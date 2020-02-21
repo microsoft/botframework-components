@@ -1,0 +1,13 @@
+name-template: 'v$NEXT_MINOR_VERSION-preview'
+change-template: '* $TITLE (#$NUMBER)'
+branches:
+  - master
+  - next
+
+template: |
+  ## What’s Changed
+
+  $CHANGES
+  
+  ## Thanks to our contributors
+  $CONTRIBUTORS
