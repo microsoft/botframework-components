@@ -26,6 +26,45 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "bingSearch": {
+      "description": "Perform a Bing Search using a provided keyword",
+      "type": "event",
+      "name": "BingSearch",
+      "value": {
+        "$ref": "#/definitions/keywordSearchRequest"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/keywordSearchResponse"
+      }
+    }
+  },
+  "definitions": {
+    "keywordSearchRequest": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "The keyword to search"
+        }
+      }
+    },
+    "keywordSearchResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The url of search result"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of search result"
+        },
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        }
+      }
     }
   }
 }
