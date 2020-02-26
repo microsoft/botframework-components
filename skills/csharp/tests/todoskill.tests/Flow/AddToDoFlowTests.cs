@@ -200,10 +200,5 @@ namespace ToDoSkill.Tests.Flow
         {
             return GetTemplates(AddToDoResponses.AfterTaskAdded, data);
         }
-
-        private string[] ActionEndMessage()
-        {
-            return GetTemplates(ToDoSharedResponses.ActionEnded);
-        }
     }
 }

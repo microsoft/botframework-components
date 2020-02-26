@@ -151,11 +151,6 @@ namespace ToDoSkill.Tests.Flow
             return GetTemplates(DeleteToDoResponses.DeleteAnotherTaskPrompt);
         }
 
-        private string[] ActionEndMessage()
-        {
-            return GetTemplates(ToDoSharedResponses.ActionEnded);
-        }
-
         private string[] CollectListType()
         {
             return GetTemplates(DeleteToDoResponses.ListTypePromptForDelete);

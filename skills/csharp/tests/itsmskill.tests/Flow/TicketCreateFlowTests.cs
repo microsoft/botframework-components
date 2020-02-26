@@ -68,7 +68,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfExistingSolve, navigate))
                 .Send(GeneralTestUtterances.Confirm)
-                .AssertReply(AssertContains(SharedResponses.ActionEnded))
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
