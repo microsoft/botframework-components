@@ -1,64 +1,33 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- dotnet
-description: "Add 150 character max description"
-urlFragment: "update-this-to-unique-url-stub"
----
+![Bot Framework Solutions](/docs/assets/images/bot_framework_solutions_header.png)
 
-# Official Microsoft Sample
+This repository is the home for a list of Bot Framework Skills that provide productivity features as well as some experimental capabilities that are built on top of the latest BotBuilder SDK that offers [Skills](https://docs.microsoft.com/en-us/azure/bot-service/skills-conceptual?view=azure-bot-service-4.0) functionality.
 
-<!-- 
-Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
+| Name | Description |  
+|:------------:|------------| 
+|[CalendarSkill (Preview)](https://aka.ms/bfcalendarskill) | Add calendar capabilities to your Assistant. Powered by Microsoft Graph and Google. |
+|[EmailSkill (Preview)](https://aka.ms/bfemailskill) | Add email capabilities to your Assistant. Powered by Microsoft Graph and Google. |
+|[ToDoSkill (Preview)](https://aka.ms/bftodoskill) | Add task management capabilities to your Assistant. Powered by Microsoft Graph. |
+|[PointOfInterestSkill (Preview)](https://aka.ms/bfpoiskill) | Find points of interest and directions. Powered by Azure Maps and FourSquare. |
+|[AutomotiveSkill (Preview)](https://aka.ms/bfautoskill) | Add automotive management capabilities to your Assistant |
+|[BingSearchSkill (Preview)](https://aka.ms/bfbingsearchskill) | Add searching capabilities to your Assistant. Powered by Microsoft Bing. |
+|[HospitalitySkill (Preview)](https://aka.ms/bfhospitalityskill) | Add hospitality capabilities to your Assistant. |
+|[ITSMSkill (Preview)](https://aka.ms/bfitsmskill) | Add ticket and knowledge base related capabilities to your Assistant. Powered by ServiceNow. |
+|[MusicSkill (Preview)](https://aka.ms/bfmusicskill) | Add music capabilities to your Assistant. Powered by Spotify. |
+|[NewsSkill (Preview)](https://aka.ms/bfnewsskill) | Add news capabilities to your Assistant. Powered by Bing News Cognitive Services. |
+|[PhoneSkill (Preview)](https://aka.ms/bfphoneskill) | Add phone capabilities to your Assistant. |
+|[RestaurantBookingSkill (Preview)](https://aka.ms/bfrestaurantbookingskill) | Add hospitality capabilities to your Assistant. |
+|[WeatherSkill (Preview)](https://aka.ms/bfweatherskill) | Add weather capabilities to your Assistant. Powered by AccuWeather. |
 
-Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
+## Documentation
 
-Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
--->
+The Skills included in this repository are part of Bot Framework Solutions offering and please refer to the [site](https://aka.ms/bfsolutionsdocs) for comprehensive documentation for everything we offer.
 
-Give a short description for your sample here. What does it do and why is it important?
+## Need Help?
 
-## Contents
+If you have any questions please start with [Stack Overflow](https://stackoverflow.com/questions/tagged/botframework) where we're happy to help. Please use this GitHub Repos issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-solutions/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-solutions/issues/new?assignees=&labels=Type%3A+Suggestion&template=feature_request.md&title=).
 
-Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
+## Reporting Security Issues
+Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `src`             | Sample source code.                        |
-| `.gitignore`      | Define what to ignore at commit time.      |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `README.md`       | This README file.                          |
-| `LICENSE`         | The license for the sample.                |
-
-## Prerequisites
-
-Outline the required components and tools that a user might need to have on their machine in order to run the sample. This can be anything from frameworks, SDKs, OS versions or IDE releases.
-
-## Setup
-
-Explain how to prepare the sample once the user clones or downloads the repository. The section should outline every step necessary to install dependencies and set up any settings (for example, API keys and output folders).
-
-## Running the sample
-
-Outline step-by-step instructions to execute the sample and see its output. Include steps for executing the sample from the IDE, starting specific services in the Azure portal or anything related to the overall launch of the code.
-
-## Key concepts
-
-Provide users with more context on the tools and services used in the sample. Explain some of the code that is being used and how services interact with each other.
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## License
+Copyright (c) Microsoft Corporation. All rights reserved.
