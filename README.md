@@ -1,4 +1,4 @@
-![Bot Framework Solutions](/docs/assets/images/bot_framework_solutions_header.png)
+![Bot Framework Solutions](https://github.com/microsoft/botframework-solutions/raw/master/docs/assets/images/bot_framework_solutions_header.png)
 
 This repository is the home for a list of Bot Framework Skills that provide productivity features as well as some experimental capabilities that are built on top of the latest BotBuilder SDK that offers [Skills](https://docs.microsoft.com/en-us/azure/bot-service/skills-conceptual?view=azure-bot-service-4.0) functionality.
 
