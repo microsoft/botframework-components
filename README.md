@@ -18,6 +18,10 @@ This repository is the home for a list of Bot Framework Skills that provide prod
 |[RestaurantBookingSkill (Preview)](https://aka.ms/bfrestaurantbookingskill) | Add hospitality capabilities to your Assistant. |
 |[WeatherSkill (Preview)](https://aka.ms/bfweatherskill) | Add weather capabilities to your Assistant. Powered by AccuWeather. |
 
+## Documentation
+
+The Skills included in this repository are part of Bot Framework Solutions offering and please refer to the [site](https://aka.ms/bfsolutionsdocs) for comprehensive documentation for everything we offer.
+
 ## Need Help?
 
 If you have any questions please start with [Stack Overflow](https://stackoverflow.com/questions/tagged/botframework) where we're happy to help. Please use this GitHub Repos issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-solutions/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-solutions/issues/new?assignees=&labels=Type%3A+Suggestion&template=feature_request.md&title=).
