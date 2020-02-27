@@ -106,6 +106,7 @@ namespace BingSearchSkill.Dialogs
                 if (entitiesResult[0].Type == SearchResultModel.EntityType.Movie)
                 {
                     var movieInfo = MovieHelper.GetMovieInfoFromUrl(entitiesResult[0].Url);
+                    actionResult.Description = movieInfo.Description;
                     tokens["Name"] = movieInfo.Name;
                     var movieData = new MovieCardData()
                     {
