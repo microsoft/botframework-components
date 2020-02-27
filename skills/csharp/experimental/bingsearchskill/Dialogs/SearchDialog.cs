@@ -107,7 +107,6 @@ namespace BingSearchSkill.Dialogs
                     var movieInfo = MovieHelper.GetMovieInfoFromUrl(entitiesResult[0].Url);
                     if (movieInfo != null)
                     {
-
                         actionResult.Description = movieInfo.Description;
                         tokens["Name"] = movieInfo.Name;
                         var movieData = new MovieCardData()
