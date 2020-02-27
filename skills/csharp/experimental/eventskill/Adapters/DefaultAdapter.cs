@@ -9,11 +9,11 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Schema;
 using SkillServiceLibrary.Utilities;
 
 namespace EventSkill.Bots
@@ -51,8 +51,8 @@ namespace EventSkill.Bots
             Use(telemetryMiddleware);
 
             // Uncomment the following line for local development without Azure Storage
-            // Use(new TranscriptLoggerMiddleware(new MemoryTranscriptStore()));
-            Use(new TranscriptLoggerMiddleware(new AzureBlobTranscriptStore(settings.BlobStorage.ConnectionString, settings.BlobStorage.Container)));
+            Use(new TranscriptLoggerMiddleware(new MemoryTranscriptStore()));
+            // Use(new TranscriptLoggerMiddleware(new AzureBlobTranscriptStore(settings.BlobStorage.ConnectionString, settings.BlobStorage.Container)));
             Use(new TelemetryLoggerMiddleware(telemetryClient, logPersonalInformation: true));
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
