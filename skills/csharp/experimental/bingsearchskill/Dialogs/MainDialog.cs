@@ -153,7 +153,7 @@ namespace BingSearchSkill.Dialogs
         // Handles introduction/continuation prompt logic.
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Context.IsSkill())
+            if (true || stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
@@ -228,7 +228,7 @@ namespace BingSearchSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "SendEmail":
+                        case "BingSearch":
                             {
                                 KeywordSearchRequest actionData = null;
 
@@ -266,7 +266,7 @@ namespace BingSearchSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Context.IsSkill())
+            if (true || stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
                 var endOfConversation = new Activity(ActivityTypes.EndOfConversation)

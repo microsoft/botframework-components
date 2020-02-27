@@ -67,7 +67,6 @@ namespace BingSearchSkill.Dialogs
         private async Task<DialogTurnResult> ShowResult(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context);
-            var intent = state.LuisResult.TopIntent().intent;
 
             GetEntityFromLuis(stepContext);
             var userInput = string.Empty;
@@ -106,31 +105,43 @@ namespace BingSearchSkill.Dialogs
                 if (entitiesResult[0].Type == SearchResultModel.EntityType.Movie)
                 {
                     var movieInfo = MovieHelper.GetMovieInfoFromUrl(entitiesResult[0].Url);
-                    actionResult.Description = movieInfo.Description;
-                    tokens["Name"] = movieInfo.Name;
-                    var movieData = new MovieCardData()
+                    if (movieInfo != null)
                     {
-                        Name = movieInfo.Name,
-                        Description = movieInfo.Description,
-                        Image = movieInfo.Image,
-                        Rating = $"{movieInfo.Rating}",
-                        GenreArray = string.Join(" ▪ ", movieInfo.Genre),
-                        ContentRating = movieInfo.ContentRating,
-                        Duration = movieInfo.Duration,
-                        Year = movieInfo.Year,
-                    };
 
-                    if (Channel.GetChannelId(stepContext.Context) == Channels.DirectlineSpeech || Channel.GetChannelId(stepContext.Context) == Channels.Msteams)
-                    {
-                        movieData.Image = ImageToDataUri(movieInfo.Image);
+                        actionResult.Description = movieInfo.Description;
+                        tokens["Name"] = movieInfo.Name;
+                        var movieData = new MovieCardData()
+                        {
+                            Name = movieInfo.Name,
+                            Description = movieInfo.Description,
+                            Image = movieInfo.Image,
+                            Rating = $"{movieInfo.Rating}",
+                            GenreArray = string.Join(" ▪ ", movieInfo.Genre),
+                            ContentRating = movieInfo.ContentRating,
+                            Duration = movieInfo.Duration,
+                            Year = movieInfo.Year,
+                        };
+
+                        if (Channel.GetChannelId(stepContext.Context) == Channels.DirectlineSpeech || Channel.GetChannelId(stepContext.Context) == Channels.Msteams)
+                        {
+                            movieData.Image = ImageToDataUri(movieInfo.Image);
+                        }
+
+                        tokens.Add("Speak", movieInfo.Description);
+
+                        prompt = ResponseManager.GetCardResponse(
+                                    SearchResponses.EntityKnowledge,
+                                    new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
+                                    tokens);
                     }
-
-                    tokens.Add("Speak", movieInfo.Description);
-
-                    prompt = ResponseManager.GetCardResponse(
-                                SearchResponses.EntityKnowledge,
-                                new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
-                                tokens);
+                    else
+                    {
+                        prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        {
+                            { "Answer", entitiesResult[0].Description },
+                            { "Url", entitiesResult[0].Url }
+                        });
+                    }
                 }
                 else if (entitiesResult[0].Type == SearchResultModel.EntityType.Person)
                 {
@@ -205,6 +216,10 @@ namespace BingSearchSkill.Dialogs
         private async void GetEntityFromLuis(WaterfallStepContext stepContext)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context);
+            if (state.LuisResult == null)
+            {
+                return;
+            }
 
             if (state.LuisResult.Entities.MovieTitle != null)
             {
