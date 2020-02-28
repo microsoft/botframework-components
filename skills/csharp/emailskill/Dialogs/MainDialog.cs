@@ -403,7 +403,7 @@ namespace EmailSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(EmailMainResponses.EmailWelcomeMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(EmailMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
