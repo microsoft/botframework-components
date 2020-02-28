@@ -435,6 +435,48 @@ namespace EmailSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task Test_SendEmailAction()
+        {
+            string testEmailAddress = ContextStrings.TestEmailAdress;
+
+            var recipientList = new
+            {
+                NameList = testEmailAddress
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(SendEmailUtterances.SendEmailAction)
+                .AssertReplyOneOf(this.AddMoreContacts(recipientList))
+                .Send(GeneralTestUtterances.No)
+                .AssertReply(this.AssertComfirmBeforeSendingPrompt())
+                .Send(GeneralTestUtterances.Yes)
+                .AssertReply(this.AfterSendingMessage(ContextStrings.TestSubject))
+                .AssertReply(CheckForEoC(true, true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_SendEmailActionNotSuccess()
+        {
+            string testEmailAddress = ContextStrings.TestEmailAdress;
+
+            var recipientList = new
+            {
+                NameList = testEmailAddress
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(SendEmailUtterances.SendEmailAction)
+                .AssertReplyOneOf(this.AddMoreContacts(recipientList))
+                .Send(GeneralTestUtterances.No)
+                .AssertReply(this.AssertComfirmBeforeSendingPrompt())
+                .Send(GeneralTestUtterances.No)
+                .AssertReplyOneOf(CancelResponses())
+                .AssertReply(CheckForEoC(true, false))
+                .StartTestAsync();
+        }
+
         private Action<IActivity> AfterSendingMessage(string subject)
         {
             return activity =>
