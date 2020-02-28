@@ -90,6 +90,14 @@ namespace NewsSkill.Dialogs
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
             await _responder.ReplyWith(sc.Context, FavoriteTopicsResponses.ShowArticles, articles);
 
+            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            if (convState.IsAction)
+            {
+                convState.Clear();
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+            }
+
+            convState.Clear();
             return await sc.EndDialogAsync();
         }
     }
