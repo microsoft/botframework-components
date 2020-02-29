@@ -62,6 +62,33 @@ namespace EventSkill.Dialogs
         {
             if (innerDc.Context.Activity.Type == ActivityTypes.Message)
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("Event", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<EventLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState.Add(StateProperties.EventLuisResultKey, skillResult);
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResultKey, generalResult);
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -80,6 +107,33 @@ namespace EventSkill.Dialogs
         {
             if (innerDc.Context.Activity.Type == ActivityTypes.Message)
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("Event", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<EventLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState.Add(StateProperties.EventLuisResultKey, skillResult);
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResultKey, generalResult);
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -102,24 +156,14 @@ namespace EventSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Get connected LUIS result from turn state.
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
-                if (generalLuisService == null)
-                {
-                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                var generalResult = innerDc.Context.TurnState.Get<GeneralLuis>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
                 if (generalScore > 0.5)
                 {
                     switch (generalIntent)
                     {
-                        case General.Intent.Cancel:
+                        case GeneralLuis.Intent.Cancel:
                             {
                                 await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
@@ -128,7 +172,7 @@ namespace EventSkill.Dialogs
                                 break;
                             }
 
-                        case General.Intent.Help:
+                        case GeneralLuis.Intent.Help:
                             {
                                 await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
@@ -136,30 +180,12 @@ namespace EventSkill.Dialogs
                                 break;
                             }
 
-                        case General.Intent.Logout:
+                        case GeneralLuis.Intent.Logout:
                             {
-                                IUserTokenProvider tokenProvider;
-                                var supported = innerDc.Context.Adapter is IUserTokenProvider;
-                                if (supported)
-                                {
-                                    tokenProvider = (IUserTokenProvider)innerDc.Context.Adapter;
-
-                                    // Sign out user
-                                    var tokens = await tokenProvider.GetTokenStatusAsync(innerDc.Context, innerDc.Context.Activity.From.Id);
-                                    foreach (var token in tokens)
-                                    {
-                                        await tokenProvider.SignOutUserAsync(innerDc.Context, token.ConnectionName);
-                                    }
-
-                                    // Cancel all active dialogs
-                                    await innerDc.CancelAllDialogsAsync();
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
-                                }
+                                await OnLogout(innerDc);
 
                                 await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+                                await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
                                 break;
@@ -202,18 +228,9 @@ namespace EventSkill.Dialogs
             var a = stepContext.Context.Activity;
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on Skill model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("Event", out var luisService);
-                if (luisService == null)
-                {
-                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var skillResult = await luisService.RecognizeAsync<Luis.EventLuis>(stepContext.Context, cancellationToken);
-                var intent = skillResult?.TopIntent().intent;
+                // Get connected LUIS result from turn state.
+                var result = stepContext.Context.TurnState.Get<EventLuis>(StateProperties.EventLuisResultKey);
+                var intent = result?.TopIntent().intent;
 
                 // switch on general intents
                 switch (intent)
@@ -259,6 +276,30 @@ namespace EventSkill.Dialogs
             else
             {
                 return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+            }
+        }
+
+        private async Task OnLogout(DialogContext dc)
+        {
+            IUserTokenProvider tokenProvider;
+            var supported = dc.Context.Adapter is IUserTokenProvider;
+            if (supported)
+            {
+                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
+
+                // Sign out user
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                foreach (var token in tokens)
+                {
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                }
+
+                // Cancel all active dialogs
+                await dc.CancelAllDialogsAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
             }
         }
     }
