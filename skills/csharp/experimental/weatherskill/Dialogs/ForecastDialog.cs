@@ -17,6 +17,7 @@ using Microsoft.Bot.Connector;
 using WeatherSkill.Models;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
+using WeatherSkill.Models.Action;
 
 namespace WeatherSkill.Dialogs
 {
@@ -181,6 +182,20 @@ namespace WeatherSkill.Dialogs
                 Icon6 = GetWeatherIcon(twelveHourForecast[5].WeatherIcon, useFile),
                 Temperature6 = Convert.ToInt32(twelveHourForecast[5].Temperature.Value)
             };
+
+            var options = stepContext.Options as SkillOptions;
+            if (options != null && options.IsAction)
+            {
+                // Todo: design this summary message.
+                var summary = "";
+
+                var actionResult = new ActionResult()
+                {
+                    Summary = summary,
+                    ActionSuccess = true
+                };
+                return await stepContext.EndDialogAsync(actionResult);
+            }
 
             var templateId = SharedResponses.SixHourForecast;
             var card = new Card(GetDivergedCardName(stepContext.Context, "SixHourForecast"), forecastModel);

@@ -19,8 +19,10 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 using WeatherSkill.Models;
+using WeatherSkill.Models.Action;
 using WeatherSkill.Responses.Main;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
@@ -235,6 +237,39 @@ namespace WeatherSkill.Dialogs
                     }
                 }
             }
+            else if (activity.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = activity.AsEventActivity();
+
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "Forecast":
+                            {
+                                LocationInfo actionData = null;
+
+                                var eventValue = activity.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<LocationInfo>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog), new SkillOptions() { IsAction = true });
+                            }
+
+                        default:
+                            {
+                                // todo: move the response to lg
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                break;
+                            }
+                    }
+                }
+            }
 
             // If activity was unhandled, flow should continue to next step
             return await stepContext.NextAsync();
@@ -312,6 +347,12 @@ namespace WeatherSkill.Dialogs
                     state.Geography = locationObj;
                 }
             }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, LocationInfo emailInfo)
+        {
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
+            state.Geography = emailInfo.Location;
         }
     }
 }
