@@ -18,7 +18,9 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Skills.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using RestaurantBookingSkill.Models;
+using RestaurantBookingSkill.Models.Action;
 using RestaurantBookingSkill.Responses.Main;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
@@ -223,6 +225,39 @@ namespace RestaurantBookingSkill.Dialogs
                     }
                 }
             }
+            else if (activity.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = activity.AsEventActivity();
+
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "Booking":
+                            {
+                                BookingInfo actionData = null;
+                                var eventValue = activity.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<BookingInfo>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(BookingDialog), new SkillOption() { IsAction = true });
+                            }
+
+                        default:
+                            {
+                                // todo: move the response to lg
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                                break;
+                            }
+                    }
+                }
+            }
 
             // If activity was unhandled, flow should continue to next step
             return await stepContext.NextAsync();
@@ -247,6 +282,23 @@ namespace RestaurantBookingSkill.Dialogs
             {
                 return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
             }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, BookingInfo bookingInfo)
+        {
+            var state = await _conversationStateAccessor.GetAsync(dc.Context, () => new RestaurantBookingState());
+            state.Booking.Category = bookingInfo.FoodType;
+
+            // Todo: Now we assume all properties are valid. 
+            // Do we need to more parse, such as 'today' or '11 am'?
+            state.Booking.ReservationDate = DateTime.Parse(bookingInfo.Date);
+
+            state.Booking.ReservationTime = DateTime.Parse(bookingInfo.Time);
+
+            state.Booking.AttendeeCount = bookingInfo.AttendeeCount;
+
+            // Note: Now there are no actual action to book a place. So we only save Name.
+            state.Booking.BookingPlace.Name = bookingInfo.BookingPlace;
         }
     }
 }

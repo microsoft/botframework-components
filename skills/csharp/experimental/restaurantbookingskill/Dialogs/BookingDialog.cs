@@ -23,6 +23,7 @@ using RestaurantBookingSkill.Models;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
 using RestaurantBookingSkill.Utilities;
+using EmailSkill.Models.Action;
 
 namespace RestaurantBookingSkill.Dialogs
 {
@@ -601,6 +602,13 @@ namespace RestaurantBookingSkill.Dialogs
             await sc.Context.SendActivityAsync(replyMessage);
 
             state.Clear();
+
+            var skillOptions = sc.Options as SkillOption;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                var actionResult = new ActionResult() { ActionSuccess = true };
+                return await sc.EndDialogAsync(actionResult);
+            }
 
             return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
