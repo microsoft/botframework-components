@@ -692,7 +692,6 @@ namespace CalendarSkill.Dialogs
                     switch (recreateState.Value)
                     {
                         case RecreateEventState.Cancel:
-                            await SendActionEnded(sc.Context);
                             state.Clear();
                             return await sc.EndDialogAsync(true, cancellationToken);
                         case RecreateEventState.Time:

@@ -647,19 +647,6 @@ namespace ToDoSkill.Dialogs
             }
         }
 
-        protected Task SendActionEnded(ITurnContext turnContext)
-        {
-            if (turnContext.IsSkill())
-            {
-                return Task.CompletedTask;
-            }
-            else
-            {
-                var activity = TemplateEngine.GenerateActivityForLocale(ToDoSharedResponses.ActionEnded);
-                return turnContext.SendActivityAsync(activity);
-            }
-        }
-
         private async Task<bool> RecoverListTypeIdsAsync(DialogContext dc)
         {
             var userState = await UserStateAccessor.GetAsync(dc.Context, () => new ToDoSkillUserState());

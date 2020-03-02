@@ -212,12 +212,7 @@ namespace ToDoSkill.Tests.Flow
 
         private string[] FirstReadMoreRefused()
         {
-            return GetTemplates(ToDoSharedResponses.ActionEnded);
-        }
-
-        private string[] ActionEndMessage()
-        {
-            return GetTemplates(ToDoSharedResponses.ActionEnded);
+            return GetTemplates(ToDoMainResponses.CompletedMessage);
         }
     }
 }
