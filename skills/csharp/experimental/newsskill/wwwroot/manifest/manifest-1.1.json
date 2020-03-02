@@ -70,7 +70,7 @@
       }
     },
     "findArticles": {
-      "description": "search articles by keyword and site",
+      "description": "Search articles by keyword and site",
       "type": "event",
       "name": "FindArticles",
       "value": {
