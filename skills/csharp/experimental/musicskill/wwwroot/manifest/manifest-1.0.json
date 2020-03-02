@@ -23,9 +23,41 @@
     }
   ],
   "activities": {
+    "playMusic": {
+      "description": "Play a music",
+      "type": "event",
+      "name": "ChangeVehicleSetting",
+      "value": {
+        "$ref": "#/definitions/searchInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/operationStatus"
+      }
+    },
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    }
+  },
+  "definitions": {
+    "searchInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "setting": {
+          "type": "string",
+          "description": "Info to search the music, such as the artist"
+        }
+      }
+    },
+    "operationStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "description": "An operation status indicating success or failure"
+        }
+      }
     }
   }
 }
