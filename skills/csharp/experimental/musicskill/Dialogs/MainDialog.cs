@@ -60,8 +60,35 @@ namespace MusicSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<MusicSkillLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.MusicLuisResultKey] = skillResult;
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.GeneralLuisResultKey] = generalResult;
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -78,8 +105,35 @@ namespace MusicSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<MusicSkillLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.MusicLuisResultKey] = skillResult;
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.GeneralLuisResultKey] = generalResult;
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -102,17 +156,8 @@ namespace MusicSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Get connected LUIS result from turn state.
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
-                if (generalLuisService == null)
-                {
-                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                var generalResult = innerDc.Context.TurnState.Get<GeneralLuis>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
                 if (generalScore > 0.5)
@@ -186,17 +231,7 @@ namespace MusicSkill.Dialogs
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on Skill model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
-                if (skillLuisService == null)
-                {
-                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var skillResult = await skillLuisService.RecognizeAsync<MusicSkillLuis>(stepContext.Context, cancellationToken);
+                var skillResult = stepContext.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
                 var intent = skillResult?.TopIntent().intent;
 
                 // switch on general intents
