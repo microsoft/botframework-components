@@ -18,9 +18,7 @@ namespace PhoneSkill.Tests.Flow
         [TestMethod]
         public async Task Test_SingleTurnCompletion()
         {
-            await this.GetTestFlow()
-                .SendConversationUpdate()
-                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
+            await this.GetSkillTestFlow()
                 .Send(GeneralUtterances.Incomprehensible)
                 .AssertReplyOneOf(this.ConfusedResponse())
                 .AssertReply((activity) => { Assert.AreEqual(ActivityTypes.EndOfConversation, activity.Type); })
