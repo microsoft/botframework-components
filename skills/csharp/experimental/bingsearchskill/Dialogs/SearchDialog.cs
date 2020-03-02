@@ -17,6 +17,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using BingSearchSkill.Models.Actions;
+using BingSearchSkill.Responses;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -171,11 +172,11 @@ namespace BingSearchSkill.Dialogs
                     {
                         prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
-                            { "Answer", "Sorry I do not know this answer yet." },
+                            { "Answer", CommonStrings.DontKnowAnswer },
                             { "Url", "www.bing.com" }
                         });
 
-                        actionResult.Description = "Sorry I do not know this answer yet.";
+                        actionResult.Description = CommonStrings.DontKnowAnswer;
                         actionResult.Url = "www.bing.com";
                         actionResult.ActionSuccess = false;
                     }
@@ -196,7 +197,8 @@ namespace BingSearchSkill.Dialogs
 
             await stepContext.Context.SendActivityAsync(prompt);
 
-            if (state.IsAction)
+            var skillOptions = stepContext.Options as BingSearchSkillDialogOptionBase;
+            if (skillOptions != null && skillOptions.IsAction == true)
             {
                 return await stepContext.NextAsync(actionResult);
             }

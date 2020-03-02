@@ -239,8 +239,7 @@ namespace BingSearchSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(SearchDialog));
+                                return await stepContext.BeginDialogAsync(nameof(SearchDialog), new BingSearchSkillDialogOptionBase() { IsAction = true });
                             }
 
                         default:
