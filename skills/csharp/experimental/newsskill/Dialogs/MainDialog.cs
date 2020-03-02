@@ -69,8 +69,21 @@ namespace NewsSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                var skillResult = await localizedServices.LuisServices["News"].RecognizeAsync<NewsLuis>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.SkillLuisResult, skillResult);
+
+                // Run LUIS recognition on General model and store result in turn state.
+                var generalResult = await localizedServices.LuisServices["General"].RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResult, generalResult);
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -87,8 +100,21 @@ namespace NewsSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+                
+                // Run LUIS recognition on Skill model and store result in turn state.
+                var skillResult = await localizedServices.LuisServices["News"].RecognizeAsync<NewsLuis>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.SkillLuisResult, skillResult);
+
+                // Run LUIS recognition on General model and store result in turn state.
+                var generalResult = await localizedServices.LuisServices["General"].RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResult, generalResult);
+
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
@@ -111,17 +137,7 @@ namespace NewsSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Get connected LUIS result from turn state.
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
-                if (generalLuisService == null)
-                {
-                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
                 if (generalScore > 0.5)
@@ -164,10 +180,10 @@ namespace NewsSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var prompt = stepContext.Options as Activity ?? await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
-                if (state.NewConversation)
+                var activity = stepContext.Context.Activity;
+                if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
                     prompt = await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
-                    state.NewConversation = false;
                 }
 
                 var promptOptions = new PromptOptions
@@ -187,58 +203,46 @@ namespace NewsSkill.Dialogs
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
+                var result = stepContext.Context.TurnState.Get<NewsLuis>(StateProperties.SkillLuisResult);
+                state.LuisResult = result;
 
-                // Run LUIS recognition on Skill model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("News", out var luisService);
-                if (luisService == null)
+                var intent = result?.TopIntent().intent;
+
+                // switch on general intents
+                switch (intent)
                 {
-                    throw new Exception("The specified LUIS Model could not be found in your Bot Services configuration.");
-                }
-                else
-                {
-                    var result = await luisService.RecognizeAsync<NewsLuis>(stepContext.Context, CancellationToken.None);
-                    state.LuisResult = result;
+                    case NewsLuis.Intent.TrendingArticles:
+                        {
+                            // send articles in response
+                            return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
+                        }
 
-                    var intent = result?.TopIntent().intent;
+                    case NewsLuis.Intent.SetFavoriteTopics:
+                    case NewsLuis.Intent.ShowFavoriteTopics:
+                        {
+                            // send favorite news categories
+                            return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
+                        }
 
-                    // switch on general intents
-                    switch (intent)
-                    {
-                        case NewsLuis.Intent.TrendingArticles:
-                            {
-                                // send articles in response
-                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
-                            }
+                    case NewsLuis.Intent.FindArticles:
+                        {
+                            // send greeting response
+                            return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
+                        }
 
-                        case NewsLuis.Intent.SetFavoriteTopics:
-                        case NewsLuis.Intent.ShowFavoriteTopics:
-                            {
-                                // send favorite news categories
-                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
-                            }
+                    case NewsLuis.Intent.None:
+                        {
+                            // No intent was identified, send confused message
+                            await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
+                            break;
+                        }
 
-                        case NewsLuis.Intent.FindArticles:
-                            {
-                                // send greeting response
-                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
-                            }
-
-                        case NewsLuis.Intent.None:
-                            {
-                                // No intent was identified, send confused message
-                                await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
-                                break;
-                            }
-
-                        default:
-                            {
-                                // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
-                                break;
-                            }
-                    }
+                    default:
+                        {
+                            // intent was identified but not yet implemented
+                            await stepContext.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
+                            break;
+                        }
                 }
             }
 

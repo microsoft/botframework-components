@@ -12,7 +12,5 @@ namespace NewsSkill.Models
         public Luis.NewsLuis LuisResult { get; set; }
 
         public string CurrentCoordinates { get; set; }
-
-        public bool NewConversation { get; set; } = true;
     }
 }
