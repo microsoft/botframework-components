@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Tests.Flow.Utterances;
 
@@ -18,6 +19,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_SingleTurnCompletion()
         {
             await this.GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                 .Send(GeneralUtterances.Incomprehensible)
                 .AssertReplyOneOf(this.ConfusedResponse())
                 .AssertReply((activity) => { Assert.AreEqual(ActivityTypes.EndOfConversation, activity.Type); })

@@ -245,8 +245,7 @@ namespace PhoneSkill.Dialogs
                 {
                     case PhoneLuis.Intent.OutgoingCall:
                         {
-                            await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), skillOptions);
-                            break;
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), skillOptions);
                         }
 
                     case PhoneLuis.Intent.None:
