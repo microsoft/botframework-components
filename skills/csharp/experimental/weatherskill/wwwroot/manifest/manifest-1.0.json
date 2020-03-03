@@ -28,7 +28,7 @@
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
     "forecast": {
-      "description": "Forecast weather in a Geography or Latitude & Longitude",
+      "description": "Weather forcast in a Geography or Latitude & Longitude",
       "type": "event",
       "name": "Forecast",
       "value": {
@@ -45,7 +45,7 @@
       "properties": {
         "location": {
           "type": "string",
-          "description": "A Geography or Latitude & Longitude."
+          "description": "A Geography name or its Latitude & Longitude(north and east are above zero). E.g., Beijing or 39.90,116.40."
         }
       }
     },
