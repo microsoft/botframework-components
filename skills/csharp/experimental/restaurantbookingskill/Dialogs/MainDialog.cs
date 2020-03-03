@@ -163,17 +163,7 @@ namespace RestaurantBookingSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Get connected LUIS result from turn state.
-                // Get cognitive models for the current locale.
-                var localizedServices = _services.GetCognitiveModels();
-
-                // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
-                if (generalLuisService == null)
-                {
-                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
-                }
-
-                var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
                 if (generalScore > 0.5)
@@ -239,42 +229,29 @@ namespace RestaurantBookingSkill.Dialogs
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
-                // get current activity locale
-                var localeConfig = _services.GetCognitiveModels();
+                var result = stepContext.Context.TurnState.Get<ReservationLuis>(StateProperties.ReservationLuis);
+                var intent = result?.TopIntent().intent;
 
-                // Get skill LUIS model from configuration
-                localeConfig.LuisServices.TryGetValue("Restaurant", out var luisService);
-
-                if (luisService == null)
+                switch (intent)
                 {
-                    throw new Exception("The specified LUIS Model could not be found in your Bot Services configuration.");
-                }
-                else
-                {
-                    var result = await luisService.RecognizeAsync<ReservationLuis>(stepContext.Context, CancellationToken.None);
-                    var intent = result?.TopIntent().intent;
+                    case ReservationLuis.Intent.Reservation:
+                        {
+                            return await stepContext.BeginDialogAsync(nameof(BookingDialog));
+                        }
 
-                    switch (intent)
-                    {
-                        case ReservationLuis.Intent.Reservation:
-                            {
-                                return await stepContext.BeginDialogAsync(nameof(BookingDialog));
-                            }
+                    case ReservationLuis.Intent.None:
+                        {
+                            // No intent was identified, send confused message
+                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            break;
+                        }
 
-                        case ReservationLuis.Intent.None:
-                            {
-                                // No intent was identified, send confused message
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
-                                break;
-                            }
-
-                        default:
-                            {
-                                // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
-                                break;
-                            }
-                    }
+                    default:
+                        {
+                            // intent was identified but not yet implemented
+                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            break;
+                        }
                 }
             }
 
