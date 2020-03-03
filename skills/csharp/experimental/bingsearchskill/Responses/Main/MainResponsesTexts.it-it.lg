@@ -1,0 +1,46 @@
+[import] (MainResponses.lg)
+
+# GreetingMessage.Text(Data)
+- lì!
+- Ehilà!
+- ciao!
+
+# CancelMessage.Text(Data)
+- Ok, iniziamo.
+
+# WelcomeMessage.Text(Data)
+- benvenuto! Posso cercare informazioni sui film, informazioni sulle celebrità per te.
+
+# FeatureNotAvailable.Text(Data)
+- @{FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = Questa funzione non è ancora disponibile in questa abilità. Si prega di provare a chiedere qualcos'altro.
+    Speak = Questa funzione non è ancora disponibile in questkill. Si prega di provare a chiedere qualcos'altro.
+]
+
+# LogOut.Text(Data)
+- Il tuo segno è andato a buon fine.
+- Hai firmato con successo.
+- Sei stato disconnesso.
+
+# GoodbyeMessage.Text(Data)
+- arrivederci!
+
+# HelpMessage.Text(Data)
+- Puoi dire "chi è Bill Gates" o "come è Titanic" per avviare una query.
+
+# FirstPromptMessage.Text(Data)
+- Con cosa posso aiutarti oggi?
+- Cosa posso fare per te?
+- C'è qualcosa che posso fare per te?
+- Come posso aiutarla?
+
+# CompletedMessage.Text(Data)
+- Sono qui se hai bisogno di qualcos'altro.
+- Fammi sapere se c'è qualcos'altro di cui hai bisogno.
+- Fammi sapere se posso aiutarti con qualcos'altro.
+- Tutto fatto. Fammi sapere se posso fare qualcos'altro.
+
+

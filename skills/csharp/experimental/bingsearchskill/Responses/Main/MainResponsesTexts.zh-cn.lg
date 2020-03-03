@@ -1,0 +1,46 @@
+[import] (MainResponses.lg)
+
+# GreetingMessage.Text(Data)
+- 就在那儿!
+- 嘿，你好！
+- 你好！
+
+# CancelMessage.Text(Data)
+- 好吧, 让我们重新开始。
+
+# WelcomeMessage.Text(Data)
+- 欢迎！我可以搜索电影信息, 名人信息为你。
+
+# FeatureNotAvailable.Text(Data)
+- @{FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = 此功能在此技能中尚不可用。请尝试询问其他的东西。
+    Speak = 此功能在此绝种中尚不可用。请尝试询问其他的东西。
+]
+
+# LogOut.Text(Data)
+- 您的注销成功了。
+- 您已成功注销。
+- 您已注销。
+
+# GoodbyeMessage.Text(Data)
+- 再见！
+
+# HelpMessage.Text(Data)
+- 你可以说'比尔·盖茨是谁'或'泰坦尼克号是怎么'开始查询。
+
+# FirstPromptMessage.Text(Data)
+- 现在能帮您做些什么？
+- 我能为您做些什么？
+- 有什么需要我做的吗？
+- 有什么需要帮忙的吗？
+
+# CompletedMessage.Text(Data)
+- 如果您需要帮助，请随时找我。
+- 请告诉我您还有什么需要。
+- 如果还有什么我能帮您的，请随时找我。
+- 已经全部完成，如果还有其他需要帮忙的请随时找我。
+
+

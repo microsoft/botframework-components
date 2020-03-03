@@ -24,6 +24,7 @@ using SkillServiceLibrary.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using BingSearchSkill.Models.Actions;
 using Newtonsoft.Json.Linq;
+using Bingsearchskill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -31,7 +32,7 @@ namespace BingSearchSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateEngineManager _localeTemplateEngineManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
         private Dialog _searchDialog;
 
@@ -42,7 +43,7 @@ namespace BingSearchSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _localeTemplateEngineManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -129,7 +130,7 @@ namespace BingSearchSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -138,7 +139,7 @@ namespace BingSearchSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -161,11 +162,11 @@ namespace BingSearchSkill.Dialogs
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
-                var prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(MainResponses.FirstPromptMessage);
+                var prompt = stepContext.Options as Activity ?? _localeTemplateEngineManager.GetResponse(MainResponses.FirstPromptMessage);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
                 if (state.NewConversation)
                 {
-                    prompt = _responseManager.GetResponse(MainResponses.WelcomeMessage);
+                    prompt = _localeTemplateEngineManager.GetResponse(MainResponses.WelcomeMessage);
                     state.NewConversation = false;
                 }
 
@@ -212,7 +213,7 @@ namespace BingSearchSkill.Dialogs
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.FeatureNotAvailable));
                                 break;
                             }
                     }
@@ -279,7 +280,7 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _localeTemplateEngineManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }
     }

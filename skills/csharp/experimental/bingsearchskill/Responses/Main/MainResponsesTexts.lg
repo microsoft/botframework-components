@@ -1,0 +1,46 @@
+[import] (MainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- Welcome! I can search movie info, celebrity info for you. You can say 'who is Bill Gates' or 'how is Titanic' to start query.
+
+# HelpMessage.Text(Data)
+- You can say 'who is Bill Gates' or 'how is Titanic' to start query.
+
+# GreetingMessage.Text(Data)
+- Hi!
+- Hi there!
+- Hello!
+
+# GoodbyeMessage.Text(Data)
+- Goodbye!
+
+# LogOut.Text(Data)
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# FeatureNotAvailable.Text(Data)
+- @{FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = This feature is not yet available in this skill. Please try asking something else.
+    Speak = This feature is not yet available in thiskill. Please try asking something else.
+]
+
+# CancelMessage.Text(Data)
+- Ok, let's start over.
+
+# FirstPromptMessage.Text(Data)
+- What can I help you with today?
+- What can I do for you?
+- Is there anything I can do for you?
+- How can I help you?
+
+# CompletedMessage.Text(Data)
+- I'm here if you need anything else.
+- Let me know if there's anything else you need.
+- Let me know if I can help you with anything else.
+- All done. Let me know if I can do anything else.
+
+

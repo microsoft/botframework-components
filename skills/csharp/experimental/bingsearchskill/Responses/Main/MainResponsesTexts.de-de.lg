@@ -1,0 +1,46 @@
+[import] (MainResponses.lg)
+
+# GreetingMessage.Text(Data)
+- dort!
+- Hallo!
+- Hallo!
+
+# CancelMessage.Text(Data)
+- Okkiert, fangen wir an.
+
+# WelcomeMessage.Text(Data)
+- willkommen! Ich kann Film-Info, Promi-Info für Sie suchen.
+
+# FeatureNotAvailable.Text(Data)
+- @{FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = Diese Funktion ist in dieser Fähigkeit noch nicht verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
+    Speak = Diese Funktion ist noch nicht in diesem kill verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
+]
+
+# LogOut.Text(Data)
+- Ihr Anmeldeausweiser war erfolgreich.
+- Sie haben erfolgreich unterschrieben.
+- Sie haben sich angemeldet.
+
+# GoodbyeMessage.Text(Data)
+- Auf Wiedersehen!
+
+# HelpMessage.Text(Data)
+- Man kann sagen: "Wer Bill Gates" oder "Wie ist Titanic", um die Abfrage zu starten.
+
+# FirstPromptMessage.Text(Data)
+- Was kann ich Ihnen heute helfen?
+- Was kann ich für Sie tun?
+- Gibt es etwas, was ich für Sie tun kann?
+- Wie kann ich Ihnen helfen?
+
+# CompletedMessage.Text(Data)
+- Ich bin hier, wenn du etwas anderes brauchst.
+- Lassen Sie mich wissen, ob es noch etwas gibt, was Sie brauchen.
+- Lassen Sie mich wissen, ob ich Ihnen mit etwas anderem helfen kann.
+- Fertig. Lassen Sie mich wissen, ob ich etwas anderes tun kann.
+
+

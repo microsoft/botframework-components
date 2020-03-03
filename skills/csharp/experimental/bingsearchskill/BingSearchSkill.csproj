@@ -34,18 +34,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\MovieCard.1.0.json" />
     <EmbeddedResource Include="Content\PersonCard.1.0.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.de.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.es.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.fr.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.it.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.json" />
-    <EmbeddedResource Include="Responses\Main\MainResponses.zh.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.de.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.es.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.fr.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.it.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.json" />
-    <EmbeddedResource Include="Responses\Search\SearchResponses.zh.json" />
     <EmbeddedResource Include="Responses\Shared\SharedResponses.de.json" />
     <EmbeddedResource Include="Responses\Shared\SharedResponses.es.json" />
     <EmbeddedResource Include="Responses\Shared\SharedResponses.fr.json" />
@@ -94,13 +82,106 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Responses\CommonStrings.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStrings.ttnew">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CommonStrings.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\CommonStringsTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStringsTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStringsTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStringsTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStringsTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStringsTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\MainResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainResponses.cs</LastGenOutput>
     </None>
+    <None Update="Responses\Main\MainResponses.ttnew">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Search\SearchResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SearchResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Search\SearchResponses.ttnew">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SearchResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Shared\SharedResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -113,33 +194,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Responses\CommonStrings.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonStrings.ttnew</DependentUpon>
+    </Compile>
     <Compile Update="Responses\Main\MainResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
+      <DependentUpon>MainResponses.ttnew</DependentUpon>
     </Compile>
     <Compile Update="Responses\Search\SearchResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>SearchResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\CommonStrings.Designer.cs">
-      <DependentUpon>CommonStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchResponses.ttnew</DependentUpon>
     </Compile>
     <Compile Update="Responses\Shared\SharedResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SharedResponses.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Responses\CommonStrings.resx">
-      <LastGenOutput>CommonStrings.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,46 @@
+[import] (MainResponses.lg)
+
+# GreetingMessage.Text(Data)
+- ¡allí!
+- ¡Hola!
+- ¡Hola!
+
+# CancelMessage.Text(Data)
+- Bien, empecemos de una vez.
+
+# WelcomeMessage.Text(Data)
+- ¡Bienvenido! Puedo buscar información de la película, información de celebridades para usted.
+
+# FeatureNotAvailable.Text(Data)
+- @{FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = Esta función aún no está disponible en esta habilidad. Por favor, intenta preguntar algo más.
+    Speak = Esta función aún no está disponible en thiskill. Por favor, intenta preguntar algo más.
+]
+
+# LogOut.Text(Data)
+- Su firma fue exitosa.
+- Se ha registrado correctamente.
+- Se ha cerrado la sesión.
+
+# GoodbyeMessage.Text(Data)
+- ¡Adiós!
+
+# HelpMessage.Text(Data)
+- Puedes decir ' quién es Bill Gates ' o ' cómo es Titanic ' para comenzar la consulta.
+
+# FirstPromptMessage.Text(Data)
+- ¿En qué puedo ayudarte hoy?
+- ¿Qué puedo hacer por usted?
+- ¿Hay algo que pueda hacer por ti?
+- ¿Cómo puedo ayudarle?
+
+# CompletedMessage.Text(Data)
+- Estoy aquí si necesitas algo más.
+- Avísame si necesitas algo más.
+- Avísame si puedo ayudarte con cualquier otra cosa.
+- Ya está. Avísame si puedo hacer algo más.
+
+

@@ -25,6 +25,8 @@ using System.Net.Http;
 using System.IO;
 using System.Linq;
 using System.Drawing.Drawing2D;
+using BingSearchSkill.Utilities;
+using Bingsearchskill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -34,13 +36,13 @@ namespace BingSearchSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateEngineManager localeTemplateEngineManager,
              ConversationState conversationState,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
-            ResponseManager = responseManager;
+            LocaleTemplateEngineManager = localeTemplateEngineManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
 
@@ -59,7 +61,7 @@ namespace BingSearchSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -174,7 +176,7 @@ namespace BingSearchSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GetResponse(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);

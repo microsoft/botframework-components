@@ -1,0 +1,118 @@
+{
+  "type": "AdaptiveCard",
+  "id": "MovieCard",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "items": [
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "verticalContentAlignment": "Center",
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "id": "title",
+                          "size": "ExtraLarge",
+                          "weight": "Bolder",
+                          "color": "Default",
+                          "text": "@{if(Data.Name == null, '', Data.Name)}",
+                          "wrap": true
+                        }
+                      ],
+                      "width": "stretch"
+                    }
+                  ]
+                }
+              ],
+              "width": "stretch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "verticalContentAlignment": "Center",
+              "items": [
+                {
+                  "type": "Image",
+                  "horizontalAlignment": "Left",
+                  "url": "@{if(Data.Image == null, '', Data.Image)}",
+                  "size": "Large"
+                }
+              ],
+              "width": "auto"
+            },
+            {
+              "type": "Column",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "size": "Large",
+                  "weight": "Bolder",
+                  "text": "@{if(Data.ContentRating == null, '', Data.ContentRating)}",
+                  "isSubtle": true
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "Large",
+                  "text": "@{if(Data.Year == null, '', Data.Year)}",
+                  "isSubtle": true
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "Large",
+                  "text": "@{if(Data.GenreArray == null, '', Data.GenreArray)}",
+                  "isSubtle": true,
+                  "wrap": true,
+                  "maxLines": 2
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "Large",
+                  "text": "@{if(Data.Duration == null, '', Data.Duration)}",
+                  "isSubtle": true
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "Large",
+                  "weight": "Bolder",
+                  "text": "@{if(Data.Rating == null, '', Data.Rating)}",
+                  "isSubtle": true
+                }
+              ],
+              "width": "stretch"
+            }
+          ]
+        },
+        {
+          "type": "TextBlock",
+          "id": "messageBody",
+          "size": "Medium",
+          "color": "default",
+          "text": "@{if(Data.Description == null, '', Data.Description)}",
+          "wrap": true,
+          "maxLines": 3
+        }
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0",
+  "speak": "@{if(Data.Speak == null, '', Data.Speak)}"
+}
