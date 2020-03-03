@@ -61,6 +61,15 @@ namespace BingSearchSkill.Responses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://www.bing.com.
+        /// </summary>
+        public static string BingSite {
+            get {
+                return ResourceManager.GetString("BingSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry I do not know this answer yet..
         /// </summary>
         public static string DontKnowAnswer {

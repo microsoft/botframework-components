@@ -173,11 +173,11 @@ namespace BingSearchSkill.Dialogs
                         prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
                             { "Answer", CommonStrings.DontKnowAnswer },
-                            { "Url", "www.bing.com" }
+                            { "Url", CommonStrings.BingSite }
                         });
 
                         actionResult.Description = CommonStrings.DontKnowAnswer;
-                        actionResult.Url = "www.bing.com";
+                        actionResult.Url = CommonStrings.BingSite;
                         actionResult.ActionSuccess = false;
                     }
                     else

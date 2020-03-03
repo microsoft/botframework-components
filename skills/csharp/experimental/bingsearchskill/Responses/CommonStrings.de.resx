@@ -132,4 +132,7 @@
   <data name="DontKnowAnswer" xml:space="preserve">
     <value>Entschuldigung, ich kenne diese Antwort noch nicht.</value>
   </data>
+  <data name="BingSite" xml:space="preserve">
+    <value>https://www.bing.com</value>
+  </data>
 </root>
