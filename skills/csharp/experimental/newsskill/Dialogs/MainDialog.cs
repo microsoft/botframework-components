@@ -106,7 +106,7 @@ namespace NewsSkill.Dialogs
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
-                
+
                 // Run LUIS recognition on Skill model and store result in turn state.
                 var skillResult = await localizedServices.LuisServices["News"].RecognizeAsync<NewsLuis>(innerDc.Context, cancellationToken);
                 innerDc.Context.TurnState.Add(StateProperties.SkillLuisResult, skillResult);
@@ -267,7 +267,7 @@ namespace NewsSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Completed), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Completed), cancellationToken);
             }
         }
     }
