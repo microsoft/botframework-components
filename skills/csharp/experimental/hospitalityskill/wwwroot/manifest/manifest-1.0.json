@@ -26,6 +26,167 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "checkOut": {
+      "description": "Check out",
+      "type": "event",
+      "name": "CheckOut",
+      "value": {
+        "$ref": "#/definitions/checkOutInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "extendStay": {
+      "description": "Extend stay",
+      "type": "event",
+      "name": "ExtendStay",
+      "value": {
+        "$ref": "#/definitions/extendStayInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "lateCheckOut": {
+      "description": "Check out at a later time",
+      "type": "event",
+      "name": "LateCheckOut",
+      "value": {
+        "$ref": "#/definitions/lateCheckOutInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "getReservationDetails": {
+      "description": "Get details of reservation",
+      "type": "event",
+      "name": "GetReservationDetails",
+      "value": {
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "requestItem": {
+      "description": "Request items",
+      "type": "event",
+      "name": "RequestItem",
+      "value": {
+        "$ref": "#/definitions/requestItemInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "roomService": {
+      "description": "Request room service",
+      "type": "event",
+      "name": "RoomService",
+      "value": {
+        "$ref": "#/definitions/roomServiceInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    }
+  },
+  "definitions": {
+    "checkOutInput": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email for receiving receipt"
+        }
+      }
+    },
+    "extendStayInput": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "A date in format yyyy-MM-dd for extending to"
+        }
+      }
+    },
+    "lateCheckOutInput": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "description": "A time in format Thh:mm:ss for checking out later"
+        }
+      }
+    },
+    "requestItemInput": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Items requested",
+          "items": {
+            "type": "#/definitions/item"
+          }
+        }
+      }
+    },
+    "roomServiceInput": {
+      "type": "object",
+      "properties": {
+        "menu": {
+          "type": "string",
+          "description": "The menu required. One of breakfast, lunch, dinner, 24 hour"
+        },
+        "food": {
+          "type": "array",
+          "description": "Food requested",
+          "items": {
+            "type": "#/definitions/food"
+          }
+        }
+      }
+    },
+    "actionResult": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number",
+          "description": "Number of item"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of item"
+        }
+      }
+    },
+    "food": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number",
+          "description": "Number of food"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of food"
+        },
+        "specialRequest": {
+          "type": "string",
+          "description": "Special request of food"
+        }
+      }
     }
   }
 }
