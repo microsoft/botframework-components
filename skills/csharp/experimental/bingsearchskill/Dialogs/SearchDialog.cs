@@ -23,6 +23,7 @@ namespace BingSearchSkill.Dialogs
 {
     public class SearchDialog : SkillDialogBase
     {
+        private const string BingSiteUrl = "https://www.bing.com";
         private BotServices _services;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
 
@@ -173,11 +174,11 @@ namespace BingSearchSkill.Dialogs
                         prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
                             { "Answer", CommonStrings.DontKnowAnswer },
-                            { "Url", CommonStrings.BingSite }
+                            { "Url", BingSiteUrl }
                         });
 
                         actionResult.Description = CommonStrings.DontKnowAnswer;
-                        actionResult.Url = CommonStrings.BingSite;
+                        actionResult.Url = BingSiteUrl;
                         actionResult.ActionSuccess = false;
                     }
                     else
