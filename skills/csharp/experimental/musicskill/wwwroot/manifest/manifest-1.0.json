@@ -24,9 +24,9 @@
   ],
   "activities": {
     "playMusic": {
-      "description": "Play a music",
+      "description": "Play music",
       "type": "event",
-      "name": "ChangeVehicleSetting",
+      "name": "PlayMusic",
       "value": {
         "$ref": "#/definitions/searchInfo"
       },
@@ -46,7 +46,7 @@
       "properties": {
         "setting": {
           "type": "string",
-          "description": "Info to search the music, such as the artist"
+          "description": "Information used to search the music catalogue, e.g. artist name"
         }
       }
     },
