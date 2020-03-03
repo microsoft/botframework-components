@@ -94,7 +94,7 @@
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
     "addToDo": {
-      "description": "Add a todo task.",
+      "description": "Add a ToDo task.",
       "type": "event",
       "name": "AddToDo",
       "value": {
@@ -105,7 +105,7 @@
       }
     },
     "deleteToDo": {
-      "description": "Delete a todo task",
+      "description": "Delete a ToDo task",
       "type": "event",
       "name": "DeleteToDo",
       "value": {
@@ -115,8 +115,19 @@
         "$ref": "#/definitions/todoList"
       }
     },
+    "deleteAll": {
+      "description": "Delete all tasks",
+      "type": "event",
+      "name": "DeleteAll",
+      "value": {
+        "$ref": "#/definitions/listInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
     "markToDo": {
-      "description": "Mark a todo task as completed.",
+      "description": "Mark a ToDo task as completed.",
       "type": "event",
       "name": "MarkToDo",
       "value": {
@@ -126,8 +137,19 @@
         "$ref": "#/definitions/todoList"
       }
     },
+    "markAll": {
+      "description": "Mark all tasks as completed",
+      "type": "event",
+      "name": "MarkAll",
+      "value": {
+        "$ref": "#/definitions/listInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
     "showToDo": {
-      "description": "Show todo list.",
+      "description": "Show ToDo list.",
       "type": "event",
       "name": "ShowToDo",
       "value": {
@@ -166,6 +188,15 @@
       "description": "List of todo tasks",
       "items": {
         "type": "string"
+      }
+    },
+    "actionResult": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        }
       }
     }
   }
