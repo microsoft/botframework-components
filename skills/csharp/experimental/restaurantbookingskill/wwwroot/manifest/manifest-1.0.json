@@ -28,7 +28,7 @@
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
     "booking": {
-      "description": "Book a restaurant.",
+      "description": "Make a reservation.",
       "type": "event",
       "name": "Booking",
       "value": {
@@ -49,11 +49,11 @@
         },
         "date": {
           "type": "string",
-          "description": "Booking date"
+          "description": "Booking date. E.g., 2020-02-02."
         },
         "time": {
           "type": "string",
-          "description": "The reservation time"
+          "description": "The reservation time. E.g., 16:30:00."
         },
         "attendeeCount": {
           "type": "number",
