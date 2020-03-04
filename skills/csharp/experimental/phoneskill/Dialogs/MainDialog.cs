@@ -18,8 +18,9 @@ using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
-using SkillServiceLibrary.Utilities;
 using Newtonsoft.Json.Linq;
+using Microsoft.Bot.Builder.AI.Luis;
+using SkillServiceLibrary.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
@@ -84,7 +85,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
@@ -129,7 +130,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
@@ -238,7 +239,6 @@ namespace PhoneSkill.Dialogs
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
                 // Get connected LUIS result from turn state.
-                var skillOptions = new PhoneSkillDialogOptions();
                 var result = stepContext.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
                 var intent = result?.TopIntent().intent;
 
@@ -247,6 +247,7 @@ namespace PhoneSkill.Dialogs
                 {
                     case PhoneLuis.Intent.OutgoingCall:
                         {
+                            var skillOptions = new PhoneSkillDialogOptions();
                             return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), skillOptions);
                         }
 
@@ -307,7 +308,11 @@ namespace PhoneSkill.Dialogs
                             if (eventValue != null)
                             {
                                 actionData = eventValue.ToObject<OutgoingCallRequest>();
-                                state.ContactSearch = actionData.ContactPerson;
+                                if (!string.IsNullOrEmpty(actionData.ContactPerson) ||
+                                    !string.IsNullOrEmpty(actionData.PhoneNumber))
+                                {
+                                    await DigestActionInput(stepContext, actionData);
+                                }
                             }
 
                             return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), new PhoneSkillDialogOptions() { IsAction = true });
@@ -345,6 +350,49 @@ namespace PhoneSkill.Dialogs
             }
         }
 
+        private async Task DigestActionInput(DialogContext dc, OutgoingCallRequest request)
+        {
+            var state = await _stateAccessor.GetAsync(dc.Context);
+
+            // generate the luis result based on event input
+            state.LuisResult = new PhoneLuis
+            {
+                Text = request.ContactPerson,
+                Intents = new Dictionary<PhoneLuis.Intent, IntentScore>()
+            };
+            state.LuisResult.Intents.Add(PhoneLuis.Intent.OutgoingCall, new IntentScore() { Score = 0.9 });
+            state.LuisResult.Entities = new PhoneLuis._Entities
+            {
+                _instance = new PhoneLuis._Entities._Instance(),
+
+                contactName = string.IsNullOrEmpty(request.ContactPerson) ? null : new string[] { request.ContactPerson },
+                phoneNumber = string.IsNullOrEmpty(request.PhoneNumber) ? null : new string[] { request.PhoneNumber }
+            };
+
+            state.LuisResult.Entities._instance.contactName = string.IsNullOrEmpty(request.ContactPerson) ? null : new[]
+                {
+                    new InstanceData
+                    {
+                        StartIndex = 0,
+                        EndIndex = request.ContactPerson.Length,
+                        Text = request.ContactPerson
+                    }
+                };
+
+            state.LuisResult.Entities._instance.phoneNumber = string.IsNullOrEmpty(request.PhoneNumber) ? null : new[]
+                {
+                    new InstanceData
+                    {
+                        StartIndex = 0,
+                        EndIndex = request.PhoneNumber.Length,
+                        Text = request.PhoneNumber
+                    }
+                };
+
+            // save to turn context
+            dc.Context.TurnState.Add(StateProperties.PhoneLuisResultKey, state.LuisResult);
+        }
+
         private async Task OnLogout(DialogContext dc)
         {
             BotFrameworkAdapter adapter;
@@ -374,7 +422,7 @@ namespace PhoneSkill.Dialogs
         {
             public const string TokenResponseEvent = "tokens/response";
             public const string SkillBeginEvent = "skillBegin";
-            public const string OutgoingCallEvent = "outgoingCall";
+            public const string OutgoingCallEvent = "OutgoingCall";
         }
     }
 }
