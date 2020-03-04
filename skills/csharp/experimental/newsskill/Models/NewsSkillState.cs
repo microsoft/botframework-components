@@ -17,13 +17,10 @@ namespace NewsSkill.Models
 
         public string Site { get; set; }
 
-        public bool IsAction { get; set; } = false;
-
         public void Clear()
         {
             Query = null;
             Site = null;
-            IsAction = false;
         }
     }
 }

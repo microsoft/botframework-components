@@ -141,7 +141,7 @@ namespace NewsSkill.Dialogs
                     Subtitle = article.DatePublished,
                     Description = article.Description,
                     ImageUrl = article?.Image?.Thumbnail?.ContentUrl,
-                    Url = article.Url
+                    Url = article.WebSearchUrl
                 };
                 actionResult.NewsList.Add(newsInfo);
             }
@@ -165,7 +165,7 @@ namespace NewsSkill.Dialogs
                     Title = article.Name,
                     Description = article.Description,
                     ImageUrl = article?.Image?.Url,
-                    Url = article.Url
+                    Url = article.WebSearchUrl
                 };
                 actionResult.NewsList.Add(newsInfo);
             }

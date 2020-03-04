@@ -55,7 +55,7 @@ namespace NewsSkill.Dialogs
             var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
 
             // if intent is SetFavorites or not set in state yet
-            if (convState.LuisResult.TopIntent().intent == Luis.NewsLuis.Intent.SetFavoriteTopics || userState.Category == null)
+            if ((convState.LuisResult != null && convState.LuisResult.TopIntent().intent == Luis.NewsLuis.Intent.SetFavoriteTopics) || userState.Category == null)
             {
                 // show card with categories the user can choose
                 var categories = new PromptOptions()
@@ -89,15 +89,15 @@ namespace NewsSkill.Dialogs
             // show favorite articles
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
             await _responder.ReplyWith(sc.Context, FavoriteTopicsResponses.ShowArticles, articles);
-
             var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            if (convState.IsAction)
+            convState.Clear();
+
+            var skillOptions = sc.Options as NewsSkillOptionBase;
+            if (skillOptions != null && skillOptions.IsAction)
             {
-                convState.Clear();
                 return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
             }
 
-            convState.Clear();
             return await sc.EndDialogAsync();
         }
     }

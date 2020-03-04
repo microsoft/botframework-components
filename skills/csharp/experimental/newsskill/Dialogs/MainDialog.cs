@@ -271,8 +271,7 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
+                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
                             }
 
                         case "GetFavoriteTopics":
@@ -286,8 +285,7 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
+                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), new NewsSkillOptionBase() { IsAction = true });
                             }
 
                         case "FindArticles":
@@ -301,8 +299,7 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
+                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
                             }
 
                         default:
@@ -357,6 +354,9 @@ namespace NewsSkill.Dialogs
         {
             var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
             userState.Market = request.Market;
+            var convState = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
+            convState.Query = request.Query;
+            convState.Site = request.Site;
         }
     }
 }

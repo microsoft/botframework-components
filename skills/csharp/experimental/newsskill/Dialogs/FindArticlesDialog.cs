@@ -60,7 +60,7 @@ namespace NewsSkill.Dialogs
                 return await sc.NextAsync(convState.Query);
             }
 
-            if (convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
+            if (convState.LuisResult != null && convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
             {
                 return await sc.NextAsync(convState.LuisResult.Entities.topic[0]);
             }
@@ -82,9 +82,8 @@ namespace NewsSkill.Dialogs
             {
                 string site = convState.Site;
                 query = string.Concat(query, $" site:{site}");
-            }
-
-            if (convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
+            } 
+            else if (convState.LuisResult != null && convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
             {
                 string site = convState.LuisResult.Entities.site[0].Replace(" ", string.Empty);
                 query = string.Concat(query, $" site:{site}");
@@ -103,14 +102,14 @@ namespace NewsSkill.Dialogs
             await _responder.ReplyWith(sc.Context, FindArticlesResponses.ShowArticles, articles);
 
             var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            convState.Clear();
 
-            if (convState.IsAction)
+            var skillOptions = sc.Options as NewsSkillOptionBase;
+            if (skillOptions != null && skillOptions.IsAction)
             {
-                convState.Clear();
                 return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
             }
 
-            convState.Clear();
             return await sc.EndDialogAsync();
         }
     }

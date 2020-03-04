@@ -51,13 +51,13 @@ namespace NewsSkill.Dialogs
             await _responder.ReplyWith(sc.Context, TrendingArticlesResponses.ShowArticles, articles);
 
             var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            if (convState.IsAction)
+            convState.Clear();
+            var skillOptions = sc.Options as NewsSkillOptionBase;
+            if (skillOptions != null && skillOptions.IsAction)
             {
-                convState.Clear();
                 return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
             }
 
-            convState.Clear();
             return await sc.EndDialogAsync();
         }
     }
