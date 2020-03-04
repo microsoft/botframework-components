@@ -13,11 +13,13 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using PhoneSkill.Models;
+using PhoneSkill.Models.Actions;
 using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
 using SkillServiceLibrary.Utilities;
+using Newtonsoft.Json.Linq;
 
 namespace PhoneSkill.Dialogs
 {
@@ -63,7 +65,7 @@ namespace PhoneSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -82,7 +84,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
@@ -102,14 +104,14 @@ namespace PhoneSkill.Dialogs
                     return EndOfTurn;
                 }
             }
-            
+
             return await base.OnBeginDialogAsync(innerDc, options, cancellationToken);
         }
 
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -127,7 +129,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
@@ -265,13 +267,14 @@ namespace PhoneSkill.Dialogs
             }
             else if (a.Type == ActivityTypes.Event)
             {
-                switch (stepContext.Context.Activity.Name)
+                // Handle skill actions here
+                var eventActivity = a.AsEventActivity();
+
+                switch (eventActivity.Name)
                 {
                     case Events.SkillBeginEvent:
                         {
-                            // var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
-
-                            if (stepContext.Context.Activity.Value is Dictionary<string, object> userData)
+                            if (eventActivity.Value is Dictionary<string, object> userData)
                             {
                                 // Capture user data from event if needed
                             }
@@ -295,6 +298,25 @@ namespace PhoneSkill.Dialogs
 
                             break;
                         }
+
+                    case Events.OutgoingCallEvent:
+                        {
+                            OutgoingCallRequest actionData = null;
+
+                            var eventValue = a.Value as JObject;
+                            if (eventValue != null)
+                            {
+                                actionData = eventValue.ToObject<OutgoingCallRequest>();
+                                state.ContactSearch = actionData.ContactPerson;
+                            }
+
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), new PhoneSkillDialogOptions() { IsAction = true });
+                        }
+
+                    default:
+                        await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                        break;
                 }
             }
 
@@ -352,6 +374,7 @@ namespace PhoneSkill.Dialogs
         {
             public const string TokenResponseEvent = "tokens/response";
             public const string SkillBeginEvent = "skillBegin";
+            public const string OutgoingCallEvent = "outgoingCall";
         }
     }
 }

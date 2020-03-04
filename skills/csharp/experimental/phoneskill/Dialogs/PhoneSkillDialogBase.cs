@@ -155,7 +155,8 @@ namespace PhoneSkill.Dialogs
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
                 var state = await PhoneStateAccessor.GetAsync(dc.Context);
-                state.LuisResult = await RunLuis<PhoneLuis>(dc.Context, "phone");
+                // state.LuisResult = await RunLuis<PhoneLuis>(dc.Context, "phone");
+                state.LuisResult = dc.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
             }
         }
 
