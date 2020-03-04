@@ -17,6 +17,7 @@ using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Main;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
+using PointOfInterestSkill.Utilities;
 using SkillServiceLibrary.Utilities;
 
 namespace PointOfInterestSkill.Dialogs
@@ -25,7 +26,7 @@ namespace PointOfInterestSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateManager _responseManager;
         private IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
         private Dialog _routeDialog;
         private Dialog _cancelRouteDialog;
@@ -39,7 +40,7 @@ namespace PointOfInterestSkill.Dialogs
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _responseManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Initialize state accessor

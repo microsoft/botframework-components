@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
@@ -33,6 +36,7 @@ using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.API.Fakes;
 using PointOfInterestSkill.Tests.Flow.Utterances;
+using PointOfInterestSkill.Utilities;
 using SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes;
 
 namespace PointOfInterestSkill.Tests.Flow
@@ -40,6 +44,8 @@ namespace PointOfInterestSkill.Tests.Flow
     public class PointOfInterestSkillTestBase : BotTestBase
     {
         public IServiceCollection Services { get; set; }
+
+        public Templates AllTemplates { get; set; }
 
         [TestInitialize]
         public override void Initialize()
@@ -84,15 +90,11 @@ namespace PointOfInterestSkill.Tests.Flow
                 return new BotStateSet(userState, conversationState);
             });
 
-            ResponseManager = new ResponseManager(
-                new string[] { "en", "de", "es", "fr", "it", "zh" },
-                new POISharedResponses(),
-                new RouteResponses(),
-                new FindPointOfInterestResponses(),
-                new POIMainResponses(),
-                new CancelRouteResponses());
+            // Configure localized responses
+            var templateEngine = LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn");
+            Services.AddSingleton(templateEngine);
 
-            Services.AddSingleton(ResponseManager);
+            AllTemplates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             Services.AddSingleton<IServiceManager, MockServiceManager>();
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
@@ -158,7 +160,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 }
                 else
                 {
-                    Assert.IsTrue(ParseReplies(response, new StringDictionary()).Any((reply) =>
+                    Assert.IsTrue(ParseReplies(response, new Dictionary<string, string>()).Any((reply) =>
                     {
                         return messageActivity.Text.StartsWith(reply);
                     }));
@@ -180,7 +182,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 }
                 else
                 {
-                    CollectionAssert.Contains(ParseReplies(response, new StringDictionary()), messageActivity.Text);
+                    CollectionAssert.Contains(ParseReplies(response, new Dictionary<string, string>()), messageActivity.Text);
                 }
 
                 AssertSameId(messageActivity, cardIds);
@@ -235,6 +237,11 @@ namespace PointOfInterestSkill.Tests.Flow
                     Assert.IsTrue(!string.IsNullOrEmpty(dest.Name));
                 }
             };
+        }
+
+        protected string[] ParseReplies(string name, IDictionary<string, string> data = null)
+        {
+            return AllTemplates.ParseReplies(name, data);
         }
     }
 }
