@@ -55,11 +55,6 @@ namespace NewsSkill.Dialogs
             var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
 
             // Let's see if we have a topic
-            if (!string.IsNullOrEmpty(convState.Query))
-            {
-                return await sc.NextAsync(convState.Query);
-            }
-
             if (convState.LuisResult != null && convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
             {
                 return await sc.NextAsync(convState.LuisResult.Entities.topic[0]);
@@ -77,13 +72,7 @@ namespace NewsSkill.Dialogs
 
             string query = (string)sc.Result;
 
-            // if site specified in luis, add to query
-            if (!string.IsNullOrEmpty(convState.Site))
-            {
-                string site = convState.Site;
-                query = string.Concat(query, $" site:{site}");
-            } 
-            else if (convState.LuisResult != null && convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
+            if (convState.LuisResult != null && convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
             {
                 string site = convState.LuisResult.Entities.site[0].Replace(" ", string.Empty);
                 query = string.Concat(query, $" site:{site}");
@@ -100,9 +89,6 @@ namespace NewsSkill.Dialogs
 
             var articles = await _client.GetNewsForTopic(query, userState.Market);
             await _responder.ReplyWith(sc.Context, FindArticlesResponses.ShowArticles, articles);
-
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            convState.Clear();
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
