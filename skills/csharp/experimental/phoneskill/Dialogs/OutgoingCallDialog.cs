@@ -126,7 +126,6 @@ namespace PhoneSkill.Dialogs
         {
             var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
 
-            // var phoneResult = await RunLuis<PhoneLuis>(promptContext.Context, "phone");
             var phoneResult = promptContext.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
             contactFilter.OverrideEntities(state, phoneResult);
 

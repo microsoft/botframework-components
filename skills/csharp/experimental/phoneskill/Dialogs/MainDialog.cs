@@ -85,7 +85,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);
@@ -130,7 +130,7 @@ namespace PhoneSkill.Dialogs
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                localizedServices.LuisServices.TryGetValue("general", out var generalLuisService);
                 if (generalLuisService != null)
                 {
                     var generalResult = await generalLuisService.RecognizeAsync<General>(innerDc.Context, cancellationToken);

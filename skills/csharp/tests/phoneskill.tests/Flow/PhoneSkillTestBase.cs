@@ -142,9 +142,6 @@ namespace PhoneSkill.Tests.Flow
             var adapter = sp.GetService<TestAdapter>();
             adapter.AddUserToken(Provider, Channels.Test, adapter.Conversation.User.Id, "test");
 
-            // StartActivity = Activity.CreateConversationUpdateActivity();
-            // StartActivity.MembersAdded = new ChannelAccount[] { adapter.Conversation.User, adapter.Conversation.Bot };
-
             var testFlow = new TestFlow(adapter, async (context, token) =>
             {
                 // Set claims in turn state to simulate skill mode
