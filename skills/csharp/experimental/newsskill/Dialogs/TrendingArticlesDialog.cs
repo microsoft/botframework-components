@@ -50,8 +50,6 @@ namespace NewsSkill.Dialogs
             var articles = await _client.GetTrendingNews(userState.Market);
             await _responder.ReplyWith(sc.Context, TrendingArticlesResponses.ShowArticles, articles);
 
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            convState.Clear();
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
             {
