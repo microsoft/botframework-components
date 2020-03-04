@@ -47,6 +47,153 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "createTicket": {
+      "description": "Create a ticket",
+      "type": "event",
+      "name": "CreateTicket",
+      "value": {
+        "$ref": "#/definitions/createTicketInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "updateTicket": {
+      "description": "Update a ticket",
+      "type": "event",
+      "name": "UpdateTicket",
+      "value": {
+        "$ref": "#/definitions/updateTicketInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "showTicket": {
+      "description": "Show tickets",
+      "type": "event",
+      "name": "ShowTicket",
+      "value": {
+        "$ref": "#/definitions/showTicketInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "closeTicket": {
+      "description": "Close a ticket",
+      "type": "event",
+      "name": "CloseTicket",
+      "value": {
+        "$ref": "#/definitions/closeTicketInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "showKnowledge": {
+      "description": "Show knowledgebase articles",
+      "type": "event",
+      "name": "ShowKnowledge",
+      "value": {
+        "$ref": "#/definitions/showKnowledgeInput"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    }
+  },
+  "definitions": {
+    "createTicketInput": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the ticket"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the ticket"
+        },
+        "urgency": {
+          "type": "string",
+          "description": "Urgency level of the ticket. One of low, medium and high"
+        }
+      }
+    },
+    "updateTicketInput": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Number of the ticket"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the ticket"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the ticket"
+        },
+        "urgency": {
+          "type": "string",
+          "description": "Urgency level of the ticket. One of low, medium and high"
+        }
+      }
+    },
+    "showTicketInput": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Number of the ticket"
+        },
+        "search": {
+          "type": "string",
+          "description": "Title or description of the ticket to search"
+        },
+        "state": {
+          "type": "string",
+          "description": "State of the ticket. One of new, inprogress, onhold, resolved, closed and canceled"
+        },
+        "urgency": {
+          "type": "string",
+          "description": "Urgency level of the ticket. One of low, medium and high"
+        }
+      }
+    },
+    "closeTicketInput": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Number of the ticket"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason of the closing"
+        }
+      }
+    },
+    "showKnowledgeInput": {
+      "type": "object",
+      "properties": {
+        "search": {
+          "type": "string",
+          "description": "Content of the knowledgebase to search"
+        }
+      }
+    },
+    "actionResult": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        }
+      }
     }
   }
 }
