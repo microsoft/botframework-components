@@ -6,8 +6,6 @@
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Content\PointOfInterestDetailsContainer.1.0.json" />
-    <Content Remove="Content\PointOfInterestDetailsContainer.json" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

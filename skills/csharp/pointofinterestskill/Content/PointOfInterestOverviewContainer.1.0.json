@@ -42,6 +42,7 @@
       "type": "Container",
       "id": "Container",
       "items": [
+        ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}
       ]
     },
     {

@@ -1,0 +1,61 @@
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": 75,
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "horizontalAlignment": "Left",
+                  "spacing": "None",
+                  "size": "Medium",
+                  "weight": "Bolder",
+                  "color": "default",
+                  "text": "${if(Data.Name == null, '', Data.Name)}"
+                },
+                {
+                  "type": "TextBlock",
+                  "spacing": "None",
+                  "color": "default",
+                  "text": "${if(Data.AvailableDetails == null, '', Data.AvailableDetails)}"
+                },
+                {
+                  "type": "TextBlock",
+                  "spacing": "None",
+                  "color": "default",
+                  "text": "${if(Data.Address == null, '', Data.Address)}",
+                  "maxLines": 1,
+                  "wrap": true
+                },
+                {
+                  "type": "TextBlock",
+                  "spacing": "None",
+                  "color": "default",
+                  "text": "${if(Data.Hours == null, '', Data.Hours)}",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 25,
+              "verticalContentAlignment": "Center",
+              "horizontalAlignment": "Center",
+              "backgroundImage": {
+                "url": "${if(Data.PointOfInterestImageUrl == null, '', Data.PointOfInterestImageUrl)}",
+                "verticalAlignment": "Center",
+                "horizontalAlignment": "Center"
+              }
+            }
+          ]
+        }
+      ],
+      "selectAction": {
+        "type": "Action.Submit",
+        "data": "${if(Data.SubmitText == null, '', Data.SubmitText)}"
+      }
+    }
