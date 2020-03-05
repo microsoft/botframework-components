@@ -18,6 +18,8 @@ using NewsSkill.Services;
 using SkillServiceLibrary.Utilities;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using NewsSkill.Models.Action;
+using Newtonsoft.Json.Linq;
 
 namespace NewsSkill.Dialogs
 {
@@ -27,6 +29,7 @@ namespace NewsSkill.Dialogs
         private BotServices _services;
         private ResponseManager _responseManager;
         private IStatePropertyAccessor<NewsSkillState> _stateAccessor;
+        private IStatePropertyAccessor<NewsSkillUserState> _userStateAccessor;
         private Dialog _findArticlesDialog;
         private Dialog _trendingArticlesDialog;
         private Dialog _favoriteTopicsDialog;
@@ -45,6 +48,8 @@ namespace NewsSkill.Dialogs
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
             _stateAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
+            var userState = serviceProvider.GetService<UserState>();
+            _userStateAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
 
             var steps = new WaterfallStep[]
             {
@@ -245,6 +250,67 @@ namespace NewsSkill.Dialogs
                         }
                 }
             }
+            else if (a.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = a.AsEventActivity();
+
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "GetTrendingArticles":
+                            {
+                                TrendingArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<TrendingArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        case "GetFavoriteTopics":
+                            {
+                                FavoriteTopicsInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FavoriteTopicsInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        case "FindArticles":
+                            {
+                                FindArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FindArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        default:
+
+                            // todo: move the response to lg
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                            break;
+                    }
+                }
+            }
 
             // If activity was unhandled, flow should continue to next step
             return await stepContext.NextAsync();
@@ -269,6 +335,27 @@ namespace NewsSkill.Dialogs
             {
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Completed), cancellationToken);
             }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, TrendingArticlesInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FavoriteTopicsInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            userState.Category = new FoundChoice() { Value = request.Category };
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FindArticlesInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            var convState = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
+            convState.LuisResult = new NewsLuis() { Entities = new NewsLuis._Entities() { topic = new string[] { request.Query }, site = new string[] { request.Site } } };
         }
     }
 }
