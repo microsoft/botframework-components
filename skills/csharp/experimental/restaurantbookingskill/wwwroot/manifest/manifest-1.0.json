@@ -27,12 +27,12 @@
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
-    "booking": {
+    "restaurantReservation": {
       "description": "Make a reservation.",
       "type": "event",
-      "name": "Booking",
+      "name": "RestaurantReservation",
       "value": {
-        "$ref": "#/definitions/bookingInfo"
+        "$ref": "#/definitions/reservationInfo"
       },
       "resultValue": {
         "$ref": "#/definitions/actionResult"
@@ -40,7 +40,7 @@
     }
   },
   "definitions": {
-    "bookingInfo": {
+    "reservationInfo": {
       "type": "object",
       "properties": {
         "foodType": {
@@ -59,7 +59,7 @@
           "type": "number",
           "description": "The number of attendees."
         },
-        "bookingPlace": {
+        "restaurantName": {
           "type": "string",
           "description": "The name of restaurant."
         }
