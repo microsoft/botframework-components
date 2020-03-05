@@ -29,7 +29,7 @@
           "id": "AutomotiveSkillLuModel-en",
           "name": "SettingsDispatch LU (English)",
           "contentType": "application/lu",
-          "url": "file://SettingsDispatch.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/automotiveskill/Deployment/Resources/LU/en-us/SettingsDispatch.lu?token=AA6Q7FBQZECGGOQFQG3VMCS6NJ5Q4",
           "description": "English language model for the skill"
         }
       ]

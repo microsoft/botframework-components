@@ -30,7 +30,7 @@
           "id": "ToDoLuModel-en",
           "name": "ToDoSkill LU (English)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/en-us/ToDo.lu?token=AA6Q7FHWFAIO33AYVR2HIQC6NKCVQ",
           "description": "English language model for the skill"
         }
       ],
@@ -39,7 +39,7 @@
           "id": "ToDoLuModel-de",
           "name": "ToDoSkill LU (German)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/de-de/ToDo.lu?token=AA6Q7FEOOERUJC22EA5I6DK6NKCWY",
           "description": "German language model for the skill"
         }
       ],
@@ -48,7 +48,7 @@
           "id": "ToDoLuModel-es",
           "name": "ToDoSkill LU (Spanish)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/es-es/ToDo.lu?token=AA6Q7FAV4VMFROF43BWSLLC6NKCYC",
           "description": "Spanish language model for the skill"
         }
       ],
@@ -57,7 +57,7 @@
           "id": "ToDoLuModel-fr",
           "name": "ToDoSkill LU (French)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/fr-fr/ToDo.lu?token=AA6Q7FCQ6FNVZA2OR6VUDFS6NKCZQ",
           "description": "French language model for the skill"
         }
       ],
@@ -66,7 +66,7 @@
           "id": "ToDoLuModel-it",
           "name": "ToDoSkill LU (Italian)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/it-it/ToDo.lu?token=AA6Q7FEXPCHMPASYQ7NHT4K6NKC2U",
           "description": "Italian language model for the skill"
         }
       ],
@@ -75,7 +75,7 @@
           "id": "ToDoLuModel-zh",
           "name": "ToDoSkill LU (Chinese)",
           "contentType": "application/lu",
-          "url": "file://ToDo.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/todoskill/Deployment/Resources/LU/zh-cn/ToDo.lu?token=AA6Q7FHRAQDTIML7Q4RJEMC6NKC32",
           "description": "Chinese language model for the skill"
         }
       ]

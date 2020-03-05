@@ -29,7 +29,7 @@
           "id": "ITSMSkillLuModel-en",
           "name": "ITSM LU (English)",
           "contentType": "application/lu",
-          "url": "file://ITSM.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/itsmskill/Deployment/Resources/LU/en-us/ITSM.lu?token=AA6Q7FFH4N7CF3OHSGZNTJ26NJ63M",
           "description": "English language model for the skill"
         }
       ]

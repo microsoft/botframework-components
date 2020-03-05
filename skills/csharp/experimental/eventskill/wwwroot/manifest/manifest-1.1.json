@@ -29,7 +29,7 @@
           "id": "EventSkillLuModel-en",
           "name": "EventSkill LU (English)",
           "contentType": "application/lu",
-          "url": "file://EventSkill.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/eventskill/Deployment/Resources/LU/en-us/Event.lu?token=AA6Q7FHMIJBVAYTHHMA4Y6K6NJ6WI",
           "description": "English language model for the skill"
         }
       ]

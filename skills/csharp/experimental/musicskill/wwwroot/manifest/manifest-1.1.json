@@ -29,7 +29,7 @@
           "id": "MusicSkillLuModel-en",
           "name": "Music LU (English)",
           "contentType": "application/lu",
-          "url": "file://MusicSkill.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/musicskill/Deployment/Resources/LU/en-us/MusicSkill.lu?token=AA6Q7FFBWLRMFW5YFWKJ6AC6NJ7JK",
           "description": "English language model for the skill"
         }
       ]

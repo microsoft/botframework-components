@@ -29,7 +29,7 @@
           "id": "EmailLuModel-en",
           "name": "EmailSkill LU (English)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/en-us/Email.lu?token=AA6Q7FAR2YNY3WZSGAUXVSC6NKACA",
           "description": "English language model for the skill"
         }
       ],
@@ -38,7 +38,7 @@
           "id": "EmailLuModel-de",
           "name": "EmailSkill LU (German)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/de-de/Email.lu?token=AA6Q7FEPU6MQVKEKCSRIS5S6NKADY",
           "description": "German language model for the skill"
         }
       ],
@@ -47,7 +47,7 @@
           "id": "EmailLuModel-es",
           "name": "EmailSkill LU (Spanish)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/es-es/Email.lu?token=AA6Q7FDI6FALANO6D5YBAP26NKAFA",
           "description": "Spanish language model for the skill"
         }
       ],
@@ -56,7 +56,7 @@
           "id": "EmailLuModel-fr",
           "name": "EmailSkill LU (French)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/fr-fr/Email.lu?token=AA6Q7FDLKF3UMBAYJYAHO2C6NKBFO",
           "description": "French language model for the skill"
         }
       ],
@@ -65,7 +65,7 @@
           "id": "EmailLuModel-it",
           "name": "EmailSkill LU (Italian)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/it-it/Email.lu?token=AA6Q7FGSC322H6XLMKKEEOS6NKCEU",
           "description": "Italian language model for the skill"
         }
       ],
@@ -74,7 +74,7 @@
           "id": "EmailLuModel-zh",
           "name": "EmailSkill LU (Chinese)",
           "contentType": "application/lu",
-          "url": "file://Email.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/emailskill/Deployment/Resources/LU/zh-cn/Email.lu?token=AA6Q7FFVTOCH6ACNRXIPJMS6NKCF6",
           "description": "Chinese language model for the skill"
         }
       ]

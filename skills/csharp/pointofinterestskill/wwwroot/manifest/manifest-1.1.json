@@ -29,7 +29,7 @@
           "id": "PointOfInterestSkillLuModel-en",
           "name": "PoISkill LU (English)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/en-us/PointOfInterest.lu?token=AA6Q7FDHGC7XX7OOB2VRBF26NKCM4",
           "description": "English language model for the skill"
         }
       ],
@@ -38,7 +38,7 @@
           "id": "PointOfInterestSkillLuModel-de",
           "name": "PoISkill LU (German)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/de-de/PointOfInterest.lu?token=AA6Q7FDHGCDBJ76KKMNLUPC6NKCOK",
           "description": "German language model for the skill"
         }
       ],
@@ -47,7 +47,7 @@
           "id": "PointOfInterestSkillLuModel-es",
           "name": "PoISkill LU (Spanish)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/es-es/PointOfInterest.lu?token=AA6Q7FGXQ24UM2HBX2QVCES6NKCPQ",
           "description": "Spanish language model for the skill"
         }
       ],
@@ -56,7 +56,7 @@
           "id": "PointOfInterestSkillLuModel-fr",
           "name": "PoISkill LU (French)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/fr-fr/PointOfInterest.lu?token=AA6Q7FHKUPV56CVAPTFTNWC6NKCQU",
           "description": "French language model for the skill"
         }
       ],
@@ -65,7 +65,7 @@
           "id": "PointOfInterestSkillLuModel-it",
           "name": "PoISkill LU (Italian)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/it-it/PointOfInterest.lu?token=AA6Q7FDVFAMRAXNALXS25UC6NKCR2",
           "description": "Italian language model for the skill"
         }
       ],
@@ -74,7 +74,7 @@
           "id": "PointOfInterestSkillLuModel-zh",
           "name": "PoISkill LU (Chinese)",
           "contentType": "application/lu",
-          "url": "file://PointOfInterest.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/pointofinterestskill/Deployment/Resources/LU/zh-cn/PointOfInterest.lu?token=AA6Q7FBTVSOOKGQEMRQWPR26NKCS6",
           "description": "Chinese language model for the skill"
         }
       ]

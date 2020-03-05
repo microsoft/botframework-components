@@ -29,7 +29,7 @@
           "id": "NewsSkillLuModel-en",
           "name": "News LU (English)",
           "contentType": "application/lu",
-          "url": "file://news.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/newsskill/Deployment/Resources/LU/en-us/News.lu?token=AA6Q7FDIGZSBDYT7LNKL5QK6NJ7L2",
           "description": "English language model for the skill"
         }
       ]

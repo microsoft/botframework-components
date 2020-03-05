@@ -29,7 +29,7 @@
           "id": "RestaurantSkillLuModel-en",
           "name": "Restaurant LU (English)",
           "contentType": "application/lu",
-          "url": "file://restaurant.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/restaurantbookingskill/Deployment/Resources/LU/en-us/Restaurant.lu?token=AA6Q7FAAFFOFNXCUWOMTFBC6NJ7RO",
           "description": "English language model for the skill"
         }
       ]

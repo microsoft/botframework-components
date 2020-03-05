@@ -29,7 +29,7 @@
           "id": "PhoneSkillLuModel-en",
           "name": "Phone LU (English)",
           "contentType": "application/lu",
-          "url": "file://Phone.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/phoneskill/Deployment/Resources/LU/en-us/phone.lu?token=AA6Q7FAR7K74YOFB3VEB2FS6NJ7PA",
           "description": "English language model for the skill"
         }
       ]

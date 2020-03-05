@@ -29,7 +29,7 @@
           "id": "WeatherSkillLuModel-en",
           "name": "Weather LU (English)",
           "contentType": "application/lu",
-          "url": "file://WeatherSkill.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/weatherskill/Deployment/Resources/LU/en-us/WeatherSkill.lu?token=AA6Q7FG3CG6MEQTN76OIBF26NJ7TU",
           "description": "English language model for the skill"
         }
       ]

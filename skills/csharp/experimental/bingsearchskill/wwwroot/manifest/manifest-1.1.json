@@ -29,7 +29,7 @@
           "id": "BingSkillLuModel-en",
           "name": "BingSearchSkill LU (English)",
           "contentType": "application/lu",
-          "url": "file://BingSearchSkill.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/bingsearchskill/Deployment/Resources/LU/en-us/BingSearchSkill.lu?token=AA6Q7FFWTR4PSVJMOYSXCG26NJ6T2",
           "description": "English language model for the skill"
         }
       ]

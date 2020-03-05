@@ -29,7 +29,7 @@
           "id": "HospitalitySkillLuModel-en",
           "name": "Hospitality LU (English)",
           "contentType": "application/lu",
-          "url": "file://Hospitality.lu",
+          "url": "https://raw.githubusercontent.com/microsoft/botframework-skills/master/skills/csharp/experimental/hospitalityskill/Deployment/Resources/LU/en-us/Hospitality.lu?token=AA6Q7FFCFPG5FWFIHS72TEC6NJ6YK",
           "description": "English language model for the skill"
         }
       ]
