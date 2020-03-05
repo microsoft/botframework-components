@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -61,6 +63,31 @@ namespace CalendarSkill.Test.Flow.Utterances
         public static string FindMeetingByAttendee { get; } = $"show my the meeting with {Strings.Strings.DefaultUserName}";
 
         public static string FindMeetingByLocation { get; } = $"show my the meeting at {Strings.Strings.DefaultLocation}";
+
+        public static string SummaryName { get; } = "Summary";
+
+        public static Activity SummaryAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = SummaryName,
+            Value = JObject.FromObject(new DateInfo()
+            {
+                Date = "today",
+            })
+        };
+
+        public static string ShowEventName { get; } = "ShowEvent";
+
+        public static Activity ShowEventAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = ShowEventName,
+            Value = JObject.FromObject(new ChooseEventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+            })
+        };
 
         private CalendarLuis GetBaseFindMeetingIntent(
             string userInput,

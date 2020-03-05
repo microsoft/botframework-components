@@ -52,6 +52,15 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarSummaryEvent()
+        {
+            await this.GetSkillTestFlow()
+                .Send(FindMeetingTestUtterances.SummaryAction)
+                .AssertReply(CheckForSummary())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarSearchByTitle()
         {
             await this.GetTestFlow()
@@ -222,6 +231,16 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarSummaryByStartTimeEvent()
+        {
+            await this.GetSkillTestFlow()
+                .Send(FindMeetingTestUtterances.ShowEventAction)
+                .AssertReplyOneOf(this.FoundOneEventPrompt("tomorrow", "tomorrow"))
+                .AssertReply(CheckForEventInfo())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarSummaryShowOverviewAgain()
         {
             await this.GetTestFlow()
@@ -258,14 +277,6 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(this.AskForOrgnizerActionPrompt())
                 .Send(Strings.Strings.ConfirmNo)
                 .StartTestAsync();
-        }
-
-        private Action<IActivity> ActionEndMessage()
-        {
-            return activity =>
-            {
-                Assert.AreEqual(activity.Type, ActivityTypes.EndOfConversation);
-            };
         }
 
         private string[] AskForShowOverviewAgainPrompt(string dateTime = "today")

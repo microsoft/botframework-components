@@ -73,6 +73,39 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarCreateAction()
+        {
+            await GetSkillTestFlow()
+                .Send(CreateMeetingTestUtterances.CreateEventAction)
+                .AssertReplyOneOf(ConfirmOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .AssertReply(CheckForOperationStatus(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_CalendarActionCreationFailed()
+        {
+            ServiceManager = MockServiceManager.SetCreateEventToNull();
+            await GetSkillTestFlow()
+                .Send(CreateMeetingTestUtterances.CreateEventAction)
+                .AssertReplyOneOf(ConfirmOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(EventCreationFailed())
+                .AssertReply(CheckForOperationStatus(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarCreate_ConfirmNo_RetryTooMany()
         {
             await GetTestFlow()
@@ -921,6 +954,14 @@ namespace CalendarSkill.Test.Flow
             });
         }
 
+        private string[] ConfirmOneAddress(string address = Strings.Strings.DefaultUserEmail)
+        {
+            return GetTemplates(FindContactResponses.PromptOneNameOneAddress, new
+            {
+                User = $"{address}"
+            });
+        }
+
         private string[] AddMoreUserPromptWithMultipleUsers(int count)
         {
             var resultString = string.Empty;
@@ -1115,6 +1156,11 @@ namespace CalendarSkill.Test.Flow
         private string[] BookedMeeting()
         {
             return GetTemplates(CreateEventResponses.MeetingBooked);
+        }
+
+        private string[] EventCreationFailed()
+        {
+            return GetTemplates(CreateEventResponses.EventCreationFailed);
         }
 
         private Action<IActivity> CheckCreatedMeetingInFuture()

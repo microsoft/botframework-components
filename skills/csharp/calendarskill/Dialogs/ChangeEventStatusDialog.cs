@@ -183,6 +183,8 @@ namespace CalendarSkill.Dialogs
                     await sc.Context.SendActivityAsync(activity);
                 }
 
+                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus() { Status = true };
+
                 if (options.SubFlowMode)
                 {
                     state.MeetingInfo.ClearTimes();
@@ -193,7 +195,7 @@ namespace CalendarSkill.Dialogs
                     state.Clear();
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(operationStatus);
             }
             catch (SkillException ex)
             {

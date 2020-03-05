@@ -233,6 +233,14 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context);
                 var options = sc.Options as ShowMeetingsDialogOptions;
 
+                if (options != null && options.Reason == ShowMeetingReason.Summary && state.TriggerSource == TriggerModel.TriggerSource.Event)
+                {
+                    List<Models.ActionInfos.EventInfo> eventInfos = new List<Models.ActionInfos.EventInfo>();
+                    state.ShowMeetingInfo.ShowingMeetings.ForEach(e => eventInfos.Add(new Models.ActionInfos.EventInfo(e, state.GetUserTimeZone())));
+                    state.Clear();
+                    return await sc.EndDialogAsync(eventInfos);
+                }
+
                 // no meeting
                 if (!state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
@@ -387,9 +395,10 @@ namespace CalendarSkill.Dialogs
                 var reply = await GetGeneralMeetingListResponseAsync(sc, state, true);
 
                 await sc.Context.SendActivityAsync(reply);
-
+                var eventItem = state.ShowMeetingInfo.ShowingMeetings.FirstOrDefault();
+                Models.ActionInfos.EventInfo eventInfo = new Models.ActionInfos.EventInfo(eventItem, state.GetUserTimeZone());
                 state.Clear();
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(eventInfo);
             }
             catch (SkillException ex)
             {
@@ -766,6 +775,13 @@ namespace CalendarSkill.Dialogs
 
                     var replyMessage = await GetDetailMeetingResponseAsync(sc, eventItem, responseTemplateId, responseParams);
                     await sc.Context.SendActivityAsync(replyMessage);
+                }
+
+                if (state.TriggerSource == TriggerModel.TriggerSource.Event)
+                {
+                    Models.ActionInfos.EventInfo eventInfo = new Models.ActionInfos.EventInfo(eventItem, state.GetUserTimeZone());
+                    state.Clear();
+                    return await sc.EndDialogAsync(eventInfo);
                 }
 
                 return await sc.NextAsync();

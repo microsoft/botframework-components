@@ -222,17 +222,18 @@ namespace CalendarSkill.Dialogs
                 var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, UpdateEventResponses.EventUpdated);
 
                 await sc.Context.SendActivityAsync(replyMessage);
-
-                if (options.SubFlowMode)
+                Models.ActionInfos.OperationStatus operationStatus = null;
+                if (options != null && options.SubFlowMode)
                 {
                     state.UpdateMeetingInfo.Clear();
                 }
                 else
                 {
+                    operationStatus = new Models.ActionInfos.OperationStatus() { Status = true };
                     state.Clear();
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(operationStatus);
             }
             catch (SkillException ex)
             {

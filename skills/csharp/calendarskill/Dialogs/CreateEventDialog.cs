@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts;
 using CalendarSkill.Prompts.Options;
@@ -634,22 +635,24 @@ namespace CalendarSkill.Dialogs
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
                 };
 
+                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus();
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                 if (await calendarService.CreateEventAysnc(newEvent) != null)
                 {
                     var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
                     await sc.Context.SendActivityAsync(activity);
+                    operationStatus.Status = true;
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.EventCreationFailed) as Activity;
-                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
+                    var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.EventCreationFailed);
+                    await sc.Context.SendActivityAsync(activity);
+                    operationStatus.Status = false;
                 }
 
                 state.Clear();
-
-                return await sc.EndDialogAsync(true, cancellationToken);
+                return await sc.EndDialogAsync(operationStatus, cancellationToken);
             }
             catch (SkillException ex)
             {

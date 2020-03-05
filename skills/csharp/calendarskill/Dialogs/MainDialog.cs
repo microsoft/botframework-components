@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.Main;
 using CalendarSkill.Responses.Shared;
@@ -16,6 +17,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace CalendarSkill.Dialogs
@@ -218,6 +220,7 @@ namespace CalendarSkill.Dialogs
                             {
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
+
                                 await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
@@ -262,6 +265,10 @@ namespace CalendarSkill.Dialogs
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
 
+            var options = new CalendarSkillDialogOptions()
+            {
+                SubFlowMode = false
+            };
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
                 var luisResult = stepContext.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
@@ -272,11 +279,6 @@ namespace CalendarSkill.Dialogs
                 var generalIntent = generalResult?.TopIntent().intent;
 
                 InitializeConfig(state);
-
-                var options = new CalendarSkillDialogOptions()
-                {
-                    SubFlowMode = false
-                };
 
                 // switch on general intents
                 switch (intent)
@@ -449,20 +451,119 @@ namespace CalendarSkill.Dialogs
             }
             else if (a.Type == ActivityTypes.Event)
             {
+                state.TriggerSource = TriggerModel.TriggerSource.Event;
                 var ev = a.AsEventActivity();
-
-                switch (stepContext.Context.Activity.Name)
+                if (!string.IsNullOrEmpty(ev.Name))
                 {
-                    case Events.DeviceStart:
-                        {
-                            return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id);
-                        }
+                    switch (ev.Name)
+                    {
+                        case Events.DeviceStart:
+                            {
+                                return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id);
+                            }
 
-                    default:
-                        {
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
-                            break;
-                        }
+                        case Events.CreateEvent:
+                            {
+                                EventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<EventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_createEventDialog.Id, options);
+                            }
+
+                        case Events.UpdateEvent:
+                            {
+                                UpdateEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<UpdateEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options);
+                            }
+
+                        case Events.ShowEvent:
+                            {
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                            }
+
+                        case Events.AcceptEvent:
+                            {
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted));
+                            }
+
+                        case Events.DeleteEvent:
+                            {
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled));
+                            }
+
+                        case Events.JoinEvent:
+                            {
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options);
+                            }
+
+                        case Events.TimeRemaining:
+                            {
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id);
+                            }
+
+                        case Events.Summary:
+                            {
+                                DateInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<DateInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.Summary, options));
+                            }
+
+                        default:
+                            {
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                break;
+                            }
+                    }
                 }
             }
 
@@ -528,6 +629,14 @@ namespace CalendarSkill.Dialogs
         private class Events
         {
             public const string DeviceStart = "DeviceStart";
+            public const string CreateEvent = "CreateEvent";
+            public const string UpdateEvent = "UpdateEvent";
+            public const string ShowEvent = "ShowEvent";
+            public const string AcceptEvent = "AcceptEvent";
+            public const string DeleteEvent = "DeleteEvent";
+            public const string JoinEvent = "JoinEvent";
+            public const string TimeRemaining = "TimeRemaining";
+            public const string Summary = "Summary";
         }
     }
 }

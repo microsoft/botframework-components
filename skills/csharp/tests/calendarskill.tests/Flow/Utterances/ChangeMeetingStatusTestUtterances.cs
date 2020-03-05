@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -30,6 +33,32 @@ namespace CalendarSkill.Test.Flow.Utterances
         public static string DeleteMeetingWithTitle { get; } = $"delete {Strings.Strings.DefaultEventName} meeting";
 
         public static string AcceptMeetingWithStartTime { get; } = "accept meeting at tomorrow 6 pm";
+
+        public static string AcceptEventName { get; } = "AcceptEvent";
+
+        public static Activity AcceptMeetingWithStartTimeEvent { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = AcceptEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+            })
+        };
+
+        public static string DeleteEventName { get; } = "DeleteEvent";
+
+        public static Activity DeleteMeetingWithStartTimeEvent { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = DeleteEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+            })
+        };
 
         private CalendarLuis GetBaseDeleteMeetingIntent(
             string userInput,

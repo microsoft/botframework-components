@@ -49,6 +49,18 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarDeleteWithStartTimeEntityEvent()
+        {
+            await this.GetSkillTestFlow()
+                .Send(ChangeMeetingStatusTestUtterances.DeleteMeetingWithStartTimeEvent)
+                .AssertReply(this.ShowCalendarList())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(this.DeleteEventPrompt())
+                .AssertReply(CheckForOperationStatus(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarDeleteWithTitleEntity()
         {
             await this.GetTestFlow()
@@ -88,6 +100,18 @@ namespace CalendarSkill.Test.Flow
                 .AssertReply(this.ShowCalendarList())
                 .Send(Strings.Strings.ConfirmYes)
                 .AssertReplyOneOf(this.AcceptEventPrompt())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_CalendarAcceptWithStartTimeEntityEvent()
+        {
+            await this.GetSkillTestFlow()
+                .Send(ChangeMeetingStatusTestUtterances.AcceptMeetingWithStartTimeEvent)
+                .AssertReply(this.ShowCalendarList())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(this.AcceptEventPrompt())
+                .AssertReply(CheckForOperationStatus(true))
                 .StartTestAsync();
         }
 

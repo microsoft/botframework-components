@@ -7,6 +7,7 @@ using System.Linq;
 using Luis;
 using Microsoft.Graph;
 using static CalendarSkill.Models.CreateEventStateModel;
+using static CalendarSkill.Models.TriggerModel;
 
 namespace CalendarSkill.Models
 {
@@ -17,6 +18,8 @@ namespace CalendarSkill.Models
         public int PageSize { get; set; } = 0;
 
         public EventSource EventSource { get; set; } = EventSource.Other;
+
+        public TriggerSource TriggerSource { get; set; } = TriggerSource.Message;
 
         public CalendarLuis.Intent InitialIntent { get; set; } = CalendarLuis.Intent.None;
 
@@ -44,6 +47,7 @@ namespace CalendarSkill.Models
             MeetingInfo.Clear();
             ShowMeetingInfo.Clear();
             UpdateMeetingInfo.Clear();
+            TriggerSource = TriggerSource.Message;
         }
 
         public class UserInformation

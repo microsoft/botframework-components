@@ -249,6 +249,7 @@ namespace CalendarSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context);
+                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus();
                 if (sc.Result is bool)
                 {
                     if ((bool)sc.Result)
@@ -266,17 +267,19 @@ namespace CalendarSkill.Dialogs
                         };
                         replyEvent.Value = JsonConvert.SerializeObject(eventJoinLink);
                         await sc.Context.SendActivityAsync(replyEvent, cancellationToken);
+                        operationStatus.Status = true;
                     }
                     else
                     {
                         var activity = TemplateEngine.GenerateActivityForLocale(JoinEventResponses.NotJoinMeeting);
                         await sc.Context.SendActivityAsync(activity);
+                        operationStatus.Status = false;
                     }
                 }
 
-                state.ShowMeetingInfo.ShowingMeetings.Clear();
+                state.Clear();
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(operationStatus);
             }
             catch (SkillException ex)
             {

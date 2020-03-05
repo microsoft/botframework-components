@@ -84,11 +84,11 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
+                Models.ActionInfos.TimeRemainingOutput timeRemainingOutput = new Models.ActionInfos.TimeRemainingOutput() { RemainingTime = 0 };
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
                     await sc.Context.SendActivityAsync(prompt);
-                    return await sc.EndDialogAsync();
                 }
                 else
                 {
@@ -98,6 +98,7 @@ namespace CalendarSkill.Dialogs
                     var timeDiffMinutes = (int)timeDiff.TotalMinutes % 60;
                     var timeDiffHours = (int)timeDiff.TotalMinutes / 60;
                     var timeDiffDays = timeDiff.Days;
+                    timeRemainingOutput.RemainingTime = (int)timeDiff.TotalMinutes;
 
                     var remainingMinutes = string.Empty;
                     var remainingHours = string.Empty;
@@ -148,7 +149,6 @@ namespace CalendarSkill.Dialogs
                         };
                         var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
-                        return await sc.EndDialogAsync();
                     }
                     else
                     {
@@ -177,9 +177,10 @@ namespace CalendarSkill.Dialogs
 
                         var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
-                        return await sc.EndDialogAsync();
                     }
                 }
+
+                return await sc.EndDialogAsync(timeRemainingOutput);
             }
             catch (SkillException ex)
             {
