@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.LateCheckOut;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
@@ -54,7 +55,9 @@ namespace HospitalitySkill.Dialogs
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
                 await sc.Context.SendActivityAsync(reply);
 
-                return await sc.EndDialogAsync();
+                var result = new ActionResult(false);
+
+                return await sc.EndDialogAsync(result);
             }
 
             // TODO checking availability
@@ -64,9 +67,10 @@ namespace HospitalitySkill.Dialogs
             var lateTime = await HotelService.GetLateCheckOutAsync();
 
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
-            if (entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
+            var entities = convState?.LuisResult?.Entities;
+            if (entities != null && entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
             {
+                // ISO 8601 https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-prebuilt-datetimev2?tabs=1-1%2C2-1%2C3-1%2C4-1%2C5-1%2C6-1
                 var timexProperty = new TimexProperty();
                 TimexParsing.ParseString(entities.datetime[0].Expressions[0], timexProperty);
                 var preferedTime = new TimeSpan(timexProperty.Hour ?? 0, timexProperty.Minute ?? 0, timexProperty.Second ?? 0) + new TimeSpan((int)(timexProperty.Hours ?? 0), (int)(timexProperty.Minutes ?? 0), (int)(timexProperty.Seconds ?? 0));
@@ -119,6 +123,8 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
+            var result = new ActionResult(false);
+
             if (userState.LateCheckOut)
             {
                 var tokens = new StringDictionary
@@ -133,9 +139,11 @@ namespace HospitalitySkill.Dialogs
                 // check out time moved confirmation
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
+
+                result.ActionSuccess = true;
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(result);
         }
 
         private class DialogIds

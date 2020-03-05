@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.ExtendStay;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
@@ -50,8 +51,13 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState?.LuisResult?.Entities;
             convState.UpdatedReservation = userState.UserReservation.Copy();
+
+            if (entities == null)
+            {
+                return await sc.NextAsync();
+            }
 
             // check for valid datetime entity
             if (entities.datetime != null && (entities.datetime[0].Type == "date" ||
@@ -252,6 +258,8 @@ namespace HospitalitySkill.Dialogs
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
+            var result = new ActionResult(false);
+
             if (userState.UserReservation.CheckOutDate == convState.UpdatedReservation.CheckOutDate)
             {
                 var tokens = new StringDictionary
@@ -265,9 +273,11 @@ namespace HospitalitySkill.Dialogs
                 // check out date moved confirmation
                 var reply = ResponseManager.GetCardResponse(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
+
+                result.ActionSuccess = true;
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(result);
         }
 
         private class DialogIds

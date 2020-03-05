@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.CheckOut;
 using HospitalitySkill.Services;
 using Microsoft.Bot.Builder;
@@ -105,6 +106,8 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
+            var result = new ActionResult(false);
+
             if (userState.CheckedOut)
             {
                 var tokens = new StringDictionary
@@ -116,9 +119,11 @@ namespace HospitalitySkill.Dialogs
                 // checked out confirmation message
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.SendEmailMessage, tokens));
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.CheckOutSuccess));
+
+                result.ActionSuccess = true;
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(result);
         }
 
         private class DialogIds

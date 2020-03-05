@@ -43,7 +43,7 @@ namespace HospitalitySkill.Tests.Flow
             await this.GetSkillTestFlow()
                 .Send(GeneralTestUtterances.None)
                 .AssertReply(AssertContains(SharedResponses.DidntUnderstandMessage))
-                .AssertReply(SkillActionEndMessage())
+                .AssertReply(SkillActionEndMessage(null))
                 .StartTestAsync();
         }
 }

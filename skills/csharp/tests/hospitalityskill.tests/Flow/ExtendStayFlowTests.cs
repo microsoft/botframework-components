@@ -107,5 +107,45 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task ExtendStayActionTest()
+        {
+            var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
+
+            var tokens = new StringDictionary
+            {
+                { "Date", extendDate.ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(ExtendStayUtterances.ExtendStayAction)
+                .AssertReply(AssertContains(ExtendStayResponses.ExtendDatePrompt))
+                .Send(extendDate.ToString())
+                .AssertReply(AssertStartsWith(ExtendStayResponses.ConfirmExtendStay, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(ExtendStayResponses.ExtendStaySuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ExtendStayWithDateActionTest()
+        {
+            var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
+
+            var tokens = new StringDictionary
+            {
+                { "Date", extendDate.ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(ExtendStayUtterances.ExtendStayWithDateAction)
+                .AssertReply(AssertStartsWith(ExtendStayResponses.ConfirmExtendStay, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(ExtendStayResponses.ExtendStaySuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

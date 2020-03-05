@@ -88,5 +88,66 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task CheckOutActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Email", NonLuisUtterances.Email },
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(CheckOutUtterances.CheckOutAction)
+                .AssertReply(AssertStartsWith(CheckOutResponses.ConfirmCheckOut))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(CheckOutResponses.EmailPrompt))
+                .Send(NonLuisUtterances.Email)
+                .AssertReply(AssertContains(CheckOutResponses.SendEmailMessage, tokens))
+                .AssertReply(AssertContains(CheckOutResponses.CheckOutSuccess))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CheckOutWithEmailActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Email", NonLuisUtterances.Email },
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(CheckOutUtterances.CheckOutWithEmailAction)
+                .AssertReply(AssertStartsWith(CheckOutResponses.ConfirmCheckOut))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(CheckOutResponses.SendEmailMessage, tokens))
+                .AssertReply(AssertContains(CheckOutResponses.CheckOutSuccess))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CheckOutActionAlreadyTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Email", NonLuisUtterances.Email },
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(CheckOutUtterances.CheckOutAction)
+                .AssertReply(AssertStartsWith(CheckOutResponses.ConfirmCheckOut))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(CheckOutResponses.EmailPrompt))
+                .Send(NonLuisUtterances.Email)
+                .AssertReply(AssertContains(CheckOutResponses.SendEmailMessage, tokens))
+                .AssertReply(AssertContains(CheckOutResponses.CheckOutSuccess))
+                .AssertReply(SkillActionEndMessage(true))
+                .Send(CheckOutUtterances.CheckOut)
+                .AssertReply(AssertContains(SharedResponses.HasCheckedOut))
+                .AssertReply(SkillActionEndMessage(false))
+                .StartTestAsync();
+        }
     }
 }

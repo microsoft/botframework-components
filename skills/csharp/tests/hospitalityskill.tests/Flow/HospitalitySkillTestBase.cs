@@ -34,6 +34,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using Microsoft.Bot.Connector.Authentication;
+using HospitalitySkill.Models.ActionDefinitions;
 
 namespace HospitalitySkill.Tests.Flow
 {
@@ -181,11 +182,16 @@ namespace HospitalitySkill.Tests.Flow
             return AssertContains(SharedResponses.ActionEnded);
         }
 
-        protected Action<IActivity> SkillActionEndMessage()
+        protected Action<IActivity> SkillActionEndMessage(bool? success)
         {
             return activity =>
             {
                 Assert.AreEqual(activity.Type, ActivityTypes.EndOfConversation);
+                if (success.HasValue)
+                {
+                    var result = ((Activity)activity).Value as ActionResult;
+                    Assert.AreEqual(result.ActionSuccess, success.Value);
+                }
             };
         }
 

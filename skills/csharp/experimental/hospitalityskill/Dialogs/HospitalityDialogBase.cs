@@ -19,6 +19,7 @@ using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using HospitalitySkill.Models.ActionDefinitions;
 
 namespace HospitalitySkill.Dialogs
 {
@@ -184,7 +185,10 @@ namespace HospitalitySkill.Dialogs
             if (userState.CheckedOut)
             {
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.HasCheckedOut));
-                return await sc.EndDialogAsync();
+
+                var result = new ActionResult(false);
+
+                return await sc.EndDialogAsync(result);
             }
 
             return await sc.NextAsync();

@@ -6,11 +6,13 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.Main;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
 using Luis;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
@@ -20,6 +22,8 @@ using Microsoft.Bot.Solutions.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace HospitalitySkill.Dialogs
@@ -28,7 +32,9 @@ namespace HospitalitySkill.Dialogs
     {
         private BotServices _services;
         private ResponseManager _responseManager;
+        private IHotelService _hotelService;
         private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
+        private IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
 
         public MainDialog(
             IServiceProvider serviceProvider,
@@ -37,11 +43,15 @@ namespace HospitalitySkill.Dialogs
         {
             _services = serviceProvider.GetService<BotServices>();
             _responseManager = serviceProvider.GetService<ResponseManager>();
+            _hotelService = serviceProvider.GetService<IHotelService>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
             _stateAccessor = conversationState.CreateProperty<HospitalitySkillState>(nameof(HospitalitySkillState));
+
+            var userState = serviceProvider.GetService<UserState>();
+            _userStateAccessor = userState.CreateProperty<HospitalityUserSkillState>(nameof(HospitalityUserSkillState));
 
             var steps = new WaterfallStep[]
             {
@@ -276,6 +286,21 @@ namespace HospitalitySkill.Dialogs
                 {
                     switch (ev.Name)
                     {
+                        case ActionNames.CheckOut:
+                            {
+                                return await ProcessAction<CheckOutInput>(nameof(CheckOutDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.ExtendStay:
+                            {
+                                return await ProcessAction<ExtendStayInput>(nameof(ExtendStayDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.LateCheckOut:
+                            {
+                                return await ProcessAction<LateCheckOutInput>(nameof(LateCheckOutDialog), stepContext, cancellationToken);
+                            }
+
                         default:
                             {
                                 await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
@@ -336,6 +361,19 @@ namespace HospitalitySkill.Dialogs
             {
                 throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
             }
+        }
+
+        private async Task<DialogTurnResult> ProcessAction<T>(string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
+            where T : IActionInput
+        {
+            var ev = stepContext.Context.Activity.AsEventActivity();
+            if (ev.Value is JObject eventValue)
+            {
+                var input = eventValue.ToObject<T>();
+                await input.Process(stepContext.Context, _stateAccessor, _userStateAccessor, _hotelService, cancellationToken);
+            }
+
+            return await stepContext.BeginDialogAsync(dialogId, null, cancellationToken);
         }
     }
 }
