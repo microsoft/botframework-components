@@ -1,0 +1,47 @@
+[import](MainDialogActivities.lg)
+
+# WelcomeMessage.Text
+- Bienvenue à la compétence automobile! En ce moment je peux vous aider avec le contrôle de réglage de véhicule-contrôle du climat, sécurité active et audio.
+
+# HelpMessage.Text
+- En ce moment je peux vous aider avec le contrôle de réglage de véhicule-contrôle du climat, sécurité active et audio.
+
+# HelpMessage.S1
+- Réglez la température à 21 degrés
+
+# HelpMessage.S2
+- réchauffer le dos de la voiture
+
+# HelpMessage.S3
+- mettre l'air sur mes pieds
+
+# HelpMessage.S4
+- augmenter le freinage automatique vers l'avant à 50%
+
+# GreetingMessage.Text
+- Il y en a!
+- Je suis là!
+- Salut!
+
+# LogOut.Text
+- Votre déconnexion a été couronnée de succès.
+- Vous avez réussi à vous déconnecter.
+- Vous avez été déconnecté.
+
+# FeatureNotAvailable.Text
+- Cette fonctionnalité n'est pas encore disponible dans cette compétence. S'il vous plaît essayer de demander autre chose.
+
+# CancelMessage.Text
+- OK, commençons.
+
+# FirstPromptMessage.Text
+- Qu'est-ce que je peux t'aider aujourd'hui ?
+- Que puis-je pour vous?
+- Y a-t-il quelque chose que je puisse faire pour toi ?
+- Comment puis-je vous aider?
+
+# CompletedMessage.Text
+- Je suis là si tu as besoin d'autre chose.
+- Faites-moi savoir s'il y a autre chose dont vous avez besoin.
+- Faites-moi savoir si je peux vous aider avec autre chose.
+- Tout est fini. Faites-moi savoir si je peux faire autre chose.

@@ -1,0 +1,47 @@
+[import](MainDialogActivities.lg)
+
+# WelcomeMessage.Text
+- Welcome to the Automotive Skill! Right now I can help you with vehicle setting control - climate, safety, and audio settings.
+
+# HelpMessage.Text
+- Right now I can help you with vehicle setting control - climate, safety, and audio settings.
+
+# HelpMessage.S1
+- set temperature to 21 degrees
+
+# HelpMessage.S2
+- warm up the back of the car
+
+# HelpMessage.S3
+- put the air on my feet
+
+# HelpMessage.S4
+- increase forward automatic braking to 50%
+
+# GreetingMessage.Text
+- Hi!
+- I'm here
+- Hi there!
+
+# LogOut.Text
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# FeatureNotAvailable.Text
+- This feature is not yet available in this skill. Please try asking something else.
+
+# CancelMessage.Text
+- OK, let's start over.
+
+# FirstPromptMessage.Text
+- What can I help you with today?
+- What can I do for you?
+- Is there anything I can do for you?
+- How can I help you?
+
+# CompletedMessage.Text
+- I'm here if you need anything else.
+- Let me know if there's anything else you need.
+- Let me know if I can help you with anything else.
+- All done. Let me know if I can do anything else.

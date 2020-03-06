@@ -1,3 +1,6 @@
+﻿> AutomotiveCard
+# AutomotiveCard.Text(ImageUrl, Body, Speak)
+- ```
 {
   "type": "AdaptiveCard",
   "id": "AutomotiveCard",
@@ -61,14 +64,14 @@
       "items": [
         {
           "type": "Image",
-          "url": "{ImageUrl}",
+          "url": "@{if(ImageUrl == null, '', ImageUrl)}",
           "horizontalAlignment": "center"
         },
         {
           "type": "TextBlock",
           "id": "messageBody",
           "color": "Dark",
-          "text": "{Body}",
+          "text": "@{if(Body == null, '', Body)}",
           "wrap": true
         }
       ]
@@ -76,5 +79,6 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "@{if(Speak == null, '', Speak)}"
 }
+```

@@ -1,0 +1,46 @@
+[import](MainDialogActivities.lg)
+
+# WelcomeMessage.Text
+- Benvenuto all'abilità automobilistica! In questo momento posso aiutarvi con controllo di impostazione del veicolo-climatizzazione, sicurezza attiva e audio.
+
+# HelpMessage.Text
+- In questo momento posso aiutarvi con controllo di impostazione del veicolo-climatizzazione, sicurezza attiva e audio.
+# HelpMessage.S1
+- impostare la temperatura a 21 gradi
+
+# HelpMessage.S2
+- riscaldare la parte posteriore della vettura
+
+# HelpMessage.S3
+- mettere l'aria sui miei piedi
+
+# HelpMessage.S4
+- aumento della frenatura automatica in avanti fino al 50%
+
+# GreetingMessage.Text
+- C'è!
+- Sono qui!
+- Ehilà!
+
+# LogOut.Text
+- Il tuo cartello è riuscito.
+- Hai firmato con successo.
+- Sei stato disconnesso.
+
+# FeatureNotAvailable.Text
+- Questa funzionalità non è ancora disponibile in questa abilità. Per favore prova a chiedere qualcos'altro.
+
+# CancelMessage.Text
+- Ok, ricominciamo da qui.
+
+# FirstPromptMessage.Text
+- Con cosa posso aiutarti oggi?
+- Cosa posso fare per te?
+- C'è qualcosa che posso fare per te?
+- Come posso aiutarla?
+
+# CompletedMessage.Text
+- Sono qui se hai bisogno di qualcos'altro.
+- Fammi sapere se c'è qualcos'altro di cui hai bisogno.
+- Fammi sapere se posso aiutarti con qualcos'altro.
+- Tutto fatto. Fammi sapere se posso fare qualcos'altro.
