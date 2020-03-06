@@ -11,7 +11,7 @@
 [Activity
     Text = @{DidntUnderstandMessageIgnoringInput.Text()}
     Speak = @{DidntUnderstandMessageIgnoringInput.Text()}
-    InputHint = expectingInput
+    InputHint = ignoringInput
 ]
 
 # CancellingMessage
@@ -39,5 +39,5 @@
 [Activity
     Text = @{NoAuth.Text()}
     Speak = @{NoAuth.Text()}
-    InputHint = acceptingInput
+    InputHint = expectingInput
 ]
