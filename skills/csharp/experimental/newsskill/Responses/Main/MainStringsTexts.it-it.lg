@@ -1,0 +1,45 @@
+[import] (MainStrings.lg)
+
+# CONFUSED.Text(Data)
+- Mi dispiace, non sono in grado di aiutarti.
+
+# INTRO_TITLE.Text(Data)
+- Benvenuto all'abilità di notizie!
+
+# HELP_TEXT.Text(Data)
+- Questa scheda può essere utilizzata per visualizzare informazioni per consentire all'utente di interagire con il proprio bot. I pulsanti sottostanti possono essere utilizzati per query di esempio o collegamenti a siti esterni.
+
+# ERROR.Text(Data)
+- Mi dispiace, sembra che qualcosa sia andato storto.
+
+# HELP_TITLE.Text(Data)
+- Guida
+
+# GREETING.Text(Data)
+- Ehilà!
+
+# CANCELLED.Text(Data)
+- Ok, ricominciamo da qui.
+
+# COMPLETED.Text(Data)
+- Che altro posso aiutarvi?
+
+# GREETING_WITH_NAME.Text(Data)
+- Ehi, {0}!
+
+# INTRO_TEXT.Text(Data)
+- Prova a digitare * Tell me News * per la ricerca di articoli di notizie rilevanti.
+
+# ReadMore.Text(Data)
+- Read More!
+
+# LearnMore.Text(Data)
+- Learn More
+
+# MarketPrompt.Text(Data)
+- What country or region are you in?
+
+# MarketRetryPrompt.Text(Data)
+- Couldn't find that country or region. What country or region do you want to search in?
+
+

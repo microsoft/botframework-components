@@ -1,0 +1,45 @@
+[import] (MainStrings.lg)
+
+# CONFUSED.Text(Data)
+- Je suis désolé, je ne suis pas en mesure d'aider avec ça.
+
+# INTRO_TITLE.Text(Data)
+- Bienvenue à la compétence nouvelles!
+
+# HELP_TEXT.Text(Data)
+- Cette carte peut être utilisée pour afficher des informations pour aider votre utilisateur à interagir avec votre bot. Les boutons ci-dessous peuvent être utilisés pour des exemples de requêtes ou des liens vers des sites externes.
+
+# ERROR.Text(Data)
+- Désolé, on dirait que quelque chose a mal tourné.
+
+# HELP_TITLE.Text(Data)
+- Aide
+
+# GREETING.Text(Data)
+- Salut!
+
+# CANCELLED.Text(Data)
+- OK, commençons.
+
+# COMPLETED.Text(Data)
+- Que puis-je vous aider?
+
+# GREETING_WITH_NAME.Text(Data)
+- Hé, {0}!
+
+# INTRO_TEXT.Text(Data)
+- Essayez de taper * dites-moi nouvelles * pour rechercher des Articles de nouvelles pertinentes.
+
+# ReadMore.Text(Data)
+- Read More!
+
+# LearnMore.Text(Data)
+- Learn More
+
+# MarketPrompt.Text(Data)
+- What country or region are you in?
+
+# MarketRetryPrompt.Text(Data)
+- Couldn't find that country or region. What country or region do you want to search in?
+
+

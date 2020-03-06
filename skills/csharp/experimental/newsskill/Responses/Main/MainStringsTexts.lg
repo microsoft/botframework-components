@@ -1,0 +1,43 @@
+[import] (MainStrings.lg)
+
+# CANCELLED.Text(Data)
+- Ok, let's start over.
+
+# COMPLETED.Text(Data)
+- What else can I help you with?
+
+# CONFUSED.Text(Data)
+- I'm sorry, I'm not able to help with that.
+
+# ERROR.Text(Data)
+- Sorry, it looks like something went wrong.
+
+# GREETING.Text(Data)
+- Hi there!
+
+# GREETING_WITH_NAME.Text(Data)
+- Hey, {0}!
+
+# HELP_TEXT.Text(Data)
+- This card can be used to display information to help your user interact with your bot. The buttons below can be used for sample queries or links to external sites.
+
+# HELP_TITLE.Text(Data)
+- HELP
+
+# INTRO_TEXT.Text(Data)
+- Try typing *tell me news* to search for relevant news articles.
+
+# INTRO_TITLE.Text(Data)
+- Welcome to the News Skill!
+
+# ReadMore.Text(Data)
+- Read More!
+
+# LearnMore.Text(Data)
+- Learn More
+
+# MarketPrompt.Text(Data)
+- What country or region are you in?
+
+# MarketRetryPrompt.Text(Data)
+- Couldn't find that country or region. What country or region do you want to search in?

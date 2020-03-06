@@ -14,6 +14,7 @@ using NewsSkill.Services;
 using SkillServiceLibrary.Utilities;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Solutions.Responses;
 
 namespace NewsSkill.Adapters
 {
@@ -25,13 +26,14 @@ namespace NewsSkill.Adapters
             ConversationState conversationState,
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
-            IBotTelemetryClient telemetryClient)
+            IBotTelemetryClient telemetryClient,
+            LocaleTemplateEngineManager localeTemplateEngineManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(MainStrings.ERROR);
+                await context.SendActivityAsync(localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.ERROR));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"News Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
 
