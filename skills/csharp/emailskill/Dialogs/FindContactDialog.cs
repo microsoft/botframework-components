@@ -33,12 +33,12 @@ namespace EmailSkill.Dialogs
         public static readonly int MaxAcceptContactsNum = 20;
 
         public FindContactDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager lgFileManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
             : base(nameof(FindContactDialog))
         {
-            TemplateEngine = localeTemplateEngineManager;
+            TemplateEngine = lgFileManager;
 
             TelemetryClient = telemetryClient;
             Services = serviceProvider.GetService<BotServices>();
@@ -133,7 +133,7 @@ namespace EmailSkill.Dialogs
             InitialDialogId = FindContactAction.ConfirmNameList;
         }
 
-        protected LocaleTemplateEngineManager TemplateEngine { get; set; }
+        protected LocaleLGFileManager TemplateEngine { get; set; }
 
         protected BotSettings Settings { get; set; }
 

@@ -10,7 +10,7 @@
 - Do you want to go back to the overview of your email?
 
 # ReadOutMessage.Text(emailDetailsWithoutContent)
-- Here are details of the email: @{emailDetailsWithoutContent}
+- Here are details of the email: ${emailDetailsWithoutContent}
 
 # ReadOutMessage.Speak(emailDetailsWithContent)
-- Here are details of the email: @{emailDetailsWithoutContent}
+- Here are details of the email: ${emailDetailsWithoutContent}

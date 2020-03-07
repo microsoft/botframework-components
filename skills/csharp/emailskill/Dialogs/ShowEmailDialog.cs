@@ -28,10 +28,10 @@ namespace EmailSkill.Dialogs
     public class ShowEmailDialog : EmailSkillDialogBase
     {
         public ShowEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager lgFileManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(ShowEmailDialog), lgFileManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 

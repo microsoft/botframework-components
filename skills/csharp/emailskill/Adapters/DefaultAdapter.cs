@@ -5,14 +5,12 @@ using EmailSkill.Responses.Shared;
 using EmailSkill.Services;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
-using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Skills;
 using SkillServiceLibrary.Utilities;
 
 namespace EmailSkill.Adapters
@@ -23,7 +21,7 @@ namespace EmailSkill.Adapters
             BotSettings settings,
             ICredentialProvider credentialProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager localeTemplateEngineManager,
             UserState userState,
             ConversationState conversationState,
             TelemetryInitializerMiddleware telemetryMiddleware)
@@ -53,7 +51,6 @@ namespace EmailSkill.Adapters
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

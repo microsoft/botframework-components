@@ -39,7 +39,7 @@
                           "size": "Large",
                           "weight": "Bolder",
                           "color": "Light",
-                          "text": "@{emailDetails.Subject}"
+                          "text": "${emailDetails.Subject}"
                         }
                       ],
                       "width": "stretch"
@@ -56,7 +56,7 @@
                           "type": "Image",
                           "id": "senderAvatar",
                           "style": "Person",
-                          "url": "@{emailDetails.SenderIcon}",
+                          "url": "${emailDetails.SenderIcon}",
                           "size": "Medium"
                         }
                       ],
@@ -82,7 +82,7 @@
                                   "size": "Medium",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{emailDetails.Sender}"
+                                  "text": "${emailDetails.Sender}"
                                 }
                               ],
                               "width": "stretch"
@@ -97,7 +97,7 @@
                                   "size": "Medium",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{emailDetails.ReceivedDateTime}"
+                                  "text": "${emailDetails.ReceivedDateTime}"
                                 }
                               ],
                               "width": "auto"
@@ -128,7 +128,7 @@
                                 {
                                   "type": "Image",
                                   "style": "Person",
-                                  "url": "@{emailDetails.RecipientIcon0}",
+                                  "url": "${emailDetails.RecipientIcon0}",
                                   "size": "Small"
                                 }
                               ],
@@ -141,7 +141,7 @@
                                 {
                                   "type": "Image",
                                   "style": "Person",
-                                  "url": "@{emailDetails.RecipientIcon1}",
+                                  "url": "${emailDetails.RecipientIcon1}",
                                   "size": "Small"
                                 }
                               ],
@@ -154,7 +154,7 @@
                                 {
                                   "type": "Image",
                                   "style": "Person",
-                                  "url": "@{emailDetails.RecipientIcon2}",
+                                  "url": "${emailDetails.RecipientIcon2}",
                                   "size": "Small"
                                 }
                               ],
@@ -167,7 +167,7 @@
                                 {
                                   "type": "Image",
                                   "style": "Person",
-                                  "url": "@{emailDetails.RecipientIcon3}",
+                                  "url": "${emailDetails.RecipientIcon3}",
                                   "size": "Small"
                                 }
                               ],
@@ -183,7 +183,7 @@
                                   "size": "Medium",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "\\+ @{emailDetails.AdditionalRecipientNumber}"
+                                  "text": "\\+ ${emailDetails.AdditionalRecipientNumber}"
                                 }
                               ],
                               "width": "stretch"

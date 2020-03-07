@@ -36,12 +36,12 @@ namespace EmailSkill.Dialogs
     {
         public EmailSkillDialogBase(
              string dialogId,
-             LocaleTemplateEngineManager localeTemplateEngineManager,
+             LocaleLGFileManager lgFileManager,
              IServiceProvider serviceProvider,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
-            TemplateEngine = localeTemplateEngineManager;
+            TemplateEngine = lgFileManager;
 
             Settings = serviceProvider.GetService<BotSettings>();
             Services = serviceProvider.GetService<BotServices>();
@@ -64,7 +64,7 @@ namespace EmailSkill.Dialogs
         {
         }
 
-        protected LocaleTemplateEngineManager TemplateEngine { get; set; }
+        protected LocaleLGFileManager TemplateEngine { get; set; }
 
         protected BotServices Services { get; set; }
 

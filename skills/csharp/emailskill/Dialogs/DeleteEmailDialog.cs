@@ -23,10 +23,10 @@ namespace EmailSkill.Dialogs
     public class DeleteEmailDialog : EmailSkillDialogBase
     {
         public DeleteEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager lgFileManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(DeleteEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(DeleteEmailDialog), lgFileManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 

@@ -20,10 +20,10 @@ namespace EmailSkill.Dialogs
     public class ReplyEmailDialog : EmailSkillDialogBase
     {
         public ReplyEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager lgFileManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ReplyEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(ReplyEmailDialog), lgFileManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 

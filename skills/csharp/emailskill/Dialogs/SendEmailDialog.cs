@@ -23,10 +23,10 @@ namespace EmailSkill.Dialogs
     public class SendEmailDialog : EmailSkillDialogBase
     {
         public SendEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleLGFileManager lgFileManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(SendEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(SendEmailDialog), lgFileManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -79,7 +79,7 @@ namespace EmailSkill.Dialogs
             AddDialog(new WaterfallDialog(Actions.CollectRecipient, collectRecipients) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.UpdateSubject, updateSubject) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.UpdateContent, updateContent) { TelemetryClient = telemetryClient });
-            AddDialog(new FindContactDialog(localeTemplateEngineManager, serviceProvider, telemetryClient));
+            AddDialog(new FindContactDialog(lgFileManager, serviceProvider, telemetryClient));
             AddDialog(new WaterfallDialog(Actions.GetRecreateInfo, getRecreateInfo) { TelemetryClient = telemetryClient });
             AddDialog(new GetRecreateInfoPrompt(Actions.GetRecreateInfoPrompt));
             InitialDialogId = Actions.Send;
