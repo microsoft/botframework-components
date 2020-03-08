@@ -398,6 +398,12 @@ namespace RestaurantBookingSkill.Dialogs
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
 
+            var skillOptions = sc.Options as SkillOption;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.NextAsync();
+            }
+
             var tokens = new StringDictionary
             {
                 { "FoodType", reservation.Category },
@@ -459,6 +465,12 @@ namespace RestaurantBookingSkill.Dialogs
         {
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
+
+            var skillOptions = sc.Options as SkillOption;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.NextAsync();
+            }
 
             // Reset the dialog if the user hasn't confirmed the reservation.
             if (!reservation.Confirmed)

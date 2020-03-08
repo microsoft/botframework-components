@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace RestaurantBookingSkill.Models.Action
 {
-    public class BookingInfo
+    public class ReservationInfo
     {
         [JsonProperty("foodType")]
         public string FoodType { get; set; }
@@ -17,7 +17,7 @@ namespace RestaurantBookingSkill.Models.Action
         [JsonProperty("attendeeCount")]
         public int AttendeeCount { get; set; }
 
-        [JsonProperty("bookingPlace")]
-        public string BookingPlace { get; set; }
+        [JsonProperty("restaurantName")]
+        public string RestaurantName { get; set; }
     }
 }

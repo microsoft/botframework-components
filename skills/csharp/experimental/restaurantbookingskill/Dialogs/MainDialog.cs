@@ -266,13 +266,13 @@ namespace RestaurantBookingSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "Booking":
+                        case "RestaurantReservation":
                             {
-                                BookingInfo actionData = null;
+                                ReservationInfo actionData = null;
                                 var eventValue = activity.Value as JObject;
                                 if (eventValue != null)
                                 {
-                                    actionData = eventValue.ToObject<BookingInfo>();
+                                    actionData = eventValue.ToObject<ReservationInfo>();
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
@@ -315,21 +315,16 @@ namespace RestaurantBookingSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, BookingInfo bookingInfo)
+        private async Task DigestActionInput(DialogContext dc, ReservationInfo reservationInfo)
         {
             var state = await _conversationStateAccessor.GetAsync(dc.Context, () => new RestaurantBookingState());
-            state.Booking.Category = bookingInfo.FoodType;
+            state.Booking.Category = reservationInfo.FoodType;
+            state.Booking.ReservationDate = DateTime.Parse(reservationInfo.Date);
+            state.Booking.ReservationTime = DateTime.Parse(reservationInfo.Time);
+            state.Booking.AttendeeCount = reservationInfo.AttendeeCount;
 
-            // Todo: Now we assume all properties are valid. 
-            // Do we need to more parse, such as 'today' or '11 am'?
-            state.Booking.ReservationDate = DateTime.Parse(bookingInfo.Date);
-
-            state.Booking.ReservationTime = DateTime.Parse(bookingInfo.Time);
-
-            state.Booking.AttendeeCount = bookingInfo.AttendeeCount;
-
-            // Note: Now there are no actual action to book a place. So we only save Name.
-            state.Booking.BookingPlace.Name = bookingInfo.BookingPlace;
+            // Note: Now there is no actual action to book a place. So we only save Name.
+            state.Booking.BookingPlace.Name = reservationInfo.RestaurantName;
         }
     }
 }
