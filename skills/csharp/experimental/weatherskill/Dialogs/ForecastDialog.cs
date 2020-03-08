@@ -186,9 +186,7 @@ namespace WeatherSkill.Dialogs
             var options = stepContext.Options as SkillOptions;
             if (options != null && options.IsAction)
             {
-                // Todo: design this summary message.
-                var summary = "";
-
+                var summary = forecastModel.Speak;
                 var actionResult = new ActionResult()
                 {
                     Summary = summary,

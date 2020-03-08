@@ -274,7 +274,7 @@ namespace WeatherSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "Forecast":
+                        case "WeatherForcast":
                             {
                                 LocationInfo actionData = null;
 
@@ -376,10 +376,20 @@ namespace WeatherSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, LocationInfo emailInfo)
+        private async Task DigestActionInput(DialogContext dc, LocationInfo locationInfo)
         {
             var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
-            state.Geography = emailInfo.Location;
+            var location = locationInfo.Location;
+            var coords = location.Split(',');
+            if (coords.Length == 2 && double.TryParse(coords[0], out var lat) && double.TryParse(coords[1], out var lng))
+            {
+                state.Latitude = lat;
+                state.Longitude = lng;
+            }
+            else
+            {
+                state.Geography = location;
+            }
         }
     }
 }
