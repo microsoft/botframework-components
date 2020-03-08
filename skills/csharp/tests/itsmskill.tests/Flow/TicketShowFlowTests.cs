@@ -55,7 +55,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.TicketUpdateClose))
                 .AssertReply(AssertStartsWith(TicketResponses.TicketShow, navigate))
                 .Send(GeneralTestUtterances.Reject)
-                .AssertReply(AssertContains(SharedResponses.ActionEnded))
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
@@ -83,7 +82,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.TicketUpdateClose))
                 .AssertReply(AssertStartsWith(TicketResponses.TicketShow, navigate))
                 .Send(GeneralTestUtterances.Reject)
-                .AssertReply(AssertContains(SharedResponses.ActionEnded))
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }

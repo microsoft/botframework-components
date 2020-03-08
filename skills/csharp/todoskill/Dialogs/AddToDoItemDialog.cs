@@ -136,7 +136,6 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    await SendActionEnded(sc.Context);
                     return await sc.EndDialogAsync(true);
                 }
             }
@@ -428,7 +427,6 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    await SendActionEnded(sc.Context);
                     return await sc.EndDialogAsync(true);
                 }
             }

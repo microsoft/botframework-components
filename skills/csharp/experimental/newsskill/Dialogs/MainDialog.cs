@@ -16,65 +16,199 @@ using NewsSkill.Models;
 using NewsSkill.Responses.Main;
 using NewsSkill.Services;
 using SkillServiceLibrary.Utilities;
+using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
+using NewsSkill.Models.Action;
+using Newtonsoft.Json.Linq;
 
 namespace NewsSkill.Dialogs
 {
-    public class MainDialog : ActivityHandlerDialog
+    public class MainDialog : ComponentDialog
     {
+        private BotSettings _settings;
         private BotServices _services;
-        private IBotTelemetryClient _telemetryClient;
-        private ConversationState _conversationState;
-        private MainResponses _responder = new MainResponses();
+        private ResponseManager _responseManager;
         private IStatePropertyAccessor<NewsSkillState> _stateAccessor;
+        private IStatePropertyAccessor<NewsSkillUserState> _userStateAccessor;
+        private Dialog _findArticlesDialog;
+        private Dialog _trendingArticlesDialog;
+        private Dialog _favoriteTopicsDialog;
+        private MainResponses _responder = new MainResponses();
 
         public MainDialog(
-            BotServices services,
-            ConversationState conversationState,
-            FindArticlesDialog findArticlesDialog,
-            TrendingArticlesDialog trendingArticlesDialog,
-            FavoriteTopicsDialog favoriteTopicsDialog,
+            IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(MainDialog), telemetryClient)
+            : base(nameof(MainDialog))
         {
-            _services = services ?? throw new ArgumentNullException(nameof(services));
-            _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
+            _settings = serviceProvider.GetService<BotSettings>();
+            _services = serviceProvider.GetService<BotServices>();
+            _responseManager = serviceProvider.GetService<ResponseManager>();
+            TelemetryClient = telemetryClient;
 
-            _telemetryClient = telemetryClient;
+            // Create conversation state properties
+            var conversationState = serviceProvider.GetService<ConversationState>();
+            _stateAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
+            var userState = serviceProvider.GetService<UserState>();
+            _userStateAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
 
-            // Initialize state accessor
-            _stateAccessor = _conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
-
-            AddDialog(findArticlesDialog ?? throw new ArgumentNullException(nameof(findArticlesDialog)));
-            AddDialog(trendingArticlesDialog ?? throw new ArgumentNullException(nameof(trendingArticlesDialog)));
-            AddDialog(favoriteTopicsDialog ?? throw new ArgumentNullException(nameof(favoriteTopicsDialog)));
-        }
-
-        protected override async Task OnMembersAddedAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // send a greeting if we're in local mode
-            await _responder.ReplyWith(dc.Context, MainResponses.Intro);
-        }
-
-        protected override async Task OnMessageActivityAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
-
-            // get current activity locale
-            var localeConfig = _services.GetCognitiveModels();
-
-            // Populate state from SemanticAction as required
-            await PopulateStateFromSemanticAction(dc.Context);
-
-            // If dispatch result is general luis model
-            localeConfig.LuisServices.TryGetValue("News", out var luisService);
-
-            if (luisService == null)
+            var steps = new WaterfallStep[]
             {
-                throw new Exception("The specified LUIS Model could not be found in your Bot Services configuration.");
+                IntroStepAsync,
+                RouteStepAsync,
+                FinalStepAsync,
+            };
+
+            AddDialog(new WaterfallDialog(nameof(MainDialog), steps));
+            AddDialog(new TextPrompt(nameof(TextPrompt)));
+            InitialDialogId = nameof(MainDialog);
+
+            // Register dialogs
+            _findArticlesDialog = serviceProvider.GetService<FindArticlesDialog>() ?? throw new ArgumentNullException(nameof(FindArticlesDialog));
+            _trendingArticlesDialog = serviceProvider.GetService<TrendingArticlesDialog>() ?? throw new ArgumentNullException(nameof(FindArticlesDialog));
+            _favoriteTopicsDialog = serviceProvider.GetService<FavoriteTopicsDialog>() ?? throw new ArgumentNullException(nameof(FindArticlesDialog));
+            AddDialog(_findArticlesDialog);
+            AddDialog(_trendingArticlesDialog);
+            AddDialog(_favoriteTopicsDialog);
+        }
+
+        // Runs when the dialog is started.
+        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
+        {
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
+            {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                var skillResult = await localizedServices.LuisServices["News"].RecognizeAsync<NewsLuis>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.SkillLuisResult, skillResult);
+
+                // Run LUIS recognition on General model and store result in turn state.
+                var generalResult = await localizedServices.LuisServices["General"].RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResult, generalResult);
+
+                // Check for any interruptions
+                var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
+
+                if (interrupted)
+                {
+                    // If dialog was interrupted, return EndOfTurn
+                    return EndOfTurn;
+                }
+            }
+
+            return await base.OnBeginDialogAsync(innerDc, options, cancellationToken);
+        }
+
+        // Runs on every turn of the conversation.
+        protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
+        {
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
+            {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                var skillResult = await localizedServices.LuisServices["News"].RecognizeAsync<NewsLuis>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.SkillLuisResult, skillResult);
+
+                // Run LUIS recognition on General model and store result in turn state.
+                var generalResult = await localizedServices.LuisServices["General"].RecognizeAsync<General>(innerDc.Context, cancellationToken);
+                innerDc.Context.TurnState.Add(StateProperties.GeneralLuisResult, generalResult);
+
+                // Check for any interruptions
+                var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
+
+                if (interrupted)
+                {
+                    // If dialog was interrupted, return EndOfTurn
+                    return EndOfTurn;
+                }
+            }
+
+            return await base.OnContinueDialogAsync(innerDc, cancellationToken);
+        }
+
+        // Runs on every turn of the conversation to check if the conversation should be interrupted.
+        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        {
+            var interrupted = false;
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
+            {
+                // Get connected LUIS result from turn state.
+                var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
+                (var generalIntent, var generalScore) = generalResult.TopIntent();
+
+                if (generalScore > 0.5)
+                {
+                    switch (generalIntent)
+                    {
+                        case General.Intent.Cancel:
+                            {
+                                await _responder.ReplyWith(innerDc.Context, MainResponses.Cancelled);
+                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.BeginDialogAsync(InitialDialogId);
+                                interrupted = true;
+                                break;
+                            }
+
+                        case General.Intent.Help:
+                            {
+                                await _responder.ReplyWith(innerDc.Context, MainResponses.Help);
+                                await innerDc.RepromptDialogAsync();
+                                interrupted = true;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return interrupted;
+        }
+
+        // Handles introduction/continuation prompt logic.
+        private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            if (stepContext.Context.IsSkill())
+            {
+                // If the bot is in skill mode, skip directly to route and do not prompt
+                return await stepContext.NextAsync();
             }
             else
             {
-                var result = await luisService.RecognizeAsync<NewsLuis>(dc.Context, CancellationToken.None);
+                // If bot is in local mode, prompt with intro or continuation message
+                var prompt = stepContext.Options as Activity ?? await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
+                var activity = stepContext.Context.Activity;
+                if (activity.Type == ActivityTypes.ConversationUpdate)
+                {
+                    prompt = await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
+                }
+
+                var promptOptions = new PromptOptions
+                {
+                    Prompt = prompt
+                };
+
+                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            }
+        }
+
+        // Handles routing to additional dialogs logic.
+        private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            var a = stepContext.Context.Activity;
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
+
+            if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
+            {
+                var result = stepContext.Context.TurnState.Get<NewsLuis>(StateProperties.SkillLuisResult);
                 state.LuisResult = result;
 
                 var intent = result?.TopIntent().intent;
@@ -85,158 +219,143 @@ namespace NewsSkill.Dialogs
                     case NewsLuis.Intent.TrendingArticles:
                         {
                             // send articles in response
-                            await dc.BeginDialogAsync(nameof(TrendingArticlesDialog));
-                            break;
+                            return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
                         }
 
                     case NewsLuis.Intent.SetFavoriteTopics:
                     case NewsLuis.Intent.ShowFavoriteTopics:
                         {
                             // send favorite news categories
-                            await dc.BeginDialogAsync(nameof(FavoriteTopicsDialog));
-                            break;
+                            return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
                         }
 
                     case NewsLuis.Intent.FindArticles:
                         {
                             // send greeting response
-                            await dc.BeginDialogAsync(nameof(FindArticlesDialog));
-                            break;
+                            return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
                         }
 
                     case NewsLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await _responder.ReplyWith(dc.Context, MainResponses.Confused);
+                            await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await dc.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
+                            await stepContext.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
                             break;
                         }
                 }
             }
-        }
-
-        protected override async Task OnDialogCompleteAsync(DialogContext dc, object result = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // workaround. if connect skill directly to teams, the following response does not work.
-            if (dc.Context.IsSkill() || Channel.GetChannelId(dc.Context) != Channels.Msteams)
+            else if (a.Type == ActivityTypes.Event)
             {
-                var response = dc.Context.Activity.CreateReply();
-                response.Type = ActivityTypes.EndOfConversation;
+                // Handle skill actions here
+                var eventActivity = a.AsEventActivity();
 
-                await dc.Context.SendActivityAsync(response);
-            }
-
-            // End active dialog.
-            await dc.EndDialogAsync(result);
-        }
-
-        protected override async Task<InterruptionAction> OnInterruptDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var result = InterruptionAction.NoAction;
-
-            if (dc.Context.Activity.Type == ActivityTypes.Message)
-            {
-                // check luis intent
-                _services.CognitiveModelSets["en-us"].LuisServices.TryGetValue("General", out var luisService);
-
-                if (luisService == null)
+                if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
-                    throw new Exception("The specified LUIS Model could not be found in your Skill configuration.");
-                }
-                else
-                {
-                    var luisResult = await luisService.RecognizeAsync<General>(dc.Context, cancellationToken);
-                    var topIntent = luisResult.TopIntent();
-
-                    if (topIntent.score > 0.5)
+                    switch (eventActivity.Name)
                     {
-                        switch (topIntent.intent)
-                        {
-                            case General.Intent.Cancel:
-                                {
-                                    result = await OnCancel(dc);
-                                    break;
-                                }
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        protected override async Task OnEventActivityAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var ev = dc.Context.Activity.AsEventActivity();
-            var value = ev.Value?.ToString();
-
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
-
-            switch (ev.Name)
-            {
-                case Events.Location:
-                    {
-                        // Test trigger with
-                        // /event:{ "Name": "Location", "Value": "34.05222222222222,-118.2427777777777" }
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            var coords = value.Split(',');
-                            if (coords.Length == 2)
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "GetTrendingArticles":
                             {
-                                if (double.TryParse(coords[0], out var lat) && double.TryParse(coords[1], out var lng))
+                                TrendingArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
                                 {
-                                    state.CurrentCoordinates = value;
+                                    actionData = eventValue.ToObject<TrendingArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
                                 }
+
+                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
                             }
-                        }
 
-                        break;
-                    }
+                        case "GetFavoriteTopics":
+                            {
+                                FavoriteTopicsInput actionData = null;
 
-                default:
-                    {
-                        await dc.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
-                        break;
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FavoriteTopicsInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        case "FindArticles":
+                            {
+                                FindArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FindArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        default:
+
+                            // todo: move the response to lg
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                            break;
                     }
+                }
             }
+
+            // If activity was unhandled, flow should continue to next step
+            return await stepContext.NextAsync();
         }
 
-        private async Task<InterruptionAction> OnCancel(DialogContext dc)
+        // Handles conversation cleanup.
+        private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            await _responder.ReplyWith(dc.Context, MainResponses.Cancelled);
-            await dc.CancelAllDialogsAsync();
-            return InterruptionAction.End;
-        }
-
-        private async Task<InterruptionAction> OnHelp(DialogContext dc)
-        {
-            await _responder.ReplyWith(dc.Context, MainResponses.Help);
-            return InterruptionAction.Resume;
-        }
-
-        private async Task PopulateStateFromSemanticAction(ITurnContext context)
-        {
-            // Populating local state with data passed through semanticAction out of Activity
-            var activity = context.Activity;
-            var semanticAction = activity.SemanticAction;
-            if (semanticAction != null && semanticAction.Entities.ContainsKey("location"))
+            if (stepContext.Context.IsSkill())
             {
-                var location = semanticAction.Entities["location"];
-                var locationObj = location.Properties["location"].ToString();
-                var state = await _stateAccessor.GetAsync(context, () => new NewsSkillState());
-                state.CurrentCoordinates = locationObj;
+                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
+                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
+                {
+                    Code = EndOfConversationCodes.CompletedSuccessfully,
+                    Value = stepContext.Result,
+                };
+
+                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
+                return await stepContext.EndDialogAsync();
+            }
+            else
+            {
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Completed), cancellationToken);
             }
         }
 
-        public class Events
+        private async Task DigestActionInput(DialogContext dc, TrendingArticlesInput request)
         {
-            public const string Location = "Location";
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FavoriteTopicsInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            userState.Category = new FoundChoice() { Value = request.Category };
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FindArticlesInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            var convState = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
+            convState.LuisResult = new NewsLuis() { Entities = new NewsLuis._Entities() { topic = new string[] { request.Query }, site = new string[] { request.Site } } };
         }
     }
 }

@@ -50,6 +50,12 @@ namespace NewsSkill.Dialogs
             var articles = await _client.GetTrendingNews(userState.Market);
             await _responder.ReplyWith(sc.Context, TrendingArticlesResponses.ShowArticles, articles);
 
+            var skillOptions = sc.Options as NewsSkillOptionBase;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+            }
+
             return await sc.EndDialogAsync();
         }
     }

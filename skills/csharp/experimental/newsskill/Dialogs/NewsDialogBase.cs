@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using NewsSkill.Models;
+using NewsSkill.Models.Action;
 using NewsSkill.Responses.Main;
 using NewsSkill.Services;
 
@@ -119,6 +122,55 @@ namespace NewsSkill.Dialogs
             }
 
             return await Task.FromResult(false);
+        }
+
+        protected NewsResult GenerateNewsActionResult(IList<NewsArticle> articles, bool actionSuccess)
+        {
+            var actionResult = new NewsResult()
+            {
+                NewsList = new List<NewsInfo>(),
+                ActionSuccess = actionSuccess
+            };
+
+            var newsArticles = articles as List<NewsArticle>;
+            foreach (var article in newsArticles)
+            {
+                var newsInfo = new NewsInfo()
+                {
+                    Title = article.Name,
+                    Subtitle = article.DatePublished,
+                    Description = article.Description,
+                    ImageUrl = article?.Image?.Thumbnail?.ContentUrl,
+                    Url = article.WebSearchUrl
+                };
+                actionResult.NewsList.Add(newsInfo);
+            }
+
+            return actionResult;
+        }
+
+        protected NewsResult GenerateNewsActionResult(IList<NewsTopic> articles, bool actionSuccess)
+        {
+            var actionResult = new NewsResult()
+            {
+                NewsList = new List<NewsInfo>(),
+                ActionSuccess = actionSuccess
+            };
+
+            var newsArticles = articles as List<NewsTopic>;
+            foreach (var article in newsArticles)
+            {
+                var newsInfo = new NewsInfo()
+                {
+                    Title = article.Name,
+                    Description = article.Description,
+                    ImageUrl = article?.Image?.Url,
+                    Url = article.WebSearchUrl
+                };
+                actionResult.NewsList.Add(newsInfo);
+            }
+
+            return actionResult;
         }
     }
 }

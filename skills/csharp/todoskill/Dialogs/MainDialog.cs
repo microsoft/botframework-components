@@ -65,10 +65,6 @@ namespace ToDoSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            // Initialize the PageSize and ReadSize parameters in state from configuration
-            var state = await _stateAccessor.GetAsync(innerDc.Context, () => new ToDoSkillState());
-            InitializeConfig(state);
-
             if (innerDc.Context.Activity.Type == ActivityTypes.Message)
             {
                 // Get cognitive models for the current locale.
@@ -239,6 +235,10 @@ namespace ToDoSkill.Dialogs
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                // Initialize the PageSize and ReadSize parameters in state from configuration
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                InitializeConfig(state);
+
                 var luisResult = stepContext.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var intent = luisResult?.TopIntent().intent;
                 var generalLuisResult = stepContext.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);

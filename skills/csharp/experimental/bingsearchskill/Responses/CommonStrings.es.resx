@@ -129,4 +129,7 @@
   <data name="View" xml:space="preserve">
     <value>Vista</value>
   </data>
+  <data name="DontKnowAnswer" xml:space="preserve">
+    <value>Lo siento, aún no sé esta respuesta.</value>
+  </data>
 </root>

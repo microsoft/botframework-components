@@ -20,5 +20,7 @@ namespace MusicSkill.Responses.Main
         public const string FeatureNotAvailable = "FeatureNotAvailable";
         public const string CancelMessage = "CancelMessage";
         public const string NoResultstMessage = "NoResultstMessage";
+        public const string FirstPromptMessage = "FirstPromptMessage";
+        public const string CompletedMessage = "CompletedMessage";
     }
 }
