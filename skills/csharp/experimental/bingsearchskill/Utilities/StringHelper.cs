@@ -9,7 +9,8 @@ namespace BingSearchSkill.Utilities
     {
         public static string EscapeCardString(string cardString)
         {
-            return cardString.Replace("\"", "\\\"");
+            // workaround for render error of double quotes
+            return cardString.Replace("\"", string.Empty);
         }
     }
 }

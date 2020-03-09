@@ -86,7 +86,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\CommonStrings.ttnew">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonStrings.cs</LastGenOutput>
     </None>
@@ -116,7 +116,7 @@
       <LastGenOutput>MainResponses.cs</LastGenOutput>
     </None>
     <None Update="Responses\Main\MainResponses.ttnew">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainResponses.cs</LastGenOutput>
     </None>
@@ -198,16 +198,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CommonStrings.ttnew</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.ttnew</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Search\SearchResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SearchResponses.ttnew</DependentUpon>
     </Compile>
     <Compile Update="Responses\Shared\SharedResponses.cs">
       <DesignTime>True</DesignTime>
