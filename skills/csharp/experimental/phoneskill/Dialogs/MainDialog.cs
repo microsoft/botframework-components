@@ -21,6 +21,7 @@ using PhoneSkill.Services.Luis;
 using Newtonsoft.Json.Linq;
 using Microsoft.Bot.Builder.AI.Luis;
 using SkillServiceLibrary.Utilities;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
@@ -29,7 +30,7 @@ namespace PhoneSkill.Dialogs
         private readonly OutgoingCallDialog outgoingCallDialog;
         private BotSettings _settings;
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateEngineManager _responseManager;
         private IStatePropertyAccessor<PhoneSkillState> _stateAccessor;
 
         public MainDialog(
@@ -39,7 +40,7 @@ namespace PhoneSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _responseManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
 
             TelemetryClient = telemetryClient;
 

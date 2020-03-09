@@ -32,10 +32,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Responses\Main\PhoneMainResponses.json" />
-    <EmbeddedResource Include="Responses\OutgoingCall\OutgoingCallResponses.json" />
-    <EmbeddedResource Include="Responses\Shared\PhoneSharedResponses.json" />
-  </ItemGroup>
+    <None Update="Responses\Main\PhoneMainResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\PhoneMainResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\OutgoingCall\OutgoingCallResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\OutgoingCall\OutgoingCallResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\PhoneSharedResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+      <None Update="Responses\Shared\PhoneSharedResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\Shared.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    </ItemGroup>
 
   <ItemGroup>
     <None Update="Responses\Main\PhoneMainResponses.tt">
