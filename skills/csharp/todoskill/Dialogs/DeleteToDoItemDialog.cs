@@ -15,6 +15,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.DeleteToDo;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
@@ -145,6 +146,18 @@ namespace ToDoSkill.Dialogs
                         false);
 
                     canDeleteAnotherTask = state.AllTasks.Count > 0 ? true : false;
+
+                    var skillOptions = sc.Options as ToDoSkillOptions;
+                    if (skillOptions != null && skillOptions.IsAction)
+                    {
+                        var actionResult = new List<string>();
+                        if (state.AllTasks != null && state.AllTasks.Any())
+                        {
+                            state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
+                        }
+
+                        return await sc.EndDialogAsync(actionResult);
+                    }
                 }
                 else
                 {
@@ -164,6 +177,13 @@ namespace ToDoSkill.Dialogs
                             string.Empty,
                             state.ListType,
                             true);
+
+                        var skillOptions = sc.Options as ToDoSkillOptions;
+                        if (skillOptions != null && skillOptions.IsAction)
+                        {
+                            var actionResult = new ActionResult() { ActionSuccess = true };
+                            return await sc.EndDialogAsync(actionResult);
+                        }
                     }
                     else
                     {
@@ -379,6 +399,12 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var skillOptions = sc.Options as ToDoSkillOptions;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.EndDialogAsync();
+            }
+
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);

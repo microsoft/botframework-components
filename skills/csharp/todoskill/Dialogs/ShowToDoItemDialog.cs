@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Luis;
@@ -128,6 +130,18 @@ namespace ToDoSkill.Dialogs
                 if (topIntent == ToDoLuis.Intent.ShowToDo || state.GoBackToStart)
                 {
                     state.AllTasks = await service.GetTasksAsync(state.ListType);
+                }
+
+                var skillOptions = sc.Options as ToDoSkillOptions;
+                if (skillOptions != null && skillOptions.IsAction)
+                {
+                    var actionResult = new List<string>();
+                    if (state.AllTasks != null && state.AllTasks.Any())
+                    {
+                        state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
+                    }
+
+                    return await sc.EndDialogAsync(actionResult);
                 }
 
                 var allTasksCount = state.AllTasks.Count;

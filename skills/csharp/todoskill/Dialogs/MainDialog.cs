@@ -325,6 +325,7 @@ namespace ToDoSkill.Dialogs
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
+                                state.DeleteTaskConfirmation = true;
                                 return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
                             }
 
@@ -448,6 +449,7 @@ namespace ToDoSkill.Dialogs
                 var actionData = value.ToObject<ToDoInfo>();
                 state.ListType = actionData.ListType;
                 state.TaskContent = actionData.TaskName;
+                state.TaskContentML = actionData.TaskName;
                 return;
             }
             catch

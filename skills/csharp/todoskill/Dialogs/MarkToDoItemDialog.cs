@@ -15,6 +15,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.MarkToDo;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
@@ -135,6 +136,13 @@ namespace ToDoSkill.Dialogs
                         state.ListType,
                         state.MarkOrDeleteAllTasksFlag);
                     await sc.Context.SendActivityAsync(markToDoCard.Speak, speak: markToDoCard.Speak);
+
+                    var skillOptions = sc.Options as ToDoSkillOptions;
+                    if (skillOptions != null && skillOptions.IsAction)
+                    {
+                        var actionResult = new ActionResult() { ActionSuccess = true };
+                        return await sc.EndDialogAsync(actionResult);
+                    }
                 }
                 else
                 {
@@ -159,6 +167,19 @@ namespace ToDoSkill.Dialogs
                     {
                         var activity = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForMultipleTasks, new { AllTasksCount = uncompletedTaskCount.ToString(), ListType = state.ListType });
                         await sc.Context.SendActivityAsync(activity);
+                    }
+
+                    var skillOptions = sc.Options as ToDoSkillOptions;
+                    if (skillOptions != null && skillOptions.IsAction)
+                    {
+                        var actionResult = new List<string>();
+                        var uncompletedTasks = state.AllTasks.Where(t => t.IsCompleted == false).ToList();
+                        if (uncompletedTasks != null && uncompletedTasks.Any())
+                        {
+                            uncompletedTasks.ForEach(x => actionResult.Add(x.Topic));
+                        }
+
+                        return await sc.EndDialogAsync(actionResult);
                     }
                 }
 
