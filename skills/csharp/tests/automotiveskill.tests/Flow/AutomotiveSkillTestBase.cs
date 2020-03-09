@@ -122,7 +122,7 @@ namespace AutomotiveSkill.Tests.Flow
             Services.AddSingleton<IHttpContextAccessor>(mockHttpContextAcessor);
         }
 
-        public string[] ParseReplies(string templateName, object data = null)
+        public string[] GetTemplates(string templateName, object data = null)
         {
             var sp = Services.BuildServiceProvider();
             var engine = sp.GetService<TemplateEngine>();
