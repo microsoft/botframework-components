@@ -186,7 +186,7 @@ namespace ITSMSkill.Tests.Flow
 
         protected Action<IActivity> ActionEndMessage()
         {
-            return AssertContains(MainResponses.WelcomeMessage);
+            return AssertContains(SharedResponses.ActionEnded);
         }
 
         protected Action<IActivity> SkillActionEndMessage()

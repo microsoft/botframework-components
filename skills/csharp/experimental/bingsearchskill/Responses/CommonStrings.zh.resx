@@ -129,4 +129,7 @@
   <data name="View" xml:space="preserve">
     <value>更多</value>
   </data>
+  <data name="DontKnowAnswer" xml:space="preserve">
+    <value>抱歉，我不知道答案。</value>
+  </data>
 </root>

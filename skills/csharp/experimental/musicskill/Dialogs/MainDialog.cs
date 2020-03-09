@@ -2,251 +2,339 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Dialogs;
-using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Skills;
-using Microsoft.Bot.Solutions.Skills.Models;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions;
+using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 using MusicSkill.Models;
 using MusicSkill.Responses.Main;
 using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
 using SkillServiceLibrary.Utilities;
-using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Connector;
 
 namespace MusicSkill.Dialogs
 {
-    public class MainDialog : ActivityHandlerDialog
+    public class MainDialog : ComponentDialog
     {
         private BotSettings _settings;
         private BotServices _services;
         private ResponseManager _responseManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
+        private Dialog _playMusicDialog;
 
         public MainDialog(
-            BotSettings settings,
-            BotServices services,
-            ResponseManager responseManager,
-            UserState userState,
-            ConversationState conversationState,
-            PlayMusicDialog playMusicDialog,
+            IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(MainDialog), telemetryClient)
+            : base(nameof(MainDialog))
         {
-            _settings = settings;
-            _services = services;
-            _responseManager = responseManager;
+            _settings = serviceProvider.GetService<BotSettings>();
+            _services = serviceProvider.GetService<BotServices>();
+            _responseManager = serviceProvider.GetService<ResponseManager>();
             TelemetryClient = telemetryClient;
 
-            // Initialize state accessor
+            // Create conversation state properties
+            var conversationState = serviceProvider.GetService<ConversationState>();
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
 
-            // Register dialogs
-            AddDialog(playMusicDialog);
-        }
-
-        protected override async Task OnMembersAddedAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var locale = CultureInfo.CurrentUICulture;
-            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.WelcomeMessage));
-        }
-
-        protected override async Task OnMessageActivityAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // get current activity locale
-            var localeConfig = _services.GetCognitiveModels();
-
-            // Populate state from SemanticAction as required
-            await PopulateStateFromSemanticAction(dc.Context);
-
-            // Get skill LUIS model from configuration
-            localeConfig.LuisServices.TryGetValue("MusicSkill", out var luisService);
-
-            if (luisService == null)
+            var steps = new WaterfallStep[]
             {
-                throw new Exception("The specified LUIS Model could not be found in your Bot Services configuration.");
+                IntroStepAsync,
+                RouteStepAsync,
+                FinalStepAsync,
+            };
+
+            AddDialog(new WaterfallDialog(nameof(MainDialog), steps));
+            AddDialog(new TextPrompt(nameof(TextPrompt)));
+            InitialDialogId = nameof(MainDialog);
+
+            // Register dialogs
+            _playMusicDialog = serviceProvider.GetService<PlayMusicDialog>() ?? throw new ArgumentNullException(nameof(PlayMusicDialog));
+            AddDialog(_playMusicDialog);
+        }
+
+        // Runs when the dialog is started.
+        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
+        {
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
+            {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<MusicSkillLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.MusicLuisResultKey] = skillResult;
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.GeneralLuisResultKey] = generalResult;
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Check for any interruptions
+                var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
+
+                if (interrupted)
+                {
+                    // If dialog was interrupted, return EndOfTurn
+                    return EndOfTurn;
+                }
+            }
+
+            return await base.OnBeginDialogAsync(innerDc, options, cancellationToken);
+        }
+
+        // Runs on every turn of the conversation.
+        protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
+        {
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
+            {
+                // Get cognitive models for the current locale.
+                var localizedServices = _services.GetCognitiveModels();
+
+                // Run LUIS recognition on Skill model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
+                if (skillLuisService != null)
+                {
+                    var skillResult = await skillLuisService.RecognizeAsync<MusicSkillLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.MusicLuisResultKey] = skillResult;
+                }
+                else
+                {
+                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Run LUIS recognition on General model and store result in turn state.
+                localizedServices.LuisServices.TryGetValue("General", out var generalLuisService);
+                if (generalLuisService != null)
+                {
+                    var generalResult = await generalLuisService.RecognizeAsync<GeneralLuis>(innerDc.Context, cancellationToken);
+                    innerDc.Context.TurnState[StateProperties.GeneralLuisResultKey] = generalResult;
+                }
+                else
+                {
+                    throw new Exception("The general LUIS Model could not be found in your Bot Services configuration.");
+                }
+
+                // Check for any interruptions
+                var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
+
+                if (interrupted)
+                {
+                    // If dialog was interrupted, return EndOfTurn
+                    return EndOfTurn;
+                }
+            }
+
+            return await base.OnContinueDialogAsync(innerDc, cancellationToken);
+        }
+
+        // Runs on every turn of the conversation to check if the conversation should be interrupted.
+        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        {
+            var interrupted = false;
+            var activity = innerDc.Context.Activity;
+
+            if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
+            {
+                // Get connected LUIS result from turn state.
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                var generalResult = innerDc.Context.TurnState.Get<GeneralLuis>(StateProperties.GeneralLuisResultKey);
+                (var generalIntent, var generalScore) = generalResult.TopIntent();
+
+                if (generalScore > 0.5)
+                {
+                    switch (generalIntent)
+                    {
+                        case GeneralLuis.Intent.Cancel:
+                            {
+                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.BeginDialogAsync(InitialDialogId);
+                                interrupted = true;
+                                break;
+                            }
+
+                        case GeneralLuis.Intent.Help:
+                            {
+                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.RepromptDialogAsync();
+                                interrupted = true;
+                                break;
+                            }
+
+                        case GeneralLuis.Intent.Logout:
+                            {
+                                await LogUserOut(innerDc);
+
+                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.BeginDialogAsync(InitialDialogId);
+                                interrupted = true;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return interrupted;
+        }
+
+        // Handles introduction/continuation prompt logic.
+        private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            if (stepContext.Context.IsSkill())
+            {
+                // If the bot is in skill mode, skip directly to route and do not prompt
+                return await stepContext.NextAsync();
             }
             else
             {
-                var result = await luisService.RecognizeAsync<MusicSkillLuis>(dc.Context, CancellationToken.None);
-                var intent = result?.TopIntent().intent;
+                // If bot is in local mode, prompt with intro or continuation message
+                var promptOptions = new PromptOptions
+                {
+                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(MainResponses.FirstPromptMessage)
+                };
 
+                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
+                {
+                    promptOptions.Prompt = _responseManager.GetResponse(MainResponses.WelcomeMessage);
+                }
+
+                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            }
+        }
+
+        // Handles routing to additional dialogs logic.
+        private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            var a = stepContext.Context.Activity;
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+
+            if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
+            {
+                var skillResult = stepContext.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
+                var intent = skillResult?.TopIntent().intent;
+
+                // switch on general intents
                 switch (intent)
                 {
                     case MusicSkillLuis.Intent.PlayMusic:
                         {
-                            await dc.BeginDialogAsync(nameof(PlayMusicDialog));
-                            break;
+                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id);
                         }
 
                     case MusicSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await dc.Context.SendActivityAsync(_responseManager.GetResponse(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(SharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
             }
-        }
-
-        protected override async Task OnDialogCompleteAsync(DialogContext dc, object result = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // workaround. if connect skill directly to teams, the following response does not work.
-            if (dc.Context.IsSkill() || Channel.GetChannelId(dc.Context) != Channels.Msteams)
+            else if (a.Type == ActivityTypes.Event)
             {
-                var response = dc.Context.Activity.CreateReply();
-                response.Type = ActivityTypes.EndOfConversation;
+                var ev = a.AsEventActivity();
 
-                await dc.Context.SendActivityAsync(response);
-            }
-
-            // End active dialog.
-            await dc.EndDialogAsync(result);
-        }
-
-        protected override async Task OnEventActivityAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            switch (dc.Context.Activity.Name)
-            {
-                case TokenEvents.TokenResponseEventName:
-                    {
-                        // Auth dialog completion
-                        var result = await dc.ContinueDialogAsync();
-
-                        // If the dialog completed when we sent the token, end the skill conversation
-                        if (result.Status != DialogTurnStatus.Waiting)
+                switch (ev.Name)
+                {
+                    case TokenEvents.TokenResponseEventName:
                         {
-                            var response = dc.Context.Activity.CreateReply();
-                            response.Type = ActivityTypes.EndOfConversation;
+                            // Auth dialog completion
+                            var result = await stepContext.ContinueDialogAsync();
 
-                            await dc.Context.SendActivityAsync(response);
+                            // If the dialog completed when we sent the token, end the skill conversation
+                            if (result.Status != DialogTurnStatus.Waiting)
+                            {
+                                var response = stepContext.Context.Activity.CreateReply();
+                                response.Type = ActivityTypes.EndOfConversation;
+
+                                await stepContext.Context.SendActivityAsync(response);
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-            }
-        }
-
-        protected override async Task<InterruptionAction> OnInterruptDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var result = InterruptionAction.NoAction;
-
-            if (dc.Context.Activity.Type == ActivityTypes.Message)
-            {
-                // get current activity locale
-                var localeConfig = _services.GetCognitiveModels();
-
-                // check general luis intent
-                localeConfig.LuisServices.TryGetValue("General", out var luisService);
-
-                if (luisService == null)
-                {
-                    throw new Exception("The specified LUIS Model could not be found in your Skill configuration.");
-                }
-                else
-                {
-                    var luisResult = await luisService.RecognizeAsync<GeneralLuis>(dc.Context, cancellationToken);
-                    var topIntent = luisResult.TopIntent();
-
-                    if (topIntent.score > 0.5)
-                    {
-                        switch (topIntent.intent)
+                    default:
                         {
-                            case GeneralLuis.Intent.Cancel:
-                                {
-                                    result = await OnCancel(dc);
-                                    break;
-                                }
-
-                            case GeneralLuis.Intent.Help:
-                                {
-                                    result = await OnHelp(dc);
-                                    break;
-                                }
-
-                            case GeneralLuis.Intent.Logout:
-                                {
-                                    result = await OnLogout(dc);
-                                    break;
-                                }
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                            break;
                         }
-                    }
                 }
             }
 
-            return result;
+            // If activity was unhandled, flow should continue to next step
+            return await stepContext.NextAsync();
         }
 
-        private async Task<InterruptionAction> OnCancel(DialogContext dc)
+        // Handles conversation cleanup.
+        private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
-            await OnDialogCompleteAsync(dc);
-            await dc.CancelAllDialogsAsync();
-            return InterruptionAction.End;
-        }
-
-        private async Task<InterruptionAction> OnHelp(DialogContext dc)
-        {
-            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
-            return InterruptionAction.Resume;
-        }
-
-        private async Task<InterruptionAction> OnLogout(DialogContext dc)
-        {
-            BotFrameworkAdapter adapter;
-            var supported = dc.Context.Adapter is BotFrameworkAdapter;
-            if (!supported)
+            if (stepContext.Context.IsSkill())
             {
-                throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
+                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
+                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
+                {
+                    Code = EndOfConversationCodes.CompletedSuccessfully,
+                    Value = stepContext.Result,
+                };
+
+                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
+                return await stepContext.EndDialogAsync();
             }
             else
             {
-                adapter = (BotFrameworkAdapter)dc.Context.Adapter;
+                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
-
-            await dc.CancelAllDialogsAsync();
-
-            // Sign out user
-            var tokens = await adapter.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
-            foreach (var token in tokens)
-            {
-                await adapter.SignOutUserAsync(dc.Context, token.ConnectionName);
-            }
-
-            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
-
-            return InterruptionAction.End;
         }
 
-        private async Task PopulateStateFromSemanticAction(ITurnContext context)
+        private async Task LogUserOut(DialogContext dc)
         {
-            // Example of populating local state with data passed through semanticAction out of Activity
-            var activity = context.Activity;
-            var semanticAction = activity.SemanticAction;
+            IUserTokenProvider tokenProvider;
+            var supported = dc.Context.Adapter is IUserTokenProvider;
+            if (supported)
+            {
+                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
-            // if (semanticAction != null && semanticAction.Entities.ContainsKey("location"))
-            // {
-            //    var location = semanticAction.Entities["location"];
-            //    var locationObj = location.Properties["location"].ToString();
-            //    var state = await _stateAccessor.GetAsync(context, () => new SkillState());
-            //    state.CurrentCoordinates = locationObj;
-            // }
+                // Sign out user
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                foreach (var token in tokens)
+                {
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                }
+
+                // Cancel all active dialogs
+                await dc.CancelAllDialogsAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
+            }
         }
     }
 }

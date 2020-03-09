@@ -310,7 +310,7 @@ namespace HospitalitySkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.WelcomeMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
             }
         }
 

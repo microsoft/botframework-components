@@ -23,6 +23,11 @@ namespace BingSearchSkill.Utilities
             var reg = new Regex("<script type=\"application/ld\\+json\">(?<json>(.)*?(?=</script>))</script>", RegexOptions.Singleline);
             var match = reg.Match(pageString);
             var movieInfoJsonString = match.Groups["json"].Value;
+            if (string.IsNullOrEmpty(movieInfoJsonString))
+            {
+                return null;
+            }
+
             var movieInfo = JToken.Parse(movieInfoJsonString);
             return new MovieModel(movieInfo);
         }

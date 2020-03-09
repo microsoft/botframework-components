@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToDoSkill.Bots;
 using ToDoSkill.Dialogs;
+using ToDoSkill.Responses.Main;
 using ToDoSkill.Services;
 using ToDoSkill.Tests.Flow.Fakes;
 using ToDoSkill.Tests.Flow.Utterances;
@@ -188,6 +189,11 @@ namespace ToDoSkill.Tests.Flow
             });
 
             return testFlow;
+        }
+
+        protected string[] ActionEndMessage()
+        {
+            return GetTemplates(ToDoMainResponses.CompletedMessage);
         }
     }
 }

@@ -284,7 +284,6 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    await SendActionEnded(sc.Context);
                     return await sc.CancelAllDialogsAsync();
                 }
             }
@@ -374,7 +373,6 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    await SendActionEnded(sc.Context);
                     return await sc.CancelAllDialogsAsync();
                 }
             }
@@ -485,7 +483,6 @@ namespace ToDoSkill.Dialogs
             else
             {
                 state.GoBackToStart = false;
-                await SendActionEnded(sc.Context);
                 return await sc.EndDialogAsync(true);
             }
         }
@@ -529,7 +526,6 @@ namespace ToDoSkill.Dialogs
             else
             {
                 state.GoBackToStart = false;
-                await SendActionEnded(sc.Context);
                 return await sc.EndDialogAsync(true);
             }
         }

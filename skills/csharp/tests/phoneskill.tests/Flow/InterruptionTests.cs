@@ -17,6 +17,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_Help_Interruption()
         {
             await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(GeneralUtterances.Help)
@@ -29,6 +31,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_Cancel_Interruption()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(GeneralUtterances.Cancel)

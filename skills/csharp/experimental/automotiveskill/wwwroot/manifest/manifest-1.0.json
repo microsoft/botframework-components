@@ -23,9 +23,57 @@
     }
   ],
   "activities": {
+    "changeVehicleSetting": {
+      "description": "Change a specific vehicle setting",
+      "type": "event",
+      "name": "ChangeVehicleSetting",
+      "value": {
+        "$ref": "#/definitions/settingInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/operationStatus"
+      }
+    },
     "message": {
       "type": "message",
-      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+      "description": "Receives the user's utterance and attempts to resolve it using the skill's LU models"
+    }
+  },
+  "definitions": {
+    "settingInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "setting": {
+          "type": "string",
+          "description": "The setting to change, e.g. volume, temperature"
+        },
+        "value": {
+          "type": "string",
+          "description": "The operation you want to set for the setting, e.g. activate, higher, on/off"
+        },
+        "amount": {
+          "type": "string",
+          "description": "The amount you want to set for a numeric setting, e.g. eleven, minimum"
+        },
+        "type": {
+          "type": "string",
+          "description": "The operation type you want to do with the amount, e.g. \"by\" or \"to\""
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of measurement for the amount, e.g. celsius, percent"
+        }
+      }
+    },
+    "operationStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "description": "An operation status indicating success or failure"
+        }
+      }
     }
   }
 }
