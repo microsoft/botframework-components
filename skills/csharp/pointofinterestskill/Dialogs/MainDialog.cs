@@ -346,7 +346,7 @@ namespace PointOfInterestSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(POIMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(POIMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
