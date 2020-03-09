@@ -61,7 +61,7 @@
       "type": "object",
       "required": [],
       "properties": {
-        "setting": {
+        "info": {
           "type": "string",
           "description": "Information used to search the music catalogue, e.g. artist name"
         }

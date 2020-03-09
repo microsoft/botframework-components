@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Graph;
 using MusicSkill.Models;
 using MusicSkill.Responses.Main;
 using MusicSkill.Services;
@@ -45,11 +45,17 @@ namespace MusicSkill.Dialogs
         private async Task<DialogTurnResult> GetAndSendMusicResult(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var state = await StateAccessor.GetAsync(stepContext.Context);
-            var intent = state.LuisResult.TopIntent().intent;
-            var entities = state.LuisResult.Entities;
+
+            var operationStatus = new Models.ActionInfos.OperationStatus() { Status = false };
+
+            if (string.IsNullOrEmpty(state.Query))
+            {
+                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
+                return await stepContext.EndDialogAsync(operationStatus);
+            }
 
             // Extract query entity to search against Spotify for
-            var searchQuery = entities.Artist_Any[0];
+            var searchQuery = state.Query;
 
             // Get music api client
             var client = await GetSpotifyWebAPIClient(Settings);
@@ -60,10 +66,12 @@ namespace MusicSkill.Dialogs
             // If any results exist, get the first playlist, then artist result
             if (searchItems.Playlists?.Total != 0)
             {
+                operationStatus.Status = true;
                 await SendOpenDefaultAppEventActivity(stepContext, searchItems.Playlists.Items[0].Uri, cancellationToken);
             }
             else if (searchItems.Artists?.Total != 0)
             {
+                operationStatus.Status = true;
                 await SendOpenDefaultAppEventActivity(stepContext, searchItems.Artists.Items[0].Uri, cancellationToken);
             }
             else
@@ -72,7 +80,7 @@ namespace MusicSkill.Dialogs
             }
 
             // End dialog
-            return await stepContext.EndDialogAsync();
+            return await stepContext.EndDialogAsync(operationStatus);
         }
 
         private async Task<SpotifyWebAPI> GetSpotifyWebAPIClient(BotSettings settings)

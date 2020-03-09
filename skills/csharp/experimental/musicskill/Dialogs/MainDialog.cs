@@ -12,9 +12,11 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using MusicSkill.Models;
+using MusicSkill.Models.ActionInfos;
 using MusicSkill.Responses.Main;
 using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace MusicSkill.Dialogs
@@ -280,6 +282,18 @@ namespace MusicSkill.Dialogs
                             break;
                         }
 
+                    case Events.PlayMusic:
+                        {
+                            SearchInfo actionData = null;
+                            if (ev.Value is JObject info)
+                            {
+                                actionData = info.ToObject<SearchInfo>();
+                                actionData.DigestState(state);
+                            }
+
+                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id);
+                        }
+
                     default:
                         {
                             await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
@@ -335,6 +349,11 @@ namespace MusicSkill.Dialogs
             {
                 throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
             }
+        }
+
+        private class Events
+        {
+            public const string PlayMusic = "PlayMusic";
         }
     }
 }

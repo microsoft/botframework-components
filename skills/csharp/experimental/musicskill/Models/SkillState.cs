@@ -9,10 +9,11 @@ namespace MusicSkill.Models
     {
         public string Token { get; set; }
 
-        public MusicSkillLuis LuisResult { get; set; }
+        public string Query { get; set; }
 
         public void Clear()
         {
+            Query = null;
         }
     }
 }
