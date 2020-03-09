@@ -1,0 +1,27 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Luis;
+using Newtonsoft.Json;
+
+namespace ITSMSkill.Models.Actions
+{
+    public class CloseTicketInput : IActionInput
+    {
+        [JsonProperty("number")]
+        public string Number { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+
+        public ITSMLuis Convert()
+        {
+            var luis = new ITSMLuis
+            {
+                Entities = new ITSMLuis._Entities(),
+            };
+
+            return luis;
+        }
+    }
+}

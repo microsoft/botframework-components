@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
@@ -488,6 +489,12 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> CheckDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // TODO for display knowledge loop
+            if (sc.Result is EndFlowResult endFlow)
+            {
+                return await sc.EndDialogAsync(new ActionResult { ActionSuccess = endFlow.Result });
+            }
+
             var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
             if (string.IsNullOrEmpty(state.TicketDescription))
             {
@@ -885,7 +892,7 @@ namespace ITSMSkill.Dialogs
             var intent = (GeneralLuis.Intent)sc.Result;
             if (intent == GeneralLuis.Intent.Confirm)
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.EndDialogAsync(new EndFlowResult(true));
             }
             else if (intent == GeneralLuis.Intent.Reject)
             {

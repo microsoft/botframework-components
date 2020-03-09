@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading;
 using ITSMSkill.Bots;
 using ITSMSkill.Dialogs;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
@@ -189,11 +190,16 @@ namespace ITSMSkill.Tests.Flow
             return AssertContains(SharedResponses.ActionEnded);
         }
 
-        protected Action<IActivity> SkillActionEndMessage()
+        protected Action<IActivity> SkillActionEndMessage(bool? success = null)
         {
             return activity =>
             {
                 Assert.AreEqual(activity.Type, ActivityTypes.EndOfConversation);
+                if (success.HasValue)
+                {
+                    var result = ((Activity)activity).Value as ActionResult;
+                    Assert.AreEqual(result.ActionSuccess, success.Value);
+                }
             };
         }
 

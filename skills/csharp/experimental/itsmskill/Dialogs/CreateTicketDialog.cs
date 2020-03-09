@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Shared;
@@ -102,7 +103,7 @@ namespace ITSMSkill.Dialogs
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
             await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketCreated, card, null));
-            return await sc.NextAsync();
+            return await sc.EndDialogAsync(new ActionResult { ActionSuccess = true });
         }
     }
 }
