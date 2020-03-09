@@ -1,16 +1,16 @@
 ﻿[import] (FindArticlesResponses.lg)
 
 # ShowArticles.Text(Data)
-- Here's what I found:
+- Folgendes habe ich gefunden:
 
 # ShowMultipleArticles.Speak(Data)
-- I found a few news stories, here's a summary of the first: @{if(Data == null, '', Data)}
+- Ich habe ein paar Nachrichten gefunden, hier eine Zusammenfassung der ersten: @{if(Data == null, '', Data)}
 
 # ShowOneArticles.Speak(Data)
 - @{if(Data == null, '', Data)}
 
 # NoArticles.Text(Data)
-- Sorry, I couldn't find any articles on that topic.
+- Entschuldigung, ich konnte keine Artikel zu diesem Thema finden.
 
 # TopicPrompt.Text(Data)
-- What topic are you interested in?
+- Für welches Thema interessieren Sie sich?

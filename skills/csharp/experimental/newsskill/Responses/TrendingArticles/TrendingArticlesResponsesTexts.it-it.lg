@@ -1,13 +1,13 @@
 ﻿[import] (TrendingArticlesResponses.lg)
 
 # ShowTrending.Text(Data)
-- Here's what's trending:
+- Ecco cosa è di tendenza:
 
 # ShowMultipleTrending.Speak(Data)
-- I found a few news stories, here's the title of the first: @{if(Data == null, '', Data)}
+- Ho trovato alcune notizie, ecco il titolo del primo: @{if(Data == null, '', Data)}
 
 # ShowOneTrending.Speak(Data)
 - @{if(Data == null, '', Data)}
 
 # NoTrending.Text(Data)
-- Sorry, I couldn't find any trending articles.
+- Spiacente, non sono riuscito a trovare articoli di tendenza.

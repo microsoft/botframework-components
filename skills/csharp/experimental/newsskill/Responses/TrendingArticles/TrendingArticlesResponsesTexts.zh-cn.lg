@@ -1,13 +1,13 @@
 ﻿[import] (TrendingArticlesResponses.lg)
 
 # ShowTrending.Text(Data)
-- Here's what's trending:
+- 以下是热门新闻：
 
 # ShowMultipleTrending.Speak(Data)
-- I found a few news stories, here's the title of the first: @{if(Data == null, '', Data)}
+- 我找到了一些新闻，第一个的标题是： @{if(Data == null, '', Data)}
 
 # ShowOneTrending.Speak(Data)
 - @{if(Data == null, '', Data)}
 
 # NoTrending.Text(Data)
-- Sorry, I couldn't find any trending articles.
+- 抱歉，我没有找到任何热门新闻。

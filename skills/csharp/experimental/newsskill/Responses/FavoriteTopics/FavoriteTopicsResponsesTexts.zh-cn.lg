@@ -1,16 +1,16 @@
 ﻿[import] (FavoriteTopicsResponses.lg)
 
 # FavoriteTopicPrompt.Text(Data)
-- What's your favorite news topic?
+- 你喜欢什么话题？
 
 # ShowFavoriteTopics.Text(Data)
-- Here's what I found on your favorite topic:
+- 这是和你喜欢的话题相关的文章：
 
 # ShowMultipleFavoriteTopics.Speak(Data)
-- I found a few news stories, here's a summary of the first: @{if(Data == null, '', Data)}
+- 我找到了一些新闻，第一个是： @{if(Data == null, '', Data)}
 
 # ShowOneFavoriteTopics.Speak(Data)
 - @{if(Data == null, '', Data)}
 
 # NoFavoriteTopics.Text(Data)
-- Sorry, I couldn't find any articles on that topic.
+- 抱歉，我没有找到和这个话题相关的文章。

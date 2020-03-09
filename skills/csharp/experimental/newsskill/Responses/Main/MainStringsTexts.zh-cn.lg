@@ -31,14 +31,14 @@
 - 尝试键入 * 告诉我新闻 * 搜索相关新闻文章。
 
 # ReadMore.Text(Data)
-- Read More!
+- 阅读更多！
 
 # LearnMore.Text(Data)
-- Learn More
+- 了解更多
 
 # MarketPrompt.Text(Data)
-- What country or region are you in?
+- 你在哪个国家或地区？
 
 # MarketRetryPrompt.Text(Data)
-- Couldn't find that country or region. What country or region do you want to search in?
+- 找不到该国家或地区。你想在哪个国家或地区内进行搜索？
 

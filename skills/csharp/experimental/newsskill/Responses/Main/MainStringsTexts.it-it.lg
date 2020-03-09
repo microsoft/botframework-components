@@ -31,15 +31,15 @@
 - Prova a digitare * Tell me News * per la ricerca di articoli di notizie rilevanti.
 
 # ReadMore.Text(Data)
-- Read More!
+- Leggi di più!
 
 # LearnMore.Text(Data)
-- Learn More
+- Per saperne di più
 
 # MarketPrompt.Text(Data)
-- What country or region are you in?
+- In quale paese o regione ti trovi?
 
 # MarketRetryPrompt.Text(Data)
-- Couldn't find that country or region. What country or region do you want to search in?
+- Impossibile trovare quel paese o quella regione. In quale paese o regione vuoi cercare?
 
 
