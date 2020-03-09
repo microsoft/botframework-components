@@ -12,13 +12,7 @@
 - ¡Bienvenido! Puedo buscar información de la película, información de celebridades para usted.
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = Esta función aún no está disponible en esta habilidad. Por favor, intenta preguntar algo más.
-    Speak = Esta función aún no está disponible en thiskill. Por favor, intenta preguntar algo más.
-]
+- Esta función aún no está disponible en esta habilidad. Por favor, intenta preguntar algo más.
 
 # LogOut.Text(Data)
 - Su firma fue exitosa.

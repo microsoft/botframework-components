@@ -12,13 +12,7 @@
 - benvenuto! Posso cercare informazioni sui film, informazioni sulle celebrità per te.
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = Questa funzione non è ancora disponibile in questa abilità. Si prega di provare a chiedere qualcos'altro.
-    Speak = Questa funzione non è ancora disponibile in questkill. Si prega di provare a chiedere qualcos'altro.
-]
+- Questa funzione non è ancora disponibile in questa abilità. Si prega di provare a chiedere qualcos'altro.
 
 # LogOut.Text(Data)
 - Il tuo segno è andato a buon fine.

@@ -26,7 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Drawing.Drawing2D;
 using BingSearchSkill.Utilities;
-using Bingsearchskill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {

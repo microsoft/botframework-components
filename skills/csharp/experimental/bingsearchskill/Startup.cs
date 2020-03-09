@@ -4,7 +4,7 @@
 using BingSearchSkill.Bots;
 using BingSearchSkill.Dialogs;
 using BingSearchSkill.Services;
-using Bingsearchskill.Utilities;
+using BingSearchSkill.Utilities;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

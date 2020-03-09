@@ -15,7 +15,7 @@ using Microsoft.Bot.Schema;
 using SkillServiceLibrary.Utilities;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Builder.Dialogs;
-using Bingsearchskill.Utilities;
+using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Bots
 {

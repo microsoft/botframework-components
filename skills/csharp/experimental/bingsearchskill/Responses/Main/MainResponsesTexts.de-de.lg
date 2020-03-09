@@ -12,13 +12,7 @@
 - willkommen! Ich kann Film-Info, Promi-Info für Sie suchen.
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = Diese Funktion ist in dieser Fähigkeit noch nicht verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
-    Speak = Diese Funktion ist noch nicht in diesem kill verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
-]
+- Diese Funktion ist in dieser Fähigkeit noch nicht verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
 
 # LogOut.Text(Data)
 - Ihr Anmeldeausweiser war erfolgreich.

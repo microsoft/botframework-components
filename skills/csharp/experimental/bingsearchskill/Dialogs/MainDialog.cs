@@ -24,7 +24,7 @@ using SkillServiceLibrary.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using BingSearchSkill.Models.Actions;
 using Newtonsoft.Json.Linq;
-using Bingsearchskill.Utilities;
+using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {

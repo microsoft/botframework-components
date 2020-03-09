@@ -12,13 +12,7 @@
 - 欢迎！我可以搜索电影信息, 名人信息为你。
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = 此功能在此技能中尚不可用。请尝试询问其他的东西。
-    Speak = 此功能在此绝种中尚不可用。请尝试询问其他的东西。
-]
+- 此功能在此技能中尚不可用。请尝试询问其他的东西。
 
 # LogOut.Text(Data)
 - 您的注销成功了。

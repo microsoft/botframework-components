@@ -18,7 +18,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using BingSearchSkill.Models.Actions;
 using BingSearchSkill.Responses;
-using Bingsearchskill.Utilities;
+using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -115,7 +115,7 @@ namespace BingSearchSkill.Dialogs
                         var movieData = new MovieCardData()
                         {
                             Name = movieInfo.Name,
-                            Description = movieInfo.Description,
+                            Description = StringHelper.EscapeCardString(movieInfo.Description),
                             Image = movieInfo.Image,
                             Rating = $"{movieInfo.Rating}",
                             GenreArray = string.Join(" ▪ ", movieInfo.Genre),
@@ -140,7 +140,7 @@ namespace BingSearchSkill.Dialogs
                     {
                         prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
-                            { "Answer", entitiesResult[0].Description },
+                            { "Answer", StringHelper.EscapeCardString(entitiesResult[0].Description) },
                             { "Url", entitiesResult[0].Url }
                         });
                     }
@@ -150,7 +150,7 @@ namespace BingSearchSkill.Dialogs
                     var celebrityData = new PersonCardData()
                     {
                         Name = entitiesResult[0].Name,
-                        Description = entitiesResult[0].Description,
+                        Description = StringHelper.EscapeCardString(entitiesResult[0].Description),
                         IconPath = entitiesResult[0].ImageUrl,
                         Title_View = LocaleTemplateEngineManager.GetString(CommonStrings.View),
                         Link_View = entitiesResult[0].Url,
@@ -162,7 +162,7 @@ namespace BingSearchSkill.Dialogs
                         celebrityData.IconPath = ImageToDataUri(entitiesResult[0].ImageUrl);
                     }
 
-                    tokens.Add("Speak", entitiesResult[0].Description);
+                    tokens.Add("Speak", StringHelper.EscapeCardString(entitiesResult[0].Description));
 
                     prompt = LocaleTemplateEngineManager.GetCardResponse(
                                 SearchResponses.EntityKnowledge,

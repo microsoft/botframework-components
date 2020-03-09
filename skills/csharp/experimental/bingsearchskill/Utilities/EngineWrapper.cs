@@ -15,7 +15,7 @@ using Microsoft.Bot.Expressions.Memory;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 
-namespace Bingsearchskill.Utilities
+namespace BingSearchSkill.Utilities
 {
     public static class EngineWrapper
     {

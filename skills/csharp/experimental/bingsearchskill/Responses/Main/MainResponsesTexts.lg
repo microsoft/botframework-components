@@ -20,13 +20,7 @@
 - You have been logged out.
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = This feature is not yet available in this skill. Please try asking something else.
-    Speak = This feature is not yet available in thiskill. Please try asking something else.
-]
+- This feature is not yet available in this skill. Please try asking something else.
 
 # CancelMessage.Text(Data)
 - Ok, let's start over.

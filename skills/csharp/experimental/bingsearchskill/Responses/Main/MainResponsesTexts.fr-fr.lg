@@ -12,13 +12,7 @@
 - accueillir! Je peux Rechercher des infos de film, infos de célébrité pour vous.
 
 # FeatureNotAvailable.Text(Data)
-- @{FeatureNotAvailableTextAndSpeak1(Data)}
-
-# FeatureNotAvailableTextAndSpeak1(Data)
-[Activity
-    Text = Cette fonctionnalité n’est pas encore disponible dans cette compétence. S’il vous plaît essayer de demander autre chose.
-    Speak = Cette fonctionnalité n’est pas encore disponible dans thiskill. S’il vous plaît essayer de demander autre chose.
-]
+- Cette fonctionnalité n’est pas encore disponible dans cette compétence. S’il vous plaît essayer de demander autre chose.
 
 # LogOut.Text(Data)
 - Votre déconnexion a été couronnée de succès.
