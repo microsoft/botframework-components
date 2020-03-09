@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -132,6 +133,14 @@ namespace ToDoSkill.Dialogs
                         state.ListType);
                     await sc.Context.SendActivityAsync(toDoListCard);
 
+                    var skillOptions = sc.Options as ToDoSkillOptions;
+                    if (skillOptions != null && skillOptions.IsAction)
+                    {
+                        var actionResult = new List<string>();
+                        state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
+                        return await sc.EndDialogAsync(actionResult);
+                    }
+
                     return await sc.NextAsync();
                 }
                 else
@@ -166,6 +175,12 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskTaskContent(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var skillOptions = sc.Options as ToDoSkillOptions;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.EndDialogAsync();
+            }
+
             try
             {
                 var state = await this.ToDoStateAccessor.GetAsync(sc.Context);
@@ -308,6 +323,12 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var skillOptions = sc.Options as ToDoSkillOptions;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.EndDialogAsync();
+            }
+
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
