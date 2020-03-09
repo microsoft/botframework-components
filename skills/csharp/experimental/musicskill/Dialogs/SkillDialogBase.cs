@@ -56,10 +56,9 @@ namespace MusicSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var luisResult = dc.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
-            if (luisResult != null)
+            if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                await DigestLuisResult(dc, luisResult);
+                await DigestLuisResult(dc);
             }
 
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
@@ -67,10 +66,9 @@ namespace MusicSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var luisResult = dc.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
-            if (luisResult != null)
+            if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                await DigestLuisResult(dc, luisResult);
+                await DigestLuisResult(dc);
             }
 
             return await base.OnContinueDialogAsync(dc, cancellationToken);
@@ -148,14 +146,14 @@ namespace MusicSkill.Dialogs
         }
 
         // Helpers
-        protected async Task DigestLuisResult(DialogContext dc, MusicSkillLuis musicSkillLuis)
+        protected async Task DigestLuisResult(DialogContext dc)
         {
-            if (dc.Context.Activity.Type == ActivityTypes.Message)
+            var luisResult = dc.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
+            if (luisResult != null)
             {
                 var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState());
-
-                var intent = musicSkillLuis.TopIntent().intent;
-                var entities = musicSkillLuis.Entities;
+                var intent = luisResult.TopIntent().intent;
+                var entities = luisResult.Entities;
 
                 // Extract query entity to search against Spotify for
                 if (entities.Artist_Any != null && entities.Artist_Any.Any())

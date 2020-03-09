@@ -7,7 +7,6 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Graph;
 using MusicSkill.Models;
 using MusicSkill.Responses.Main;
 using MusicSkill.Services;
