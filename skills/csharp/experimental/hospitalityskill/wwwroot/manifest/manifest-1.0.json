@@ -108,7 +108,7 @@
       "properties": {
         "date": {
           "type": "string",
-          "description": "A date in format yyyy-MM-dd for extending to"
+          "description": "Date in TIMEX format yyyy-MM-dd for extending to"
         }
       }
     },
@@ -117,7 +117,7 @@
       "properties": {
         "time": {
           "type": "string",
-          "description": "A time in format Thh:mm:ss for checking out later"
+          "description": "Time in TIMEX format like THH, THH:mm, THH:mm:ss for checking out later"
         }
       }
     },
