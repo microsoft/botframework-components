@@ -91,8 +91,6 @@ namespace NewsSkill.Dialogs
             // show favorite articles
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
             await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, localeTemplateEngineManager, articles, true));
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            convState.Clear();
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
