@@ -487,7 +487,7 @@ namespace CalendarSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
