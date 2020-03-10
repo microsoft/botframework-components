@@ -53,7 +53,7 @@
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.ttnew">
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FavoriteTopicsResponses.cs</LastGenOutput>
     </None>
@@ -78,7 +78,7 @@
     <None Update="Responses\FindArticles\FindArticlesResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.ttnew">
+    <None Update="Responses\FindArticles\FindArticlesResponses.tt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FindArticlesResponses.cs</LastGenOutput>
@@ -150,7 +150,7 @@
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.ttnew">
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TrendingArticlesResponses.cs</LastGenOutput>
     </None>
@@ -178,12 +178,12 @@
     <Compile Update="Responses\FavoriteTopics\FavoriteTopicsResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>FavoriteTopicsResponses.ttnew</DependentUpon>
+      <DependentUpon>FavoriteTopicsResponses.tt</DependentUpon>
     </Compile>
     <Compile Update="Responses\FindArticles\FindArticlesResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>FindArticlesResponses.ttnew</DependentUpon>
+      <DependentUpon>FindArticlesResponses.tt</DependentUpon>
     </Compile>
     <Compile Update="Responses\Main\MainStrings.cs">
       <DesignTime>True</DesignTime>
@@ -198,7 +198,7 @@
     <Compile Update="Responses\TrendingArticles\TrendingArticlesResponses.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>TrendingArticlesResponses.ttnew</DependentUpon>
+      <DependentUpon>TrendingArticlesResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
