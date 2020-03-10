@@ -86,6 +86,7 @@ namespace CalendarSkill.Dialogs
                 }
 
                 var totalRemainingMinutes = 0;
+                var status = false;
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
@@ -100,6 +101,7 @@ namespace CalendarSkill.Dialogs
                     var timeDiffHours = (int)timeDiff.TotalMinutes / 60;
                     var timeDiffDays = timeDiff.Days;
                     totalRemainingMinutes = (int)timeDiff.TotalMinutes;
+                    status = true;
 
                     var remainingMinutes = string.Empty;
                     var remainingHours = string.Empty;
@@ -183,7 +185,7 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes });
+                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status });
                 }
 
                 return await sc.EndDialogAsync();

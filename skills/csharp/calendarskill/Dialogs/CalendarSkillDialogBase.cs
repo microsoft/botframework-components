@@ -1930,10 +1930,6 @@ namespace CalendarSkill.Dialogs
             // send error message to bot user
             var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
             await sc.Context.SendActivityAsync(activity);
-
-            // clear state
-            var state = await Accessor.GetAsync(sc.Context);
-            state.Clear();
             await sc.CancelAllDialogsAsync();
 
             return;
@@ -1960,10 +1956,6 @@ namespace CalendarSkill.Dialogs
                 var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
                 await sc.Context.SendActivityAsync(activity);
             }
-
-            // clear state
-            var state = await Accessor.GetAsync(sc.Context);
-            state.Clear();
         }
 
         // This method is called by any waterfall step that throws a SkillException to ensure consistency

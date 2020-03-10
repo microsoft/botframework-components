@@ -232,15 +232,6 @@
         }
       }
     },
-    "timeRemainingOutput": {
-      "type": "object",
-      "properties": {
-        "remainingTime": {
-          "type": "number",
-          "description": "The remaining time in minutes"
-        }
-      }
-    },
     "dateInfo": {
       "type": "object",
       "properties": {
@@ -254,10 +245,78 @@
         }
       }
     },
+    "timeRemainingOutput": {
+      "type": "object",
+      "properties": {
+        "remainingTime": {
+          "type": "number",
+          "description": "The remaining time in minutes"
+        }
+      }
+    },
+    "eventInfoOutput": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the meeting"
+        },
+        "content": {
+          "type": "string",
+          "description": "Description of the meeting"
+        },
+        "attendees": {
+          "type": "string",
+          "description": "Semicolon separated list of email addresses to invite"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date of the meeting in yyyy-MM-dd format"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Start time of the meeting in HH:mm format"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "End date of the meeting in yyyy-MM-dd format"
+        },
+        "endTime": {
+          "type": "string",
+          "description": "End time of the meeting in HH:mm format"
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration of the meeting in minutes"
+        },
+        "location": {
+          "type": "string",
+          "description": "The location for the meeting"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The timezone to create the meeting in"
+        },
+        "actionSuccess": {
+          "type": "boolean",
+          "description": "Result of action"
+        }
+      }
+    },
     "eventSummary": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/eventInfo"
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "boolean",
+          "description": "Result of action"
+        },
+        "eventList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/eventInfo"
+          }
+        }
       }
     }
   }

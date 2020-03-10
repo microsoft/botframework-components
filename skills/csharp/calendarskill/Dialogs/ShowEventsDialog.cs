@@ -238,7 +238,7 @@ namespace CalendarSkill.Dialogs
                 {
                     List<EventInfo> eventInfos = new List<EventInfo>();
                     state.ShowMeetingInfo.ShowingMeetings.ForEach(e => eventInfos.Add(new EventInfo(e, state.GetUserTimeZone())));
-                    return await sc.EndDialogAsync(eventInfos);
+                    return await sc.EndDialogAsync(new SummaryResult() { EventList = eventInfos, ActionSuccess = true });
                 }
 
                 // no meeting
@@ -399,8 +399,8 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    EventInfo eventInfo = new EventInfo(eventItem, state.GetUserTimeZone());
-                    return await sc.EndDialogAsync(eventInfo);
+                    EventInfoOutput eventInfoOutput = new EventInfoOutput(eventItem, state.GetUserTimeZone(), true);
+                    return await sc.EndDialogAsync(eventInfoOutput);
                 }
 
                 return await sc.EndDialogAsync();
@@ -580,7 +580,6 @@ namespace CalendarSkill.Dialogs
 
                 if (topIntent == null)
                 {
-                    state.Clear();
                     return await sc.CancelAllDialogsAsync();
                 }
 
@@ -594,7 +593,6 @@ namespace CalendarSkill.Dialogs
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
                     // answer no
-                    state.Clear();
                     return await sc.EndDialogAsync();
                 }
 
@@ -784,9 +782,8 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    EventInfo eventInfo = new EventInfo(eventItem, state.GetUserTimeZone());
-                    state.Clear();
-                    return await sc.EndDialogAsync(eventInfo);
+                    EventInfoOutput eventInfoOutput = new EventInfoOutput(eventItem, state.GetUserTimeZone(), true);
+                    return await sc.EndDialogAsync(eventInfoOutput);
                 }
 
                 return await sc.NextAsync();
