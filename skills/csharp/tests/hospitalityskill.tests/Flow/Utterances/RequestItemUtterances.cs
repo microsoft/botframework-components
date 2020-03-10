@@ -24,7 +24,7 @@ namespace HospitalitySkill.Tests.Flow.Utterances
 
         public static readonly Activity RequestWithItemAndInvalidItemAction = new Activity(type: ActivityTypes.Event, name: ActionNames.RequestItem, value: JObject.FromObject(new
         {
-            items = new object[]
+            items = new[]
             {
                 new { number = 1, name = Item },
                 new { number = 1, name = InvalidItem },

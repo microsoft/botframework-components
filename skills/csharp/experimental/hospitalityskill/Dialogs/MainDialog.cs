@@ -311,6 +311,11 @@ namespace HospitalitySkill.Dialogs
                                 return await ProcessAction<RequestItemInput>(nameof(RequestItemDialog), stepContext, cancellationToken);
                             }
 
+                        case ActionNames.RoomService:
+                            {
+                                return await ProcessAction<RoomServiceInput>(nameof(RoomServiceDialog), stepContext, cancellationToken);
+                            }
+
                         default:
                             {
                                 await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));

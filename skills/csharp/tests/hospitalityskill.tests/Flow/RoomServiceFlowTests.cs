@@ -73,5 +73,58 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task RoomServiceTestAction()
+        {
+            await this.GetSkillTestFlow()
+                .Send(RoomServiceUtterances.RoomServiceAction)
+                .AssertReply(AssertContains(RoomServiceResponses.MenuPrompt, null, HeroCard.ContentType))
+                .Send(RoomServiceUtterances.Breakfast)
+                .AssertReply(AssertContains(null, null, CardStrings.MenuCard))
+                .AssertReply(AssertContains(RoomServiceResponses.FoodOrder))
+                .Send(RoomServiceUtterances.RoomServiceWithFood)
+                .AssertReply(AssertContains(null, null, CardStrings.FoodOrderCard))
+                .AssertReply(AssertContains(RoomServiceResponses.AddMore))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(AssertStartsWith(RoomServiceResponses.ConfirmOrder))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(RoomServiceResponses.FinalOrderConfirmation))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RoomServiceWithMenuActionTest()
+        {
+            await this.GetSkillTestFlow()
+                .Send(RoomServiceUtterances.RoomServiceWithMenuAction)
+                .AssertReply(AssertContains(null, null, CardStrings.MenuCard))
+                .AssertReply(AssertContains(RoomServiceResponses.FoodOrder))
+                .Send(RoomServiceUtterances.RoomServiceWithFood)
+                .AssertReply(AssertContains(null, null, CardStrings.FoodOrderCard))
+                .AssertReply(AssertContains(RoomServiceResponses.AddMore))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(AssertStartsWith(RoomServiceResponses.ConfirmOrder))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(RoomServiceResponses.FinalOrderConfirmation))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RoomServiceWithFoodActionTest()
+        {
+            await this.GetSkillTestFlow()
+                .Send(RoomServiceUtterances.RoomServiceWithFoodAction)
+                .AssertReply(AssertContains(null, null, CardStrings.FoodOrderCard))
+                .AssertReply(AssertContains(RoomServiceResponses.AddMore))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(AssertStartsWith(RoomServiceResponses.ConfirmOrder))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(RoomServiceResponses.FinalOrderConfirmation))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }
