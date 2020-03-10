@@ -9,11 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Bot.Schema;
 using PhoneSkill.Models;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
@@ -155,7 +155,7 @@ namespace PhoneSkill.Dialogs
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
                 var state = await PhoneStateAccessor.GetAsync(dc.Context);
-                state.LuisResult = await RunLuis<PhoneLuis>(dc.Context, "phone");
+                state.LuisResult = dc.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
             }
         }
 

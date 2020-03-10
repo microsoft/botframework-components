@@ -2,13 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using NewsSkill.Models;
+using NewsSkill.Models.Action;
 using NewsSkill.Responses.FindArticles;
 using NewsSkill.Services;
 
@@ -52,7 +55,7 @@ namespace NewsSkill.Dialogs
             var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
 
             // Let's see if we have a topic
-            if (convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
+            if (convState.LuisResult != null && convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
             {
                 return await sc.NextAsync(convState.LuisResult.Entities.topic[0]);
             }
@@ -69,8 +72,7 @@ namespace NewsSkill.Dialogs
 
             string query = (string)sc.Result;
 
-            // if site specified in luis, add to query
-            if (convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
+            if (convState.LuisResult != null && convState.LuisResult.Entities.site != null && convState.LuisResult.Entities.site.Length > 0)
             {
                 string site = convState.LuisResult.Entities.site[0].Replace(" ", string.Empty);
                 query = string.Concat(query, $" site:{site}");
@@ -87,6 +89,12 @@ namespace NewsSkill.Dialogs
 
             var articles = await _client.GetNewsForTopic(query, userState.Market);
             await _responder.ReplyWith(sc.Context, FindArticlesResponses.ShowArticles, articles);
+
+            var skillOptions = sc.Options as NewsSkillOptionBase;
+            if (skillOptions != null && skillOptions.IsAction)
+            {
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+            }
 
             return await sc.EndDialogAsync();
         }

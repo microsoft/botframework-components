@@ -2299,19 +2299,6 @@ namespace CalendarSkill.Dialogs
             return dateTimeResults;
         }
 
-        protected Task SendActionEnded(ITurnContext turnContext)
-        {
-            if (turnContext.IsSkill())
-            {
-                return Task.CompletedTask;
-            }
-            else
-            {
-                var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.ActionEnded);
-                return turnContext.SendActivityAsync(activity);
-            }
-        }
-
         private async Task<List<object>> GetMeetingCardListAsync(DialogContext dc, List<EventModel> events)
         {
             var state = await Accessor.GetAsync(dc.Context);

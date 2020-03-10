@@ -321,7 +321,7 @@ namespace RestaurantBookingSkill.Dialogs
             else
             {
                 state.Clear();
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PhoneSkill.Models;
+using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.OutgoingCall;
 using PhoneSkill.Tests.Flow.Utterances;
 using PhoneSkill.Tests.TestDouble;
@@ -20,6 +21,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_PhoneNumber()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallPhoneNumber)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
@@ -36,6 +39,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_RecipientPromptPhoneNumber()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientPhoneNumber)
@@ -54,6 +59,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactName)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
@@ -71,6 +78,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithSpeechRecognitionError()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithSpeechRecognitionError)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
@@ -88,6 +97,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithPhoneNumberType()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberType)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
                {
@@ -113,6 +124,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithPhoneNumberTypeNotFound_ConfirmationYes()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundSingleAlternative)
                .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
                {
@@ -141,6 +154,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithPhoneNumberTypeNotFound_ConfirmationNo()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundSingleAlternative)
                .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
                {
@@ -178,6 +193,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithPhoneNumberTypeNotFound_PhoneNumberSelectionByIndex()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundMultipleAlternatives)
                .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
                {
@@ -219,6 +236,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameNotFound()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNotFound)
                .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new StringDictionary()
                {
@@ -242,6 +261,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameNoPhoneNumber()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNoPhoneNumber)
                .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new StringDictionary()
                {
@@ -267,6 +288,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameNoPhoneNumberMultipleMatches()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNoPhoneNumberMultipleMatches)
                .AssertReply(Message(OutgoingCallResponses.ContactsHaveNoPhoneNumber, new StringDictionary()
                {
@@ -292,6 +315,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_RecipientPromptContactName()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
@@ -311,6 +336,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_RecipientPromptContactNameWithSpeechRecognitionError()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactNameWithSpeechRecognitionError)
@@ -330,6 +357,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_RecipientPromptContactNameWithPhoneNumberType()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactNameWithPhoneNumberType)
@@ -357,6 +386,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_ContactSelectionByIndex()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -384,6 +415,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_ContactSelectionByPartialName()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -411,6 +444,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_ContactSelectionByFullName()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -438,6 +473,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_ContactSelectionByFullNameWithSpeechRecognitionError()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesWithSpeechRecognitionError)
                .AssertReply(Message(OutgoingCallResponses.ContactSelectionWithoutName, new StringDictionary(),
                new List<string>()
@@ -462,6 +499,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_ContactSelectionFailureThenByPartialNameTwice()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesAndrew)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -522,6 +561,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameWithPhoneNumberTypeNotFound_ContactSelectionByPartialName()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeMultipleMatches)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -560,6 +601,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameMultipleMatchesWhereOnlyOneHasPhoneNumber()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesBotter)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
@@ -577,6 +620,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactNameMultipleMatchesWhereSomeHavePhoneNumber_ContactSelectionByIndex()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesSanchez)
                .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
                {
@@ -604,6 +649,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_PhoneNumberSelectionByIndex()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
                .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
                {
@@ -639,6 +686,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_PhoneNumberSelectionByStandardizedType()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
                .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
                {
@@ -675,6 +724,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_PhoneNumberSelectionByStandardizedTypeThenFailureThenIndex()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbersWithSameType)
                .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
                {
@@ -744,6 +795,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_OutgoingCall_ContactName_PhoneNumberSelectionByFullNumber()
         {
             await GetTestFlow()
+               .SendConversationUpdate()
+               .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
                .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
                {

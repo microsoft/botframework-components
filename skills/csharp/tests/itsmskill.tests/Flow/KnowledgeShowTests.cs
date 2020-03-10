@@ -38,7 +38,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Confirm)
-                .AssertReply(AssertContains(SharedResponses.ActionEnded))
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
@@ -65,7 +64,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(MainResponses.HelpMessage))
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Confirm)
-                .AssertReply(AssertContains(SharedResponses.ActionEnded))
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
@@ -90,7 +88,7 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
-                .AssertReply(ActionEndMessage())
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
                 .StartTestAsync();
         }
 
