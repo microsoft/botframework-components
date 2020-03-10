@@ -4,6 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.GetReservation;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
@@ -45,7 +46,7 @@ namespace HospitalitySkill.Dialogs
             // send card with reservation details
             var reply = ResponseManager.GetCardResponse(GetReservationResponses.ShowReservationDetails, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
             await sc.Context.SendActivityAsync(reply);
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(new ActionResult(true));
         }
     }
 }

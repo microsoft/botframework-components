@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace HospitalitySkill.Models.ActionDefinitions
 {
-    public class GetReservationDetails : IActionInput
+    public class GetReservationDetailsInput : IActionInput
     {
         public async Task Process(ITurnContext context, IStatePropertyAccessor<HospitalitySkillState> stateAccessor, IStatePropertyAccessor<HospitalityUserSkillState> userStateAccessor, IHotelService hotelService, CancellationToken cancellationToken)
         {

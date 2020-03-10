@@ -76,5 +76,57 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task RequestItemActionTest()
+        {
+            await this.GetSkillTestFlow()
+                .Send(RequestItemUtterances.RequestItemAction)
+                .AssertReply(AssertContains(RequestItemResponses.ItemPrompt))
+                .Send(RequestItemUtterances.Item)
+                .AssertReply(AssertContains(null, null, CardStrings.RequestItemCard))
+                .AssertReply(AssertContains(RequestItemResponses.ItemsRequested))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RequestInvalidItemActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Items", $"{Environment.NewLine}- {RequestItemUtterances.InvalidItem}" }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(RequestItemUtterances.RequestItemAction)
+                .AssertReply(AssertContains(RequestItemResponses.ItemPrompt))
+                .Send(RequestItemUtterances.InvalidItem)
+                .AssertReply(AssertContains(RequestItemResponses.ItemNotAvailable, tokens))
+                .AssertReply(AssertStartsWith(RequestItemResponses.GuestServicesPrompt))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(SkillActionEndMessage(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RequestWithItemAndInvalidItemActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Items", $"{Environment.NewLine}- {RequestItemUtterances.InvalidItem}" }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(RequestItemUtterances.RequestWithItemAndInvalidItemAction)
+                .AssertReply(AssertContains(RequestItemResponses.ItemNotAvailable, tokens))
+                .AssertReply(AssertStartsWith(RequestItemResponses.GuestServicesPrompt))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(RequestItemResponses.GuestServicesConfirm))
+                .AssertReply(AssertContains(null, null, CardStrings.RequestItemCard))
+                .AssertReply(AssertContains(RequestItemResponses.ItemsRequested))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

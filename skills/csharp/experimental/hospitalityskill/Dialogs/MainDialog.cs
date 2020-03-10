@@ -301,6 +301,16 @@ namespace HospitalitySkill.Dialogs
                                 return await ProcessAction<LateCheckOutInput>(nameof(LateCheckOutDialog), stepContext, cancellationToken);
                             }
 
+                        case ActionNames.GetReservationDetails:
+                            {
+                                return await ProcessAction<GetReservationDetailsInput>(nameof(GetReservationDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.RequestItem:
+                            {
+                                return await ProcessAction<RequestItemInput>(nameof(RequestItemDialog), stepContext, cancellationToken);
+                            }
+
                         default:
                             {
                                 await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.RequestItem;
 using HospitalitySkill.Services;
 using Microsoft.Bot.Builder;
@@ -66,15 +67,15 @@ namespace HospitalitySkill.Dialogs
         private async Task GetEntities(ITurnContext turnContext)
         {
             var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState.LuisResult?.Entities;
 
-            if (entities.ItemRequest != null)
+            if (entities?.ItemRequest != null)
             {
                 // items with quantity
                 convState.ItemList.AddRange(entities.ItemRequest);
             }
 
-            if (!string.IsNullOrWhiteSpace(entities.Item?[0]))
+            if (!string.IsNullOrWhiteSpace(entities?.Item?[0]))
             {
                 // items identified without specified quantity
                 for (int i = 0; i < entities.Item.Length; i++)
@@ -171,6 +172,13 @@ namespace HospitalitySkill.Dialogs
         {
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
 
+            var result = new ActionResult(false);
+
+            if (sc.Result is bool && (bool)sc.Result)
+            {
+                result.ActionSuccess = true;
+            }
+
             if (convState.ItemList.Count > 0)
             {
                 List<Card> roomItems = new List<Card>();
@@ -191,9 +199,11 @@ namespace HospitalitySkill.Dialogs
                 // if at least one item was available send this card reply
                 await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems));
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RequestItemResponses.ItemsRequested));
+
+                result.ActionSuccess = true;
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(result);
         }
 
         private class DialogIds
