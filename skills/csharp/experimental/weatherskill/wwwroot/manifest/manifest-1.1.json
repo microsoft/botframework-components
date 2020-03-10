@@ -43,6 +43,41 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "weatherForcast": {
+      "description": "Weather forcast in a Geography or Latitude & Longitude",
+      "type": "event",
+      "name": "WeatherForcast",
+      "value": {
+        "$ref": "#/definitions/locationInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    }
+  },
+  "definitions": {
+    "locationInfo": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "A Geography name or its Latitude & Longitude(north and east are above zero). E.g., Beijing or 39.90,116.40."
+        }
+      }
+    },
+    "actionResult": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        },
+        "summary": {
+          "type": "string",
+          "description": "weather summary for this location."
+        }
+      }
     }
   }
 }
