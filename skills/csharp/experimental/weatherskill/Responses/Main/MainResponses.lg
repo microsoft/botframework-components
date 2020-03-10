@@ -2,7 +2,6 @@
 [Activity
     Text = @{WelcomeMessage.Text(Data)}
     Speak = @{WelcomeMessage.Text(Data)}
-    SuggestedActions = 
     Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = @{if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
@@ -12,7 +11,6 @@
 [Activity
     Text = @{HelpMessage.Text(Data)}
     Speak = @{HelpMessage.Text(Data)}
-    SuggestedActions = 
     Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = @{if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
@@ -63,4 +61,20 @@
     InputHint = acceptingInput
 ]
 
+# FirstPromptMessage(Data, Cards, Layout)
+[Activity
+    Text = @{FirstPromptMessage.Text(Data)}
+    Speak = @{FirstPromptMessage.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
 
+# CompletedMessage(Data, Cards, Layout)
+[Activity
+    Text = @{CompletedMessage.Text(Data)}
+    Speak = @{CompletedMessage.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]

@@ -25,4 +25,14 @@
 # CancelMessage.Text(Data)
 - Okkiert, fangen wir an.
 
+# FirstPromptMessage.Text(Data)
+- Mit was kann ich dir heute behilflich sein?
+- Was kann ich für Dich tun?
+- Kann ich etwas für Sie tun?
+- Womit kann ich Ihnen behilflich sein?
 
+# CompletedMessage.Text(Data)
+- Ich bin hier, wenn Sie noch etwas brauchen.
+- Lassen Sie mich wissen, wenn Sie noch etwas brauchen.
+- Lassen Sie mich wissen, ob ich Ihnen bei irgendetwas anderem helfen kann.
+- Alles erledigt. Lassen Sie mich wissen, ob ich noch etwas tun kann.

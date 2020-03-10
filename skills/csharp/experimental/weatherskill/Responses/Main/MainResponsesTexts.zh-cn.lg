@@ -25,4 +25,14 @@
 # CancelMessage.Text(Data)
 - 好的, 我们从头再来。
 
+# FirstPromptMessage.Text(Data)
+- 今天有什么可以帮您的吗？
+- 我能为你做什么？
+- 我有什么可以为您做的吗？
+- 我怎么帮你？
 
+# CompletedMessage.Text(Data)
+- 如果您还有其他需要，我在这里。
+- 让我知道您是否还有其他需要。
+- 让我知道我是否可以帮助您。
+- 全做完了。 让我知道我是否还能做其他事情。
