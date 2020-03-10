@@ -200,9 +200,9 @@ namespace CalendarSkill.Test.Flow
             {
                 var eoc = (Activity)activity;
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                Assert.IsTrue(eoc.Value is OperationStatus);
-                var operationStatus = eoc.Value as OperationStatus;
-                Assert.AreEqual(operationStatus.Status, value);
+                Assert.IsTrue(eoc.Value is ActionResult);
+                var operationStatus = eoc.Value as ActionResult;
+                Assert.AreEqual(operationStatus.ActionSuccess, value);
             };
         }
 

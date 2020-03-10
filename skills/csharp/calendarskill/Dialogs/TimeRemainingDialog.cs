@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.TimeRemaining;
 using CalendarSkill.Services;
@@ -84,7 +85,7 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
-                Models.ActionInfos.TimeRemainingOutput timeRemainingOutput = new Models.ActionInfos.TimeRemainingOutput() { RemainingTime = 0 };
+                var totalRemainingMinutes = 0;
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
@@ -98,7 +99,7 @@ namespace CalendarSkill.Dialogs
                     var timeDiffMinutes = (int)timeDiff.TotalMinutes % 60;
                     var timeDiffHours = (int)timeDiff.TotalMinutes / 60;
                     var timeDiffDays = timeDiff.Days;
-                    timeRemainingOutput.RemainingTime = (int)timeDiff.TotalMinutes;
+                    totalRemainingMinutes = (int)timeDiff.TotalMinutes;
 
                     var remainingMinutes = string.Empty;
                     var remainingHours = string.Empty;
@@ -180,7 +181,12 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
-                return await sc.EndDialogAsync(timeRemainingOutput);
+                if (state.IsAction)
+                {
+                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes });
+                }
+
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {

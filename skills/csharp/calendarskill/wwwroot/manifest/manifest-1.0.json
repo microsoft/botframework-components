@@ -31,7 +31,7 @@
         "$ref": "#/definitions/eventInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "updateEvent": {
@@ -42,7 +42,7 @@
         "$ref": "#/definitions/updateEventInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "showEvent": {
@@ -64,7 +64,7 @@
         "$ref": "#/definitions/chooseEventInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "deleteEvent": {
@@ -75,7 +75,7 @@
         "$ref": "#/definitions/chooseEventInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "joinEvent": {
@@ -86,7 +86,7 @@
         "$ref": "#/definitions/chooseEventInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "timeRemaining": {
@@ -223,12 +223,12 @@
         }
       }
     },
-    "operationStatus": {
+    "actionResult": {
       "type": "object",
       "properties": {
-        "status": {
+        "actionSuccess": {
           "type": "boolean",
-          "description": "An operation status indicating success or failure"
+          "description": "Result of action"
         }
       }
     },

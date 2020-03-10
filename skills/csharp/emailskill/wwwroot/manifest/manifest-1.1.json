@@ -92,109 +92,203 @@
     }
   },
   "activities": {
-    "message": {
-      "type": "message",
-      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
-    },
-    "sendEmail": {
-      "description": "Send an Email",
+    "createEvent": {
+      "description": "Create a new event",
       "type": "event",
-      "name": "SendEmail",
+      "name": "CreateEvent",
       "value": {
-        "$ref": "#/definitions/emailInfo"
+        "$ref": "#/definitions/eventInfo"
       },
       "resultValue": {
         "$ref": "#/definitions/actionResult"
       }
     },
-    "deleteEmail": {
-      "description": "Delete an Email",
+    "updateEvent": {
+      "description": "Update the time of an existing event",
       "type": "event",
-      "name": "DeleteEmail",
-      "value": {},
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
-    },
-    "replyEmail": {
-      "description": "Reply to an Email",
-      "type": "event",
-      "name": "ReplyEmail",
+      "name": "UpdateEvent",
       "value": {
-        "$ref": "#/definitions/replyEmailInfo"
+        "$ref": "#/definitions/updateEventInfo"
       },
       "resultValue": {
         "$ref": "#/definitions/actionResult"
       }
     },
-    "forwardEmail": {
-      "description": "Forward an Email",
+    "showEvent": {
+      "description": "Show an existing event",
       "type": "event",
-      "name": "ForwardEmail",
+      "name": "ShowEvent",
       "value": {
-        "$ref": "#/definitions/forwardEmailInfo"
+        "$ref": "#/definitions/chooseEventInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/eventInfo"
+      }
+    },
+    "acceptEvent": {
+      "description": "Accept an existing event",
+      "type": "event",
+      "name": "AcceptEvent",
+      "value": {
+        "$ref": "#/definitions/chooseEventInfo"
       },
       "resultValue": {
         "$ref": "#/definitions/actionResult"
+      }
+    },
+    "deleteEvent": {
+      "description": "Delete(as organizer) or Decline(as invitee) an existing event",
+      "type": "event",
+      "name": "DeleteEvent",
+      "value": {
+        "$ref": "#/definitions/chooseEventInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "joinEvent": {
+      "description": "Join an existing event",
+      "type": "event",
+      "name": "JoinEvent",
+      "value": {
+        "$ref": "#/definitions/chooseEventInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "timeRemaining": {
+      "description": "Find out how long until a specific event",
+      "type": "event",
+      "name": "TimeRemaining",
+      "value": {
+        "$ref": "#/definitions/chooseEventInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/timeRemainingOutput"
       }
     },
     "summary": {
-      "description": "Summary of recent emails",
+      "description": "Retrieve a summary of meetings",
       "type": "event",
-      "name": "EmailSummary",
-      "value": {},
+      "name": "Summary",
+      "value": {
+        "$ref": "#/definitions/dateInfo"
+      },
       "resultValue": {
-        "$ref": "#/definitions/summaryResult"
+        "$ref": "#/definitions/eventSummary"
       }
+    },
+    "message": {
+      "type": "message",
+      "description": "Receives the user's utterance and attempts to resolve it using the skill's LU models"
     }
   },
   "definitions": {
-    "emailInfo": {
+    "eventInfo": {
       "type": "object",
+      "required": [],
       "properties": {
-        "subject": {
+        "title": {
           "type": "string",
-          "description": "Subject of the email"
+          "description": "Title of the meeting"
         },
         "content": {
           "type": "string",
-          "description": "Content of the email"
+          "description": "Description of the meeting"
         },
-        "sender": {
+        "attendees": {
           "type": "string",
-          "description": "Email address of email sender"
+          "description": "Semicolon separated list of email addresses to invite"
         },
-        "recipients": {
-          "type": "array",
-          "description": "List of email addresses to send to",
-          "items": {
-            "type": "string"
-          }
+        "startDate": {
+          "type": "string",
+          "description": "Start date of the meeting in yyyy-MM-dd format"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Start time of the meeting in HH:mm format"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "End date of the meeting in yyyy-MM-dd format"
+        },
+        "endTime": {
+          "type": "string",
+          "description": "End time of the meeting in HH:mm format"
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration of the meeting in minutes"
+        },
+        "location": {
+          "type": "string",
+          "description": "The location for the meeting"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The timezone to create the meeting in"
         }
       }
     },
-    "replyEmailInfo": {
+    "updateEventInfo": {
       "type": "object",
+      "required": [],
       "properties": {
-        "replyMessage": {
+        "title": {
           "type": "string",
-          "description": "The reply message"
+          "description": "Title of the meeting"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Current start date of the meeting in yyyy-MM-dd format"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Current start time of the meeting in HH:mm format"
+        },
+        "newStartDate": {
+          "type": "string",
+          "description": "New start date of the meeting in yyyy-MM-dd format"
+        },
+        "newStartTime": {
+          "type": "string",
+          "description": "New start time of the meeting in HH:mm format"
+        },
+        "moveTimeSpan": {
+          "type": "number",
+          "description": "Time to shift earlier or later in minutes"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The current user's timezone"
         }
       }
     },
-    "forwardEmailInfo": {
+    "chooseEventInfo": {
       "type": "object",
+      "required": [],
       "properties": {
-        "forwardRecipients": {
-          "type": "array",
-          "description": "List of email addresses to forward to",
-          "items": {
-            "type": "string"
-          }
+        "nextEvent": {
+          "type": "boolean",
+          "description": "Choose the Next meeting directly"
         },
-        "forwardMessage": {
+        "title": {
           "type": "string",
-          "description": "The message to forward"
+          "description": "Title of the meeting"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date of the meeting in yyyy-MM-dd format"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Start time of the meeting in HH:mm format"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The current user's timezone"
         }
       }
     },
@@ -202,22 +296,37 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
-          "description": "result of action"
+          "type": "boolean",
+          "description": "Result of action"
         }
       }
     },
-    "summaryResult": {
+    "timeRemainingOutput": {
       "type": "object",
       "properties": {
-        "$ref": "#/definitions/actionResult",
-        "emailList": {
-          "type": "array",
-          "description": "List of recent emails",
-          "item": {
-            "type": "#/definitions/emailInfo"
-          }
+        "remainingTime": {
+          "type": "number",
+          "description": "The remaining time in minutes"
         }
+      }
+    },
+    "dateInfo": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "Date of the meetings in yyyy-MM-dd format"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The current user's timezone"
+        }
+      }
+    },
+    "eventSummary": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/eventInfo"
       }
     }
   }

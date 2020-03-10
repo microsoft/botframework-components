@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
+using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.JoinEvent;
 using CalendarSkill.Services;
@@ -249,7 +251,8 @@ namespace CalendarSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context);
-                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus();
+                var options = (CalendarSkillDialogOptions)sc.Options;
+                var status = false;
                 if (sc.Result is bool)
                 {
                     if ((bool)sc.Result)
@@ -267,19 +270,26 @@ namespace CalendarSkill.Dialogs
                         };
                         replyEvent.Value = JsonConvert.SerializeObject(eventJoinLink);
                         await sc.Context.SendActivityAsync(replyEvent, cancellationToken);
-                        operationStatus.Status = true;
+                        status = true;
                     }
                     else
                     {
                         var activity = TemplateEngine.GenerateActivityForLocale(JoinEventResponses.NotJoinMeeting);
                         await sc.Context.SendActivityAsync(activity);
-                        operationStatus.Status = false;
                     }
                 }
 
-                state.Clear();
+                if (options.SubFlowMode)
+                {
+                    state.ShowMeetingInfo.ShowingMeetings.Clear();
+                }
 
-                return await sc.EndDialogAsync(operationStatus);
+                if (state.IsAction)
+                {
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = status });
+                }
+
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {

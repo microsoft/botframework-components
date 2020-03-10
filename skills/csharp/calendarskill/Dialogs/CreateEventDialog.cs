@@ -635,24 +635,28 @@ namespace CalendarSkill.Dialogs
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
                 };
 
-                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus();
+                var status = false;
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                 if (await calendarService.CreateEventAysnc(newEvent) != null)
                 {
                     var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
                     await sc.Context.SendActivityAsync(activity);
-                    operationStatus.Status = true;
+                    status = true;
                 }
                 else
                 {
                     var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.EventCreationFailed);
                     await sc.Context.SendActivityAsync(activity);
-                    operationStatus.Status = false;
+                    status = false;
                 }
 
-                state.Clear();
-                return await sc.EndDialogAsync(operationStatus, cancellationToken);
+                if (state.IsAction)
+                {
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = status });
+                }
+
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (SkillException ex)
             {

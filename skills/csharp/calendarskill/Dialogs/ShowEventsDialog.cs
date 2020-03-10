@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.Summary;
@@ -233,11 +234,10 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context);
                 var options = sc.Options as ShowMeetingsDialogOptions;
 
-                if (options != null && options.Reason == ShowMeetingReason.Summary && state.TriggerSource == TriggerModel.TriggerSource.Event)
+                if (options != null && options.Reason == ShowMeetingReason.Summary && state.IsAction)
                 {
-                    List<Models.ActionInfos.EventInfo> eventInfos = new List<Models.ActionInfos.EventInfo>();
-                    state.ShowMeetingInfo.ShowingMeetings.ForEach(e => eventInfos.Add(new Models.ActionInfos.EventInfo(e, state.GetUserTimeZone())));
-                    state.Clear();
+                    List<EventInfo> eventInfos = new List<EventInfo>();
+                    state.ShowMeetingInfo.ShowingMeetings.ForEach(e => eventInfos.Add(new EventInfo(e, state.GetUserTimeZone())));
                     return await sc.EndDialogAsync(eventInfos);
                 }
 
@@ -396,9 +396,14 @@ namespace CalendarSkill.Dialogs
 
                 await sc.Context.SendActivityAsync(reply);
                 var eventItem = state.ShowMeetingInfo.ShowingMeetings.FirstOrDefault();
-                Models.ActionInfos.EventInfo eventInfo = new Models.ActionInfos.EventInfo(eventItem, state.GetUserTimeZone());
-                state.Clear();
-                return await sc.EndDialogAsync(eventInfo);
+
+                if (state.IsAction)
+                {
+                    EventInfo eventInfo = new EventInfo(eventItem, state.GetUserTimeZone());
+                    return await sc.EndDialogAsync(eventInfo);
+                }
+
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {
@@ -777,9 +782,9 @@ namespace CalendarSkill.Dialogs
                     await sc.Context.SendActivityAsync(replyMessage);
                 }
 
-                if (state.TriggerSource == TriggerModel.TriggerSource.Event)
+                if (state.IsAction)
                 {
-                    Models.ActionInfos.EventInfo eventInfo = new Models.ActionInfos.EventInfo(eventItem, state.GetUserTimeZone());
+                    EventInfo eventInfo = new EventInfo(eventItem, state.GetUserTimeZone());
                     state.Clear();
                     return await sc.EndDialogAsync(eventInfo);
                 }

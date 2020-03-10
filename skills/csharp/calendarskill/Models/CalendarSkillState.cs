@@ -19,7 +19,7 @@ namespace CalendarSkill.Models
 
         public EventSource EventSource { get; set; } = EventSource.Other;
 
-        public TriggerSource TriggerSource { get; set; } = TriggerSource.Message;
+        public bool IsAction { get; set; } = false;
 
         public CalendarLuis.Intent InitialIntent { get; set; } = CalendarLuis.Intent.None;
 
@@ -47,7 +47,7 @@ namespace CalendarSkill.Models
             MeetingInfo.Clear();
             ShowMeetingInfo.Clear();
             UpdateMeetingInfo.Clear();
-            TriggerSource = TriggerSource.Message;
+            IsAction = false;
         }
 
         public class UserInformation

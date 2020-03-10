@@ -451,7 +451,6 @@ namespace CalendarSkill.Dialogs
             }
             else if (a.Type == ActivityTypes.Event)
             {
-                state.TriggerSource = TriggerModel.TriggerSource.Event;
                 var ev = a.AsEventActivity();
                 if (!string.IsNullOrEmpty(ev.Name))
                 {
@@ -464,6 +463,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.CreateEvent:
                             {
+                                state.IsAction = true;
                                 EventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -476,6 +476,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.UpdateEvent:
                             {
+                                state.IsAction = true;
                                 UpdateEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -488,6 +489,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.ShowEvent:
                             {
+                                state.IsAction = true;
                                 ChooseEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -500,6 +502,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.AcceptEvent:
                             {
+                                state.IsAction = true;
                                 ChooseEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -512,6 +515,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.DeleteEvent:
                             {
+                                state.IsAction = true;
                                 ChooseEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -524,6 +528,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.JoinEvent:
                             {
+                                state.IsAction = true;
                                 ChooseEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -536,6 +541,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.TimeRemaining:
                             {
+                                state.IsAction = true;
                                 ChooseEventInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -548,6 +554,7 @@ namespace CalendarSkill.Dialogs
 
                         case Events.Summary:
                             {
+                                state.IsAction = true;
                                 DateInfo actionData = null;
                                 if (ev.Value is JObject info)
                                 {
@@ -574,6 +581,8 @@ namespace CalendarSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
+            state.Clear();
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation

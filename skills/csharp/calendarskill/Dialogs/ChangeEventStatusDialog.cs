@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.ChangeEventStatus;
@@ -183,19 +184,18 @@ namespace CalendarSkill.Dialogs
                     await sc.Context.SendActivityAsync(activity);
                 }
 
-                Models.ActionInfos.OperationStatus operationStatus = new Models.ActionInfos.OperationStatus() { Status = true };
-
                 if (options.SubFlowMode)
                 {
                     state.MeetingInfo.ClearTimes();
                     state.MeetingInfo.ClearTitle();
                 }
-                else
+
+                if (state.IsAction)
                 {
-                    state.Clear();
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true });
                 }
 
-                return await sc.EndDialogAsync(operationStatus);
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {
