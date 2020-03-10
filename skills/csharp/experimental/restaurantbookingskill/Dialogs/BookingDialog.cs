@@ -398,8 +398,7 @@ namespace RestaurantBookingSkill.Dialogs
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
 
-            var skillOptions = sc.Options as SkillOption;
-            if (skillOptions != null && skillOptions.IsAction)
+            if (state.IsAction)
             {
                 return await sc.NextAsync();
             }
@@ -466,8 +465,7 @@ namespace RestaurantBookingSkill.Dialogs
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
 
-            var skillOptions = sc.Options as SkillOption;
-            if (skillOptions != null && skillOptions.IsAction)
+            if (state.IsAction)
             {
                 return await sc.NextAsync();
             }
@@ -613,15 +611,13 @@ namespace RestaurantBookingSkill.Dialogs
 
             await sc.Context.SendActivityAsync(replyMessage);
 
-            state.Clear();
-
-            var skillOptions = sc.Options as SkillOption;
-            if (skillOptions != null && skillOptions.IsAction)
+            if (state.IsAction)
             {
                 var actionResult = new ActionResult() { ActionSuccess = true };
                 return await sc.EndDialogAsync(actionResult);
             }
 
+            state.Clear();
             return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 

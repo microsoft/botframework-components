@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using EmailSkill.Models.Action;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -263,6 +264,7 @@ namespace RestaurantBookingSkill.Dialogs
 
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
+                    state.IsAction = true;
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
@@ -276,7 +278,7 @@ namespace RestaurantBookingSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(BookingDialog), new SkillOption() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(BookingDialog));
                             }
 
                         default:
@@ -297,6 +299,7 @@ namespace RestaurantBookingSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -306,11 +309,18 @@ namespace RestaurantBookingSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                if (state.IsAction && stepContext.Result as ActionResult == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
+                state.Clear();
                 return await stepContext.EndDialogAsync();
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
             }
         }
