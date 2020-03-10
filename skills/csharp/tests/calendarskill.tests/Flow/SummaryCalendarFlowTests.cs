@@ -236,7 +236,7 @@ namespace CalendarSkill.Test.Flow
             await this.GetSkillTestFlow()
                 .Send(FindMeetingTestUtterances.ShowEventAction)
                 .AssertReplyOneOf(this.FoundOneEventPrompt("tomorrow", "tomorrow"))
-                .AssertReply(CheckForEventInfo())
+                .AssertReply(CheckForEventInfoOutput())
                 .StartTestAsync();
         }
 

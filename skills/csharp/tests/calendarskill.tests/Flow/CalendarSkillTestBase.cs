@@ -206,13 +206,13 @@ namespace CalendarSkill.Test.Flow
             };
         }
 
-        public Action<IActivity> CheckForEventInfo()
+        public Action<IActivity> CheckForEventInfoOutput()
         {
             return activity =>
             {
                 var eoc = (Activity)activity;
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                Assert.IsTrue(eoc.Value is EventInfo);
+                Assert.IsTrue(eoc.Value is EventInfoOutput);
             };
         }
 
@@ -234,7 +234,7 @@ namespace CalendarSkill.Test.Flow
             {
                 var eoc = (Activity)activity;
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                Assert.IsTrue(eoc.Value is List<EventInfo>);
+                Assert.IsTrue(eoc.Value is SummaryResult);
             };
         }
     }
