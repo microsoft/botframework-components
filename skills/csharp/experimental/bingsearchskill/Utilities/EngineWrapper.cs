@@ -96,12 +96,12 @@ namespace BingSearchSkill.Utilities
             return manager.TemplateEnginesPerLocale[CultureInfo.CurrentUICulture.Name].ExpandTemplate(name + ".Text", input).ToArray();
         }
 
-        public static CardExt Convert(Card card, string suffix = ".new.json", IEnumerable<Card> containerItems = null)
+        public static CardExt Convert(Card card, string suffix = ".json", IEnumerable<Card> containerItems = null)
         {
             var res = new CardExt { Name = Path.Join(PathBase, card.Name + suffix), Data = card.Data };
             if (containerItems != null)
             {
-                res.Cards = containerItems.Select((card) => Convert(card, "Containee.new.json")).ToList();
+                res.Cards = containerItems.Select((card) => Convert(card, "Containee.json")).ToList();
             }
 
             return res;
