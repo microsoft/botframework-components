@@ -1,4 +1,4 @@
-[import](VehicleSettingsDialogActivities.lg)
+Ôªø[import](VehicleSettingsDialogActivities.lg)
 
 # VehicleSettingsConfirmed.Text
 - Ok.
@@ -16,19 +16,19 @@
 - Ecco i valori possibili per @{if(settingName == null, '', settingName)}. Quale?
 
 # VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
-- Quindi, si vuole cambiare @{if(settingName == null, '', settingName)} A @{if(value == null, '', value)}. » corretto?
+- Quindi, si vuole cambiare @{if(settingName == null, '', settingName)} A @{if(value == null, '', value)}. √à corretto?
 
 # VehicleSettingsSettingChangeConfirmationDenied.Text
 - Ok, non fare alcuna modifica.
 
 # VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} Ë gi‡ impostato su @{if(value == null, '', value)}.
+- @{if(settingName == null, '', settingName)} √® gi√† impostato su @{if(value == null, '', value)}.
 
 # VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} Ë gi‡ impostato su @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- @{if(settingName == null, '', settingName)} √® gi√† impostato su @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
 
 # VehicleSettingsSettingChangeUnsupported.Text(settingName)
-- Modifica dell'impostazione @{if(settingName == null, '', settingName)} Ë attualmente non supportato.
+- Modifica dell'impostazione @{if(settingName == null, '', settingName)} √® attualmente non supportato.
 
 # VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
 - @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} da parte di @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
@@ -46,13 +46,13 @@
 - Verifica dello stato di @{if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} Ë impostato su @{if(value == null, '', value)}.
+- @{if(settingName == null, '', settingName)} √® impostato su @{if(value == null, '', value)}.
 
 # VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} Ë impostato su @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- @{if(settingName == null, '', settingName)} √® impostato su @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
 
 # VehicleSettingsCheckingStatusUnsupported.Text(settingName)
-- Verifica dello stato di @{if(settingName == null, '', settingName)} Ë attualmente non supportato.
+- Verifica dello stato di @{if(settingName == null, '', settingName)} √® attualmente non supportato.
 
 # VehicleSettingsOutOfDomain.Text
 - Scusa, non so ancora come gestirlo.

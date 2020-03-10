@@ -1,34 +1,34 @@
-[import](VehicleSettingsDialogActivities.lg)
+ï»¿[import](VehicleSettingsDialogActivities.lg)
 
 # VehicleSettingsConfirmed.Text
 - De acuerdo.
 
 # VehicleSettingsMissingSettingName.Text
-- Lo siento, no sé de qué escenario estás hablando.
+- Lo siento, no sÃ© de quÃ© escenario estÃ¡s hablando.
 
 # VehicleSettingsSettingNameSelection.Text
-- Aquí están los ajustes correspondientes. ¿Cuál?
+- AquÃ­ estÃ¡n los ajustes correspondientes. Â¿CuÃ¡l?
 
 # VehicleSettingsMissingSettingValue.Text
-- Lo siento, no sé a qué quieres cambiarlo.
+- Lo siento, no sÃ© a quÃ© quieres cambiarlo.
 
 # VehicleSettingsSettingValueSelection.Text(settingName)
-- Estos son los valores posibles para @{if(settingName == null, '', settingName)}. ¿Cuál?
+- Estos son los valores posibles para @{if(settingName == null, '', settingName)}. Â¿CuÃ¡l?
 
 # VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
-- Por lo tanto, usted quiere cambiar @{if(settingName == null, '', settingName)} Para @{if(value == null, '', value)}. ¿Es eso correcto?
+- Por lo tanto, usted quiere cambiar @{if(settingName == null, '', settingName)} Para @{if(value == null, '', value)}. Â¿Es eso correcto?
 
 # VehicleSettingsSettingChangeConfirmationDenied.Text
-- Ok, no hacer ningún cambio.
+- Ok, no hacer ningÃºn cambio.
 
 # VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} ya está establecido para @{if(value == null, '', value)}.
+- @{if(settingName == null, '', settingName)} ya estÃ¡ establecido para @{if(value == null, '', value)}.
 
 # VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} ya está establecido para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- @{if(settingName == null, '', settingName)} ya estÃ¡ establecido para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
 
 # VehicleSettingsSettingChangeUnsupported.Text(settingName)
-- Cambio de la configuración @{if(settingName == null, '', settingName)} actualmente no es compatible.
+- Cambio de la configuraciÃ³n @{if(settingName == null, '', settingName)} actualmente no es compatible.
 
 # VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
 - @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} Por @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
@@ -46,13 +46,13 @@
 - Comprobar el estado de @{if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} está listo para @{if(value == null, '', value)}.
+- @{if(settingName == null, '', settingName)} estÃ¡ listo para @{if(value == null, '', value)}.
 
 # VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} está listo para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- @{if(settingName == null, '', settingName)} estÃ¡ listo para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
 
 # VehicleSettingsCheckingStatusUnsupported.Text(settingName)
 - Comprobar el estado de @{if(settingName == null, '', settingName)} actualmente no es compatible.
 
 # VehicleSettingsOutOfDomain.Text
-- Lo siento, aún no sé cómo manejar eso.
+- Lo siento, aÃºn no sÃ© cÃ³mo manejar eso.

@@ -1,4 +1,4 @@
-[import](SharedActivities.lg)
+ï»¿[import](SharedActivities.lg)
 
 # DidntUnderstandMessage.Text
 - Scusa, non capivo cosa intendevi.
@@ -16,17 +16,17 @@
 - Non capisco. Prova in un modo diverso.
 
 # CancellingMessage.Text
-- Certo, possiamo farlo più tardi.
-- Certo, possiamo iniziare più tardi.
-- Ehilà!
+- Certo, possiamo farlo piÃ¹ tardi.
+- Certo, possiamo iniziare piÃ¹ tardi.
+- EhilÃ !
 
 # ActionEnded.Text
-- La tua disconnessione è riuscita.
+- La tua disconnessione Ã¨ riuscita.
 - Ti sei disconnesso.
 - Sei stato disconnesso.
 
 # ErrorMessage.Text
-- Questa funzione non è ancora disponibile in questa abilità. Si è verificato un problema sconosciuto.
+- Questa funzione non Ã¨ ancora disponibile in questa abilitÃ . Si Ã¨ verificato un problema sconosciuto.
 
 # NoAuth.Text
 - Ok, ricominciamo da capo.
