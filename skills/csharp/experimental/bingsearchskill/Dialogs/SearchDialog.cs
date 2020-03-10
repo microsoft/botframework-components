@@ -129,7 +129,7 @@ namespace BingSearchSkill.Dialogs
                             movieData.Image = ImageToDataUri(movieInfo.Image);
                         }
 
-                        tokens.Add("Speak", movieInfo.Description);
+                        tokens.Add("Speak", StringHelper.EscapeCardString(movieInfo.Description));
 
                         prompt = LocaleTemplateEngineManager.GetCardResponse(
                                     SearchResponses.EntityKnowledge,

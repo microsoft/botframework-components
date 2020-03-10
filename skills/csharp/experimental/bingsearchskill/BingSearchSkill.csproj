@@ -23,23 +23,11 @@
     <Content Remove="Responses\Search\SampleResponses.it.json" />
     <Content Remove="Responses\Search\SampleResponses.zh.json" />
     <Content Remove="Responses\Search\SearchResponses.json" />
-    <Content Remove="Responses\Shared\SharedResponses.de.json" />
-    <Content Remove="Responses\Shared\SharedResponses.es.json" />
-    <Content Remove="Responses\Shared\SharedResponses.fr.json" />
-    <Content Remove="Responses\Shared\SharedResponses.it.json" />
-    <Content Remove="Responses\Shared\SharedResponses.json" />
-    <Content Remove="Responses\Shared\SharedResponses.zh.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Content\MovieCard.1.0.json" />
     <EmbeddedResource Include="Content\PersonCard.1.0.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.de.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.es.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.fr.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.it.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.json" />
-    <EmbeddedResource Include="Responses\Shared\SharedResponses.zh.json" />
     <EmbeddedResource Include="Content\MovieCard.json" />
     <EmbeddedResource Include="Content\PersonCard.json" />
   </ItemGroup>
@@ -85,7 +73,7 @@
     <None Update="Responses\CommonStrings.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\CommonStrings.ttnew">
+    <None Update="Responses\CommonStrings.tt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonStrings.cs</LastGenOutput>
@@ -115,7 +103,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainResponses.cs</LastGenOutput>
     </None>
-    <None Update="Responses\Main\MainResponses.ttnew">
+    <None Update="Responses\Main\MainResponses.tt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainResponses.cs</LastGenOutput>
@@ -160,7 +148,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SearchResponses.cs</LastGenOutput>
     </None>
-    <None Update="Responses\Search\SearchResponses.ttnew">
+    <None Update="Responses\Search\SearchResponses.tt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SearchResponses.cs</LastGenOutput>
@@ -197,7 +185,17 @@
     <Compile Update="Responses\CommonStrings.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>CommonStrings.ttnew</DependentUpon>
+      <DependentUpon>CommonStrings.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Responses\Main\MainResponses.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainResponses.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Responses\Search\SearchResponses.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchResponses.tt</DependentUpon>
     </Compile>
     <Compile Update="Responses\Shared\SharedResponses.cs">
       <DesignTime>True</DesignTime>
