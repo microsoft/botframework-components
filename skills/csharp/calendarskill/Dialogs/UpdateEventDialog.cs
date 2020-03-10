@@ -175,7 +175,6 @@ namespace CalendarSkill.Dialogs
                 }
                 else
                 {
-                    await SendActionEnded(sc.Context);
                     if (options.SubFlowMode)
                     {
                         state.UpdateMeetingInfo.Clear();

@@ -9,6 +9,8 @@ using System.Threading;
 using EmailSkill.Bots;
 using EmailSkill.Dialogs;
 using EmailSkill.Models;
+using EmailSkill.Models.Action;
+using EmailSkill.Responses.Shared;
 using EmailSkill.Services;
 using EmailSkill.Tests.Flow.Fakes;
 using EmailSkill.Tests.Flow.Utterances;
@@ -18,6 +20,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
@@ -197,6 +200,36 @@ namespace EmailSkill.Tests.Flow
             });
 
             return testFlow;
+        }
+
+        protected Action<IActivity> CheckForEoC(bool value = false, bool actionSuccess = true)
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                if (value)
+                {
+                    if (eoc.Value is ActionResult)
+                    {
+                        var actionResult = eoc.Value as ActionResult;
+                        Assert.IsNotNull(actionResult);
+                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
+                    }
+                    else if (eoc.Value is SummaryResult)
+                    {
+                        var actionResult = eoc.Value as SummaryResult;
+                        Assert.IsNotNull(actionResult);
+                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
+                        Assert.AreEqual(actionResult.EmailList.Count, 5);
+                    }
+                }
+            };
+        }
+
+        protected string[] CancelResponses()
+        {
+            return GetTemplates(EmailSharedResponses.CancellingMessage);
         }
     }
 }

@@ -23,9 +23,41 @@
     }
   ],
   "activities": {
+    "playMusic": {
+      "description": "Play music",
+      "type": "event",
+      "name": "PlayMusic",
+      "value": {
+        "$ref": "#/definitions/searchInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/operationStatus"
+      }
+    },
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    }
+  },
+  "definitions": {
+    "searchInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "setting": {
+          "type": "string",
+          "description": "Information used to search the music catalogue, e.g. artist name"
+        }
+      }
+    },
+    "operationStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "description": "An operation status indicating success or failure"
+        }
+      }
     }
   }
 }

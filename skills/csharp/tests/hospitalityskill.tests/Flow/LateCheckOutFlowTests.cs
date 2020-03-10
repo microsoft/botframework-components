@@ -103,7 +103,7 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
-                .AssertReply(ActionEndMessage())
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
                 .StartTestAsync();
         }
     }

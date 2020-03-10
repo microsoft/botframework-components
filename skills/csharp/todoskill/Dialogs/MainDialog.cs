@@ -65,11 +65,7 @@ namespace ToDoSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            // Initialize the PageSize and ReadSize parameters in state from configuration
-            var state = await _stateAccessor.GetAsync(innerDc.Context, () => new ToDoSkillState());
-            InitializeConfig(state);
-
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -114,7 +110,7 @@ namespace ToDoSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -239,6 +235,10 @@ namespace ToDoSkill.Dialogs
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                // Initialize the PageSize and ReadSize parameters in state from configuration
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                InitializeConfig(state);
+
                 var luisResult = stepContext.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var intent = luisResult?.TopIntent().intent;
                 var generalLuisResult = stepContext.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
@@ -336,7 +336,7 @@ namespace ToDoSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

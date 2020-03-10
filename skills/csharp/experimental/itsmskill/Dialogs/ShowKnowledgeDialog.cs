@@ -95,7 +95,6 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                await SendActionEnded(sc.Context);
                 return await sc.CancelAllDialogsAsync();
             }
         }
