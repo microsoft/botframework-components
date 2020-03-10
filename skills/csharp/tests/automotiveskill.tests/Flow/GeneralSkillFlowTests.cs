@@ -19,7 +19,7 @@ namespace AutomotiveSkill.Tests.Flow
         {
             await this.GetTestFlow()
                 .Send(string.Empty)
-                .AssertReplyOneOf(GetTemplates(AutomotiveSkillMainResponses.FirstPromptMessage))
+                .AssertReplyOneOf(ParseReplies(AutomotiveSkillMainResponses.FirstPromptMessage))
                 .Send("what's the weather?")
                 .AssertReplyOneOf(this.ConfusedResponse())
                 .StartTestAsync();
@@ -27,7 +27,7 @@ namespace AutomotiveSkill.Tests.Flow
 
         private string[] ConfusedResponse()
         {
-            return this.GetTemplates(AutomotiveSkillSharedResponses.DidntUnderstandMessage, new StringDictionary());
+            return this.ParseReplies(AutomotiveSkillSharedResponses.DidntUnderstandMessage, new StringDictionary());
         }
     }
 }
