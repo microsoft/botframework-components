@@ -7,7 +7,6 @@ using System.Linq;
 using Luis;
 using Microsoft.Graph;
 using static CalendarSkill.Models.CreateEventStateModel;
-using static CalendarSkill.Models.TriggerModel;
 
 namespace CalendarSkill.Models
 {
