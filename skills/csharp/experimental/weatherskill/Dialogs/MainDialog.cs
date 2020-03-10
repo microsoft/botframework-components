@@ -268,16 +268,18 @@ namespace WeatherSkill.Dialogs
             {
                 // Handle skill actions here
                 var eventActivity = activity.AsEventActivity();
-
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
+                    var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
                         case "WeatherForcast":
                             {
-                                LocationInfo actionData = null;
+                                state.IsAction = true;
 
+                                LocationInfo actionData = null;
                                 var eventValue = activity.Value as JObject;
                                 if (eventValue != null)
                                 {
@@ -285,7 +287,7 @@ namespace WeatherSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog), new SkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog));
                             }
 
                         default:
@@ -305,6 +307,7 @@ namespace WeatherSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -314,12 +317,19 @@ namespace WeatherSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                if (state.IsAction && stepContext.Result as ActionResult == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
+                state.Clear();
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                state.Clear();
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }
 

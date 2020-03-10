@@ -183,8 +183,7 @@ namespace WeatherSkill.Dialogs
                 Temperature6 = Convert.ToInt32(twelveHourForecast[5].Temperature.Value)
             };
 
-            var options = stepContext.Options as SkillOptions;
-            if (options != null && options.IsAction)
+            if (state.IsAction)
             {
                 var summary = forecastModel.Speak;
                 var actionResult = new ActionResult()

@@ -24,12 +24,15 @@ namespace WeatherSkill.Models
 
         public Location GeographyLocation { get; set; }
 
+        public bool IsAction { get; set; }
+
         public void Clear()
         {
             Geography = string.Empty;
             Latitude = double.NaN;
             Longitude = double.NaN;
             GeographyLocation = null;
+            IsAction = false;
         }
     }
 }
