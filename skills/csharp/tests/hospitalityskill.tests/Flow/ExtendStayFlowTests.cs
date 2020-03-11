@@ -147,5 +147,28 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(SkillActionEndMessage(true))
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task ExtendStayThenTimeActionTest()
+        {
+            var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
+
+            var tokens = new StringDictionary
+            {
+                { "Date", extendDate.ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(ExtendStayUtterances.ExtendStayAction)
+                .AssertReply(AssertContains(ExtendStayResponses.ExtendDatePrompt))
+                .Send(LateCheckOutUtterances.Time.ToString())
+                .AssertReply(AssertContains(ExtendStayResponses.RetryExtendDate))
+                .Send(extendDate.ToString())
+                .AssertReply(AssertStartsWith(ExtendStayResponses.ConfirmExtendStay, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(ExtendStayResponses.ExtendStaySuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

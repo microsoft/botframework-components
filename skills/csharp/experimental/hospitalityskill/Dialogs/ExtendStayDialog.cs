@@ -91,7 +91,7 @@ namespace HospitalitySkill.Dialogs
             }
 
             // trying to request late check out time
-            else if (entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
+            else if (convState.IsAction == false && entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
             {
                 return await sc.ReplaceDialogAsync(nameof(LateCheckOutDialog));
             }
