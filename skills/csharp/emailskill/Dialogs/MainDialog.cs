@@ -73,7 +73,7 @@ namespace EmailSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -118,7 +118,7 @@ namespace EmailSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -403,7 +403,7 @@ namespace EmailSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateManager.GenerateActivityForLocale(EmailMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(EmailMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
