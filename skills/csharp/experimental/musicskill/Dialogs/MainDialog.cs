@@ -332,7 +332,7 @@ namespace MusicSkill.Dialogs
             else
             {
                 state.Clear();
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }
 

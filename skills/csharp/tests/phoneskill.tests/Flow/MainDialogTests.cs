@@ -17,6 +17,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_Help_Intent()
         {
             await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                 .Send(GeneralUtterances.Help)
                 .AssertReply(Message(PhoneMainResponses.HelpMessage))
                 .StartTestAsync();
@@ -26,6 +28,8 @@ namespace PhoneSkill.Tests.Flow
         public async Task Test_Unhandled_Message()
         {
             await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                 .Send(GeneralUtterances.Incomprehensible)
                 .AssertReply(Message(PhoneSharedResponses.DidntUnderstandMessage))
                 .StartTestAsync();

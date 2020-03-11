@@ -48,7 +48,7 @@
         "$ref": "#/definitions/searchInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "message": {
