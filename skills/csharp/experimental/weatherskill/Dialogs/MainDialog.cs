@@ -24,6 +24,7 @@ using WeatherSkill.Models;
 using WeatherSkill.Responses.Main;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
+using WeatherSkill.Utilities;
 
 namespace WeatherSkill.Dialogs
 {
@@ -31,7 +32,7 @@ namespace WeatherSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateEngineManager _localeTemplateEngineManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
         private IStatePropertyAccessor<SkillContext> _contextAccessor;
 
@@ -42,7 +43,7 @@ namespace WeatherSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _localeTemplateEngineManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -176,7 +177,7 @@ namespace WeatherSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -185,7 +186,7 @@ namespace WeatherSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -194,7 +195,7 @@ namespace WeatherSkill.Dialogs
                         case GeneralLuis.Intent.Logout:
                             {
                                 await OnLogout(innerDc);
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -220,12 +221,12 @@ namespace WeatherSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(MainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _localeTemplateEngineManager.GetResponse(MainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _responseManager.GetResponse(MainResponses.WelcomeMessage);
+                    promptOptions.Prompt = _localeTemplateEngineManager.GetResponse(MainResponses.WelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -250,14 +251,14 @@ namespace WeatherSkill.Dialogs
                     case WeatherSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(SharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
@@ -284,7 +285,7 @@ namespace WeatherSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }
 
@@ -310,7 +311,7 @@ namespace WeatherSkill.Dialogs
                 await adapter.SignOutUserAsync(dc.Context, token.ConnectionName);
             }
 
-            await dc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+            await dc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.LogOut));
 
             return InterruptionAction.End;
         }

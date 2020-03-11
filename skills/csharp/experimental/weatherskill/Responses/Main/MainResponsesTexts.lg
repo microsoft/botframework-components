@@ -1,0 +1,38 @@
+[import] (MainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- I'm the weather skill and I can look up the weather.
+
+# HelpMessage.Text(Data)
+- [Enter your help message here]
+
+# GreetingMessage.Text(Data)
+- Hi!
+- Hi there!
+- Hello!
+
+# GoodbyeMessage.Text(Data)
+- Goodbye!
+
+# LogOut.Text(Data)
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# FeatureNotAvailable.Text(Data)
+- This feature is not yet available in this skill. Please try asking something else.
+
+# CancelMessage.Text(Data)
+- Ok, let's start over.
+
+# FirstPromptMessage.Text(Data)
+- What can I help you with today?
+- What can I do for you?
+- Is there anything I can do for you?
+- How can I help you?
+
+# CompletedMessage.Text(Data)
+- I'm here if you need anything else.
+- Let me know if there's anything else you need.
+- Let me know if I can help you with anything else.
+- All done. Let me know if I can do anything else.
