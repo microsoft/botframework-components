@@ -1,19 +1,17 @@
-﻿[import](DeleteToDoActivities.lg)
-
-# AskDeletionAllConfirmation.Text(ListType)
-- Are you sure you want to delete everything from your @{ListType} list?
+﻿# AskDeletionAllConfirmation.Text(ListType)
+- Are you sure you want to delete everything from your ${ListType} list?
 
 # AskDeletionAllConfirmationFailed.Text(ListType)
-- Sorry, I didn't understand. Do you want to delete everything from your @{ListType} list?
+- Sorry, I didn't understand. Do you want to delete everything from your ${ListType} list?
 
 # AfterAllTasksDeleted.Text(ListType)
-- I cleared your @{ListType} list.
+- I cleared your ${ListType} list.
 
 # AfterTaskDeleted.Text(TaskContent, ListType)
-- I deleted @{TaskContent} from your @{ListType} list.
+- I deleted ${TaskContent} from your ${ListType} list.
 
 # DeletionAllConfirmationRefused.Text(TaskCount, ListType)
-- OK, I didn't delete anything. There are @{TaskCount} items on your @{ListType} list.
+- OK, I didn't delete anything. There are ${TaskCount} items on your ${ListType} list.
 
 # ListTypePromptForDelete.Text
 - Do you want to delete something from your To Do, Shopping, or Grocery list?

@@ -18,6 +18,7 @@ using PhoneSkill.Models;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
@@ -27,7 +28,7 @@ namespace PhoneSkill.Dialogs
             string dialogId,
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager responseManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)
@@ -60,7 +61,7 @@ namespace PhoneSkill.Dialogs
 
         protected IServiceManager ServiceManager { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateEngineManager ResponseManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {

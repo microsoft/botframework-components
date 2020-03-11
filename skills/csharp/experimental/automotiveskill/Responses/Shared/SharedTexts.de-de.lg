@@ -1,0 +1,32 @@
+﻿[import](SharedActivities.lg)
+
+# DidntUnderstandMessage.Text
+- Tut mir leid, ich habe nicht verstanden, was Sie meinten.
+- Ich habe es nicht verstanden, vielleicht noch einmal auf eine andere Art und Weise versuchen.
+- Können Sie versuchen, auf eine andere Art und Weise zu fragen.
+- Ich habe nicht bekommen, was Du meinen, kannst du es anders versuchen.
+- Könnten Sie nähere Angaben machen?
+- Sagen Sie das noch einmal auf eine andere Art und Weise.
+- Das habe ich nicht ganz bekommen.
+- Können Sie das anders sagen?
+- Kannst du versuchen, mich noch einmal zu fragen, ich habe nicht bekommen, was du meinst.
+
+# DidntUnderstandMessageIgnoringInput.Text
+- Tut mir leid, ich habe nicht bekommen, was Sie meinen.
+- Ich kann Sie nicht verstehen. Versuchen Sie es auf eine andere Art und Weise.
+
+# CancellingMessage.Text
+- Sicher, wir können dies später tun.
+- Sicher, wir können später damit beginnen.
+- Hallo!
+
+# ActionEnded.Text
+- Ihr Abmelden war erfolgreich.
+- Sie haben sich erfolgreich abgemeldet.
+- Sie wurden abgemeldet.
+
+# ErrorMessage.Text
+- Diese Funktion ist in dieser Fertigkeit noch nicht verfügbar. Bitte versuchen Sie, etwas anderes zu fragen.
+
+# NoAuth.Text
+- OK, fangen wir von vorne an.

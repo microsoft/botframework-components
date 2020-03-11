@@ -5,10 +5,10 @@
 [import](ConfirmCard_RecipientMoreThanFive.lg)
 
 # EmailDetailRecipientWithoutButton(emailDetails)
-- IF: @{emailDetails.RecipientsCount > 5}
-    - @{ConfirmCard_RecipientMoreThanFive(emailDetails)}
+- IF: ${emailDetails.RecipientsCount > 5}
+    - ${ConfirmCard_RecipientMoreThanFive(emailDetails)}
 - ELSE:
-    - @{ConfirmCard_RecipientLessThanFive(emailDetails)}
+    - ${ConfirmCard_RecipientLessThanFive(emailDetails)}
 
 # EmailWithOutButtonCard(emailDetails)
 -```
@@ -19,7 +19,7 @@
     {
       "type": "Container",
       "id": "items",
-      "items": @{EmailDetailRecipientWithoutButton(emailDetails)}
+      "items": ${EmailDetailRecipientWithoutButton(emailDetails)}
     },
     {
       "type": "Container",
@@ -29,7 +29,7 @@
           "type": "TextBlock",
           "id": "messageBody",
           "color": "Default",
-          "text": "@{emailDetails.EmailContent}",
+          "text": "${emailDetails.EmailContent}",
           "wrap": true,
           "maxLines": 5
         }

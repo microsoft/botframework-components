@@ -14,6 +14,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
+using PhoneSkill.Utilities;
 using SkillServiceLibrary.Utilities;
 
 namespace PhoneSkill.Adapters
@@ -28,7 +29,7 @@ namespace PhoneSkill.Adapters
             BotStateSet botStateSet,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            ResponseManager responseManager)
+            LocaleTemplateEngineManager responseManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>

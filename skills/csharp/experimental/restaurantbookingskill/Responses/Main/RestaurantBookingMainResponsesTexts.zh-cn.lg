@@ -1,0 +1,44 @@
+[import] (RestaurantBookingMainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- 欢迎来到餐厅预订技能。
+
+# HelpMessage.Text(Data)
+- 我可以帮您订餐！
+
+# HelpMessage.S1(Data)
+- 明天晚上7点预订意大利餐厅
+
+# HelpMessage.S2(Data)
+- 我想要炸肉排
+
+# GreetingMessage.Text(Data)
+- 嗨！
+- 我在这！
+- 你好！
+- 您好！
+
+# GoodbyeMessage.Text(Data)
+- 再见！
+
+# LogOut.Text(Data)
+- 您已成功退出。
+- 您已退出。
+
+# FeatureNotAvailable.Text(Data)
+- 此功能在此技能中尚不可用。
+
+# CancelMessage.Text(Data)
+- 好的, 我们从头再来。
+
+# FirstPromptMessage.Text(Data)
+- 今天有什么可以帮您的吗？
+- 我能为你做什么？
+- 我有什么可以为您做的吗？
+- 我怎么帮你？
+
+# CompletedMessage.Text(Data)
+- 如果您还有其他需要，我在这里。
+- 让我知道您是否还有其他需要。
+- 让我知道我是否可以帮助您。
+- 全做完了。 让我知道我是否还能做其他事情。

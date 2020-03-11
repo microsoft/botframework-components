@@ -20,10 +20,10 @@ namespace EmailSkill.Dialogs
     public class ReplyEmailDialog : EmailSkillDialogBase
     {
         public ReplyEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ReplyEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(ReplyEmailDialog), templateManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -98,7 +98,7 @@ namespace EmailSkill.Dialogs
                     { "Subject", state.Subject },
                 };
 
-                var reply = TemplateEngine.GenerateActivityForLocale(
+                var reply = TemplateManager.GenerateActivityForLocale(
                 EmailSharedResponses.SentSuccessfully,
                 new
                 {

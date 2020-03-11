@@ -1,0 +1,84 @@
+# CANCELLED(Data, Cards, Layout)
+[Activity
+    Text = @{CANCELLED.Text(Data)}
+    Speak = @{CANCELLED.Text(Data)}
+]
+
+# COMPLETED(Data, Cards, Layout)
+[Activity
+    Text = @{COMPLETED.Text(Data)}
+    Speak = @{COMPLETED.Text(Data)}
+]
+
+# CONFUSED(Data, Cards, Layout)
+[Activity
+    Text = @{CONFUSED.Text(Data)}
+    Speak = @{CONFUSED.Text(Data)}
+]
+
+# ERROR(Data, Cards, Layout)
+[Activity
+    Text = @{ERROR.Text(Data)}
+    Speak = @{ERROR.Text(Data)}
+]
+
+# GREETING(Data, Cards, Layout)
+[Activity
+    Text = @{GREETING.Text(Data)}
+    Speak = @{GREETING.Text(Data)}
+]
+
+# GREETING_WITH_NAME(Data, Cards, Layout)
+[Activity
+    Text = @{GREETING_WITH_NAME.Text(Data)}
+    Speak = @{GREETING_WITH_NAME.Text(Data)}
+]
+
+# HELP_TEXT(Data, Cards, Layout)
+[Activity
+    Text = @{HELP_TEXT.Text(Data)}
+    Speak = @{HELP_TEXT.Text(Data)}
+]
+
+# HELP_TITLE(Data, Cards, Layout)
+[Activity
+    Text = @{HELP_TITLE.Text(Data)}
+    Speak = @{HELP_TITLE.Text(Data)}
+]
+
+# INTRO_TEXT(Data, Cards, Layout)
+[Activity
+    Text = @{INTRO_TEXT.Text(Data)}
+    Speak = @{INTRO_TEXT.Text(Data)}
+]
+
+# INTRO_TITLE(Data, Cards, Layout)
+[Activity
+    Text = @{INTRO_TITLE.Text(Data)}
+    Speak = @{INTRO_TITLE.Text(Data)}
+]
+
+# ReadMore(Data, Cards, Layout)
+[Activity
+    Text = @{ReadMore.Text(Data)}
+    Speak = @{ReadMore.Text(Data)}
+]
+
+# LearnMore(Data, Cards, Layout)
+[Activity
+    Text = @{LearnMore.Text(Data)}
+    Speak = @{LearnMore.Text(Data)}
+]
+
+# MarketPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{MarketPrompt.Text(Data)}
+    Speak = @{MarketPrompt.Text(Data)}
+]
+
+# MarketRetryPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{MarketRetryPrompt.Text(Data)}
+    Speak = @{MarketRetryPrompt.Text(Data)}
+]
+

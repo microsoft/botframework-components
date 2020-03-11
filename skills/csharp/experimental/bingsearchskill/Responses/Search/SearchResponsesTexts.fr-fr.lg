@@ -1,0 +1,24 @@
+[import] (SearchResponses.lg)
+
+# EntityKnowledge.Text(Data)
+- OK, Voici les informations de @{if(Data.Name == null, '', Data.Name)}.
+
+# EntityKnowledge.Speak(Data)
+- OK, Voici les informations de @{if(Data.Name == null, '', Data.Name)}. @{if(Data.Speak == null, '', Data.Speak)}.
+
+# NoResultPrompt.Text(Data)
+- Désolé, on dirait qu’on n’a rien trouvé.
+
+# AskEntityPrompt.Text(Data)
+- Que voulez-vous Rechercher? Vous pouvez dire des choses comme "qui est Bill Gates" ou "Comment est Jurassic Park".
+
+# AnswerSearchResultPrompt.Text(Data)
+- @{AnswerSearchResultPromptTextAndSpeak1(Data)}
+
+# AnswerSearchResultPromptTextAndSpeak1(Data)
+[Activity
+    Text = @{if(Data.Answer == null, '', Data.Answer)}. Vous pouvez trouver plus d'informations ici: @{if(Data.Url == null, '', Data.Url)}
+    Speak = @{if(Data.Answer == null, '', Data.Answer)}. Vous pouvez trouver plus d'informations ici.
+]
+
+

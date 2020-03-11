@@ -1,0 +1,5 @@
+[import] (..\Main\MainResponsesTexts.zh-cn.lg)
+[import] (..\Search\SearchResponsesTexts.zh-cn.lg)
+[import] (..\Shared\SharedResponsesTexts.zh-cn.lg)
+[import] (..\CommonStringsTexts.zh-cn.lg)
+[import] (..\Shared\Shared.lg)

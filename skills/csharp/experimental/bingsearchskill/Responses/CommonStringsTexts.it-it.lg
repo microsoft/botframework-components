@@ -1,0 +1,18 @@
+[import] (CommonStrings.lg)
+
+# Trailers.Text(Data)
+- Rimorchi
+
+# Showtimes.Text(Data)
+- Orari
+
+# Trivia.Text(Data)
+- quiz
+
+# View.Text(Data)
+- vista
+
+# DontKnowAnswer.Text(Data)
+- Mi dispiace non conosco ancora questa risposta.
+
+

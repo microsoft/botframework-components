@@ -1,0 +1,17 @@
+﻿# ShowArticles(Data, Cards, Layout)
+[Activity
+    Text = @{ShowArticles.Text(Data)}
+    Speak = @{if(Data.Count > 1, ShowMultipleArticles.Speak(Data.Article.Description), ShowOneArticles.Speak(Data.Article.Description))}
+]
+
+# NoArticles(Data, Cards, Layout)
+[Activity
+    Text = @{NoArticles.Text(Data)}
+    Speak = @{NoArticles.Text(Data)}
+]
+
+# TopicPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{TopicPrompt.Text(Data)}
+    Speak = @{TopicPrompt.Text(Data)}
+]

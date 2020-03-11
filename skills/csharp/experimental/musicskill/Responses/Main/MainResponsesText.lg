@@ -1,0 +1,41 @@
+﻿[import](MainResponsesActivities.lg)
+
+# WelcomeMessage.Text
+- What do you want me to play?
+
+# HelpMessage.Text
+- [Enter your help message here]
+
+# GreetingMessage.Text
+- Hi!
+- Hi there!
+- Hello!
+
+# GoodbyeMessage.Text
+- Goodbye!
+
+# LogOut.Text
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# FeatureNotAvailable.Text
+- This feature is not yet available in this skill. Please try asking something else.
+
+# CancelMessage.Text
+- Ok, let's start over.
+
+# NoResultstMessage.Text
+- Sorry, no match.
+
+# FirstPromptMessage.Text
+- What can I help you with today?
+- What can I do for you?
+- Is there anything I can do for you?
+- How can I help you?
+
+# CompletedMessage.Text
+- I'm here if you need anything else.
+- Let me know if there's anything else you need.
+- Let me know if I can help you with anything else.
+- All done. Let me know if I can do anything else.

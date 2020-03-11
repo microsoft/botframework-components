@@ -1,0 +1,47 @@
+[import](MainDialogActivities.lg)
+
+# WelcomeMessage.Text
+- 欢迎来到汽车技能!现在, 我可以帮助您与车辆设置控制-气候控制, 主动安全和音频。
+
+# HelpMessage.Text
+- 现在, 我可以帮助您与车辆设置控制-气候控制, 主动安全和音频。
+
+# HelpMessage.S1
+- 将温度设置为21度
+
+# HelpMessage.S2
+- 把车的后部暖和起来
+
+# HelpMessage.S3
+- 把空气放在我的脚上
+
+# HelpMessage.S4
+- 将前置自动制动提高到50%
+
+# GreetingMessage.Text
+- 有啊!
+- 我在这里！
+- 嘿，你好！
+
+# LogOut.Text
+- 您的注销成功了。
+- 您已成功注销。
+- 您已注销。
+
+# FeatureNotAvailable.Text
+- 此功能在此技能中尚不可用。请尝试询问其他的东西。
+
+# CancelMessage.Text
+- 好的, 我们从头再来。
+
+# FirstPromptMessage.Text
+- 今天我能帮到你什么？
+- 我能为你做什么？
+- 有什么我能为你做什么的吗？
+- 我能帮你什么？
+
+# CompletedMessage.Text
+- 如果你还需要什么，我会在这里。
+- 如果还有什么需要，请告诉我。
+- 让我知道，如果我可以帮你什么。
+- 全部完成。让我知道我能不能做别的事。
