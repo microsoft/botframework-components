@@ -309,7 +309,7 @@ namespace MusicSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.CompletedMessage), cancellationToken);
             }
         }
 
