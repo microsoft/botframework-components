@@ -15,5 +15,18 @@ namespace ITSMSkill.Models.Actions
         public virtual void ProcessAfterDigest(SkillState state)
         {
         }
+
+        protected string CovertNumber(string number)
+        {
+            number = number.ToUpper();
+            if (number.StartsWith("INC"))
+            {
+                return number;
+            }
+            else
+            {
+                return $"INC{int.Parse(number).ToString("D7")}";
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using ITSMSkill.Responses.Knowledge;
@@ -24,7 +25,7 @@ namespace ITSMSkill.Tests.Flow
         {
             var attribute = new StringDictionary()
             {
-                { "Attributes", string.Empty }
+                { "Attributes", $"Title: {MockData.CreateTicketTitle}" }
             };
 
             await this.GetTestFlow()
@@ -53,7 +54,7 @@ namespace ITSMSkill.Tests.Flow
         {
             var attribute = new StringDictionary()
             {
-                { "Attributes", string.Empty }
+                { "Attributes", $"Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
 
             await this.GetTestFlow()
@@ -68,6 +69,54 @@ namespace ITSMSkill.Tests.Flow
                 .Send(NonLuisUtterances.No)
                 .AssertReply(AssertContains(TicketResponses.TicketUpdated, null, CardStrings.TicketUpdateClose))
                 .AssertReply(ActionEndMessage())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task UpdateActionTest()
+        {
+            var attribute = new StringDictionary()
+            {
+                { "Attributes", $"Title: {MockData.CreateTicketTitle}" }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketUpdateUtterances.UpdateAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputTicketNumber))
+                .Send(MockData.CreateTicketNumber)
+                .AssertReply(AssertContains(TicketResponses.TicketTarget, null, CardStrings.Ticket))
+                .AssertReply(AssertContains(TicketResponses.UpdateAttribute))
+                .Send(NonLuisUtterances.Title)
+                .AssertReply(AssertContains(SharedResponses.InputTitle))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertStartsWith(TicketResponses.ShowUpdates, attribute))
+                .AssertReply(AssertContains(TicketResponses.UpdateAttribute))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(AssertContains(TicketResponses.TicketUpdated, null, CardStrings.TicketUpdateClose))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task UpdateWithNumberUrgencyDescriptionActionTest()
+        {
+            var attribute = new StringDictionary()
+            {
+                { "Attributes", $"Description: {MockData.CreateTicketDescription}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketUpdateUtterances.UpdateWithNumberUrgencyDescriptionAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(TicketResponses.TicketTarget, null, CardStrings.Ticket))
+                .AssertReply(AssertStartsWith(TicketResponses.ShowUpdates, attribute))
+                .AssertReply(AssertContains(TicketResponses.UpdateAttribute))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(AssertContains(TicketResponses.TicketUpdated, null, CardStrings.TicketUpdateClose))
+                .AssertReply(SkillActionEndMessage(true))
                 .StartTestAsync();
         }
     }

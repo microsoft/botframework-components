@@ -20,14 +20,34 @@ namespace ITSMSkill.Models.Actions
         [JsonProperty("Urgency")]
         public string Urgency { get; set; }
 
-        public ITSMLuis Convert()
+        public override ITSMLuis CreateLuis()
         {
             var luis = new ITSMLuis
             {
                 Entities = new ITSMLuis._Entities(),
             };
 
+            if (!string.IsNullOrEmpty(Number))
+            {
+                luis.Entities.TicketNumber = new string[] { CovertNumber(Number) };
+            }
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                luis.Entities.TicketTitle = new string[] { Title };
+            }
+
+            if (!string.IsNullOrEmpty(Urgency))
+            {
+                luis.Entities.UrgencyLevel = new string[][] { new string[] { Urgency } };
+            }
+
             return luis;
+        }
+
+        public override void ProcessAfterDigest(SkillState state)
+        {
+            state.TicketDescription = Description;
         }
     }
 }
