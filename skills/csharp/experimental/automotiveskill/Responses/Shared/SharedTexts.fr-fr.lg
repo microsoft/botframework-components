@@ -1,0 +1,32 @@
+﻿[import](SharedActivities.lg)
+
+# DidntUnderstandMessage.Text
+- Désolé, je ne comprenais pas ce que tu voulais dire.
+- Je ne comprenais pas, peut-être essayer à nouveau d’une manière différente.
+- Pouvez-vous essayer de demander d’une manière différente.
+- Je n’ai pas eu ce que tu veux dire, tu peux essayer d’une manière différente.
+- Pourriez-vous élaborer?
+- Dites-le encore s’il vous plaît d’une manière différente.
+- Je n’ai pas tout à fait eu ça.
+- Pouvez-vous dire cela d’une manière différente?
+- Pouvez-vous essayer de me demander à nouveau, je n’ai pas obtenu ce que vous voulez dire.
+
+# DidntUnderstandMessageIgnoringInput.Text
+- Désolé, je n’ai pas eu ce que tu veux dire.
+- Je ne comprends pas. Essayez d’une manière différente.
+
+# CancellingMessage.Text
+- Bien sûr, nous pourrons le faire plus tard.
+- Bien sûr, nous pourrons commencer plus tard.
+- Salut!
+
+# ActionEnded.Text
+- Votre signature a été un succès.
+- Vous avez signé avec succès.
+- Vous avez été déconnecté.
+
+# ErrorMessage.Text
+- Cette fonctionnalité n’est pas encore disponible dans cette compétence. S’ll vous plaît, essayez de demander autre chose.
+
+# NoAuth.Text
+- OK, revenons.

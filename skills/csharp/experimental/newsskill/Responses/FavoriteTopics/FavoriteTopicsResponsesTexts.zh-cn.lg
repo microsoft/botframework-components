@@ -1,0 +1,16 @@
+﻿[import] (FavoriteTopicsResponses.lg)
+
+# FavoriteTopicPrompt.Text(Data)
+- 你喜欢什么话题？
+
+# ShowFavoriteTopics.Text(Data)
+- 这是和你喜欢的话题相关的文章：
+
+# ShowMultipleFavoriteTopics.Speak(Data)
+- 我找到了一些新闻，第一个是： @{if(Data == null, '', Data)}
+
+# ShowOneFavoriteTopics.Speak(Data)
+- @{if(Data == null, '', Data)}
+
+# NoFavoriteTopics.Text(Data)
+- 抱歉，我没有找到和这个话题相关的文章。

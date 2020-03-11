@@ -1,0 +1,18 @@
+[import] (CommonStrings.lg)
+
+# Trailers.Text(Data)
+- Acoplados
+
+# Showtimes.Text(Data)
+- Horarios
+
+# Trivia.Text(Data)
+- Trivia
+
+# View.Text(Data)
+- Vista
+
+# DontKnowAnswer.Text(Data)
+- Lo siento, aún no sé esta respuesta.
+
+

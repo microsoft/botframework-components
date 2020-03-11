@@ -1,0 +1,32 @@
+﻿[import](SharedActivities.lg)
+
+# DidntUnderstandMessage.Text
+- Scusa, non capivo cosa intendevi.
+- Non ho capito, forse riprovare in un modo diverso.
+- Puoi provare a chiedere in un modo diverso.
+- Non ho capito quello che vuoi dire, puoi provarci in un modo diverso.
+- Potresti spiegarmi meglio?
+- Dillo di nuovo per favore in un modo diverso.
+- Non l'ho capito bene.
+- Puoi dirlo in un modo diverso?
+- Puoi provare a chiedermelo di nuovo, non ho capito quello che intendevi.
+
+# DidntUnderstandMessageIgnoringInput.Text
+- Scusa, non ho capito quello che volevi dire.
+- Non capisco. Prova in un modo diverso.
+
+# CancellingMessage.Text
+- Certo, possiamo farlo più tardi.
+- Certo, possiamo iniziare più tardi.
+- Ehilà!
+
+# ActionEnded.Text
+- La tua disconnessione è riuscita.
+- Ti sei disconnesso.
+- Sei stato disconnesso.
+
+# ErrorMessage.Text
+- Questa funzione non è ancora disponibile in questa abilità. Si è verificato un problema sconosciuto.
+
+# NoAuth.Text
+- Ok, ricominciamo da capo.

@@ -1,0 +1,44 @@
+[import] (RestaurantBookingMainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- Benvenuto nell'abilità sperimentale di prenotazione di ristoranti
+
+# HelpMessage.Text(Data)
+- Posso aiutarti con la prenotazione di un tavolo!
+
+# HelpMessage.S1(Data)
+- Prenota un ristorante italiano domani alle 19:00
+
+# HelpMessage.S2(Data)
+- Vorrei la cotoletta
+
+# GreetingMessage.Text(Data)
+- C'è!
+- Ehilà!
+- Ciao!
+
+# GoodbyeMessage.Text(Data)
+- Addio!
+
+# LogOut.Text(Data)
+- Il tuo cartello è riuscito.
+- Hai firmato con successo.
+- Sei stato disconnesso.
+
+# FeatureNotAvailable.Text(Data)
+- Questa funzionalità non è ancora disponibile in questa abilità. Per favore prova a chiedere qualcos'altro.
+
+# CancelMessage.Text(Data)
+- Ok, ricominciamo da qui.
+
+# FirstPromptMessage.Text(Data)
+- Con cosa posso aiutarti oggi?
+- Cosa posso fare per lei?
+- C'è qualcosa che posso fare per te?
+- Come posso aiutarla?
+
+# CompletedMessage.Text(Data)
+- Sono qui se hai bisogno di qualcos'altro.
+- Fammi sapere se c'è qualcos'altro di cui hai bisogno.
+- Fammi sapere se posso aiutarti con qualsiasi altra cosa.
+- Tutto fatto. Fammi sapere se posso fare qualcos'altro.

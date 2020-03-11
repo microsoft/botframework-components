@@ -1,0 +1,39 @@
+[import] (MainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- Soy la habilidad del clima y puedo consultar el clima.
+
+# HelpMessage.Text(Data)
+- [Introduzca su mensaje de ayuda aquí]
+
+# GreetingMessage.Text(Data)
+- ¡ Ahí está!
+- ¡Hola!
+- ¡Hola!
+
+# GoodbyeMessage.Text(Data)
+- ¡Adiós!
+
+# LogOut.Text(Data)
+- Tu sesión fue exitosa.
+- Ha firmado con éxito.
+- Se ha desconectado.
+
+# FeatureNotAvailable.Text(Data)
+- Esta función aún no está disponible en la habilidad. Por favor, intente preguntar algo más.
+
+# CancelMessage.Text(Data)
+- Bien, empecemos de una vez.
+
+# FirstPromptMessage.Text(Data)
+- ¿Con que puedo ayudarte hoy?
+- ¿Qué puedo hacer por ti?
+- ¿Hay algo que pueda hacer por ti?
+- ¿Como puedo ayudarte?
+
+# CompletedMessage.Text(Data)
+- Estoy aquí si necesitas algo más.
+- Avísame si necesitas algo más.
+- Avísame si puedo ayudarte con algo más.
+- Todo listo. Avísame si puedo hacer algo más.
+

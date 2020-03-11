@@ -26,11 +26,9 @@ using PhoneSkill.Bots;
 using PhoneSkill.Common;
 using PhoneSkill.Dialogs;
 using PhoneSkill.Models;
-using PhoneSkill.Responses.Main;
-using PhoneSkill.Responses.OutgoingCall;
-using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Tests.TestDouble;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Tests.Flow
 {
@@ -53,6 +51,8 @@ namespace PhoneSkill.Tests.Flow
         public IBackgroundTaskQueue BackgroundTaskQueue { get; set; }
 
         public IServiceManager ServiceManager { get; set; }
+
+        public LocaleTemplateEngineManager TemplateEngine { get; set; }
 
         [TestInitialize]
         public override void Initialize()
@@ -101,12 +101,9 @@ namespace PhoneSkill.Tests.Flow
                 return new BotStateSet(userState, conversationState);
             });
 
-            ResponseManager = new ResponseManager(
-                new string[] { "en" },
-                new PhoneMainResponses(),
-                new PhoneSharedResponses(),
-                new OutgoingCallResponses());
-            Services.AddSingleton(ResponseManager);
+            // Configure localized responses
+            TemplateEngine = EngineWrapper.CreateLocaleTemplateEngineManager("en-us");
+            Services.AddSingleton(TemplateEngine);
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             Services.AddSingleton<IServiceManager>(ServiceManager);
@@ -237,6 +234,11 @@ namespace PhoneSkill.Tests.Flow
                 Assert.IsInstanceOfType(eventReceived.Value, typeof(OutgoingCall));
                 Assert.AreEqual(expectedCall, (OutgoingCall)eventReceived.Value);
             };
+        }
+
+        protected new string[] ParseReplies(string name, StringDictionary data = null)
+        {
+            return TemplateEngine.ParseReplies(name, data);
         }
     }
 }
