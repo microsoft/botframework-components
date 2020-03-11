@@ -230,7 +230,7 @@ namespace MusicSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
-
+            state.Clear();
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
                 var skillResult = stepContext.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
@@ -325,13 +325,11 @@ namespace MusicSkill.Dialogs
                     endOfConversation.Value = new ActionResult() { ActionSuccess = false };
                 }
 
-                state.Clear();
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }

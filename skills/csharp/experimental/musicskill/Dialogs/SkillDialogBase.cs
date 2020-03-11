@@ -175,10 +175,6 @@ namespace MusicSkill.Dialogs
 
             // send error message to bot user
             await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ErrorMessage));
-
-            // clear state
-            var state = await StateAccessor.GetAsync(sc.Context);
-            state.Clear();
         }
     }
 }
