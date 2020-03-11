@@ -36,7 +36,7 @@
         "$ref": "#/definitions/todoInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/todoList"
+        "$ref": "#/definitions/todoListInfo"
       }
     },
     "deleteToDo": {
@@ -47,7 +47,7 @@
         "$ref": "#/definitions/todoInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/todoList"
+        "$ref": "#/definitions/todoListInfo"
       }
     },
     "deleteAll": {
@@ -69,7 +69,7 @@
         "$ref": "#/definitions/todoInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/todoList"
+        "$ref": "#/definitions/todoListInfo"
       }
     },
     "markAll": {
@@ -91,7 +91,7 @@
         "$ref": "#/definitions/listInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/todoList"
+        "$ref": "#/definitions/todoListInfo"
       }
     }
   },
@@ -118,11 +118,20 @@
         }
       }
     },
-    "todoList": {
-      "type": "array",
-      "description": "List of todo tasks",
-      "items": {
-        "type": "string"
+    "todoListInfo": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        },
+        "todoList": {
+          "type": "array",
+          "description": "List of todo tasks",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "actionResult": {

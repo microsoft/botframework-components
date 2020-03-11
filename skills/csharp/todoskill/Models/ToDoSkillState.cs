@@ -14,6 +14,7 @@ namespace ToDoSkill.Models
         /// </summary>
         public ToDoSkillState()
         {
+            IsAction = false;
             PageSize = 0;
             Tasks = new List<TaskItem>();
             TaskIndexes = new List<int>();
@@ -40,6 +41,14 @@ namespace ToDoSkill.Models
             GoBackToStart = false;
             CollectIndexRetry = false;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether gets or sets IsAction.
+        /// </summary>
+        /// <value>
+        /// indicating whether gets or sets IsAction.
+        /// </value>
+        public bool IsAction { get; set; }
 
         /// <summary>
         /// Gets or sets PageSize.
@@ -246,6 +255,7 @@ namespace ToDoSkill.Models
         /// </summary>
         public void Clear()
         {
+            IsAction = false;
             PageSize = 0;
             Tasks = new List<TaskItem>();
             TaskIndexes = new List<int>();

@@ -137,8 +137,7 @@ namespace ToDoSkill.Dialogs
                         state.MarkOrDeleteAllTasksFlag);
                     await sc.Context.SendActivityAsync(markToDoCard.Speak, speak: markToDoCard.Speak);
 
-                    var skillOptions = sc.Options as ToDoSkillOptions;
-                    if (skillOptions != null && skillOptions.IsAction)
+                    if (state.IsAction)
                     {
                         var actionResult = new ActionResult() { ActionSuccess = true };
                         return await sc.EndDialogAsync(actionResult);
@@ -169,17 +168,16 @@ namespace ToDoSkill.Dialogs
                         await sc.Context.SendActivityAsync(activity);
                     }
 
-                    var skillOptions = sc.Options as ToDoSkillOptions;
-                    if (skillOptions != null && skillOptions.IsAction)
+                    if (state.IsAction)
                     {
-                        var actionResult = new List<string>();
+                        var todoList = new List<string>();
                         var uncompletedTasks = state.AllTasks.Where(t => t.IsCompleted == false).ToList();
                         if (uncompletedTasks != null && uncompletedTasks.Any())
                         {
-                            uncompletedTasks.ForEach(x => actionResult.Add(x.Topic));
+                            uncompletedTasks.ForEach(x => todoList.Add(x.Topic));
                         }
 
-                        return await sc.EndDialogAsync(actionResult);
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                     }
                 }
 

@@ -13,6 +13,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.AddToDo;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
@@ -133,12 +134,11 @@ namespace ToDoSkill.Dialogs
                         state.ListType);
                     await sc.Context.SendActivityAsync(toDoListCard);
 
-                    var skillOptions = sc.Options as ToDoSkillOptions;
-                    if (skillOptions != null && skillOptions.IsAction)
+                    if (state.IsAction)
                     {
-                        var actionResult = new List<string>();
-                        state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
-                        return await sc.EndDialogAsync(actionResult);
+                        var todoList = new List<string>();
+                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                     }
 
                     return await sc.NextAsync();
@@ -175,12 +175,6 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskTaskContent(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var skillOptions = sc.Options as ToDoSkillOptions;
-            if (skillOptions != null && skillOptions.IsAction)
-            {
-                return await sc.EndDialogAsync();
-            }
-
             try
             {
                 var state = await this.ToDoStateAccessor.GetAsync(sc.Context);
@@ -323,15 +317,14 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var skillOptions = sc.Options as ToDoSkillOptions;
-            if (skillOptions != null && skillOptions.IsAction)
+            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            if (state.IsAction)
             {
                 return await sc.EndDialogAsync();
             }
 
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 state.LastListType = state.ListType;
                 var service = await InitListTypeIds(sc);

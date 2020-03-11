@@ -300,10 +300,10 @@ namespace ToDoSkill.Dialogs
             {
                 // Handle skill actions here
                 var eventActivity = activity.AsEventActivity();
-
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
                     var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                    state.IsAction = true;
 
                     switch (eventActivity.Name)
                     {
@@ -312,13 +312,13 @@ namespace ToDoSkill.Dialogs
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.AddDupTask = true;
-                                return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
                             }
 
                         case "DeleteToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
-                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
                         case "DeleteAll":
@@ -326,26 +326,26 @@ namespace ToDoSkill.Dialogs
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
                                 state.DeleteTaskConfirmation = true;
-                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
                         case "MarkToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
-                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
                         case "MarkAll":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
-                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
                         case "ShowToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
-                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog), new ToDoSkillOptions() { IsAction = true });
+                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
                             }
 
                         default:
@@ -365,6 +365,7 @@ namespace ToDoSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -374,12 +375,19 @@ namespace ToDoSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                if (state.IsAction && stepContext.Result as ActionResult == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
+                state.Clear();
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
+                state.Clear();
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
@@ -436,16 +444,6 @@ namespace ToDoSkill.Dialogs
 
             try
             {
-                var actionData = value.ToObject<ListInfo>();
-                state.ListType = actionData.ListType;
-                return;
-            }
-            catch
-            {
-            }
-
-            try
-            {
                 var actionData = value.ToObject<ToDoInfo>();
                 state.ListType = actionData.ListType;
                 state.TaskContent = actionData.TaskName;
@@ -455,6 +453,17 @@ namespace ToDoSkill.Dialogs
             catch
             {
             }
+
+            try
+            {
+                var actionData = value.ToObject<ListInfo>();
+                state.ListType = actionData.ListType;
+                return;
+            }
+            catch
+            {
+            }
+
         }
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Responses.ShowToDo;
 using ToDoSkill.Services;
@@ -132,16 +133,15 @@ namespace ToDoSkill.Dialogs
                     state.AllTasks = await service.GetTasksAsync(state.ListType);
                 }
 
-                var skillOptions = sc.Options as ToDoSkillOptions;
-                if (skillOptions != null && skillOptions.IsAction)
+                if (state.IsAction)
                 {
-                    var actionResult = new List<string>();
+                    var todoList = new List<string>();
                     if (state.AllTasks != null && state.AllTasks.Any())
                     {
-                        state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
+                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
                     }
 
-                    return await sc.EndDialogAsync(actionResult);
+                    return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                 }
 
                 var allTasksCount = state.AllTasks.Count;

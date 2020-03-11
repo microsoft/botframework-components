@@ -147,16 +147,15 @@ namespace ToDoSkill.Dialogs
 
                     canDeleteAnotherTask = state.AllTasks.Count > 0 ? true : false;
 
-                    var skillOptions = sc.Options as ToDoSkillOptions;
-                    if (skillOptions != null && skillOptions.IsAction)
+                    if (state.IsAction)
                     {
-                        var actionResult = new List<string>();
+                        var todoList = new List<string>();
                         if (state.AllTasks != null && state.AllTasks.Any())
                         {
-                            state.AllTasks.ForEach(x => actionResult.Add(x.Topic));
+                            state.AllTasks.ForEach(x => todoList.Add(x.Topic));
                         }
 
-                        return await sc.EndDialogAsync(actionResult);
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                     }
                 }
                 else
@@ -178,8 +177,7 @@ namespace ToDoSkill.Dialogs
                             state.ListType,
                             true);
 
-                        var skillOptions = sc.Options as ToDoSkillOptions;
-                        if (skillOptions != null && skillOptions.IsAction)
+                        if (state.IsAction)
                         {
                             var actionResult = new ActionResult() { ActionSuccess = true };
                             return await sc.EndDialogAsync(actionResult);
@@ -399,15 +397,14 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var skillOptions = sc.Options as ToDoSkillOptions;
-            if (skillOptions != null && skillOptions.IsAction)
+            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            if (state.IsAction)
             {
                 return await sc.EndDialogAsync();
             }
 
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
                     var prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmation, new

@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
 namespace ToDoSkill.Tests.Flow.Utterances
@@ -73,6 +76,19 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string AddTaskWithContentAndShopVerb { get; } = "add purchase shoes to my shopping list";
 
         public static string AddTaskWithContentAndCustomizeListType { get; } = "add history to my homework list";
+
+        public static string AddToDoActionName { get; } = "AddToDo";
+
+        public static Activity AddToDoAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = AddToDoActionName,
+            Value = JObject.FromObject(new ToDoInfo()
+            {
+                ListType = MockData.ToDo,
+                TaskName = MockData.TaskContent,
+            })
+        };
 
         private ToDoLuis GetBaseAddTaskIntent(
             string userInput,

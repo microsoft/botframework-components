@@ -14,6 +14,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
@@ -24,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToDoSkill.Bots;
 using ToDoSkill.Dialogs;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.Main;
 using ToDoSkill.Services;
 using ToDoSkill.Tests.Flow.Fakes;
@@ -194,6 +196,31 @@ namespace ToDoSkill.Tests.Flow
         protected string[] ActionEndMessage()
         {
             return GetTemplates(ToDoMainResponses.CompletedMessage);
+        }
+
+        protected Action<IActivity> CheckForEoC(bool value = false, bool actionSuccess = true)
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                if (value)
+                {
+                    if (eoc.Value is ActionResult)
+                    {
+                        var actionResult = eoc.Value as ActionResult;
+                        Assert.IsNotNull(actionResult);
+                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
+                    }
+                    else if (eoc.Value is List<string>)
+                    {
+                        var actionResult = eoc.Value as TodoListInfo;
+                        Assert.IsNotNull(actionResult);
+                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
+                        Assert.AreEqual(actionResult.ToDoList.Count, 1);
+                    }
+                }
+            };
         }
     }
 }
