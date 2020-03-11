@@ -2,7 +2,7 @@
 > See https://github.com/Microsoft/BotBuilder-Samples/tree/master/experimental/language-generation to learn more
 
 # EmailOverviewList(emails)
-- @{join(foreach(emails, x , EmailOverviewItem(x)), ',')} 
+- ${join(foreach(emails, x , EmailOverviewItem(x)), ',')} 
 
 # EmailOverviewItem(emailItem)
 -```
@@ -20,7 +20,7 @@
                   "horizontalAlignment": "Center",
                   "height": "stretch",
                   "style": "Person",
-                  "url": "@{emailItem.SenderIcon}",
+                  "url": "${emailItem.SenderIcon}",
                   "size": "Medium"
                 }
               ],
@@ -42,7 +42,7 @@
                           "size": "Medium",
                           "weight": "Bolder",
                           "color": "Default",
-                          "text": "@{emailItem.Subject}"
+                          "text": "${emailItem.Subject}"
                         }
                       ],
                       "width": 95
@@ -54,7 +54,7 @@
                         {
                           "type": "Image",
                           "horizontalAlignment": "Center",
-                          "url": "@{emailItem.AdditionalIcon2}",
+                          "url": "${emailItem.AdditionalIcon2}",
                           "width": "20px",
                           "height": "20px"
                         }
@@ -68,7 +68,7 @@
                         {
                           "type": "Image",
                           "horizontalAlignment": "Center",
-                          "url": "@{emailItem.AdditionalIcon1}",
+                          "url": "${emailItem.AdditionalIcon1}",
                           "width": "20px",
                           "height": "20px"
                         }
@@ -87,7 +87,7 @@
                         {
                           "type": "TextBlock",
                           "color": "Default",
-                          "text": "@{emailItem.Sender}"
+                          "text": "${emailItem.Sender}"
                         }
                       ],
                       "width": "auto"
@@ -99,7 +99,7 @@
                           "type": "TextBlock",
                           "horizontalAlignment": "Right",
                           "color": "Default",
-                          "text": "@{emailItem.ReceivedDateTime}"
+                          "text": "${emailItem.ReceivedDateTime}"
                         }
                       ],
                       "width": "stretch"

@@ -1,0 +1,30 @@
+﻿[import](./ShowEmailTexts.it-it.lg)
+[import](../Cards/EmailDetailCard.lg)
+
+# ReadOut
+[Activity
+    Text = ${ReadOutText(messageList)}
+    Speak = ${ReadOutText(messageList)}
+    InputHint = expectingInput
+]
+
+# ReadOutText(messageList)
+- IF: ${count(messageList) == 1}
+  - ${ReadOutForOneEmail.Text()}
+- ELSE:
+  - ${ReadOutForMultiEmails.Text()}
+
+# ReadOutMore
+[Activity
+    Text = ${ReadOutMore.Text()}
+    Speak = ${ReadOutMore.Text()}
+    InputHint = expectingInput
+]
+
+# ReadOutMessage
+[Activity
+    Text = ${ReadOutMessage.Text(emailDetailsWithoutContent)}
+    Speak = ${ReadOutMessage.Speak(emailDetailsWithContent)}
+    Attachments = ${json(EmailDetailCard(emailDetails))}
+    InputHint = acceptingInput
+]

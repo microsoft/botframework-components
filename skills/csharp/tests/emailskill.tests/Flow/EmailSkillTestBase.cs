@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using EmailSkill.Bots;
@@ -102,37 +103,25 @@ namespace EmailSkill.Tests.Flow
             });
 
             // Configure localized responses
+            var localizedTemplates = new Dictionary<string, string>();
+            var templateFile = "ResponsesAndTexts";
             var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
-            var templateFiles = new Dictionary<string, string>
-            {
-                { "Shared", "ResponsesAndTexts" },
-            };
 
-            var localizedTemplates = new Dictionary<string, List<string>>();
             foreach (var locale in supportedLocales)
             {
-                var localeTemplateFiles = new List<string>();
-                foreach (var (dialog, template) in templateFiles)
-                {
-                    // LG template for default locale should not include locale in file extension.
-                    if (locale.Equals("en-us"))
-                    {
-                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.lg"));
-                    }
-                    else
-                    {
-                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.{locale}.lg"));
-                    }
-                }
+                // LG template for en-us does not include locale in file extension.
+                var localeTemplateFile = locale.Equals("en-us")
+                    ? Path.Combine(".", "Responses", "Shared", $"{templateFile}.lg")
+                    : Path.Combine(".", "Responses", "Shared", $"{templateFile}.{locale}.lg");
 
-                localizedTemplates.Add(locale, localeTemplateFiles);
+                localizedTemplates.Add(locale, localeTemplateFile);
             }
 
-            Services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, "en-us"));
+            Services.AddSingleton(new LocaleTemplateManager(localizedTemplates, "en-us"));
 
             // Configure files for generating all responses. Response from bot should equal one of them.
-            var engineAll = new TemplateEngine().AddFile(Path.Combine("Responses", "Shared", "ResponsesAndTexts.lg"));
-            Services.AddSingleton(engineAll);
+            var allTemplates = Templates.ParseFile(Path.Combine("Responses", "Shared", "ResponsesAndTexts.lg"));
+            Services.AddSingleton(allTemplates);
 
             Services.AddSingleton<IStorage>(new MemoryStorage());
 
@@ -155,9 +144,9 @@ namespace EmailSkill.Tests.Flow
         public string[] GetTemplates(string templateName, object data = null)
         {
             var sp = Services.BuildServiceProvider();
-            var engine = sp.GetService<TemplateEngine>();
+            var templates = sp.GetService<Templates>();
             var formatTemplateName = templateName + ".Text";
-            return engine.ExpandTemplate(formatTemplateName, data).ToArray();
+            return templates.ExpandTemplate(formatTemplateName, data).ToArray();
         }
 
         public TestFlow GetTestFlow()

@@ -39,7 +39,7 @@
                           "size": "Large",
                           "weight": "Bolder",
                           "color": "Light",
-                          "text": "@{emailDetails.Subject}"
+                          "text": "${emailDetails.Subject}"
                         }
                       ],
                       "width": "stretch"
@@ -70,7 +70,7 @@
                         {
                           "type": "Image",
                           "style": "Person",
-                          "url": "@{emailDetails.RecipientIcon0}"
+                          "url": "${emailDetails.RecipientIcon0}"
                         }
                       ],
                       "width": "auto"
@@ -81,7 +81,7 @@
                         {
                           "type": "Image",
                           "style": "Person",
-                          "url": "@{emailDetails.RecipientIcon1}"
+                          "url": "${emailDetails.RecipientIcon1}"
                         }
                       ],
                       "width": "auto"
@@ -92,7 +92,7 @@
                         {
                           "type": "Image",
                           "style": "Person",
-                          "url": "@{emailDetails.RecipientIcon2}"
+                          "url": "${emailDetails.RecipientIcon2}"
                         }
                       ],
                       "width": "auto"
@@ -103,7 +103,7 @@
                         {
                           "type": "Image",
                           "style": "Person",
-                          "url": "@{emailDetails.RecipientIcon3}"
+                          "url": "${emailDetails.RecipientIcon3}"
                         }
                       ],
                       "width": "auto"
@@ -118,7 +118,7 @@
                           "size": "Large",
                           "weight": "Bolder",
                           "color": "Light",
-                          "text": "\\+ @{emailDetails.AdditionalRecipientNumber}"
+                          "text": "\\+ ${emailDetails.AdditionalRecipientNumber}"
                         }
                       ],
                       "width": "stretch"
