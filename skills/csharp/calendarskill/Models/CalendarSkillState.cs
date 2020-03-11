@@ -46,7 +46,6 @@ namespace CalendarSkill.Models
             MeetingInfo.Clear();
             ShowMeetingInfo.Clear();
             UpdateMeetingInfo.Clear();
-            IsAction = false;
         }
 
         public class UserInformation

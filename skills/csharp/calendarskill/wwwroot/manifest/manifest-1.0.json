@@ -157,6 +157,18 @@
           "type": "string",
           "description": "The location for the meeting"
         },
+        "meetingRoom": {
+          "type": "string",
+          "description": "The meeting room for the meeting"
+        },
+        "building": {
+          "type": "string",
+          "description": "Building of the meeting room"
+        },
+        "floorNumber": {
+          "type": "number",
+          "description": "Floor number of the meeting room"
+        },
         "timezone": {
           "type": "string",
           "description": "The timezone to create the meeting in"
@@ -297,6 +309,10 @@
         "timezone": {
           "type": "string",
           "description": "The timezone to create the meeting in"
+        },
+        "meetingRoom": {
+          "type": "string",
+          "description": "The meeting room for the meeting"
         },
         "actionSuccess": {
           "type": "boolean",

@@ -264,7 +264,7 @@ namespace CalendarSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
-
+            state.IsAction = false;
             var options = new CalendarSkillDialogOptions()
             {
                 SubFlowMode = false
@@ -596,8 +596,8 @@ namespace CalendarSkill.Dialogs
                     endOfConversation.Value = new ActionResult() { ActionSuccess = false };
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 state.Clear();
+                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
             else
