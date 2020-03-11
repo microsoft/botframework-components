@@ -284,6 +284,7 @@ namespace MusicSkill.Dialogs
 
                     case Events.PlayMusic:
                         {
+                            state.IsAction = true;
                             SearchInfo actionData = null;
                             if (ev.Value is JObject info)
                             {
@@ -309,6 +310,7 @@ namespace MusicSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -318,11 +320,18 @@ namespace MusicSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                if (state.IsAction && stepContext.Result == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
+
+                state.Clear();
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }

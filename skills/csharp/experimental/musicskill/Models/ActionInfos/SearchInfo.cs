@@ -5,12 +5,12 @@ namespace MusicSkill.Models.ActionInfos
 {
     public class SearchInfo
     {
-        [JsonProperty("info")]
-        public string Info { get; set; }
+        [JsonProperty("musicInfo")]
+        public string MusicInfo { get; set; }
 
         public void DigestState(SkillState state)
         {
-            state.Query = Info;
+            state.Query = MusicInfo;
         }
     }
 }

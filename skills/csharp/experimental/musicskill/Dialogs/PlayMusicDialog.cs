@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -45,41 +46,41 @@ namespace MusicSkill.Dialogs
         {
             var state = await StateAccessor.GetAsync(stepContext.Context);
 
-            var operationStatus = new Models.ActionInfos.OperationStatus() { Status = false };
-
+            var status = false;
             if (string.IsNullOrEmpty(state.Query))
             {
                 await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
-                return await stepContext.EndDialogAsync(operationStatus);
-            }
-
-            // Extract query entity to search against Spotify for
-            var searchQuery = state.Query;
-
-            // Get music api client
-            var client = await GetSpotifyWebAPIClient(Settings);
-
-            // Search library
-            var searchItems = await client.SearchItemsEscapedAsync(searchQuery, SearchType.All, 5);
-
-            // If any results exist, get the first playlist, then artist result
-            if (searchItems.Playlists?.Total != 0)
-            {
-                operationStatus.Status = true;
-                await SendOpenDefaultAppEventActivity(stepContext, searchItems.Playlists.Items[0].Uri, cancellationToken);
-            }
-            else if (searchItems.Artists?.Total != 0)
-            {
-                operationStatus.Status = true;
-                await SendOpenDefaultAppEventActivity(stepContext, searchItems.Artists.Items[0].Uri, cancellationToken);
             }
             else
             {
-                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
+                // Extract query entity to search against Spotify for
+                var searchQuery = state.Query;
+
+                // Get music api client
+                var client = await GetSpotifyWebAPIClient(Settings);
+
+                // Search library
+                var searchItems = await client.SearchItemsEscapedAsync(searchQuery, SearchType.All, 5);
+
+                // If any results exist, get the first playlist, then artist result
+                if (searchItems.Playlists?.Total != 0)
+                {
+                    status = true;
+                    await SendOpenDefaultAppEventActivity(stepContext, searchItems.Playlists.Items[0].Uri, cancellationToken);
+                }
+                else if (searchItems.Artists?.Total != 0)
+                {
+                    status = true;
+                    await SendOpenDefaultAppEventActivity(stepContext, searchItems.Artists.Items[0].Uri, cancellationToken);
+                }
+                else
+                {
+                    await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
+                }
             }
 
             // End dialog
-            return await stepContext.EndDialogAsync(operationStatus);
+            return await stepContext.EndDialogAsync(new Models.ActionInfos.ActionResult() { ActionSuccess = status });
         }
 
         private async Task<SpotifyWebAPI> GetSpotifyWebAPIClient(BotSettings settings)

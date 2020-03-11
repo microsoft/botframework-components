@@ -9,11 +9,14 @@ namespace MusicSkill.Models
     {
         public string Token { get; set; }
 
-        public string Query { get; set; }
+        public string Query { get; set; } = null;
+
+        public bool IsAction { get; set; } = false;
 
         public void Clear()
         {
             Query = null;
+            IsAction = false;
         }
     }
 }
