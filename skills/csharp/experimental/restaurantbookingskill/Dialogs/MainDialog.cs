@@ -227,9 +227,10 @@ namespace RestaurantBookingSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var activity = stepContext.Context.Activity;
             var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
+            state.IsAction = false;
 
+            var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 var result = stepContext.Context.TurnState.Get<ReservationLuis>(StateProperties.ReservationLuis);
@@ -264,12 +265,12 @@ namespace RestaurantBookingSkill.Dialogs
 
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
-                    state.IsAction = true;
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
                         case "RestaurantReservation":
                             {
+                                state.IsAction = true;
                                 ReservationInfo actionData = null;
                                 var eventValue = activity.Value as JObject;
                                 if (eventValue != null)
@@ -334,7 +335,7 @@ namespace RestaurantBookingSkill.Dialogs
             state.Booking.AttendeeCount = reservationInfo.AttendeeCount;
 
             // Note: Now there is no actual action to book a place. So we only save Name.
-            state.Booking.BookingPlace.Name = reservationInfo.RestaurantName;
+            state.Booking.BookingPlace = new BookingPlace() { Name = reservationInfo.RestaurantName };
         }
     }
 }
