@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using AutomotiveSkill.Bots;
 using AutomotiveSkill.Dialogs;
 using AutomotiveSkill.Models;
-using AutomotiveSkill.Responses.Main;
-using AutomotiveSkill.Responses.Shared;
-using AutomotiveSkill.Responses.VehicleSettings;
 using AutomotiveSkill.Services;
 using AutomotiveSkill.Tests.Flow.Fakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
@@ -28,6 +27,8 @@ namespace AutomotiveSkill.Tests.Flow
     public class AutomotiveSkillTestBase : BotTestBase
     {
         public IServiceCollection Services { get; set; }
+
+        public LocaleTemplateEngineManager TemplateEngine { get; set; }
 
         public string ImageAssetLocation { get; set; } = "http://localhost";
 
@@ -69,12 +70,38 @@ namespace AutomotiveSkill.Tests.Flow
                 return new BotStateSet(userState, conversationState);
             });
 
-            ResponseManager = new ResponseManager(
-                new string[] { "en", "de", "es", "fr", "it", "zh" },
-                new AutomotiveSkillMainResponses(),
-                new AutomotiveSkillSharedResponses(),
-                new VehicleSettingsResponses());
-            Services.AddSingleton(ResponseManager);
+            // Configure localized responses
+            var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
+            var templateFiles = new Dictionary<string, string>
+            {
+                { "ResponsesAndTexts", "ResponsesAndTexts" },
+            };
+
+            var localizedTemplates = new Dictionary<string, List<string>>();
+            foreach (var locale in supportedLocales)
+            {
+                var localeTemplateFiles = new List<string>();
+                foreach (var (dialog, template) in templateFiles)
+                {
+                    // LG template for default locale should not include locale in file extension.
+                    if (locale.Equals("en-us"))
+                    {
+                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.lg"));
+                    }
+                    else
+                    {
+                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.{locale}.lg"));
+                    }
+                }
+
+                localizedTemplates.Add(locale, localeTemplateFiles);
+            }
+
+            Services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, "en-us"));
+
+            // Configure files for generating all responses. Response from bot should equal one of them.
+            var engineAll = new TemplateEngine().AddFile(Path.Combine("Responses", "ResponsesAndTexts", "ResponsesAndTexts.lg"));
+            Services.AddSingleton(engineAll);
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             Services.AddSingleton<TestAdapter, DefaultTestAdapter>();
@@ -93,6 +120,14 @@ namespace AutomotiveSkill.Tests.Flow
             };
 
             Services.AddSingleton<IHttpContextAccessor>(mockHttpContextAcessor);
+        }
+
+        public string[] ParseReplies(string templateName, object data = null)
+        {
+            var sp = Services.BuildServiceProvider();
+            var engine = sp.GetService<TemplateEngine>();
+            var formatTemplateName = templateName + ".Text";
+            return engine.ExpandTemplate(formatTemplateName, data).ToArray();
         }
 
         public TestFlow GetTestFlow()
