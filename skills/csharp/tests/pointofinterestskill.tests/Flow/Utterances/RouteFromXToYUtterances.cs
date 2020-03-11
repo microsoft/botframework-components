@@ -3,7 +3,6 @@
 
 using Luis;
 using Microsoft.Bot.Schema;
-using Microsoft.CognitiveServices.ContentModerator.Models;
 using Newtonsoft.Json.Linq;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.Flow.Strings;
