@@ -237,6 +237,10 @@ namespace WeatherSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            // Clear IsAction before dialog
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            state.IsAction = false;
+
             var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
@@ -270,8 +274,6 @@ namespace WeatherSkill.Dialogs
                 var eventActivity = activity.AsEventActivity();
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
-                    var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
-
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities

@@ -32,7 +32,6 @@ namespace WeatherSkill.Models
             Latitude = double.NaN;
             Longitude = double.NaN;
             GeographyLocation = null;
-            IsAction = false;
         }
     }
 }
