@@ -1,8 +1,8 @@
 ﻿# ShowToDoTitle(UseFile, Title, TotalNumber)
-- IF: @{UseFile == true}
-    - @{ShowToDoTitleV1(Title, TotalNumber)}
+- IF: ${UseFile == true}
+    - ${ShowToDoTitleV1(Title, TotalNumber)}
 - ELSE:
-    - @{ShowToDoTitleV2(Title, TotalNumber)}
+    - ${ShowToDoTitleV2(Title, TotalNumber)}
 
 # ShowToDoTitleV1(Title, TotalNumber)
 - ```
@@ -31,7 +31,7 @@
                           "size": "Large",
                           "weight": "Bolder",
                           "color": "Default",
-                          "text": "@{Title}"
+                          "text": "${Title}"
                         }
                       ],
                       "width": "stretch"
@@ -43,7 +43,7 @@
                   "size": "Medium",
                   "weight": "Bolder",
                   "color": "Default",
-                  "text": "@{TotalNumber}",
+                  "text": "${TotalNumber}",
                   "maxLines": 1
                 }
               ],
@@ -91,7 +91,7 @@
                             "color": "light",
                             "id": "title",
                             "size": "large",
-                            "text": "@{Title}",
+                            "text": "${Title}",
                             "type": "TextBlock",
                             "weight": "bolder"
                             }
@@ -107,7 +107,7 @@
                     "color": "light",
                     "maxLines": 1,
                     "size": "medium",
-                    "text": "@{TotalNumber}",
+                    "text": "${TotalNumber}",
                     "type": "TextBlock",
                     "weight": "bolder"
                     }
@@ -126,10 +126,10 @@
 ```
 
 # ShowToDoItem(x, CheckIconUrl, UnCheckIconUrl)
-- IF: @{x.IsCompleted == true}
-    - @{ShowCompletedToDoItem(x, CheckIconUrl)}
+- IF: ${x.IsCompleted == true}
+    - ${ShowCompletedToDoItem(x, CheckIconUrl)}
 - ELSE:
-    - @{ShowUncompletedToDoItem(x, UnCheckIconUrl)}
+    - ${ShowUncompletedToDoItem(x, UnCheckIconUrl)}
 
 # ShowCompletedToDoItem(x, CheckIconUrl)
 - ```
@@ -144,7 +144,7 @@
                 "horizontalAlignment": "center",
                 "size": "stretch",
                 "type": "Image",
-                "url": "@{CheckIconUrl}"
+                "url": "${CheckIconUrl}"
                 }
             ],
             "type": "Column",
@@ -155,7 +155,7 @@
             "items": [
                 {
                 "size": "medium",
-                "text": "@{x.Topic}",
+                "text": "${x.Topic}",
                 "type": "TextBlock"
                 }
             ],
@@ -183,7 +183,7 @@
                 "horizontalAlignment": "center",
                 "size": "stretch",
                 "type": "Image",
-                "url": "@{UnCheckIconUrl}"
+                "url": "${UnCheckIconUrl}"
                 }
             ],
             "type": "Column",
@@ -194,7 +194,7 @@
             "items": [
                 {
                 "size": "medium",
-                "text": "@{x.Topic}",
+                "text": "${x.Topic}",
                 "type": "TextBlock"
                 }
             ],
@@ -234,7 +234,7 @@
 ```
 
 # ShowToDoList(ToDos, CheckIconUrl, UnCheckIconUrl)
-- @{join(foreach(ToDos, x , ShowToDoItem(x, CheckIconUrl, UnCheckIconUrl)), ',')} 
+- ${join(foreach(ToDos, x , ShowToDoItem(x, CheckIconUrl, UnCheckIconUrl)), ',')} 
 
 # ShowToDoCard(Title, TotalNumber, ToDos, UseFile, CheckIconUrl, UnCheckIconUrl)
-- @{join(createArray(ShowToDoTitle(UseFile, Title, TotalNumber), ShowToDoList(ToDos, CheckIconUrl, UnCheckIconUrl), ShowToDoPageFooter()), ' ')}
+- ${join(createArray(ShowToDoTitle(UseFile, Title, TotalNumber), ShowToDoList(ToDos, CheckIconUrl, UnCheckIconUrl), ShowToDoPageFooter()), ' ')}

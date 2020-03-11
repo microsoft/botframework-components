@@ -16,7 +16,6 @@ using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
 using ToDoSkill.Responses.MarkToDo;
-using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
 
@@ -29,12 +28,12 @@ namespace ToDoSkill.Dialogs
             BotServices services,
             ConversationState conversationState,
             UserState userState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials,
             IHttpContextAccessor httpContext)
-            : base(nameof(MarkToDoItemDialog), settings, services, conversationState, userState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(MarkToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -152,12 +151,12 @@ namespace ToDoSkill.Dialogs
                     int uncompletedTaskCount = state.AllTasks.Where(t => t.IsCompleted == false).Count();
                     if (uncompletedTaskCount == 1)
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForSingleTask, new { ListType = state.ListType });
+                        var activity = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForSingleTask, new { ListType = state.ListType });
                         await sc.Context.SendActivityAsync(activity);
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForMultipleTasks, new { AllTasksCount = uncompletedTaskCount.ToString(), ListType = state.ListType });
+                        var activity = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForMultipleTasks, new { AllTasksCount = uncompletedTaskCount.ToString(), ListType = state.ListType });
                         await sc.Context.SendActivityAsync(activity);
                     }
                 }
@@ -196,7 +195,7 @@ namespace ToDoSkill.Dialogs
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 if (string.IsNullOrEmpty(state.ListType))
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.ListTypePromptForComplete);
+                    var prompt = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.ListTypePromptForComplete);
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
                 }
                 else
@@ -264,11 +263,11 @@ namespace ToDoSkill.Dialogs
                     Activity prompt;
                     if (state.CollectIndexRetry)
                     {
-                        prompt = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AskTaskIndexRetryForComplete);
+                        prompt = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.AskTaskIndexRetryForComplete);
                     }
                     else
                     {
-                        prompt = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AskTaskIndexForComplete);
+                        prompt = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.AskTaskIndexForComplete);
                     }
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
@@ -356,8 +355,8 @@ namespace ToDoSkill.Dialogs
         {
             try
             {
-                var prompt = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.CompleteAnotherTaskPrompt);
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.CompleteAnotherTaskConfirmFailed);
+                var prompt = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.CompleteAnotherTaskPrompt);
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(MarkToDoResponses.CompleteAnotherTaskConfirmFailed);
                 return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
             }
             catch (Exception ex)
