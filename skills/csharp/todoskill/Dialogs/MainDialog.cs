@@ -208,7 +208,7 @@ namespace ToDoSkill.Dialogs
         // Handles introduction/continuation prompt logic.
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Context.IsSkill())
+            if (true)
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
@@ -303,7 +303,6 @@ namespace ToDoSkill.Dialogs
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
                     var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
-                    state.IsAction = true;
 
                     switch (eventActivity.Name)
                     {
@@ -311,6 +310,7 @@ namespace ToDoSkill.Dialogs
                         case "AddToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
                                 state.AddDupTask = true;
                                 return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
                             }
@@ -318,6 +318,7 @@ namespace ToDoSkill.Dialogs
                         case "DeleteToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
@@ -326,12 +327,14 @@ namespace ToDoSkill.Dialogs
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
                                 state.DeleteTaskConfirmation = true;
+                                state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
                         case "MarkToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
@@ -339,12 +342,14 @@ namespace ToDoSkill.Dialogs
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
+                                state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
                         case "ShowToDo":
                             {
                                 await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
                             }
 
@@ -365,8 +370,7 @@ namespace ToDoSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
-            if (stepContext.Context.IsSkill())
+            if (true)
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
                 var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
@@ -375,18 +379,20 @@ namespace ToDoSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
-                if (state.IsAction && stepContext.Result as ActionResult == null)
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
+                if (state.IsAction)
                 {
-                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    }
                 }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                state.Clear();
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
             }
         }
