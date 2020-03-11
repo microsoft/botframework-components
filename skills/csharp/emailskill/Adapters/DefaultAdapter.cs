@@ -21,13 +21,13 @@ namespace EmailSkill.Adapters
             BotSettings settings,
             ICredentialProvider credentialProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateManager localeTemplateManager,
+            LocaleTemplateManager templateManager,
             TelemetryInitializerMiddleware telemetryMiddleware)
             : base(credentialProvider)
         {
             OnTurnError = async (turnContext, exception) =>
             {
-                var activity = localeTemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
+                var activity = templateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
                 await turnContext.SendActivityAsync(activity);
                 await turnContext.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Email Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
