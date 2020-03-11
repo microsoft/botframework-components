@@ -5,5 +5,6 @@ namespace PhoneSkill.Models
 {
     public class PhoneSkillDialogOptions
     {
+        public bool IsAction { get; set; } = false;
     }
 }

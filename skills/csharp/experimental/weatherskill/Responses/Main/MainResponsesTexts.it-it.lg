@@ -1,0 +1,38 @@
+[import] (MainResponses.lg)
+
+# WelcomeMessage.Text(Data)
+- Sono l'abilità del tempo e posso cercare il tempo.
+
+# HelpMessage.Text(Data)
+- [Inserisci qui il tuo messaggio di aiuto]
+
+# GreetingMessage.Text(Data)
+- C'è!
+- Ehilà!
+- Ciao!
+
+# GoodbyeMessage.Text(Data)
+- Addio!
+
+# LogOut.Text(Data)
+- Il tuo cartello è riuscito.
+- Hai firmato con successo.
+- Sei stato disconnesso.
+
+# FeatureNotAvailable.Text(Data)
+- Questa funzionalità non è ancora disponibile in questa abilità. Per favore prova a chiedere qualcos'altro.
+
+# CancelMessage.Text(Data)
+- Ok, ricominciamo da qui.
+
+# FirstPromptMessage.Text(Data)
+- Con cosa posso aiutarti oggi?
+- Cosa posso fare per lei?
+- C'è qualcosa che posso fare per te?
+- Come posso aiutarla?
+
+# CompletedMessage.Text(Data)
+- Sono qui se hai bisogno di qualcos'altro.
+- Fammi sapere se c'è qualcos'altro di cui hai bisogno.
+- Fammi sapere se posso aiutarti con qualsiasi altra cosa.
+- Tutto fatto. Fammi sapere se posso fare qualcos'altro.

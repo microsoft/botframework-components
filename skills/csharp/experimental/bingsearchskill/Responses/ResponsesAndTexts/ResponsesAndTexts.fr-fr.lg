@@ -1,0 +1,5 @@
+[import] (..\Main\MainResponsesTexts.fr-fr.lg)
+[import] (..\Search\SearchResponsesTexts.fr-fr.lg)
+[import] (..\Shared\SharedResponsesTexts.fr-fr.lg)
+[import] (..\CommonStringsTexts.fr-fr.lg)
+[import] (..\Shared\Shared.lg)

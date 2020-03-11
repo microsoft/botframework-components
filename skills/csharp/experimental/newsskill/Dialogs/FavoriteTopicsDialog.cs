@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
+using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
+using NewsSkill.Responses;
 using NewsSkill.Responses.FavoriteTopics;
 using NewsSkill.Services;
 
@@ -19,7 +21,6 @@ namespace NewsSkill.Dialogs
     public class FavoriteTopicsDialog : NewsDialogBase
     {
         private NewsClient _client;
-        private FavoriteTopicsResponses _responder = new FavoriteTopicsResponses();
 
         public FavoriteTopicsDialog(
             BotSettings settings,
@@ -27,8 +28,9 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(FavoriteTopicsDialog), settings, services, conversationState, userState, mapsService, telemetryClient)
+            : base(nameof(FavoriteTopicsDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -72,7 +74,7 @@ namespace NewsSkill.Dialogs
 
                 return await sc.PromptAsync(nameof(ChoicePrompt), new PromptOptions()
                 {
-                    Prompt = await _responder.RenderTemplate(sc.Context, sc.Context.Activity.Locale, FavoriteTopicsResponses.FavoriteTopicPrompt),
+                    Prompt = localeTemplateEngineManager.GenerateActivityForLocale(FavoriteTopicsResponses.FavoriteTopicPrompt),
                     Choices = categories.Choices
                 });
             }
@@ -88,7 +90,7 @@ namespace NewsSkill.Dialogs
 
             // show favorite articles
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
-            await _responder.ReplyWith(sc.Context, FavoriteTopicsResponses.ShowArticles, articles);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, localeTemplateEngineManager, articles, true));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)

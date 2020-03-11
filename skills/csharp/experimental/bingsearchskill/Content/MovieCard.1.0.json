@@ -24,7 +24,7 @@
                           "size": "ExtraLarge",
                           "weight": "Bolder",
                           "color": "Default",
-                          "text": "{Name}",
+                          "text": "@{if(Data.Name == null, '', Data.Name)}",
                           "wrap": true
                         }
                       ],
@@ -52,7 +52,7 @@
                 {
                   "type": "Image",
                   "horizontalAlignment": "Left",
-                  "url": "{Image}",
+                  "url": "@{if(Data.Image == null, '', Data.Image)}",
                   "size": "Large"
                 }
               ],
@@ -65,19 +65,19 @@
                   "type": "TextBlock",
                   "size": "Large",
                   "weight": "Bolder",
-                  "text": "{ContentRating}",
+                  "text": "@{if(Data.ContentRating == null, '', Data.ContentRating)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "{Year}",
+                  "text": "@{if(Data.Year == null, '', Data.Year)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "{GenreArray}",
+                  "text": "@{if(Data.GenreArray == null, '', Data.GenreArray)}",
                   "isSubtle": true,
                   "wrap": true,
                   "maxLines": 2
@@ -85,14 +85,14 @@
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "{Duration}",
+                  "text": "@{if(Data.Duration == null, '', Data.Duration)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
                   "weight": "Bolder",
-                  "text": "{Rating}",
+                  "text": "@{if(Data.Rating == null, '', Data.Rating)}",
                   "isSubtle": true
                 }
               ],
@@ -105,7 +105,7 @@
           "id": "messageBody",
           "size": "Medium",
           "color": "default",
-          "text": "{Description}",
+          "text": "@{if(Data.Description == null, '', Data.Description)}",
           "wrap": true,
           "maxLines": 3
         }
@@ -114,5 +114,5 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "@{if(Data.Speak == null, '', Data.Speak)}"
 }

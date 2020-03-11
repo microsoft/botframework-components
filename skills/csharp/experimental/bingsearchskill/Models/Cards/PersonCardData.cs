@@ -16,7 +16,7 @@ namespace BingSearchSkill.Models.Cards
 
         public string Description { get; set; }
 
-        public string Title_View { get; } = CommonStrings.View;
+        public string Title_View { get; set; }
 
         public string Link_View { get; set; }
 

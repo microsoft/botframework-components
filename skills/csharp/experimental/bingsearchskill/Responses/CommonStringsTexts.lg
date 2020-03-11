@@ -1,0 +1,18 @@
+[import] (CommonStrings.lg)
+
+# DontKnowAnswer.Text(Data)
+- Sorry I do not know this answer yet.
+
+# Showtimes.Text(Data)
+- Showtimes
+
+# Trailers.Text(Data)
+- Trailers
+
+# Trivia.Text(Data)
+- Trivia
+
+# View.Text(Data)
+- View
+
+

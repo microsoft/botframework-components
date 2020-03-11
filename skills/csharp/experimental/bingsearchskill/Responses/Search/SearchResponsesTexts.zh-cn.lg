@@ -1,0 +1,24 @@
+[import] (SearchResponses.lg)
+
+# EntityKnowledge.Text(Data)
+- 好的, 这里是@{if(Data.Name == null, '', Data.Name)}的信息。
+
+# EntityKnowledge.Speak(Data)
+- 好的, 这里是@{if(Data.Name == null, '', Data.Name)}的信息。@{if(Data.Speak == null, '', Data.Speak)}。
+
+# NoResultPrompt.Text(Data)
+- 对不起, 好像我们什么都没找到。
+
+# AskEntityPrompt.Text(Data)
+- 你想搜索什么？你可以说'谁是比尔·盖茨'或'侏罗纪公园怎么样'之类的话。
+
+# AnswerSearchResultPrompt.Text(Data)
+- @{AnswerSearchResultPromptTextAndSpeak1(Data)}
+
+# AnswerSearchResultPromptTextAndSpeak1(Data)
+[Activity
+    Text = @{if(Data.Answer == null, '', Data.Answer)}. 你可以在这里找到更多信息：@{if(Data.Url == null, '', Data.Url)}
+    Speak = @{if(Data.Answer == null, '', Data.Answer)}. 你可以在这里找到更多信息。
+]
+
+

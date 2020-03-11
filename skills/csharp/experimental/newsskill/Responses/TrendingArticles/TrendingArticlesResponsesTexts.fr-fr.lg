@@ -1,0 +1,13 @@
+﻿[import] (TrendingArticlesResponses.lg)
+
+# ShowTrending.Text(Data)
+- Voici ce qui a tendance:
+
+# ShowMultipleTrending.Speak(Data)
+- J'ai trouvé quelques nouvelles, voici le titre du premier: @{if(Data == null, '', Data)}
+
+# ShowOneTrending.Speak(Data)
+- @{if(Data == null, '', Data)}
+
+# NoTrending.Text(Data)
+- Désolé, je n'ai trouvé aucun article tendance.
