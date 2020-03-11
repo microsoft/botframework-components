@@ -1,0 +1,6 @@
+[import](..\CancelRoute\CancelRouteResponses.lg)
+[import](..\FindPointOfInterest\FindPointOfInterestResponses.lg)
+[import](..\Main\POIMainResponses.lg)
+[import](..\Route\RouteResponses.lg)
+[import](..\Shared\POISharedResponses.lg)
+[import](..\Shared\PointOfInterestSharedStrings.lg)
