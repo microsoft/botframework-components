@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using EmailSkill.Models.Action;
+using RestaurantBookingSkill.Models.Action;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;

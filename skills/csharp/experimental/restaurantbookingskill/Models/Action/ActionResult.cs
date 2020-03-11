@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EmailSkill.Models.Action
+namespace RestaurantBookingSkill.Models.Action
 {
     public class ActionResult
     {

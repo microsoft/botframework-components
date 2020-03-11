@@ -23,7 +23,7 @@ using RestaurantBookingSkill.Models;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
 using RestaurantBookingSkill.Utilities;
-using EmailSkill.Models.Action;
+using RestaurantBookingSkill.Models.Action;
 
 namespace RestaurantBookingSkill.Dialogs
 {
