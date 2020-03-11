@@ -14,12 +14,22 @@ namespace ITSMSkill.Models.Actions
         [JsonProperty("reason")]
         public string Reason { get; set; }
 
-        public ITSMLuis Convert()
+        public override ITSMLuis CreateLuis()
         {
             var luis = new ITSMLuis
             {
                 Entities = new ITSMLuis._Entities(),
             };
+
+            if (!string.IsNullOrEmpty(Number))
+            {
+                luis.Entities.TicketNumber = new string[] { CovertNumber(Number) };
+            }
+
+            if (!string.IsNullOrEmpty(Reason))
+            {
+                luis.Entities.CloseReason = new string[] { Reason };
+            }
 
             return luis;
         }
