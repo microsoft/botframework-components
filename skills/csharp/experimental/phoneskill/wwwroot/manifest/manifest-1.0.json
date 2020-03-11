@@ -26,6 +26,41 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "outgoingcall": {
+      "description": "Make a phone call",
+      "type": "event",
+      "name": "OutgoingCall",
+      "value": {
+        "$ref": "#/definitions/callInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    }
+  },
+  "definitions": {
+    "callInfo": {
+      "type": "object",
+      "properties": {
+        "contactPerson": {
+          "type": "string",
+          "description": "A contact person"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "A phone number"
+        }
+      }
+    },
+    "actionResult": {
+      "type": "object",
+      "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "result of action"
+        }
+      }
     }
   }
 }

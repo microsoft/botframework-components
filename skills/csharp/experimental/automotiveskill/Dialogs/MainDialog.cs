@@ -269,7 +269,7 @@ namespace AutomotiveSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _localeTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(AutomotiveSkillMainResponses.CompletedMessage), cancellationToken);
             }
         }
     }

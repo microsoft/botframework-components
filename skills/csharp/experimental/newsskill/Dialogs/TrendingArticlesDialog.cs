@@ -6,7 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
+using NewsSkill.Responses;
 using NewsSkill.Responses.TrendingArticles;
 using NewsSkill.Services;
 
@@ -15,7 +17,6 @@ namespace NewsSkill.Dialogs
     public class TrendingArticlesDialog : NewsDialogBase
     {
         private NewsClient _client;
-        private TrendingArticlesResponses _responder = new TrendingArticlesResponses();
 
         public TrendingArticlesDialog(
             BotSettings settings,
@@ -23,10 +24,12 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(TrendingArticlesDialog), settings, services, conversationState, userState, mapsService, telemetryClient)
+            : base(nameof(TrendingArticlesDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
+            base.localeTemplateEngineManager = localeTemplateEngineManager;
 
             var key = settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
@@ -48,7 +51,7 @@ namespace NewsSkill.Dialogs
             var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
 
             var articles = await _client.GetTrendingNews(userState.Market);
-            await _responder.ReplyWith(sc.Context, TrendingArticlesResponses.ShowArticles, articles);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, localeTemplateEngineManager, articles));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
