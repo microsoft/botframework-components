@@ -192,6 +192,10 @@ namespace HospitalitySkill.Tests.Flow
                     var result = ((Activity)activity).Value as ActionResult;
                     Assert.AreEqual(result.ActionSuccess, success.Value);
                 }
+                else
+                {
+                    Assert.IsNull(((Activity)activity).Value);
+                }
             };
         }
 

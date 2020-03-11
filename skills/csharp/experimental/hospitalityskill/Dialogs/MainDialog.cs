@@ -345,6 +345,17 @@ namespace HospitalitySkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult(false);
+                    }
+
+                    state.IsAction = false;
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
@@ -381,6 +392,9 @@ namespace HospitalitySkill.Dialogs
         private async Task<DialogTurnResult> ProcessAction<T>(string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
             where T : IActionInput
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+            state.IsAction = true;
+
             var ev = stepContext.Context.Activity.AsEventActivity();
             if (ev.Value is JObject eventValue)
             {

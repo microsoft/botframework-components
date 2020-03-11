@@ -144,7 +144,7 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(AssertContains(CheckOutResponses.SendEmailMessage, tokens))
                 .AssertReply(AssertContains(CheckOutResponses.CheckOutSuccess))
                 .AssertReply(SkillActionEndMessage(true))
-                .Send(CheckOutUtterances.CheckOut)
+                .Send(CheckOutUtterances.CheckOutAction)
                 .AssertReply(AssertContains(SharedResponses.HasCheckedOut))
                 .AssertReply(SkillActionEndMessage(false))
                 .StartTestAsync();

@@ -55,9 +55,7 @@ namespace HospitalitySkill.Dialogs
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
                 await sc.Context.SendActivityAsync(reply);
 
-                var result = new ActionResult(false);
-
-                return await sc.EndDialogAsync(result);
+                return await sc.EndDialogAsync();
             }
 
             // TODO checking availability
@@ -123,8 +121,6 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
-            var result = new ActionResult(false);
-
             if (userState.LateCheckOut)
             {
                 var tokens = new StringDictionary
@@ -140,10 +136,10 @@ namespace HospitalitySkill.Dialogs
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
 
-                result.ActionSuccess = true;
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
-            return await sc.EndDialogAsync(result);
+            return await sc.EndDialogAsync();
         }
 
         private class DialogIds

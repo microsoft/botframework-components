@@ -258,8 +258,6 @@ namespace HospitalitySkill.Dialogs
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
-            var result = new ActionResult(false);
-
             if (userState.UserReservation.CheckOutDate == convState.UpdatedReservation.CheckOutDate)
             {
                 var tokens = new StringDictionary
@@ -274,10 +272,10 @@ namespace HospitalitySkill.Dialogs
                 var reply = ResponseManager.GetCardResponse(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
 
-                result.ActionSuccess = true;
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
-            return await sc.EndDialogAsync(result);
+            return await sc.EndDialogAsync();
         }
 
         private class DialogIds

@@ -270,16 +270,14 @@ namespace HospitalitySkill.Dialogs
         {
             var confirm = (bool)sc.Result;
 
-            var result = new ActionResult(false);
-
             if (confirm)
             {
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RoomServiceResponses.FinalOrderConfirmation));
 
-                result.ActionSuccess = true;
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
-            return await sc.EndDialogAsync(result);
+            return await sc.EndDialogAsync();
         }
 
         // Create and show list of items that were requested but not on the menu

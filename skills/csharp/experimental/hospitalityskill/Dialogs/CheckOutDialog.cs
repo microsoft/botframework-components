@@ -106,8 +106,6 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
 
-            var result = new ActionResult(false);
-
             if (userState.CheckedOut)
             {
                 var tokens = new StringDictionary
@@ -120,10 +118,10 @@ namespace HospitalitySkill.Dialogs
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.SendEmailMessage, tokens));
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.CheckOutSuccess));
 
-                result.ActionSuccess = true;
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
-            return await sc.EndDialogAsync(result);
+            return await sc.EndDialogAsync();
         }
 
         private class DialogIds

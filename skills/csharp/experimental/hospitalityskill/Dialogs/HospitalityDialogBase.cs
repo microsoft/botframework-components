@@ -186,12 +186,23 @@ namespace HospitalitySkill.Dialogs
             {
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.HasCheckedOut));
 
-                var result = new ActionResult(false);
-
-                return await sc.EndDialogAsync(result);
+                return await sc.EndDialogAsync();
             }
 
             return await sc.NextAsync();
+        }
+
+        protected async Task<ActionResult> CreateSuccessActionResult(ITurnContext context)
+        {
+            var state = await StateAccessor.GetAsync(context, () => new HospitalitySkillState());
+            if (state.IsAction)
+            {
+                return new ActionResult(true);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // Get card that renders for adaptive card 1.0

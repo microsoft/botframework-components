@@ -46,7 +46,7 @@ namespace HospitalitySkill.Dialogs
             // send card with reservation details
             var reply = ResponseManager.GetCardResponse(GetReservationResponses.ShowReservationDetails, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
             await sc.Context.SendActivityAsync(reply);
-            return await sc.EndDialogAsync(new ActionResult(true));
+            return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
         }
     }
 }

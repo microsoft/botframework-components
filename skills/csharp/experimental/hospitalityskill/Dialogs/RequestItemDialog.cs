@@ -172,9 +172,9 @@ namespace HospitalitySkill.Dialogs
         {
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
 
-            var result = new ActionResult(false);
+            var result = convState.IsAction ? new ActionResult(false) : null;
 
-            if (sc.Result is bool && (bool)sc.Result)
+            if (result != null && sc.Result is bool && (bool)sc.Result)
             {
                 result.ActionSuccess = true;
             }
@@ -200,7 +200,10 @@ namespace HospitalitySkill.Dialogs
                 await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems));
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RequestItemResponses.ItemsRequested));
 
-                result.ActionSuccess = true;
+                if (result != null)
+                {
+                    result.ActionSuccess = true;
+                }
             }
 
             return await sc.EndDialogAsync(result);
