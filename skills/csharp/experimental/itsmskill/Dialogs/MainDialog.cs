@@ -202,6 +202,10 @@ namespace ITSMSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            // Clear IsAction before dialog
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+            state.IsAction = false;
+
             var activity = stepContext.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -219,7 +223,6 @@ namespace ITSMSkill.Dialogs
 
                     if (intent != null && intent != ITSMLuis.Intent.None)
                     {
-                        var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
                         state.DigestLuisResult(result, (ITSMLuis.Intent)intent);
                     }
 
@@ -326,6 +329,15 @@ namespace ITSMSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult(false);
+                    }
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
@@ -362,20 +374,24 @@ namespace ITSMSkill.Dialogs
         private async Task<DialogTurnResult> ProcessAction<T>(ITSMLuis.Intent intent, string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
              where T : IActionInput
         {
-            var result = new ITSMLuis
-            {
-                Entities = new ITSMLuis._Entities(),
-            };
+            ITSMLuis result = null;
+            T actionData = null;
 
             var ev = stepContext.Context.Activity.AsEventActivity();
             if (ev.Value is JObject eventValue)
             {
-                T actionData = eventValue.ToObject<T>();
-                result = actionData.Convert();
+                actionData = eventValue.ToObject<T>();
+                result = actionData.CreateLuis();
             }
 
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
             state.DigestLuisResult(result, intent);
+            state.IsAction = true;
+
+            if (actionData != null)
+            {
+                actionData.ProcessAfterDigest(state);
+            }
 
             return await stepContext.BeginDialogAsync(dialogId, null, cancellationToken);
         }

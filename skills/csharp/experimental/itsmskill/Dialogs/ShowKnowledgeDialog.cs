@@ -78,7 +78,13 @@ namespace ITSMSkill.Dialogs
         {
             if (sc.Result is EndFlowResult endFlow)
             {
-                return await sc.EndDialogAsync(new ActionResult { ActionSuccess = endFlow.Result });
+                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
+            }
+
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
+            if (state.IsAction)
+            {
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             var options = new PromptOptions()
@@ -101,7 +107,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                return await sc.EndDialogAsync(new ActionResult { ActionSuccess = false });
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
     }

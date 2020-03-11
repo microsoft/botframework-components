@@ -7,6 +7,11 @@ namespace ITSMSkill.Models.Actions
 {
     public class ActionResult
     {
+        public ActionResult(bool success)
+        {
+            ActionSuccess = success;
+        }
+
         [JsonProperty("actionSuccess")]
         public bool ActionSuccess { get; set; }
     }

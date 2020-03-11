@@ -26,7 +26,6 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Graph;
 using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
@@ -492,7 +491,7 @@ namespace ITSMSkill.Dialogs
             // TODO for display knowledge loop
             if (sc.Result is EndFlowResult endFlow)
             {
-                return await sc.EndDialogAsync(new ActionResult { ActionSuccess = endFlow.Result });
+                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
             }
 
             var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
@@ -1104,6 +1103,19 @@ namespace ITSMSkill.Dialogs
                 ProviderDisplayText = string.Format(SharedStrings.PoweredBy, knowledge.Provider),
             };
             return card;
+        }
+
+        protected async Task<ActionResult> CreateActionResult(ITurnContext context, bool success, CancellationToken cancellationToken)
+        {
+            var state = await StateAccessor.GetAsync(context, () => new SkillState(), cancellationToken);
+            if (success && state.IsAction)
+            {
+                return new ActionResult(success);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected string GetDivergedCardName(ITurnContext turnContext, string card)

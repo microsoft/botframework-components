@@ -103,7 +103,7 @@ namespace ITSMSkill.Dialogs
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
             await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketCreated, card, null));
-            return await sc.EndDialogAsync(new ActionResult { ActionSuccess = true });
+            return await sc.EndDialogAsync(await CreateActionResult(sc.Context, true, cancellationToken));
         }
     }
 }

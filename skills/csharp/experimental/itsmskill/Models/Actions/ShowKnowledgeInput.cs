@@ -11,7 +11,7 @@ namespace ITSMSkill.Models.Actions
         [JsonProperty("search")]
         public string Search { get; set; }
 
-        public ITSMLuis Convert()
+        public override ITSMLuis CreateLuis()
         {
             var luis = new ITSMLuis
             {

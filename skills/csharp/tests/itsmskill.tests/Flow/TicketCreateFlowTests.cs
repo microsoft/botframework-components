@@ -153,5 +153,96 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task CreateActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketCreateUtterances.CreateAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputTitle))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertContains(KnowledgeResponses.ShowExistingToSolve))
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfExistingSolve, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(AssertContains(SharedResponses.InputDescription))
+                .Send(MockData.CreateTicketDescription)
+                .AssertReply(AssertStartsWith(SharedResponses.InputUrgency))
+                .Send(NonLuisUtterances.CreateTicketUrgency)
+                .AssertReply(AssertContains(TicketResponses.TicketCreated, null, CardStrings.TicketUpdateClose))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CreateExistingSolveActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketCreateUtterances.CreateAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputTitle))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertContains(KnowledgeResponses.ShowExistingToSolve))
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfExistingSolve, navigate))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CreateWithTitleUrgencyDescriptionActionTest()
+        {
+            var confirmTitle = new StringDictionary
+            {
+                { "Title", MockData.CreateTicketTitle }
+            };
+
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var confirmUrgency = new StringDictionary
+            {
+                { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
+            };
+
+            var confirmDescription = new StringDictionary
+            {
+                { "Description", MockData.CreateTicketDescription }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketCreateUtterances.CreateWithTitleUrgencyDescriptionAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmTitle, confirmTitle))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(KnowledgeResponses.ShowExistingToSolve))
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfExistingSolve, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmDescription, confirmDescription))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmUrgency, confirmUrgency))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(TicketResponses.TicketCreated, null, CardStrings.TicketUpdateClose))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

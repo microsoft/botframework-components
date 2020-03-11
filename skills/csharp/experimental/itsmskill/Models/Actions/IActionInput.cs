@@ -5,8 +5,15 @@ using Luis;
 
 namespace ITSMSkill.Models.Actions
 {
-    public interface IActionInput
+    public class IActionInput
     {
-        ITSMLuis Convert();
+        public virtual ITSMLuis CreateLuis()
+        {
+            return null;
+        }
+
+        public virtual void ProcessAfterDigest(SkillState state)
+        {
+        }
     }
 }

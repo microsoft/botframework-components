@@ -210,7 +210,7 @@ namespace ITSMSkill.Tests.Flow
         }
 
         [TestMethod]
-        public async Task ShowThenCreateActionTest()
+        public async Task ShowThenRejectActionTest()
         {
             var navigate = new StringDictionary
             {
@@ -231,16 +231,7 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Reject)
-                .AssertReply(AssertStartsWith(KnowledgeResponses.IfCreateTicket))
-                .Send(NonLuisUtterances.Yes)
-                .AssertReply(AssertStartsWith(SharedResponses.ConfirmTitle, confirmTitle))
-                .Send(NonLuisUtterances.Yes)
-                .AssertReply(AssertContains(SharedResponses.InputDescription))
-                .Send(MockData.CreateTicketDescription)
-                .AssertReply(AssertStartsWith(SharedResponses.InputUrgency))
-                .Send(NonLuisUtterances.CreateTicketUrgency)
-                .AssertReply(AssertContains(TicketResponses.TicketCreated, null, CardStrings.TicketUpdateClose))
-                .AssertReply(SkillActionEndMessage(true))
+                .AssertReply(SkillActionEndMessage(false))
                 .StartTestAsync();
         }
 
@@ -271,7 +262,7 @@ namespace ITSMSkill.Tests.Flow
         }
 
         [TestMethod]
-        public async Task ShowWithSearchNoCreateActionTest()
+        public async Task ShowWithSearchThenRejectActionTest()
         {
             var navigate = new StringDictionary
             {
@@ -292,8 +283,6 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Reject)
-                .AssertReply(AssertStartsWith(KnowledgeResponses.IfCreateTicket))
-                .Send(NonLuisUtterances.No)
                 .AssertReply(SkillActionEndMessage(false))
                 .StartTestAsync();
         }
