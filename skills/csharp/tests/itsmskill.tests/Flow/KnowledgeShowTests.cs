@@ -12,7 +12,6 @@ using ITSMSkill.Tests.Flow.Strings;
 using ITSMSkill.Tests.Flow.Utterances;
 using ITSMSkill.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 
 namespace ITSMSkill.Tests.Flow
 {

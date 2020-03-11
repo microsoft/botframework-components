@@ -488,7 +488,8 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> CheckDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // TODO for display knowledge loop
+            // TODO in CreateTicketDialog, after display knowledge loop
+            // Since we use EndDialogAsync to pass result, it needs to end here explicitly
             if (sc.Result is EndFlowResult endFlow)
             {
                 return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));

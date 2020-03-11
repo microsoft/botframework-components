@@ -81,6 +81,7 @@ namespace ITSMSkill.Dialogs
                 return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
             }
 
+            // Skip create ticket in action mode
             var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (state.IsAction)
             {
