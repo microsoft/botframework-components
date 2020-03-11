@@ -1,0 +1,5 @@
+[import] (..\Main\MainStringsTexts.es-es.lg)
+[import] (..\Shared\Shared.lg)
+[import] (..\FavoriteTopics\FavoriteTopicsResponsesTexts.es-es.lg)
+[import] (..\FindArticles\FindArticlesResponsesTexts.es-es.lg)
+[import] (..\TrendingArticles\TrendingArticlesResponsesTexts.es-es.lg)

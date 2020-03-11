@@ -1,0 +1,32 @@
+[import] (SharedResponses.lg)
+
+# DidntUnderstandMessage.Text(Data)
+- 对不起，没有明白你的意思。
+- 我没有明白你的意思，你能以不同的方式尝试吗？
+- 你能以不同的方式说出来吗？
+- 你能再试一次问我，我没听懂你的意思。
+
+# CancellingMessage.Text(Data)
+- 当然，我们可以稍后再做。
+
+# NoAuth.Text(Data)
+- 请登录，以便我采取进一步行动。
+
+# AuthFailed.Text(Data)
+- 您的登录失败，请稍后再试。
+
+# ActionEnded.Text(Data)
+- 还有什么需要我的帮助吗？
+- 还有什么我可以帮你的吗？
+- 还有什么想要采取行动吗？
+- 如果您需要我的帮助，请告诉我。
+- 如果你需要我的帮助，我就在这里。
+
+# ErrorMessage.Text(Data)
+- 对不起，看起来出了问题！
+- 发生错误，给我一些时间，稍后再试。
+- 出了点问题，对不起！
+- 我相信出了点问题。你稍后可以再试一次吗？
+- 抱歉，我现在找不到你想要的东西。请稍后再试。
+
+

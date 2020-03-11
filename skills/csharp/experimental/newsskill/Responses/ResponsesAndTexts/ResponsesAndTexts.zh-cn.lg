@@ -1,0 +1,5 @@
+[import] (..\Main\MainStringsTexts.zh-cn.lg)
+[import] (..\Shared\Shared.lg)
+[import] (..\FavoriteTopics\FavoriteTopicsResponsesTexts.zh-cn.lg)
+[import] (..\FindArticles\FindArticlesResponsesTexts.zh-cn.lg)
+[import] (..\TrendingArticles\TrendingArticlesResponsesTexts.zh-cn.lg)

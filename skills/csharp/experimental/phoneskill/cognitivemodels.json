@@ -3,10 +3,6 @@
     "en-us": {
       "languageModels": [
         {
-          "subscriptionKey": "20b8990984574b2f9994965b8c18a1bb",
-          "region": "westus",
-          "authoringKey": "80d731206676475bb03d30e3bc2ee07e",
-          "version": "0.1",
           "id": "contactSelection",
           "name": "",
           "appId": "",
@@ -17,10 +13,6 @@
           "region": ""
         },
         {
-          "subscriptionKey": "20b8990984574b2f9994965b8c18a1bb",
-          "region": "westus",
-          "authoringKey": "80d731206676475bb03d30e3bc2ee07e",
-          "version": "0.1",
           "id": "general",
           "name": "",
           "appId": "",
@@ -31,10 +23,6 @@
           "region": ""
         },
         {
-          "subscriptionKey": "20b8990984574b2f9994965b8c18a1bb",
-          "region": "westus",
-          "authoringKey": "80d731206676475bb03d30e3bc2ee07e",
-          "version": "0.1",
           "id": "phone",
           "name": "",
           "appId": "",
@@ -45,10 +33,6 @@
           "region": ""
         },
         {
-          "subscriptionKey": "20b8990984574b2f9994965b8c18a1bb",
-          "region": "westus",
-          "authoringKey": "80d731206676475bb03d30e3bc2ee07e",
-          "version": "0.1",
           "id": "phoneNumberSelection",
           "name": "",
           "appId": "",

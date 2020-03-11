@@ -66,7 +66,7 @@ namespace HospitalitySkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -95,7 +95,7 @@ namespace HospitalitySkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -310,7 +310,7 @@ namespace HospitalitySkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
             }
         }
 

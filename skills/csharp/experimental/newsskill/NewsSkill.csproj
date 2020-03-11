@@ -50,13 +50,160 @@
     <None Update="LocaleConfigurations\newsskillen.bot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FavoriteTopicsResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.tt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FindArticlesResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStrings.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStrings.tt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainStrings.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Main\MainStrings.ttnew">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainStrings.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStringsTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\LgIdCollection.t4">
+      <Generator></Generator>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TrendingArticlesResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Responses\FavoriteTopics\FavoriteTopicsResponses.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FavoriteTopicsResponses.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Responses\FindArticles\FindArticlesResponses.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FindArticlesResponses.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Responses\Main\MainStrings.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainStrings.tt</DependentUpon>
+    </Compile>
     <Compile Update="Responses\Main\MainStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Responses\TrendingArticles\TrendingArticlesResponses.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TrendingArticlesResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -65,6 +212,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 <PropertyGroup><UserSecretsId>0db1c89b-fe8e-42ab-8a6b-88bf81cd8e02</UserSecretsId></PropertyGroup>
