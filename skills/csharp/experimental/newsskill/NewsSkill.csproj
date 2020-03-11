@@ -104,6 +104,11 @@
     <None Update="Responses\Main\MainStrings.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Main\MainStrings.tt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainStrings.cs</LastGenOutput>
+    </None>
     <None Update="Responses\Main\MainStrings.ttnew">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainStrings.cs</LastGenOutput>
@@ -188,7 +193,7 @@
     <Compile Update="Responses\Main\MainStrings.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MainStrings.ttnew</DependentUpon>
+      <DependentUpon>MainStrings.tt</DependentUpon>
     </Compile>
     <Compile Update="Responses\Main\MainStrings.Designer.cs">
       <DesignTime>True</DesignTime>
