@@ -33,7 +33,6 @@ namespace RestaurantBookingSkill.Models
             Booking = new ReservationBooking();
             Cuisine = new List<FoodTypeInfo>();
             AmbiguousTimexExpressions = new Dictionary<string, string>();
-            IsAction = false;
         }
     }
 }
