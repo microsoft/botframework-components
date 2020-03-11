@@ -19,10 +19,10 @@ namespace EmailSkill.Dialogs
     public class ForwardEmailDialog : EmailSkillDialogBase
     {
         public ForwardEmailDialog(
-            LocaleLGFileManager lgFileManager,
+            LocaleTemplateManager templateManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ForwardEmailDialog), lgFileManager, serviceProvider, telemetryClient)
+            : base(nameof(ForwardEmailDialog), templateManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -73,7 +73,7 @@ namespace EmailSkill.Dialogs
             AddDialog(new WaterfallDialog(Actions.Show, showEmail) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.CollectRecipient, collectRecipients) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.UpdateSelectMessage, updateSelectMessage) { TelemetryClient = telemetryClient });
-            AddDialog(new FindContactDialog(lgFileManager, serviceProvider, telemetryClient));
+            AddDialog(new FindContactDialog(templateManager, serviceProvider, telemetryClient));
             InitialDialogId = Actions.Forward;
         }
 
@@ -101,7 +101,7 @@ namespace EmailSkill.Dialogs
                 };
                 emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, state.FindContactInfor.Contacts);
 
-                var reply = TemplateEngine.GenerateActivityForLocale(
+                var reply = TemplateManager.GenerateActivityForLocale(
                     EmailSharedResponses.SentSuccessfully,
                     new
                     {

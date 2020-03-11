@@ -33,12 +33,12 @@ namespace EmailSkill.Dialogs
         public static readonly int MaxAcceptContactsNum = 20;
 
         public FindContactDialog(
-            LocaleLGFileManager lgFileManager,
+            LocaleTemplateManager templateManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
             : base(nameof(FindContactDialog))
         {
-            TemplateEngine = lgFileManager;
+            TemplateManager = templateManager;
 
             TelemetryClient = telemetryClient;
             Services = serviceProvider.GetService<BotServices>();
@@ -133,7 +133,7 @@ namespace EmailSkill.Dialogs
             InitialDialogId = FindContactAction.ConfirmNameList;
         }
 
-        protected LocaleLGFileManager TemplateEngine { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected BotSettings Settings { get; set; }
 
@@ -169,12 +169,12 @@ namespace EmailSkill.Dialogs
                 // ask for attendee
                 if (options.FindContactReason == FindContactDialogOptions.FindContactReasonType.FirstFindContact)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
                     return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreContacts);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreContacts);
                     return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
                 }
             }
@@ -215,7 +215,7 @@ namespace EmailSkill.Dialogs
                 {
                     if (state.FindContactInfor.ContactsNameList.Count > 1)
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new { nameList = await GetNameListStringAsync(sc) });
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new { nameList = await GetNameListStringAsync(sc) });
                         await sc.Context.SendActivityAsync(activity);
                     }
 
@@ -332,7 +332,7 @@ namespace EmailSkill.Dialogs
             if (confirmedPerson.Emails.Count() == 1)
             {
                 // Highest probability
-                var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.PromptOneNameOneAddress, new { userName = name, emailAddress = confirmedPerson.Emails.First() ?? confirmedPerson.UserPrincipalName });
+                var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.PromptOneNameOneAddress, new { userName = name, emailAddress = confirmedPerson.Emails.First() ?? confirmedPerson.UserPrincipalName });
                 return await sc.PromptAsync(FindContactAction.TakeFurtherAction, new PromptOptions { Prompt = activity as Activity });
             }
             else
@@ -396,7 +396,7 @@ namespace EmailSkill.Dialogs
                 // if it is confirm no, then ask user to give a new attendee
                 if (options.UpdateUserNameReason == FindContactDialogOptions.UpdateUserNameReasonType.ConfirmNo)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
                     return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity });
                 }
 
@@ -409,12 +409,12 @@ namespace EmailSkill.Dialogs
                     {
                         state.FindContactInfor.FirstRetryInFindContact = false;
 
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFound, new { userName = currentRecipientName });
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFound, new { userName = currentRecipientName });
                         return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity });
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = currentRecipientName, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = currentRecipientName, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
                         await sc.Context.SendActivityAsync(activity);
 
                         state.FindContactInfor.FirstRetryInFindContact = true;
@@ -443,7 +443,7 @@ namespace EmailSkill.Dialogs
 
                 if (string.IsNullOrEmpty(userInput) && options.UpdateUserNameReason != FindContactDialogOptions.UpdateUserNameReasonType.Initialize)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = userInput, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = userInput, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.EndDialogAsync();
                 }
@@ -628,7 +628,7 @@ namespace EmailSkill.Dialogs
                         }
                         else
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
+                            var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -712,7 +712,7 @@ namespace EmailSkill.Dialogs
                         }
                         else
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
+                            var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -753,7 +753,7 @@ namespace EmailSkill.Dialogs
                 var nameString = state.FindContactInfor.Contacts.ToSpeechString(
                      CommonStrings.And,
                      li => !string.IsNullOrEmpty(li.EmailAddress.Name) && Util.IsEmail(li.EmailAddress.Name) ? li.EmailAddress.Name : $"{li.EmailAddress.Name ?? li.EmailAddress.Name}: {li.EmailAddress.Address}");
-                var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreContactsPrompt, new { nameList = nameString });
+                var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreContactsPrompt, new { nameList = nameString });
                 return await sc.PromptAsync(FindContactAction.TakeFurtherAction, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
             }
             catch (Exception ex)
@@ -922,7 +922,7 @@ namespace EmailSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
+            var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
             await sc.Context.SendActivityAsync(activity);
 
             // clear state
@@ -975,11 +975,11 @@ namespace EmailSkill.Dialogs
                 state.FindContactInfor.ShowContactsIndex--;
                 pageIndex = state.FindContactInfor.ShowContactsIndex;
                 skip = pageSize * pageIndex;
-                var replyActivity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
+                var replyActivity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
                 await sc.Context.SendActivityAsync(replyActivity);
             }
 
-            var reply = TemplateEngine.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailSinglePage, new { userName = confirmedPerson.DisplayName });
+            var reply = TemplateManager.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailSinglePage, new { userName = confirmedPerson.DisplayName });
             var options = new PromptOptions
             {
                 Choices = new List<Choice>(),
@@ -988,11 +988,11 @@ namespace EmailSkill.Dialogs
 
             if (!isSinglePage)
             {
-                var multiPageReply = TemplateEngine.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailMultiPage, new { userName = confirmedPerson.DisplayName });
+                var multiPageReply = TemplateManager.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailMultiPage, new { userName = confirmedPerson.DisplayName });
                 options.Prompt = multiPageReply as Activity;
             }
 
-            var didntUnderstandReply = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
+            var didntUnderstandReply = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
             for (var i = 0; i < emailList.Count; i++)
             {
                 var user = confirmedPerson;
@@ -1066,11 +1066,11 @@ namespace EmailSkill.Dialogs
                 state.FindContactInfor.ShowContactsIndex--;
                 pageIndex = state.FindContactInfor.ShowContactsIndex;
                 skip = pageSize * pageIndex;
-                var replyActivity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
+                var replyActivity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
                 await sc.Context.SendActivityAsync(replyActivity);
             }
 
-            var reply = TemplateEngine.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailSinglePage, new { userName = currentRecipientName });
+            var reply = TemplateManager.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailSinglePage, new { userName = currentRecipientName });
             var options = new PromptOptions
             {
                 Choices = new List<Choice>(),
@@ -1079,11 +1079,11 @@ namespace EmailSkill.Dialogs
 
             if (!isSinglePage)
             {
-                var multiPageReply = TemplateEngine.GenerateActivityForLocale(FindContactResponses.ConfirmMultipleContactNameMultiPage, new { userName = currentRecipientName });
+                var multiPageReply = TemplateManager.GenerateActivityForLocale(FindContactResponses.ConfirmMultipleContactNameMultiPage, new { userName = currentRecipientName });
                 options.Prompt = multiPageReply as Activity;
             }
 
-            var didntUnderstandReply = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
+            var didntUnderstandReply = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
             for (var i = 0; i < unionList.Count; i++)
             {
                 var user = unionList[i];
@@ -1141,7 +1141,7 @@ namespace EmailSkill.Dialogs
         {
             try
             {
-                var retry = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoAuth);
+                var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoAuth);
                 return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retry });
             }
             catch (Exception ex)

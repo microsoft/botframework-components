@@ -36,12 +36,12 @@ namespace EmailSkill.Dialogs
     {
         public EmailSkillDialogBase(
              string dialogId,
-             LocaleLGFileManager lgFileManager,
+             LocaleTemplateManager templateManager,
              IServiceProvider serviceProvider,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
-            TemplateEngine = lgFileManager;
+            TemplateManager = templateManager;
 
             Settings = serviceProvider.GetService<BotSettings>();
             Services = serviceProvider.GetService<BotServices>();
@@ -64,7 +64,7 @@ namespace EmailSkill.Dialogs
         {
         }
 
-        protected LocaleLGFileManager TemplateEngine { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected BotServices Services { get; set; }
 
@@ -198,7 +198,7 @@ namespace EmailSkill.Dialogs
         {
             try
             {
-                var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoAuth);
+                var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoAuth);
                 return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = activity as Activity });
             }
             catch (Exception ex)
@@ -286,7 +286,7 @@ namespace EmailSkill.Dialogs
                     return await sc.NextAsync();
                 }
 
-                var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoFocusMessage);
+                var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoFocusMessage);
                 return await sc.PromptAsync(
                     Actions.Prompt,
                     new PromptOptions() { Prompt = activity as Activity });
@@ -421,7 +421,7 @@ namespace EmailSkill.Dialogs
 
                 if (state.FindContactInfor.Contacts.Count > DisplayHelper.MaxReadoutNumber && (action == Actions.Send || action == Actions.Forward))
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(
+                    var prompt = TemplateManager.GenerateActivityForLocale(
                         EmailSharedResponses.ConfirmSendWithRecipients,
                         new
                         {
@@ -429,13 +429,13 @@ namespace EmailSkill.Dialogs
                             emailDetails = emailCard
                         });
 
-                    var retry = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendRecipientsFailed);
+                    var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendRecipientsFailed);
 
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = prompt as Activity, RetryPrompt = retry as Activity });
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(
+                    var prompt = TemplateManager.GenerateActivityForLocale(
                         EmailSharedResponses.ConfirmSendWithoutRecipients,
                         new
                         {
@@ -443,7 +443,7 @@ namespace EmailSkill.Dialogs
                             emailDetails = emailCard
                         });
 
-                    var retry = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
+                    var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
 
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = prompt as Activity, RetryPrompt = retry as Activity });
                 }
@@ -467,7 +467,7 @@ namespace EmailSkill.Dialogs
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
                     await sc.Context.SendActivityAsync(activity);
                     var skillOptions = sc.Options as EmailSkillDialogOptions;
                     if (skillOptions != null && skillOptions.IsAction)
@@ -496,8 +496,8 @@ namespace EmailSkill.Dialogs
                 if (state.FindContactInfor.Contacts.Count > DisplayHelper.MaxReadoutNumber)
                 {
                     var nameListString = DisplayHelper.ToDisplayRecipientsString(state.FindContactInfor.Contacts);
-                    var confirmRecipients = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendAfterConfirmRecipients, new { recipientsList = nameListString });
-                    var retry = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
+                    var confirmRecipients = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendAfterConfirmRecipients, new { recipientsList = nameListString });
+                    var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
 
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = confirmRecipients as Activity, RetryPrompt = retry as Activity });
                 }
@@ -522,7 +522,7 @@ namespace EmailSkill.Dialogs
 
                 if (string.IsNullOrEmpty(state.Content))
                 {
-                    var noEmailContentMessage = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoEmailContent);
+                    var noEmailContentMessage = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoEmailContent);
                     if (sc.ActiveDialog.Id == Actions.Forward)
                     {
                         if (state.FindContactInfor.Contacts.Count == 0 || state.FindContactInfor.Contacts == null)
@@ -531,11 +531,11 @@ namespace EmailSkill.Dialogs
                             return await sc.EndDialogAsync();
                         }
 
-                        noEmailContentMessage = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoEmailContentWithRecipientConfirmed, new { userName = await GetNameListStringAsync(sc, false) });
+                        noEmailContentMessage = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoEmailContentWithRecipientConfirmed, new { userName = await GetNameListStringAsync(sc, false) });
                     }
                     else if (sc.ActiveDialog.Id == Actions.Reply)
                     {
-                        noEmailContentMessage = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoEmailContentForReply);
+                        noEmailContentMessage = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoEmailContentForReply);
                     }
 
                     return await sc.PromptAsync(
@@ -587,7 +587,7 @@ namespace EmailSkill.Dialogs
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
                 }
             }
@@ -690,7 +690,7 @@ namespace EmailSkill.Dialogs
                 {
                     state.MessageList.Clear();
                     state.Message.Clear();
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailNotFound);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailNotFound);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
@@ -1106,7 +1106,7 @@ namespace EmailSkill.Dialogs
                 overviewCard = GetDivergedCardName(sc.Context, "EmailOverviewByCondition");
             }
 
-            var reply = TemplateEngine.GenerateActivityForLocale(
+            var reply = TemplateManager.GenerateActivityForLocale(
                         EmailSharedResponses.ShowEmailPromptWithFirstLastPrefix,
                         new
                         {
@@ -1489,7 +1489,7 @@ namespace EmailSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
+            var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
             await sc.Context.SendActivityAsync(activity);
 
             // clear state
@@ -1510,15 +1510,15 @@ namespace EmailSkill.Dialogs
             IMessageActivity activity = new Activity();
             if (ex.ExceptionType == SkillExceptionType.APIAccessDenied || ex.ExceptionType == SkillExceptionType.APIUnauthorized || ex.ExceptionType == SkillExceptionType.APIForbidden || ex.ExceptionType == SkillExceptionType.APIBadRequest)
             {
-                activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessageBotProblem);
+                activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessageBotProblem);
             }
             else if (ex.ExceptionType == SkillExceptionType.AccountNotActivated)
             {
-                activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessageAccountProblem);
+                activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessageAccountProblem);
             }
             else
             {
-                activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
+                activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
             }
 
             await sc.Context.SendActivityAsync(activity);

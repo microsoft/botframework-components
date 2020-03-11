@@ -96,7 +96,7 @@ namespace EmailSkill
                 localizedTemplates.Add(locale, localeTemplateFile);
             }
 
-            services.AddSingleton(new LocaleLGFileManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
+            services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();

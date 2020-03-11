@@ -21,9 +21,7 @@ namespace EmailSkill.Adapters
             BotSettings settings,
             ICredentialProvider credentialProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleLGFileManager localeTemplateEngineManager,
-            UserState userState,
-            ConversationState conversationState,
+            LocaleTemplateManager localeTemplateEngineManager,
             TelemetryInitializerMiddleware telemetryMiddleware)
             : base(credentialProvider)
         {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>3383fcc5-4017-4e0a-9103-68603b68fe1d</UserSecretsId>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
@@ -12,24 +12,24 @@
     <PackageReference Include="Google.Apis.People.v1" Version="1.25.0.830" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.NewsSearch" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.0-preview-200306-111271" />
-    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.0-preview-200306-111271" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.0-rc2-preview" />
+    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.0-rc2" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.9.0-daily246" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
     <PackageReference Include="MimeKit" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\botframework-solutions\sdk\csharp\libraries\microsoft.bot.solutions\Microsoft.Bot.Solutions.csproj" />
     <ProjectReference Include="..\shared\SkillServiceLibrary\SkillServiceLibrary.csproj" />
   </ItemGroup>
 
@@ -102,10 +102,25 @@
     <None Update="Responses\Cards\EmailOverviewItem.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\Cards\EmailWithOutButtonCard.lg">
+    <None Update="Responses\Cards\EmailWithoutButtonCard.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\DeleteEmail\DeleteEmailActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\DeleteEmail\DeleteEmailActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\DeleteEmail\DeleteEmailActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\DeleteEmail\DeleteEmailActivities.it-it.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\DeleteEmail\DeleteEmailActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\DeleteEmail\DeleteEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\DeleteEmail\DeleteEmailResponses.tt">
@@ -130,7 +145,22 @@
     <None Update="Responses\DeleteEmail\DeleteEmailTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\FindContact\FindContactActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindContact\FindContactActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindContact\FindContactActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindContact\FindContactActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\FindContact\FindContactActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindContact\FindContactActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FindContact\FindContactResponses.tt">
@@ -159,7 +189,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmailMainResponses.cs</LastGenOutput>
     </None>
+    <None Update="Responses\Main\MainDialogActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\MainDialogActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Main\MainDialogTexts.de-de.lg">
@@ -180,7 +225,22 @@
     <None Update="Responses\Main\MainDialogTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\SendEmail\SendEmailActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\SendEmail\SendEmailActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\SendEmail\SendEmailActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\SendEmail\SendEmailActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\SendEmail\SendEmailActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\SendEmail\SendEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\SendEmail\SendEmailResponses.tt">
@@ -230,7 +290,22 @@
     <None Update="Responses\Shared\ResponsesAndTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Shared\SharedActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Shared\SharedActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Shared\SharedTexts.de-de.lg">
@@ -251,7 +326,22 @@
     <None Update="Responses\Shared\SharedTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\ShowEmail\ShowEmailActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ShowEmail\ShowEmailActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ShowEmail\ShowEmailActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ShowEmail\ShowEmailActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\ShowEmail\ShowEmailActivities.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ShowEmail\ShowEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\ShowEmail\ShowEmailResponses.tt">

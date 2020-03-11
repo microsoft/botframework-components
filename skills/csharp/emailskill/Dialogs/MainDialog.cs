@@ -22,7 +22,7 @@ namespace EmailSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleLGFileManager _lgFileManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<EmailSkillState> _stateAccessor;
         private Dialog _forwardEmailDialog;
         private Dialog _sendEmailDialog;
@@ -37,7 +37,7 @@ namespace EmailSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _lgFileManager = serviceProvider.GetService<LocaleLGFileManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -178,7 +178,7 @@ namespace EmailSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_lgFileManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -187,7 +187,7 @@ namespace EmailSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_lgFileManager.GenerateActivityForLocale(EmailMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -198,7 +198,7 @@ namespace EmailSkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_lgFileManager.GenerateActivityForLocale(EmailMainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -224,12 +224,12 @@ namespace EmailSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _lgFileManager.GenerateActivityForLocale(EmailMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(EmailMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _lgFileManager.GenerateActivityForLocale(EmailMainResponses.EmailWelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(EmailMainResponses.EmailWelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -297,7 +297,7 @@ namespace EmailSkill.Dialogs
                             }
                             else
                             {
-                                await stepContext.Context.SendActivityAsync(_lgFileManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage));
                             }
 
                             break;
@@ -305,7 +305,7 @@ namespace EmailSkill.Dialogs
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_lgFileManager.GenerateActivityForLocale(EmailMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
@@ -403,7 +403,7 @@ namespace EmailSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _lgFileManager.GenerateActivityForLocale(EmailMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _templateManager.GenerateActivityForLocale(EmailMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

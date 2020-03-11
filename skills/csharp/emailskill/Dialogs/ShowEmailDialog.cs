@@ -28,10 +28,10 @@ namespace EmailSkill.Dialogs
     public class ShowEmailDialog : EmailSkillDialogBase
     {
         public ShowEmailDialog(
-            LocaleLGFileManager lgFileManager,
+            LocaleTemplateManager templateManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowEmailDialog), lgFileManager, serviceProvider, telemetryClient)
+            : base(nameof(ShowEmailDialog), templateManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -145,7 +145,7 @@ namespace EmailSkill.Dialogs
             try
             {
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
-                var activity = TemplateEngine.GenerateActivityForLocale(ShowEmailResponses.ReadOut, new { messageList = state.MessageList });
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOut, new { messageList = state.MessageList });
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -160,7 +160,7 @@ namespace EmailSkill.Dialogs
         {
             try
             {
-                var activity = TemplateEngine.GenerateActivityForLocale(ShowEmailResponses.ReadOutMore);
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOutMore);
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace EmailSkill.Dialogs
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.EndDialogAsync(false);
                 }
@@ -263,7 +263,7 @@ namespace EmailSkill.Dialogs
                     };
 
                     emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, message.ToRecipients);
-                    var replyMessage = TemplateEngine.GenerateActivityForLocale(
+                    var replyMessage = TemplateManager.GenerateActivityForLocale(
                         ShowEmailResponses.ReadOutMessage,
                         new
                         {
@@ -309,7 +309,7 @@ namespace EmailSkill.Dialogs
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.EndDialogAsync(true);
                 }
@@ -378,7 +378,7 @@ namespace EmailSkill.Dialogs
                         return await sc.ReplaceDialogAsync(Actions.DisplayFiltered, skillOptions);
                     }
 
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.EndDialogAsync(true);
                 }
@@ -544,13 +544,13 @@ namespace EmailSkill.Dialogs
                         return await sc.ReplaceDialogAsync(Actions.Read, options: sc.Options);
                     }
 
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.EndDialogAsync(true);
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.EmailNotFound);
+                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailNotFound);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
