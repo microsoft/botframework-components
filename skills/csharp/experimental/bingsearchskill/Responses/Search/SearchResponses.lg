@@ -1,0 +1,37 @@
+# AskEntityPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{AskEntityPrompt.Text(Data)}
+    Speak = @{AskEntityPrompt.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# EntityKnowledge(Data, Cards, Layout)
+[Activity
+    Text = @{EntityKnowledge.Text(Data)}
+    Speak = @{EntityKnowledge.Speak(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# NoResultPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{NoResultPrompt.Text(Data)}
+    Speak = @{NoResultPrompt.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# AnswerSearchResultPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{AnswerSearchResultPrompt.Text(Data)}
+    Speak = @{AnswerSearchResultPrompt.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

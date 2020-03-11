@@ -1,0 +1,41 @@
+# DontKnowAnswer(Data, Cards, Layout)
+[Activity
+    Text = @{DontKnowAnswer.Text(Data)}
+    Speak = @{DontKnowAnswer.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+]
+
+# Showtimes(Data, Cards, Layout)
+[Activity
+    Text = @{Showtimes.Text(Data)}
+    Speak = @{Showtimes.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+]
+
+# Trailers(Data, Cards, Layout)
+[Activity
+    Text = @{Trailers.Text(Data)}
+    Speak = @{Trailers.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+]
+
+# Trivia(Data, Cards, Layout)
+[Activity
+    Text = @{Trivia.Text(Data)}
+    Speak = @{Trivia.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+]
+
+# View(Data, Cards, Layout)
+[Activity
+    Text = @{View.Text(Data)}
+    Speak = @{View.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+]
+
+
