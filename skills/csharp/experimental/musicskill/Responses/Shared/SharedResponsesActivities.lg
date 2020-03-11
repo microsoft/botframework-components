@@ -1,0 +1,42 @@
+﻿# DidntUnderstandMessage
+[Activity
+    Text = @{DidntUnderstandMessage.Text()}
+    Speak = @{DidntUnderstandMessage.Text()}
+    InputHint = acceptingInput
+]
+
+# CancellingMessage
+[Activity
+    Text = @{CancellingMessage.Text()}
+    Speak = @{CancellingMessage.Text()}
+    InputHint = acceptingInput
+]
+
+
+# NoAuth
+[Activity
+    Text = @{NoAuth.Text()}
+    Speak = @{NoAuth.Text()}
+    InputHint = expectingInput
+] 
+
+# AuthFailed
+[Activity
+    Text = @{AuthFailed.Text()}
+    Speak = @{AuthFailed.Text()}
+    InputHint = acceptingInput
+] 
+
+# ActionEnded
+[Activity
+    Text = @{ActionEnded.Text()}
+    Speak = @{ActionEnded.Text()}
+    InputHint = acceptingInput
+]
+
+# ErrorMessage
+[Activity
+    Text = @{ErrorMessage.Text()}
+    Speak = @{ErrorMessage.Text()}
+    InputHint = acceptingInput
+]
