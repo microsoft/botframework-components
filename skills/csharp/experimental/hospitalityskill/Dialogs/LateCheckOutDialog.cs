@@ -6,7 +6,6 @@ using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
-using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.LateCheckOut;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;

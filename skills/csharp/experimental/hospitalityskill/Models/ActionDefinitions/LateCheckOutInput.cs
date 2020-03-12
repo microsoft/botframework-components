@@ -27,7 +27,7 @@ namespace HospitalitySkill.Models.ActionDefinitions
                     {
                         datetime = new DateTimeSpec[]
                         {
-                                                    new DateTimeSpec("time", new string[] { Time })
+                            new DateTimeSpec("time", new string[] { Time })
                         }
                     }
                 };

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Bot.Builder.Community.Adapters.Google.Model;
 using Bot.Builder.Community.Adapters.Google.Model.Attachments;
 using HospitalitySkill.Models;
-using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.RoomService;
 using HospitalitySkill.Services;
 using Microsoft.Bot.Builder;

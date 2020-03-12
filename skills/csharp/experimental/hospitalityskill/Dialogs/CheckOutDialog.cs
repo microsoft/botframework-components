@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
-using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.CheckOut;
 using HospitalitySkill.Services;
 using Microsoft.Bot.Builder;
