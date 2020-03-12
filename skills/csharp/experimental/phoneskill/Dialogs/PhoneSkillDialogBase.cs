@@ -28,7 +28,7 @@ namespace PhoneSkill.Dialogs
             string dialogId,
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)
@@ -36,7 +36,7 @@ namespace PhoneSkill.Dialogs
         {
             Settings = settings;
             Services = services;
-            ResponseManager = responseManager;
+            TemplateManager = templateManager;
             PhoneStateAccessor = conversationState.CreateProperty<PhoneSkillState>(nameof(PhoneSkillState));
             DialogStateAccessor = conversationState.CreateProperty<DialogState>(nameof(DialogState));
             ServiceManager = serviceManager;
@@ -61,7 +61,7 @@ namespace PhoneSkill.Dialogs
 
         protected IServiceManager ServiceManager { get; set; }
 
-        protected LocaleTemplateEngineManager ResponseManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -80,7 +80,7 @@ namespace PhoneSkill.Dialogs
         {
             try
             {
-                var retry = ResponseManager.GetResponse(PhoneSharedResponses.NoAuth);
+                var retry = TemplateManager.GenerateActivity(PhoneSharedResponses.NoAuth);
                 return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retry });
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace PhoneSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(PhoneSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(PhoneSharedResponses.ErrorMessage));
 
             // clear state
             var state = await PhoneStateAccessor.GetAsync(sc.Context);

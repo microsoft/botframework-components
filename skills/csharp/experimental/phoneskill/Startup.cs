@@ -40,8 +40,7 @@ namespace PhoneSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
+
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -80,7 +79,7 @@ namespace PhoneSkill
             // Configure bot state
             // Uncomment the following line for local development without Cosmos Db
             // services.AddSingleton<IStorage, MemoryStorage>();
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -106,7 +105,7 @@ namespace PhoneSkill
             services.AddTransient<IServiceManager, ServiceManager>();
 
             // Configure responses
-            services.AddSingleton(EngineWrapper.CreateLocaleTemplateEngineManager("en-us"));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
 
             // register dialogs
             services.AddTransient<MainDialog>();

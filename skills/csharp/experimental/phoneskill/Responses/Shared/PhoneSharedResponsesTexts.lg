@@ -1,5 +1,3 @@
-[import] (PhoneSharedResponses.lg)
-
 # DidntUnderstandMessage.Text(Data)
 - Sorry, I didn't understand what you meant.
 - I didn't understand, perhaps try again in a different way.

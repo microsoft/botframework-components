@@ -29,16 +29,15 @@ using PhoneSkill.Models;
 using PhoneSkill.Services;
 using PhoneSkill.Tests.TestDouble;
 using PhoneSkill.Utilities;
+using Microsoft.Bot.Builder.LanguageGeneration;
 
 namespace PhoneSkill.Tests.Flow
 {
-    public class PhoneSkillTestBase : BotTestBase
+    public class PhoneSkillTestBase
     {
         public static readonly string Provider = "Azure Active Directory v2";
 
         public IServiceCollection Services { get; set; }
-
-        public EndpointService EndpointService { get; set; }
 
         public ConversationState ConversationState { get; set; }
 
@@ -52,10 +51,12 @@ namespace PhoneSkill.Tests.Flow
 
         public IServiceManager ServiceManager { get; set; }
 
-        public LocaleTemplateEngineManager TemplateEngine { get; set; }
+        public LocaleTemplateManager TemplateEngine { get; set; }
+
+        public Templates Templates { get; set; }
 
         [TestInitialize]
-        public override void Initialize()
+        public void Initialize()
         {
             // Initialize mock service manager
             ServiceManager = new FakeServiceManager();
@@ -102,8 +103,9 @@ namespace PhoneSkill.Tests.Flow
             });
 
             // Configure localized responses
-            TemplateEngine = EngineWrapper.CreateLocaleTemplateEngineManager("en-us");
+            TemplateEngine = LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us");
             Services.AddSingleton(TemplateEngine);
+            Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             Services.AddSingleton<IServiceManager>(ServiceManager);
@@ -155,7 +157,7 @@ namespace PhoneSkill.Tests.Flow
             return testFlow;
         }
 
-        protected Action<IActivity> Message(string templateId, StringDictionary tokens = null, IList<string> selectionItems = null)
+        protected Action<IActivity> Message(string templateId, Dictionary<string, object> tokens = null, IList<string> selectionItems = null)
         {
             return activity =>
             {
@@ -165,7 +167,7 @@ namespace PhoneSkill.Tests.Flow
                 // Work around a bug in ParseReplies.
                 if (tokens == null)
                 {
-                    tokens = new StringDictionary();
+                    tokens = new Dictionary<string, object>();
                 }
 
                 var expectedTexts = ParseReplies(templateId, tokens);
@@ -236,9 +238,9 @@ namespace PhoneSkill.Tests.Flow
             };
         }
 
-        protected new string[] ParseReplies(string name, StringDictionary data = null)
+        protected string[] ParseReplies(string name, Dictionary<string, object> data = null)
         {
-            return TemplateEngine.ParseReplies(name, data);
+            return Templates.ParseReplies(name, data);
         }
     }
 }

@@ -1,5 +1,3 @@
-[import] (OutgoingCallResponses.lg)
-
 # RecipientPrompt.Text(Data)
 - Who would you like to call?
 

@@ -1,5 +1,3 @@
-[import] (PhoneMainResponses.lg)
-
 # WelcomeMessage.Text(Data)
 - Welcome to the Phone Skill! You can ask me to start phone calls for you.
 
