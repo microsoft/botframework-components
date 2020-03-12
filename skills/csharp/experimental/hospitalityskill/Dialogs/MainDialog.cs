@@ -205,6 +205,10 @@ namespace HospitalitySkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            // Reset before all dialogs
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+            state.IsAction = false;
+
             var activity = stepContext.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -352,8 +356,6 @@ namespace HospitalitySkill.Dialogs
                     {
                         endOfConversation.Value = new ActionResult(false);
                     }
-
-                    state.IsAction = false;
                 }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);

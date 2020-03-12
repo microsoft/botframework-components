@@ -21,8 +21,6 @@ namespace HospitalitySkill.Bots
 {
     public class DefaultAdapter : BotFrameworkHttpAdapter
     {
-        private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
-
         public DefaultAdapter(
             BotSettings settings,
             UserState userState,
@@ -33,8 +31,6 @@ namespace HospitalitySkill.Bots
             ResponseManager responseManager)
             : base(credentialProvider)
         {
-            _stateAccessor = conversationState.CreateProperty<HospitalitySkillState>(nameof(HospitalitySkillState));
-
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
@@ -44,10 +40,6 @@ namespace HospitalitySkill.Bots
 
                 if (context.IsSkill())
                 {
-                    // Reset when sending EoC
-                    var state = await _stateAccessor.GetAsync(context, () => new HospitalitySkillState());
-                    state.IsAction = false;
-
                     // Send an EndOfConversation activity to the skill caller with the error to end the conversation
                     // and let the caller decide what to do.
                     var endOfConversation = Activity.CreateEndOfConversationActivity();
