@@ -30,7 +30,7 @@ namespace RestaurantBookingSkill.Dialogs
             string dialogId,
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager localeTemplateManager,
             ConversationState conversationState,
             UserState userState,
             IBotTelemetryClient telemetryClient)
@@ -38,7 +38,7 @@ namespace RestaurantBookingSkill.Dialogs
         {
             Settings = settings;
             Services = services;
-            LocaleTemplateEngineManager = localeTemplateEngineManager;
+            LocaleTemplateManager = localeTemplateManager;
             ConversationStateAccessor = conversationState.CreateProperty<RestaurantBookingState>(nameof(BookingDialog));
             UserStateAccessor = userState.CreateProperty<SkillUserState>(nameof(SkillUserState));
             TelemetryClient = telemetryClient;
@@ -52,7 +52,7 @@ namespace RestaurantBookingSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillUserState> UserStateAccessor { get; set; }
 
-        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
+        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -101,7 +101,7 @@ namespace RestaurantBookingSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GetResponse(RestaurantBookingSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GetResponse(RestaurantBookingSharedResponses.ErrorMessage));
 
             // clear state
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
