@@ -46,13 +46,11 @@ namespace AutomotiveSkill.Dialogs
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(dc.Context);
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(dc.Context);
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
@@ -77,7 +75,6 @@ namespace AutomotiveSkill.Dialogs
 
             // clear state
             var state = await Accessor.GetAsync(sc.Context);
-            state.Clear();
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2

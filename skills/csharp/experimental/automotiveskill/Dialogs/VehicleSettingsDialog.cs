@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AutomotiveSkill.Models;
+using AutomotiveSkill.Models.Actions;
 using AutomotiveSkill.Responses.VehicleSettings;
 using AutomotiveSkill.Services;
 using AutomotiveSkill.Utilities;
@@ -18,10 +19,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Recognizers.Text;
 using SkillServiceLibrary.Utilities;
 
@@ -63,10 +63,6 @@ namespace AutomotiveSkill.Dialogs
             TelemetryClient = telemetryClient;
 
             var localeConfig = services.GetCognitiveModels();
-
-            // Initialise supporting LUIS models for followup questions
-            vehicleSettingNameSelectionLuisRecognizer = localeConfig.LuisServices["SettingsName"];
-            vehicleSettingValueSelectionLuisRecognizer = localeConfig.LuisServices["SettingsValue"];
 
             // Initialise supporting LUIS models for followup questions
             vehicleSettingNameSelectionLuisRecognizer = localeConfig.LuisServices["SettingsName"];
@@ -125,87 +121,72 @@ namespace AutomotiveSkill.Dialogs
         public async Task<DialogTurnResult> ProcessSetting(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             var state = await Accessor.GetAsync(sc.Context, () => new AutomotiveSkillState());
+            var skillResult = sc.Context.TurnState.Get<SettingsLuis>(StateProperties.SettingsLuisResultKey);
+            bool isDeclarative = skillResult?.TopIntent().intent == SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE;
 
-            var luisResult = state.VehicleSettingsLuisResult;
-            var topIntent = luisResult?.TopIntent().intent;
+            // Perform post-processing on the entities, if it's declarative we indicate for special processing (opposite of the condition they've expressed)
+            settingFilter.PostProcessSettingName(state, isDeclarative);
 
-            switch (topIntent.Value)
+            // Perform content logic and remove entities that don't make sense
+            settingFilter.ApplyContentLogic(state);
+
+            var settingNames = state.GetUniqueSettingNames();
+            if (!settingNames.Any())
             {
-                case SettingsLuis.Intent.VEHICLE_SETTINGS_CHANGE:
-                case SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE:
+                // missing setting name
+                await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
+                return await sc.EndDialogAsync();
+            }
+            else if (settingNames.Count() > 1)
+            {
+                // If we have more than one setting name matching prompt the user to choose
+                var options = new PromptOptions()
+                {
+                    Choices = new List<Choice>(),
+                };
 
-                    // Perform post-processing on the entities, if it's declarative we indicate for special processing (opposite of the condition they've expressed)
-                    settingFilter.PostProcessSettingName(state, topIntent.Value == SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE ? true : false);
-
-                    // Perform content logic and remove entities that don't make sense
-                    settingFilter.ApplyContentLogic(state);
-
-                    var settingNames = state.GetUniqueSettingNames();
-                    if (!settingNames.Any())
+                for (var i = 0; i < settingNames.Count; ++i)
+                {
+                    var item = settingNames[i];
+                    var synonyms = new List<string>
                     {
-                        // missing setting name
-                        await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
-                        return await sc.EndDialogAsync();
-                    }
-                    else if (settingNames.Count() > 1)
+                        item,
+                        (i + 1).ToString()
+                    };
+                    synonyms.AddRange(settingList.GetAlternativeNamesForSetting(item));
+                    var choice = new Choice()
                     {
-                        // If we have more than one setting name matching prompt the user to choose
-                        var options = new PromptOptions()
-                        {
-                            Choices = new List<Choice>(),
-                        };
+                        Value = item,
+                        Synonyms = synonyms,
+                    };
+                    options.Choices.Add(choice);
+                }
 
-                        for (var i = 0; i < settingNames.Count; ++i)
-                        {
-                            var item = settingNames[i];
-                            var synonyms = new List<string>
-                            {
-                                item,
-                                (i + 1).ToString()
-                            };
-                            synonyms.AddRange(settingList.GetAlternativeNamesForSetting(item));
-                            var choice = new Choice()
-                            {
-                                Value = item,
-                                Synonyms = synonyms,
-                            };
-                            options.Choices.Add(choice);
-                        }
+                var cardModel = new AutomotiveCardModel()
+                {
+                    ImageUrl = GetSettingCardImageUri(FallbackSettingImageFileName)
+                };
 
-                        var cardModel = new AutomotiveCardModel()
-                        {
-                            ImageUrl = GetSettingCardImageUri(FallbackSettingImageFileName)
-                        };
+                var card = LocaleTemplateEngineManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
+                options.Prompt = LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
+                options.Prompt.Attachments = card.Attachments;
 
-                        var card = LocaleTemplateEngineManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
-                        options.Prompt = LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
-                        options.Prompt.Attachments = card.Attachments;
+                // Default Text property is clumsy for speech
+                options.Prompt.Speak = SpeechUtility.ListToSpeechReadyString(options);
 
-                        // Default Text property is clumsy for speech
-                        options.Prompt.Speak = SpeechUtility.ListToSpeechReadyString(options);
+                // Workaround. In teams, prompt will be changed to HeroCard and adaptive card could not be shown. So send them separatly
+                if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
+                {
+                    await sc.Context.SendActivityAsync(options.Prompt);
+                    options.Prompt = null;
+                }
 
-                        // Workaround. In teams, prompt will be changed to HeroCard and adaptive card could not be shown. So send them separatly
-                        if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
-                        {
-                            await sc.Context.SendActivityAsync(options.Prompt);
-                            options.Prompt = null;
-                        }
-
-                        return await sc.PromptAsync(Actions.SettingNameSelectionPrompt, options);
-                    }
-                    else
-                    {
-                        // Only one setting detected so move on to next stage
-                        return await sc.NextAsync();
-                    }
-
-                case SettingsLuis.Intent.VEHICLE_SETTINGS_CHECK:
-                    await sc.Context.SendActivityAsync(sc.Context.Activity.CreateReply("The skill doesn't support checking vehicle settings quite yet!"));
-                    return await sc.EndDialogAsync(true, cancellationToken);
-
-                default:
-                    await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain));
-                    return await sc.EndDialogAsync(true, cancellationToken);
+                return await sc.PromptAsync(Actions.SettingNameSelectionPrompt, options);
+            }
+            else
+            {
+                // Only one setting detected so move on to next stage
+                return await sc.NextAsync();
             }
         }
 
@@ -460,6 +441,11 @@ namespace AutomotiveSkill.Dialogs
             else
             {
                 await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied));
+            }
+
+            if (state.IsAction)
+            {
+                return await sc.EndDialogAsync(new ActionResult(true));
             }
 
             return await sc.EndDialogAsync();

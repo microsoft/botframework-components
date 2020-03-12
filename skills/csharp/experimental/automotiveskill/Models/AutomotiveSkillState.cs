@@ -12,20 +12,16 @@ namespace AutomotiveSkill.Models
         {
         }
 
-        public SettingsLuis VehicleSettingsLuisResult { get; set; }
-
         public IDictionary<string, IList<string>> Entities { get; set; } = new Dictionary<string, IList<string>>();
 
         public IList<SettingChange> Changes { get; set; } = new List<SettingChange>();
 
         public IList<SettingStatus> Statuses { get; set; } = new List<SettingStatus>();
 
+        public bool IsAction { get; set; } = false;
+
         public void AddRecognizerResult(SettingsLuis luisResult)
         {
-            Clear();
-
-            VehicleSettingsLuisResult = luisResult;
-
             if (luisResult.Entities.AMOUNT != null)
             {
                 AddEntities(nameof(luisResult.Entities.AMOUNT), luisResult.Entities.AMOUNT);
@@ -131,13 +127,13 @@ namespace AutomotiveSkill.Models
 
         public void Clear()
         {
-            VehicleSettingsLuisResult = null;
             Entities.Clear();
             Changes.Clear();
             Statuses.Clear();
+            IsAction = false;
         }
 
-        private void AddEntities(string key, IEnumerable<string> values)
+        public void AddEntities(string key, IEnumerable<string> values)
         {
             if (!Entities.TryGetValue(key, out IList<string> entityValues))
             {

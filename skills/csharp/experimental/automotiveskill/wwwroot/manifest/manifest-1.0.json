@@ -31,7 +31,7 @@
         "$ref": "#/definitions/settingInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "message": {
@@ -66,12 +66,12 @@
         }
       }
     },
-    "operationStatus": {
+    "actionResult": {
       "type": "object",
       "properties": {
-        "status": {
+        "actionSuccess": {
           "type": "boolean",
-          "description": "An operation status indicating success or failure"
+          "description": "Result of action"
         }
       }
     }
