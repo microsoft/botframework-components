@@ -116,6 +116,8 @@ namespace HospitalitySkill.Dialogs
                 // checked out confirmation message
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.SendEmailMessage, tokens));
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.CheckOutSuccess));
+
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
             return await sc.EndDialogAsync();

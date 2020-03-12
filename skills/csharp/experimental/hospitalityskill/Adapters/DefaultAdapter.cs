@@ -39,7 +39,7 @@ namespace HospitalitySkill.Bots
 
                 if (context.IsSkill())
                 {
-                    // Send and EndOfConversation activity to the skill caller with the error to end the conversation
+                    // Send an EndOfConversation activity to the skill caller with the error to end the conversation
                     // and let the caller decide what to do.
                     var endOfConversation = Activity.CreateEndOfConversationActivity();
                     endOfConversation.Code = "SkillError";

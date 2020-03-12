@@ -42,6 +42,27 @@ namespace HospitalitySkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task LateCheckOutWithTimeTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Time", LateCheckOutUtterances.Time.ToString(ReservationData.TimeFormat) },
+                { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetTestFlow()
+                .Send(StartActivity)
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .Send(LateCheckOutUtterances.LateCheckOutWithTime)
+                .AssertReply(AssertContains(LateCheckOutResponses.CheckAvailability))
+                .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(LateCheckOutResponses.MoveCheckOutSuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(ActionEndMessage())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task LateCheckOutWithExceededTimeTest()
         {
             var tokens = new StringDictionary
@@ -104,6 +125,63 @@ namespace HospitalitySkill.Tests.Flow
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
                 .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task LateCheckOutActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
+                { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(LateCheckOutUtterances.LateCheckOutAction)
+                .AssertReply(AssertContains(LateCheckOutResponses.CheckAvailability))
+                .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(LateCheckOutResponses.MoveCheckOutSuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task LateCheckOutWithTimeActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Time", LateCheckOutUtterances.Time.ToString(ReservationData.TimeFormat) },
+                { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(LateCheckOutUtterances.LateCheckOutWithTimeAction)
+                .AssertReply(AssertContains(LateCheckOutResponses.CheckAvailability))
+                .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(LateCheckOutResponses.MoveCheckOutSuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task LateCheckOutWithExceededTimeActionTest()
+        {
+            var tokens = new StringDictionary
+            {
+                { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
+                { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(LateCheckOutUtterances.LateCheckOutWithExceededTimeAction)
+                .AssertReply(AssertContains(LateCheckOutResponses.CheckAvailability))
+                .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(LateCheckOutResponses.MoveCheckOutSuccess, tokens, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
                 .StartTestAsync();
         }
     }

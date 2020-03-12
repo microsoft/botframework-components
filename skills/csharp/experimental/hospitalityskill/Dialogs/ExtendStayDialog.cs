@@ -50,8 +50,13 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState?.LuisResult?.Entities;
             convState.UpdatedReservation = userState.UserReservation.Copy();
+
+            if (entities == null)
+            {
+                return await sc.NextAsync();
+            }
 
             // check for valid datetime entity
             if (entities.datetime != null && (entities.datetime[0].Type == "date" ||
@@ -85,7 +90,7 @@ namespace HospitalitySkill.Dialogs
             }
 
             // trying to request late check out time
-            else if (entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
+            else if (convState.IsAction == false && entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
             {
                 return await sc.ReplaceDialogAsync(nameof(LateCheckOutDialog));
             }
@@ -265,6 +270,8 @@ namespace HospitalitySkill.Dialogs
                 // check out date moved confirmation
                 var reply = ResponseManager.GetCardResponse(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
+
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
             return await sc.EndDialogAsync();

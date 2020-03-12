@@ -19,8 +19,14 @@ namespace HospitalitySkill.Models
 
         public List<FoodRequestClass> FoodList { get; set; }
 
+        public bool IsAction { get; set; } = false;
+
         public void Clear()
         {
+            LuisResult = null;
+            UpdatedReservation = null;
+            ItemList = null;
+            FoodList = null;
         }
     }
 }

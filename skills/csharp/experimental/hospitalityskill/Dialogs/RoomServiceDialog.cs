@@ -58,39 +58,45 @@ namespace HospitalitySkill.Dialogs
             convState.FoodList = new List<FoodRequestClass>();
             await GetFoodEntities(sc.Context);
 
-            var menu = convState.LuisResult.Entities.Menu;
+            var menu = convState.LuisResult?.Entities?.Menu;
 
             // didn't order, prompt if 1 menu type not identified
             if (convState.FoodList.Count == 0 && string.IsNullOrWhiteSpace(menu?[0][0]) && menu?.Length != 1)
             {
                 var prompt = ResponseManager.GetResponse(RoomServiceResponses.MenuPrompt);
 
+                // TODO what does this for ?
                 if (sc.Context.Activity.ChannelId == "google")
                 {
-                    prompt.Text = prompt.Text.Replace("*", "");
-                    prompt.Speak = prompt.Speak.Replace("*", "");
+                    prompt.Text = prompt.Text.Replace("*", string.Empty);
+                    prompt.Speak = prompt.Speak.Replace("*", string.Empty);
                     var listAttachment = new ListAttachment(
                         "Select an option below",
-                        new List<OptionItem>() {
-                            new OptionItem() {
+                        new List<OptionItem>()
+                        {
+                            new OptionItem()
+                            {
                                 Title = "Breakfast",
-                                Image = new OptionItemImage() { AccessibilityText = "Item 1 image", Url = "http://cdn.cnn.com/cnnnext/dam/assets/190515173104-03-breakfast-around-the-world-avacado-toast.jpg"},
-                                OptionInfo = new OptionItemInfo() { Key = "Breakfast", Synonyms = new List<string>(){ "first" } }
+                                Image = new OptionItemImage() { AccessibilityText = "Item 1 image", Url = "http://cdn.cnn.com/cnnnext/dam/assets/190515173104-03-breakfast-around-the-world-avacado-toast.jpg" },
+                                OptionInfo = new OptionItemInfo() { Key = "Breakfast", Synonyms = new List<string>() { "first" } }
                             },
-                        new OptionItem() {
+                            new OptionItem()
+                            {
                                 Title = "Lunch",
-                                Image = new OptionItemImage() { AccessibilityText = "Item 2 image", Url = "https://simply-delicious-food.com/wp-content/uploads/2018/07/mexican-lunch-bowls-3.jpg"},
-                                OptionInfo = new OptionItemInfo() { Key = "Lunch", Synonyms = new List<string>(){ "second" } }
+                                Image = new OptionItemImage() { AccessibilityText = "Item 2 image", Url = "https://simply-delicious-food.com/wp-content/uploads/2018/07/mexican-lunch-bowls-3.jpg" },
+                                OptionInfo = new OptionItemInfo() { Key = "Lunch", Synonyms = new List<string>() { "second" } }
                             },
-                        new OptionItem() {
+                            new OptionItem()
+                            {
                                 Title = "Dinner",
-                                Image = new OptionItemImage() { AccessibilityText = "Item 3 image", Url = "https://cafedelites.com/wp-content/uploads/2018/06/Garlic-Butter-Steak-Shrimp-Recipe-IMAGE-1.jpg"},
-                                OptionInfo = new OptionItemInfo() { Key = "Dinner", Synonyms = new List<string>(){ "third" } }
+                                Image = new OptionItemImage() { AccessibilityText = "Item 3 image", Url = "https://cafedelites.com/wp-content/uploads/2018/06/Garlic-Butter-Steak-Shrimp-Recipe-IMAGE-1.jpg" },
+                                OptionInfo = new OptionItemInfo() { Key = "Dinner", Synonyms = new List<string>() { "third" } }
                             },
-                        new OptionItem() {
+                            new OptionItem()
+                            {
                                 Title = "24 Hour Options",
-                                Image = new OptionItemImage() { AccessibilityText = "Item 4 image", Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvAkc_j44yfAhswKl9s5LKnwFL4MGAg4IwFM6lBVTs0W4o9fLB&s"},
-                                OptionInfo = new OptionItemInfo() { Key = "24 hour options", Synonyms = new List<string>(){ "fourth" } }
+                                Image = new OptionItemImage() { AccessibilityText = "Item 4 image", Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvAkc_j44yfAhswKl9s5LKnwFL4MGAg4IwFM6lBVTs0W4o9fLB&s" },
+                                OptionInfo = new OptionItemInfo() { Key = "24 hour options", Synonyms = new List<string>() { "fourth" } }
                             }
                         },
                         ListAttachmentStyle.Carousel);
@@ -133,7 +139,7 @@ namespace HospitalitySkill.Dialogs
             var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
 
             // can only choose one menu type
-            var menu = convState.LuisResult.Entities.Menu;
+            var menu = convState.LuisResult?.Entities?.Menu;
             if (promptContext.Recognized.Succeeded && !string.IsNullOrWhiteSpace(menu?[0][0]) && menu.Length == 1)
             {
                 return await Task.FromResult(true);
@@ -148,7 +154,7 @@ namespace HospitalitySkill.Dialogs
 
             if (convState.FoodList.Count == 0)
             {
-                Menu menu = HotelService.GetMenu(convState.LuisResult.Entities.Menu[0][0]);
+                Menu menu = HotelService.GetMenu(convState.LuisResult?.Entities?.Menu[0][0]);
 
                 // get available items for requested menu
                 List<Card> menuItems = new List<Card>();
@@ -164,10 +170,10 @@ namespace HospitalitySkill.Dialogs
 
                     menuItems.Add(new Card(cardName, item));
                 }
-                var Prompt = ResponseManager.GetResponse(RoomServiceResponses.FoodOrder);
+
+                var prompt = ResponseManager.GetResponse(RoomServiceResponses.FoodOrder);
                 if (sc.Context.Activity.ChannelId == "google")
                 {
-
                     List<OptionItem> menuOptions = new List<OptionItem>();
                     foreach (MenuItem item in menu.Items)
                     {
@@ -176,7 +182,6 @@ namespace HospitalitySkill.Dialogs
                             Title = item.Name,
                             Description = item.Description + " " + item.Price,
                             OptionInfo = new OptionItemInfo() { Key = item.Name, Synonyms = new List<string>() { } }
-
                         };
                         menuOptions.Add(option);
                     }
@@ -185,7 +190,7 @@ namespace HospitalitySkill.Dialogs
                         menu.Type + ": " + menu.TimeAvailable,
                         menuOptions,
                         ListAttachmentStyle.List);
-                    Prompt.Attachments.Add(listAttachment);
+                    prompt.Attachments.Add(listAttachment);
                 }
                 else
                 {
@@ -196,7 +201,7 @@ namespace HospitalitySkill.Dialogs
                 // prompt for order
                 return await sc.PromptAsync(DialogIds.FoodOrderPrompt, new PromptOptions()
                 {
-                    Prompt = Prompt,
+                    Prompt = prompt,
                     RetryPrompt = ResponseManager.GetResponse(RoomServiceResponses.RetryFoodOrder)
                 });
             }
@@ -207,9 +212,9 @@ namespace HospitalitySkill.Dialogs
         private async Task<bool> ValidateFoodOrder(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
             var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState.LuisResult?.Entities;
 
-            if (promptContext.Recognized.Succeeded && (entities.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
+            if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
             {
                 await GetFoodEntities(promptContext.Context);
                 return await Task.FromResult(true);
@@ -232,9 +237,9 @@ namespace HospitalitySkill.Dialogs
         private async Task<bool> ValidateAddItems(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
             var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState.LuisResult?.Entities;
 
-            if (promptContext.Recognized.Succeeded && (entities.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
+            if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
             {
                 // added an item
                 await GetFoodEntities(promptContext.Context);
@@ -263,9 +268,12 @@ namespace HospitalitySkill.Dialogs
         private async Task<DialogTurnResult> EndDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             var confirm = (bool)sc.Result;
+
             if (confirm)
             {
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RoomServiceResponses.FinalOrderConfirmation));
+
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
             return await sc.EndDialogAsync();
@@ -327,15 +335,15 @@ namespace HospitalitySkill.Dialogs
         private async Task GetFoodEntities(ITurnContext turnContext)
         {
             var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
+            var entities = convState.LuisResult?.Entities;
 
-            if (entities.FoodRequest != null)
+            if (entities?.FoodRequest != null)
             {
                 // food with quantity or special requests
                 convState.FoodList.AddRange(entities.FoodRequest);
             }
 
-            if (!string.IsNullOrWhiteSpace(entities.Food?[0]))
+            if (!string.IsNullOrWhiteSpace(entities?.Food?[0]))
             {
                 // food without quantity or special request
                 for (int i = 0; i < entities.Food.Length; i++)

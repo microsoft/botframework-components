@@ -3,7 +3,10 @@
 
 using System;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 using static Luis.HospitalityLuis;
 
 namespace HospitalitySkill.Tests.Flow.Utterances
@@ -19,6 +22,20 @@ namespace HospitalitySkill.Tests.Flow.Utterances
         public static readonly string LateCheckOutWithTime = $"can i check out late to {Time.ToString()}";
 
         public static readonly string LateCheckOutWithExceededTime = $"can i check out late to {ExceededTime.ToString()}";
+
+        public static readonly Activity LateCheckOutAction = new Activity(type: ActivityTypes.Event, name: ActionNames.LateCheckOut, value: JObject.FromObject(new
+        {
+        }));
+
+        public static readonly Activity LateCheckOutWithTimeAction = new Activity(type: ActivityTypes.Event, name: ActionNames.LateCheckOut, value: JObject.FromObject(new
+        {
+            Time = Time.ToString(TimexTimeFormat)
+        }));
+
+        public static readonly Activity LateCheckOutWithExceededTimeAction = new Activity(type: ActivityTypes.Event, name: ActionNames.LateCheckOut, value: JObject.FromObject(new
+        {
+            Time = ExceededTime.ToString(TimexTimeFormat)
+        }));
 
         public LateCheckOutUtterances()
         {

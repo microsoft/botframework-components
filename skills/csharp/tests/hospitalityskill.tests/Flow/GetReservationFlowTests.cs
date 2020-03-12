@@ -25,5 +25,15 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task GetReservationActionTest()
+        {
+            await this.GetSkillTestFlow()
+                .Send(GetReservationUtterances.GetReservationAction)
+                .AssertReply(AssertContains(GetReservationResponses.ShowReservationDetails, null, CardStrings.ReservationDetails))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

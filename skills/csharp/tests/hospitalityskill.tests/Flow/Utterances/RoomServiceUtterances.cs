@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using HospitalitySkill.Models.ActionDefinitions;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 using static Luis.HospitalityLuis;
 using static Luis.HospitalityLuis._Entities;
 
@@ -17,6 +20,20 @@ namespace HospitalitySkill.Tests.Flow.Utterances
         public static readonly string RoomServiceWithMenu = $"can i see a {Breakfast} menu";
 
         public static readonly string RoomServiceWithFood = $"i need a {Coffee}";
+
+        public static readonly Activity RoomServiceAction = new Activity(type: ActivityTypes.Event, name: ActionNames.RoomService, value: JObject.FromObject(new
+        {
+        }));
+
+        public static readonly Activity RoomServiceWithMenuAction = new Activity(type: ActivityTypes.Event, name: ActionNames.RoomService, value: JObject.FromObject(new
+        {
+            menu = Breakfast,
+        }));
+
+        public static readonly Activity RoomServiceWithFoodAction = new Activity(type: ActivityTypes.Event, name: ActionNames.RoomService, value: JObject.FromObject(new
+        {
+            food = new[] { new { number = 1, name = Coffee } }
+        }));
 
         public RoomServiceUtterances()
         {

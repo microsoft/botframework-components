@@ -64,9 +64,10 @@ namespace HospitalitySkill.Dialogs
             var lateTime = await HotelService.GetLateCheckOutAsync();
 
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
-            var entities = convState.LuisResult.Entities;
-            if (entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
+            var entities = convState?.LuisResult?.Entities;
+            if (entities != null && entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
             {
+                // ISO 8601 https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-prebuilt-datetimev2?tabs=1-1%2C2-1%2C3-1%2C4-1%2C5-1%2C6-1
                 var timexProperty = new TimexProperty();
                 TimexParsing.ParseString(entities.datetime[0].Expressions[0], timexProperty);
                 var preferedTime = new TimeSpan(timexProperty.Hour ?? 0, timexProperty.Minute ?? 0, timexProperty.Second ?? 0) + new TimeSpan((int)(timexProperty.Hours ?? 0), (int)(timexProperty.Minutes ?? 0), (int)(timexProperty.Seconds ?? 0));
@@ -133,6 +134,8 @@ namespace HospitalitySkill.Dialogs
                 // check out time moved confirmation
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
+
+                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
 
             return await sc.EndDialogAsync();

@@ -3,22 +3,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema;
 
 namespace HospitalitySkill.Dialogs
 {
@@ -184,10 +184,24 @@ namespace HospitalitySkill.Dialogs
             if (userState.CheckedOut)
             {
                 await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.HasCheckedOut));
+
                 return await sc.EndDialogAsync();
             }
 
             return await sc.NextAsync();
+        }
+
+        protected async Task<ActionResult> CreateSuccessActionResult(ITurnContext context)
+        {
+            var state = await StateAccessor.GetAsync(context, () => new HospitalitySkillState());
+            if (state.IsAction)
+            {
+                return new ActionResult(true);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // Get card that renders for adaptive card 1.0
