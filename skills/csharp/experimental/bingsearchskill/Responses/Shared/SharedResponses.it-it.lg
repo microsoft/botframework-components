@@ -1,5 +1,5 @@
 [import](Shared.lg)
-[import](SharedResponsesTexts.lg)
+[import](SharedResponsesTexts.it-it.lg)
 # DidntUnderstandMessage(Data, Cards, Layout)
 [Activity
     Text = ${DidntUnderstandMessage.Text(Data)}

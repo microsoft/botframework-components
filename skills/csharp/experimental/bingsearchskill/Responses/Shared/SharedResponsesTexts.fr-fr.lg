@@ -1,5 +1,3 @@
-[import] (SharedResponses.lg)
-
 # DidntUnderstandMessage.Text(Data)
 - Désolé, je ne comprenais pas ce que vous vouliez dire.
 - Je n'ai pas compris, peut-être essayer de nouveau d'une manière différente.
@@ -26,27 +24,9 @@
 - Vous devez vous connecter afin que je puisse prendre d'autres mesures.
 
 # AuthFailed.Text(Data)
-- @{AuthFailedTextAndSpeak1(Data)}
-- @{AuthFailedTextAndSpeak2(Data)}
-- @{AuthFailedTextAndSpeak3(Data)}
-
-# AuthFailedTextAndSpeak1(Data)
-[Activity
-    Text = L'authentification a échoué. Veuillez réessayer
-    Speak = L'authentification a échoué. Veuillez réessayer.
-]
-
-# AuthFailedTextAndSpeak2(Data)
-[Activity
-    Text = Vous avez échoué à vous connecter. Veuillez réessayer plus tard.
-    Speak = Vous avez échoué à vous connecter. Veuillez réessayer plus tard.
-]
-
-# AuthFailedTextAndSpeak3(Data)
-[Activity
-    Text = Votre connexion a échoué. Essayons encore.
-    Speak = Votre connexion a échoué. Essayons encore.
-]
+- L'authentification a échoué. Veuillez réessayer.
+- Vous avez échoué à vous connecter. Veuillez réessayer plus tard.
+- Votre connexion a échoué. Essayons encore.
 
 # ActionEnded.Text(Data)
 - Faites-moi savoir si vous avez besoin de mon aide avec autre chose.

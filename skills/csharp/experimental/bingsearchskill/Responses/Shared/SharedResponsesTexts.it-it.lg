@@ -1,5 +1,3 @@
-[import] (SharedResponses.lg)
-
 # DidntUnderstandMessage.Text(Data)
 - Scusa, non ho capito cosa volevi dire.
 - Non ho capito, forse riprovare in modo diverso.
@@ -26,27 +24,9 @@
 - È necessario accedere in modo che io possa intraprendere ulteriori azioni.
 
 # AuthFailed.Text(Data)
-- @{AuthFailedTextAndSpeak1(Data)}
-- @{AuthFailedTextAndSpeak2(Data)}
-- @{AuthFailedTextAndSpeak3(Data)}
-
-# AuthFailedTextAndSpeak1(Data)
-[Activity
-    Text = Autenticazione non riuscita. Per favore riprova
-    Speak = Autenticazione non riuscita. Per favore riprova.
-]
-
-# AuthFailedTextAndSpeak2(Data)
-[Activity
-    Text = Non sei riuscito ad accedere. Per favore riprova più tardi.
-    Speak = Non sei riuscito ad accedere. Per favore riprova più tardi.
-]
-
-# AuthFailedTextAndSpeak3(Data)
-[Activity
-    Text = Il login non è riuscito. Proviamo di nuovo.
-    Speak = Il login non è riuscito. Proviamo di nuovo.
-]
+- Autenticazione non riuscita. Per favore riprova.
+- Non sei riuscito ad accedere. Per favore riprova più tardi.
+- Il login non è riuscito. Proviamo di nuovo.
 
 # ActionEnded.Text(Data)
 - Fatemi sapere se avete bisogno del mio aiuto con qualcos'altro.

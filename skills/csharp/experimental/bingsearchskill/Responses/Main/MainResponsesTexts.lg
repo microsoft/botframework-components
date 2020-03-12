@@ -1,5 +1,3 @@
-[import] (MainResponses.lg)
-
 # WelcomeMessage.Text(Data)
 - Welcome! I can search movie info, celebrity info for you. You can say 'who is Bill Gates' or 'how is Titanic' to start query.
 

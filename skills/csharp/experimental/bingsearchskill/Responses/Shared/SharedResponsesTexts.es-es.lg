@@ -1,5 +1,3 @@
-[import] (SharedResponses.lg)
-
 # DidntUnderstandMessage.Text(Data)
 - Lo siento, no entendí lo que quería decir.
 - No entendía, tal vez intentarlo de nuevo de una manera diferente.
@@ -26,27 +24,9 @@
 - Tienes que iniciar sesión para que pueda tomar más medidas.
 
 # AuthFailed.Text(Data)
-- @{AuthFailedTextAndSpeak1(Data)}
-- @{AuthFailedTextAndSpeak2(Data)}
-- @{AuthFailedTextAndSpeak3(Data)}
-
-# AuthFailedTextAndSpeak1(Data)
-[Activity
-    Text = Error de autenticación. Por favor, inténtelo de nuevo
-    Speak = Error de autenticación. Por favor inténtalo de nuevo.
-]
-
-# AuthFailedTextAndSpeak2(Data)
-[Activity
-    Text = No ha podido iniciar sesión. Por favor inténtelo de nuevo más tarde.
-    Speak = No ha podido iniciar sesión. Por favor inténtelo de nuevo más tarde.
-]
-
-# AuthFailedTextAndSpeak3(Data)
-[Activity
-    Text = Falló el registro. Probemos esto de nuevo.
-    Speak = Falló el registro. Probemos esto de nuevo.
-]
+- Error de autenticación. Por favor inténtalo de nuevo.
+- No ha podido iniciar sesión. Por favor inténtelo de nuevo más tarde.
+- Falló el registro. Probemos esto de nuevo.
 
 # ActionEnded.Text(Data)
 - Hazme saber si necesitas mi ayuda con otra cosa.

@@ -25,7 +25,7 @@
                           "size": "ExtraLarge",
                           "weight": "Bolder",
                           "color": "Light",
-                          "text": "@{if(Data.Name == null, '', Data.Name)}",
+                          "text": "${if(Data.Name == null, '', Data.Name)}",
                           "wrap": true
                         }
                       ],
@@ -53,7 +53,7 @@
                 {
                   "type": "Image",
                   "horizontalAlignment": "Left",
-                  "url": "@{if(Data.Image == null, '', Data.Image)}",
+                  "url": "${if(Data.Image == null, '', Data.Image)}",
                   "size": "Large"
                 }
               ],
@@ -66,19 +66,19 @@
                   "type": "TextBlock",
                   "size": "Large",
                   "weight": "Bolder",
-                  "text": "@{if(Data.ContentRating == null, '', Data.ContentRating)}",
+                  "text": "${if(Data.ContentRating == null, '', Data.ContentRating)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "@{if(Data.Year == null, '', Data.Year)}",
+                  "text": "${if(Data.Year == null, '', Data.Year)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "@{if(Data.GenreArray == null, '', Data.GenreArray)}",
+                  "text": "${if(Data.GenreArray == null, '', Data.GenreArray)}",
                   "isSubtle": true,
                   "wrap": true,
                   "maxLines": 2
@@ -86,14 +86,14 @@
                 {
                   "type": "TextBlock",
                   "size": "Large",
-                  "text": "@{if(Data.Duration == null, '', Data.Duration)}",
+                  "text": "${if(Data.Duration == null, '', Data.Duration)}",
                   "isSubtle": true
                 },
                 {
                   "type": "TextBlock",
                   "size": "Large",
                   "weight": "Bolder",
-                  "text": "@{if(Data.Rating == null, '', Data.Rating)}",
+                  "text": "${if(Data.Rating == null, '', Data.Rating)}",
                   "isSubtle": true
                 }
               ],
@@ -106,7 +106,7 @@
           "id": "messageBody",
           "size": "Medium",
           "color": "default",
-          "text": "@{if(Data.Description == null, '', Data.Description)}",
+          "text": "${if(Data.Description == null, '', Data.Description)}",
           "wrap": true,
           "maxLines": 3
         }
@@ -115,5 +115,5 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "@{if(Data.Speak == null, '', Data.Speak)}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }

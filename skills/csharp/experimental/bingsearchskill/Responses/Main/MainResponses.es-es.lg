@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](MainResponsesTexts.lg)
+[import](MainResponsesTexts.es-es.lg)
 # WelcomeMessage(Data, Cards, Layout)
 [Activity
     Text = ${WelcomeMessage.Text(Data)}

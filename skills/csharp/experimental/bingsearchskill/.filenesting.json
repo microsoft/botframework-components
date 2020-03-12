@@ -5,6 +5,7 @@
       "pathSegment": {
         "add": {
           ".*": [
+            ".lg",
             ".json",
             ".resx"
           ]

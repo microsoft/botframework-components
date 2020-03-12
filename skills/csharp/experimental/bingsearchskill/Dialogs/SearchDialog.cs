@@ -2,23 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using BingSearchSkill.Models;
+using BingSearchSkill.Models.Actions;
 using BingSearchSkill.Models.Cards;
+using BingSearchSkill.Responses;
 using BingSearchSkill.Responses.Search;
 using BingSearchSkill.Services;
 using BingSearchSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
-using BingSearchSkill.Models.Actions;
-using BingSearchSkill.Responses;
-using BingSearchSkill.Utilities;
+using Microsoft.Bot.Solutions.Responses;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -31,10 +30,10 @@ namespace BingSearchSkill.Dialogs
         public SearchDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(SearchDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
+            : base(nameof(SearchDialog), settings, services, templateManager, conversationState, telemetryClient)
         {
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _services = services;
@@ -100,7 +99,7 @@ namespace BingSearchSkill.Dialogs
             Activity prompt = null;
             if (entitiesResult != null && entitiesResult.Count > 0)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, object>()
                 {
                     { "Name", entitiesResult[0].Name },
                 };
@@ -131,14 +130,14 @@ namespace BingSearchSkill.Dialogs
 
                         tokens.Add("Speak", StringHelper.EscapeCardString(movieInfo.Description));
 
-                        prompt = LocaleTemplateEngineManager.GetCardResponse(
+                        prompt = TemplateManager.GetCardResponse(
                                     SearchResponses.EntityKnowledge,
                                     new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
                                     tokens);
                     }
                     else
                     {
-                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
                             { "Answer", StringHelper.EscapeCardString(entitiesResult[0].Description) },
                             { "Url", entitiesResult[0].Url }
@@ -152,7 +151,7 @@ namespace BingSearchSkill.Dialogs
                         Name = entitiesResult[0].Name,
                         Description = StringHelper.EscapeCardString(entitiesResult[0].Description),
                         IconPath = entitiesResult[0].ImageUrl,
-                        Title_View = LocaleTemplateEngineManager.GetString(CommonStrings.View),
+                        Title_View = TemplateManager.GetString(CommonStrings.View),
                         Link_View = entitiesResult[0].Url,
                         EntityTypeDisplayHint = entitiesResult[0].EntityTypeDisplayHint
                     };
@@ -164,7 +163,7 @@ namespace BingSearchSkill.Dialogs
 
                     tokens.Add("Speak", StringHelper.EscapeCardString(entitiesResult[0].Description));
 
-                    prompt = LocaleTemplateEngineManager.GetCardResponse(
+                    prompt = TemplateManager.GetCardResponse(
                                 SearchResponses.EntityKnowledge,
                                 new Card(GetDivergedCardName(stepContext.Context, "PersonCard"), celebrityData),
                                 tokens);
@@ -173,19 +172,19 @@ namespace BingSearchSkill.Dialogs
                 {
                     if (userInput.Contains("president"))
                     {
-                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
-                            { "Answer", LocaleTemplateEngineManager.GetString(CommonStrings.DontKnowAnswer) },
+                            { "Answer", TemplateManager.GetString(CommonStrings.DontKnowAnswer) },
                             { "Url", BingSiteUrl }
                         });
 
-                        actionResult.Description = LocaleTemplateEngineManager.GetString(CommonStrings.DontKnowAnswer);
+                        actionResult.Description = TemplateManager.GetString(CommonStrings.DontKnowAnswer);
                         actionResult.Url = BingSiteUrl;
                         actionResult.ActionSuccess = false;
                     }
                     else
                     {
-                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
                             { "Answer", entitiesResult[0].Description },
                             { "Url", entitiesResult[0].Url }
@@ -195,7 +194,7 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.NoResultPrompt);
+                prompt = TemplateManager.GetResponse(SearchResponses.NoResultPrompt);
             }
 
             await stepContext.Context.SendActivityAsync(prompt);

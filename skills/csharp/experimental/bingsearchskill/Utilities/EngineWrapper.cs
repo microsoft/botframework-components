@@ -5,13 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.AspNetCore.Server.IIS.Core;
-using Microsoft.Bot.Expressions.Memory;
+using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 
@@ -22,26 +18,26 @@ namespace BingSearchSkill.Utilities
         // TODO may not all be same
         public static readonly string PathBase = @"..\..\Content";
 
-        public static Activity GetCardResponse(this LocaleTemplateEngineManager manager, Card card)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, Card card)
         {
             return manager.GetCardResponse(new Card[] { card });
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateEngineManager manager, IEnumerable<Card> cards, string attachmentLayout = "carousel")
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, IEnumerable<Card> cards, string attachmentLayout = "carousel")
         {
             return manager.GetCardResponse("CardsOnly", cards, null, attachmentLayout);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateEngineManager manager, string templateId, Card card, StringDictionary tokens = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, Dictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, new Card[] { card }, tokens);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateEngineManager manager, string templateId, IEnumerable<Card> cards, StringDictionary tokens = null, string attachmentLayout = "carousel")
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
         {
             var input = new
             {
-                Data = Convert(tokens),
+                Data = tokens,
                 Cards = cards.Select((card) => { return Convert(card); }).ToArray(),
                 Layout = attachmentLayout,
             };
@@ -57,12 +53,12 @@ namespace BingSearchSkill.Utilities
             }
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateEngineManager manager, string templateId, Card card, StringDictionary tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
             throw new Exception("1. create *Containee.new.json which only keeps containee's body;2. in the container, write @{if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
             var input = new
             {
-                Data = Convert(tokens),
+                Data = tokens,
                 Cards = new CardExt[] { Convert(card, containerItems: containerItems) },
             };
             try
@@ -77,23 +73,24 @@ namespace BingSearchSkill.Utilities
             }
         }
 
-        public static Activity GetResponse(this LocaleTemplateEngineManager manager, string templateId, StringDictionary tokens = null)
+        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, Dictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, Array.Empty<Card>(), tokens);
         }
 
-        public static string GetString(this LocaleTemplateEngineManager manager, string templateId)
+        public static string GetString(this LocaleTemplateManager manager, string templateId)
         {
             return manager.GenerateActivityForLocale(templateId + ".Text").Text;
         }
 
-        public static string[] ParseReplies(this LocaleTemplateEngineManager manager, string name, StringDictionary data = null)
+        public static string[] ParseReplies(this Templates manager, string name, IDictionary<string, object> data = null)
         {
             var input = new
             {
-                Data = Convert(data)
+                Data = data
             };
-            return manager.TemplateEnginesPerLocale[CultureInfo.CurrentUICulture.Name].ExpandTemplate(name + ".Text", input).ToArray();
+
+            return manager.ExpandTemplate(name + ".Text", input).ToArray();
         }
 
         public static CardExt Convert(Card card, string suffix = ".json", IEnumerable<Card> containerItems = null)
@@ -122,27 +119,27 @@ namespace BingSearchSkill.Utilities
         }
 
         // first locale is default locale
-        public static LocaleTemplateEngineManager CreateLocaleTemplateEngineManager(params string[] locales)
+        public static LocaleTemplateManager CreateLocaleTemplateEngineManager(params string[] locales)
         {
-            var localizedTemplates = new Dictionary<string, List<string>>();
+            var localizedTemplates = new Dictionary<string, string>();
             foreach (var locale in locales)
             {
-                var localeTemplateFiles = new List<string>();
+                string localeTemplateFile;
 
                 // LG template for default locale should not include locale in file extension.
                 if (locale.Equals(locales[0]))
                 {
-                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg"));
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg");
                 }
                 else
                 {
-                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg"));
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg");
                 }
 
-                localizedTemplates.Add(locale, localeTemplateFiles);
+                localizedTemplates.Add(locale, localeTemplateFile);
             }
 
-            return new LocaleTemplateEngineManager(localizedTemplates, locales[0]);
+            return new LocaleTemplateManager(localizedTemplates, locales[0]);
         }
 
         public class CardExt : Card

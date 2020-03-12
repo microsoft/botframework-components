@@ -2,29 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using BingSearchSkill.Models;
+using BingSearchSkill.Models.Actions;
 using BingSearchSkill.Responses.Main;
-using BingSearchSkill.Responses.Shared;
 using BingSearchSkill.Services;
+using BingSearchSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Dialogs;
-using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Skills;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
-using SkillServiceLibrary.Utilities;
+using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
-using BingSearchSkill.Models.Actions;
 using Newtonsoft.Json.Linq;
-using BingSearchSkill.Utilities;
+using SkillServiceLibrary.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -32,7 +24,7 @@ namespace BingSearchSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleTemplateEngineManager _localeTemplateEngineManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
         private Dialog _searchDialog;
 
@@ -43,7 +35,7 @@ namespace BingSearchSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _localeTemplateEngineManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -130,7 +122,7 @@ namespace BingSearchSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -139,7 +131,7 @@ namespace BingSearchSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -162,11 +154,11 @@ namespace BingSearchSkill.Dialogs
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
-                var prompt = stepContext.Options as Activity ?? _localeTemplateEngineManager.GetResponse(MainResponses.FirstPromptMessage);
+                var prompt = stepContext.Options as Activity ?? _templateManager.GetResponse(MainResponses.FirstPromptMessage);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
                 if (state.NewConversation)
                 {
-                    prompt = _localeTemplateEngineManager.GetResponse(MainResponses.WelcomeMessage);
+                    prompt = _templateManager.GetResponse(MainResponses.WelcomeMessage);
                     state.NewConversation = false;
                 }
 
@@ -213,7 +205,7 @@ namespace BingSearchSkill.Dialogs
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.FeatureNotAvailable));
                                 break;
                             }
                     }
@@ -280,7 +272,7 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _localeTemplateEngineManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _templateManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
             }
         }
     }
