@@ -323,24 +323,18 @@ namespace ITSMSkill.Dialogs
         {
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var value = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
                 if (state.IsAction)
                 {
-                    if (stepContext.Result == null)
+                    if (value == null)
                     {
-                        endOfConversation.Value = new ActionResult(false);
+                        value = new ActionResult(false);
                     }
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                return await stepContext.EndDialogAsync(value, cancellationToken);
             }
             else
             {
