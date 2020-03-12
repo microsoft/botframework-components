@@ -24,7 +24,9 @@ namespace ToDoSkill.Tests.Flow
             ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
             await this.GetSkillTestFlow()
                 .Send(AddToDoFlowTestUtterances.AddToDoAction)
-                .AssertReply(CheckForEoC(true, true))
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(CheckForEoC(MockData.MockTaskItems.Count + 1))
                 .StartTestAsync();
         }
 

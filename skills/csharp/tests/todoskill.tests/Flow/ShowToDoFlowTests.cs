@@ -19,6 +19,18 @@ namespace ToDoSkill.Tests.Flow
     public class ShowToDoFlowTests : ToDoSkillTestBase
     {
         [TestMethod]
+        public async Task Test_ShowToDoAction()
+        {
+            ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
+            await this.GetSkillTestFlow()
+                .Send(ShowToDoFlowTestUtterances.ShowToDoAction)
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(CheckForEoC(MockData.MockTaskItems.Count))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_ShowToDoItems()
         {
             ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);

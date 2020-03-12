@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
 namespace ToDoSkill.Tests.Flow.Utterances
@@ -59,6 +62,31 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string DeleteAllTasks { get; } = "remove all my tasks";
 
         public static string ConfirmListType { get; } = "To Do list";
+
+        public static string DeleteToDoActionName { get; } = "DeleteToDo";
+
+        public static string DeleteAllActionName { get; } = "DeleteAll";
+
+        public static Activity DeleteToDoAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = DeleteToDoActionName,
+            Value = JObject.FromObject(new ToDoInfo()
+            {
+                ListType = MockData.ToDo,
+                TaskName = MockData.MockTaskItems[0].Topic,
+            })
+        };
+
+        public static Activity DeleteAllAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = DeleteAllActionName,
+            Value = JObject.FromObject(new ListInfo()
+            {
+                ListType = MockData.ToDo,
+            })
+        };
 
         private ToDoLuis GetBaseDeleteToDoIntent(
             string userInput,

@@ -198,27 +198,25 @@ namespace ToDoSkill.Tests.Flow
             return GetTemplates(ToDoMainResponses.CompletedMessage);
         }
 
-        protected Action<IActivity> CheckForEoC(bool value = false, bool actionSuccess = true)
+        protected Action<IActivity> CheckForEoC(int taskCount)
         {
             return activity =>
             {
                 var eoc = (Activity)activity;
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                if (value)
+
+                if (eoc.Value is ActionResult)
                 {
-                    if (eoc.Value is ActionResult)
-                    {
-                        var actionResult = eoc.Value as ActionResult;
-                        Assert.IsNotNull(actionResult);
-                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
-                    }
-                    else if (eoc.Value is List<string>)
-                    {
-                        var actionResult = eoc.Value as TodoListInfo;
-                        Assert.IsNotNull(actionResult);
-                        Assert.AreEqual(actionSuccess, actionResult.ActionSuccess);
-                        Assert.AreEqual(actionResult.ToDoList.Count, 1);
-                    }
+                    var actionResult = eoc.Value as ActionResult;
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(actionResult.ActionSuccess, true);
+                }
+                else if (eoc.Value is TodoListInfo)
+                {
+                    var actionResult = eoc.Value as TodoListInfo;
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(actionResult.ActionSuccess, true);
+                    Assert.AreEqual(actionResult.ToDoList.Count, taskCount);
                 }
             };
         }

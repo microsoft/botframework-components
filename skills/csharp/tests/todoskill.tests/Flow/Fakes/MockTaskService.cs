@@ -102,6 +102,12 @@ namespace ToDoSkill.Tests.Fakes
 
         public Task<bool> DeleteTasksAsync(string listType, List<TaskItem> taskItems)
         {
+            // If allToDoItems and taskItems refer to same list, will cause a error:
+            // "Collection was modified; enumeration operation may not execute",
+            // because we can't modify the collection when we are enumerating.
+            // So copy taskItems to another list first.
+            taskItems = new List<TaskItem>(taskItems);
+
             if (listType.Equals(MockData.ToDo, StringComparison.InvariantCultureIgnoreCase))
             {
                 taskItems.ForEach(o => allToDoItems.Remove(allToDoItems.Find(x => x.Topic == o.Topic)));

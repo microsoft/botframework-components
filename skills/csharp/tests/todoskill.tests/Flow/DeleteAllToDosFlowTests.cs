@@ -19,6 +19,18 @@ namespace ToDoSkill.Tests.Flow
     public class DeleteAllToDosFlowTests : ToDoSkillTestBase
     {
         [TestMethod]
+        public async Task Test_DeleteAllAction()
+        {
+            ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
+            await this.GetSkillTestFlow()
+                .Send(DeleteToDoFlowTestUtterances.DeleteAllAction)
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(CheckForEoC(0))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_DeleteAllToDoItems()
         {
             ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);

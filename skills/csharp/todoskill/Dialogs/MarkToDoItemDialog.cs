@@ -128,6 +128,12 @@ namespace ToDoSkill.Dialogs
 
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
+                    if (state.IsAction)
+                    {
+                        var actionResult = new ActionResult() { ActionSuccess = true };
+                        return await sc.EndDialogAsync(actionResult);
+                    }
+
                     var markToDoCard = ToAdaptiveCardForTaskCompletedFlowByLG(
                         sc.Context,
                         state.Tasks,
@@ -136,15 +142,21 @@ namespace ToDoSkill.Dialogs
                         state.ListType,
                         state.MarkOrDeleteAllTasksFlag);
                     await sc.Context.SendActivityAsync(markToDoCard.Speak, speak: markToDoCard.Speak);
-
-                    if (state.IsAction)
-                    {
-                        var actionResult = new ActionResult() { ActionSuccess = true };
-                        return await sc.EndDialogAsync(actionResult);
-                    }
                 }
                 else
                 {
+                    if (state.IsAction)
+                    {
+                        var todoList = new List<string>();
+                        var uncompletedTasks = state.AllTasks.Where(t => t.IsCompleted == false).ToList();
+                        if (uncompletedTasks != null && uncompletedTasks.Any())
+                        {
+                            uncompletedTasks.ForEach(x => todoList.Add(x.Topic));
+                        }
+
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                    }
+
                     var completedTaskIndex = state.AllTasks.FindIndex(t => t.IsCompleted == true);
                     var taskContent = state.AllTasks[completedTaskIndex].Topic;
                     var markToDoCard = ToAdaptiveCardForTaskCompletedFlowByLG(
@@ -166,18 +178,6 @@ namespace ToDoSkill.Dialogs
                     {
                         var activity = TemplateEngine.GenerateActivityForLocale(MarkToDoResponses.AfterCompleteCardSummaryMessageForMultipleTasks, new { AllTasksCount = uncompletedTaskCount.ToString(), ListType = state.ListType });
                         await sc.Context.SendActivityAsync(activity);
-                    }
-
-                    if (state.IsAction)
-                    {
-                        var todoList = new List<string>();
-                        var uncompletedTasks = state.AllTasks.Where(t => t.IsCompleted == false).ToList();
-                        if (uncompletedTasks != null && uncompletedTasks.Any())
-                        {
-                            uncompletedTasks.ForEach(x => todoList.Add(x.Topic));
-                        }
-
-                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                     }
                 }
 

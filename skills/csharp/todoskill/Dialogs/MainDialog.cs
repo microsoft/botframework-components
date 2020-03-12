@@ -208,7 +208,7 @@ namespace ToDoSkill.Dialogs
         // Handles introduction/continuation prompt logic.
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (true)
+            if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
@@ -303,6 +303,7 @@ namespace ToDoSkill.Dialogs
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
                     var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                    InitializeConfig(state);
 
                     switch (eventActivity.Name)
                     {
@@ -370,7 +371,7 @@ namespace ToDoSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (true)
+            if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
                 var endOfConversation = new Activity(ActivityTypes.EndOfConversation)

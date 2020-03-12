@@ -123,18 +123,11 @@ namespace ToDoSkill.Dialogs
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
-                state.ListType = state.ListType ?? ToDoStrings.ToDo;
-                state.LastListType = state.ListType;
                 var service = await InitListTypeIds(sc);
-                var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
-                var topIntent = luisResult.TopIntent().intent;
-                if (topIntent == ToDoLuis.Intent.ShowToDo || state.GoBackToStart)
-                {
-                    state.AllTasks = await service.GetTasksAsync(state.ListType);
-                }
 
                 if (state.IsAction)
                 {
+                    state.AllTasks = await service.GetTasksAsync(state.ListType);
                     var todoList = new List<string>();
                     if (state.AllTasks != null && state.AllTasks.Any())
                     {
@@ -142,6 +135,15 @@ namespace ToDoSkill.Dialogs
                     }
 
                     return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                }
+
+                state.ListType = state.ListType ?? ToDoStrings.ToDo;
+                state.LastListType = state.ListType;
+                var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
+                var topIntent = luisResult.TopIntent().intent;
+                if (topIntent == ToDoLuis.Intent.ShowToDo || state.GoBackToStart)
+                {
+                    state.AllTasks = await service.GetTasksAsync(state.ListType);
                 }
 
                 var allTasksCount = state.AllTasks.Count;

@@ -19,6 +19,18 @@ namespace ToDoSkill.Tests.Flow
     public class MarkAllToDosFlowTests : ToDoSkillTestBase
     {
         [TestMethod]
+        public async Task Test_MarkAllAction()
+        {
+            ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
+            await this.GetSkillTestFlow()
+                .Send(MarkToDoFlowTestUtterances.MarkAllAction)
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(CheckForEoC(0))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_MarkAllToDoItems()
         {
             ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);

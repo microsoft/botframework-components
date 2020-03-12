@@ -126,6 +126,13 @@ namespace ToDoSkill.Dialogs
                     var rangeCount = Math.Min(state.PageSize, state.AllTasks.Count);
                     state.Tasks = state.AllTasks.GetRange(0, rangeCount);
 
+                    if (state.IsAction)
+                    {
+                        var todoList = new List<string>();
+                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                    }
+
                     var toDoListCard = ToAdaptiveCardForTaskAddedFlowByLG(
                         sc.Context,
                         state.Tasks,
@@ -133,13 +140,6 @@ namespace ToDoSkill.Dialogs
                         state.AllTasks.Count,
                         state.ListType);
                     await sc.Context.SendActivityAsync(toDoListCard);
-
-                    if (state.IsAction)
-                    {
-                        var todoList = new List<string>();
-                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
-                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
-                    }
 
                     return await sc.NextAsync();
                 }

@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
 namespace ToDoSkill.Tests.Flow.Utterances
@@ -59,6 +62,31 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string MarkAllTasksAsCompleted { get; } = "mark all tasks as completed";
 
         public static string ConfirmListType { get; } = "To Do list";
+
+        public static string MarkToDoActionName { get; } = "MarkToDo";
+
+        public static string MarkAllActionName { get; } = "MarkAll";
+
+        public static Activity MarkToDoAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = MarkToDoActionName,
+            Value = JObject.FromObject(new ToDoInfo()
+            {
+                ListType = MockData.ToDo,
+                TaskName = MockData.MockTaskItems[0].Topic,
+            })
+        };
+
+        public static Activity MarkAllAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = MarkAllActionName,
+            Value = JObject.FromObject(new ListInfo()
+            {
+                ListType = MockData.ToDo,
+            })
+        };
 
         private ToDoLuis GetBaseMarkToDoIntent(
             string userInput,
