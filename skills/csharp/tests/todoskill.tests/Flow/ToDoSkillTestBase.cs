@@ -191,7 +191,12 @@ namespace ToDoSkill.Tests.Flow
             return activity =>
             {
                 var eoc = (Activity)activity;
+
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+
+                var expectedResultTypes = new List<Type> { typeof(ActionResult), typeof(TodoListInfo) };
+                var type = eoc.Value.GetType();
+                CollectionAssert.Contains(expectedResultTypes, type);
 
                 if (eoc.Value is ActionResult)
                 {

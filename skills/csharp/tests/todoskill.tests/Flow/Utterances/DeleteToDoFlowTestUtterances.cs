@@ -4,6 +4,7 @@
 using Luis;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json.Linq;
+using ToDoSkill.Models;
 using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
@@ -63,14 +64,10 @@ namespace ToDoSkill.Tests.Flow.Utterances
 
         public static string ConfirmListType { get; } = "To Do list";
 
-        public static string DeleteToDoActionName { get; } = "DeleteToDo";
-
-        public static string DeleteAllActionName { get; } = "DeleteAll";
-
         public static Activity DeleteToDoAction { get; } = new Activity()
         {
             Type = ActivityTypes.Event,
-            Name = DeleteToDoActionName,
+            Name = ActionNames.DeleteToDo,
             Value = JObject.FromObject(new ToDoInfo()
             {
                 ListType = MockData.ToDo,
@@ -81,7 +78,7 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static Activity DeleteAllAction { get; } = new Activity()
         {
             Type = ActivityTypes.Event,
-            Name = DeleteAllActionName,
+            Name = ActionNames.DeleteAll,
             Value = JObject.FromObject(new ListInfo()
             {
                 ListType = MockData.ToDo,

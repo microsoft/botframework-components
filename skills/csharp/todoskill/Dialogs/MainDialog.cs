@@ -308,7 +308,7 @@ namespace ToDoSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "AddToDo":
+                        case ActionNames.AddToDo:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.IsAction = true;
@@ -316,14 +316,14 @@ namespace ToDoSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
                             }
 
-                        case "DeleteToDo":
+                        case ActionNames.DeleteToDo:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
-                        case "DeleteAll":
+                        case ActionNames.DeleteAll:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
@@ -332,14 +332,14 @@ namespace ToDoSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
                             }
 
-                        case "MarkToDo":
+                        case ActionNames.MarkToDo:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.IsAction = true;
                                 return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
-                        case "MarkAll":
+                        case ActionNames.MarkAll:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.MarkOrDeleteAllTasksFlag = true;
@@ -347,7 +347,7 @@ namespace ToDoSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
                             }
 
-                        case "ShowToDo":
+                        case ActionNames.ShowToDo:
                             {
                                 await DigestActionInput(stepContext, activity.Value);
                                 state.IsAction = true;
@@ -460,17 +460,6 @@ namespace ToDoSkill.Dialogs
             catch
             {
             }
-
-            try
-            {
-                var actionData = value.ToObject<ListInfo>();
-                state.ListType = actionData.ListType;
-                return;
-            }
-            catch
-            {
-            }
-
         }
     }
 }

@@ -123,7 +123,7 @@
       "properties": {
         "actionSuccess": {
           "type": "bool",
-          "description": "result of action"
+          "description": "Result of action"
         },
         "todoList": {
           "type": "array",

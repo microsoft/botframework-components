@@ -4,6 +4,7 @@
 using Luis;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json.Linq;
+using ToDoSkill.Models;
 using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
@@ -77,12 +78,10 @@ namespace ToDoSkill.Tests.Flow.Utterances
 
         public static string AddTaskWithContentAndCustomizeListType { get; } = "add history to my homework list";
 
-        public static string AddToDoActionName { get; } = "AddToDo";
-
         public static Activity AddToDoAction { get; } = new Activity()
         {
             Type = ActivityTypes.Event,
-            Name = AddToDoActionName,
+            Name = ActionNames.AddToDo,
             Value = JObject.FromObject(new ToDoInfo()
             {
                 ListType = MockData.ToDo,
