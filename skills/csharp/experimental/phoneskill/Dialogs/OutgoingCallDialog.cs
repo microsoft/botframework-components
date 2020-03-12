@@ -361,16 +361,14 @@ namespace PhoneSkill.Dialogs
 
                 await SendEvent(stepContext, outgoingCall);
 
-                state.Clear();
-
-                var skillOptions = stepContext.Options as PhoneSkillDialogOptions;
-                if (skillOptions != null && skillOptions.IsAction)
+                ActionResult actionResult = null;
+                if (state.IsAction)
                 {
-                    var actionResult = new ActionResult() { ActionSuccess = true };
-                    return await stepContext.EndDialogAsync(actionResult);
+                    actionResult = new ActionResult() { ActionSuccess = true };
                 }
 
-                return await stepContext.EndDialogAsync();
+                state.Clear();
+                return await stepContext.EndDialogAsync(actionResult);
             }
             catch (Exception ex)
             {
