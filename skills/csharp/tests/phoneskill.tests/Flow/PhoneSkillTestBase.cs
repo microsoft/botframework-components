@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
@@ -24,11 +26,9 @@ using PhoneSkill.Bots;
 using PhoneSkill.Common;
 using PhoneSkill.Dialogs;
 using PhoneSkill.Models;
-using PhoneSkill.Responses.Main;
-using PhoneSkill.Responses.OutgoingCall;
-using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Tests.TestDouble;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Tests.Flow
 {
@@ -51,6 +51,8 @@ namespace PhoneSkill.Tests.Flow
         public IBackgroundTaskQueue BackgroundTaskQueue { get; set; }
 
         public IServiceManager ServiceManager { get; set; }
+
+        public LocaleTemplateEngineManager TemplateEngine { get; set; }
 
         [TestInitialize]
         public override void Initialize()
@@ -99,12 +101,9 @@ namespace PhoneSkill.Tests.Flow
                 return new BotStateSet(userState, conversationState);
             });
 
-            ResponseManager = new ResponseManager(
-                new string[] { "en" },
-                new PhoneMainResponses(),
-                new PhoneSharedResponses(),
-                new OutgoingCallResponses());
-            Services.AddSingleton(ResponseManager);
+            // Configure localized responses
+            TemplateEngine = EngineWrapper.CreateLocaleTemplateEngineManager("en-us");
+            Services.AddSingleton(TemplateEngine);
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             Services.AddSingleton<IServiceManager>(ServiceManager);
@@ -128,6 +127,28 @@ namespace PhoneSkill.Tests.Flow
                 var bot = sp.GetService<IBot>();
                 var state = await stateAccessor.GetAsync(context, () => new PhoneSkillState());
                 state.SourceOfContacts = ContactSource.Microsoft;
+                await bot.OnTurnAsync(context, CancellationToken.None);
+            });
+
+            return testFlow;
+        }
+
+        protected TestFlow GetSkillTestFlow()
+        {
+            var sp = Services.BuildServiceProvider();
+            var adapter = sp.GetService<TestAdapter>();
+            adapter.AddUserToken(Provider, Channels.Test, adapter.Conversation.User.Id, "test");
+
+            var testFlow = new TestFlow(adapter, async (context, token) =>
+            {
+                // Set claims in turn state to simulate skill mode
+                var claims = new List<Claim>();
+                claims.Add(new Claim(AuthenticationConstants.VersionClaim, "1.0"));
+                claims.Add(new Claim(AuthenticationConstants.AudienceClaim, Guid.NewGuid().ToString()));
+                claims.Add(new Claim(AuthenticationConstants.AppIdClaim, Guid.NewGuid().ToString()));
+                context.TurnState.Add("BotIdentity", new ClaimsIdentity(claims));
+
+                var bot = sp.GetService<IBot>();
                 await bot.OnTurnAsync(context, CancellationToken.None);
             });
 
@@ -213,6 +234,11 @@ namespace PhoneSkill.Tests.Flow
                 Assert.IsInstanceOfType(eventReceived.Value, typeof(OutgoingCall));
                 Assert.AreEqual(expectedCall, (OutgoingCall)eventReceived.Value);
             };
+        }
+
+        protected new string[] ParseReplies(string name, StringDictionary data = null)
+        {
+            return TemplateEngine.ParseReplies(name, data);
         }
     }
 }

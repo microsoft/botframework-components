@@ -10,14 +10,16 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Bot.Schema;
 using PhoneSkill.Common;
 using PhoneSkill.Models;
+using PhoneSkill.Models.Actions;
 using PhoneSkill.Responses.OutgoingCall;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
@@ -28,7 +30,7 @@ namespace PhoneSkill.Dialogs
         public OutgoingCallDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager responseManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)
@@ -100,6 +102,7 @@ namespace PhoneSkill.Dialogs
             try
             {
                 var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
+
                 var contactProvider = GetContactProvider(state);
                 await contactFilter.Filter(state, contactProvider);
 
@@ -124,7 +127,7 @@ namespace PhoneSkill.Dialogs
         {
             var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
 
-            var phoneResult = await RunLuis<PhoneLuis>(promptContext.Context, "phone");
+            var phoneResult = promptContext.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
             contactFilter.OverrideEntities(state, phoneResult);
 
             var contactProvider = GetContactProvider(state);
@@ -359,6 +362,13 @@ namespace PhoneSkill.Dialogs
                 await SendEvent(stepContext, outgoingCall);
 
                 state.Clear();
+
+                var skillOptions = stepContext.Options as PhoneSkillDialogOptions;
+                if (skillOptions != null && skillOptions.IsAction)
+                {
+                    var actionResult = new OutgoingCallResponse() { ActionSuccess = true };
+                    return await stepContext.EndDialogAsync(actionResult);
+                }
 
                 return await stepContext.EndDialogAsync();
             }

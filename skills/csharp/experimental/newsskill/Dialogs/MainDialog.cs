@@ -18,6 +18,9 @@ using NewsSkill.Services;
 using SkillServiceLibrary.Utilities;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using NewsSkill.Models.Action;
+using Newtonsoft.Json.Linq;
+using NewsSkill.Responses;
 
 namespace NewsSkill.Dialogs
 {
@@ -25,26 +28,31 @@ namespace NewsSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private ResponseManager _responseManager;
         private IStatePropertyAccessor<NewsSkillState> _stateAccessor;
+        private IStatePropertyAccessor<NewsSkillUserState> _userStateAccessor;
         private Dialog _findArticlesDialog;
         private Dialog _trendingArticlesDialog;
         private Dialog _favoriteTopicsDialog;
-        private MainResponses _responder = new MainResponses();
+        private LocaleTemplateEngineManager _localeTemplateEngineManager;
+        //private MainResponses _responder = new MainResponses();
 
         public MainDialog(
             IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IBotTelemetryClient telemetryClient,
+            LocaleTemplateEngineManager localeTemplateEngineManager)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            //_responseManager = serviceProvider.GetService<ResponseManager>();
+            _localeTemplateEngineManager = localeTemplateEngineManager;
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
             _stateAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
+            var userState = serviceProvider.GetService<UserState>();
+            _userStateAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
 
             var steps = new WaterfallStep[]
             {
@@ -146,7 +154,8 @@ namespace NewsSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await _responder.ReplyWith(innerDc.Context, MainResponses.Cancelled);
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.CANCELLED));
+                                //await _responder.ReplyWith(innerDc.Context, MainResponses.Cancelled);
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -155,7 +164,8 @@ namespace NewsSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await _responder.ReplyWith(innerDc.Context, MainResponses.Help);
+                                await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _localeTemplateEngineManager));
+                                //await _responder.ReplyWith(innerDc.Context, MainResponses.Help);
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -178,17 +188,17 @@ namespace NewsSkill.Dialogs
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
-                var prompt = stepContext.Options as Activity ?? await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
+                var prompt = stepContext.Options as Activity ?? HeroCardResponses.SendIntroCard(stepContext.Context, _localeTemplateEngineManager);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
                 var activity = stepContext.Context.Activity;
                 if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    prompt = await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Intro);
+                    prompt = HeroCardResponses.SendIntroCard(stepContext.Context, _localeTemplateEngineManager);
                 }
 
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = prompt
+                    Prompt = (Activity)prompt
                 };
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -233,7 +243,8 @@ namespace NewsSkill.Dialogs
                     case NewsLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.CONFUSED));
+                            //await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
                             break;
                         }
 
@@ -243,6 +254,67 @@ namespace NewsSkill.Dialogs
                             await stepContext.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
                             break;
                         }
+                }
+            }
+            else if (a.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = a.AsEventActivity();
+
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "GetTrendingArticles":
+                            {
+                                TrendingArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<TrendingArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        case "GetFavoriteTopics":
+                            {
+                                FavoriteTopicsInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FavoriteTopicsInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        case "FindArticles":
+                            {
+                                FindArticlesInput actionData = null;
+
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<FindArticlesInput>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                            }
+
+                        default:
+
+                            // todo: move the response to lg
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                            break;
+                    }
                 }
             }
 
@@ -267,8 +339,29 @@ namespace NewsSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, await _responder.RenderTemplate(stepContext.Context, stepContext.Context.Activity.Locale, MainResponses.Completed), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.COMPLETED), cancellationToken);
             }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, TrendingArticlesInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FavoriteTopicsInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            userState.Category = new FoundChoice() { Value = request.Category };
+        }
+
+        private async Task DigestActionInput(DialogContext dc, FindArticlesInput request)
+        {
+            var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
+            userState.Market = request.Market;
+            var convState = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
+            convState.LuisResult = new NewsLuis() { Entities = new NewsLuis._Entities() { topic = new string[] { request.Query }, site = new string[] { request.Site } } };
         }
     }
 }

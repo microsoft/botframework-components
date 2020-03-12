@@ -1,10 +1,8 @@
-[import](MarkToDoActivities.lg)
-
 # AfterAllTasksCompleted.Text(ListType)
-- 我标记了您的所有项目@{ListType}列表为完整。
+- 我标记了您的所有项目${ListType}列表为完整。
 
 # AfterTaskCompleted.Text(TaskContent, ListType)
-- 好的，我标记了@{TaskContent}在你的@{ListType}列表为完整。
+- 好的，我标记了${TaskContent}在你的${ListType}列表为完整。
 
 # ListTypePromptForComplete.Text
 - 是否要在"待办事项"、"购物"或"杂货清单"列表中将项目标记为已完成？
@@ -22,7 +20,7 @@
 - 对不起，我不明白。是否要将其他项目标记为已完成？
 
 # AfterCompleteCardSummaryMessageForSingleTask.Text(ListType)
-- 您有 1 个项目@{ListType}列表。
+- 您有 1 个项目${ListType}列表。
 
 # AfterCompleteCardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType)
-- 你有@{AllTasksCount}项目@{ListType}列表。
+- 你有${AllTasksCount}项目${ListType}列表。

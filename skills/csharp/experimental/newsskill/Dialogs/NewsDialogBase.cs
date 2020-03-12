@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
+using NewsSkill.Models.Action;
 using NewsSkill.Responses.Main;
 using NewsSkill.Services;
 
@@ -15,7 +19,7 @@ namespace NewsSkill.Dialogs
     public class NewsDialogBase : ComponentDialog
     {
         protected const string LuisResultKey = "LuisResult";
-        private MainResponses _responder = new MainResponses();
+        protected LocaleTemplateEngineManager localeTemplateEngineManager;
         private AzureMapsService _mapsService;
 
         public NewsDialogBase(
@@ -25,6 +29,7 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             IBotTelemetryClient telemetryClient)
             : base(dialogId)
         {
@@ -32,6 +37,7 @@ namespace NewsSkill.Dialogs
             ConvAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
             UserAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
             TelemetryClient = telemetryClient;
+            this.localeTemplateEngineManager = localeTemplateEngineManager;
 
             var mapsKey = settings.AzureMapsKey ?? throw new Exception("The AzureMapsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
             _mapsService = mapsService;
@@ -87,8 +93,8 @@ namespace NewsSkill.Dialogs
             // Prompt user for location
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = await _responder.RenderTemplate(sc.Context, sc.Context.Activity.Locale, MainResponses.MarketPrompt),
-                RetryPrompt = await _responder.RenderTemplate(sc.Context, sc.Context.Activity.Locale, MainResponses.MarketRetryPrompt)
+                Prompt = localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.MarketPrompt),
+                RetryPrompt = localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.MarketRetryPrompt)
             });
         }
 
@@ -119,6 +125,55 @@ namespace NewsSkill.Dialogs
             }
 
             return await Task.FromResult(false);
+        }
+
+        protected NewsResult GenerateNewsActionResult(IList<NewsArticle> articles, bool actionSuccess)
+        {
+            var actionResult = new NewsResult()
+            {
+                NewsList = new List<NewsInfo>(),
+                ActionSuccess = actionSuccess
+            };
+
+            var newsArticles = articles as List<NewsArticle>;
+            foreach (var article in newsArticles)
+            {
+                var newsInfo = new NewsInfo()
+                {
+                    Title = article.Name,
+                    Subtitle = article.DatePublished,
+                    Description = article.Description,
+                    ImageUrl = article?.Image?.Thumbnail?.ContentUrl,
+                    Url = article.WebSearchUrl
+                };
+                actionResult.NewsList.Add(newsInfo);
+            }
+
+            return actionResult;
+        }
+
+        protected NewsResult GenerateNewsActionResult(IList<NewsTopic> articles, bool actionSuccess)
+        {
+            var actionResult = new NewsResult()
+            {
+                NewsList = new List<NewsInfo>(),
+                ActionSuccess = actionSuccess
+            };
+
+            var newsArticles = articles as List<NewsTopic>;
+            foreach (var article in newsArticles)
+            {
+                var newsInfo = new NewsInfo()
+                {
+                    Title = article.Name,
+                    Description = article.Description,
+                    ImageUrl = article?.Image?.Url,
+                    Url = article.WebSearchUrl
+                };
+                actionResult.NewsList.Add(newsInfo);
+            }
+
+            return actionResult;
         }
     }
 }

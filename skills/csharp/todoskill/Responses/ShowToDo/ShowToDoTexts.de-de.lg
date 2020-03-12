@@ -1,5 +1,3 @@
-[import](ShowToDoActivities.lg)
-
 # AskAddOrCompleteTaskMessage.Text
 - Lassen Sie mich wissen, ob Sie ein Element hinzufügen oder als vollständig markieren möchten.
 
@@ -16,34 +14,34 @@
 - Tut mir leid, ich habe es nicht verstanden. Möchten Sie die anderen Elemente überprüfen?
 
 # NoTasksMessage.Text(ListType)
-- Sie haben nichts in Ihrem @{ListType} Liste. Lassen Sie mich wissen, wenn Sie einen Artikel hinzufügen möchten.
+- Sie haben nichts in Ihrem ${ListType} Liste. Lassen Sie mich wissen, wenn Sie einen Artikel hinzufügen möchten.
 
 # TaskSummaryMessage.Text(TaskCount, ListType)
-- Sie haben @{TaskCount} Artikel auf Ihrem @{ListType} Liste.
+- Sie haben ${TaskCount} Artikel auf Ihrem ${ListType} Liste.
 
 # RepeatFirstPagePrompt.Text(TaskCount, ListType)
-- Dies ist der Beginn Ihrer @{ListType} Liste. Möchten Sie die erste @{TaskCount} wieder Artikel?
+- Dies ist der Beginn Ihrer ${ListType} Liste. Möchten Sie die erste ${TaskCount} wieder Artikel?
 
 # RepeatFirstPageConfirmFailed.Text(TaskCount)
-- Tut mir leid, ich habe nicht verstanden, was Sie meinten. Möchten Sie die erste @{TaskCount} wieder Artikel?
+- Tut mir leid, ich habe nicht verstanden, was Sie meinten. Möchten Sie die erste ${TaskCount} wieder Artikel?
 
 # GoBackToStartPromptForSingleTask.Text(TaskCount, ListType)
-- Dies ist der letzte Punkt auf Ihrem @{ListType} Liste. Möchten Sie die erste @{TaskCount} wieder Artikel?
+- Dies ist der letzte Punkt auf Ihrem ${ListType} Liste. Möchten Sie die erste ${TaskCount} wieder Artikel?
 
 # GoBackToStartForSingleTaskConfirmFailed.Text(TaskCount)
-- Tut mir leid, ich habe es nicht verstanden. Möchten Sie die erste @{TaskCount} wieder Artikel?
+- Tut mir leid, ich habe es nicht verstanden. Möchten Sie die erste ${TaskCount} wieder Artikel?
 
 # GoBackToStartPromptForTasks.Text(TaskCount, ListType)
-- Dies sind die letzten Elemente auf Ihrem @{ListType} Liste. Möchten Sie Ihre erste @{TaskCount} wieder Artikel?
+- Dies sind die letzten Elemente auf Ihrem ${ListType} Liste. Möchten Sie Ihre erste ${TaskCount} wieder Artikel?
 
 # GoBackToStartForTasksConfirmFailed.Text(TaskCount)
-- Tut mir leid, ich habe es nicht verstanden. Möchten Sie Ihre erste @{TaskCount} wieder Artikel?
+- Tut mir leid, ich habe es nicht verstanden. Möchten Sie Ihre erste ${TaskCount} wieder Artikel?
 
 # CardSummaryMessageForSingleTask.Text(ListType)
-- Sie haben 1 Artikel auf Ihrem @{ListType} Liste:
+- Sie haben 1 Artikel auf Ihrem ${ListType} Liste:
 
 # CardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType, ToDos)
-- Sie haben @{AllTasksCount} Artikel auf Ihrem @{ListType} Liste. Hier sind die @{count(ToDos)} Neuesten:
+- Sie haben ${AllTasksCount} Artikel auf Ihrem ${ListType} Liste. Hier sind die ${count(ToDos)} Neuesten:
 
 # LatestTask.Text
 - Der neueste Artikel ist:
@@ -61,7 +59,7 @@
 - Die vorherigen Elemente sind:
 
 # PreviousFirstSingleTask.Text(taskCount)
-- Die erste @{taskCount} Artikel ist:
+- Die erste ${taskCount} Artikel ist:
 
 # PreviousFirstTasks.Text(taskCount)
-- Die erste @{taskCount} Artikel sind:
+- Die erste ${taskCount} Artikel sind:

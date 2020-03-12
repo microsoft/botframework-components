@@ -23,10 +23,10 @@ namespace EmailSkill.Dialogs
     public class DeleteEmailDialog : EmailSkillDialogBase
     {
         public DeleteEmailDialog(
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(DeleteEmailDialog), localeTemplateEngineManager, serviceProvider, telemetryClient)
+            : base(nameof(DeleteEmailDialog), templateManager, serviceProvider, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -96,7 +96,7 @@ namespace EmailSkill.Dialogs
                     emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, message.ToRecipients);
 
                     var speech = SpeakHelper.ToSpeechEmailSendDetailString(message.Subject, nameListString, message.BodyPreview);
-                    var prompt = TemplateEngine.GenerateActivityForLocale(
+                    var prompt = TemplateManager.GenerateActivityForLocale(
                         DeleteEmailResponses.DeleteConfirm,
                         new
                         {
@@ -104,7 +104,7 @@ namespace EmailSkill.Dialogs
                             emailDetails = emailCard
                         });
 
-                    var retry = TemplateEngine.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
+                    var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.ConfirmSendFailed);
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = prompt as Activity, RetryPrompt = retry as Activity });
                 }
 
@@ -128,7 +128,7 @@ namespace EmailSkill.Dialogs
                 var mailService = this.ServiceManager.InitMailService(token as string, state.GetUserTimeZone(), state.MailSourceType);
                 var focusMessage = state.Message.FirstOrDefault();
                 await mailService.DeleteMessageAsync(focusMessage.Id);
-                var activity = TemplateEngine.GenerateActivityForLocale(DeleteEmailResponses.DeleteSuccessfully);
+                var activity = TemplateManager.GenerateActivityForLocale(DeleteEmailResponses.DeleteSuccessfully);
                 await sc.Context.SendActivityAsync(activity);
 
                 var skillOptions = sc.Options as EmailSkillDialogOptions;

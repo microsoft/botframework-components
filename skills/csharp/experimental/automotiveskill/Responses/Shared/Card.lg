@@ -1,0 +1,3 @@
+﻿> AutomotiveCard
+# AutomotiveCard.Text(ImageUrl, Body, Speak)
+- @{fromFile("Cards/AutomotiveCard.json")}

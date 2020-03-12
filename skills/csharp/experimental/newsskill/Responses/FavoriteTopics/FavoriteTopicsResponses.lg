@@ -1,0 +1,17 @@
+﻿# FavoriteTopicPrompt(Data, Cards, Layout)
+[Activity
+    Text = @{FavoriteTopicPrompt.Text(Data)}
+    Speak = @{FavoriteTopicPrompt.Text(Data)}
+]
+
+# ShowFavoriteTopics(Data, Cards, Layout)
+[Activity
+    Text = @{ShowFavoriteTopics.Text(Data)}
+    Speak = @{if(Data.Count > 1, ShowMultipleFavoriteTopics.Speak(Data.Article.Description), ShowOneFavoriteTopics.Speak(Data.Article.Description))}
+]
+
+# NoFavoriteTopics(Data, Cards, Layout)
+[Activity
+    Text = @{NoTrending.Text(Data)}
+    Speak = @{NoTrending.Text(Data)}
+]

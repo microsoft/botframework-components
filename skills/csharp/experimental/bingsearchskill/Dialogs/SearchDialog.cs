@@ -16,21 +16,25 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using BingSearchSkill.Models.Actions;
+using BingSearchSkill.Responses;
+using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
     public class SearchDialog : SkillDialogBase
     {
+        private const string BingSiteUrl = "https://www.bing.com";
         private BotServices _services;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public SearchDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(SearchDialog), settings, services, responseManager, conversationState, telemetryClient)
+            : base(nameof(SearchDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
         {
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _services = services;
@@ -66,7 +70,6 @@ namespace BingSearchSkill.Dialogs
         private async Task<DialogTurnResult> ShowResult(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context);
-            var intent = state.LuisResult.TopIntent().intent;
 
             GetEntityFromLuis(stepContext);
             var userInput = string.Empty;
@@ -86,6 +89,14 @@ namespace BingSearchSkill.Dialogs
             // https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/cognitive-services/Labs/Answer-Search/overview.md
             var entitiesResult = await client.GetSearchResult(state.SearchEntityName, "en-us", state.SearchEntityType);
 
+            var actionResult = new KeywordSearchResponse() { ActionSuccess = false };
+            if (entitiesResult != null && entitiesResult.Count > 0)
+            {
+                actionResult.Url = entitiesResult[0].Url;
+                actionResult.Description = entitiesResult[0].Description;
+                actionResult.ActionSuccess = true;
+            }
+
             Activity prompt = null;
             if (entitiesResult != null && entitiesResult.Count > 0)
             {
@@ -97,38 +108,51 @@ namespace BingSearchSkill.Dialogs
                 if (entitiesResult[0].Type == SearchResultModel.EntityType.Movie)
                 {
                     var movieInfo = MovieHelper.GetMovieInfoFromUrl(entitiesResult[0].Url);
-                    tokens["Name"] = movieInfo.Name;
-                    var movieData = new MovieCardData()
+                    if (movieInfo != null)
                     {
-                        Name = movieInfo.Name,
-                        Description = movieInfo.Description,
-                        Image = movieInfo.Image,
-                        Rating = $"{movieInfo.Rating}",
-                        GenreArray = string.Join(" ▪ ", movieInfo.Genre),
-                        ContentRating = movieInfo.ContentRating,
-                        Duration = movieInfo.Duration,
-                        Year = movieInfo.Year,
-                    };
+                        actionResult.Description = movieInfo.Description;
+                        tokens["Name"] = movieInfo.Name;
+                        var movieData = new MovieCardData()
+                        {
+                            Name = movieInfo.Name,
+                            Description = StringHelper.EscapeCardString(movieInfo.Description),
+                            Image = movieInfo.Image,
+                            Rating = $"{movieInfo.Rating}",
+                            GenreArray = string.Join(" ▪ ", movieInfo.Genre),
+                            ContentRating = movieInfo.ContentRating,
+                            Duration = movieInfo.Duration,
+                            Year = movieInfo.Year,
+                        };
 
-                    if (Channel.GetChannelId(stepContext.Context) == Channels.DirectlineSpeech || Channel.GetChannelId(stepContext.Context) == Channels.Msteams)
-                    {
-                        movieData.Image = ImageToDataUri(movieInfo.Image);
+                        if (Channel.GetChannelId(stepContext.Context) == Channels.DirectlineSpeech || Channel.GetChannelId(stepContext.Context) == Channels.Msteams)
+                        {
+                            movieData.Image = ImageToDataUri(movieInfo.Image);
+                        }
+
+                        tokens.Add("Speak", StringHelper.EscapeCardString(movieInfo.Description));
+
+                        prompt = LocaleTemplateEngineManager.GetCardResponse(
+                                    SearchResponses.EntityKnowledge,
+                                    new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
+                                    tokens);
                     }
-
-                    tokens.Add("Speak", movieInfo.Description);
-
-                    prompt = ResponseManager.GetCardResponse(
-                                SearchResponses.EntityKnowledge,
-                                new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
-                                tokens);
+                    else
+                    {
+                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        {
+                            { "Answer", StringHelper.EscapeCardString(entitiesResult[0].Description) },
+                            { "Url", entitiesResult[0].Url }
+                        });
+                    }
                 }
                 else if (entitiesResult[0].Type == SearchResultModel.EntityType.Person)
                 {
                     var celebrityData = new PersonCardData()
                     {
                         Name = entitiesResult[0].Name,
-                        Description = entitiesResult[0].Description,
+                        Description = StringHelper.EscapeCardString(entitiesResult[0].Description),
                         IconPath = entitiesResult[0].ImageUrl,
+                        Title_View = LocaleTemplateEngineManager.GetString(CommonStrings.View),
                         Link_View = entitiesResult[0].Url,
                         EntityTypeDisplayHint = entitiesResult[0].EntityTypeDisplayHint
                     };
@@ -138,9 +162,9 @@ namespace BingSearchSkill.Dialogs
                         celebrityData.IconPath = ImageToDataUri(entitiesResult[0].ImageUrl);
                     }
 
-                    tokens.Add("Speak", entitiesResult[0].Description);
+                    tokens.Add("Speak", StringHelper.EscapeCardString(entitiesResult[0].Description));
 
-                    prompt = ResponseManager.GetCardResponse(
+                    prompt = LocaleTemplateEngineManager.GetCardResponse(
                                 SearchResponses.EntityKnowledge,
                                 new Card(GetDivergedCardName(stepContext.Context, "PersonCard"), celebrityData),
                                 tokens);
@@ -149,15 +173,19 @@ namespace BingSearchSkill.Dialogs
                 {
                     if (userInput.Contains("president"))
                     {
-                        prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
-                            { "Answer", "Sorry I do not know this answer yet." },
-                            { "Url", "www.bing.com" }
+                            { "Answer", LocaleTemplateEngineManager.GetString(CommonStrings.DontKnowAnswer) },
+                            { "Url", BingSiteUrl }
                         });
+
+                        actionResult.Description = LocaleTemplateEngineManager.GetString(CommonStrings.DontKnowAnswer);
+                        actionResult.Url = BingSiteUrl;
+                        actionResult.ActionSuccess = false;
                     }
                     else
                     {
-                        prompt = ResponseManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
+                        prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new StringDictionary()
                         {
                             { "Answer", entitiesResult[0].Description },
                             { "Url", entitiesResult[0].Url }
@@ -167,10 +195,17 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                prompt = ResponseManager.GetResponse(SearchResponses.NoResultPrompt);
+                prompt = LocaleTemplateEngineManager.GetResponse(SearchResponses.NoResultPrompt);
             }
 
             await stepContext.Context.SendActivityAsync(prompt);
+
+            var skillOptions = stepContext.Options as BingSearchSkillDialogOptionBase;
+            if (skillOptions != null && skillOptions.IsAction == true)
+            {
+                return await stepContext.NextAsync(actionResult);
+            }
+
             return await stepContext.NextAsync();
         }
 
@@ -179,12 +214,16 @@ namespace BingSearchSkill.Dialogs
             var state = await _stateAccessor.GetAsync(stepContext.Context);
             state.Clear();
 
-            return await stepContext.EndDialogAsync();
+            return await stepContext.EndDialogAsync(stepContext.Result);
         }
 
         private async void GetEntityFromLuis(WaterfallStepContext stepContext)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context);
+            if (state.LuisResult == null)
+            {
+                return;
+            }
 
             if (state.LuisResult.Entities.MovieTitle != null)
             {

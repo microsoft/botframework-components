@@ -22,6 +22,10 @@ using NewsSkill.Adapters;
 using NewsSkill.Bots;
 using NewsSkill.Dialogs;
 using NewsSkill.Services;
+using Microsoft.Bot.Solutions.Middleware;
+using System.Collections.Generic;
+using Microsoft.Bot.Solutions.Responses;
+using System.IO;
 
 namespace NewsSkill
 {
@@ -85,6 +89,29 @@ namespace NewsSkill
                 var conversationState = sp.GetService<ConversationState>();
                 return new BotStateSet(userState, conversationState);
             });
+
+            // Configure localized responses
+            var locales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
+
+            var localizedTemplates = new Dictionary<string, List<string>>();
+            foreach (var locale in locales)
+            {
+                var localeTemplateFiles = new List<string>();
+
+                // LG template for default locale should not include locale in file extension.
+                if (locale.Equals(locales[0]))
+                {
+                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg"));
+                }
+                else
+                {
+                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg"));
+                }
+
+                localizedTemplates.Add(locale, localeTemplateFiles);
+            }
+
+            services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, locales[0]));
 
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();

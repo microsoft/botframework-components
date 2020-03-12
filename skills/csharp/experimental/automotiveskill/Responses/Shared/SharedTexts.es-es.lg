@@ -1,0 +1,32 @@
+[import](SharedActivities.lg)
+
+# DidntUnderstandMessage.Text
+- Lo siento, no entendí lo que querías decir.
+- No lo entendí, tal vez intentarlo de otra manera de una manera diferente.
+- ¿Puedes tratar de preguntar de una manera diferente.
+- No entendí lo que querías decir, puedes intentarlo de otra manera.
+- ¿Podrías explicarlo?
+- Dilo otra vez, por favor, de una manera diferente.
+- No lo entendí del todo.
+- ¿Puedes decir eso de una manera diferente?
+- ¿Puedes intentar preguntarme otra vez, no entendí lo que querías decir.
+
+# DidntUnderstandMessageIgnoringInput.Text
+- Lo siento, no entendí lo que querías decir.
+- No entiendo. Inténtalo de una manera diferente.
+
+# CancellingMessage.Text
+- Claro, podemos hacerlo más tarde.
+- Claro, podemos empezar esto más tarde.
+- ¡Hola!
+
+# ActionEnded.Text
+- Tu cierre de sesión fue exitoso.
+- Ha cerrado sesión correctamente.
+- Ha cerrado la sesión.
+
+# ErrorMessage.Text
+- Esta función aún no está disponible en esta habilidad. Por favor, intente preguntar algo más.
+
+# NoAuth.Text
+- Bien, empecemos de nuevo.

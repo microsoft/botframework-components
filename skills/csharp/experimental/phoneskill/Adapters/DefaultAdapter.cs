@@ -14,6 +14,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
+using PhoneSkill.Utilities;
 using SkillServiceLibrary.Utilities;
 
 namespace PhoneSkill.Adapters
@@ -28,7 +29,7 @@ namespace PhoneSkill.Adapters
             BotStateSet botStateSet,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            ResponseManager responseManager)
+            LocaleTemplateEngineManager responseManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
@@ -37,7 +38,7 @@ namespace PhoneSkill.Adapters
                 await context.SendActivityAsync(responseManager.GetResponse(PhoneSharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Phone Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
-                
+
                 if (context.IsSkill())
                 {
                     // Send and EndOfConversation activity to the skill caller with the error to end the conversation
@@ -51,6 +52,8 @@ namespace PhoneSkill.Adapters
 
             Use(telemetryMiddleware);
 
+            // Uncomment the following line for local development without Azure Storage
+            // Use(new TranscriptLoggerMiddleware(new MemoryTranscriptStore()));
             Use(new TranscriptLoggerMiddleware(new AzureBlobTranscriptStore(settings.BlobStorage.ConnectionString, settings.BlobStorage.Container)));
             Use(new TelemetryLoggerMiddleware(telemetryClient, logPersonalInformation: true));
             Use(new ShowTypingMiddleware());

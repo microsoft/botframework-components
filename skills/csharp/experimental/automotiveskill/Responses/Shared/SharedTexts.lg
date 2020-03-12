@@ -1,0 +1,32 @@
+﻿[import](SharedActivities.lg)
+
+# DidntUnderstandMessage.Text
+- Sorry, I didn't understand what you meant.
+- I didn't understand, perhaps try again in a different way.
+- Can you try to ask in a different way.
+- I didn't get what you mean, can you try in a different way.
+- Could you elaborate?
+- Say that again please in a different way.
+- I didn't quite get that.
+- Can you say that in a different way?
+- Can you try to ask me again, I didn't get what you mean.
+
+# DidntUnderstandMessageIgnoringInput.Text
+- Sorry, I didn't get what you mean.
+- I don't understand. Try in a different way.
+
+# CancellingMessage.Text
+- Sure, we can do this later.
+- Sure, we can start this later.
+- Hi there!
+
+# ActionEnded.Text
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# ErrorMessage.Text
+- This feature is not yet available in this skill. Please try asking something else.
+
+# NoAuth.Text
+- OK, let's start over.
