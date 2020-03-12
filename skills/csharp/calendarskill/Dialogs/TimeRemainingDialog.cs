@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.TimeRemaining;
 using CalendarSkill.Services;
@@ -84,11 +85,12 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
+                var totalRemainingMinutes = 0;
+                var status = false;
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
                     await sc.Context.SendActivityAsync(prompt);
-                    return await sc.EndDialogAsync();
                 }
                 else
                 {
@@ -98,6 +100,8 @@ namespace CalendarSkill.Dialogs
                     var timeDiffMinutes = (int)timeDiff.TotalMinutes % 60;
                     var timeDiffHours = (int)timeDiff.TotalMinutes / 60;
                     var timeDiffDays = timeDiff.Days;
+                    totalRemainingMinutes = (int)timeDiff.TotalMinutes;
+                    status = true;
 
                     var remainingMinutes = string.Empty;
                     var remainingHours = string.Empty;
@@ -148,7 +152,6 @@ namespace CalendarSkill.Dialogs
                         };
                         var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
-                        return await sc.EndDialogAsync();
                     }
                     else
                     {
@@ -177,9 +180,15 @@ namespace CalendarSkill.Dialogs
 
                         var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
-                        return await sc.EndDialogAsync();
                     }
                 }
+
+                if (state.IsAction)
+                {
+                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status });
+                }
+
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {

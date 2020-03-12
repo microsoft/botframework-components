@@ -17,7 +17,6 @@ using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
 using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.DeleteToDo;
-using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
 
@@ -30,12 +29,12 @@ namespace ToDoSkill.Dialogs
             BotServices services,
             ConversationState conversationState,
             UserState userState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials,
             IHttpContextAccessor httpContext)
-            : base(nameof(DeleteToDoItemDialog), settings, services, conversationState, userState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(DeleteToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -238,7 +237,7 @@ namespace ToDoSkill.Dialogs
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 if (string.IsNullOrEmpty(state.ListType))
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.ListTypePromptForDelete);
+                    var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.ListTypePromptForDelete);
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
                 }
@@ -307,11 +306,11 @@ namespace ToDoSkill.Dialogs
                     Activity prompt;
                     if (state.CollectIndexRetry)
                     {
-                        prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.AskTaskIndexRetryForDelete);
+                        prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskTaskIndexRetryForDelete);
                     }
                     else
                     {
-                        prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.AskTaskIndexForDelete);
+                        prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskTaskIndexForDelete);
                     }
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
@@ -407,12 +406,12 @@ namespace ToDoSkill.Dialogs
             {
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmation, new
+                    var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmation, new
                     {
                         ListType = state.ListType
                     });
 
-                    var retryPrompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmationFailed, new
+                    var retryPrompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmationFailed, new
                     {
                         ListType = state.ListType
                     });
@@ -475,8 +474,8 @@ namespace ToDoSkill.Dialogs
         {
             try
             {
-                var prompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskPrompt);
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskConfirmFailed);
+                var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskPrompt);
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskConfirmFailed);
 
                 return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
             }

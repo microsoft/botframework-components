@@ -49,6 +49,18 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarUpdateWithNewStartDateEntityEvent()
+        {
+            await this.GetSkillTestFlow()
+                .Send(UpdateMeetingTestUtterances.UpdateEventAction)
+                .AssertReply(this.ShowCalendarList())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(this.UpdateEventPrompt())
+                .AssertReply(CheckForOperationStatus(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarUpdateWithTitleEntity()
         {
             await this.GetTestFlow()

@@ -33,6 +33,8 @@ namespace CalendarSkill.Test.Flow.Strings
 
         public const string DefaultDuration = "1 hour";
 
+        public const string DefaultDurationMinutes = "60";
+
         public const string ConfirmYes = "yes";
 
         public const string ConfirmNo = "no";

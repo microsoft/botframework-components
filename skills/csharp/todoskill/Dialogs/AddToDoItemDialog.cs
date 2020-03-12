@@ -28,12 +28,12 @@ namespace ToDoSkill.Dialogs
             BotServices services,
             ConversationState conversationState,
             UserState userState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials,
             IHttpContextAccessor httpContext)
-            : base(nameof(AddToDoItemDialog), settings, services, conversationState, userState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(AddToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -186,7 +186,7 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.AskTaskContentText);
+                    var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AskTaskContentText);
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
                 }
@@ -259,12 +259,12 @@ namespace ToDoSkill.Dialogs
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
 
-                var prompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.SwitchListType, new
+                var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.SwitchListType, new
                 {
                     ListType = state.ListType
                 });
 
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.SwitchListTypeConfirmFailed, new
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.SwitchListTypeConfirmFailed, new
                 {
                     ListType = state.ListType
                 });
@@ -338,12 +338,12 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.AskAddDupTaskPrompt, new
+                    var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AskAddDupTaskPrompt, new
                     {
                         TaskContent = state.TaskContent
                     });
 
-                    var retryPrompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.AskAddDupTaskConfirmFailed, new
+                    var retryPrompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AskAddDupTaskConfirmFailed, new
                     {
                         TaskContent = state.TaskContent
                     });
@@ -400,12 +400,12 @@ namespace ToDoSkill.Dialogs
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
 
-                var prompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.AddMoreTask, new
+                var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AddMoreTask, new
                 {
                     ListType = state.ListType
                 });
 
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(AddToDoResponses.AddMoreTaskConfirmFailed, new
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AddMoreTaskConfirmFailed, new
                 {
                     ListType = state.ListType
                 });

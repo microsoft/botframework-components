@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.Main;
 using CalendarSkill.Responses.Shared;
@@ -16,6 +17,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace CalendarSkill.Dialogs
@@ -92,7 +94,7 @@ namespace CalendarSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -137,7 +139,7 @@ namespace CalendarSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -218,6 +220,7 @@ namespace CalendarSkill.Dialogs
                             {
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
+
                                 await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
@@ -261,7 +264,11 @@ namespace CalendarSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
-
+            state.IsAction = false;
+            var options = new CalendarSkillDialogOptions()
+            {
+                SubFlowMode = false
+            };
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
                 var luisResult = stepContext.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
@@ -272,11 +279,6 @@ namespace CalendarSkill.Dialogs
                 var generalIntent = generalResult?.TopIntent().intent;
 
                 InitializeConfig(state);
-
-                var options = new CalendarSkillDialogOptions()
-                {
-                    SubFlowMode = false
-                };
 
                 // switch on general intents
                 switch (intent)
@@ -450,19 +452,125 @@ namespace CalendarSkill.Dialogs
             else if (a.Type == ActivityTypes.Event)
             {
                 var ev = a.AsEventActivity();
-
-                switch (stepContext.Context.Activity.Name)
+                if (!string.IsNullOrEmpty(ev.Name))
                 {
-                    case Events.DeviceStart:
-                        {
-                            return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id);
-                        }
+                    switch (ev.Name)
+                    {
+                        case Events.DeviceStart:
+                            {
+                                return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id);
+                            }
 
-                    default:
-                        {
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
-                            break;
-                        }
+                        case Events.CreateEvent:
+                            {
+                                state.IsAction = true;
+                                EventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<EventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_createEventDialog.Id, options);
+                            }
+
+                        case Events.UpdateEvent:
+                            {
+                                state.IsAction = true;
+                                UpdateEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<UpdateEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options);
+                            }
+
+                        case Events.ShowEvent:
+                            {
+                                state.IsAction = true;
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                            }
+
+                        case Events.AcceptEvent:
+                            {
+                                state.IsAction = true;
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted));
+                            }
+
+                        case Events.DeleteEvent:
+                            {
+                                state.IsAction = true;
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled));
+                            }
+
+                        case Events.JoinEvent:
+                            {
+                                state.IsAction = true;
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options);
+                            }
+
+                        case Events.TimeRemaining:
+                            {
+                                state.IsAction = true;
+                                ChooseEventInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<ChooseEventInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id);
+                            }
+
+                        case Events.Summary:
+                            {
+                                state.IsAction = true;
+                                DateInfo actionData = null;
+                                if (ev.Value is JObject info)
+                                {
+                                    actionData = info.ToObject<DateInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.Summary, options));
+                            }
+
+                        default:
+                            {
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                break;
+                            }
+                    }
                 }
             }
 
@@ -473,6 +581,7 @@ namespace CalendarSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -482,12 +591,19 @@ namespace CalendarSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                if (state.IsAction && stepContext.Result as ActionResult == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
+
+                state.Clear();
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
+                state.Clear();
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
             }
         }
 
@@ -528,6 +644,14 @@ namespace CalendarSkill.Dialogs
         private class Events
         {
             public const string DeviceStart = "DeviceStart";
+            public const string CreateEvent = "CreateEvent";
+            public const string UpdateEvent = "UpdateEvent";
+            public const string ShowEvent = "ShowEvent";
+            public const string AcceptEvent = "AcceptEvent";
+            public const string DeleteEvent = "DeleteEvent";
+            public const string JoinEvent = "JoinEvent";
+            public const string TimeRemaining = "TimeRemaining";
+            public const string Summary = "Summary";
         }
     }
 }

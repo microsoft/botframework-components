@@ -5,14 +5,12 @@ using EmailSkill.Responses.Shared;
 using EmailSkill.Services;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
-using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Skills;
 using SkillServiceLibrary.Utilities;
 
 namespace EmailSkill.Adapters
@@ -23,15 +21,13 @@ namespace EmailSkill.Adapters
             BotSettings settings,
             ICredentialProvider credentialProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
-            UserState userState,
-            ConversationState conversationState,
+            LocaleTemplateManager templateManager,
             TelemetryInitializerMiddleware telemetryMiddleware)
             : base(credentialProvider)
         {
             OnTurnError = async (turnContext, exception) =>
             {
-                var activity = localeTemplateEngineManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
+                var activity = templateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
                 await turnContext.SendActivityAsync(activity);
                 await turnContext.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Email Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
@@ -53,7 +49,6 @@ namespace EmailSkill.Adapters
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

@@ -12,10 +12,10 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +26,7 @@ using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.OutgoingCall;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill
 {
@@ -77,6 +78,8 @@ namespace PhoneSkill
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
 
             // Configure bot state
+            // Uncomment the following line for local development without Cosmos Db
+            // services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
@@ -103,11 +106,7 @@ namespace PhoneSkill
             services.AddTransient<IServiceManager, ServiceManager>();
 
             // Configure responses
-            services.AddSingleton(sp => new ResponseManager(
-                settings.CognitiveModels.Select(l => l.Key).ToArray(),
-                new PhoneMainResponses(),
-                new PhoneSharedResponses(),
-                new OutgoingCallResponses()));
+            services.AddSingleton(EngineWrapper.CreateLocaleTemplateEngineManager("en-us"));
 
             // register dialogs
             services.AddTransient<MainDialog>();

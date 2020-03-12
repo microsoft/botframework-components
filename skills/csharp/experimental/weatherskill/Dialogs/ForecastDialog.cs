@@ -17,7 +17,7 @@ using Microsoft.Bot.Connector;
 using WeatherSkill.Models;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
-using WeatherSkill.Models.Action;
+using WeatherSkill.Utilities;
 
 namespace WeatherSkill.Dialogs
 {
@@ -30,11 +30,11 @@ namespace WeatherSkill.Dialogs
         public ForecastDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(ForecastDialog), settings, services, responseManager, conversationState, telemetryClient)
+            : base(nameof(ForecastDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
         {
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _services = services;
@@ -85,7 +85,7 @@ namespace WeatherSkill.Dialogs
         /// </summary>
         private async Task<DialogTurnResult> GeographyPrompt(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var prompt = ResponseManager.GetResponse(SharedResponses.LocationPrompt);
+            var prompt = LocaleTemplateEngineManager.GetResponse(SharedResponses.LocationPrompt);
             return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt });
         }
 
@@ -96,7 +96,7 @@ namespace WeatherSkill.Dialogs
         {
             if (!promptContext.Recognized.Succeeded)
             {
-                var prompt = ResponseManager.GetResponse(SharedResponses.LocationPrompt);
+                var prompt = LocaleTemplateEngineManager.GetResponse(SharedResponses.LocationPrompt);
                 await promptContext.Context.SendActivityAsync(prompt, cancellationToken: cancellationToken);
                 return false;
             }
@@ -183,21 +183,9 @@ namespace WeatherSkill.Dialogs
                 Temperature6 = Convert.ToInt32(twelveHourForecast[5].Temperature.Value)
             };
 
-            var options = stepContext.Options as SkillOptions;
-            if (options != null && options.IsAction)
-            {
-                var summary = forecastModel.Speak;
-                var actionResult = new ActionResult()
-                {
-                    Summary = summary,
-                    ActionSuccess = true
-                };
-                return await stepContext.EndDialogAsync(actionResult);
-            }
-
             var templateId = SharedResponses.SixHourForecast;
             var card = new Card(GetDivergedCardName(stepContext.Context, "SixHourForecast"), forecastModel);
-            var response = ResponseManager.GetCardResponse(templateId, card, tokens: null);
+            var response = LocaleTemplateEngineManager.GetCardResponse(templateId, card, tokens: null);
 
             await stepContext.Context.SendActivityAsync(response);
 

@@ -1,0 +1,140 @@
+﻿# VehicleSettingsConfirmed
+[Activity
+    Text = @{VehicleSettingsConfirmed.Text()}
+    Speak = @{VehicleSettingsConfirmed.Text()}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsMissingSettingName
+[Activity
+    Text = @{VehicleSettingsMissingSettingName.Text()}
+    Speak = @{VehicleSettingsMissingSettingName.Text()}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsSettingNameSelection
+[Activity
+    Text = @{VehicleSettingsSettingNameSelection.Text()}
+    Speak = @{VehicleSettingsSettingNameSelection.Text()}
+    InputHint = expectingInput
+]
+
+# VehicleSettingsMissingSettingValue
+[Activity
+    Text = @{VehicleSettingsMissingSettingValue.Text()}
+    Speak = @{VehicleSettingsMissingSettingValue.Text()}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsSettingValueSelection
+[Activity
+    Text = @{VehicleSettingsSettingValueSelection.Text(settingName)}
+    Speak = @{VehicleSettingsSettingValueSelection.Text(settingName)}
+    InputHint = expectingInput
+]
+
+# VehicleSettingsSettingChangeConfirmation
+[Activity
+    Text = @{VehicleSettingsSettingChangeConfirmation.Text(settingName, value)}
+    Speak = @{VehicleSettingsSettingChangeConfirmation.Text(settingName, value)}
+    InputHint = expectingInput
+]
+
+# VehicleSettingsSettingChangeConfirmationDenied
+[Activity
+    Text = @{VehicleSettingsSettingChangeConfirmationDenied.Text()}
+    Speak = @{VehicleSettingsSettingChangeConfirmationDenied.Text()}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsSettingChangeNoOpValue
+[Activity
+    Text = @{VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)}
+    Speak = @{VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsSettingChangeNoOpAmount
+[Activity
+    Text = @{VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)}
+    Speak = @{VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsSettingChangeUnsupported
+[Activity
+    Text = @{VehicleSettingsSettingChangeUnsupported.Text(settingName)}
+    Speak = @{VehicleSettingsSettingChangeUnsupported.Text(settingName)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsChangingRelativeAmount
+[Activity
+    Text = @{VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)}
+    Speak = @{VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsChangingAmount
+[Activity
+    Text = @{VehicleSettingsChangingAmount.Text(settingName, amount, unit)}
+    Speak = @{VehicleSettingsChangingAmount.Text(settingName, amount, unit)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsChangingValue
+[Activity
+    Text = @{VehicleSettingsChangingValue.Text(settingName, value)}
+    Speak = @{VehicleSettingsChangingValue.Text(settingName, value)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsChangingValueKnown
+[Activity
+    Text = @{VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)}
+    Speak = @{VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsCheckingStatus
+[Activity
+    Text = @{VehicleSettingsCheckingStatus.Text(settingName)}
+    Speak = @{VehicleSettingsCheckingStatus.Text(settingName)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsCheckingStatusValueSuccess
+[Activity
+    Text = @{VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)}
+    Speak = @{VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsCheckingStatusAmountSuccess
+[Activity
+    Text = @{VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)}
+    Speak = @{VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsCheckingStatusUnsupported
+[Activity
+    Text = @{VehicleSettingsCheckingStatusUnsupported.Text(settingName)}
+    Speak = @{VehicleSettingsCheckingStatusUnsupported.Text(settingName)}
+    InputHint = ignoringInput
+]
+
+# VehicleSettingsOutOfDomain
+[Activity
+    Text = @{VehicleSettingsOutOfDomain.Text()}
+    Speak = @{VehicleSettingsOutOfDomain.Text()}
+    InputHint = ignoringInput
+]
+
+# AutomotiveCard
+[Activity
+    Text = 
+    Speak = 
+    Attachments = @{json(AutomotiveCard.Text(ImageUrl, Body, Speak))}
+    InputHint = acceptingInput
+]

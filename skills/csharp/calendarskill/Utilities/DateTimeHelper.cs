@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using CalendarSkill.Responses.Shared;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Recognizers.Text.DateTime;
+using static Microsoft.Recognizers.Text.Culture;
 
 namespace CalendarSkill.Utilities
 {
@@ -89,6 +91,155 @@ namespace CalendarSkill.Utilities
         public static bool IsInRange(DateTime time, DateTime startTime, DateTime endTime)
         {
             return startTime <= time && time <= endTime;
+        }
+
+        public static List<DateTime> GetDateFromDateTimeString(string date, string local, TimeZoneInfo userTimeZone, bool isStart, bool isTargetTimeRange)
+        {
+            // if isTargetTimeRange is true, will only parse the time range
+            var culture = local ?? English;
+            var results = RecognizeDateTime(date, culture, userTimeZone, true);
+            var dateTimeResults = new List<DateTime>();
+            if (results != null)
+            {
+                foreach (var result in results)
+                {
+                    if (result.Value != null)
+                    {
+                        if (isTargetTimeRange)
+                        {
+                            break;
+                        }
+
+                        var dateTime = DateTime.Parse(result.Value);
+                        var dateTimeConvertType = result.Timex;
+
+                        if (dateTime != null)
+                        {
+                            dateTimeResults.Add(dateTime);
+                        }
+                    }
+                    else
+                    {
+                        var startDate = DateTime.Parse(result.Start);
+                        var endDate = DateTime.Parse(result.End);
+                        if (isStart)
+                        {
+                            dateTimeResults.Add(startDate);
+                        }
+                        else
+                        {
+                            dateTimeResults.Add(endDate);
+                        }
+                    }
+                }
+            }
+
+            return dateTimeResults;
+        }
+
+        public static List<DateTime> GetTimeFromDateTimeString(string time, string local, TimeZoneInfo userTimeZone, bool isStart, bool isTargetTimeRange)
+        {
+            // if isTargetTimeRange is true, will only parse the time range
+            var culture = local ?? English;
+            var results = RecognizeDateTime(time, culture, userTimeZone, false);
+            var dateTimeResults = new List<DateTime>();
+            if (results != null)
+            {
+                foreach (var result in results)
+                {
+                    if (result.Value != null)
+                    {
+                        if (isTargetTimeRange)
+                        {
+                            break;
+                        }
+
+                        var dateTime = DateTime.Parse(result.Value);
+                        var dateTimeConvertType = result.Timex;
+
+                        if (dateTime != null)
+                        {
+                            dateTimeResults.Add(dateTime);
+                        }
+                    }
+                    else
+                    {
+                        var startTime = DateTime.Parse(result.Start);
+                        var endTime = DateTime.Parse(result.End);
+                        if (isStart)
+                        {
+                            dateTimeResults.Add(startTime);
+                        }
+                        else
+                        {
+                            dateTimeResults.Add(endTime);
+                        }
+                    }
+                }
+            }
+
+            return dateTimeResults;
+        }
+
+        public static List<DateTimeResolution> RecognizeDateTime(string dateTimeString, string culture, TimeZoneInfo userTimeZone, bool convertToDate = true)
+        {
+            var userNow = TimeConverter.ConvertUtcToUserTime(DateTime.UtcNow, userTimeZone);
+            var results = DateTimeRecognizer.RecognizeDateTime(DateTimeHelper.ConvertNumberToDateTimeString(dateTimeString, convertToDate), culture, DateTimeOptions.CalendarMode, userNow);
+
+            if (results.Count > 0)
+            {
+                // Return list of resolutions from first match
+                var result = new List<DateTimeResolution>();
+                var values = (List<Dictionary<string, string>>)results[0].Resolution["values"];
+                foreach (var value in values)
+                {
+                    result.Add(ReadResolution(value));
+                }
+
+                return result;
+            }
+
+            return null;
+        }
+
+        public static TimeZoneInfo ConvertTimeZoneInfo(string timezone)
+        {
+            try
+            {
+                TimeZoneInfo result = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static DateTimeResolution ReadResolution(IDictionary<string, string> resolution)
+        {
+            var result = new DateTimeResolution();
+
+            if (resolution.TryGetValue("timex", out var timex))
+            {
+                result.Timex = timex;
+            }
+
+            if (resolution.TryGetValue("value", out var value))
+            {
+                result.Value = value;
+            }
+
+            if (resolution.TryGetValue("start", out var start))
+            {
+                result.Start = start;
+            }
+
+            if (resolution.TryGetValue("end", out var end))
+            {
+                result.End = end;
+            }
+
+            return result;
         }
     }
 }

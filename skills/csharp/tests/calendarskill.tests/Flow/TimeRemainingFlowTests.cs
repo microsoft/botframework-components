@@ -48,6 +48,17 @@ namespace CalendarSkill.Test.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task Test_CalendarNextMeetingTimeRemainingEvent()
+        {
+            this.ServiceManager = MockServiceManager.SetMeetingsToSpecial(new List<EventModel>() { MockServiceManager.CreateEventModel(startDateTime: DateTime.UtcNow.AddDays(1)) });
+            await this.GetSkillTestFlow()
+                .Send(TimeRemainingUtterances.NextMeetingTimeRemainingEvent)
+                .AssertReplyOneOf(this.ShowNextMeetingRemainingTime())
+                .AssertReply(CheckForTimeRemaining())
+                .StartTestAsync();
+        }
+
         private string[] ShowNextMeetingRemainingTime()
         {
             return GetTemplates(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, new

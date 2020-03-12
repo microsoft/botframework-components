@@ -1,34 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Collections.Generic;
+using System.IO;
+using AutomotiveSkill.Adapters;
+using AutomotiveSkill.Bots;
+using AutomotiveSkill.Dialogs;
+using AutomotiveSkill.Services;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.ApplicationInsights;
+using Microsoft.Bot.Builder.Azure;
+using Microsoft.Bot.Builder.BotFramework;
+using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
+using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Solutions;
+using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Bot.Solutions.TaskExtensions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AutomotiveSkill
 {
-    using System.Linq;
-    using AutomotiveSkill.Adapters;
-    using AutomotiveSkill.Bots;
-    using AutomotiveSkill.Dialogs;
-    using AutomotiveSkill.Responses.Main;
-    using AutomotiveSkill.Responses.Shared;
-    using AutomotiveSkill.Responses.VehicleSettings;
-    using AutomotiveSkill.Services;
-    using Microsoft.ApplicationInsights.Extensibility;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
-    using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Builder.ApplicationInsights;
-    using Microsoft.Bot.Builder.Azure;
-    using Microsoft.Bot.Builder.BotFramework;
-    using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
-    using Microsoft.Bot.Builder.Integration.AspNet.Core;
-    using Microsoft.Bot.Solutions;
-    using Microsoft.Bot.Solutions.Responses;
-    using Microsoft.Bot.Solutions.TaskExtensions;
-    using Microsoft.Bot.Connector.Authentication;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-
     public class Startup
     {
         public Startup(IWebHostEnvironment env)
@@ -105,12 +102,34 @@ namespace AutomotiveSkill
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<QueuedHostedService>();
 
-            // Configure responses
-            services.AddSingleton(sp => new ResponseManager(
-                settings.CognitiveModels.Select(l => l.Key).ToArray(),
-                new AutomotiveSkillMainResponses(),
-                new AutomotiveSkillSharedResponses(),
-                new VehicleSettingsResponses()));
+            // Configure localized responses
+            var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
+            var templateFiles = new Dictionary<string, string>
+            {
+                { "ResponsesAndTexts", "ResponsesAndTexts" },
+            };
+
+            var localizedTemplates = new Dictionary<string, List<string>>();
+            foreach (var locale in supportedLocales)
+            {
+                var localeTemplateFiles = new List<string>();
+                foreach (var (dialog, template) in templateFiles)
+                {
+                    // LG template for default locale should not include locale in file extension.
+                    if (locale.Equals(settings.DefaultLocale ?? "en-us"))
+                    {
+                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.lg"));
+                    }
+                    else
+                    {
+                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.{locale}.lg"));
+                    }
+                }
+
+                localizedTemplates.Add(locale, localeTemplateFiles);
+            }
+
+            services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
             // register dialogs
             services.AddTransient<MainDialog>();

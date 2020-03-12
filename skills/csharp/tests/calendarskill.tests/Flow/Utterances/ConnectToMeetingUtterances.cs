@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -19,6 +22,19 @@ namespace CalendarSkill.Test.Flow.Utterances
         public static string BaseConnectToMeeting { get; } = "i need to join conference call";
 
         public static string JoinMeetingWithStartTime { get; } = "i need to join conference call at tomorrow 6 pm";
+
+        public static string JoinEventName { get; } = "JoinEvent";
+
+        public static Activity JoinMeetingWithStartTimeEvent { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = JoinEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+            })
+        };
 
         private CalendarLuis GetBaseConnectToMeetingIntent(
             string userInput,

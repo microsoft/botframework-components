@@ -1,0 +1,18 @@
+[import] (CommonStrings.lg)
+
+# Trailers.Text(Data)
+- 预告片
+
+# Showtimes.Text(Data)
+- 上映时间
+
+# Trivia.Text(Data)
+- 细节
+
+# View.Text(Data)
+- 更多
+
+# DontKnowAnswer.Text(Data)
+- 抱歉，我不知道答案。
+
+

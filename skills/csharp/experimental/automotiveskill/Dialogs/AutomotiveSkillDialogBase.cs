@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using AutomotiveSkill.Models;
 using AutomotiveSkill.Responses.Shared;
 using AutomotiveSkill.Services;
+using AutomotiveSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Responses;
 
 namespace AutomotiveSkill.Dialogs
 {
@@ -23,13 +24,13 @@ namespace AutomotiveSkill.Dialogs
             string dialogId,
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient)
             : base(dialogId)
         {
             Services = services;
-            ResponseManager = responseManager;
+            LocaleTemplateEngineManager = localeTemplateEngineManager;
             Accessor = conversationState.CreateProperty<AutomotiveSkillState>(nameof(AutomotiveSkillState));
             TelemetryClient = telemetryClient;
         }
@@ -40,7 +41,7 @@ namespace AutomotiveSkill.Dialogs
 
         protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
 
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
@@ -72,7 +73,7 @@ namespace AutomotiveSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(AutomotiveSkillSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
 
             // clear state
             var state = await Accessor.GetAsync(sc.Context);

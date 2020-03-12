@@ -9,6 +9,7 @@ using System.Threading;
 using CalendarSkill.Bots;
 using CalendarSkill.Dialogs;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Services;
 using CalendarSkill.Test.Flow.Fakes;
 using Microsoft.Bot.Builder;
@@ -17,6 +18,7 @@ using Microsoft.Bot.Builder.Dialogs.Declarative.Types;
 using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
@@ -190,6 +192,50 @@ namespace CalendarSkill.Test.Flow
             });
 
             return testFlow;
+        }
+
+        public Action<IActivity> CheckForOperationStatus(bool value = false)
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                Assert.IsTrue(eoc.Value is ActionResult);
+                var operationStatus = eoc.Value as ActionResult;
+                Assert.AreEqual(operationStatus.ActionSuccess, value);
+            };
+        }
+
+        public Action<IActivity> CheckForEventInfoOutput()
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                Assert.IsTrue(eoc.Value is EventInfoOutput);
+            };
+        }
+
+        public Action<IActivity> CheckForTimeRemaining(int time = 1439)
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                Assert.IsTrue(eoc.Value is TimeRemainingOutput);
+                var timeRemainingOutput = eoc.Value as TimeRemainingOutput;
+                Assert.AreEqual(timeRemainingOutput.RemainingTime, time);
+            };
+        }
+
+        public Action<IActivity> CheckForSummary()
+        {
+            return activity =>
+            {
+                var eoc = (Activity)activity;
+                Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
+                Assert.IsTrue(eoc.Value is SummaryResult);
+            };
         }
     }
 }

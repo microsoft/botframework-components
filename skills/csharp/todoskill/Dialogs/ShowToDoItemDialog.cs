@@ -28,12 +28,12 @@ namespace ToDoSkill.Dialogs
             BotServices services,
             ConversationState conversationState,
             UserState userState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials,
             IHttpContextAccessor httpContext)
-            : base(nameof(ShowToDoItemDialog), settings, services, conversationState, userState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(ShowToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -153,7 +153,7 @@ namespace ToDoSkill.Dialogs
                 var generalTopIntent = generalLuisResult.TopIntent().intent;
                 if (state.Tasks.Count <= 0)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.NoTasksMessage, new
+                    var activity = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.NoTasksMessage, new
                     {
                         ListType = state.ListType
                     });
@@ -176,7 +176,7 @@ namespace ToDoSkill.Dialogs
 
                         if (allTasksCount <= state.Tasks.Count)
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.AskAddOrCompleteTaskMessage);
+                            var activity = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.AskAddOrCompleteTaskMessage);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -276,8 +276,8 @@ namespace ToDoSkill.Dialogs
         {
             try
             {
-                var prompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksPrompt);
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksConfirmFailed);
+                var prompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksPrompt);
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksConfirmFailed);
                 return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
             }
             catch (Exception ex)
@@ -365,8 +365,8 @@ namespace ToDoSkill.Dialogs
         {
             try
             {
-                var prompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksPrompt2);
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.RetryReadMoreTasksPrompt2);
+                var prompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.ReadMoreTasksPrompt2);
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.RetryReadMoreTasksPrompt2);
                 return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
             }
             catch (Exception ex)
@@ -450,13 +450,13 @@ namespace ToDoSkill.Dialogs
 
                 if (state.Tasks.Count <= 1)
                 {
-                    prompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartPromptForSingleTask, new
+                    prompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartPromptForSingleTask, new
                     {
                         ListType = state.ListType,
                         TaskCount = taskCount
                     });
 
-                    retryPrompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartForSingleTaskConfirmFailed, new
+                    retryPrompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartForSingleTaskConfirmFailed, new
                     {
                         ListType = state.ListType,
                         TaskCount = taskCount
@@ -464,13 +464,13 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
-                    prompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartPromptForTasks, new
+                    prompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartPromptForTasks, new
                     {
                         ListType = state.ListType,
                         TaskCount = taskCount
                     });
 
-                    retryPrompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartForTasksConfirmFailed, new
+                    retryPrompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.GoBackToStartForTasksConfirmFailed, new
                     {
                         ListType = state.ListType,
                         TaskCount = taskCount
@@ -509,13 +509,13 @@ namespace ToDoSkill.Dialogs
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 var taskCount = Math.Min(state.PageSize, state.AllTasks.Count);
-                var prompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.RepeatFirstPagePrompt, new
+                var prompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.RepeatFirstPagePrompt, new
                 {
                     ListType = state.ListType,
                     TaskCount = taskCount
                 });
 
-                var retryPrompt = TemplateEngine.GenerateActivityForLocale(ShowToDoResponses.RepeatFirstPageConfirmFailed, new
+                var retryPrompt = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.RepeatFirstPageConfirmFailed, new
                 {
                     ListType = state.ListType,
                     TaskCount = taskCount

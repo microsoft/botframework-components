@@ -59,5 +59,42 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task CloseTestAction()
+        {
+            await this.GetSkillTestFlow()
+                .Send(TicketCloseUtterances.CloseAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputTicketNumber))
+                .Send(MockData.CloseTicketNumber)
+                .AssertReply(AssertContains(TicketResponses.TicketTarget, null, CardStrings.Ticket))
+                .AssertReply(AssertContains(SharedResponses.InputReason))
+                .Send(MockData.CloseTicketReason)
+                .AssertReply(AssertContains(TicketResponses.TicketClosed, null, CardStrings.TicketUpdate))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CloseWithNumberReasonActionTest()
+        {
+            var confirmReason = new StringDictionary
+            {
+                { "Reason", MockData.CloseTicketReason }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(TicketCloseUtterances.CloseWithNumberReasonAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(TicketResponses.TicketTarget, null, CardStrings.Ticket))
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmReason, confirmReason))
+                .Send(NonLuisUtterances.Yes)
+                .AssertReply(AssertContains(TicketResponses.TicketClosed, null, CardStrings.TicketUpdate))
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
     }
 }

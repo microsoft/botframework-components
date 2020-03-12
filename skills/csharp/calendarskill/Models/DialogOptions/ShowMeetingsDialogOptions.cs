@@ -41,7 +41,12 @@ namespace CalendarSkill.Models.DialogOptions
             /// <summary>
             /// ShowNextMeeting.
             /// </summary>
-            ShowNextMeeting
+            ShowNextMeeting,
+
+            /// <summary>
+            /// ShowOverview.
+            /// </summary>
+            Summary
         }
 
         public ShowMeetingReason Reason { get; set; }

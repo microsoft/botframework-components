@@ -7,60 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Content\CuisineChoiceCard.1.0.json" />
-    <Content Remove="Content\CuisineChoiceCard.json" />
-    <Content Remove="Content\ReservationConfirmationCard.json" />
-    <Content Remove="Content\ReservationConfirmCard.json" />
-    <Content Remove="Content\RestaurantChoiceCard.1.0.json" />
-    <Content Remove="Content\RestaurantChoiceCard.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.de.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.es.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.fr.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.it.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.json" />
-    <Content Remove="Responses\Main\RestaurantBookingMainResponses.zh.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.de.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.es.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.fr.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.it.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.json" />
-    <Content Remove="Responses\Shared\RestaurantBookingSharedResponses.zh.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Content\CuisineChoiceCard.1.0.json" />
-    <EmbeddedResource Include="Content\CuisineChoiceCard.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\RestaurantChoiceCard.1.0.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.de.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.es.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.fr.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.it.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.zh.json" />
-    <EmbeddedResource Include="Responses\Main\RestaurantBookingMainResponses.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\ReservationConfirmationCard.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\ReservationConfirmCard.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\RestaurantChoiceCard.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.de.json" />
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.es.json" />
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.fr.json" />
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.it.json" />
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Responses\Shared\RestaurantBookingSharedResponses.zh.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder" Version="4.7.2" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.7.2" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.7.2" />
@@ -188,18 +134,102 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Responses\Main\RestaurantBookingMainResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\RestaurantBookingMainResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RestaurantBookingMainResponses.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\RestaurantBookingMainResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStrings.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\BotStringsTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Shared\ResponseIdCollection.t4">
       <Generator></Generator>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Shared\RestaurantBookingSharedResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RestaurantBookingSharedResponses.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\RestaurantBookingSharedResponsesTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\Shared.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

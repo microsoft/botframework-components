@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -43,6 +46,20 @@ namespace CalendarSkill.Test.Flow.Utterances
         public static string UpdateMeetingWithMoveEarlierTimeSpan { get; } = $"update {Strings.Strings.DefaultEventName} meeting 30 minutes earlier";
 
         public static string UpdateMeetingWithMoveLaterTimeSpan { get; } = $"update {Strings.Strings.DefaultEventName} meeting 30 minutes later";
+
+        public static string UpdateEventName { get; } = "UpdateEvent";
+
+        public static Activity UpdateEventAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = UpdateEventName,
+            Value = JObject.FromObject(new UpdateEventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+                NewStartDate = "today"
+            })
+        };
 
         public static CalendarLuis GetBaseUpdateMeetingIntent(
             string userInput,

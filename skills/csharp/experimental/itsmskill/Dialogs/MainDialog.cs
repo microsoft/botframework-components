@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Services;
@@ -18,6 +19,7 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
@@ -64,7 +66,7 @@ namespace ITSMSkill.Dialogs
         // Runs when the dialog is started.
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -93,7 +95,7 @@ namespace ITSMSkill.Dialogs
         // Runs on every turn of the conversation.
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken = default)
         {
-            if (innerDc.Context.Activity.Type == ActivityTypes.Message)
+            if (innerDc.Context.Activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(innerDc.Context.Activity.Text))
             {
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
@@ -200,6 +202,10 @@ namespace ITSMSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            // Clear IsAction before dialog
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+            state.IsAction = false;
+
             var activity = stepContext.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -217,7 +223,6 @@ namespace ITSMSkill.Dialogs
 
                     if (intent != null && intent != ITSMLuis.Intent.None)
                     {
-                        var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
                         state.DigestLuisResult(result, (ITSMLuis.Intent)intent);
                     }
 
@@ -270,6 +275,31 @@ namespace ITSMSkill.Dialogs
                 {
                     switch (ev.Name)
                     {
+                        case ActionNames.CreateTicket:
+                            {
+                                return await ProcessAction<CreateTicketInput>(ITSMLuis.Intent.TicketCreate, nameof(CreateTicketDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.UpdateTicket:
+                            {
+                                return await ProcessAction<UpdateTicketInput>(ITSMLuis.Intent.TicketUpdate, nameof(UpdateTicketDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.ShowTicket:
+                            {
+                                return await ProcessAction<ShowTicketInput>(ITSMLuis.Intent.TicketShow, nameof(ShowTicketDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.CloseTicket:
+                            {
+                                return await ProcessAction<CloseTicketInput>(ITSMLuis.Intent.TicketClose, nameof(CloseTicketDialog), stepContext, cancellationToken);
+                            }
+
+                        case ActionNames.ShowKnowledge:
+                            {
+                                return await ProcessAction<ShowKnowledgeInput>(ITSMLuis.Intent.KnowledgeShow, nameof(ShowKnowledgeDialog), stepContext, cancellationToken);
+                            }
+
                         default:
                             {
                                 await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
@@ -299,12 +329,21 @@ namespace ITSMSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult(false);
+                    }
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
             }
         }
 
@@ -330,6 +369,31 @@ namespace ITSMSkill.Dialogs
             {
                 throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
             }
+        }
+
+        private async Task<DialogTurnResult> ProcessAction<T>(ITSMLuis.Intent intent, string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
+             where T : IActionInput
+        {
+            ITSMLuis result = null;
+            T actionData = null;
+
+            var ev = stepContext.Context.Activity.AsEventActivity();
+            if (ev.Value is JObject eventValue)
+            {
+                actionData = eventValue.ToObject<T>();
+                result = actionData.CreateLuis();
+            }
+
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+            state.DigestLuisResult(result, intent);
+            state.IsAction = true;
+
+            if (actionData != null)
+            {
+                actionData.ProcessAfterDigest(state);
+            }
+
+            return await stepContext.BeginDialogAsync(dialogId, null, cancellationToken);
         }
     }
 }

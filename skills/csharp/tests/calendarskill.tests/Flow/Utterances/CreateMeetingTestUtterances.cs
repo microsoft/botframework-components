@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -47,6 +50,24 @@ namespace CalendarSkill.Test.Flow.Utterances
         public static string CreateMeetingWithDurationEntity { get; } = $"Create a meeting for {Strings.Strings.DefaultDuration}";
 
         public static string ChooseFirstUser { get; } = "the first";
+
+        public static string CreateEventName { get; } = "CreateEvent";
+
+        public static Activity CreateEventAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = CreateEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+                Attendees = Strings.Strings.DefaultUserEmail,
+                Content = Strings.Strings.DefaultContent,
+                Duration = int.Parse(Strings.Strings.DefaultDurationMinutes),
+                Location = Strings.Strings.DefaultLocation,
+                StartDate = Strings.Strings.DefaultStartDate,
+                StartTime = Strings.Strings.DefaultStartTime,
+                Title = Strings.Strings.DefaultEventName
+            })
+        };
 
         private CalendarLuis GetCreateMeetingIntent(
             string userInput,

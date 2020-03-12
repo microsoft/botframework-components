@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
+using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.JoinEvent;
 using CalendarSkill.Services;
@@ -249,6 +251,8 @@ namespace CalendarSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context);
+                var options = (CalendarSkillDialogOptions)sc.Options;
+                var status = false;
                 if (sc.Result is bool)
                 {
                     if ((bool)sc.Result)
@@ -266,6 +270,7 @@ namespace CalendarSkill.Dialogs
                         };
                         replyEvent.Value = JsonConvert.SerializeObject(eventJoinLink);
                         await sc.Context.SendActivityAsync(replyEvent, cancellationToken);
+                        status = true;
                     }
                     else
                     {
@@ -274,7 +279,15 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
-                state.ShowMeetingInfo.ShowingMeetings.Clear();
+                if (options.SubFlowMode)
+                {
+                    state.ShowMeetingInfo.ShowingMeetings.Clear();
+                }
+
+                if (state.IsAction)
+                {
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = status });
+                }
 
                 return await sc.EndDialogAsync();
             }

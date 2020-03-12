@@ -91,63 +91,6 @@
       "*": "#/activities/message"
     }
   },
-  "activities": {
-    "message": {
-      "type": "message",
-      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
-    },
-    "sendEmail": {
-      "description": "Send an Email",
-      "type": "event",
-      "name": "SendEmail",
-      "value": {
-        "$ref": "#/definitions/emailInfo"
-      },
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
-    },
-    "deleteEmail": {
-      "description": "Delete an Email",
-      "type": "event",
-      "name": "DeleteEmail",
-      "value": {},
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
-    },
-    "replyEmail": {
-      "description": "Reply to an Email",
-      "type": "event",
-      "name": "ReplyEmail",
-      "value": {
-        "$ref": "#/definitions/replyEmailInfo"
-      },
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
-    },
-    "forwardEmail": {
-      "description": "Forward an Email",
-      "type": "event",
-      "name": "ForwardEmail",
-      "value": {
-        "$ref": "#/definitions/forwardEmailInfo"
-      },
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
-    },
-    "summary": {
-      "description": "Summary of recent emails",
-      "type": "event",
-      "name": "EmailSummary",
-      "value": {},
-      "resultValue": {
-        "$ref": "#/definitions/summaryResult"
-      }
-    }
-  },
   "definitions": {
     "emailInfo": {
       "type": "object",

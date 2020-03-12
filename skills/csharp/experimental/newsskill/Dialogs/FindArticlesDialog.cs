@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
 using NewsSkill.Models.Action;
+using NewsSkill.Responses;
 using NewsSkill.Responses.FindArticles;
 using NewsSkill.Services;
 
@@ -20,7 +22,6 @@ namespace NewsSkill.Dialogs
     public class FindArticlesDialog : NewsDialogBase
     {
         private NewsClient _client;
-        private FindArticlesResponses _responder = new FindArticlesResponses();
 
         public FindArticlesDialog(
             BotSettings settings,
@@ -28,8 +29,9 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(FindArticlesDialog), settings, services, conversationState, userState, mapsService, telemetryClient)
+            : base(nameof(FindArticlesDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -62,7 +64,7 @@ namespace NewsSkill.Dialogs
 
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = await _responder.RenderTemplate(sc.Context, sc.Context.Activity.Locale, FindArticlesResponses.TopicPrompt)
+                Prompt = localeTemplateEngineManager.GenerateActivityForLocale(FindArticlesResponses.TopicPrompt)
             });
         }
 
@@ -88,7 +90,7 @@ namespace NewsSkill.Dialogs
             var query = (string)sc.Result;
 
             var articles = await _client.GetNewsForTopic(query, userState.Market);
-            await _responder.ReplyWith(sc.Context, FindArticlesResponses.ShowArticles, articles);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, localeTemplateEngineManager, articles));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)

@@ -1,5 +1,3 @@
-[import](ShowToDoActivities.lg)
-
 # AskAddOrCompleteTaskMessage.Text
 - 让我知道，如果你想添加一个项目或标记为完成。
 
@@ -16,34 +14,34 @@
 - 对不起，我不明白。是否要查看其他项目？
 
 # NoTasksMessage.Text(ListType)
-- 你没有任何在你的@{ListType}列表。让我知道，如果你想添加一个项目。
+- 你没有任何在你的${ListType}列表。让我知道，如果你想添加一个项目。
 
 # TaskSummaryMessage.Text(TaskCount, ListType)
-- 你有@{TaskCount}项目@{ListType}列表。
+- 你有${TaskCount}项目${ListType}列表。
 
 # RepeatFirstPagePrompt.Text(TaskCount, ListType)
-- 这是你的开始@{ListType}列表。是否要查看第一个@{TaskCount}项目再次？
+- 这是你的开始${ListType}列表。是否要查看第一个${TaskCount}项目再次？
 
 # RepeatFirstPageConfirmFailed.Text(TaskCount)
-- 对不起，我不明白你的意思。是否要查看第一个@{TaskCount}项目再次？
+- 对不起，我不明白你的意思。是否要查看第一个${TaskCount}项目再次？
 
 # GoBackToStartPromptForSingleTask.Text(TaskCount, ListType)
-- 这是您的最后一个项目@{ListType}列表。是否要查看第一个@{TaskCount}项目再次？
+- 这是您的最后一个项目${ListType}列表。是否要查看第一个${TaskCount}项目再次？
 
 # GoBackToStartForSingleTaskConfirmFailed.Text(TaskCount)
-- 对不起，我不明白。是否要查看第一个@{TaskCount}项目再次？
+- 对不起，我不明白。是否要查看第一个${TaskCount}项目再次？
 
 # GoBackToStartPromptForTasks.Text(TaskCount, ListType)
-- 这些是您最后的项目@{ListType}列表。你想先看看你的@{TaskCount}项目再次？
+- 这些是您最后的项目${ListType}列表。你想先看看你的${TaskCount}项目再次？
 
 # GoBackToStartForTasksConfirmFailed.Text(TaskCount)
-- 对不起，我不明白。你想先看看你的@{TaskCount}项目再次？
+- 对不起，我不明白。你想先看看你的${TaskCount}项目再次？
 
 # CardSummaryMessageForSingleTask.Text(ListType)
-- 您有 1 个项目@{ListType}列表：
+- 您有 1 个项目${ListType}列表：
 
 # CardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType, ToDos)
-- 你有@{AllTasksCount}项目@{ListType}列表。这里是@{count(ToDos)}最近：
+- 你有${AllTasksCount}项目${ListType}列表。这里是${count(ToDos)}最近：
 
 # LatestTask.Text
 - 最近的项目是：
@@ -61,7 +59,7 @@
 - 前面的项目是：
 
 # PreviousFirstSingleTask.Text(taskCount)
-- 第一个@{taskCount}项目是：
+- 第一个${taskCount}项目是：
 
 # PreviousFirstTasks.Text(taskCount)
-- 第一个@{taskCount}项目是：
+- 第一个${taskCount}项目是：

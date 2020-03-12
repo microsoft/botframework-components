@@ -54,7 +54,7 @@
                                   "size": "Large",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{emailOverview.Description}"
+                                  "text": "${emailOverview.Description}"
                                 }
                               ],
                               "width": "stretch"
@@ -74,14 +74,14 @@
                                   "height": "stretch",
                                   "size": "Medium",
                                   "color": "Light",
-                                  "text": "@{emailOverview.TotalMessageNumber}"
+                                  "text": "${emailOverview.TotalMessageNumber}"
                                 },
                                 {
                                   "type": "TextBlock",
                                   "horizontalAlignment": "Right",
                                   "size": "Medium",
                                   "color": "Light",
-                                  "text": "@{emailOverview.HighPriorityMessagesNumber}"
+                                  "text": "${emailOverview.HighPriorityMessagesNumber}"
                                 }
                               ],
                               "width": "auto"
@@ -95,14 +95,14 @@
                                   "size": "Medium",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{emailOverview.MessagesDescription}"
+                                  "text": "${emailOverview.MessagesDescription}"
                                 },
                                 {
                                   "type": "TextBlock",
                                   "size": "Medium",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{emailOverview.ImportantMessagesDescription}"
+                                  "text": "${emailOverview.ImportantMessagesDescription}"
                                 }
                               ],
                               "width": "stretch"
@@ -135,7 +135,7 @@
                                   "horizontalAlignment": "Center",
                                   "size": "Medium",
                                   "color": "Light",
-                                  "text": "@{emailOverview.EmailIndexer}"
+                                  "text": "${emailOverview.EmailIndexer}"
                                 }
                               ],
                               "width": "auto"
@@ -167,7 +167,7 @@
                           "type": "Image",
                           "horizontalAlignment": "Center",
                           "style": "Person",
-                          "url": "@{emailOverview.AvatorIcon}",
+                          "url": "${emailOverview.AvatorIcon}",
                           "size": "Medium"
                         }
                       ],
@@ -186,7 +186,7 @@
       "type": "Container",
       "id": "items",
       "items": [
-      @{EmailOverviewList(emailOverview.EmailList)}
+      ${EmailOverviewList(emailOverview.EmailList)}
       ]
     },
     {
@@ -198,7 +198,7 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "Default",
-          "text": "@{emailOverview.MailSourceType}"
+          "text": "${emailOverview.MailSourceType}"
         }
       ]
     }
