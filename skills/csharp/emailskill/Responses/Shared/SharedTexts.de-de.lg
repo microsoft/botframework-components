@@ -1,5 +1,3 @@
-[import](SharedActivities.lg)
-
 # Cancel.Text
 - OK, wir können dies später tun.
 - OK, lassen Sie mich wissen, wenn Sie meine Hilfe brauchen.
@@ -28,7 +26,7 @@
 - Es tut mir leid, ich kann jetzt nicht auf Ihr E-Mail-Konto zugreifen. Möglicherweise haben Sie eine E-Mail mit Anweisungen zur Überprüfung Ihres Kontos erhalten.
 
 # ConfirmSendRecipients.Text(recipientsList)
-- Sie senden diese E-Mail an @{recipientsList}.
+- Sie senden diese E-Mail an ${recipientsList}.
 
 # ConfirmSendRecipientsMessage.Text
 - Möchten Sie die Liste der Empfänger überprüfen?
@@ -43,7 +41,7 @@
 - OK, ich bin bereit, Ihre E-Mail zu senden.
 
 # ConfirmSend.Speak(emailSubject)
-- OK, ich bin bereit zu senden. Hier sind die Details Ihrer E-Mail: @{emailSubject}.
+- OK, ich bin bereit zu senden. Hier sind die Details Ihrer E-Mail: ${emailSubject}.
 
 # ConfirmSendFailed.Text
 - Bitte bestätigen Sie, dass Sie diese E-Mail senden möchten.
@@ -58,20 +56,20 @@
 - Was möchten Sie in die weitergeleitete E-Mail schreiben?
 
 # RecipientConfirmed.Text(userName)
-- OK, ich schicke dies an @{userName}.
+- OK, ich schicke dies an ${userName}.
 
 # ShowEmailPrompt.Text(totalCount,emailListDetails)
-- Es gibt @{totalCount} E-Mails in Ihrem Posteingang. Die neueste E-Mail ist @{emailListDetails}.
-- Sie haben @{totalCount} E-Mails in Ihrem Posteingang. Die neueste E-Mail ist @{emailListDetails}.
+- Es gibt ${totalCount} E-Mails in Ihrem Posteingang. Die neueste E-Mail ist ${emailListDetails}.
+- Sie haben ${totalCount} E-Mails in Ihrem Posteingang. Die neueste E-Mail ist ${emailListDetails}.
 
 # ShowOneEmailPrompt.Text(emailListDetails)
-- Sie haben 1 E-Mail in Ihrem Posteingang. Die neueste E-Mail ist @{emailListDetails}.
+- Sie haben 1 E-Mail in Ihrem Posteingang. Die neueste E-Mail ist ${emailListDetails}.
 
 # ShowEmailPromptOtherPage.Text(totalCount, emailListDetails)
-- Sie haben @{totalCount} E-Mails in Ihrem Posteingang. Die erste E-Mail ist @{emailListDetails}.
+- Sie haben ${totalCount} E-Mails in Ihrem Posteingang. Die erste E-Mail ist ${emailListDetails}.
 
 # ShowOneEmailPromptOtherPage.Text(emailListDetails)
-- Sie haben 1 E-Mail in Ihrem Posteingang. Die erste E-Mail ist @{emailListDetails}.
+- Sie haben 1 E-Mail in Ihrem Posteingang. Die erste E-Mail ist ${emailListDetails}.
 
 # FirstPageAlready.Text
 - Dies ist bereits die erste Seite.
@@ -90,7 +88,7 @@
 - OK, lassen Sie mich wissen, wenn Sie meine Hilfe brauchen.
 
 # SentSuccessfully.Text(subject)
-- Ich habe Ihre E-Mail mit Betreff gesendet: @{subject}.
+- Ich habe Ihre E-Mail mit Betreff gesendet: ${subject}.
 
 # RetryInput.Text
 - Tut mir leid, ich habe es nicht verstanden. Bitte versuchen Sie es erneut zu fragen.

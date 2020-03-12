@@ -1,5 +1,3 @@
-[import](SendEmailActivities.lg)
-
 # NoSubject.Text
 - ¿Cuál es el asunto del correo electrónico?
 
@@ -46,8 +44,8 @@
 - Puedeprobar Destinatarios, Asunto, Contenido o Cancelar.
 
 # PlayBackMessage.Text(emailContent)
-- Bien, aquí está el contenido de tu correo electrónico. ¿Desea incluirlo en el correo electrónico? N @{emailContent}
+- Bien, aquí está el contenido de tu correo electrónico. ¿Desea incluirlo en el correo electrónico? N ${emailContent}
 
 # PlayBackMessage.Speak(emailContent)
-- Bien, aquí está el contenido de tu correo electrónico. ¿Desea incluirlo en el correo electrónico? @{emailContent}
+- Bien, aquí está el contenido de tu correo electrónico. ¿Desea incluirlo en el correo electrónico? ${emailContent}
 

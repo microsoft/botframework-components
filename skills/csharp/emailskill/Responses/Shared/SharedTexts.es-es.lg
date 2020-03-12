@@ -1,5 +1,3 @@
-[import](SharedActivities.lg)
-
 # Cancel.Text
 - Bien, podemos hacerlo más tarde.
 - Bien, avísame cuando necesites mi ayuda.
@@ -28,7 +26,7 @@
 - Lo sentimos, no puedo acceder a tu cuenta de correo electrónico en este momento. Es posible que hayas recibido un correo electrónico con instrucciones para verificar tu cuenta.
 
 # ConfirmSendRecipients.Text(recipientsList)
-- Está enviando este correo electrónico a @{recipientsList}.
+- Está enviando este correo electrónico a ${recipientsList}.
 
 # ConfirmSendRecipientsMessage.Text
 - ¿Desea revisar la lista de destinatarios?
@@ -43,7 +41,7 @@
 - Bien, estoy listo para enviar tu correo electrónico.
 
 # ConfirmSend.Speak(emailSubject)
-- Bien, estoy listo para enviar. Estos son los detalles de su correo electrónico: @{emailSubject}.
+- Bien, estoy listo para enviar. Estos son los detalles de su correo electrónico: ${emailSubject}.
 
 # ConfirmSendFailed.Text
 - Por favor, confirme que desea enviar este correo electrónico.
@@ -58,20 +56,20 @@
 - ¿Qué desea escribir en el correo electrónico reenviado?
 
 # RecipientConfirmed.Text(userName)
-- Bien, enviaré esto a @{userName}.
+- Bien, enviaré esto a ${userName}.
 
 # ShowEmailPrompt.Text(totalCount,emailListDetails)
-- Hay @{totalCount} correos electrónicos en su bandeja de entrada. El correo electrónico más reciente es @{emailListDetails}.
-- Usted tiene @{totalCount} correos electrónicos en su bandeja de entrada. El correo electrónico más reciente es @{emailListDetails}.
+- Hay ${totalCount} correos electrónicos en su bandeja de entrada. El correo electrónico más reciente es ${emailListDetails}.
+- Usted tiene ${totalCount} correos electrónicos en su bandeja de entrada. El correo electrónico más reciente es ${emailListDetails}.
 
 # ShowOneEmailPrompt.Text(emailListDetails)
-- Tienes 1 correo electrónico en tu bandeja de entrada. El correo electrónico más reciente es @{emailListDetails}.
+- Tienes 1 correo electrónico en tu bandeja de entrada. El correo electrónico más reciente es ${emailListDetails}.
 
 # ShowEmailPromptOtherPage.Text(totalCount, emailListDetails)
-- Usted tiene @{totalCount} correos electrónicos en su bandeja de entrada. El primer correo electrónico es @{emailListDetails}.
+- Usted tiene ${totalCount} correos electrónicos en su bandeja de entrada. El primer correo electrónico es ${emailListDetails}.
 
 # ShowOneEmailPromptOtherPage.Text(emailListDetails)
-- Tienes 1 correo electrónico en tu bandeja de entrada. El primer correo electrónico es @{emailListDetails}.
+- Tienes 1 correo electrónico en tu bandeja de entrada. El primer correo electrónico es ${emailListDetails}.
 
 # FirstPageAlready.Text
 - Esta ya es la primera página.
@@ -90,7 +88,7 @@
 - Bien, avísame cuando necesites mi ayuda.
 
 # SentSuccessfully.Text(subject)
-- Envié su correo electrónico con el asunto: @{subject}.
+- Envié su correo electrónico con el asunto: ${subject}.
 
 # RetryInput.Text
 - Lo siento, no lo entendí. Por favor, intente preguntar de nuevo.

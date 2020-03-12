@@ -1,5 +1,3 @@
-[import](SendEmailActivities.lg)
-
 # NoSubject.Text
 - 电子邮件的主题是什么？
 
@@ -46,8 +44,8 @@
 - 您可以尝试收件人、主题、内容，也可以取消。
 
 # PlayBackMessage.Text(emailContent)
-- 好的，下面是您的电子邮件内容。是否要将其包含在电子邮件中？\n@{emailContent}
+- 好的，下面是您的电子邮件内容。是否要将其包含在电子邮件中？\n${emailContent}
 
 # PlayBackMessage.Speak(emailContent)
-- 好的，下面是您的电子邮件内容。是否要将其包含在电子邮件中？@{emailContent}
+- 好的，下面是您的电子邮件内容。是否要将其包含在电子邮件中？${emailContent}
 

@@ -1,5 +1,3 @@
-[import](ShowEmailActivities.lg)
-
 # ReadOutForOneEmail.Text
 - ¿Quieres leer este correo electrónico?
 
@@ -10,8 +8,8 @@
 - ¿Desea volver a la descripción general de su correo electrónico?
 
 # ReadOutMessage.Text(emailDetailsWithoutContent)
-- Aquí están los detalles del correo electrónico: @{emailDetailsWithoutContent}
+- Aquí están los detalles del correo electrónico: ${emailDetailsWithoutContent}
 
 # ReadOutMessage.Speak(emailDetailsWithContent)
-- Aquí están los detalles del correo electrónico: @{emailDetailsWithoutContent}
+- Aquí están los detalles del correo electrónico: ${emailDetailsWithoutContent}
 

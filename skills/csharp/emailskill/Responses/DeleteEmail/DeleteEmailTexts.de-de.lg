@@ -1,5 +1,3 @@
-[import](DeleteEmailActivities.lg)
-
 # DeletePrompt.Text
 - Welche möchten Sie löschen?
 - Welche E-Mail möchten Sie löschen?
@@ -8,7 +6,7 @@
 - Möchten Sie diese E-Mail wirklich löschen?
 
 # DeleteConfirm.Speak(emailInfo)
-- Möchten Sie wirklich löschen? Hier sind einige Details: @{emailInfo}.
+- Möchten Sie wirklich löschen? Hier sind einige Details: ${emailInfo}.
 
 # DeleteSuccessfully.Text
 - Die E-Mail wurde gelöscht.
