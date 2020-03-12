@@ -1,0 +1,19 @@
+# ShowExistingToSolve.Text(Data)
+- I have searched knowledgebase for you.
+
+# IfExistingSolve.Text(Data)
+- Do any of these solve your problem? ${if(Data.Navigate == null, '', Data.Navigate)}
+
+# IfFindWanted.Text(Data)
+- Do you find what you want? ${if(Data.Navigate == null, '', Data.Navigate)}
+
+# IfCreateTicket.Text(Data)
+- Do you want to create a ticket for this?
+
+# KnowledgeEnd.Text(Data)
+- Page ${if(Data.Page == null, '', Data.Page)} does not contain anything, try "Go previous".
+
+# KnowledgeShowNone.Text(Data)
+- I'm sorry, I can't find any articles. Let me know if I can help in another way.
+
+

@@ -1,0 +1,82 @@
+# TicketCreated.Text(Data)
+- Your ticket has been created. Let me know when you need my help.
+
+# ConfirmUpdateAttribute.Text(Data)
+- Do you want to update ${if(Data.Attribute == null, '', Data.Attribute)}?
+
+# UpdateAttribute.Text(Data)
+- Which attribute do you want to update?
+
+# UpdateAttribute.S1(Data)
+- title
+
+# UpdateAttribute.S2(Data)
+- description
+
+# UpdateAttribute.S3(Data)
+- urgency
+
+# UpdateAttribute.S4(Data)
+- no
+
+# TicketUpdated.Text(Data)
+- Your ticket has been updated. Let me know when you need my help.
+
+# TicketNoUpdate.Text(Data)
+- You didn't provide any changes, let me know when you need my help.
+
+# ShowConstraintNone.Text(Data)
+- You don't have any constraints on search.
+
+# ShowConstraints.Text(Data)
+- You have the following constraints on search:\r\n${if(Data.Attributes == null, '', Data.Attributes)}
+
+# ShowUpdateNone.Text(Data)
+- You don't have any to update.
+
+# ShowUpdates.Text(Data)
+- You have the following to update:\r\n${if(Data.Attributes == null, '', Data.Attributes)}
+
+# ShowAttribute.Text(Data)
+- What attribute do you want to set as search constraint? Or "No" for no more attribute.
+
+# ShowAttribute.S1(Data)
+- number
+
+# ShowAttribute.S2(Data)
+- text
+
+# ShowAttribute.S3(Data)
+- urgency
+
+# ShowAttribute.S4(Data)
+- state
+
+# ShowAttribute.S5(Data)
+- no
+
+# TicketShow.Text(Data)
+- Do you want to update constraints to search again? ${if(Data.Navigate == null, '', Data.Navigate)}
+
+# TicketEnd.Text(Data)
+- Page ${if(Data.Page == null, '', Data.Page)} does not contain anything, try "Go previous".
+
+# TicketShowNone.Text(Data)
+- I'm sorry I can't find any. Do you want to update constraints to search again?
+
+# TicketFindNone.Text(Data)
+- I'm sorry I can't find any. Let me know when you need my help.
+
+# TicketDuplicateNumber.Text(Data)
+- Service reports duplicate ticket numbers. Please contact service manager for help.
+
+# TicketTarget.Text(Data)
+- Here is your current ticket:
+
+# TicketAlreadyClosed.Text(Data)
+- Your ticket has already been closed. Let me know when you need my help.
+
+# TicketClosed.Text(Data)
+- Your ticket has been closed. Let me know when you need my help.
+
+

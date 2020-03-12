@@ -1,0 +1,58 @@
+[import](..\Shared\Shared.lg)
+[import](KnowledgeResponsesTexts.lg)
+
+# ShowExistingToSolve(Data, Cards, Layout)
+[Activity
+    Text = ${ShowExistingToSolve.Text(Data)}
+    Speak = ${ShowExistingToSolve.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# IfExistingSolve(Data, Cards, Layout)
+[Activity
+    Text = ${IfExistingSolve.Text(Data)}
+    Speak = ${IfExistingSolve.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# IfFindWanted(Data, Cards, Layout)
+[Activity
+    Text = ${IfFindWanted.Text(Data)}
+    Speak = ${IfFindWanted.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# IfCreateTicket(Data, Cards, Layout)
+[Activity
+    Text = ${IfCreateTicket.Text(Data)}
+    Speak = ${IfCreateTicket.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# KnowledgeEnd(Data, Cards, Layout)
+[Activity
+    Text = ${KnowledgeEnd.Text(Data)}
+    Speak = ${KnowledgeEnd.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# KnowledgeShowNone(Data, Cards, Layout)
+[Activity
+    Text = ${KnowledgeShowNone.Text(Data)}
+    Speak = ${KnowledgeShowNone.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+
