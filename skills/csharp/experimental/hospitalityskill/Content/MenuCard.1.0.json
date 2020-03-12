@@ -18,7 +18,7 @@
                   "size": "Large",
                   "weight": "Bolder",
                   "color": "Dark",
-                  "text": "{Type} Menu"
+                  "text": "${if(Data.Type == null, '', Data.Type)} Menu"
                 }
               ],
               "width": "stretch"
@@ -27,7 +27,7 @@
         },
         {
           "type": "TextBlock",
-          "text": "{TimeAvailable}",
+          "text": "${if(Data.TimeAvailable == null, '', Data.TimeAvailable)}",
           "weight": "Bolder",
           "color": "Dark"
         }
@@ -41,5 +41,5 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }

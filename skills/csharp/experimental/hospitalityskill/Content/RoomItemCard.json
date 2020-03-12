@@ -11,7 +11,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "{Quantity}",
+              "text": "${if(Data.Quantity == null, '', Data.Quantity)}",
               "horizontalAlignment": "Center"
             }
           ],
@@ -22,7 +22,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "{Item}"
+              "text": "${if(Data.Item == null, '', Data.Item)}"
             }
           ],
           "width": 90

@@ -14,7 +14,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "{Name} {Price}",
+                  "text": "${if(Data.Name == null, '', Data.Name)} ${if(Data.Price == null, '', Data.Price)}",
                   "weight": "Bolder"
                 }
               ]
@@ -23,7 +23,7 @@
         },
         {
           "type": "TextBlock",
-          "text": "{Description}",
+          "text": "${if(Data.Description == null, '', Data.Description)}",
           "wrap": true,
           "horizontalAlignment": "Left",
           "spacing": "None"

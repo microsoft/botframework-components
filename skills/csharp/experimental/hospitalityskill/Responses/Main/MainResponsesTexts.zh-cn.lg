@@ -1,0 +1,26 @@
+# WelcomeMessage.Text(Data)
+- [在此输入您的简介信息]
+
+# HelpMessage.Text(Data)
+- [在此处输入您的帮助信息]
+
+# GreetingMessage.Text(Data)
+- 嗨！
+- 我在这！
+- 你好！
+- 您好！
+
+# GoodbyeMessage.Text(Data)
+- 再见！
+
+# LogOut.Text(Data)
+- 您已成功退出。
+- 您已退出。
+
+# FeatureNotAvailable.Text(Data)
+- 此功能在此技能中尚不可用。
+
+# CancelMessage.Text(Data)
+- 好的, 我们从头再来。
+
+

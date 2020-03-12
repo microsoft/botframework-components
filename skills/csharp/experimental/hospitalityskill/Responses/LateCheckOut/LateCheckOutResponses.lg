@@ -1,0 +1,49 @@
+[import](..\Shared\Shared.lg)
+[import](LateCheckOutResponsesTexts.lg)
+
+# CheckAvailability(Data, Cards, Layout)
+[Activity
+    Text = ${CheckAvailability.Text(Data)}
+    Speak = ${CheckAvailability.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# MoveCheckOutPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${MoveCheckOutPrompt.Text(Data)}
+    Speak = ${MoveCheckOutPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryMoveCheckOut(Data, Cards, Layout)
+[Activity
+    Text = ${RetryMoveCheckOut.Text(Data)}
+    Speak = ${RetryMoveCheckOut.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# MoveCheckOutSuccess(Data, Cards, Layout)
+[Activity
+    Text = ${MoveCheckOutSuccess.Text(Data)}
+    Speak = ${MoveCheckOutSuccess.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# HasLateCheckOut(Data, Cards, Layout)
+[Activity
+    Text = ${HasLateCheckOut.Text(Data)}
+    Speak = ${HasLateCheckOut.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

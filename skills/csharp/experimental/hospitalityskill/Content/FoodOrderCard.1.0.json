@@ -56,7 +56,7 @@
                                 {
                                     "type": "TextBlock",
                                     "weight": "Bolder",
-                                    "text": "${BillTotal}",
+                                    "text": "$${if(Data.BillTotal == null, '', Data.BillTotal)}",
                                     "horizontalAlignment": "Right"
                                 }
                             ],

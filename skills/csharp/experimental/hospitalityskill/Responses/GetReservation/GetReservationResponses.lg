@@ -1,0 +1,13 @@
+[import](..\Shared\Shared.lg)
+[import](GetReservationResponsesTexts.lg)
+
+# ShowReservationDetails(Data, Cards, Layout)
+[Activity
+    Text = ${ShowReservationDetails.Text(Data)}
+    Speak = ${ShowReservationDetails.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+
