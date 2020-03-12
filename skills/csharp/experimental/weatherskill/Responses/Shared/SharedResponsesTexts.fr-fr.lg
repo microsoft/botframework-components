@@ -1,4 +1,4 @@
-[import] (SharedResponses.lg)
+[import](SharedResponses.lg)
 
 # AuthFailedTextAndSpeak1.Text(Data)
 - L'authentification a échoué. S'il vous plaît essayer à nouveau

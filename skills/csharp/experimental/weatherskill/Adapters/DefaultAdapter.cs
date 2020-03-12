@@ -26,13 +26,13 @@ namespace WeatherSkill.Bots
             IBotTelemetryClient telemetryClient,
             UserState userState,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager localeTemplateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(localeTemplateEngineManager.GetResponse(SharedResponses.ErrorMessage));
+                await context.SendActivityAsync(localeTemplateManager.GetResponse(SharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
 
@@ -52,7 +52,6 @@ namespace WeatherSkill.Bots
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

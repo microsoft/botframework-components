@@ -1,4 +1,4 @@
-[import] (MainResponses.lg)
+[import](MainResponses.lg)
 
 # WelcomeMessage.Text(Data)
 - I'm the weather skill and I can look up the weather.

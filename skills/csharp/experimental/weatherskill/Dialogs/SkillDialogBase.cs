@@ -20,6 +20,7 @@ using WeatherSkill.Models;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
 using WeatherSkill.Utilities;
+using Microsoft.Bot.Solutions.Skills;
 
 namespace WeatherSkill.Dialogs
 {
@@ -29,13 +30,13 @@ namespace WeatherSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             LocaleTemplateEngineManager localeTemplateEngineManager,
+             LocaleTemplateManager localeTemplateManager,
              ConversationState conversationState,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
-            LocaleTemplateEngineManager = localeTemplateEngineManager;
+            LocaleTemplateManager = localeTemplateManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
 
@@ -54,7 +55,7 @@ namespace WeatherSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
+        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -169,7 +170,7 @@ namespace WeatherSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GetResponse(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);

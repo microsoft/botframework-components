@@ -58,7 +58,7 @@ else {
 }
 
 Write-Host "> Getting config file ..." -NoNewline
-$languageMap = @{ }
+$languageMap = ${ }
 $config = Get-Content -Encoding utf8 -Raw -Path $configFile | ConvertFrom-Json
 $config.cognitiveModels.PSObject.Properties | Foreach-Object { $languageMap[$_.Name] = $_.Value }
 Write-Host "Done." -ForegroundColor Green

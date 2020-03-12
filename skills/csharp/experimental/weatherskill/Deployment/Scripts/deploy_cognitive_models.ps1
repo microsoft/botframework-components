@@ -149,7 +149,7 @@ $azAccessToken = $(Invoke-Expression "az account get-access-token --output json"
 $languageArr = $languages -split ","
 
 # Initialize settings obj
-$settings = @{ defaultLocale = $languageArr[0]; cognitiveModels = New-Object PSObject }
+$settings = ${ defaultLocale = $languageArr[0]; cognitiveModels = New-Object PSObject }
 
 # Deploy localized resources
 foreach ($language in $languageArr)
@@ -235,7 +235,7 @@ foreach ($language in $languageArr)
 				}
 
 				# Add to config 
-				$config.languageModels += @{
+				$config.languageModels += ${
 					id = $lu.BaseName
 					name = $luisApp.name
 					appid = $luisApp.id
@@ -296,7 +296,7 @@ foreach ($language in $languageArr)
                         --subscriptionKey $qnaSubscriptionKey | ConvertFrom-Json
 
 					# Add to config
-					$config.knowledgebases += @{
+					$config.knowledgebases += ${
 						id = $lu.BaseName
 						name = $lu.BaseName
 						kbId = $qnaKb.kbId
@@ -359,7 +359,7 @@ foreach ($language in $languageArr)
             }
 
 			# Add to config
-			$config.dispatchModel = @{
+			$config.dispatchModel = ${
 				type = "dispatch"
 				name = $dispatchApp.name
 				appid = $dispatchApp.appId

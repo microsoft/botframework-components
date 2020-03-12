@@ -1,4 +1,4 @@
-[import] (MainResponses.lg)
+[import](MainResponses.lg)
 
 # WelcomeMessage.Text(Data)
 - 我是天气查询技能， 可以帮助您查询天气。

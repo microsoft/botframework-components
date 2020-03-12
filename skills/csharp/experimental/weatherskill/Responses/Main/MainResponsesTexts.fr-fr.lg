@@ -1,4 +1,4 @@
-[import] (MainResponses.lg)
+[import](MainResponses.lg)
 
 # WelcomeMessage.Text(Data)
 - Je suis l'habileté météo et je peux regarder la météo.

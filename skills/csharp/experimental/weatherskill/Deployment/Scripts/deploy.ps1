@@ -215,7 +215,7 @@ if ($outputs)
 	# Log and convert to JSON
 	$outputs >> $logFile
 	$outputs = $outputs | ConvertFrom-Json
-	$outputMap = @{}
+	$outputMap = ${}
 	$outputs.PSObject.Properties | Foreach-Object { $outputMap[$_.Name] = $_.Value }
 
 	# Update AD app with homepage
