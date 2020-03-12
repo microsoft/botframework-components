@@ -11,6 +11,7 @@ using Bot.Builder.Community.Adapters.Google.Model.Attachments;
 using HospitalitySkill.Models;
 using HospitalitySkill.Responses.RoomService;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
@@ -26,7 +27,7 @@ namespace HospitalitySkill.Dialogs
         public RoomServiceDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,

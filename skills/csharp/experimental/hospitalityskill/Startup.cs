@@ -30,6 +30,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HospitalitySkill.Utilities;
 
 namespace HospitalitySkill
 {
@@ -43,8 +44,6 @@ namespace HospitalitySkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -95,7 +94,7 @@ namespace HospitalitySkill
             // Configure storage
             // Uncomment the following line for local development without Cosmos Db
             // services.AddSingleton<IStorage, MemoryStorage>();
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -110,16 +109,7 @@ namespace HospitalitySkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(sp => new ResponseManager(
-                settings.CognitiveModels.Select(l => l.Key).ToArray(),
-                new MainResponses(),
-                new SharedResponses(),
-                new CheckOutResponses(),
-                new LateCheckOutResponses(),
-                new ExtendStayResponses(),
-                new GetReservationResponses(),
-                new RequestItemResponses(),
-                new RoomServiceResponses()));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
 
             // Configure services
             services.AddSingleton<IHotelService, HotelService>();

@@ -21,7 +21,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task CheckOutTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Email", NonLuisUtterances.Email },
             };
@@ -43,7 +43,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task CheckOutAlreadyTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Email", NonLuisUtterances.Email },
             };
@@ -68,7 +68,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task CheckOutInvalidEmailTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Email", NonLuisUtterances.Email },
             };

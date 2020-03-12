@@ -11,6 +11,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.RequestItem;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -23,7 +24,7 @@ namespace HospitalitySkill.Dialogs
         public RequestItemDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
@@ -135,7 +136,7 @@ namespace HospitalitySkill.Dialogs
 
             if (notAvailable.Count > 0)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, string>
                 {
                     { "Items", notAvailable.Aggregate(string.Empty, (last, item) => last + $"{Environment.NewLine}- {item.Item[0]}") }
                 };

@@ -7,6 +7,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Responses.GetReservation;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -18,7 +19,7 @@ namespace HospitalitySkill.Dialogs
         public GetReservationDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
@@ -40,7 +41,7 @@ namespace HospitalitySkill.Dialogs
         {
             var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
             var cardData = userState.UserReservation;
-            cardData.Title = string.Format(HospitalityStrings.ReservationDetails);
+            cardData.Title = ResponseManager.GetString(HospitalityStrings.ReservationDetails);
 
             // send card with reservation details
             var reply = ResponseManager.GetCardResponse(GetReservationResponses.ShowReservationDetails, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);

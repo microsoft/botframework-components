@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Responses.LateCheckOut;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -21,7 +23,7 @@ namespace HospitalitySkill.Dialogs
         public LateCheckOutDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
@@ -49,7 +51,7 @@ namespace HospitalitySkill.Dialogs
             if (userState.LateCheckOut)
             {
                 var cardData = userState.UserReservation;
-                cardData.Title = string.Format(HospitalityStrings.ReservationDetails);
+                cardData.Title = ResponseManager.GetString(HospitalityStrings.ReservationDetails);
 
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
                 await sc.Context.SendActivityAsync(reply);
@@ -79,7 +81,7 @@ namespace HospitalitySkill.Dialogs
 
             convState.UpdatedReservation = new ReservationData { CheckOutTimeData = lateTime };
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Time", convState.UpdatedReservation.CheckOutTime },
             };
@@ -122,14 +124,14 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.LateCheckOut)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, string>
                 {
                     { "Time", userState.UserReservation.CheckOutTime },
                     { "Date", userState.UserReservation.CheckOutDate }
                 };
 
                 var cardData = userState.UserReservation;
-                cardData.Title = string.Format(HospitalityStrings.UpdateReservation);
+                cardData.Title = ResponseManager.GetString(HospitalityStrings.UpdateReservation);
 
                 // check out time moved confirmation
                 var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);

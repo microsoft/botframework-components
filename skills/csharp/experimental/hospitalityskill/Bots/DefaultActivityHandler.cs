@@ -57,5 +57,10 @@ namespace HospitalitySkill.Bots
         {
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
+
+        protected override Task OnEndOfConversationActivityAsync(ITurnContext<IEndOfConversationActivity> turnContext, CancellationToken cancellationToken)
+        {
+            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+        }
     }
 }

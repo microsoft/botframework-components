@@ -36,7 +36,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task RequestInvalidItemTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Items", $"{Environment.NewLine}- {RequestItemUtterances.InvalidItem}" }
             };
@@ -58,7 +58,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task RequestWithItemAndInvalidItemTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Items", $"{Environment.NewLine}- {RequestItemUtterances.InvalidItem}" }
             };

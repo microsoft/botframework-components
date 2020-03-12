@@ -9,6 +9,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -28,7 +29,7 @@ namespace HospitalitySkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager responseManager,
              ConversationState conversationState,
              UserState userState,
              IHotelService hotelService,
@@ -60,7 +61,7 @@ namespace HospitalitySkill.Dialogs
 
         protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateManager ResponseManager { get; set; }
 
         protected IHotelService HotelService { get; set; }
 

@@ -11,6 +11,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Responses.ExtendStay;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -22,7 +23,7 @@ namespace HospitalitySkill.Dialogs
         public ExtendStayDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
@@ -78,7 +79,7 @@ namespace HospitalitySkill.Dialogs
             {
                 convState.NumberEntity = entities.number[0];
 
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, string>
                 {
                     { "Number", convState.NumberEntity.ToString() }
                 };
@@ -200,7 +201,7 @@ namespace HospitalitySkill.Dialogs
                 }
                 else
                 {
-                    var tokens = new StringDictionary
+                    var tokens = new Dictionary<string, string>
                     {
                         { "Date", userState.UserReservation.CheckOutDate }
                     };
@@ -216,7 +217,7 @@ namespace HospitalitySkill.Dialogs
         {
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, string>
             {
                 { "Date", convState.UpdatedReservation.CheckOutDate }
             };
@@ -259,13 +260,13 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.UserReservation.CheckOutDate == convState.UpdatedReservation.CheckOutDate)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, string>
                 {
                     { "Date", userState.UserReservation.CheckOutDate }
                 };
 
                 var cardData = userState.UserReservation;
-                cardData.Title = string.Format(HospitalityStrings.UpdateReservation);
+                cardData.Title = ResponseManager.GetString(HospitalityStrings.UpdateReservation);
 
                 // check out date moved confirmation
                 var reply = ResponseManager.GetCardResponse(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);

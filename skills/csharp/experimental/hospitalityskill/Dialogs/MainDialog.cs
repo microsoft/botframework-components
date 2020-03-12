@@ -9,6 +9,7 @@ using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.Main;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -23,19 +24,17 @@ namespace HospitalitySkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private BotServices _services;
-        private ResponseManager _responseManager;
         private IHotelService _hotelService;
-        private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
+        private LocaleTemplateManager _responseManager;
         private IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
-
         public MainDialog(
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
             _hotelService = serviceProvider.GetService<IHotelService>();
+            _responseManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties

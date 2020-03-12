@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using HospitalitySkill.Models;
 using HospitalitySkill.Responses.CheckOut;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -19,7 +21,7 @@ namespace HospitalitySkill.Dialogs
         public CheckOutDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
@@ -107,7 +109,7 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.CheckedOut)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, string>
                 {
                     { "Email", userState.Email },
                 };
