@@ -24,12 +24,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
@@ -64,12 +64,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCloseTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", string.Empty }
             };
@@ -96,12 +96,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithTitleTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}" }
             };
@@ -123,12 +123,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowActionTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
@@ -161,12 +161,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCloseActionTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", string.Empty }
             };
@@ -187,12 +187,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithTitleActionTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new Dictionary<string, string>
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}" }
             };

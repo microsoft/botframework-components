@@ -24,7 +24,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task UpdateTest()
         {
-            var attribute = new Dictionary<string, string>()
+            var attribute = new Dictionary<string, object>()
             {
                 { "Attributes", $"Title: {MockData.CreateTicketTitle}" }
             };
@@ -53,7 +53,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task UpdateWithNumberUrgencyTest()
         {
-            var attribute = new Dictionary<string, string>()
+            var attribute = new Dictionary<string, object>()
             {
                 { "Attributes", $"Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
@@ -76,7 +76,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task UpdateActionTest()
         {
-            var attribute = new Dictionary<string, string>()
+            var attribute = new Dictionary<string, object>()
             {
                 { "Attributes", $"Title: {MockData.CreateTicketTitle}" }
             };
@@ -103,7 +103,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task UpdateWithNumberUrgencyDescriptionActionTest()
         {
-            var attribute = new Dictionary<string, string>()
+            var attribute = new Dictionary<string, object>()
             {
                 { "Attributes", $"Description: {MockData.CreateTicketDescription}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };

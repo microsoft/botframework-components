@@ -23,7 +23,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -52,7 +52,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateExistingSolveTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -76,17 +76,17 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyTest()
         {
-            var confirmTitle = new Dictionary<string, string>
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new Dictionary<string, string>
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
@@ -115,17 +115,17 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyNotConfirmTest()
         {
-            var confirmTitle = new Dictionary<string, string>
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new Dictionary<string, string>
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
@@ -158,7 +158,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateActionTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -185,7 +185,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateExistingSolveActionTest()
         {
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -207,22 +207,22 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyDescriptionActionTest()
         {
-            var confirmTitle = new Dictionary<string, string>
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new Dictionary<string, string>
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new Dictionary<string, string>
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
 
-            var confirmDescription = new Dictionary<string, string>
+            var confirmDescription = new Dictionary<string, object>
             {
                 { "Description", MockData.CreateTicketDescription }
             };

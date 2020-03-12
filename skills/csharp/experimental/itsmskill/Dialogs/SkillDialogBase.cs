@@ -258,7 +258,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Id", state.Id }
                 };
@@ -306,7 +306,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Attribute", state.AttributeType.ToLocalizedString() }
                 };
@@ -406,7 +406,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Search", state.TicketTitle }
                 };
@@ -447,7 +447,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Title", state.TicketTitle }
                 };
@@ -502,7 +502,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Description", state.TicketDescription }
                 };
@@ -550,7 +550,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Reason", state.CloseReason }
                 };
@@ -660,7 +660,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "Urgency", state.UrgencyLevel.ToString() }
                 };
@@ -727,7 +727,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new Dictionary<string, string>
+                var replacements = new Dictionary<string, object>
                 {
                     { "State", state.TicketState.ToString() }
                 };
@@ -843,7 +843,7 @@ namespace ITSMSkill.Dialogs
                 else
                 {
                     // it is unlikely to happen now
-                    var token = new Dictionary<string, string>()
+                    var token = new Dictionary<string, object>()
                     {
                         { "Page", (state.PageIndex + 1).ToString() }
                     };
@@ -964,7 +964,7 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result)
         {
-            var errorReplacements = new Dictionary<string, string>
+            var errorReplacements = new Dictionary<string, object>
             {
                 { "Error", result.ErrorMessage }
             };
@@ -1023,7 +1023,7 @@ namespace ITSMSkill.Dialogs
 
         protected Activity GetNavigatePrompt(ITurnContext context, string response, int pageIndex, int maxPage)
         {
-            var token = new Dictionary<string, string>()
+            var token = new Dictionary<string, object>()
             {
                 { "Navigate", GetNavigateString(pageIndex, maxPage) },
             };
@@ -1041,7 +1041,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new Dictionary<string, string>()
+                var token = new Dictionary<string, object>()
                 {
                     { "Current", (pageIndex + 1).ToString() },
                     { "Total", (maxPage + 1).ToString() },

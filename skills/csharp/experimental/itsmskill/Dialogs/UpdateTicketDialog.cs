@@ -98,7 +98,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new Dictionary<string, string>()
+                var token = new Dictionary<string, object>()
                 {
                     { "Attributes", sb.ToString() }
                 };

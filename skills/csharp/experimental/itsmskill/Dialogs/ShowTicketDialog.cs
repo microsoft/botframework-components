@@ -134,7 +134,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new Dictionary<string, string>()
+                var token = new Dictionary<string, object>()
                 {
                     { "Attributes", sb.ToString() }
                 };
@@ -228,7 +228,7 @@ namespace ITSMSkill.Dialogs
                 else
                 {
                     // it is unlikely to happen now
-                    var token = new Dictionary<string, string>()
+                    var token = new Dictionary<string, object>()
                     {
                         { "Page", (state.PageIndex + 1).ToString() }
                     };

@@ -216,7 +216,7 @@ namespace ITSMSkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertStartsWith(string response, Dictionary<string, string> tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertStartsWith(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -228,7 +228,7 @@ namespace ITSMSkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, string>());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     Assert.IsTrue(collection.Any((reply) =>
                     {
                         return messageActivity.Text.StartsWith(reply);
@@ -239,7 +239,7 @@ namespace ITSMSkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertContains(string response, Dictionary<string, string> tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertContains(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -251,7 +251,7 @@ namespace ITSMSkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, string>());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     CollectionAssert.Contains(collection, messageActivity.Text);
                 }
 
@@ -259,7 +259,7 @@ namespace ITSMSkill.Tests.Flow
             };
         }
 
-        protected string[] ParseReplies(string templateId, Dictionary<string, string> tokens = null)
+        protected string[] ParseReplies(string templateId, Dictionary<string, object> tokens = null)
         {
             return Templates.ParseReplies(templateId, tokens);
         }
