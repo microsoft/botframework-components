@@ -92,6 +92,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Responses\Shared\SharedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Responses\Shared\Shared.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -117,12 +123,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Ticket\TicketResponsesTexts.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Shared\SharedStrings.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Shared\SharedStringsTexts.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.lg">
@@ -162,14 +162,11 @@
     </None>
     <None Update="Responses\Shared\SharedResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SharedResponses.cs</LastGenOutput>
     </None>
     <None Update="Responses\Ticket\TicketResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TicketResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Shared\SharedStrings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SharedStrings.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>
