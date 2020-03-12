@@ -366,7 +366,7 @@ namespace PhoneSkill.Dialogs
                 var skillOptions = stepContext.Options as PhoneSkillDialogOptions;
                 if (skillOptions != null && skillOptions.IsAction)
                 {
-                    var actionResult = new OutgoingCallResponse() { ActionSuccess = true };
+                    var actionResult = new ActionResult() { ActionSuccess = true };
                     return await stepContext.EndDialogAsync(actionResult);
                 }
 

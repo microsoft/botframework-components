@@ -236,6 +236,7 @@ namespace PhoneSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+            state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -341,6 +342,15 @@ namespace PhoneSkill.Dialogs
                     Code = EndOfConversationCodes.CompletedSuccessfully,
                     Value = stepContext.Result,
                 };
+
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    }
+                }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
