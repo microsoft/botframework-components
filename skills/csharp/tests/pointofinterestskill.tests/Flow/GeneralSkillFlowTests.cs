@@ -18,6 +18,25 @@ namespace PointOfInterestSkill.Tests.Flow
     [TestCategory("UnitTests")]
     public class GeneralSkillFlowTests : PointOfInterestSkillTestBase
     {
+        /// <summary>
+        /// Test test functions that use external functions.
+        /// </summary>
+        /// <returns>Task object.</returns>
+        [TestMethod]
+        public async Task Test_TestFunctions()
+        {
+            var data = new Dictionary<string, object>()
+            {
+                { "Name", "NAME" },
+                { "Address", "ADDRESS" },
+            };
+
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.PointOfInterestSuggestedActionName, data), "NAME at ADDRESS");
+
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "I found the following.");
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "Here's a match.");
+        }
+
         [TestMethod]
         public async Task Test_SkillModeCompletion()
         {

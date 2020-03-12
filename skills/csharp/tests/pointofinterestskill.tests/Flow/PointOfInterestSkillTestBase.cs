@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
@@ -19,7 +17,6 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Models;
 using Microsoft.Bot.Solutions.Proactive;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +25,6 @@ using Newtonsoft.Json.Linq;
 using PointOfInterestSkill.Bots;
 using PointOfInterestSkill.Dialogs;
 using PointOfInterestSkill.Models;
-using PointOfInterestSkill.Responses.CancelRoute;
-using PointOfInterestSkill.Responses.FindPointOfInterest;
-using PointOfInterestSkill.Responses.Main;
-using PointOfInterestSkill.Responses.Route;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.API.Fakes;
@@ -41,14 +34,14 @@ using SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes;
 
 namespace PointOfInterestSkill.Tests.Flow
 {
-    public class PointOfInterestSkillTestBase : BotTestBase
+    public class PointOfInterestSkillTestBase
     {
         public IServiceCollection Services { get; set; }
 
         public Templates AllTemplates { get; set; }
 
         [TestInitialize]
-        public override void Initialize()
+        public void Initialize()
         {
             // Initialize service collection
             Services = new ServiceCollection();
@@ -160,7 +153,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 }
                 else
                 {
-                    Assert.IsTrue(ParseReplies(response, new Dictionary<string, string>()).Any((reply) =>
+                    Assert.IsTrue(ParseReplies(response, new Dictionary<string, object>()).Any((reply) =>
                     {
                         return messageActivity.Text.StartsWith(reply);
                     }));
@@ -182,7 +175,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 }
                 else
                 {
-                    CollectionAssert.Contains(ParseReplies(response, new Dictionary<string, string>()), messageActivity.Text);
+                    CollectionAssert.Contains(ParseReplies(response, new Dictionary<string, object>()), messageActivity.Text);
                 }
 
                 AssertSameId(messageActivity, cardIds);
@@ -224,22 +217,26 @@ namespace PointOfInterestSkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> CheckForEoC(bool value = false)
+        protected Action<IActivity> CheckForEoC(bool? value = null)
         {
             return activity =>
             {
                 var eoc = (Activity)activity;
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                if (value)
+                if (value.HasValue)
                 {
                     var dest = eoc.Value as SingleDestinationResponse;
                     Assert.IsNotNull(dest);
-                    Assert.IsTrue(!string.IsNullOrEmpty(dest.Name));
+                    Assert.AreEqual(dest.ActionSuccess, value.Value);
+                    if (value.Value)
+                    {
+                        Assert.IsFalse(string.IsNullOrEmpty(dest.Name));
+                    }
                 }
             };
         }
 
-        protected string[] ParseReplies(string name, IDictionary<string, string> data = null)
+        protected string[] ParseReplies(string name, IDictionary<string, object> data = null)
         {
             return AllTemplates.ParseReplies(name, data);
         }

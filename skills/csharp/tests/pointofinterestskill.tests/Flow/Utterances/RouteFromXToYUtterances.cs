@@ -4,6 +4,7 @@
 using Luis;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json.Linq;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.Flow.Strings;
 using SkillServiceLibrary.Models;
@@ -20,13 +21,13 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
 
         public static readonly string GetToNearestPharmacy = $"get directions to the nearest {ContextStrings.Pharmacy}";
 
-        public static readonly Activity FindRouteAction = new Activity(type: ActivityTypes.Event, name: "GetDirectionAction", value: JObject.FromObject(new
+        public static readonly Activity FindRouteAction = new Activity(type: ActivityTypes.Event, name: ActionNames.GetDirectionAction, value: JObject.FromObject(new
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,
         }));
 
-        public static readonly Activity GetToNearestPharmacyNoCurrentAction = new Activity(type: ActivityTypes.Event, name: "GetDirectionAction", value: JObject.FromObject(new
+        public static readonly Activity GetToNearestPharmacyNoCurrentAction = new Activity(type: ActivityTypes.Event, name: ActionNames.GetDirectionAction, value: JObject.FromObject(new
         {
             keyword = ContextStrings.Pharmacy,
             poiType = GeoSpatialServiceTypes.PoiType.Nearest,

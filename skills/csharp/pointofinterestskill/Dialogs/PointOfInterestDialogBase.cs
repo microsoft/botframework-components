@@ -548,7 +548,7 @@ namespace PointOfInterestSkill.Dialogs
                     await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Telephone));
                 }
 
-                response = ConvertToResponse(state.Destination);
+                response = state.IsAction ? ConvertToResponse(state.Destination) : null;
             }
             else if (choiceIndex == 1)
             {
@@ -561,7 +561,7 @@ namespace PointOfInterestSkill.Dialogs
                     await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
                 }
 
-                response = ConvertToResponse(state.Destination);
+                response = state.IsAction ? ConvertToResponse(state.Destination) : null;
             }
 
             return await sc.NextAsync(response);
@@ -680,14 +680,14 @@ namespace PointOfInterestSkill.Dialogs
                     if (pointOfInterestList.Where(x => x.Name == pointOfInterestList[i].Name).Skip(1).Any())
                     {
                         var promptTemplate = POISharedResponses.PointOfInterestSuggestedActionName;
-                        var promptReplacements = new Dictionary<string, string>
+                        var promptReplacements = new Dictionary<string, object>
                         {
                             { "Name", WebUtility.HtmlEncode(pointOfInterestList[i].Name) },
                             { "Address", $"<say-as interpret-as='address'>{WebUtility.HtmlEncode(pointOfInterestList[i].AddressForSpeak)}</say-as>" },
                         };
                         pointOfInterestList[i].Speak = ResponseManager.GetResponse(promptTemplate, promptReplacements).Speak;
 
-                        promptReplacements = new Dictionary<string, string>
+                        promptReplacements = new Dictionary<string, object>
                         {
                             { "Name", pointOfInterestList[i].Name },
                             { "Address", pointOfInterestList[i].AddressForSpeak },
@@ -775,7 +775,7 @@ namespace PointOfInterestSkill.Dialogs
                 timeString.Append(timeSpan.Minutes + $" {ResponseManager.GetString(PointOfInterestSharedStrings.MINUTES)}");
             }
 
-            var timeReplacements = new Dictionary<string, string>
+            var timeReplacements = new Dictionary<string, object>
             {
                 { "Time", timeString.ToString() }
             };
@@ -945,6 +945,7 @@ namespace PointOfInterestSkill.Dialogs
         protected SingleDestinationResponse ConvertToResponse(PointOfInterestModel model)
         {
             var response = new SingleDestinationResponse();
+            response.ActionSuccess = true;
             response.Name = model.Name;
             response.Latitude = model.Geolocation.Latitude;
             response.Longitude = model.Geolocation.Longitude;
@@ -967,12 +968,17 @@ namespace PointOfInterestSkill.Dialogs
             }
             else
             {
+                var state = await Accessor.GetAsync(promptContext.Context);
+                if (state.IsAction)
+                {
+                    return false;
+                }
+
                 var poiResult = promptContext.Context.TurnState.Get<PointOfInterestLuis>(StateProperties.POILuisResultKey);
                 var topIntent = poiResult.TopIntent();
 
                 if (topIntent.score > 0.5 && topIntent.intent != PointOfInterestLuis.Intent.None)
                 {
-                    var state = await Accessor.GetAsync(promptContext.Context);
                     state.ShouldInterrupt = true;
                     return true;
                 }
@@ -991,7 +997,6 @@ namespace PointOfInterestSkill.Dialogs
             }
             else
             {
-                var state = await Accessor.GetAsync(promptContext.Context);
                 var generalLuisResult = promptContext.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 var intent = generalLuisResult.TopIntent().intent;
                 if (intent == General.Intent.Reject || intent == General.Intent.SelectNone)

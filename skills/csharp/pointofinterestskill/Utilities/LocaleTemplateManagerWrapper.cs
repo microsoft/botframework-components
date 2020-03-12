@@ -28,12 +28,12 @@ namespace PointOfInterestSkill.Utilities
             return manager.GetCardResponse("CardsOnly", cards, null, attachmentLayout);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, string> tokens = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, new Card[] { card }, tokens);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, string> tokens = null, string attachmentLayout = "carousel")
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
         {
             var input = new
             {
@@ -53,9 +53,8 @@ namespace PointOfInterestSkill.Utilities
             }
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, string> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
-            // throw new Exception("1. create *Containee.json which only keeps containee's body;2. in the container, write @{if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
             var input = new
             {
                 Data = tokens,
@@ -73,7 +72,7 @@ namespace PointOfInterestSkill.Utilities
             }
         }
 
-        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, IDictionary<string, string> tokens = null)
+        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, Array.Empty<Card>(), tokens);
         }
@@ -83,7 +82,7 @@ namespace PointOfInterestSkill.Utilities
             return manager.GenerateActivityForLocale(templateId + ".Text").Text;
         }
 
-        public static string[] ParseReplies(this Templates manager, string name, IDictionary<string, string> data = null)
+        public static string[] ParseReplies(this Templates manager, string name, IDictionary<string, object> data = null)
         {
             var input = new
             {
@@ -102,7 +101,7 @@ namespace PointOfInterestSkill.Utilities
             var res = new CardExt { Name = Path.Join(PathBase, card.Name + suffix), Data = card.Data };
             if (containerItems != null)
             {
-                res.Cards = containerItems.Select((card) => Convert(card, "Containee.json")).ToList();
+                res.Cards = containerItems.Select((card) => Convert(card, ".json")).ToList();
             }
 
             return res;

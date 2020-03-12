@@ -274,7 +274,7 @@ namespace PointOfInterestSkill.Dialogs
                         await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
                     }
 
-                    response = ConvertToResponse(state.Destination);
+                    response = state.IsAction ? ConvertToResponse(state.Destination) : null;
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace PointOfInterestSkill.Dialogs
             for (var i = 0; i < cards.Count; ++i)
             {
                 // Simple distinction
-                var promptReplacements = new Dictionary<string, string>
+                var promptReplacements = new Dictionary<string, object>
                 {
                     { "Id", (i + 1).ToString() },
                 };

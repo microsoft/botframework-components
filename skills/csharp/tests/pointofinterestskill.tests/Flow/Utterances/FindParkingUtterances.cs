@@ -4,6 +4,7 @@
 using Luis;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json.Linq;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.Flow.Strings;
 using SkillServiceLibrary.Models;
@@ -18,13 +19,25 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
 
         public static readonly string FindParkingNearAddress = $"find a parking garage near {ContextStrings.Ave}";
 
-        public static readonly Activity FindParkingNearbyAction = new Activity(type: ActivityTypes.Event, name: "FindParkingAction", value: JObject.FromObject(new
+        public static readonly Activity FindParkingNearbyAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindParkingAction, value: JObject.FromObject(new
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,
         }));
 
-        public static readonly Activity FindParkingNearestNoRouteAction = new Activity(type: ActivityTypes.Event, name: "FindParkingAction", value: JObject.FromObject(new
+        public static readonly Activity FindParkingNearestAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindParkingAction, value: JObject.FromObject(new
+        {
+            currentLatitude = LocationLatitude,
+            currentLongitude = LocationLongitude,
+            poiType = GeoSpatialServiceTypes.PoiType.Nearest,
+        }));
+
+        public static readonly Activity FindParkingNearestNoCurrentAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindParkingAction, value: JObject.FromObject(new
+        {
+            poiType = GeoSpatialServiceTypes.PoiType.Nearest,
+        }));
+
+        public static readonly Activity FindParkingNearestNoRouteAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindParkingAction, value: JObject.FromObject(new
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,
