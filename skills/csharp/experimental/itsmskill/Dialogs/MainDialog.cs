@@ -9,6 +9,7 @@ using ITSMSkill.Models.Actions;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Services;
+using ITSMSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -28,7 +29,7 @@ namespace ITSMSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateManager _responseManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public MainDialog(
@@ -37,7 +38,7 @@ namespace ITSMSkill.Dialogs
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _responseManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties

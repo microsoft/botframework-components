@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace ITSMSkill.Dialogs
         public UpdateTicketDialog(
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager responseManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
@@ -97,7 +98,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new StringDictionary()
+                var token = new Dictionary<string, string>()
                 {
                     { "Attributes", sb.ToString() }
                 };

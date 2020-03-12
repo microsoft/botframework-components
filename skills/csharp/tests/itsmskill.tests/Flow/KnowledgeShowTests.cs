@@ -22,7 +22,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
@@ -45,7 +45,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowAndHelpTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
@@ -71,7 +71,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowAndCancelTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
@@ -95,12 +95,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCreateTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, string>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
@@ -132,12 +132,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, string>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -160,12 +160,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchNoCreateTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, string>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -190,7 +190,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
@@ -211,12 +211,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenRejectActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, string>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
@@ -237,12 +237,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, string>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -263,12 +263,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchThenRejectActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, string>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, string>
             {
                 { "Search", MockData.CreateTicketTitle }
             };

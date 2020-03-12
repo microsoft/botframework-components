@@ -36,7 +36,7 @@ namespace ITSMSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager responseManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
@@ -162,7 +162,7 @@ namespace ITSMSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateManager ResponseManager { get; set; }
 
         protected IServiceManager ServiceManager { get; set; }
 
@@ -258,7 +258,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Id", state.Id }
                 };
@@ -306,7 +306,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Attribute", state.AttributeType.ToLocalizedString() }
                 };
@@ -406,7 +406,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Search", state.TicketTitle }
                 };
@@ -447,7 +447,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Title", state.TicketTitle }
                 };
@@ -502,7 +502,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Description", state.TicketDescription }
                 };
@@ -550,7 +550,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Reason", state.CloseReason }
                 };
@@ -660,7 +660,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "Urgency", state.UrgencyLevel.ToString() }
                 };
@@ -727,7 +727,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, string>
                 {
                     { "State", state.TicketState.ToString() }
                 };
@@ -843,7 +843,7 @@ namespace ITSMSkill.Dialogs
                 else
                 {
                     // it is unlikely to happen now
-                    var token = new StringDictionary()
+                    var token = new Dictionary<string, string>()
                     {
                         { "Page", (state.PageIndex + 1).ToString() }
                     };
@@ -964,7 +964,7 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result)
         {
-            var errorReplacements = new StringDictionary
+            var errorReplacements = new Dictionary<string, string>
             {
                 { "Error", result.ErrorMessage }
             };
@@ -1023,7 +1023,7 @@ namespace ITSMSkill.Dialogs
 
         protected Activity GetNavigatePrompt(ITurnContext context, string response, int pageIndex, int maxPage)
         {
-            var token = new StringDictionary()
+            var token = new Dictionary<string, string>()
             {
                 { "Navigate", GetNavigateString(pageIndex, maxPage) },
             };
@@ -1041,7 +1041,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new StringDictionary()
+                var token = new Dictionary<string, string>()
                 {
                     { "Current", (pageIndex + 1).ToString() },
                     { "Total", (maxPage + 1).ToString() },

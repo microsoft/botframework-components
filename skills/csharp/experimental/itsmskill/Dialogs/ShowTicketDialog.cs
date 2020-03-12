@@ -31,7 +31,7 @@ namespace ITSMSkill.Dialogs
         public ShowTicketDialog(
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager responseManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
@@ -134,7 +134,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new StringDictionary()
+                var token = new Dictionary<string, string>()
                 {
                     { "Attributes", sb.ToString() }
                 };
@@ -228,7 +228,7 @@ namespace ITSMSkill.Dialogs
                 else
                 {
                     // it is unlikely to happen now
-                    var token = new StringDictionary()
+                    var token = new Dictionary<string, string>()
                     {
                         { "Page", (state.PageIndex + 1).ToString() }
                     };

@@ -41,7 +41,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CloseWithNumberReasonTest()
         {
-            var confirmReason = new StringDictionary
+            var confirmReason = new Dictionary<string, string>
             {
                 { "Reason", MockData.CloseTicketReason }
             };
@@ -80,7 +80,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CloseWithNumberReasonActionTest()
         {
-            var confirmReason = new StringDictionary
+            var confirmReason = new Dictionary<string, string>
             {
                 { "Reason", MockData.CloseTicketReason }
             };
