@@ -72,9 +72,6 @@ namespace AutomotiveSkill.Dialogs
 
             // send error message to bot user
             await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
-
-            // clear state
-            var state = await Accessor.GetAsync(sc.Context);
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2
