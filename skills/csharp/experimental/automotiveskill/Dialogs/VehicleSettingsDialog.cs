@@ -54,11 +54,11 @@ namespace AutomotiveSkill.Dialogs
         public VehicleSettingsDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(VehicleSettingsDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
+            : base(nameof(VehicleSettingsDialog), settings, services, templateManager, conversationState, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -134,7 +134,7 @@ namespace AutomotiveSkill.Dialogs
             if (!settingNames.Any())
             {
                 // missing setting name
-                await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
+                await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
                 return await sc.EndDialogAsync();
             }
             else if (settingNames.Count() > 1)
@@ -167,8 +167,8 @@ namespace AutomotiveSkill.Dialogs
                     ImageUrl = GetSettingCardImageUri(FallbackSettingImageFileName)
                 };
 
-                var card = LocaleTemplateEngineManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
-                options.Prompt = LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
+                var card = LocaleTemplateManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
+                options.Prompt = LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
                 options.Prompt.Attachments = card.Attachments;
 
                 // Default Text property is clumsy for speech
@@ -243,7 +243,7 @@ namespace AutomotiveSkill.Dialogs
                 if (!settingValues.Any())
                 {
                     // This shouldn't happen because the SettingFilter would just add all possible values to let the user select from them.
-                    await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue));
+                    await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue));
                     return await sc.EndDialogAsync();
                 }
                 else
@@ -286,8 +286,8 @@ namespace AutomotiveSkill.Dialogs
                             ImageUrl = GetSettingCardImageUri(imageName)
                         };
 
-                        var card = LocaleTemplateEngineManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
-                        options.Prompt = LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingValueSelection, promptReplacements);
+                        var card = LocaleTemplateManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
+                        options.Prompt = LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingValueSelection, promptReplacements);
                         options.Prompt.Attachments = card.Attachments;
 
                         // Default Text property is clumsy for speech
@@ -312,7 +312,7 @@ namespace AutomotiveSkill.Dialogs
             else
             {
                 // No setting value was understood
-                await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain));
+                await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain));
                 return await sc.EndDialogAsync();
             }
         }
@@ -391,7 +391,7 @@ namespace AutomotiveSkill.Dialogs
                         };
 
                         // TODO - Explore moving to ConfirmPrompt following usability testing
-                        var prompt = LocaleTemplateEngineManager.GenerateActivityForLocale(promptTemplate, promptReplacements);
+                        var prompt = LocaleTemplateManager.GenerateActivityForLocale(promptTemplate, promptReplacements);
                         return await sc.PromptAsync(Actions.SettingConfirmationPrompt, new PromptOptions { Prompt = prompt });
                     }
                     else
@@ -402,13 +402,13 @@ namespace AutomotiveSkill.Dialogs
                 }
                 else
                 {
-                    await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
+                    await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
                     return await sc.EndDialogAsync();
                 }
             }
             else
             {
-                await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
+                await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
                 return await sc.EndDialogAsync();
             }
         }
@@ -436,11 +436,11 @@ namespace AutomotiveSkill.Dialogs
                     string promptTemplate = VehicleSettingsResponses.VehicleSettingsConfirmed;
 
                     await SendActionToDevice(sc, change);
-                    await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(promptTemplate));
+                    await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(promptTemplate));
             }
             else
             {
-                await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied));
+                await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied));
             }
 
             if (state.IsAction)

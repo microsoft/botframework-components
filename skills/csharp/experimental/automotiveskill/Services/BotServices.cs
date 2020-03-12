@@ -48,6 +48,7 @@ namespace AutomotiveSkill.Services
                     }
                 }
 
+                /*
                 if (config.Knowledgebases != null)
                 {
                     foreach (var kb in config.Knowledgebases)
@@ -62,7 +63,7 @@ namespace AutomotiveSkill.Services
                         set.QnAServices.Add(kb.Id, qnaMaker);
                     }
                 }
-
+                */
                 CognitiveModelSets.Add(language, set);
             }
         }

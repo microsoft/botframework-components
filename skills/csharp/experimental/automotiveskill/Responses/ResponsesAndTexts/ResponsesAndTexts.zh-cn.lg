@@ -1,4 +1,3 @@
-[import](../Main/MainDialogTexts.zh-cn.lg)
-[import](../Shared/SharedTexts.zh-cn.lg)
-[import](../VehicleSettings/VehicleSettingsDialogTexts.zh-cn.lg)
-[import](../Shared/Card.lg)
+[import](../Main/MainDialogActivities.zh-cn.lg)
+[import](../Shared/SharedActivities.zh-cn.lg)
+[import](../VehicleSettings/VehicleSettingsDialogActivities.zh-cn.lg)

@@ -1,6 +1,4 @@
-﻿[import](VehicleSettingsDialogActivities.lg)
-
-# VehicleSettingsConfirmed.Text
+﻿# VehicleSettingsConfirmed.Text
 - Okay.
 
 # VehicleSettingsMissingSettingName.Text
@@ -13,46 +11,46 @@
 - Entschuldigung, ich weiß nicht, wozu sie geändert werden soll.
 
 # VehicleSettingsSettingValueSelection.Text(settingName)
-- Hier sind die möglichen Werte für @{if(settingName == null, '', settingName)}. Welches?
+- Hier sind die möglichen Werte für ${if(settingName == null, '', settingName)}. Welches?
 
 # VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
-- Sie möchten also @{if(settingName == null, '', settingName)} An @{if(value == null, '', value)}. Ist das richtig?
+- Sie möchten also ${if(settingName == null, '', settingName)} An ${if(value == null, '', value)}. Ist das richtig?
 
 # VehicleSettingsSettingChangeConfirmationDenied.Text
 - Ok, keine Änderungen vornehmen.
 
 # VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} ist bereits auf @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} ist bereits auf ${if(value == null, '', value)}.
 
 # VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} ist bereits auf @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} ist bereits auf ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsSettingChangeUnsupported.Text(settingName)
-- Ändern der Einstellung @{if(settingName == null, '', settingName)} wird derzeit nicht unterstützt.
+- Ändern der Einstellung ${if(settingName == null, '', settingName)} wird derzeit nicht unterstützt.
 
 # VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
-- @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} Von @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(increasingDecreasing == null, '', increasingDecreasing)} ${if(settingName == null, '', settingName)} Von ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingAmount.Text(settingName, amount, unit)
-- Einstellung @{if(settingName == null, '', settingName)} An @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- Einstellung ${if(settingName == null, '', settingName)} An ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingValue.Text(settingName, value)
-- Einstellung @{if(settingName == null, '', settingName)} An @{if(value == null, '', value)}.
+- Einstellung ${if(settingName == null, '', settingName)} An ${if(value == null, '', value)}.
 
 # VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)
-- @{if(valueIngForm == null, '', valueIngForm)} @{if(settingName == null, '', settingName)}.
+- ${if(valueIngForm == null, '', valueIngForm)} ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatus.Text(settingName)
-- Überprüfen des Status von @{if(settingName == null, '', settingName)}.
+- Überprüfen des Status von ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} ist auf @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} ist auf ${if(value == null, '', value)}.
 
 # VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} ist auf @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} ist auf ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsCheckingStatusUnsupported.Text(settingName)
-- Überprüfen des Status von @{if(settingName == null, '', settingName)} wird derzeit nicht unterstützt.
+- Überprüfen des Status von ${if(settingName == null, '', settingName)} wird derzeit nicht unterstützt.
 
 # VehicleSettingsOutOfDomain.Text
 - Es tut mir leid, ich weiß noch nicht, wie ich damit umgehen soll.
