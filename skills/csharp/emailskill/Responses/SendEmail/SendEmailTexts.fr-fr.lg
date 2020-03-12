@@ -1,5 +1,3 @@
-[import](SendEmailActivities.lg)
-
 # NoSubject.Text
 - Quel est le sujet de l'e-mail?
 
@@ -46,8 +44,8 @@
 - Vous pouvez essayer Recipients, Subject, Content, ou vous pouvez Annuler.
 
 # PlayBackMessage.Text(emailContent)
-- OK, voici le contenu de votre e-mail. Voulez-vous l'inclure dans l'e-mail? \n @{emailContent}
+- OK, voici le contenu de votre e-mail. Voulez-vous l'inclure dans l'e-mail? \n ${emailContent}
 
 # PlayBackMessage.Speak(emailContent)
-- OK, voici le contenu de votre e-mail. Voulez-vous l'inclure dans l'e-mail? @{emailContent}
+- OK, voici le contenu de votre e-mail. Voulez-vous l'inclure dans l'e-mail? ${emailContent}
 

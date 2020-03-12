@@ -1,5 +1,3 @@
-[import](DeleteEmailActivities.lg)
-
 # DeletePrompt.Text
 - ¿Cuál desea eliminar?
 - ¿Qué correo electrónico desea eliminar?
@@ -8,7 +6,7 @@
 - ¿Está seguro de que desea eliminar este correo electrónico?
 
 # DeleteConfirm.Speak(emailInfo)
-- ¿Está seguro de que desea eliminar? Estos son algunos detalles: @{emailInfo}.
+- ¿Está seguro de que desea eliminar? Estos son algunos detalles: ${emailInfo}.
 
 # DeleteSuccessfully.Text
 - El correo electrónico se eliminó.

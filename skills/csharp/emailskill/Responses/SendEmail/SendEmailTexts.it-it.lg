@@ -1,5 +1,3 @@
-[import](SendEmailActivities.lg)
-
 # NoSubject.Text
 - Qual è l'oggetto dell'e-mail?
 
@@ -46,8 +44,8 @@
 - È possibile provare Destinatari, Oggetto, Contenuto oppure annullare l'operazione.
 
 # PlayBackMessage.Text(emailContent)
-- OK, ecco il contenuto della tua email. Vuoi includerlo nell'e-mail? \n @{emailContent}
+- OK, ecco il contenuto della tua email. Vuoi includerlo nell'e-mail? \n ${emailContent}
 
 # PlayBackMessage.Speak(emailContent)
-- OK, ecco il contenuto della tua email. Vuoi includerlo nell'e-mail? @{emailContent}
+- OK, ecco il contenuto della tua email. Vuoi includerlo nell'e-mail? ${emailContent}
 

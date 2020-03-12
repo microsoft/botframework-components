@@ -1,5 +1,3 @@
-[import](SendEmailActivities.lg)
-
 # NoSubject.Text
 - Was ist der Betreff der E-Mail?
 
@@ -46,8 +44,8 @@
 - Sie können Empfänger, Betreff, Inhalt ausprobieren oder abbrechen.
 
 # PlayBackMessage.Text(emailContent)
-- OK, hier ist der Inhalt Ihrer E-Mail. Möchten Sie sie in die E-Mail einfügen? \n @{emailContent}
+- OK, hier ist der Inhalt Ihrer E-Mail. Möchten Sie sie in die E-Mail einfügen? \n ${emailContent}
 
 # PlayBackMessage.Speak(emailContent)
-- OK, hier ist der Inhalt Ihrer E-Mail. Möchten Sie sie in die E-Mail einfügen? @{emailContent}
+- OK, hier ist der Inhalt Ihrer E-Mail. Möchten Sie sie in die E-Mail einfügen? ${emailContent}
 

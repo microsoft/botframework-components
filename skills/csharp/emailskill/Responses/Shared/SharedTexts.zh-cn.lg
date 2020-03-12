@@ -1,5 +1,3 @@
-[import](SharedActivities.lg)
-
 # Cancel.Text
 - 好的，我们可以稍后再做。
 - 好的，当你需要我的帮助时，让我知道。
@@ -28,7 +26,7 @@
 - 很抱歉，我现在无法访问您的电子邮件帐户。您可能已收到一封电子邮件，其中包含验证帐户的说明。
 
 # ConfirmSendRecipients.Text(recipientsList)
-- 您要将此电子邮件发送到@{recipientsList}.
+- 您要将此电子邮件发送到${recipientsList}.
 
 # ConfirmSendRecipientsMessage.Text
 - 是否要查看收件人列表？
@@ -43,7 +41,7 @@
 - 好的，我准备好发你的电子邮件了。
 
 # ConfirmSend.Speak(emailSubject)
-- 好的，我准备好了。以下是您的电子邮件的详细信息：@{emailSubject}.
+- 好的，我准备好了。以下是您的电子邮件的详细信息：${emailSubject}.
 
 # ConfirmSendFailed.Text
 - 请确认您要发送此电子邮件。
@@ -58,20 +56,20 @@
 - 您想在转发的电子邮件中写什么？
 
 # RecipientConfirmed.Text(userName)
-- 好的，我会把这个发给@{userName}.
+- 好的，我会把这个发给${userName}.
 
 # ShowEmailPrompt.Text(totalCount,emailListDetails)
-- 有@{totalCount}收件箱中的电子邮件。最新的电子邮件是@{emailListDetails}.
-- 你有@{totalCount}收件箱中的电子邮件。最新的电子邮件是@{emailListDetails}.
+- 有${totalCount}收件箱中的电子邮件。最新的电子邮件是${emailListDetails}.
+- 你有${totalCount}收件箱中的电子邮件。最新的电子邮件是${emailListDetails}.
 
 # ShowOneEmailPrompt.Text(emailListDetails)
-- 您的收件箱中包含 1 封电子邮件。最新的电子邮件是@{emailListDetails}.
+- 您的收件箱中包含 1 封电子邮件。最新的电子邮件是${emailListDetails}.
 
 # ShowEmailPromptOtherPage.Text(totalCount, emailListDetails)
-- 你有@{totalCount}收件箱中的电子邮件。第一封电子邮件是@{emailListDetails}.
+- 你有${totalCount}收件箱中的电子邮件。第一封电子邮件是${emailListDetails}.
 
 # ShowOneEmailPromptOtherPage.Text(emailListDetails)
-- 您的收件箱中包含 1 封电子邮件。第一封电子邮件是@{emailListDetails}.
+- 您的收件箱中包含 1 封电子邮件。第一封电子邮件是${emailListDetails}.
 
 # FirstPageAlready.Text
 - 这已经是第一页了。
@@ -90,7 +88,7 @@
 - 好的，当你需要我的帮助时，让我知道。
 
 # SentSuccessfully.Text(subject)
-- 我发送了您的电子邮件的主题：@{subject}.
+- 我发送了您的电子邮件的主题：${subject}.
 
 # RetryInput.Text
 - 对不起，我不明白。请重试。
