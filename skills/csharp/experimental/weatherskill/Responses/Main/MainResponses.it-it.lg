@@ -1,107 +1,83 @@
 [import](..\Shared\Shared.lg)
-[import](SharedResponsesTexts.lg)
+[import](MainResponsesTexts.it-it.lg)
 
-# LocationPrompt(Data, Cards, Layout)
+# WelcomeMessage(Data, Cards, Layout)
 [Activity
-    Text = ${LocationPrompt.Text(Data)}
-    Speak = ${LocationPrompt.Text(Data)}
+    Text = ${WelcomeMessage.Text(Data)}
+    Speak = ${WelcomeMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# SixHourForecast(Data, Cards, Layout)
+# HelpMessage(Data, Cards, Layout)
 [Activity
-    Text = ${SixHourForecast.Text(Data)}
-    Speak = ${SixHourForecast.Text(Data)}
+    Text = ${HelpMessage.Text(Data)}
+    Speak = ${HelpMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# DidNotUnderstandLocationPrompt(Data, Cards, Layout)
+# GreetingMessage(Data, Cards, Layout)
 [Activity
-    Text = ${DidNotUnderstandLocationPrompt.Text(Data)}
-    Speak = ${DidNotUnderstandLocationPrompt.Text(Data)}
+    Text = ${GreetingMessage.Text(Data)}
+    Speak = ${GreetingMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# DidntUnderstandMessage(Data, Cards, Layout)
+# GoodbyeMessage(Data, Cards, Layout)
 [Activity
-    Text = ${DidntUnderstandMessage.Text(Data)}
-    Speak = ${DidntUnderstandMessage.Text(Data)}
+    Text = ${GoodbyeMessage.Text(Data)}
+    Speak = ${GoodbyeMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# CancellingMessage(Data, Cards, Layout)
+# LogOut(Data, Cards, Layout)
 [Activity
-    Text = ${CancellingMessage.Text(Data)}
-    Speak = ${CancellingMessage.Text(Data)}
+    Text = ${LogOut.Text(Data)}
+    Speak = ${LogOut.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# NoAuth(Data, Cards, Layout)
+# FeatureNotAvailable(Data, Cards, Layout)
 [Activity
-    Text = ${NoAuth.Text(Data)}
-    Speak = ${NoAuth.Text(Data)}
-    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
-    InputHint = expectingInput
-]
-
-# AuthFailed(Data, Cards, Layout)
-[Activity
-    ${AuthFailedTextAndSpeak(Data)}
+    Text = ${FeatureNotAvailable.Text(Data)}
+    Speak = ${FeatureNotAvailable.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# AuthFailedTextAndSpeak(Data)
-- ${AuthFailedTextAndSpeak1(Data)}
-- ${AuthFailedTextAndSpeak2(Data)}
-- ${AuthFailedTextAndSpeak3(Data)}
-
-# AuthFailedTextAndSpeak1(Data)
+# CancelMessage(Data, Cards, Layout)
 [Activity
-    Text = ${AuthFailedTextAndSpeak1.Text(Data)}
-    Speak = ${AuthFailedTextAndSpeak1.Speak(Data)}
-]
-
-# AuthFailedTextAndSpeak2(Data)
-[Activity
-    Text = ${AuthFailedTextAndSpeak2.Text(Data)}
-    Speak = ${AuthFailedTextAndSpeak2.Speak(Data)}
-]
-
-# AuthFailedTextAndSpeak3(Data)
-[Activity
-    Text = ${AuthFailedTextAndSpeak3.Text(Data)}
-    Speak = ${AuthFailedTextAndSpeak3.Speak(Data)}
-]
-
-# ActionEnded(Data, Cards, Layout)
-[Activity
-    Text = ${ActionEnded.Text(Data)}
-    Speak = ${ActionEnded.Text(Data)}
+    Text = ${CancelMessage.Text(Data)}
+    Speak = ${CancelMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-# ErrorMessage(Data, Cards, Layout)
+# FirstPromptMessage(Data, Cards, Layout)
 [Activity
-    Text = ${ErrorMessage.Text(Data)}
-    Speak = ${ErrorMessage.Text(Data)}
+    Text = ${FirstPromptMessage.Text(Data)}
+    Speak = ${FirstPromptMessage.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 
-
+# CompletedMessage(Data, Cards, Layout)
+[Activity
+    Text = ${CompletedMessage.Text(Data)}
+    Speak = ${CompletedMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]

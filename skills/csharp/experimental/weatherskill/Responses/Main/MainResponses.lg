@@ -1,3 +1,6 @@
+[import](..\Shared\Shared.lg)
+[import](MainResponsesTexts.lg)
+
 # WelcomeMessage(Data, Cards, Layout)
 [Activity
     Text = ${WelcomeMessage.Text(Data)}
