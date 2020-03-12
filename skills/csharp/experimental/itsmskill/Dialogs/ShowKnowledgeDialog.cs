@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Shared;
@@ -75,6 +76,18 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> IfCreateTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (sc.Result is EndFlowResult endFlow)
+            {
+                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
+            }
+
+            // Skip create ticket in action mode
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
+            if (state.IsAction)
+            {
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
+            }
+
             var options = new PromptOptions()
             {
                 Prompt = ResponseManager.GetResponse(KnowledgeResponses.IfCreateTicket)
@@ -95,7 +108,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
     }

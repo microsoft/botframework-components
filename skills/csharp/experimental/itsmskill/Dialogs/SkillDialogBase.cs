@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
+using ITSMSkill.Models.Actions;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
@@ -25,7 +26,6 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Graph;
 using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
@@ -488,6 +488,13 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> CheckDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // TODO in CreateTicketDialog, after display knowledge loop
+            // Since we use EndDialogAsync to pass result, it needs to end here explicitly
+            if (sc.Result is EndFlowResult endFlow)
+            {
+                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
+            }
+
             var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
             if (string.IsNullOrEmpty(state.TicketDescription))
             {
@@ -885,7 +892,7 @@ namespace ITSMSkill.Dialogs
             var intent = (GeneralLuis.Intent)sc.Result;
             if (intent == GeneralLuis.Intent.Confirm)
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.EndDialogAsync(new EndFlowResult(true));
             }
             else if (intent == GeneralLuis.Intent.Reject)
             {
@@ -1097,6 +1104,19 @@ namespace ITSMSkill.Dialogs
                 ProviderDisplayText = string.Format(SharedStrings.PoweredBy, knowledge.Provider),
             };
             return card;
+        }
+
+        protected async Task<ActionResult> CreateActionResult(ITurnContext context, bool success, CancellationToken cancellationToken)
+        {
+            var state = await StateAccessor.GetAsync(context, () => new SkillState(), cancellationToken);
+            if (success && state.IsAction)
+            {
+                return new ActionResult(success);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected string GetDivergedCardName(ITurnContext turnContext, string card)

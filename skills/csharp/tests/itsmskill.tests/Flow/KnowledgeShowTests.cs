@@ -128,5 +128,162 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(ActionEndMessage())
                 .StartTestAsync();
         }
+
+        [TestMethod]
+        public async Task ShowWithSearchTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var search = new StringDictionary
+            {
+                { "Search", MockData.CreateTicketTitle }
+            };
+
+            await this.GetTestFlow()
+                .Send(StartActivity)
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .Send(KnowledgeShowUtterances.ShowWithSearch)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmSearch, search))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(ActionEndMessage())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowWithSearchNoCreateTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var search = new StringDictionary
+            {
+                { "Search", MockData.CreateTicketTitle }
+            };
+
+            await this.GetTestFlow()
+                .Send(StartActivity)
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .Send(KnowledgeShowUtterances.ShowWithSearch)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmSearch, search))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfCreateTicket))
+                .Send(NonLuisUtterances.No)
+                .AssertReply(ActionEndMessage())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(KnowledgeShowUtterances.ShowAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputSearch))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowThenRejectActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var confirmTitle = new StringDictionary
+            {
+                { "Title", MockData.CreateTicketTitle }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(KnowledgeShowUtterances.ShowAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputSearch))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(SkillActionEndMessage(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowWithSearchActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var search = new StringDictionary
+            {
+                { "Search", MockData.CreateTicketTitle }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(KnowledgeShowUtterances.ShowWithSearchAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmSearch, search))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowWithSearchThenRejectActionTest()
+        {
+            var navigate = new StringDictionary
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var search = new StringDictionary
+            {
+                { "Search", MockData.CreateTicketTitle }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(KnowledgeShowUtterances.ShowWithSearchAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(SharedResponses.ConfirmSearch, search))
+                .Send(GeneralTestUtterances.Confirm)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(SkillActionEndMessage(false))
+                .StartTestAsync();
+        }
     }
 }

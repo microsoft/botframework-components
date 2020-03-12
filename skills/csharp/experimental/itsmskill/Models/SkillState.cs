@@ -50,9 +50,16 @@ namespace ITSMSkill.Models
         // from OnInterruptDialogAsync
         public GeneralLuis.Intent GeneralIntent { get; set; }
 
+        public bool IsAction { get; set; } = false;
+
         public void DigestLuisResult(ITSMLuis luis, ITSMLuis.Intent topIntent)
         {
             ClearLuisResult();
+
+            if (luis?.Entities == null)
+            {
+                return;
+            }
 
             if (luis.Entities.TicketTitle != null)
             {

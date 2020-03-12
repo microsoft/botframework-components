@@ -263,6 +263,8 @@ namespace ITSMSkill.Dialogs
         protected async Task<DialogTurnResult> IfContinueShow(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+
+            // Skip in Action mode in ShowNavigateValidator
             if (state.InterruptedIntent == ITSMLuis.Intent.TicketClose)
             {
                 return await sc.ReplaceDialogAsync(nameof(CloseTicketDialog));
@@ -279,7 +281,7 @@ namespace ITSMSkill.Dialogs
             var intent = (GeneralLuis.Intent)sc.Result;
             if (intent == GeneralLuis.Intent.Reject)
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, true, cancellationToken));
             }
             else if (intent == GeneralLuis.Intent.Confirm)
             {
@@ -309,12 +311,17 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
+                var state = await StateAccessor.GetAsync(promptContext.Context, () => new SkillState());
+                if (state.IsAction)
+                {
+                    return false;
+                }
+
                 var result = promptContext.Context.TurnState.Get<ITSMLuis>(StateProperties.ITSMLuisResult);
                 var topIntent = result.TopIntent();
 
                 if (topIntent.score > 0.5 && (topIntent.intent == ITSMLuis.Intent.TicketClose || topIntent.intent == ITSMLuis.Intent.TicketUpdate))
                 {
-                    var state = await StateAccessor.GetAsync(promptContext.Context);
                     state.DigestLuisResult(result, topIntent.intent);
                     state.InterruptedIntent = topIntent.intent;
                     return true;
