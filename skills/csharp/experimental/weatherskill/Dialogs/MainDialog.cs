@@ -19,8 +19,10 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 using WeatherSkill.Models;
+using WeatherSkill.Models.Action;
 using WeatherSkill.Responses.Main;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
@@ -236,6 +238,10 @@ namespace WeatherSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            // Clear IsAction before dialog
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            state.IsAction = false;
+
             var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
@@ -263,6 +269,39 @@ namespace WeatherSkill.Dialogs
                         }
                 }
             }
+            else if (activity.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = activity.AsEventActivity();
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "WeatherForcast":
+                            {
+                                state.IsAction = true;
+
+                                LocationInfo actionData = null;
+                                var eventValue = activity.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<LocationInfo>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog));
+                            }
+
+                        default:
+                            {
+                                // todo: move the response to lg
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                break;
+                            }
+                    }
+                }
+            }
 
             // If activity was unhandled, flow should continue to next step
             return await stepContext.NextAsync();
@@ -279,6 +318,15 @@ namespace WeatherSkill.Dialogs
                     Code = EndOfConversationCodes.CompletedSuccessfully,
                     Value = stepContext.Result,
                 };
+
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    }
+                }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
@@ -339,6 +387,22 @@ namespace WeatherSkill.Dialogs
                     var state = await _stateAccessor.GetAsync(context, () => new SkillState());
                     state.Geography = locationObj;
                 }
+            }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, LocationInfo locationInfo)
+        {
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
+            var location = locationInfo.Location;
+            var coords = location.Split(',');
+            if (coords.Length == 2 && double.TryParse(coords[0], out var lat) && double.TryParse(coords[1], out var lng))
+            {
+                state.Latitude = lat;
+                state.Longitude = lng;
+            }
+            else
+            {
+                state.Geography = location;
             }
         }
     }
