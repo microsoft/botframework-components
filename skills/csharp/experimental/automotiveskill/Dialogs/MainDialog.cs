@@ -5,16 +5,17 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutomotiveSkill.Models;
+using AutomotiveSkill.Models.Actions;
 using AutomotiveSkill.Responses.Main;
 using AutomotiveSkill.Responses.Shared;
 using AutomotiveSkill.Services;
-using AutomotiveSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace AutomotiveSkill.Dialogs
@@ -217,6 +218,7 @@ namespace AutomotiveSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new AutomotiveSkillState());
+            state.Clear();
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -229,9 +231,14 @@ namespace AutomotiveSkill.Dialogs
                 {
                     case SettingsLuis.Intent.VEHICLE_SETTINGS_CHANGE:
                     case SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE:
-                    case SettingsLuis.Intent.VEHICLE_SETTINGS_CHECK:
                         {
                             return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog));
+                        }
+
+                    case SettingsLuis.Intent.VEHICLE_SETTINGS_CHECK:
+                        {
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable));
+                            break;
                         }
 
                     case SettingsLuis.Intent.None:
@@ -245,6 +252,38 @@ namespace AutomotiveSkill.Dialogs
                             await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable));
                             break;
                         }
+                }
+            }
+            else if (a.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = a.AsEventActivity();
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case Events.ChangeVehicleSetting:
+                            {
+                                state.IsAction = true;
+                                SettingInfo actionData = null;
+                                var eventValue = a.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<SettingInfo>();
+                                    actionData.DigestState(state);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog));
+                            }
+
+                        default:
+                            {
+                                // todo: move the response to lg
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                break;
+                            }
+                    }
                 }
             }
 
@@ -264,6 +303,15 @@ namespace AutomotiveSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new AutomotiveSkillState(), cancellationToken);
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult(false);
+                    }
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
@@ -271,6 +319,11 @@ namespace AutomotiveSkill.Dialogs
             {
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.CompletedMessage), cancellationToken);
             }
+        }
+
+        private class Events
+        {
+            public const string ChangeVehicleSetting = "ChangeVehicleSetting";
         }
     }
 }

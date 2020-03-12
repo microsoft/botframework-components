@@ -122,7 +122,6 @@ namespace AutomotiveSkill.Utilities
             {
                 List<string> entityValuesToMatch = new List<string>();
 
-                List<string> entity_types_for_value_disamb = new List<string>();
                 if (state.Entities.ContainsKey("VALUE"))
                 {
                     entityValuesToMatch.AddRange(state.Entities["VALUE"]);
