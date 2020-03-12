@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalendarSkill.Models.ActionInfos;
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace CalendarSkill.Test.Flow.Utterances
 {
@@ -15,6 +18,18 @@ namespace CalendarSkill.Test.Flow.Utterances
         }
 
         public static string NextMeetingTimeRemaining { get; } = $"how much time do i have before my {Strings.Strings.Next} appointment";
+
+        public static string TimeRemainingtName { get; } = "TimeRemaining";
+
+        public static Activity NextMeetingTimeRemainingEvent { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = TimeRemainingtName,
+            Value = JObject.FromObject(new ChooseEventInfo()
+            {
+                NextEvent = true
+            })
+        };
 
         private CalendarLuis GetBaseTimeRemainingIntent(
             string userInput,

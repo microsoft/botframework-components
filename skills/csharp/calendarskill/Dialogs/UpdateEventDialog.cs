@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Options;
 using CalendarSkill.Prompts.Options;
@@ -222,17 +223,17 @@ namespace CalendarSkill.Dialogs
                 var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, UpdateEventResponses.EventUpdated);
 
                 await sc.Context.SendActivityAsync(replyMessage);
-
-                if (options.SubFlowMode)
+                if (options != null && options.SubFlowMode)
                 {
                     state.UpdateMeetingInfo.Clear();
                 }
-                else
+
+                if (state.IsAction)
                 {
-                    state.Clear();
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true });
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
             {

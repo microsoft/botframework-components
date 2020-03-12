@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
+using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.Summary;
@@ -233,6 +234,13 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context);
                 var options = sc.Options as ShowMeetingsDialogOptions;
 
+                if (options != null && options.Reason == ShowMeetingReason.Summary && state.IsAction)
+                {
+                    List<EventInfo> eventInfos = new List<EventInfo>();
+                    state.ShowMeetingInfo.ShowingMeetings.ForEach(e => eventInfos.Add(new EventInfo(e, state.GetUserTimeZone())));
+                    return await sc.EndDialogAsync(new SummaryResult() { EventList = eventInfos, ActionSuccess = true });
+                }
+
                 // no meeting
                 if (!state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
@@ -387,8 +395,14 @@ namespace CalendarSkill.Dialogs
                 var reply = await GetGeneralMeetingListResponseAsync(sc, state, true);
 
                 await sc.Context.SendActivityAsync(reply);
+                var eventItem = state.ShowMeetingInfo.ShowingMeetings.FirstOrDefault();
 
-                state.Clear();
+                if (state.IsAction)
+                {
+                    EventInfoOutput eventInfoOutput = new EventInfoOutput(eventItem, state.GetUserTimeZone(), true);
+                    return await sc.EndDialogAsync(eventInfoOutput);
+                }
+
                 return await sc.EndDialogAsync();
             }
             catch (SkillException ex)
@@ -566,7 +580,6 @@ namespace CalendarSkill.Dialogs
 
                 if (topIntent == null)
                 {
-                    state.Clear();
                     return await sc.CancelAllDialogsAsync();
                 }
 
@@ -580,7 +593,6 @@ namespace CalendarSkill.Dialogs
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
                     // answer no
-                    state.Clear();
                     return await sc.EndDialogAsync();
                 }
 
@@ -766,6 +778,12 @@ namespace CalendarSkill.Dialogs
 
                     var replyMessage = await GetDetailMeetingResponseAsync(sc, eventItem, responseTemplateId, responseParams);
                     await sc.Context.SendActivityAsync(replyMessage);
+                }
+
+                if (state.IsAction)
+                {
+                    EventInfoOutput eventInfoOutput = new EventInfoOutput(eventItem, state.GetUserTimeZone(), true);
+                    return await sc.EndDialogAsync(eventInfoOutput);
                 }
 
                 return await sc.NextAsync();

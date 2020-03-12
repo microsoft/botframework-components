@@ -18,6 +18,8 @@ namespace CalendarSkill.Models
 
         public EventSource EventSource { get; set; } = EventSource.Other;
 
+        public bool IsAction { get; set; } = false;
+
         public CalendarLuis.Intent InitialIntent { get; set; } = CalendarLuis.Intent.None;
 
         public MeetingInfomation MeetingInfo { get; set; } = new MeetingInfomation();

@@ -62,6 +62,30 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_CalendarJoinNumberWithStartTimeEntityEvent()
+        {
+            var now = DateTime.Now;
+            var startTime = new DateTime(now.Year, now.Month, now.Day, 18, 0, 0);
+            startTime = startTime.AddDays(1);
+            startTime = TimeZoneInfo.ConvertTimeToUtc(startTime);
+            this.ServiceManager = MockServiceManager.SetMeetingsToSpecial(new List<EventModel>()
+            {
+                MockCalendarService.CreateEventModel(
+                    startDateTime: startTime,
+                    endDateTime: startTime.AddHours(1),
+                    content: "<a href=\"tel:12345678 \">12345678</a>")
+            });
+            await this.GetSkillTestFlow()
+                .Send(ConnectToMeetingUtterances.JoinMeetingWithStartTimeEvent)
+                .AssertReplyOneOf(this.ConfirmPhoneNumberPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(this.JoinMeetingResponse())
+                .AssertReply(this.JoinMeetingEvent())
+                .AssertReply(CheckForOperationStatus(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_CalendarJoinLinkWithStartTimeEntity()
         {
             var now = DateTime.Now;
