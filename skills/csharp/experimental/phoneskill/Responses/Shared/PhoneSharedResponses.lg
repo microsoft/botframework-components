@@ -1,0 +1,55 @@
+# DidntUnderstandMessage(Data, Cards, Layout)
+[Activity
+    Text = @{DidntUnderstandMessage.Text(Data)}
+    Speak = @{DidntUnderstandMessage.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# CancellingMessage(Data, Cards, Layout)
+[Activity
+    Text = @{CancellingMessage.Text(Data)}
+    Speak = @{CancellingMessage.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# NoAuth(Data, Cards, Layout)
+[Activity
+    Text = @{NoAuth.Text(Data)}
+    Speak = @{NoAuth.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# AuthFailed(Data, Cards, Layout)
+[Activity
+    Text = @{AuthFailed.Text(Data)}
+    Speak = @{AuthFailed.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ActionEnded(Data, Cards, Layout)
+[Activity
+    Text = @{ActionEnded.Text(Data)}
+    Speak = @{ActionEnded.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ErrorMessage(Data, Cards, Layout)
+[Activity
+    Text = @{ErrorMessage.Text(Data)}
+    Speak = @{ErrorMessage.Text(Data)}
+    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

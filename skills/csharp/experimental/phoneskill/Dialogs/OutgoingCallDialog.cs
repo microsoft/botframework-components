@@ -19,6 +19,7 @@ using PhoneSkill.Models.Actions;
 using PhoneSkill.Responses.OutgoingCall;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
+using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
@@ -29,7 +30,7 @@ namespace PhoneSkill.Dialogs
         public OutgoingCallDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager responseManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)

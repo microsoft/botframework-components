@@ -1,0 +1,56 @@
+﻿# WelcomeMessage
+[Activity
+    Text = @{WelcomeMessage.Text()}
+    Speak = @{WelcomeMessage.Text()}
+    InputHint = expectingInput
+]
+
+# HelpMessage
+[Activity
+    Text = @{HelpMessage.Text()}
+    Speak = @{HelpMessage.Text()}
+    SuggestedActions = @{HelpMessage.S1()} | @{HelpMessage.S2()}| @{HelpMessage.S3()}| @{HelpMessage.S4()}}
+    InputHint = expectingInput
+]
+
+# GreetingMessage
+[Activity
+    Text = @{GreetingMessage.Text()}
+    Speak = @{GreetingMessage.Text()}
+    InputHint = acceptingInput
+]
+
+# LogOut
+[Activity
+    Text = @{LogOut.Text()}
+    Speak = @{LogOut.Text()}
+    InputHint = acceptingInput
+]
+
+# FeatureNotAvailable
+[Activity
+    Text = @{FeatureNotAvailable.Text()}
+    Speak = @{FeatureNotAvailable.Text()}
+    InputHint = acceptingInput
+]
+
+# CancelMessage
+[Activity
+    Text = @{CancelMessage.Text()}
+    Speak = @{CancelMessage.Text()}
+    InputHint = acceptingInput
+]
+
+# FirstPromptMessage
+[Activity
+    Text = @{FirstPromptMessage.Text()}
+    Speak = @{FirstPromptMessage.Text()}
+    InputHint = acceptingInput
+]
+
+# CompletedMessage
+[Activity
+    Text = @{CompletedMessage.Text()}
+    Speak = @{CompletedMessage.Text()}
+    InputHint = acceptingInput
+]

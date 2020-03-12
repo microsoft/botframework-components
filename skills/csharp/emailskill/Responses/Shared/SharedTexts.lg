@@ -1,5 +1,3 @@
-[import](SharedActivities.lg)
-
 # Cancel.Text
 - OK, we can do this later.
 - OK, let me know when you need my help.
@@ -28,7 +26,7 @@
 - Sorry, I'm unable to access your email account right now. You might have received an email containing instructions to verify your account. 
 
 # ConfirmSendRecipients.Text(recipientsList)
-- You're sending this email to @{recipientsList}.
+- You're sending this email to ${recipientsList}.
 
 # ConfirmSendRecipientsMessage.Text
 - Do you want to review the list of recipients?
@@ -43,7 +41,7 @@
 - OK, I'm ready to send your email.
 
 # ConfirmSend.Speak(emailSubject)
-- OK, I'm ready to send. Here are the details of your email: @{emailSubject}.
+- OK, I'm ready to send. Here are the details of your email: ${emailSubject}.
 
 # ConfirmSendFailed.Text
 - Please confirm you want to send this email.
@@ -58,20 +56,20 @@
 - What do you want to write in the forwarded email?
 
 # RecipientConfirmed.Text(userName)
-- OK, I'll send this to @{userName}.
+- OK, I'll send this to ${userName}.
 
 # ShowEmailPrompt.Text(totalCount,emailListDetails)
-- There are @{totalCount} emails in your inbox. The most recent email is @{emailListDetails}.
-- You have @{totalCount} emails in your inbox. The most recent email is @{emailListDetails}.
+- There are ${totalCount} emails in your inbox. The most recent email is ${emailListDetails}.
+- You have ${totalCount} emails in your inbox. The most recent email is ${emailListDetails}.
 
 # ShowOneEmailPrompt.Text(emailListDetails)
-- You have 1 email in your inbox. The most recent email is @{emailListDetails}.
+- You have 1 email in your inbox. The most recent email is ${emailListDetails}.
 
 # ShowEmailPromptOtherPage.Text(totalCount, emailListDetails)
-- You have @{totalCount} emails in your inbox. The first email is @{emailListDetails}.
+- You have ${totalCount} emails in your inbox. The first email is ${emailListDetails}.
 
 # ShowOneEmailPromptOtherPage.Text(emailListDetails)
-- You have 1 email in your inbox. The first email is @{emailListDetails}.
+- You have 1 email in your inbox. The first email is ${emailListDetails}.
 
 # FirstPageAlready.Text
 - This is already the first page. 
@@ -90,7 +88,7 @@
 - OK, let me know when you need my help.
 
 # SentSuccessfully.Text(subject)
-- I sent your email with subject: @{subject}.
+- I sent your email with subject: ${subject}.
 
 # RetryInput.Text
 - Sorry, I didn't understand. Please try asking again.

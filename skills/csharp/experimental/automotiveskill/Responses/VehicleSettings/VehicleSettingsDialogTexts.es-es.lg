@@ -1,0 +1,58 @@
+﻿[import](VehicleSettingsDialogActivities.lg)
+
+# VehicleSettingsConfirmed.Text
+- De acuerdo.
+
+# VehicleSettingsMissingSettingName.Text
+- Lo siento, no sé de qué escenario estás hablando.
+
+# VehicleSettingsSettingNameSelection.Text
+- Aquí están los ajustes correspondientes. ¿Cuál?
+
+# VehicleSettingsMissingSettingValue.Text
+- Lo siento, no sé a qué quieres cambiarlo.
+
+# VehicleSettingsSettingValueSelection.Text(settingName)
+- Estos son los valores posibles para @{if(settingName == null, '', settingName)}. ¿Cuál?
+
+# VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
+- Por lo tanto, usted quiere cambiar @{if(settingName == null, '', settingName)} Para @{if(value == null, '', value)}. ¿Es eso correcto?
+
+# VehicleSettingsSettingChangeConfirmationDenied.Text
+- Ok, no hacer ningún cambio.
+
+# VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
+- @{if(settingName == null, '', settingName)} ya está establecido para @{if(value == null, '', value)}.
+
+# VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
+- @{if(settingName == null, '', settingName)} ya está establecido para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsSettingChangeUnsupported.Text(settingName)
+- Cambio de la configuración @{if(settingName == null, '', settingName)} actualmente no es compatible.
+
+# VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
+- @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} Por @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsChangingAmount.Text(settingName, amount, unit)
+- Ajuste @{if(settingName == null, '', settingName)} Para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsChangingValue.Text(settingName, value)
+- Ajuste @{if(settingName == null, '', settingName)} Para @{if(value == null, '', value)}.
+
+# VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)
+- @{if(valueIngForm == null, '', valueIngForm)} @{if(settingName == null, '', settingName)}.
+
+# VehicleSettingsCheckingStatus.Text(settingName)
+- Comprobar el estado de @{if(settingName == null, '', settingName)}.
+
+# VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
+- @{if(settingName == null, '', settingName)} está listo para @{if(value == null, '', value)}.
+
+# VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
+- @{if(settingName == null, '', settingName)} está listo para @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsCheckingStatusUnsupported.Text(settingName)
+- Comprobar el estado de @{if(settingName == null, '', settingName)} actualmente no es compatible.
+
+# VehicleSettingsOutOfDomain.Text
+- Lo siento, aún no sé cómo manejar eso.

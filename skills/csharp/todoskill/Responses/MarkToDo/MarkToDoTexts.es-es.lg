@@ -1,10 +1,8 @@
-[import](MarkToDoActivities.lg)
-
 # AfterAllTasksCompleted.Text(ListType)
-- Marqué todos los artículos en su @{ListType} lista como completa.
+- Marqué todos los artículos en su ${ListType} lista como completa.
 
 # AfterTaskCompleted.Text(TaskContent, ListType)
-- OK, yo marqué @{TaskContent} en su @{ListType} lista como completa.
+- OK, yo marqué ${TaskContent} en su ${ListType} lista como completa.
 
 # ListTypePromptForComplete.Text
 - ¿Desea marcar un artículo en su lista de tareas pendientes, compras o comestibles como completa?
@@ -22,7 +20,7 @@
 - Lo siento, no lo entendí. ¿Desea marcar otro elemento como completo?
 
 # AfterCompleteCardSummaryMessageForSingleTask.Text(ListType)
-- Tiene 1 elemento en su @{ListType} Lista.
+- Tiene 1 elemento en su ${ListType} Lista.
 
 # AfterCompleteCardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType)
-- Usted tiene @{AllTasksCount} artículos en su @{ListType} Lista.
+- Usted tiene ${AllTasksCount} artículos en su ${ListType} Lista.

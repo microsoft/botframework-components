@@ -1,0 +1,16 @@
+﻿[import] (FindArticlesResponses.lg)
+
+# ShowArticles.Text(Data)
+- Ecco cosa ho trovato:
+
+# ShowMultipleArticles.Speak(Data)
+- Ho trovato alcune notizie, ecco un riassunto del primo: @{if(Data == null, '', Data)}
+
+# ShowOneArticles.Speak(Data)
+- @{if(Data == null, '', Data)}
+
+# NoArticles.Text(Data)
+- Spiacente, non sono riuscito a trovare articoli su questo argomento.
+
+# TopicPrompt.Text(Data)
+- A quale argomento sei interessato?

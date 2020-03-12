@@ -1,0 +1,24 @@
+[import] (SearchResponses.lg)
+
+# AskEntityPrompt.Text(Data)
+- What do you want to search? You can say things like 'who is bill gates' or 'how is jurassic park'.
+
+# EntityKnowledge.Text(Data)
+- OK, here is information of @{if(Data.Name == null, '', Data.Name)}
+
+# EntityKnowledge.Speak(Data)
+- OK, here is information of @{if(Data.Name == null, '', Data.Name)}. @{if(Data.Speak == null, '', Data.Speak)}.
+
+# NoResultPrompt.Text(Data)
+- Sorry, seems we didn't find anything. I suggest you check out on www.bing.com.
+
+# AnswerSearchResultPrompt.Text(Data)
+- @{AnswerSearchResultPromptTextAndSpeak1(Data)}
+
+# AnswerSearchResultPromptTextAndSpeak1(Data)
+[Activity
+    Text = @{if(Data.Answer == null, '', Data.Answer)}. You can find more information here: @{if(Data.Url == null, '', Data.Url)}
+    Speak = @{if(Data.Answer == null, '', Data.Answer)}. You can find more information here.
+]
+
+

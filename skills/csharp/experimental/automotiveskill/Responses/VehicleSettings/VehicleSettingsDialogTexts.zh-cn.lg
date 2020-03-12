@@ -1,0 +1,58 @@
+[import](VehicleSettingsDialogActivities.lg)
+
+# VehicleSettingsConfirmed.Text
+- 还行。
+
+# VehicleSettingsMissingSettingName.Text
+- 对不起，我不知道你在说什么。
+
+# VehicleSettingsSettingNameSelection.Text
+- 下面是匹配设置。哪一个？
+
+# VehicleSettingsMissingSettingValue.Text
+- 对不起，我不知道你想把它改成什么。
+
+# VehicleSettingsSettingValueSelection.Text(settingName)
+- 下面是@{if(settingName == null, '', settingName)}.哪一个？
+
+# VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
+- 所以，你想改变@{if(settingName == null, '', settingName)}自@{if(value == null, '', value)}.正确吗？
+
+# VehicleSettingsSettingChangeConfirmationDenied.Text
+- 好的，不做任何改变。
+
+# VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
+- @{if(settingName == null, '', settingName)}已设置为@{if(value == null, '', value)}.
+
+# VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
+- @{if(settingName == null, '', settingName)}已设置为@{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsSettingChangeUnsupported.Text(settingName)
+- 更改设置@{if(settingName == null, '', settingName)}当前不受支持。
+
+# VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
+- @{if(increasingDecreasing == null, '', increasingDecreasing)}@{if(settingName == null, '', settingName)}由@{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsChangingAmount.Text(settingName, amount, unit)
+- 设置@{if(settingName == null, '', settingName)}自@{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsChangingValue.Text(settingName, value)
+- 设置@{if(settingName == null, '', settingName)}自@{if(value == null, '', value)}.
+
+# VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)
+- @{if(valueIngForm == null, '', valueIngForm)}@{if(settingName == null, '', settingName)}.
+
+# VehicleSettingsCheckingStatus.Text(settingName)
+- 检查 的状态@{if(settingName == null, '', settingName)}.
+
+# VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
+- @{if(settingName == null, '', settingName)}设置为@{if(value == null, '', value)}.
+
+# VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
+- @{if(settingName == null, '', settingName)}设置为@{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+
+# VehicleSettingsCheckingStatusUnsupported.Text(settingName)
+- 检查 的状态@{if(settingName == null, '', settingName)}当前不受支持。
+
+# VehicleSettingsOutOfDomain.Text
+- 对不起，我不知道该怎么处理。

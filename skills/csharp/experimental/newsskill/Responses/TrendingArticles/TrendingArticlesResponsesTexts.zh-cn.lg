@@ -1,0 +1,13 @@
+﻿[import] (TrendingArticlesResponses.lg)
+
+# ShowTrending.Text(Data)
+- 以下是热门新闻：
+
+# ShowMultipleTrending.Speak(Data)
+- 我找到了一些新闻，第一个的标题是： @{if(Data == null, '', Data)}
+
+# ShowOneTrending.Speak(Data)
+- @{if(Data == null, '', Data)}
+
+# NoTrending.Text(Data)
+- 抱歉，我没有找到任何热门新闻。

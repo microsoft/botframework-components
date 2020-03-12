@@ -1,0 +1,44 @@
+[import] (MainStrings.lg)
+
+# CONFUSED.Text(Data)
+- 对不起, 我帮不上忙。
+
+# INTRO_TITLE.Text(Data)
+- 欢迎来到新闻技巧!
+
+# HELP_TEXT.Text(Data)
+- 此卡可用于显示信息, 以帮助您的用户与您的机器人进行交互。下面的按钮可用于示例查询或指向外部网站的链接。
+
+# ERROR.Text(Data)
+- 对不起, 看起来出了问题。
+
+# HELP_TITLE.Text(Data)
+- 帮助
+
+# GREETING.Text(Data)
+- 嘿，你好！
+
+# CANCELLED.Text(Data)
+- 好吧, 让我们重新开始。
+
+# COMPLETED.Text(Data)
+- 我还能帮你什么忙？
+
+# GREETING_WITH_NAME.Text(Data)
+- 嘿, {0}!
+
+# INTRO_TEXT.Text(Data)
+- 尝试键入 * 告诉我新闻 * 搜索相关新闻文章。
+
+# ReadMore.Text(Data)
+- 阅读更多！
+
+# LearnMore.Text(Data)
+- 了解更多
+
+# MarketPrompt.Text(Data)
+- 你在哪个国家或地区？
+
+# MarketRetryPrompt.Text(Data)
+- 找不到该国家或地区。你想在哪个国家或地区内进行搜索？
+

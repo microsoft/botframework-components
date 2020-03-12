@@ -20,17 +20,17 @@ namespace MusicSkill.Dialogs
 {
     public class PlayMusicDialog : SkillDialogBase
     {
-        private ResponseManager _responseManager;
+        private LocaleTemplateEngineManager _localeTemplateEngineManager;
 
         public PlayMusicDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateEngineManager localeTemplateEngineManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(PlayMusicDialog), settings, services, responseManager, conversationState, telemetryClient)
+            : base(nameof(PlayMusicDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
         {
-            _responseManager = responseManager;
+            _localeTemplateEngineManager = localeTemplateEngineManager;
 
             var sample = new WaterfallStep[]
             {
@@ -49,7 +49,7 @@ namespace MusicSkill.Dialogs
             var status = false;
             if (string.IsNullOrEmpty(state.Query))
             {
-                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
+                await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.NoResultstMessage));
             }
             else
             {
@@ -75,7 +75,7 @@ namespace MusicSkill.Dialogs
                 }
                 else
                 {
-                    await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.NoResultstMessage));
+                    await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.NoResultstMessage));
                 }
             }
 

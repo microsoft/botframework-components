@@ -19,7 +19,7 @@ namespace ToDoSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleTemplateEngineManager _templateEngine;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<ToDoSkillState> _stateAccessor;
         private Dialog _addToDoItemDialog;
         private Dialog _markToDoItemDialog;
@@ -33,7 +33,7 @@ namespace ToDoSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _templateEngine = serviceProvider.GetService<LocaleTemplateEngineManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -170,7 +170,7 @@ namespace ToDoSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(ToDoMainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -179,7 +179,7 @@ namespace ToDoSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(ToDoMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -190,7 +190,7 @@ namespace ToDoSkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(ToDoMainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -216,12 +216,12 @@ namespace ToDoSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _templateEngine.GenerateActivityForLocale(ToDoMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(ToDoMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _templateEngine.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -278,7 +278,7 @@ namespace ToDoSkill.Dialogs
                             else
                             {
                                 // No intent was identified, send confused message
-                                var response = _templateEngine.GenerateActivityForLocale(ToDoMainResponses.DidntUnderstandMessage);
+                                var response = _templateManager.GenerateActivityForLocale(ToDoMainResponses.DidntUnderstandMessage);
                                 await stepContext.Context.SendActivityAsync(response);
                             }
 
@@ -288,7 +288,7 @@ namespace ToDoSkill.Dialogs
                     default:
                         {
                             // intent was identified but not yet implemented
-                            var response = _templateEngine.GenerateActivityForLocale(ToDoMainResponses.FeatureNotAvailable);
+                            var response = _templateManager.GenerateActivityForLocale(ToDoMainResponses.FeatureNotAvailable);
                             await stepContext.Context.SendActivityAsync(response);
                             break;
                         }
@@ -336,7 +336,7 @@ namespace ToDoSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

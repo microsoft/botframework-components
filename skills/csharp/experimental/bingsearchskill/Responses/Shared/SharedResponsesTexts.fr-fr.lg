@@ -1,0 +1,62 @@
+[import] (SharedResponses.lg)
+
+# DidntUnderstandMessage.Text(Data)
+- Désolé, je ne comprenais pas ce que vous vouliez dire.
+- Je n'ai pas compris, peut-être essayer de nouveau d'une manière différente.
+- Pouvez-vous essayer de demander d'une manière différente?
+- Je n'ai pas eu ce que vous voulez dire, pouvez-vous essayer d'une manière différente?
+- Pourriez-vous élaborer?
+- S'il vous plaît dire que de nouveau d'une manière différente.
+- Je n'ai pas vraiment eu ça.
+- Pouvez-vous dire cela d'une manière différente?
+- Pouvez-vous réessayer de me le demander? Je n'ai pas eu ce que tu voulais dire.
+
+# CancellingMessage.Text(Data)
+- Bien sûr, on peut le faire plus tard.
+- Bien sûr, on peut commencer ça plus tard.
+- Pas de problème, vous pouvez réessayer à un autre moment.
+- Bon, faites-moi savoir quand vous avez besoin de mon aide.
+- Bien sûr, je suis là si tu as besoin de moi.
+
+# NoAuth.Text(Data)
+- Veuillez vous connecter avant de prendre d'autres mesures.
+- S'il vous plaît connectez-vous afin que je puisse prendre d'autres mesures.
+- S'il vous plaît connectez-vous afin que je puisse procéder à votre demande.
+- Pouvez-vous vous connecter pour que je puisse vous aider plus loin?
+- Vous devez vous connecter afin que je puisse prendre d'autres mesures.
+
+# AuthFailed.Text(Data)
+- @{AuthFailedTextAndSpeak1(Data)}
+- @{AuthFailedTextAndSpeak2(Data)}
+- @{AuthFailedTextAndSpeak3(Data)}
+
+# AuthFailedTextAndSpeak1(Data)
+[Activity
+    Text = L'authentification a échoué. Veuillez réessayer
+    Speak = L'authentification a échoué. Veuillez réessayer.
+]
+
+# AuthFailedTextAndSpeak2(Data)
+[Activity
+    Text = Vous avez échoué à vous connecter. Veuillez réessayer plus tard.
+    Speak = Vous avez échoué à vous connecter. Veuillez réessayer plus tard.
+]
+
+# AuthFailedTextAndSpeak3(Data)
+[Activity
+    Text = Votre connexion a échoué. Essayons encore.
+    Speak = Votre connexion a échoué. Essayons encore.
+]
+
+# ActionEnded.Text(Data)
+- Faites-moi savoir si vous avez besoin de mon aide avec autre chose.
+- Je suis là si tu as besoin de moi.
+
+# ErrorMessage.Text(Data)
+- Désolé, on dirait que quelque chose a mal tourné!
+- Une erreur s'est produite, réessayez plus tard.
+- Quelque chose a mal tourné, Désolé!
+- On dirait que quelque chose a mal tourné. Tu peux réessayer plus tard?
+- Désolé de ne pas pouvoir vous aider maintenant. Veuillez réessayer plus tard.
+
+

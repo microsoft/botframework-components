@@ -22,6 +22,7 @@ using RestaurantBookingSkill.Models;
 using RestaurantBookingSkill.Responses.Main;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
+using RestaurantBookingSkill.Utilities;
 using SkillServiceLibrary.Utilities;
 
 namespace RestaurantBookingSkill.Dialogs
@@ -30,7 +31,7 @@ namespace RestaurantBookingSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateEngineManager _localeTemplateEngineManager;
         private UserState _userState;
         private ConversationState _conversationState;
         private IStatePropertyAccessor<RestaurantBookingState> _conversationStateAccessor;
@@ -42,7 +43,7 @@ namespace RestaurantBookingSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _localeTemplateEngineManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -175,7 +176,7 @@ namespace RestaurantBookingSkill.Dialogs
                                 var state = await _conversationStateAccessor.GetAsync(innerDc.Context, () => new RestaurantBookingState());
                                 state.Clear();
 
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.CancellingMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(RestaurantBookingSharedResponses.CancellingMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -184,7 +185,7 @@ namespace RestaurantBookingSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(RestaurantBookingMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -209,12 +210,12 @@ namespace RestaurantBookingSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(RestaurantBookingMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _localeTemplateEngineManager.GetResponse(RestaurantBookingMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _responseManager.GetResponse(RestaurantBookingMainResponses.WelcomeMessage);
+                    promptOptions.Prompt = _localeTemplateEngineManager.GetResponse(RestaurantBookingMainResponses.WelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -242,14 +243,14 @@ namespace RestaurantBookingSkill.Dialogs
                     case ReservationLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GetResponse(RestaurantBookingSharedResponses.DidntUnderstandMessage));
                             break;
                         }
                 }
@@ -276,7 +277,7 @@ namespace RestaurantBookingSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
             }
         }
     }

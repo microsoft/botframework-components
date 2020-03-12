@@ -1,19 +1,17 @@
-[import](DeleteToDoActivities.lg)
-
 # AskDeletionAllConfirmation.Text(ListType)
-- ¿Está seguro de que desea eliminar todo de su @{ListType} ¿Lista?
+- ¿Está seguro de que desea eliminar todo de su ${ListType} ¿Lista?
 
 # AskDeletionAllConfirmationFailed.Text(ListType)
-- Lo siento, no lo entendí. ¿Desea eliminar todo de su @{ListType} ¿Lista?
+- Lo siento, no lo entendí. ¿Desea eliminar todo de su ${ListType} ¿Lista?
 
 # AfterAllTasksDeleted.Text(ListType)
-- Yo despejé su @{ListType} Lista.
+- Yo despejé su ${ListType} Lista.
 
 # AfterTaskDeleted.Text(TaskContent, ListType)
-- He borrado @{TaskContent} de su @{ListType} Lista.
+- He borrado ${TaskContent} de su ${ListType} Lista.
 
 # DeletionAllConfirmationRefused.Text(TaskCount, ListType)
-- Vale, no borré nada. Hay @{TaskCount} artículos en su @{ListType} Lista.
+- Vale, no borré nada. Hay ${TaskCount} artículos en su ${ListType} Lista.
 
 # ListTypePromptForDelete.Text
 - ¿Desea eliminar algo de su lista de tareas pendientes, compras o comestibles?
