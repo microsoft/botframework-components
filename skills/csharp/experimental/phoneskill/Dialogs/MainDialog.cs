@@ -76,7 +76,6 @@ namespace PhoneSkill.Dialogs
                 localizedServices.LuisServices.TryGetValue("phone", out var skillLuisService);
                 if (skillLuisService != null)
                 {
-                    var skillOptions = new PhoneSkillDialogOptions();
                     var skillResult = await skillLuisService.RecognizeAsync<PhoneLuis>(innerDc.Context, cancellationToken);
                     innerDc.Context.TurnState.Add(StateProperties.PhoneLuisResultKey, skillResult);
                 }
@@ -236,6 +235,7 @@ namespace PhoneSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+            state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -248,8 +248,7 @@ namespace PhoneSkill.Dialogs
                 {
                     case PhoneLuis.Intent.OutgoingCall:
                         {
-                            var skillOptions = new PhoneSkillDialogOptions();
-                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
                         }
 
                     case PhoneLuis.Intent.None:
@@ -314,9 +313,10 @@ namespace PhoneSkill.Dialogs
                                 {
                                     await DigestActionInput(stepContext, actionData);
                                 }
+                                state.IsAction = true;
                             }
 
-                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), new PhoneSkillDialogOptions() { IsAction = true });
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
                         }
 
                     default:
@@ -341,6 +341,15 @@ namespace PhoneSkill.Dialogs
                     Code = EndOfConversationCodes.CompletedSuccessfully,
                     Value = stepContext.Result,
                 };
+
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    }
+                }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();

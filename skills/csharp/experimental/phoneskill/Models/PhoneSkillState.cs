@@ -56,6 +56,14 @@ namespace PhoneSkill.Models
         public string PhoneNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the skill is in action mode.
+        /// </summary>
+        /// <value>
+        /// true if action mode.
+        /// </value>
+        public bool IsAction { get; set; } = false;
+ 
+        /// <summary>
         /// Clear the state.
         /// </summary>
         public void Clear()

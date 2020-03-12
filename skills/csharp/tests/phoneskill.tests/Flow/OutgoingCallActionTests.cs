@@ -21,87 +21,47 @@ namespace PhoneSkill.Tests.Flow
     {
         private static string OutgoingCallActionName { get; } = "OutgoingCall";
 
-        private Activity OutgoingCallAction_PromptForContactName { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-        };
-
-        private Activity OutgoingCallAction_ContactNameAndPhoneNumber { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-            Value = JObject.FromObject(new OutgoingCallRequest()
-            {
-                ContactPerson = "Bob Botter",
-                PhoneNumber = "555 666 6666"
-            })
-        };
-
-        private Activity OutgoingCallAction_PhoneNumber { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-            Value = JObject.FromObject(new OutgoingCallRequest()
-            {
-                PhoneNumber = "555 666 6666"
-            })
-        };
-
-        private Activity OutgoingCallAction_ContactName { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-            Value = JObject.FromObject(new OutgoingCallRequest()
-            {
-                ContactPerson = "Bob Botter"
-            })
-        };
-
-        private Activity OutgoingCallAction_ContactNameNotFound { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-            Value = JObject.FromObject(new OutgoingCallRequest()
-            {
-                ContactPerson = "qqq"
-            })
-        };
-
-        private Activity OutgoingCallAction_ContactNameNoPhoneNumber { get; } = new Activity()
-        {
-            Type = ActivityTypes.Event,
-            Name = OutgoingCallActionName,
-            Value = JObject.FromObject(new OutgoingCallRequest()
-            {
-                ContactPerson = "Christina Botter"
-            })
-        };
-
         [TestMethod]
         public async Task Test_OutgoingCall_Action_PromptForContactName()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+            };
+
             await GetSkillTestFlow()
-               .Send(OutgoingCallAction_PromptForContactName)
-               .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
-               .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
-               {
-                   { "contactOrPhoneNumber", "Bob Botter" },
-               }))
-               .AssertReply(OutgoingCallEvent(new OutgoingCall
-               {
-                   Number = "555 666 6666",
-                   Contact = StubContactProvider.BobBotter,
-               }))
-               .StartTestAsync();
+                .Send(activity)
+                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
+                .Send(OutgoingCallUtterances.RecipientContactName)
+                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+                {
+                    { "contactOrPhoneNumber", "Bob Botter" },
+                }))
+                .AssertReply(OutgoingCallEvent(new OutgoingCall
+                {
+                    Number = "555 666 6666",
+                    Contact = StubContactProvider.BobBotter,
+                }))
+                .StartTestAsync();
         }
 
         [TestMethod]
         public async Task Test_OutgoingCall_Action_ContactNameAndPhoneNumber()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+                Value = JObject.FromObject(new OutgoingCallRequest()
+                {
+                    ContactPerson = "Bob Botter",
+                    PhoneNumber = "555 666 6666"
+                })
+            };
+
             await this.GetSkillTestFlow()
-                .Send(OutgoingCallAction_ContactNameAndPhoneNumber)
+                .Send(activity)
                 .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                 {
                     { "contactOrPhoneNumber", "Bob Botter" },
@@ -117,8 +77,18 @@ namespace PhoneSkill.Tests.Flow
         [TestMethod]
         public async Task Test_OutgoingCall_Action_PhoneNumber()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+                Value = JObject.FromObject(new OutgoingCallRequest()
+                {
+                    PhoneNumber = "555 666 6666"
+                })
+            };
+
             await GetSkillTestFlow()
-               .Send(OutgoingCallAction_PhoneNumber)
+               .Send(activity)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
                    { "contactOrPhoneNumber", "555 666 6666" },
@@ -133,8 +103,18 @@ namespace PhoneSkill.Tests.Flow
         [TestMethod]
         public async Task Test_OutgoingCall_Action_ContactName()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+                Value = JObject.FromObject(new OutgoingCallRequest()
+                {
+                    ContactPerson = "Bob Botter"
+                })
+            };
+
             await GetSkillTestFlow()
-               .Send(OutgoingCallAction_ContactName)
+               .Send(activity)
                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
@@ -150,8 +130,18 @@ namespace PhoneSkill.Tests.Flow
         [TestMethod]
         public async Task Test_OutgoingCall_Action_ContactNameNotFound()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+                Value = JObject.FromObject(new OutgoingCallRequest()
+                {
+                    ContactPerson = "qqq"
+                })
+            };
+
             await GetSkillTestFlow()
-               .Send(OutgoingCallAction_ContactNameNotFound)
+               .Send(activity)
                .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new StringDictionary()
                {
                    { "contactName", "qqq" },
@@ -173,8 +163,18 @@ namespace PhoneSkill.Tests.Flow
         [TestMethod]
         public async Task Test_OutgoingCall_Action_ContactNameNoPhoneNumber()
         {
+            var activity = new Activity()
+            {
+                Type = ActivityTypes.Event,
+                Name = OutgoingCallActionName,
+                Value = JObject.FromObject(new OutgoingCallRequest()
+                {
+                    ContactPerson = "Christina Botter"
+                })
+            };
+
             await GetSkillTestFlow()
-               .Send(OutgoingCallAction_ContactNameNoPhoneNumber)
+               .Send(activity)
                .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new StringDictionary()
                {
                    { "contact", "Christina Botter" },
