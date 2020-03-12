@@ -2,7 +2,7 @@
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
-  "speak": "@{if(Data.Speak == null, '', Data.Speak)}",
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}",
   "id": "CuisineChoiceCard",
   "body": [
     {
@@ -13,9 +13,9 @@
           "items": [
             {
               "type": "Image",
-              "url": "@{if(Data.ImageUrl == null, '', Data.ImageUrl)}",
-              "size": "@{if(Data.ImageSize == null, '', Data.ImageSize)}",
-              "horizontalAlignment": "@{if(Data.ImageAlign == null, '', Data.ImageAlign)}"
+              "url": "${if(Data.ImageUrl == null, '', Data.ImageUrl)}",
+              "size": "${if(Data.ImageSize == null, '', Data.ImageSize)}",
+              "horizontalAlignment": "${if(Data.ImageAlign == null, '', Data.ImageAlign)}"
             }
           ]
         },
@@ -24,7 +24,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "@{if(Data.Cuisine == null, '', Data.Cuisine)}",
+              "text": "${if(Data.Cuisine == null, '', Data.Cuisine)}",
               "wrap": true,
               "size": "default"
             }

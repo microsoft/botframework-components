@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](RestaurantBookingMainResponsesTexts.lg)
+[import](RestaurantBookingMainResponsesTexts.zh-cn.lg)
 
 # WelcomeMessage(Data, Cards, Layout)
 [Activity

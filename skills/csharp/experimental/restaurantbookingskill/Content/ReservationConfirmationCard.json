@@ -2,7 +2,7 @@
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
-  "speak": "@{if(Data.Speak == null, '', Data.Speak)}",
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}",
   "id": "ReservationConfirmationCard",
   "body": [
     {
@@ -10,9 +10,9 @@
       "items": [
         {
           "type": "Image",
-          "url": "@{if(Data.ImageUrl == null, '', Data.ImageUrl)}",
-          "size": "@{if(Data.ImageSize == null, '', Data.ImageSize)}",
-          "horizontalAlignment": "@{if(Data.ImageAlign == null, '', Data.ImageAlign)}"
+          "url": "${if(Data.ImageUrl == null, '', Data.ImageUrl)}",
+          "size": "${if(Data.ImageSize == null, '', Data.ImageSize)}",
+          "horizontalAlignment": "${if(Data.ImageAlign == null, '', Data.ImageAlign)}"
         }
       ]
     },
@@ -21,7 +21,7 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "@{if(Data.BookingPlace == null, '', Data.BookingPlace)}",
+          "text": "${if(Data.BookingPlace == null, '', Data.BookingPlace)}",
           "wrap": true,
           "size": "medium"
         },
@@ -30,25 +30,25 @@
           "facts": [
             {
               "title": "Location",
-              "value": "@{if(Data.Location == null, '', Data.Location)}"
+              "value": "${if(Data.Location == null, '', Data.Location)}"
             },
             {
               "title": "Date",
-              "value": "@{if(Data.ReservationDate == null, '', Data.ReservationDate)}"
+              "value": "${if(Data.ReservationDate == null, '', Data.ReservationDate)}"
             },
             {
               "title": "Time",
-              "value": "@{if(Data.ReservationTime == null, '', Data.ReservationTime)}"
+              "value": "${if(Data.ReservationTime == null, '', Data.ReservationTime)}"
             },
             {
               "title": "Attendee Count",
-              "value": "@{if(Data.AttendeeCount == null, '', Data.AttendeeCount)}"
+              "value": "${if(Data.AttendeeCount == null, '', Data.AttendeeCount)}"
             }
           ]
         },
         {
           "type": "TextBlock",
-          "text": "@{if(Data.FooterText == null, '', Data.FooterText)}",
+          "text": "${if(Data.FooterText == null, '', Data.FooterText)}",
           "wrap": true
         }
       ]

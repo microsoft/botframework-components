@@ -1,4 +1,3 @@
-[import] (..\Main\RestaurantBookingMainResponsesTexts.de-de.lg)
-[import] (..\Shared\RestaurantBookingSharedResponsesTexts.de-de.lg)
-[import] (..\Shared\BotStringsTexts.de-de.lg)
-[import] (..\Shared\Shared.lg)
+[import](..\Main\RestaurantBookingMainResponses.de-de.lg)
+[import](..\Shared\RestaurantBookingSharedResponses.de-de.lg)
+[import](..\Shared\BotStrings.de-de.lg)
