@@ -136,7 +136,7 @@ namespace HospitalitySkill.Dialogs
 
             if (notAvailable.Count > 0)
             {
-                var tokens = new Dictionary<string, string>
+                var tokens = new Dictionary<string, object>
                 {
                     { "Items", notAvailable.Aggregate(string.Empty, (last, item) => last + $"{Environment.NewLine}- {item.Item[0]}") }
                 };

@@ -26,7 +26,9 @@ namespace HospitalitySkill.Dialogs
         private BotServices _services;
         private IHotelService _hotelService;
         private LocaleTemplateManager _responseManager;
+        private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
         private IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
+
         public MainDialog(
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient)
@@ -333,24 +335,18 @@ namespace HospitalitySkill.Dialogs
         {
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var result = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
                 if (state.IsAction)
                 {
-                    if (stepContext.Result == null)
+                    if (result == null)
                     {
-                        endOfConversation.Value = new ActionResult(false);
+                        result = new ActionResult(false);
                     }
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {

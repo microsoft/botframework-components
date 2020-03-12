@@ -81,7 +81,7 @@ namespace HospitalitySkill.Dialogs
 
             convState.UpdatedReservation = new ReservationData { CheckOutTimeData = lateTime };
 
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", convState.UpdatedReservation.CheckOutTime },
             };
@@ -124,7 +124,7 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.LateCheckOut)
             {
-                var tokens = new Dictionary<string, string>
+                var tokens = new Dictionary<string, object>
                 {
                     { "Time", userState.UserReservation.CheckOutTime },
                     { "Date", userState.UserReservation.CheckOutDate }

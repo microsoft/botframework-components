@@ -1,18 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using HospitalitySkill.Bots;
 using HospitalitySkill.Dialogs;
-using HospitalitySkill.Responses.CheckOut;
-using HospitalitySkill.Responses.ExtendStay;
-using HospitalitySkill.Responses.GetReservation;
-using HospitalitySkill.Responses.LateCheckOut;
-using HospitalitySkill.Responses.Main;
-using HospitalitySkill.Responses.RequestItem;
-using HospitalitySkill.Responses.RoomService;
-using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,12 +17,10 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HospitalitySkill.Utilities;
 
 namespace HospitalitySkill
 {
@@ -109,7 +99,7 @@ namespace HospitalitySkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // Configure services
             services.AddSingleton<IHotelService, HotelService>();

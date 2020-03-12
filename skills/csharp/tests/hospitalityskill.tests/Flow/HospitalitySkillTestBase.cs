@@ -3,44 +3,34 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
+using System.Security.Claims;
 using System.Threading;
 using HospitalitySkill.Bots;
 using HospitalitySkill.Dialogs;
-using HospitalitySkill.Responses.CheckOut;
-using HospitalitySkill.Responses.ExtendStay;
-using HospitalitySkill.Responses.GetReservation;
-using HospitalitySkill.Responses.LateCheckOut;
-using HospitalitySkill.Responses.Main;
-using HospitalitySkill.Responses.RequestItem;
-using HospitalitySkill.Responses.RoomService;
+using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
 using HospitalitySkill.Tests.Flow.Fakes;
 using HospitalitySkill.Tests.Flow.Utterances;
+using HospitalitySkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
-using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using System.Security.Claims;
-using Microsoft.Bot.Connector.Authentication;
-using HospitalitySkill.Models.ActionDefinitions;
-using HospitalitySkill.Utilities;
-using Microsoft.Bot.Builder.LanguageGeneration;
 
 namespace HospitalitySkill.Tests.Flow
 {
-    public class HospitalitySkillTestBase : BotTestBase
+    public class HospitalitySkillTestBase
     {
         public static readonly DateTime CheckInDate = DateTime.Now;
 
@@ -51,7 +41,7 @@ namespace HospitalitySkill.Tests.Flow
         public Templates Templates { get; set; }
 
         [TestInitialize]
-        public override void Initialize()
+        public void Initialize()
         {
             // Initialize service collection
             Services = new ServiceCollection();
@@ -112,7 +102,7 @@ namespace HospitalitySkill.Tests.Flow
             Services.AddSingleton<IHotelService>(new HotelService(CheckInDate));
 
             // Configure responses
-            Services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
+            Services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
             Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             // Register dialogs
@@ -194,7 +184,7 @@ namespace HospitalitySkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertStartsWith(string response, Dictionary<string, string> tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertStartsWith(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -206,7 +196,7 @@ namespace HospitalitySkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, string>());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     Assert.IsTrue(collection.Any((reply) =>
                     {
                         return messageActivity.Text.StartsWith(reply);
@@ -217,7 +207,7 @@ namespace HospitalitySkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertContains(string response, Dictionary<string, string> tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertContains(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -229,7 +219,7 @@ namespace HospitalitySkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, string>());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     CollectionAssert.Contains(collection, messageActivity.Text);
                 }
 
@@ -237,7 +227,7 @@ namespace HospitalitySkill.Tests.Flow
             };
         }
 
-        protected string[] ParseReplies(string templateId, Dictionary<string, string> tokens = null)
+        protected string[] ParseReplies(string templateId, Dictionary<string, object> tokens = null)
         {
             return Templates.ParseReplies(templateId, tokens);
         }

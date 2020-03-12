@@ -79,7 +79,7 @@ namespace HospitalitySkill.Dialogs
             {
                 convState.NumberEntity = entities.number[0];
 
-                var tokens = new Dictionary<string, string>
+                var tokens = new Dictionary<string, object>
                 {
                     { "Number", convState.NumberEntity.ToString() }
                 };
@@ -201,7 +201,7 @@ namespace HospitalitySkill.Dialogs
                 }
                 else
                 {
-                    var tokens = new Dictionary<string, string>
+                    var tokens = new Dictionary<string, object>
                     {
                         { "Date", userState.UserReservation.CheckOutDate }
                     };
@@ -217,7 +217,7 @@ namespace HospitalitySkill.Dialogs
         {
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
 
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", convState.UpdatedReservation.CheckOutDate }
             };
@@ -260,7 +260,7 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.UserReservation.CheckOutDate == convState.UpdatedReservation.CheckOutDate)
             {
-                var tokens = new Dictionary<string, string>
+                var tokens = new Dictionary<string, object>
                 {
                     { "Date", userState.UserReservation.CheckOutDate }
                 };

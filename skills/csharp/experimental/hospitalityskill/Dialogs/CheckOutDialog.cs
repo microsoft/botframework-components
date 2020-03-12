@@ -109,7 +109,7 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.CheckedOut)
             {
-                var tokens = new Dictionary<string, string>
+                var tokens = new Dictionary<string, object>
                 {
                     { "Email", userState.Email },
                 };

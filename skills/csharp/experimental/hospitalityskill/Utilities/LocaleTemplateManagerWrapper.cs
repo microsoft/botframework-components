@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Newtonsoft.Json.Linq;
 
 namespace HospitalitySkill.Utilities
 {
@@ -18,6 +20,8 @@ namespace HospitalitySkill.Utilities
         // TODO may not all be same
         public static readonly string PathBase = @"..\..\Content";
 
+        private const string CardsOnly = "CardsOnly";
+
         public static Activity GetCardResponse(this LocaleTemplateManager manager, Card card)
         {
             return manager.GetCardResponse(new Card[] { card });
@@ -25,16 +29,21 @@ namespace HospitalitySkill.Utilities
 
         public static Activity GetCardResponse(this LocaleTemplateManager manager, IEnumerable<Card> cards, string attachmentLayout = "carousel")
         {
-            return manager.GetCardResponse("CardsOnly", cards, null, attachmentLayout);
+            return manager.GetCardResponse(CardsOnly, cards, null, attachmentLayout);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, string> tokens = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, new Card[] { card }, tokens);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, string> tokens = null, string attachmentLayout = "carousel")
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
         {
+            if (string.IsNullOrEmpty(templateId))
+            {
+                templateId = CardsOnly;
+            }
+
             var input = new
             {
                 Data = tokens,
@@ -53,9 +62,13 @@ namespace HospitalitySkill.Utilities
             }
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, string> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
-            throw new Exception("1. create *Containee.json which only keeps containee's body;2. in the container, write @{if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
+            if (string.IsNullOrEmpty(templateId))
+            {
+                templateId = CardsOnly;
+            }
+
             var input = new
             {
                 Data = tokens,
@@ -73,23 +86,32 @@ namespace HospitalitySkill.Utilities
             }
         }
 
-        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, IDictionary<string, string> tokens = null)
+        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)
         {
             return manager.GetCardResponse(templateId, Array.Empty<Card>(), tokens);
         }
 
         public static string GetString(this LocaleTemplateManager manager, string templateId)
         {
-            return manager.GenerateActivityForLocale(templateId + ".Text").Text;
+            // Not use .Text in case text and speak are different
+            return manager.GenerateActivityForLocale(templateId).Text;
         }
 
-        public static string[] ParseReplies(this Templates manager, string name, IDictionary<string, string> data = null)
+        public static string[] ParseReplies(this Templates manager, string name, IDictionary<string, object> data = null)
         {
             var input = new
             {
                 Data = data
             };
-            return manager.ExpandTemplate(name + ".Text", input).ToArray();
+
+            // Not use .Text in case text and speak are different
+            var list = manager.ExpandTemplate(name, input);
+            var result = list.Select(value =>
+            {
+                return JObject.Parse(value)["text"].ToString();
+            }).ToArray();
+
+            return result;
         }
 
         public static Templates CreateTemplates()
@@ -102,7 +124,7 @@ namespace HospitalitySkill.Utilities
             var res = new CardExt { Name = Path.Join(PathBase, card.Name + suffix), Data = card.Data };
             if (containerItems != null)
             {
-                res.Cards = containerItems.Select((card) => Convert(card, "Containee.json")).ToList();
+                res.Cards = containerItems.Select((card) => Convert(card, ".json")).ToList();
             }
 
             return res;

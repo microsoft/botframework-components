@@ -23,7 +23,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutTest()
         {
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -44,7 +44,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutWithTimeTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", LateCheckOutUtterances.Time.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -65,7 +65,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutWithExceededTimeTest()
         {
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -86,7 +86,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutAndHelpTest()
         {
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -110,7 +110,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutAndCancelTest()
         {
-            var tokens = new Dictionary<string, string>
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -131,7 +131,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutActionTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -150,7 +150,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutWithTimeActionTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", LateCheckOutUtterances.Time.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -169,7 +169,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task LateCheckOutWithExceededTimeActionTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }

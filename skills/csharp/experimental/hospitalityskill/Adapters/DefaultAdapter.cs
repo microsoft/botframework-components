@@ -4,6 +4,7 @@
 using System.Globalization;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Dialogs;
@@ -27,7 +28,7 @@ namespace HospitalitySkill.Bots
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            ResponseManager responseManager)
+            LocaleTemplateManager responseManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>

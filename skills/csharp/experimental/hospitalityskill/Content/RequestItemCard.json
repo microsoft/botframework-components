@@ -80,7 +80,9 @@
     {
       "type": "Container",
       "id": "items",
-      "items": []
+      "items": [
+        ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}
+      ]
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
