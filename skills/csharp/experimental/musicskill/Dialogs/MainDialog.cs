@@ -12,9 +12,11 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using MusicSkill.Models;
+using MusicSkill.Models.ActionInfos;
 using MusicSkill.Responses.Main;
 using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 
 namespace MusicSkill.Dialogs
@@ -228,7 +230,7 @@ namespace MusicSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
-
+            state.Clear();
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
                 var skillResult = stepContext.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
@@ -280,6 +282,19 @@ namespace MusicSkill.Dialogs
                             break;
                         }
 
+                    case Events.PlayMusic:
+                        {
+                            state.IsAction = true;
+                            SearchInfo actionData = null;
+                            if (ev.Value is JObject info)
+                            {
+                                actionData = info.ToObject<SearchInfo>();
+                                actionData.DigestState(state);
+                            }
+
+                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id);
+                        }
+
                     default:
                         {
                             await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
@@ -295,6 +310,7 @@ namespace MusicSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
             if (stepContext.Context.IsSkill())
             {
                 // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
@@ -303,6 +319,11 @@ namespace MusicSkill.Dialogs
                     Code = EndOfConversationCodes.CompletedSuccessfully,
                     Value = stepContext.Result,
                 };
+
+                if (state.IsAction && stepContext.Result == null)
+                {
+                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
@@ -335,6 +356,11 @@ namespace MusicSkill.Dialogs
             {
                 throw new InvalidOperationException("OAuthPrompt.SignOutUser(): not supported by the current adapter");
             }
+        }
+
+        private class Events
+        {
+            public const string PlayMusic = "PlayMusic";
         }
     }
 }

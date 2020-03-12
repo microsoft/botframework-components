@@ -3,17 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Bot.Schema;
 using MusicSkill.Models;
 using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
@@ -56,13 +56,21 @@ namespace MusicSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            if (dc.Context.Activity.Type == ActivityTypes.Message)
+            {
+                await DigestLuisResult(dc);
+            }
+
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            if (dc.Context.Activity.Type == ActivityTypes.Message)
+            {
+                await DigestLuisResult(dc);
+            }
+
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
@@ -138,19 +146,20 @@ namespace MusicSkill.Dialogs
         }
 
         // Helpers
-        protected async Task GetLuisResult(DialogContext dc)
+        protected async Task DigestLuisResult(DialogContext dc)
         {
-            if (dc.Context.Activity.Type == ActivityTypes.Message)
+            var luisResult = dc.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
+            if (luisResult != null)
             {
                 var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState());
+                var intent = luisResult.TopIntent().intent;
+                var entities = luisResult.Entities;
 
-                // Get luis service for current locale
-                var localeConfig = Services.GetCognitiveModels();
-                var luisService = localeConfig.LuisServices["MusicSkill"];
-
-                // Get intent and entities for activity
-                var result = await luisService.RecognizeAsync<MusicSkillLuis>(dc.Context, CancellationToken.None);
-                state.LuisResult = result;
+                // Extract query entity to search against Spotify for
+                if (entities.Artist_Any != null && entities.Artist_Any.Any())
+                {
+                    state.Query = entities.Artist_Any[0];
+                }
             }
         }
 
@@ -166,10 +175,6 @@ namespace MusicSkill.Dialogs
 
             // send error message to bot user
             await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
-
-            // clear state
-            var state = await StateAccessor.GetAsync(sc.Context);
-            state.Clear();
         }
     }
 }

@@ -48,7 +48,7 @@
         "$ref": "#/definitions/searchInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/operationStatus"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "message": {
@@ -61,16 +61,16 @@
       "type": "object",
       "required": [],
       "properties": {
-        "setting": {
+        "musicInfo": {
           "type": "string",
           "description": "Information used to search the music catalogue, e.g. artist name"
         }
       }
     },
-    "operationStatus": {
+    "actionResult": {
       "type": "object",
       "properties": {
-        "status": {
+        "actionSuccess": {
           "type": "boolean",
           "description": "An operation status indicating success or failure"
         }
