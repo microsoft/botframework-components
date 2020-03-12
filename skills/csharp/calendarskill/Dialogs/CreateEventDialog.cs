@@ -35,12 +35,12 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             FindContactDialog findContactDialog,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(CreateEventDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(CreateEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -160,7 +160,7 @@ namespace CalendarSkill.Dialogs
 
                 if (state.MeetingInfo.RecreateState == RecreateEventState.Subject)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoTitleShort) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoTitleShort) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 else if (state.MeetingInfo.CreateHasDetail && isTitleSkipByDefault.GetValueOrDefault())
@@ -177,7 +177,7 @@ namespace CalendarSkill.Dialogs
 
                     var userNameString = state.MeetingInfo.ContactInfor.Contacts.ToSpeechString(CommonStrings.And, li => $"{li.DisplayName ?? li.Address}");
                     var data = new { UserName = userNameString };
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoTitle, data) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoTitle, data) as Activity;
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
@@ -258,7 +258,7 @@ namespace CalendarSkill.Dialogs
 
                 if (string.IsNullOrEmpty(state.MeetingInfo.Content) && (!(state.MeetingInfo.CreateHasDetail && isContentSkipByDefault.GetValueOrDefault()) || state.MeetingInfo.RecreateState == RecreateEventState.Content))
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoContent) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoContent) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 else
@@ -367,7 +367,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoMeetingRoom);
+                    var prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoMeetingRoom);
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
             }
@@ -414,7 +414,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else if (state.MeetingInfo.Location == null && (!(state.MeetingInfo.CreateHasDetail && isLocationSkipByDefault.GetValueOrDefault()) || state.MeetingInfo.RecreateState == RecreateEventState.Location))
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoLocation) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoLocation) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 else
@@ -494,7 +494,7 @@ namespace CalendarSkill.Dialogs
                 var attendeeConfirmTextString = string.Empty;
                 if (state.MeetingInfo.ContactInfor.Contacts.Count > 0)
                 {
-                    var attendeeConfirmResponse = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateAttendees, new
+                    var attendeeConfirmResponse = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateAttendees, new
                     {
                         Attendees = DisplayHelper.ToDisplayParticipantsStringSummary(state.MeetingInfo.ContactInfor.Contacts, 5)
                     });
@@ -504,7 +504,7 @@ namespace CalendarSkill.Dialogs
                 var subjectConfirmString = string.Empty;
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Title))
                 {
-                    var subjectConfirmResponse = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateSubject, new
+                    var subjectConfirmResponse = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateSubject, new
                     {
                         Subject = string.IsNullOrEmpty(state.MeetingInfo.Title) ? CalendarCommonStrings.Empty : state.MeetingInfo.Title
                     });
@@ -514,7 +514,7 @@ namespace CalendarSkill.Dialogs
                 var locationConfirmString = string.Empty;
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Location))
                 {
-                    var subjectConfirmResponse = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateLocation, new
+                    var subjectConfirmResponse = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateLocation, new
                     {
                         Location = string.IsNullOrEmpty(state.MeetingInfo.Location) ? CalendarCommonStrings.Empty : state.MeetingInfo.Location
                     });
@@ -524,7 +524,7 @@ namespace CalendarSkill.Dialogs
                 var contentConfirmString = string.Empty;
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Content))
                 {
-                    var contentConfirmResponse = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateContent, new
+                    var contentConfirmResponse = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateContent, new
                     {
                         Content = string.IsNullOrEmpty(state.MeetingInfo.Content) ? CalendarCommonStrings.Empty : state.MeetingInfo.Content
                     });
@@ -571,8 +571,8 @@ namespace CalendarSkill.Dialogs
             {
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreatePrompt) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateFailed) as Activity
+                    Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreatePrompt) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ConfirmCreateFailed) as Activity
                 }, cancellationToken);
             }
             catch (Exception ex)
@@ -640,13 +640,13 @@ namespace CalendarSkill.Dialogs
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                 if (await calendarService.CreateEventAysnc(newEvent) != null)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
+                    var activity = TemplateManager.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
                     await sc.Context.SendActivityAsync(activity);
                     status = true;
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.EventCreationFailed);
+                    var activity = TemplateManager.GenerateActivityForLocale(CreateEventResponses.EventCreationFailed);
                     await sc.Context.SendActivityAsync(activity);
                     status = false;
                 }
@@ -676,8 +676,8 @@ namespace CalendarSkill.Dialogs
             {
                 return await sc.PromptAsync(Actions.GetRecreateInfoPrompt, new CalendarPromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.GetRecreateInfo) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.GetRecreateInfoRetry) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.GetRecreateInfo) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.GetRecreateInfoRetry) as Activity,
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
             }
@@ -731,7 +731,7 @@ namespace CalendarSkill.Dialogs
                 else
                 {
                     // user has tried 5 times but can't get result
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.CancelAllDialogsAsync();
                 }
@@ -749,8 +749,8 @@ namespace CalendarSkill.Dialogs
             {
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ShowRestParticipantsPrompt) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.ShowRestParticipantsPrompt) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ShowRestParticipantsPrompt) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.ShowRestParticipantsPrompt) as Activity,
                 }, cancellationToken);
             }
             catch (Exception ex)

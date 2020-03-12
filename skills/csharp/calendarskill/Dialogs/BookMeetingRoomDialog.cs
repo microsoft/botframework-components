@@ -19,12 +19,12 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             FindMeetingRoomDialog findMeetingRoomDialog,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(BookMeetingRoomDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(BookMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
             var bookMeetingRoom = new WaterfallStep[]
@@ -77,7 +77,7 @@ namespace CalendarSkill.Dialogs
                     throw new NullReferenceException("CreateMeeting received a null MeetingRoom.");
                 }
 
-                var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmedMeetingRoom);
+                var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmedMeetingRoom);
                 await sc.Context.SendActivityAsync(activity);
                 return await sc.ReplaceDialogAsync(nameof(CreateEventDialog), sc.Options);
             }

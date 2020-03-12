@@ -29,11 +29,11 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(ChangeEventStatusDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(ChangeEventStatusDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -104,7 +104,7 @@ namespace CalendarSkill.Dialogs
                 };
 
                 var replyMessage = await GetDetailMeetingResponseAsync(sc, deleteEvent, replyResponse, responseParams);
-                var retryMessage = TemplateEngine.GenerateActivityForLocale(retryResponse, responseParams) as Activity;
+                var retryMessage = TemplateManager.GenerateActivityForLocale(retryResponse, responseParams) as Activity;
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
                     Prompt = replyMessage,
@@ -173,14 +173,14 @@ namespace CalendarSkill.Dialogs
                         await calendarService.DeclineEventByIdAsync(deleteEvent.Id);
                     }
 
-                    var activity = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.EventDeleted);
+                    var activity = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventDeleted);
                     await sc.Context.SendActivityAsync(activity);
                 }
                 else
                 {
                     await calendarService.AcceptEventByIdAsync(deleteEvent.Id);
 
-                    var activity = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.EventAccepted);
+                    var activity = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventAccepted);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
@@ -232,8 +232,8 @@ namespace CalendarSkill.Dialogs
                     {
                         return await sc.PromptAsync(Actions.GetEventPrompt, new GetEventOptions(calendarService, state.GetUserTimeZone())
                         {
-                            Prompt = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.NoDeleteStartTime) as Activity,
-                            RetryPrompt = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.EventWithStartTimeNotFound) as Activity,
+                            Prompt = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.NoDeleteStartTime) as Activity,
+                            RetryPrompt = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventWithStartTimeNotFound) as Activity,
                             MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                         }, cancellationToken);
                     }
@@ -241,8 +241,8 @@ namespace CalendarSkill.Dialogs
                     {
                         return await sc.PromptAsync(Actions.GetEventPrompt, new GetEventOptions(calendarService, state.GetUserTimeZone())
                         {
-                            Prompt = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.NoAcceptStartTime) as Activity,
-                            RetryPrompt = TemplateEngine.GenerateActivityForLocale(ChangeEventStatusResponses.EventWithStartTimeNotFound) as Activity,
+                            Prompt = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.NoAcceptStartTime) as Activity,
+                            RetryPrompt = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventWithStartTimeNotFound) as Activity,
                             MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                         }, cancellationToken);
                     }

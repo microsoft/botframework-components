@@ -1,16 +1,14 @@
-[import](ChangeEventStatusDialogActivities.lg)
-
 # ConfirmDelete.Text
 - 是否确实要从日历中删除此事件？
 
 # ConfirmDeleteFailed.Text(Title, Time)
-- 是否确实要取消"@{Title}"在@{Time}?
+- 是否确实要取消"${Title}"在${Time}?
 
 # ConfirmAccept.Text
 - 是否确实要接受此事件？
 
 # ConfirmAcceptFailed.Text(Title, Time)
-- 是否确实要接受@{Time}"@{Title}"会议？
+- 是否确实要接受${Time}"${Title}"会议？
 
 # EventDeleted.Text
 - 我从您的日历中删除了该事件。

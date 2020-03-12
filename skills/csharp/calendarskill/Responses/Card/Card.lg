@@ -49,14 +49,14 @@
                                   "size": "Large",
                                   "weight": "Bolder",
                                   "color": "Light",
-                                  "text": "@{listTitle}"
+                                  "text": "${listTitle}"
                                 }
                               ],
                               "width": "stretch"
                             }
                           ]
                         },
-						@{GetTotalAndOverlap(totalEventCount, overlapEventCount, dateTimeString, isOverview)}
+						${GetTotalAndOverlap(totalEventCount, overlapEventCount, dateTimeString, isOverview)}
                         {
                           "type": "ColumnSet",
                           "height": "stretch",
@@ -84,7 +84,7 @@
                                   "horizontalAlignment": "Center",
                                   "size": "Medium",
                                   "color": "Light",
-                                  "text": "@{indicator}"
+                                  "text": "${indicator}"
                                 }
                               ],
                               "width": "auto"
@@ -105,7 +105,7 @@
                             }
                           ]
                         }
-						@{GetMePhoto(userPhoto, isOverview)}
+						${GetMePhoto(userPhoto, isOverview)}
                       ],
                       "width": 60
                     }
@@ -122,7 +122,7 @@
       "id": "EventItemContainer",
       "type": "Container",
       "items": [
-		@{MeetingItemContainerCard(itemData, timezone)}
+		${MeetingItemContainerCard(itemData, timezone)}
       ]
     },
     {
@@ -134,7 +134,7 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "Default",
-          "text": "@{provider}"
+          "text": "${provider}"
         }
       ]
     }
@@ -180,14 +180,14 @@
                                   "size": "Large",
                                   "weight": "Bolder",
                                   "color": "Default",
-                                  "text": "@{listTitle}"
+                                  "text": "${listTitle}"
                                 }
                               ],
                               "width": "stretch"
                             }
                           ]
                         },
-						@{GetTotalAndOverlapV1(totalEventCount, overlapEventCount, dateTimeString, isOverview)}
+						${GetTotalAndOverlapV1(totalEventCount, overlapEventCount, dateTimeString, isOverview)}
                         {
                           "type": "ColumnSet",
                           "height": "stretch",
@@ -202,14 +202,14 @@
                                   "horizontalAlignment": "Center",
                                   "size": "Medium",
                                   "color": "Default",
-                                  "text": "@{indicator}"
+                                  "text": "${indicator}"
                                 }
                               ],
                               "width": "auto"
                             }
                           ]
                         }
-						@{GetMePhoto(userPhoto, isOverview)}
+						${GetMePhoto(userPhoto, isOverview)}
                       ],
                       "width": 60
                     }
@@ -226,7 +226,7 @@
       "id": "EventItemContainer",
       "type": "Container",
       "items": [
-		@{MeetingItemContainerCard(itemData, timezone)}
+		${MeetingItemContainerCard(itemData, timezone)}
       ]
     },
     {
@@ -238,7 +238,7 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "Default",
-          "text": "@{provider}"
+          "text": "${provider}"
         }
       ]
     }
@@ -249,8 +249,8 @@
 ```
 
 # GetTotalAndOverlapV1(totalEventCount, overlapEventCount, dateTimeString, isOverview)
-- IF: @{isOverview}
-	- @{GetTotalAndOverlapCardV1(totalEventCount, overlapEventCount, dateTimeString)}
+- IF: ${isOverview}
+	- ${GetTotalAndOverlapCardV1(totalEventCount, overlapEventCount, dateTimeString)}
 - ELSE:
 	-
 
@@ -269,14 +269,14 @@
             "horizontalAlignment": "Right",
             "size": "Medium",
             "color": "Default",
-            "text": "@{totalEventCount}"
+            "text": "${totalEventCount}"
         },
         {
             "type": "TextBlock",
             "horizontalAlignment": "Right",
             "size": "Medium",
             "color": "Default",
-            "text": "@{overlapEventCount}"
+            "text": "${overlapEventCount}"
         }
         ],
         "width": "auto"
@@ -289,14 +289,14 @@
             "size": "Medium",
             "weight": "Bolder",
             "color": "Default",
-            "text": "@{GetTotalEventCountUnit(totalEventCount, dateTimeString)}"
+            "text": "${GetTotalEventCountUnit(totalEventCount, dateTimeString)}"
         },
         {
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
             "color": "Default",
-            "text": "@{GetOverviewOverlapMeetingCountUnit(overlapEventCount)}"
+            "text": "${GetOverviewOverlapMeetingCountUnit(overlapEventCount)}"
         }
         ],
         "width": "stretch"
@@ -306,8 +306,8 @@
 ```
 
 # GetTotalAndOverlap(totalEventCount, overlapEventCount, dateTimeString, isOverview)
-- IF: @{isOverview}
-	- @{GetTotalAndOverlapCard(totalEventCount, overlapEventCount, dateTimeString)}
+- IF: ${isOverview}
+	- ${GetTotalAndOverlapCard(totalEventCount, overlapEventCount, dateTimeString)}
 - ELSE:
 	-
 
@@ -326,14 +326,14 @@
             "horizontalAlignment": "Right",
             "size": "Medium",
             "color": "Light",
-            "text": "@{totalEventCount}"
+            "text": "${totalEventCount}"
         },
         {
             "type": "TextBlock",
             "horizontalAlignment": "Right",
             "size": "Medium",
             "color": "Light",
-            "text": "@{overlapEventCount}"
+            "text": "${overlapEventCount}"
         }
         ],
         "width": "auto"
@@ -346,14 +346,14 @@
             "size": "Medium",
             "weight": "Bolder",
             "color": "Light",
-            "text": "@{GetTotalEventCountUnit(totalEventCount, dateTimeString)}"
+            "text": "${GetTotalEventCountUnit(totalEventCount, dateTimeString)}"
         },
         {
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
             "color": "Light",
-            "text": "@{GetOverviewOverlapMeetingCountUnit(overlapEventCount)}"
+            "text": "${GetOverviewOverlapMeetingCountUnit(overlapEventCount)}"
         }
         ],
         "width": "stretch"
@@ -363,26 +363,26 @@
 ```
 
 # GetTotalEventCountUnit(count, startDateString)
-- IF: @{count == 1}
-	- Event @{GetStartDateString(startDateString)}
+- IF: ${count == 1}
+	- Event ${GetStartDateString(startDateString)}
 - ELSE:
-	- Events @{GetStartDateString(startDateString)}
+	- Events ${GetStartDateString(startDateString)}
 
 # GetStartDateString(startDateString)
-- IF: @{startDateString == null || startDateString == ''}
+- IF: ${startDateString == null || startDateString == ''}
 	- today
 - ELSE:
-	- @{startDateString}
+	- ${startDateString}
 
 # GetOverviewOverlapMeetingCountUnit(count)
-- IF: @{count == 1}
+- IF: ${count == 1}
 	- Event overlap
 - ELSE:
 	- Events overlap
 
 # GetMePhoto(userPhoto, isOverview)
-- IF: @{isOverview}
-	- @{GetMePhotoCard(userPhoto)}
+- IF: ${isOverview}
+	- ${GetMePhotoCard(userPhoto)}
 - ELSE:
 	- 
 
@@ -398,7 +398,7 @@
         "type": "Image",
         "horizontalAlignment": "Center",
         "style": "Person",
-        "url": "@{userPhoto}",
+        "url": "${userPhoto}",
         "size": "Medium"
     }
     ],
@@ -407,13 +407,13 @@
 ```
 
 # MeetingItemContainerCard(itemData, timezone)
-- @{join(foreach(itemData, x, MeetingDateItemCard(x, timezone)), ', ')}
+- ${join(foreach(itemData, x, MeetingDateItemCard(x, timezone)), ', ')}
 
 # MeetingDateItemCard(item, timezone)
-- IF: @{item.Name == 'CalendarDate'}
-	- @{MeetingDateCard(item.Date, timezone)}
+- IF: ${item.Name == 'CalendarDate'}
+	- ${MeetingDateCard(item.Date, timezone)}
 - ELSE:
-	- @{MeetingItemCard(item.Event, timezone)}
+	- ${MeetingItemCard(item.Event, timezone)}
 
 # MeetingDateCard(date, timezone)
 - ```
@@ -425,7 +425,7 @@
 			"type": "TextBlock",
 			"weight": "Bolder",
 			"color": "Default",
-			"text": "@{toUpper(convertFromUTC(formatDateTime(date), timezone, 'dddd, MMMM d'))}"
+			"text": "${toUpper(convertFromUTC(formatDateTime(date), timezone, 'dddd, MMMM d'))}"
 		}
     ]
 }
@@ -451,15 +451,15 @@
 							"spacing": "Medium",
 							"size": "Medium",
 							"weight": "Bolder",
-							"color": "@{GetTimeColorByConflictState(eventItem.IsConflict)}",
-							"text": "@{convertFromUTC(formatDateTime(eventItem.StartTime), timezone, 'H:mm')}",
-							"isSubtle": "@{!eventItem.IsAccepted}"
+							"color": "${GetTimeColorByConflictState(eventItem.IsConflict)}",
+							"text": "${convertFromUTC(formatDateTime(eventItem.StartTime), timezone, 'H:mm')}",
+							"isSubtle": "${!eventItem.IsAccepted}"
 						},
 						{
 							"type": "TextBlock",
 							"horizontalAlignment": "Center",
 							"spacing": "Small",
-							"text": "@{FormatDateTimeDuration(eventItem.StartTime, eventItem.EndTime)}"
+							"text": "${FormatDateTimeDuration(eventItem.StartTime, eventItem.EndTime)}"
 						}
 					]
 				},
@@ -474,15 +474,15 @@
 							"size": "Medium",
 							"weight": "Bolder",
 							"color": "Default",
-							"text": "@{EscapeString(eventItem.Title)}",
-							"isSubtle": "@{!eventItem.IsAccepted}"
+							"text": "${EscapeString(eventItem.Title)}",
+							"isSubtle": "${!eventItem.IsAccepted}"
 						},
 						{
 							"type": "TextBlock",
 							"spacing": "None",
 							"color": "Accent",
-							"text": "@{EscapeString(eventItem.Location)}",
-							"isSubtle": "@{!eventItem.IsAccepted}"
+							"text": "${EscapeString(eventItem.Location)}",
+							"isSubtle": "${!eventItem.IsAccepted}"
 						}
 					],
 					"width": 80
@@ -494,25 +494,25 @@
 ```
 
 # GetTimeColorByConflictState(isConflict)
-- IF: @{isConflict}
+- IF: ${isConflict}
 	- Attention
 - ELSE:
 	- Dark
 
 # FormatDateTimeDuration(startTime, endTime)
-- @{FormatDuration((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)}
+- ${FormatDuration((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)}
 
 # FormatDuration(seconds)
-- IF: @{seconds < 3600}
-	- @{seconds / 60}m
-- ELSEIF: @{seconds % 3600 / 60 != 0}
-	- @{concat(string(seconds / 3600), 'h', string(seconds % 3600 / 60), 'm')}
+- IF: ${seconds < 3600}
+	- ${seconds / 60}m
+- ELSEIF: ${seconds % 3600 / 60 != 0}
+	- ${concat(string(seconds / 3600), 'h', string(seconds % 3600 / 60), 'm')}
 - ELSE:
-	- @{seconds / 3600}h
+	- ${seconds / 3600}h
 
 # EscapeString(textString)
-- IF: @{textString != null}
-	- @{replace(replace(textString, '\\', '\\\\'), '"', '\\"')}
+- IF: ${textString != null}
+	- ${replace(replace(textString, '\\', '\\\\'), '"', '\\"')}
 - ELSE:
 	- 
 
@@ -567,7 +567,7 @@
                               "size": "Large",
                               "weight": "Bolder",
                               "color": "Light",
-                              "text": "@{EscapeString(subject)}",
+                              "text": "${EscapeString(subject)}",
                               "wrap": true
                             }
                           ],
@@ -588,7 +588,7 @@
                               "id": "Time",
                               "size": "Medium",
                               "color": "Light",
-                              "text": "@{FormatTime(startDateTime, timezone)} (@{FormatDateTimeDuration(startDateTime, endDateTime)})"
+                              "text": "${FormatTime(startDateTime, timezone)} (${FormatDateTimeDuration(startDateTime, endDateTime)})"
                             },
                             {
                               "type": "TextBlock",
@@ -597,13 +597,13 @@
                               "spacing": "Small",
                               "size": "Medium",
                               "color": "Light",
-                              "text": "@{FormatDateShort(startDateTime, timezone)}"
+                              "text": "${FormatDateShort(startDateTime, timezone)}"
                             },
                             {
                               "type": "ColumnSet",
                               "id": "Participants",
                               "columns": [
-							    @{GetParticipantsCards(attendeePhotoList)}
+							    ${GetParticipantsCards(attendeePhotoList)}
                               ]
                             },
                             {
@@ -618,7 +618,7 @@
                                     {
                                       "type": "Image",
                                       "horizontalAlignment": "Center",
-                                      "url": "@{GetLocationIcon(location)}",
+                                      "url": "${GetLocationIcon(location)}",
                                       "height": "20px"
                                     }
                                   ],
@@ -636,7 +636,7 @@
                                       "horizontalAlignment": "Left",
                                       "size": "Medium",
                                       "color": "Light",
-                                      "text": "@{EscapeString(location)}",
+                                      "text": "${EscapeString(location)}",
                                       "wrap": true,
                                       "maxLines": 2
                                     }
@@ -666,14 +666,14 @@
           "type": "TextBlock",
           "id": "ContentPreview",
           "color": "Default",
-          "text": "@{EscapeString(content)}",
+          "text": "${EscapeString(content)}",
           "wrap": true,
           "maxLines": 5
         }
       ]
     }
   ],
-  @{JoinOnlineMeetingButton(meetingLink)}
+  ${JoinOnlineMeetingButton(meetingLink)}
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0"
 }
@@ -713,7 +713,7 @@
                               "size": "Large",
                               "weight": "Bolder",
                               "color": "Default",
-                              "text": "@{EscapeString(subject)}",
+                              "text": "${EscapeString(subject)}",
                               "wrap": true
                             }
                           ],
@@ -734,7 +734,7 @@
                               "id": "Time",
                               "size": "Medium",
                               "color": "Default",
-                              "text": "@{FormatTime(startDateTime, timezone)} (@{FormatDateTimeDuration(startDateTime, endDateTime)})"
+                              "text": "${FormatTime(startDateTime, timezone)} (${FormatDateTimeDuration(startDateTime, endDateTime)})"
                             },
                             {
                               "type": "TextBlock",
@@ -743,13 +743,13 @@
                               "spacing": "Small",
                               "size": "Medium",
                               "color": "Default",
-                              "text": "@{FormatDateShort(startDateTime, timezone)}"
+                              "text": "${FormatDateShort(startDateTime, timezone)}"
                             },
                             {
                               "type": "ColumnSet",
                               "id": "Participants",
                               "columns": [
-							    @{GetParticipantsCards(attendeePhotoList)}
+							    ${GetParticipantsCards(attendeePhotoList)}
                               ]
                             },
                             {
@@ -768,7 +768,7 @@
                                       "horizontalAlignment": "Left",
                                       "size": "Medium",
                                       "color": "Default",
-                                      "text": "@{EscapeString(location)}",
+                                      "text": "${EscapeString(location)}",
                                       "wrap": true,
                                       "maxLines": 2
                                     }
@@ -798,27 +798,27 @@
           "type": "TextBlock",
           "id": "ContentPreview",
           "color": "Default",
-          "text": "@{EscapeString(content)}",
+          "text": "${EscapeString(content)}",
           "wrap": true,
           "maxLines": 5
         }
       ]
     }
   ],
-  @{JoinOnlineMeetingButton(meetingLink)}
+  ${JoinOnlineMeetingButton(meetingLink)}
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0"
 }
 ```
 
 # FormatTime(time, timezone)
-- @{convertFromUTC(formatDateTime(time), timezone, 'h:mm tt')}
+- ${convertFromUTC(formatDateTime(time), timezone, 'h:mm tt')}
 
 # FormatDateShort(date, timezone)
-- @{convertFromUTC(formatDateTime(date), timezone, 'dddd M/d')}
+- ${convertFromUTC(formatDateTime(date), timezone, 'dddd M/d')}
 
 # GetParticipantsCards(attendeePhotoList)
-- @{join(foreach(attendeePhotoList, x, ParticipantsCard(x)), ', ')}
+- ${join(foreach(attendeePhotoList, x, ParticipantsCard(x)), ', ')}
 
 # ParticipantsCard(photoUrl)
 - ```
@@ -828,7 +828,7 @@
 		{
 			"type": "Image",
 			"style": "Person",
-			"url": "@{photoUrl}",
+			"url": "${photoUrl}",
 			"size": "Medium"
 		}
     ],
@@ -837,19 +837,19 @@
 ```
 
 # GetLocationIcon(location)
-- IF: @{location == null || location == ''}
+- IF: ${location == null || location == ''}
 	- data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==
 - ELSE:
 	- data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxNiAyNS42IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxNiAyNS42OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU+Cjx0aXRsZT5wbGF0Zm9ybXNBc3NldCAzNXF1ZXNpdG9uczwvdGl0bGU+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04LDBjMC43LDAsMS40LDAuMSwyLjEsMC4zYzAuNywwLjIsMS4zLDAuNSwxLjksMC44YzAuNiwwLjMsMS4xLDAuOCwxLjYsMS4zYzAuNSwwLjUsMC45LDEuMSwxLjIsMS43CgljMC4zLDAuNiwwLjYsMS4yLDAuOCwxLjlDMTUuOSw2LjYsMTYsNy4zLDE2LDhjMCwwLjYtMC4xLDEuMS0wLjIsMS42Yy0wLjEsMC41LTAuMywxLjEtMC42LDEuNkw4LDI1LjZMMC44LDExLjIKCWMtMC4zLTAuNS0wLjUtMS0wLjYtMS41QzAuMSw5LjEsMCw4LjYsMCw4YzAtMC43LDAuMS0xLjQsMC4zLTIuMUMwLjUsNS4yLDAuNyw0LjYsMS4xLDRDMS44LDIuOCwyLjgsMS44LDQsMS4xCgljMC42LTAuMywxLjItMC42LDEuOS0wLjhDNi42LDAuMSw3LjMsMCw4LDB6IE0xMy45LDEwLjZMMTMuOSwxMC42TDEzLjksMTAuNmMwLjItMC40LDAuNC0wLjgsMC41LTEuMmMwLjEtMC40LDAuMi0wLjksMC4yLTEuMwoJYzAtMC45LTAuMi0xLjgtMC41LTIuNmMtMC4zLTAuOC0wLjgtMS41LTEuNC0yLjFjLTAuNi0wLjYtMS4zLTEuMS0yLjEtMS40QzkuOCwxLjYsOC45LDEuNCw4LDEuNGMtMC45LDAtMS44LDAuMi0yLjYsMC41CglDMy45LDIuNiwyLjYsMy45LDEuOSw1LjRDMS42LDYuMiwxLjQsNy4xLDEuNCw4YzAsMC40LDAuMSwwLjksMC4yLDEuM2MwLjEsMC40LDAuMiwwLjgsMC40LDEuMmwwLDBsMCwwbDYsMTEuOUwxMy45LDEwLjZ6IE04LDMuMwoJYzAuNiwwLDEuMywwLjEsMS44LDAuNGMxLjEsMC41LDIsMS40LDIuNSwyLjVjMC41LDEuMiwwLjUsMi41LDAsMy43Yy0wLjUsMS4xLTEuNCwyLTIuNSwyLjVjLTEuMiwwLjUtMi41LDAuNS0zLjcsMAoJYy0xLjEtMC41LTItMS40LTIuNS0yLjVjLTAuNS0xLjItMC41LTIuNSwwLTMuN0M0LjEsNSw1LDQuMSw2LjIsMy43QzYuNywzLjQsNy40LDMuMyw4LDMuM3ogTTgsMTEuM2MwLjQsMCwwLjktMC4xLDEuMy0wLjMKCWMwLjgtMC4zLDEuNC0xLDEuNy0xLjdjMC4zLTAuOCwwLjMtMS43LDAtMi42QzEwLjcsNS45LDEwLDUuMyw5LjMsNUM4LjUsNC43LDcuNSw0LjcsNi43LDVDNS45LDUuMyw1LjMsNS45LDUsNi43CglDNC43LDcuNSw0LjcsOC41LDUsOS4zQzUuMywxMCw1LjksMTAuNyw2LjcsMTFDNy4xLDExLjIsNy42LDExLjMsOCwxMS4zTDgsMTEuM3oiLz4KPC9zdmc+Cg==
 
 # JoinOnlineMeetingButton(meetingLink)
-- IF: @{meetingLink != null && meetingLink != ''}
+- IF: ${meetingLink != null && meetingLink != ''}
 	- ```
 	"actions": [
 	{
 		"type": "Action.OpenUrl",
 		"title": "Join meeting",
-		"url": "@{MeetingLink}"
+		"url": "${MeetingLink}"
 	}
 	],
 	```

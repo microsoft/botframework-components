@@ -1,7 +1,5 @@
-[import](CreateEventDialogActivities.lg)
-
 # NoTitle.Text(UserName)
-- OK, ich schicke eine Einladung an @{UserName}. Was ist das Thema des Treffens?
+- OK, ich schicke eine Einladung an ${UserName}. Was ist das Thema des Treffens?
 
 # NoTitleShort.Text
 - Was ist das Thema des Treffens?
@@ -9,27 +7,24 @@
 # NoContent.Text
 - Können Sie eine kurze Beschreibung für die Besprechung bereitstellen?
 
-# NoAttendees.Text
-- Wen möchten Sie einladen?
-
 # NoLocation.Text
 - Wo findet die Veranstaltung statt?
 
 # ConfirmCreate.Text(Date, Time, EndTime, AttendeesConfirm, SubjectConfirm, LocationConfirm, ContentConfirm)
-- Ich bin bereit, das Ereignis für @{Date}Von @{Time} An @{EndTime}@{AttendeesConfirm}. @{SubjectConfirm}@{LocationConfirm}@{ContentConfirm}
+- Ich bin bereit, das Ereignis für ${Date}Von ${Time} An ${EndTime}${AttendeesConfirm}. ${SubjectConfirm}${LocationConfirm}${ContentConfirm}
 
 # ConfirmCreateAttendees.Text(Attendees)
-- Mit @{Attendees}
+- Mit ${Attendees}
 > Is starting with a comma here intentional? Unclear on context.
 
 # ConfirmCreateSubject.Text(Subject)
-- Das Thema der Veranstaltung ist @{Subject}.
+- Das Thema der Veranstaltung ist ${Subject}.
 
 # ConfirmCreateLocation.Text(Location)
-- Die Veranstaltung findet unter @{Location}.
+- Die Veranstaltung findet unter ${Location}.
 
 # ConfirmCreateContent.Text(Content)
-- Die Beschreibung für das Ereignis ist @{Content}.
+- Die Beschreibung für das Ereignis ist ${Content}.
 
 # ConfirmCreatePrompt.Text
 - Möchten Sie ein Ereignis mit diesen Informationen erstellen?
@@ -41,7 +36,7 @@
 - Möchten Sie alle Teilnehmer überprüfen?
 
 # EventCreated.Text(Subject)
-- OK, ich habe hinzugefügt @{Subject} in Ihren Kalender.
+- OK, ich habe hinzugefügt ${Subject} in Ihren Kalender.
 
 # EventCreationFailed.Text
 - Ich konnte dieses Ereignis nicht erstellen. Versuchen Sie es später erneut.

@@ -31,13 +31,13 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             ProactiveState proactiveState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IBackgroundTaskQueue backgroundTaskQueue,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpcomingEventDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(UpcomingEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             _backgroundTaskQueue = backgroundTaskQueue;
             _proactiveState = proactiveState;
@@ -125,7 +125,7 @@ namespace CalendarSkill.Dialogs
                     responseString = UpcomingEventResponses.UpcomingEventMessage;
                 }
 
-                var activity = TemplateEngine.GenerateActivityForLocale(responseString, responseParams);
+                var activity = TemplateManager.GenerateActivityForLocale(responseString, responseParams);
                 await turnContext.SendActivityAsync(activity);
             };
         }

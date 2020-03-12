@@ -28,11 +28,11 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(TimeRemainingDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(TimeRemainingDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -89,7 +89,7 @@ namespace CalendarSkill.Dialogs
                 var status = false;
                 if (nextEventList.Count == 0)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
+                    var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
                     await sc.Context.SendActivityAsync(prompt);
                 }
                 else
@@ -150,7 +150,7 @@ namespace CalendarSkill.Dialogs
                         {
                             RemainingTime = remainingTime
                         };
-                        var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
+                        var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
                     }
                     else
@@ -178,7 +178,7 @@ namespace CalendarSkill.Dialogs
                             Title = state.MeetingInfo.Title != null ? string.Format(CalendarCommonStrings.WithTheSubject, state.MeetingInfo.Title) : string.Empty
                         };
 
-                        var prompt = TemplateEngine.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
+                        var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
                         await sc.Context.SendActivityAsync(prompt);
                     }
                 }

@@ -26,12 +26,12 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             FindContactDialog findContactDialog,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(CheckPersonAvailableDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(CheckPersonAvailableDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -126,8 +126,8 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 return await sc.PromptAsync(Actions.TimePrompt, new TimePromptOptions()
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableTime) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableTime) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableTime) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableTime) as Activity,
                     TimeZone = state.GetUserTimeZone(),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 });
@@ -226,7 +226,7 @@ namespace CalendarSkill.Dialogs
                 if (!availabilityResult.AvailabilityViewList.First().StartsWith("0"))
                 {
                     // the attendee is not available
-                    var activity = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.NotAvailable, new
+                    var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.NotAvailable, new
                     {
                         UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address,
                         Time = timeString,
@@ -265,7 +265,7 @@ namespace CalendarSkill.Dialogs
                         // both attendee and current user is available
                         state.MeetingInfo.IsOrgnizerAvailable = true;
 
-                        var activity = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailable, new
+                        var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailable, new
                         {
                             StartTime = startAvailableTime.ToString(CommonStrings.DisplayTime),
                             EndTime = endAvailableTime.ToString(CommonStrings.DisplayTime),
@@ -298,7 +298,7 @@ namespace CalendarSkill.Dialogs
                                 EventStartTime = TimeConverter.ConvertUtcToUserTime(conflictMeetingTitleList.First().StartTime, state.GetUserTimeZone()).ToString(CommonStrings.DisplayTime),
                                 EventEndTime = TimeConverter.ConvertUtcToUserTime(conflictMeetingTitleList.First().EndTime, state.GetUserTimeZone()).ToString(CommonStrings.DisplayTime)
                             };
-                            var activity = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithOneConflict, responseParams);
+                            var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithOneConflict, responseParams);
                             await sc.Context.SendActivityAsync(activity);
                         }
                         else
@@ -311,7 +311,7 @@ namespace CalendarSkill.Dialogs
                                 UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address,
                                 ConflictEventsCount = conflictMeetingTitleList.Count.ToString()
                             };
-                            var activity = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithMutipleConflicts, responseParams);
+                            var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithMutipleConflicts, responseParams);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -339,8 +339,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForNextAvailableTime, data) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForNextAvailableTime, data) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForNextAvailableTime, data) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForNextAvailableTime, data) as Activity,
                 }, cancellationToken);
             }
             catch (Exception ex)
@@ -393,7 +393,7 @@ namespace CalendarSkill.Dialogs
 
                         state.MeetingInfo.StartDateTime = startAvailableTime;
 
-                        var activity = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.NextBothAvailableTime, new
+                        var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.NextBothAvailableTime, new
                         {
                             UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address,
                             StartTime = TimeConverter.ConvertUtcToUserTime(state.MeetingInfo.StartDateTime.Value, state.GetUserTimeZone()).ToString(CommonStrings.DisplayTime),
@@ -405,7 +405,7 @@ namespace CalendarSkill.Dialogs
                         return await sc.BeginDialogAsync(Actions.CreateMeetingWithAvailableTime, sc.Options);
                     }
 
-                    var activityNoNextBothAvailableTime = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.NoNextBothAvailableTime, new
+                    var activityNoNextBothAvailableTime = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.NoNextBothAvailableTime, new
                     {
                         UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address
                     });
@@ -441,8 +441,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(responseId, data) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(responseId, data) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(responseId, data) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(responseId, data) as Activity,
                 }, cancellationToken);
             }
             catch (Exception ex)

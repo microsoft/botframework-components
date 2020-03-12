@@ -33,13 +33,13 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             UpdateEventDialog updateEventDialog,
             ChangeEventStatusDialog changeEventStatusDialog,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(ShowEventsDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(ShowEventsDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -244,7 +244,7 @@ namespace CalendarSkill.Dialogs
                 // no meeting
                 if (!state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ShowNoMeetingMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowNoMeetingMessage);
                     await sc.Context.SendActivityAsync(activity);
                     state.Clear();
                     return await sc.EndDialogAsync(true);
@@ -304,17 +304,17 @@ namespace CalendarSkill.Dialogs
                             EventLocation = state.ShowMeetingInfo.ShowingMeetings[0].Location
                         };
 
-                        var activityBeforeShowEventDetails = TemplateEngine.GenerateActivityForLocale(SummaryResponses.BeforeShowEventDetails, tokens);
+                        var activityBeforeShowEventDetails = TemplateManager.GenerateActivityForLocale(SummaryResponses.BeforeShowEventDetails, tokens);
                         await sc.Context.SendActivityAsync(activityBeforeShowEventDetails);
                         if (askParameter.NeedTime)
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadTime, tokens);
+                            var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadTime, tokens);
                             await sc.Context.SendActivityAsync(activity);
                         }
 
                         if (askParameter.NeedDuration)
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadDuration, tokens);
+                            var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadDuration, tokens);
                             await sc.Context.SendActivityAsync(activity);
                         }
 
@@ -323,19 +323,19 @@ namespace CalendarSkill.Dialogs
                             // for some event there might be no localtion.
                             if (string.IsNullOrEmpty(tokens.EventLocation))
                             {
-                                var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadNoLocation, tokens);
+                                var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadNoLocation, tokens);
                                 await sc.Context.SendActivityAsync(activity);
                             }
                             else
                             {
-                                var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadLocation, tokens);
+                                var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadLocation, tokens);
                                 await sc.Context.SendActivityAsync(activity);
                             }
                         }
 
                         if (askParameter.NeedDate)
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadStartDate, tokens);
+                            var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadStartDate, tokens);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -376,18 +376,18 @@ namespace CalendarSkill.Dialogs
 
                     if (string.IsNullOrEmpty(state.ShowMeetingInfo.ShowingMeetings[0].Location))
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingNoLocationMessage, speakParams);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingNoLocationMessage, speakParams);
                         await sc.Context.SendActivityAsync(activity);
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingMessage, speakParams);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingMessage, speakParams);
                         await sc.Context.SendActivityAsync(activity);
                     }
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ShowMultipleNextMeetingMessage);
+                    var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowMultipleNextMeetingMessage);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
@@ -549,7 +549,7 @@ namespace CalendarSkill.Dialogs
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions());
                 }
 
-                var prompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.ReadOutMorePrompt) as Activity;
+                var prompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.ReadOutMorePrompt) as Activity;
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt });
             }
             catch (SkillException ex)
@@ -604,7 +604,7 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.CalendarNoMoreEvent);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.CalendarNoMoreEvent);
                         await sc.Context.SendActivityAsync(activity);
                     }
 
@@ -620,7 +620,7 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.CalendarNoPreviousEvent);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.CalendarNoPreviousEvent);
                         await sc.Context.SendActivityAsync(activity);
                     }
 
@@ -812,21 +812,21 @@ namespace CalendarSkill.Dialogs
                 {
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.AskForOrgnizerAction, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
+                        Prompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.AskForOrgnizerAction, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
                     });
                 }
                 else if (eventItem.IsAccepted)
                 {
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.AskForAction, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
+                        Prompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.AskForAction, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
                     });
                 }
                 else
                 {
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.AskForChangeStatus, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
+                        Prompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.AskForChangeStatus, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
                     });
                 }
             }
@@ -977,8 +977,8 @@ namespace CalendarSkill.Dialogs
                 state.ShowMeetingInfo.Clear();
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.AskForShowOverview, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(SummaryResponses.AskForShowOverview, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
+                    Prompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.AskForShowOverview, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(SummaryResponses.AskForShowOverview, new { DateTime = state.MeetingInfo.StartDateString ?? CalendarCommonStrings.TodayLower }) as Activity
                 }, cancellationToken);
             }
             catch (SkillException ex)

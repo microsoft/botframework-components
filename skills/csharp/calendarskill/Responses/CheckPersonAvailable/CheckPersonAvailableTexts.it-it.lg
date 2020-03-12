@@ -1,5 +1,3 @@
-[import](CheckPersonAvailableActivities.lg)
-
 # AskForCheckAvailableTime.Text
 - A che ora?
 
@@ -8,28 +6,28 @@
 - Chi vorresti aggiungere all'evento?
 
 # NotAvailable.Text(UserName, Time, Date)
-- Sembra @{UserName} non è disponibile su @{Date} A @{Time}.
+- Sembra ${UserName} non è disponibile su ${Date} A ${Time}.
 
 # AttendeeIsAvailable.Text(UserName, StartTime, EndTime, Date)
-- Sembra @{UserName} è disponibile su @{Date} Da @{StartTime} A @{EndTime}.
+- Sembra ${UserName} è disponibile su ${Date} Da ${StartTime} A ${EndTime}.
 
 # AttendeeIsAvailableOrgnizerIsUnavailableWithOneConflict.Text(UserName, StartTime, EndTime, Date, Title, EventStartTime, EventEndTime)
-- Sembra @{UserName} è disponibile su @{Date} Da @{StartTime} A @{EndTime}, ma si dispone di " @{Title}" da @{EventStartTime} A @{EventEndTime}.
+- Sembra ${UserName} è disponibile su ${Date} Da ${StartTime} A ${EndTime}, ma si dispone di " ${Title}" da ${EventStartTime} A ${EventEndTime}.
 
 # AttendeeIsAvailableOrgnizerIsUnavailableWithMutipleConflicts.Text(UserName, StartTime, EndTime, Date, ConflictEventsCount)
-- Sembra @{UserName} è disponibile su @{Date} Da @{StartTime} A @{EndTime}, ma si è @{ConflictEventsCount} conflitti in quel momento.
+- Sembra ${UserName} è disponibile su ${Date} Da ${StartTime} A ${EndTime}, ma si è ${ConflictEventsCount} conflitti in quel momento.
 
 # AskForCreateNewMeeting.Text
 - Vuoi pianificare una nuova riunione?
 
 # AskForCreateNewMeetingAnyway.Text(UserName, StartTime)
-- Si desidera pianificare una nuova riunione con @{UserName} A @{StartTime} Comunque?
+- Si desidera pianificare una nuova riunione con ${UserName} A ${StartTime} Comunque?
 
 # AskForNextAvailableTime.Text(UserName)
-- Vuoi che trovi un tempo tu e @{UserName} sono entrambi disponibili?
+- Vuoi che trovi un tempo tu e ${UserName} sono entrambi disponibili?
 
 # NextBothAvailableTime.Text(UserName, StartTime, EndTime, EndDate)
-- OK, tu e @{UserName} sono entrambi disponibili da @{StartTime} A @{EndTime} su @{EndDate}.
+- OK, tu e ${UserName} sono entrambi disponibili da ${StartTime} A ${EndTime} su ${EndDate}.
 
 # NoNextBothAvailableTime.Text(UserName)
-- Scusa, non riesco a trovare un momento in cui tu e @{UserName} sono entrambi disponibili.
+- Scusa, non riesco a trovare un momento in cui tu e ${UserName} sono entrambi disponibili.
