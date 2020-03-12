@@ -88,7 +88,7 @@ namespace CalendarSkill
             // Configure localized responses
             var localizedTemplates = new Dictionary<string, string>();
             var templateFile = "ResponsesAndTexts";
-            var supportedLocales = new List<string>() { "en-us" };//, "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
+            var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
 
             foreach (var locale in supportedLocales)
             {
