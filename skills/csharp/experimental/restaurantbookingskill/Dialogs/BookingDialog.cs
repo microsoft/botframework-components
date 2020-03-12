@@ -23,6 +23,7 @@ using RestaurantBookingSkill.Models;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
 using RestaurantBookingSkill.Utilities;
+using RestaurantBookingSkill.Models.Action;
 
 namespace RestaurantBookingSkill.Dialogs
 {
@@ -397,6 +398,11 @@ namespace RestaurantBookingSkill.Dialogs
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
 
+            if (state.IsAction)
+            {
+                return await sc.NextAsync();
+            }
+
             var tokens = new StringDictionary
             {
                 { "FoodType", reservation.Category },
@@ -458,6 +464,11 @@ namespace RestaurantBookingSkill.Dialogs
         {
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
             var reservation = state.Booking;
+
+            if (state.IsAction)
+            {
+                return await sc.NextAsync();
+            }
 
             // Reset the dialog if the user hasn't confirmed the reservation.
             if (!reservation.Confirmed)
@@ -600,8 +611,13 @@ namespace RestaurantBookingSkill.Dialogs
 
             await sc.Context.SendActivityAsync(replyMessage);
 
-            state.Clear();
+            if (state.IsAction)
+            {
+                var actionResult = new ActionResult() { ActionSuccess = true };
+                return await sc.EndDialogAsync(actionResult);
+            }
 
+            state.Clear();
             return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 

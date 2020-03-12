@@ -24,6 +24,8 @@ namespace RestaurantBookingSkill.Models
 
         public Dictionary<string, string> AmbiguousTimexExpressions { get; set; }
 
+        public bool IsAction { get; set; }
+
         public void Clear()
         {
             Name = null;

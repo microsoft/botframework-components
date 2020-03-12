@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using RestaurantBookingSkill.Models.Action;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -18,7 +19,9 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Skills.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using RestaurantBookingSkill.Models;
+using RestaurantBookingSkill.Models.Action;
 using RestaurantBookingSkill.Responses.Main;
 using RestaurantBookingSkill.Responses.Shared;
 using RestaurantBookingSkill.Services;
@@ -225,9 +228,10 @@ namespace RestaurantBookingSkill.Dialogs
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var activity = stepContext.Context.Activity;
             var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
+            state.IsAction = false;
 
+            var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 var result = stepContext.Context.TurnState.Get<ReservationLuis>(StateProperties.ReservationLuis);
@@ -255,6 +259,40 @@ namespace RestaurantBookingSkill.Dialogs
                         }
                 }
             }
+            else if (activity.Type == ActivityTypes.Event)
+            {
+                // Handle skill actions here
+                var eventActivity = activity.AsEventActivity();
+
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    switch (eventActivity.Name)
+                    {
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case "RestaurantReservation":
+                            {
+                                state.IsAction = true;
+                                ReservationInfo actionData = null;
+                                var eventValue = activity.Value as JObject;
+                                if (eventValue != null)
+                                {
+                                    actionData = eventValue.ToObject<ReservationInfo>();
+                                    await DigestActionInput(stepContext, actionData);
+                                }
+
+                                return await stepContext.BeginDialogAsync(nameof(BookingDialog));
+                            }
+
+                        default:
+                            {
+                                // todo: move the response to lg
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                                break;
+                            }
+                    }
+                }
+            }
 
             // If activity was unhandled, flow should continue to next step
             return await stepContext.NextAsync();
@@ -272,6 +310,15 @@ namespace RestaurantBookingSkill.Dialogs
                     Value = stepContext.Result,
                 };
 
+                var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    }
+                }
+
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
@@ -279,6 +326,18 @@ namespace RestaurantBookingSkill.Dialogs
             {
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GetResponse(RestaurantBookingMainResponses.CompletedMessage), cancellationToken);
             }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, ReservationInfo reservationInfo)
+        {
+            var state = await _conversationStateAccessor.GetAsync(dc.Context, () => new RestaurantBookingState());
+            state.Booking.Category = reservationInfo.FoodType;
+            state.Booking.ReservationDate = DateTime.Parse(reservationInfo.Date);
+            state.Booking.ReservationTime = DateTime.Parse(reservationInfo.Time);
+            state.Booking.AttendeeCount = reservationInfo.AttendeeCount;
+
+            // Note: Now there is no actual action to book a place. So we only save Name.
+            state.Booking.BookingPlace = new BookingPlace() { Name = reservationInfo.RestaurantName };
         }
     }
 }
