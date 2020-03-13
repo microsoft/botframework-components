@@ -9,7 +9,7 @@ namespace PhoneSkill.Responses.Main
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class PhoneMainResponses : IResponseIdCollection
+    public class PhoneMainResponses
     {
         // Generated accessors
         public const string WelcomeMessage = "WelcomeMessage";

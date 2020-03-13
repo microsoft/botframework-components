@@ -30,11 +30,11 @@ namespace PhoneSkill.Dialogs
         public OutgoingCallDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(OutgoingCallDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(OutgoingCallDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -112,7 +112,7 @@ namespace PhoneSkill.Dialogs
                     return await stepContext.NextAsync();
                 }
 
-                var prompt = ResponseManager.GetResponse(OutgoingCallResponses.RecipientPrompt);
+                var prompt = TemplateManager.GenerateActivity(OutgoingCallResponses.RecipientPrompt);
                 return await stepContext.PromptAsync(DialogIds.RecipientPrompt, new PromptOptions { Prompt = prompt });
             }
             catch (Exception ex)
@@ -206,12 +206,12 @@ namespace PhoneSkill.Dialogs
                     return await stepContext.NextAsync();
                 }
 
-                var notFoundTokens = new StringDictionary()
+                var notFoundTokens = new Dictionary<string, object>()
                 {
                     { "contact", state.ContactResult.Matches[0].Name },
                     { "phoneNumberType", GetSpeakablePhoneNumberType(state.ContactResult.RequestedPhoneNumberType) },
                 };
-                var response = ResponseManager.GetResponse(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, notFoundTokens);
+                var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, notFoundTokens);
                 await stepContext.Context.SendActivityAsync(response);
 
                 if (state.ContactResult.Matches[0].PhoneNumbers.Count != 1)
@@ -219,12 +219,12 @@ namespace PhoneSkill.Dialogs
                     return await stepContext.NextAsync();
                 }
 
-                var confirmationTokens = new StringDictionary()
+                var confirmationTokens = new Dictionary<string, object>()
                 {
                     { "phoneNumberType", GetSpeakablePhoneNumberType(state.ContactResult.Matches[0].PhoneNumbers[0].Type) },
                 };
                 var options = new PromptOptions();
-                options.Prompt = ResponseManager.GetResponse(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, confirmationTokens);
+                options.Prompt = TemplateManager.GenerateActivity(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, confirmationTokens);
                 return await stepContext.PromptAsync(DialogIds.PhoneNumberTypeConfirmation, options);
             }
             catch (Exception ex)
@@ -333,7 +333,7 @@ namespace PhoneSkill.Dialogs
                 await contactFilter.Filter(state, contactProvider: null);
 
                 var templateId = OutgoingCallResponses.ExecuteCall;
-                var tokens = new StringDictionary();
+                var tokens = new Dictionary<string, object>();
                 var outgoingCall = new OutgoingCall
                 {
                     Number = state.PhoneNumber,
@@ -356,7 +356,7 @@ namespace PhoneSkill.Dialogs
                     tokens["phoneNumberType"] = GetSpeakablePhoneNumberType(state.ContactResult.Matches[0].PhoneNumbers[0].Type);
                 }
 
-                var response = ResponseManager.GetResponse(templateId, tokens);
+                var response = TemplateManager.GenerateActivity(templateId, tokens);
                 await stepContext.Context.SendActivityAsync(response);
 
                 await SendEvent(stepContext, outgoingCall);
@@ -402,20 +402,20 @@ namespace PhoneSkill.Dialogs
 
                 if (contactsWithNoPhoneNumber.Count == 1)
                 {
-                    var tokens = new StringDictionary()
+                    var tokens = new Dictionary<string, object>()
                     {
                         { "contact", contactsWithNoPhoneNumber[0].Name },
                     };
-                    var response = ResponseManager.GetResponse(OutgoingCallResponses.ContactHasNoPhoneNumber, tokens);
+                    var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactHasNoPhoneNumber, tokens);
                     await context.SendActivityAsync(response);
                 }
                 else
                 {
-                    var tokens = new StringDictionary()
+                    var tokens = new Dictionary<string, object>()
                     {
                         { "contactName", state.ContactResult.SearchQuery },
                     };
-                    var response = ResponseManager.GetResponse(OutgoingCallResponses.ContactsHaveNoPhoneNumber, tokens);
+                    var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactsHaveNoPhoneNumber, tokens);
                     await context.SendActivityAsync(response);
                 }
 
@@ -425,11 +425,11 @@ namespace PhoneSkill.Dialogs
 
             if (state.ContactResult.SearchQuery.Any())
             {
-                var tokens = new StringDictionary()
+                var tokens = new Dictionary<string, object>()
                 {
                     { "contactName", state.ContactResult.SearchQuery },
                 };
-                var response = ResponseManager.GetResponse(OutgoingCallResponses.ContactNotFound, tokens);
+                var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactNotFound, tokens);
                 await context.SendActivityAsync(response);
             }
 
@@ -439,7 +439,7 @@ namespace PhoneSkill.Dialogs
         private void UpdateContactSelectionPromptOptions(PromptOptions options, PhoneSkillState state)
         {
             var templateId = OutgoingCallResponses.ContactSelection;
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "contactName", state.ContactResult.SearchQuery },
             };
@@ -468,13 +468,13 @@ namespace PhoneSkill.Dialogs
                 }
             }
 
-            options.Prompt = ResponseManager.GetResponse(templateId, tokens);
+            options.Prompt = TemplateManager.GenerateActivity(templateId, tokens);
         }
 
         private void UpdatePhoneNumberSelectionPromptOptions(PromptOptions options, PhoneSkillState state)
         {
             var templateId = OutgoingCallResponses.PhoneNumberSelection;
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "contact", state.ContactResult.Matches[0].Name },
             };
@@ -509,7 +509,7 @@ namespace PhoneSkill.Dialogs
                 tokens["phoneNumberType"] = GetSpeakablePhoneNumberType(phoneNumberTypes.First());
             }
 
-            options.Prompt = ResponseManager.GetResponse(templateId, tokens);
+            options.Prompt = TemplateManager.GenerateActivity(templateId, tokens);
         }
 
         private string GetSpeakablePhoneNumberType(PhoneNumberType phoneNumberType)

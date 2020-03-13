@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
@@ -34,7 +35,7 @@ namespace PhoneSkill.Tests.Flow
                 .Send(activity)
                 .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                 .Send(OutgoingCallUtterances.RecipientContactName)
-                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                 {
                     { "contactOrPhoneNumber", "Bob Botter" },
                 }))
@@ -62,7 +63,7 @@ namespace PhoneSkill.Tests.Flow
 
             await this.GetSkillTestFlow()
                 .Send(activity)
-                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+                .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                 {
                     { "contactOrPhoneNumber", "Bob Botter" },
                 }))
@@ -89,7 +90,7 @@ namespace PhoneSkill.Tests.Flow
 
             await GetSkillTestFlow()
                .Send(activity)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "555 666 6666" },
                }))
@@ -115,7 +116,7 @@ namespace PhoneSkill.Tests.Flow
 
             await GetSkillTestFlow()
                .Send(activity)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -142,13 +143,13 @@ namespace PhoneSkill.Tests.Flow
 
             await GetSkillTestFlow()
                .Send(activity)
-               .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new Dictionary<string, object>()
                {
                    { "contactName", "qqq" },
                }))
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -175,7 +176,7 @@ namespace PhoneSkill.Tests.Flow
 
             await GetSkillTestFlow()
                .Send(activity)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new Dictionary<string, object>()
                {
                    { "contact", "Christina Botter" },
                }))
@@ -183,7 +184,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities) // Test that "Christina Botter" was completely removed from the state.
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))

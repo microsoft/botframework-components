@@ -10,16 +10,16 @@ using System.Threading;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
-using Microsoft.Bot.Configuration;
-using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PhoneSkill.Bots;
@@ -32,13 +32,11 @@ using PhoneSkill.Utilities;
 
 namespace PhoneSkill.Tests.Flow
 {
-    public class PhoneSkillTestBase : BotTestBase
+    public class PhoneSkillTestBase
     {
         public static readonly string Provider = "Azure Active Directory v2";
 
         public IServiceCollection Services { get; set; }
-
-        public EndpointService EndpointService { get; set; }
 
         public ConversationState ConversationState { get; set; }
 
@@ -52,10 +50,12 @@ namespace PhoneSkill.Tests.Flow
 
         public IServiceManager ServiceManager { get; set; }
 
-        public LocaleTemplateEngineManager TemplateEngine { get; set; }
+        public LocaleTemplateManager TemplateManager { get; set; }
+
+        public Templates Templates { get; set; }
 
         [TestInitialize]
-        public override void Initialize()
+        public void Initialize()
         {
             // Initialize mock service manager
             ServiceManager = new FakeServiceManager();
@@ -102,8 +102,9 @@ namespace PhoneSkill.Tests.Flow
             });
 
             // Configure localized responses
-            TemplateEngine = EngineWrapper.CreateLocaleTemplateEngineManager("en-us");
-            Services.AddSingleton(TemplateEngine);
+            TemplateManager = LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us");
+            Services.AddSingleton(TemplateManager);
+            Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             Services.AddSingleton<IServiceManager>(ServiceManager);
@@ -155,7 +156,7 @@ namespace PhoneSkill.Tests.Flow
             return testFlow;
         }
 
-        protected Action<IActivity> Message(string templateId, StringDictionary tokens = null, IList<string> selectionItems = null)
+        protected Action<IActivity> Message(string templateId, Dictionary<string, object> tokens = null, IList<string> selectionItems = null)
         {
             return activity =>
             {
@@ -165,7 +166,7 @@ namespace PhoneSkill.Tests.Flow
                 // Work around a bug in ParseReplies.
                 if (tokens == null)
                 {
-                    tokens = new StringDictionary();
+                    tokens = new Dictionary<string, object>();
                 }
 
                 var expectedTexts = ParseReplies(templateId, tokens);
@@ -236,9 +237,9 @@ namespace PhoneSkill.Tests.Flow
             };
         }
 
-        protected new string[] ParseReplies(string name, StringDictionary data = null)
+        protected string[] ParseReplies(string name, Dictionary<string, object> data = null)
         {
-            return TemplateEngine.ParseReplies(name, data);
+            return Templates.ParseReplies(name, data);
         }
     }
 }

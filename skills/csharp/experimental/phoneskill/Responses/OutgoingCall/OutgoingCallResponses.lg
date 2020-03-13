@@ -1,107 +1,110 @@
+[import](..\Shared\Shared.lg)
+[import](OutgoingCallResponsesTexts.lg)
+
 # RecipientPrompt(Data, Cards, Layout)
 [Activity
-    Text = @{RecipientPrompt.Text(Data)}
-    Speak = @{RecipientPrompt.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${RecipientPrompt.Text(Data)}
+    Speak = ${RecipientPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactNotFound(Data, Cards, Layout)
 [Activity
-    Text = @{ContactNotFound.Text(Data)}
-    Speak = @{ContactNotFound.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactNotFound.Text(Data)}
+    Speak = ${ContactNotFound.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactHasNoPhoneNumber(Data, Cards, Layout)
 [Activity
-    Text = @{ContactHasNoPhoneNumber.Text(Data)}
-    Speak = @{ContactHasNoPhoneNumber.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactHasNoPhoneNumber.Text(Data)}
+    Speak = ${ContactHasNoPhoneNumber.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactsHaveNoPhoneNumber(Data, Cards, Layout)
 [Activity
-    Text = @{ContactsHaveNoPhoneNumber.Text(Data)}
-    Speak = @{ContactsHaveNoPhoneNumber.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactsHaveNoPhoneNumber.Text(Data)}
+    Speak = ${ContactsHaveNoPhoneNumber.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactHasNoPhoneNumberOfRequestedType(Data, Cards, Layout)
 [Activity
-    Text = @{ContactHasNoPhoneNumberOfRequestedType.Text(Data)}
-    Speak = @{ContactHasNoPhoneNumberOfRequestedType.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactHasNoPhoneNumberOfRequestedType.Text(Data)}
+    Speak = ${ContactHasNoPhoneNumberOfRequestedType.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ConfirmAlternativePhoneNumberType(Data, Cards, Layout)
 [Activity
-    Text = @{ConfirmAlternativePhoneNumberType.Text(Data)}
-    Speak = @{ConfirmAlternativePhoneNumberType.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ConfirmAlternativePhoneNumberType.Text(Data)}
+    Speak = ${ConfirmAlternativePhoneNumberType.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactSelection(Data, Cards, Layout)
 [Activity
-    Text = @{ContactSelection.Text(Data)}
-    Speak = @{ContactSelection.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactSelection.Text(Data)}
+    Speak = ${ContactSelection.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ContactSelectionWithoutName(Data, Cards, Layout)
 [Activity
-    Text = @{ContactSelectionWithoutName.Text(Data)}
-    Speak = @{ContactSelectionWithoutName.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ContactSelectionWithoutName.Text(Data)}
+    Speak = ${ContactSelectionWithoutName.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # PhoneNumberSelection(Data, Cards, Layout)
 [Activity
-    Text = @{PhoneNumberSelection.Text(Data)}
-    Speak = @{PhoneNumberSelection.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${PhoneNumberSelection.Text(Data)}
+    Speak = ${PhoneNumberSelection.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # PhoneNumberSelectionWithPhoneNumberType(Data, Cards, Layout)
 [Activity
-    Text = @{PhoneNumberSelectionWithPhoneNumberType.Text(Data)}
-    Speak = @{PhoneNumberSelectionWithPhoneNumberType.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${PhoneNumberSelectionWithPhoneNumberType.Text(Data)}
+    Speak = ${PhoneNumberSelectionWithPhoneNumberType.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
 # ExecuteCall(Data, Cards, Layout)
 [Activity
-    Text = @{ExecuteCall.Text(Data)}
-    Speak = @{ExecuteCall.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ExecuteCall.Text(Data)}
+    Speak = ${ExecuteCall.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
 ]
 
 # ExecuteCallWithPhoneNumberType(Data, Cards, Layout)
 [Activity
-    Text = @{ExecuteCallWithPhoneNumberType.Text(Data)}
-    Speak = @{ExecuteCallWithPhoneNumberType.Text(Data)}
-    Attachments = @{if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
-    AttachmentLayout = @{if(Layout == null, 'list', Layout)}
+    Text = ${ExecuteCallWithPhoneNumberType.Text(Data)}
+    Speak = ${ExecuteCallWithPhoneNumberType.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
 ]
 

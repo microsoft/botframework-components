@@ -1,4 +1,3 @@
-[import] (..\Main\PhoneMainResponsesTexts.lg)
-[import] (..\OutgoingCall\OutgoingCallResponsesTexts.lg)
-[import] (..\Shared\PhoneSharedResponsesTexts.lg)
-[import] (..\Shared\Shared.lg)
+[import](..\Main\PhoneMainResponses.lg)
+[import](..\OutgoingCall\OutgoingCallResponses.lg)
+[import](..\Shared\PhoneSharedResponses.lg)

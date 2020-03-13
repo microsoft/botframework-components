@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
@@ -27,7 +28,7 @@ namespace PhoneSkill.Tests.Flow
 
         private string[] ConfusedResponse()
         {
-            return this.ParseReplies(PhoneSharedResponses.DidntUnderstandMessage, new StringDictionary());
+            return this.ParseReplies(PhoneSharedResponses.DidntUnderstandMessage, new Dictionary<string, object>());
         }
     }
 }

@@ -24,7 +24,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallPhoneNumber)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "0118 999 88199 9119 725 3" },
                }))
@@ -44,7 +44,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientPhoneNumber)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "0118 999 88199 9119 725 3" },
                }))
@@ -62,7 +62,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -81,7 +81,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithSpeechRecognitionError)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                }))
@@ -100,7 +100,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberType)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                    { "phoneNumberType", "Business" },
@@ -127,17 +127,17 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundSingleAlternative)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new Dictionary<string, object>()
                {
                    { "contact", "Bob Botter" },
                    { "phoneNumberType", "Mobile" },
                }))
-               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new Dictionary<string, object>()
                {
                    { "phoneNumberType", "Home" },
                }))
                .Send(OutgoingCallUtterances.ConfirmationYes)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                    { "phoneNumberType", "Home" },
@@ -157,19 +157,19 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundSingleAlternative)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new Dictionary<string, object>()
                {
                    { "contact", "Bob Botter" },
                    { "phoneNumberType", "Mobile" },
                }))
-               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new Dictionary<string, object>()
                {
                    { "phoneNumberType", "Home" },
                }))
                .Send(OutgoingCallUtterances.ConfirmationNo)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactNameWithPhoneNumberType)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                    { "phoneNumberType", "Business" },
@@ -196,12 +196,12 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeNotFoundMultipleAlternatives)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                    { "phoneNumberType", "Business" },
                }))
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                },
@@ -212,7 +212,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 121 2121",
                }))
                .Send(OutgoingCallUtterances.SelectionFirst)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Eve Smith" },
                    { "phoneNumberType", "Home" },
@@ -239,13 +239,13 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNotFound)
-               .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactNotFound, new Dictionary<string, object>()
                {
                    { "contactName", "qqq" },
                }))
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -264,7 +264,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNoPhoneNumber)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumber, new Dictionary<string, object>()
                {
                    { "contact", "Christina Botter" },
                }))
@@ -272,7 +272,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities) // Test that "Christina Botter" was completely removed from the state.
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -291,7 +291,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameNoPhoneNumberMultipleMatches)
-               .AssertReply(Message(OutgoingCallResponses.ContactsHaveNoPhoneNumber, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactsHaveNoPhoneNumber, new Dictionary<string, object>()
                {
                    { "contactName", "christina" },
                }))
@@ -299,7 +299,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities) // Test that "christina" was completely removed from the state.
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -320,7 +320,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -341,7 +341,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactNameWithSpeechRecognitionError)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                }))
@@ -362,7 +362,7 @@ namespace PhoneSkill.Tests.Flow
                .Send(OutgoingCallUtterances.OutgoingCallNoEntities)
                .AssertReply(Message(OutgoingCallResponses.RecipientPrompt))
                .Send(OutgoingCallUtterances.RecipientContactNameWithPhoneNumberType)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                    { "phoneNumberType", "Business" },
@@ -389,7 +389,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "narthwani" },
                },
@@ -399,7 +399,7 @@ namespace PhoneSkill.Tests.Flow
                    "Sanjay Narthwani",
                }))
                .Send(OutgoingCallUtterances.SelectionFirst)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Ditha Narthwani" },
                }))
@@ -418,7 +418,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "narthwani" },
                },
@@ -428,7 +428,7 @@ namespace PhoneSkill.Tests.Flow
                    "Sanjay Narthwani",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionPartialNameSanjay)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                }))
@@ -447,7 +447,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesNarthwani)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "narthwani" },
                },
@@ -457,7 +457,7 @@ namespace PhoneSkill.Tests.Flow
                    "Sanjay Narthwani",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionFullName)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                }))
@@ -476,14 +476,14 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesWithSpeechRecognitionError)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelectionWithoutName, new StringDictionary(),
+               .AssertReply(Message(OutgoingCallResponses.ContactSelectionWithoutName, new Dictionary<string, object>(),
                new List<string>()
                {
                    "Sanjay Narthwani",
                    "Ditha Narthwani",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionFullNameWithSpeechRecognitionError)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                }))
@@ -502,7 +502,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesAndrew)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "andrew" },
                },
@@ -513,7 +513,7 @@ namespace PhoneSkill.Tests.Flow
                    "Andrew Smith",
                }))
                .Send(OutgoingCallUtterances.SelectionNoEntities)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "andrew" },
                },
@@ -524,7 +524,7 @@ namespace PhoneSkill.Tests.Flow
                    "Andrew Smith",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionNoMatches)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "andrew" },
                },
@@ -535,7 +535,7 @@ namespace PhoneSkill.Tests.Flow
                    "Andrew Smith",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionPartialNameAndrewJohn)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "andrew john" },
                },
@@ -545,7 +545,7 @@ namespace PhoneSkill.Tests.Flow
                    "Andrew John Fitzroy",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionPartialNameKeith)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew John Keith" },
                }))
@@ -564,7 +564,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameWithPhoneNumberTypeMultipleMatches)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "narthwani" },
                },
@@ -574,17 +574,17 @@ namespace PhoneSkill.Tests.Flow
                    "Sanjay Narthwani",
                }))
                .Send(OutgoingCallUtterances.ContactSelectionPartialNameSanjay)
-               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, new Dictionary<string, object>()
                {
                    { "contact", "Sanjay Narthwani" },
                    { "phoneNumberType", "Home" },
                }))
-               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, new Dictionary<string, object>()
                {
                    { "phoneNumberType", "Mobile" },
                }))
                .Send(OutgoingCallUtterances.ConfirmationYes)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Sanjay Narthwani" },
                    { "phoneNumberType", "Mobile" },
@@ -604,7 +604,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesBotter)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Bob Botter" },
                }))
@@ -623,7 +623,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleMatchesSanchez)
-               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ContactSelection, new Dictionary<string, object>()
                {
                    { "contactName", "sanchez" },
                },
@@ -633,7 +633,7 @@ namespace PhoneSkill.Tests.Flow
                    "Fernanda Sanchez",
                }))
                .Send(OutgoingCallUtterances.SelectionFirst)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Gerardo Sanchez" },
                }))
@@ -652,7 +652,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new Dictionary<string, object>()
                {
                    { "contact", "Andrew Smith" },
                },
@@ -663,7 +663,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 333 3333",
                }))
                .Send(OutgoingCallUtterances.SelectionFirst)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                }))
@@ -689,7 +689,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new Dictionary<string, object>()
                {
                    { "contact", "Andrew Smith" },
                },
@@ -700,7 +700,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 333 3333",
                }))
                .Send(OutgoingCallUtterances.PhoneNumberSelectionStandardizedType)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                    { "phoneNumberType", "Mobile" },
@@ -727,7 +727,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbersWithSameType)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                },
@@ -738,7 +738,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 121 2121",
                }))
                .Send(OutgoingCallUtterances.PhoneNumberSelectionStandardizedType)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                    { "phoneNumberType", "Mobile" },
@@ -749,7 +749,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 121 2121",
                }))
                .Send(OutgoingCallUtterances.SelectionNoEntities)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                    { "phoneNumberType", "Mobile" },
@@ -760,7 +760,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 121 2121",
                }))
                .Send(OutgoingCallUtterances.PhoneNumberSelectionNoMatches)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelectionWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contact", "Eve Smith" },
                    { "phoneNumberType", "Mobile" },
@@ -771,7 +771,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 121 2121",
                }))
                .Send(OutgoingCallUtterances.SelectionFirst)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCallWithPhoneNumberType, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Eve Smith" },
                    { "phoneNumberType", "Mobile" },
@@ -798,7 +798,7 @@ namespace PhoneSkill.Tests.Flow
                .SendConversationUpdate()
                .AssertReply(Message(PhoneMainResponses.WelcomeMessage))
                .Send(OutgoingCallUtterances.OutgoingCallContactNameMultipleNumbers)
-               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.PhoneNumberSelection, new Dictionary<string, object>()
                {
                    { "contact", "Andrew Smith" },
                },
@@ -809,7 +809,7 @@ namespace PhoneSkill.Tests.Flow
                    "Mobile: 555 333 3333",
                }))
                .Send(OutgoingCallUtterances.PhoneNumberSelectionFullNumber)
-               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new StringDictionary()
+               .AssertReply(Message(OutgoingCallResponses.ExecuteCall, new Dictionary<string, object>()
                {
                    { "contactOrPhoneNumber", "Andrew Smith" },
                }))

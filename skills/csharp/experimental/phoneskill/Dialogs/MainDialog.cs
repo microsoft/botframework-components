@@ -30,7 +30,7 @@ namespace PhoneSkill.Dialogs
         private readonly OutgoingCallDialog outgoingCallDialog;
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleTemplateEngineManager _responseManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<PhoneSkillState> _stateAccessor;
 
         public MainDialog(
@@ -40,7 +40,7 @@ namespace PhoneSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
             TelemetryClient = telemetryClient;
 
@@ -173,7 +173,7 @@ namespace PhoneSkill.Dialogs
                         case General.Intent.Cancel:
                         case General.Intent.StartOver:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(PhoneMainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -182,7 +182,7 @@ namespace PhoneSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(PhoneMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -192,7 +192,7 @@ namespace PhoneSkill.Dialogs
                             {
                                 await OnLogout(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(PhoneMainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -218,12 +218,12 @@ namespace PhoneSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(PhoneMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(PhoneMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _responseManager.GetResponse(PhoneMainResponses.WelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivity(PhoneMainResponses.WelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -254,14 +254,14 @@ namespace PhoneSkill.Dialogs
                     case PhoneLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(PhoneSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneSharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(PhoneMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
@@ -356,7 +356,7 @@ namespace PhoneSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(PhoneMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(PhoneMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

@@ -62,7 +62,7 @@ namespace PhoneSkill.Models
         /// true if action mode.
         /// </value>
         public bool IsAction { get; set; } = false;
- 
+
         /// <summary>
         /// Clear the state.
         /// </summary>

@@ -1,40 +1,38 @@
-[import] (OutgoingCallResponses.lg)
-
 # RecipientPrompt.Text(Data)
 - Who would you like to call?
 
 # ContactNotFound.Text(Data)
-- There is no @{if(Data.contactName == null, '', Data.contactName)} in your contact list.
+- There is no ${if(Data.contactName == null, '', Data.contactName)} in your contact list.
 
 # ContactHasNoPhoneNumber.Text(Data)
-- There is no phone number for @{if(Data.contact == null, '', Data.contact)} in your contact list.
+- There is no phone number for ${if(Data.contact == null, '', Data.contact)} in your contact list.
 
 # ContactsHaveNoPhoneNumber.Text(Data)
-- None of the contacts matching @{if(Data.contactName == null, '', Data.contactName)} has a phone number.
+- None of the contacts matching ${if(Data.contactName == null, '', Data.contactName)} has a phone number.
 
 # ContactHasNoPhoneNumberOfRequestedType.Text(Data)
-- There is no @{if(Data.phoneNumberType == null, '', Data.phoneNumberType)} number for @{if(Data.contact == null, '', Data.contact)} in your contact list.
+- There is no ${if(Data.phoneNumberType == null, '', Data.phoneNumberType)} number for ${if(Data.contact == null, '', Data.contact)} in your contact list.
 
 # ConfirmAlternativePhoneNumberType.Text(Data)
-- Would you like to call their @{if(Data.phoneNumberType == null, '', Data.phoneNumberType)} number instead?
+- Would you like to call their ${if(Data.phoneNumberType == null, '', Data.phoneNumberType)} number instead?
 
 # ContactSelection.Text(Data)
-- Which @{if(Data.contactName == null, '', Data.contactName)}?
+- Which ${if(Data.contactName == null, '', Data.contactName)}?
 
 # ContactSelectionWithoutName.Text(Data)
 - Which contact?
 
 # PhoneNumberSelection.Text(Data)
-- @{if(Data.contact == null, '', Data.contact)} has multiple phone numbers. Which one?
+- ${if(Data.contact == null, '', Data.contact)} has multiple phone numbers. Which one?
 
 # PhoneNumberSelectionWithPhoneNumberType.Text(Data)
-- @{if(Data.contact == null, '', Data.contact)} has multiple @{if(Data.phoneNumberType == null, '', Data.phoneNumberType)} numbers. Which one?
+- ${if(Data.contact == null, '', Data.contact)} has multiple ${if(Data.phoneNumberType == null, '', Data.phoneNumberType)} numbers. Which one?
 
 # ExecuteCall.Text(Data)
-- Calling @{if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)}.
-- Placing the call to @{if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)}.
+- Calling ${if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)}.
+- Placing the call to ${if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)}.
 
 # ExecuteCallWithPhoneNumberType.Text(Data)
-- Calling @{if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)} on @{if(Data.phoneNumberType == null, '', Data.phoneNumberType)}.
+- Calling ${if(Data.contactOrPhoneNumber == null, '', Data.contactOrPhoneNumber)} on ${if(Data.phoneNumberType == null, '', Data.phoneNumberType)}.
 
 
