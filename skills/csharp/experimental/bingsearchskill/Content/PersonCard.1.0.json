@@ -8,7 +8,7 @@
         {
           "type": "Image",
           "horizontalAlignment": "Center",
-          "url": "@{if(Data.IconPath == null, '', Data.IconPath)}",
+          "url": "${if(Data.IconPath == null, '', Data.IconPath)}",
           "size": "Large"
         },
         {
@@ -16,13 +16,13 @@
           "size": "ExtraLarge",
           "weight": "Bolder",
           "color": "Default",
-          "text": "@{if(Data.Name == null, '', Data.Name)}"
+          "text": "${if(Data.Name == null, '', Data.Name)}"
         },
         {
           "type": "TextBlock",
           "size": "Large",
           "weight": "Bolder",
-          "text": "@{if(Data.EntityTypeDisplayHint == null, '', Data.EntityTypeDisplayHint)}",
+          "text": "${if(Data.EntityTypeDisplayHint == null, '', Data.EntityTypeDisplayHint)}",
           "isSubtle": true,
           "color": "Default"
         },
@@ -30,7 +30,7 @@
           "type": "TextBlock",
           "size": "Medium",
           "color": "Default",
-          "text": "@{if(Data.Description == null, '', Data.Description)}",
+          "text": "${if(Data.Description == null, '', Data.Description)}",
           "wrap": true,
           "maxLines": 8
         }
@@ -39,6 +39,6 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "@{if(Data.Speak == null, '', Data.Speak)}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }
 

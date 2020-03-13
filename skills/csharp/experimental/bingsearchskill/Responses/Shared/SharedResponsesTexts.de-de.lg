@@ -1,5 +1,3 @@
-[import] (SharedResponses.lg)
-
 # DidntUnderstandMessage.Text(Data)
 - Es tut mir leid, ich habe nicht verstanden, was Sie gemeint haben.
 - Ich habe es nicht verstanden, vielleicht mal noch einmal anders versuchen.
@@ -26,27 +24,9 @@
 - Sie müssen sich einloggen, damit ich weitere Maßnahmen ergreifen kann.
 
 # AuthFailed.Text(Data)
-- @{AuthFailedTextAndSpeak1(Data)}
-- @{AuthFailedTextAndSpeak2(Data)}
-- @{AuthFailedTextAndSpeak3(Data)}
-
-# AuthFailedTextAndSpeak1(Data)
-[Activity
-    Text = Die Authentifizierung scheiterte. Bitte versuchen Sie es noch einmal
-    Speak = Die Authentifizierung scheiterte. Bitte versuchen Sie es noch einmal.
-]
-
-# AuthFailedTextAndSpeak2(Data)
-[Activity
-    Text = Sie haben es versäumt, sich einzuloggen. Bitte versuchen Sie es später noch einmal.
-    Speak = Sie haben es versäumt, sich einzuloggen. Bitte versuchen Sie es später noch einmal.
-]
-
-# AuthFailedTextAndSpeak3(Data)
-[Activity
-    Text = Ihr Login ist gescheitert. Versuchen wir es noch einmal.
-    Speak = Ihr Login ist gescheitert. Versuchen wir es noch einmal.
-]
+- Die Authentifizierung scheiterte. Bitte versuchen Sie es noch einmal.
+- Sie haben es versäumt, sich einzuloggen. Bitte versuchen Sie es später noch einmal.
+- Ihr Login ist gescheitert. Versuchen wir es noch einmal.
 
 # ActionEnded.Text(Data)
 - Lassen Sie es mich wissen, wenn Sie meine Hilfe bei etwas anderem brauchen.

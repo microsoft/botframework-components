@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>dce3ac16-dce5-4fd3-b97a-0f23791e65fc</UserSecretsId>
   </PropertyGroup>
 
@@ -46,18 +46,19 @@
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.EntitySearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.8.0-preview1" />
-    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Schema" Version="4.7.2" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.0-rc4" />
+	<PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.0-rc4-preview" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.9.0-daily248" />
+    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.0-rc4" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
@@ -78,6 +79,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Responses\CommonStrings.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStrings.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStrings.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\CommonStrings.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\CommonStrings.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -85,6 +98,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonStrings.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\CommonStrings.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\CommonStringsTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -104,6 +120,15 @@
     <None Update="Responses\CommonStringsTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Main\MainResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\MainResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -115,6 +140,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Main\MainResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Main\MainResponsesTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -152,6 +180,18 @@
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Search\SearchResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponses.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Search\SearchResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Search\SearchResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SearchResponses.cs</LastGenOutput>
@@ -160,6 +200,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SearchResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Search\SearchResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Search\SearchResponsesTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -179,9 +222,24 @@
     <None Update="Responses\Search\SearchResponsesTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Shared\SharedResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedResponses.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Shared\SharedResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SharedResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Shared\SharedResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

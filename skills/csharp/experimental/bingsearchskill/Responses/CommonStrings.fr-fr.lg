@@ -1,5 +1,5 @@
 [import](Shared\Shared.lg)
-[import](CommonStringsTexts.lg)
+[import](CommonStringsTexts.fr-fr.lg)
 # DontKnowAnswer(Data, Cards, Layout)
 [Activity
     Text = ${DontKnowAnswer.Text(Data)}

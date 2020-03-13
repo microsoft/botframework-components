@@ -4,18 +4,16 @@
 using System.Globalization;
 using BingSearchSkill.Responses.Shared;
 using BingSearchSkill.Services;
+using BingSearchSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Solutions.Middleware;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Middleware;
+using Microsoft.Bot.Solutions.Responses;
 using SkillServiceLibrary.Utilities;
-using Microsoft.Bot.Solutions.Skills;
-using Microsoft.Bot.Builder.Dialogs;
-using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Bots
 {
@@ -28,13 +26,13 @@ namespace BingSearchSkill.Bots
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager templateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(localeTemplateEngineManager.GetResponse(SharedResponses.ErrorMessage));
+                await context.SendActivityAsync(templateManager.GenerateActivity(SharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
 
@@ -55,7 +53,6 @@ namespace BingSearchSkill.Bots
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

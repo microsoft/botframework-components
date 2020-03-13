@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](SearchResponsesTexts.lg)
+[import](SearchResponsesTexts.es-es.lg)
 # AskEntityPrompt(Data, Cards, Layout)
 [Activity
     Text = ${AskEntityPrompt.Text(Data)}

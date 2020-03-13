@@ -3,29 +3,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using BingSearchSkill.Models;
 using BingSearchSkill.Responses.Shared;
 using BingSearchSkill.Services;
+using BingSearchSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Net.Http;
-using System.IO;
-using System.Linq;
-using System.Drawing.Drawing2D;
-using BingSearchSkill.Utilities;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -35,13 +34,13 @@ namespace BingSearchSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             LocaleTemplateEngineManager localeTemplateEngineManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
-            LocaleTemplateEngineManager = localeTemplateEngineManager;
+            TemplateManager = templateManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
 
@@ -60,7 +59,7 @@ namespace BingSearchSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -175,7 +174,7 @@ namespace BingSearchSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);
