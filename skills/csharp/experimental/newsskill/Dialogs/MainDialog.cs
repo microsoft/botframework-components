@@ -35,12 +35,12 @@ namespace NewsSkill.Dialogs
         public MainDialog(
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateManager localeTemplateEngineManager)
+            LocaleTemplateManager templateManager)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _templateManager = localeTemplateEngineManager;
+            _templateManager = templateManager;
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
