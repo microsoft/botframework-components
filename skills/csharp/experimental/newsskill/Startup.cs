@@ -96,19 +96,19 @@ namespace NewsSkill
             var localizedTemplates = new Dictionary<string, string>();
             foreach (var locale in locales)
             {
-                string localeTemplateFiles;
+                string localeTemplateFile;
 
                 // LG template for default locale should not include locale in file extension.
                 if (locale.Equals(locales[0]))
                 {
-                    localeTemplateFiles = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg");
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg");
                 }
                 else
                 {
-                    localeTemplateFiles = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg");
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg");
                 }
 
-                localizedTemplates.Add(locale, localeTemplateFiles);
+                localizedTemplates.Add(locale, localeTemplateFile);
             }
 
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, locales[0]));
