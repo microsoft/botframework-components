@@ -48,7 +48,6 @@ namespace AutomotiveSkill.Services
                     }
                 }
 
-                /*
                 if (config.Knowledgebases != null)
                 {
                     foreach (var kb in config.Knowledgebases)
@@ -59,11 +58,10 @@ namespace AutomotiveSkill.Services
                             EndpointKey = kb.EndpointKey,
                             Host = kb.Hostname,
                         };
-                        var qnaMaker = new QnAMaker(qnaEndpoint);
-                        set.QnAServices.Add(kb.Id, qnaMaker);
+                        set.QnAConfiguration.Add(kb.Id, qnaEndpoint);
                     }
                 }
-                */
+
                 CognitiveModelSets.Add(language, set);
             }
         }
