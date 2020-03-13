@@ -228,6 +228,10 @@
     "singleDestinationResponse": {
       "type": "object",
       "properties": {
+        "actionSuccess": {
+          "type": "bool",
+          "description": "Result of the action."
+        },
         "name": {
           "type": "string",
           "description": "Destination's name."

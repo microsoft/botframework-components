@@ -4,6 +4,7 @@
 using Luis;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json.Linq;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.Flow.Strings;
 using SkillServiceLibrary.Models;
@@ -20,13 +21,18 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
 
         public static readonly string FindPoiNearAddress = $"find poi near {ContextStrings.Ave}";
 
-        public static readonly Activity WhatsNearbyAction = new Activity(type: ActivityTypes.Event, name: "FindPointOfInterestAction", value: JObject.FromObject(new
+        public static readonly Activity WhatsNearbyAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,
         }));
 
-        public static readonly Activity FindNearestPoiWithRouteAction = new Activity(type: ActivityTypes.Event, name: "FindPointOfInterestAction", value: JObject.FromObject(new
+        public static readonly Activity FindNearestPoiNoCurrentAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new
+        {
+            poiType = GeoSpatialServiceTypes.PoiType.Nearest,
+        }));
+
+        public static readonly Activity FindNearestPoiWithRouteAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,

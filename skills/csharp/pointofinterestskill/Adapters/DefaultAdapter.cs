@@ -14,6 +14,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
+using PointOfInterestSkill.Utilities;
 using SkillServiceLibrary.Utilities;
 
 namespace PointOfInterestSkill.Adapters
@@ -27,7 +28,7 @@ namespace PointOfInterestSkill.Adapters
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            ResponseManager responseManager)
+            LocaleTemplateManager responseManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
@@ -57,7 +58,6 @@ namespace PointOfInterestSkill.Adapters
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

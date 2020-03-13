@@ -1,0 +1,69 @@
+# PointOfInterestWelcomeMessage.Text(Data)
+- 你好！我是Point of Interest bot! 我可以找到兴趣点，展示你去目的地的路线，或者在附近找到有趣的东西。
+
+# PointOfInterestWelcomeMessage.S1(Data)
+- 到机场的最快线路
+
+# PointOfInterestWelcomeMessage.S2(Data)
+- 城里有咖啡店吗？
+
+# PointOfInterestWelcomeMessage.S3(Data)
+- 告诉我到布罗德街400号怎么走
+
+# PointOfInterestWelcomeMessage.S4(Data)
+- 我想参观太空针塔
+
+# PointOfInterestWelcomeMessage.S5(Data)
+- 附近有什么？
+
+# HelpMessage.Text(Data)
+- 我可以帮助您找到您当地的景点以及路线。
+
+# HelpMessage.S1(Data)
+- 到机场的最快线路
+
+# HelpMessage.S2(Data)
+- 城里有咖啡店吗？
+
+# HelpMessage.S3(Data)
+- 告诉我到布罗德街400号怎么走
+
+# HelpMessage.S4(Data)
+- 我想参观太空针塔
+
+# HelpMessage.S5(Data)
+- 附近有什么？
+
+# GreetingMessage.Text(Data)
+- 嗨！
+- 我在这！
+- 你好！
+- 您好！
+
+# GoodbyeMessage.Text(Data)
+- 再见！  \r\n  如果您需要任何帮助，都可以按语音按钮和我交流。
+
+# LogOut.Text(Data)
+- 你已成功退出。
+- 您已成功退出。
+- 您已退出。
+
+# FeatureNotAvailable.Text(Data)
+- 此功能尚不可用。
+
+# CancelMessage.Text(Data)
+- 好吧, 让我们重新开始。
+
+# FirstPromptMessage.Text(Data)
+- 今天我能帮到你什么？
+- 我能为你做什么？
+- 有什么我能为你做什么的吗？
+- 我能帮你什么？
+
+# CompletedMessage.Text(Data)
+- 如果你还需要什么，我会在这里。
+- 如果还有什么需要，请告诉我。
+- 让我知道，如果我可以帮你什么。
+- 全部完成。让我知道我能不能做别的事。
+
+

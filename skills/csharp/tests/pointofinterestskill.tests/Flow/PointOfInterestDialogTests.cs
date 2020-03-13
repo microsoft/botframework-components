@@ -47,7 +47,7 @@ namespace PointOfInterestSkill.Tests.Flow
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [TestMethod]
-        public async Task RepromptForCurrentAndRouteToNearestPointOfInterestTest()
+        public async Task RepromptForCurrentAndRouteToNearestPoiTest()
         {
             await GetTestFlow()
                 .Send(string.Empty)
@@ -286,12 +286,64 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task RouteToPointOfInterestAndSelectNoneActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindPointOfInterestUtterances.WhatsNearbyAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(GeneralTestUtterances.SelectNone)
+                .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
+                .AssertReply(CheckForEoC(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RouteToPointOfInterestAndInterruptActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindPointOfInterestUtterances.WhatsNearbyAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(FindPointOfInterestUtterances.WhatsNearby)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task RouteToNearestPointOfInterestWithRouteActionTest()
         {
             await GetSkillTestFlow()
                 .Send(FindPointOfInterestUtterances.FindNearestPoiWithRouteAction)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RepromptForCurrentAndRouteToNearestPoiActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindPointOfInterestUtterances.FindNearestPoiNoCurrentAction)
+                .AssertReply(AssertContains(POISharedResponses.PromptForCurrentLocation, null))
+                .Send(ContextStrings.Ave)
+                .AssertReply(AssertContains(POISharedResponses.CurrentLocationMultipleSelection, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.No)
+                .AssertReply(AssertContains(POISharedResponses.PromptForCurrentLocation, null))
+                .Send(ContextStrings.Ave)
+                .AssertReply(AssertContains(POISharedResponses.CurrentLocationMultipleSelection, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
                 .AssertReply(CheckForEvent())
                 .AssertReply(CheckForEoC(true))
                 .StartTestAsync();

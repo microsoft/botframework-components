@@ -173,6 +173,41 @@ namespace PointOfInterestSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        // TODO this waits for update
+        [TestMethod]
+        public async Task ParkingNearestAndCancelActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindParkingUtterances.FindParkingNearestAction)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(GeneralTestUtterances.Cancel)
+                .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
+                // .AssertReply(CheckForEoC(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task RepromptForCurrentAndParkingNearestActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindParkingUtterances.FindParkingNearestNoCurrentAction)
+                .AssertReply(AssertContains(POISharedResponses.PromptForCurrentLocation, null))
+                .Send(ContextStrings.Ave)
+                .AssertReply(AssertContains(POISharedResponses.CurrentLocationMultipleSelection, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.No)
+                .AssertReply(AssertContains(POISharedResponses.PromptForCurrentLocation, null))
+                .Send(ContextStrings.Ave)
+                .AssertReply(AssertContains(POISharedResponses.CurrentLocationMultipleSelection, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
         [TestMethod]
         public async Task ParkingNearestNoRouteActionTest()
         {

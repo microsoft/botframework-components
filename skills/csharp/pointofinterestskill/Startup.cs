@@ -29,6 +29,7 @@ using PointOfInterestSkill.Responses.Main;
 using PointOfInterestSkill.Responses.Route;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
+using PointOfInterestSkill.Utilities;
 
 namespace PointOfInterestSkill
 {
@@ -42,8 +43,6 @@ namespace PointOfInterestSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -78,7 +77,9 @@ namespace PointOfInterestSkill
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
             // Configure bot state
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            // Uncomment the following line for local development without Cosmos Db
+            // services.AddSingleton<IStorage, MemoryStorage>();
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -110,13 +111,7 @@ namespace PointOfInterestSkill
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Configure responses
-            services.AddSingleton(sp => new ResponseManager(
-                settings.CognitiveModels.Select(l => l.Key).ToArray(),
-                new CancelRouteResponses(),
-                new FindPointOfInterestResponses(),
-                new POIMainResponses(),
-                new RouteResponses(),
-                new POISharedResponses()));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // register dialogs
             services.AddTransient<MainDialog>();

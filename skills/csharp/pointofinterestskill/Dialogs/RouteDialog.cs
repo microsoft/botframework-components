@@ -28,7 +28,7 @@ namespace PointOfInterestSkill.Dialogs
         public RouteDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
@@ -274,7 +274,7 @@ namespace PointOfInterestSkill.Dialogs
                         await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
                     }
 
-                    response = ConvertToResponse(state.Destination);
+                    response = state.IsAction ? ConvertToResponse(state.Destination) : null;
                 }
                 else
                 {
@@ -301,7 +301,7 @@ namespace PointOfInterestSkill.Dialogs
             if (promptContext.Context.Activity.Type == ActivityTypes.Message)
             {
                 var message = promptContext.Context.Activity.AsMessageActivity();
-                if (message.Text.Contains(PointOfInterestSharedStrings.START, StringComparison.InvariantCultureIgnoreCase))
+                if (message.Text.Contains(ResponseManager.GetString(PointOfInterestSharedStrings.START), StringComparison.InvariantCultureIgnoreCase))
                 {
                     promptContext.Recognized.Value = true;
                     return Task.FromResult(true);
@@ -321,10 +321,10 @@ namespace PointOfInterestSkill.Dialogs
             for (var i = 0; i < cards.Count; ++i)
             {
                 // Simple distinction
-                var promptReplacements = new StringDictionary
-                    {
-                        { "Id", (i + 1).ToString() },
-                    };
+                var promptReplacements = new Dictionary<string, object>
+                {
+                    { "Id", (i + 1).ToString() },
+                };
                 var suggestedActionValue = ResponseManager.GetResponse(RouteResponses.RouteSuggestedActionName, promptReplacements).Text;
 
                 var choice = new Choice()

@@ -93,6 +93,11 @@ namespace PointOfInterestSkill.Bots
             }
         }
 
+        protected override Task OnEndOfConversationActivityAsync(ITurnContext<IEndOfConversationActivity> turnContext, CancellationToken cancellationToken)
+        {
+            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+        }
+
         public class Events
         {
             public const string Location = "Location";

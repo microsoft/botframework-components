@@ -7,6 +7,9 @@ namespace PointOfInterestSkill.Models
 {
     public class SingleDestinationResponse
     {
+        [JsonProperty("actionSuccess")]
+        public bool ActionSuccess { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 

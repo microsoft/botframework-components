@@ -19,7 +19,7 @@ namespace PointOfInterestSkill.Dialogs
         public FindPointOfInterestDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager responseManager,
             ConversationState conversationState,
             RouteDialog routeDialog,
             IServiceManager serviceManager,

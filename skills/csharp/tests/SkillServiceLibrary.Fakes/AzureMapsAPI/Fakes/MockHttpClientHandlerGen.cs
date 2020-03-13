@@ -186,7 +186,6 @@ namespace SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes
                {
                    Content = new StringContent(this.GetFoursquareParkingCategory()),
                });
-
         }
 
         private string GetAzureMapsPointOfInterest()

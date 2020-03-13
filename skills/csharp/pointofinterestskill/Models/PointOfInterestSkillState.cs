@@ -45,6 +45,8 @@ namespace PointOfInterestSkill.Models
 
         public int UserSelectIndex { get; set; }
 
+        public bool IsAction { get; set; } = false;
+
         public void Clear()
         {
             Destination = null;
