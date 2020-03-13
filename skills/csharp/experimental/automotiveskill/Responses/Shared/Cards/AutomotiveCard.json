@@ -61,14 +61,14 @@
       "items": [
         {
           "type": "Image",
-          "url": "@{if(ImageUrl == null, '', ImageUrl)}",
+          "url": "${if(ImageUrl == null, '', ImageUrl)}",
           "horizontalAlignment": "center"
         },
         {
           "type": "TextBlock",
           "id": "messageBody",
           "color": "Dark",
-          "text": "@{if(Body == null, '', Body)}",
+          "text": "${if(Body == null, '', Body)}",
           "wrap": true
         }
       ]
@@ -76,5 +76,5 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "@{if(Speak == null, '', Speak)}"
+  "speak": "${if(Speak == null, '', Speak)}"
 }

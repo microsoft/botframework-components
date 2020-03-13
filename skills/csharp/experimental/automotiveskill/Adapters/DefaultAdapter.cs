@@ -4,7 +4,6 @@
 using System.Globalization;
 using AutomotiveSkill.Responses.Shared;
 using AutomotiveSkill.Services;
-using AutomotiveSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
@@ -20,18 +19,16 @@ namespace AutomotiveSkill.Adapters
     {
         public DefaultAdapter(
             BotSettings settings,
-            UserState userState,
-            ConversationState conversationState,
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager templateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(localeTemplateEngineManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
+                await context.SendActivityAsync(templateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Automotive Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
             };

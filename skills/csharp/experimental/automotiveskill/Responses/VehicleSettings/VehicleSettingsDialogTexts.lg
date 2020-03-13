@@ -1,6 +1,4 @@
-﻿[import](VehicleSettingsDialogActivities.lg)
-
-# VehicleSettingsConfirmed.Text
+﻿# VehicleSettingsConfirmed.Text
 - Ok.
 
 # VehicleSettingsMissingSettingName.Text
@@ -13,46 +11,46 @@
 - Sorry, I don't know what you want to change it to.
 
 # VehicleSettingsSettingValueSelection.Text(settingName)
-- Here are the possible values for @{if(settingName == null, '', settingName)}. Which one?
+- Here are the possible values for ${if(settingName == null, '', settingName)}. Which one?
 
 # VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
-- So, you want to change @{if(settingName == null, '', settingName)} to @{if(value == null, '', value)}. Is that correct?
+- So, you want to change ${if(settingName == null, '', settingName)} to ${if(value == null, '', value)}. Is that correct?
 
 # VehicleSettingsSettingChangeConfirmationDenied.Text
 - Ok, not making any changes.
 
 # VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} is already set to @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} is already set to ${if(value == null, '', value)}.
 
 # VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} is already set to @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} is already set to ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsSettingChangeUnsupported.Text(settingName)
-- Changing the setting @{if(settingName == null, '', settingName)} is currently unsupported.
+- Changing the setting ${if(settingName == null, '', settingName)} is currently unsupported.
 
 # VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
-- @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} by @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(increasingDecreasing == null, '', increasingDecreasing)} ${if(settingName == null, '', settingName)} by ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingAmount.Text(settingName, amount, unit)
-- Setting @{if(settingName == null, '', settingName)} to @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- Setting ${if(settingName == null, '', settingName)} to ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingValue.Text(settingName, value)
-- Setting @{if(settingName == null, '', settingName)} to @{if(value == null, '', value)}.
+- Setting ${if(settingName == null, '', settingName)} to ${if(value == null, '', value)}.
 
 # VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)
-- @{if(valueIngForm == null, '', valueIngForm)} @{if(settingName == null, '', settingName)}.
+- ${if(valueIngForm == null, '', valueIngForm)} ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatus.Text(settingName)
-- Checking the status of @{if(settingName == null, '', settingName)}.
+- Checking the status of ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} is set to @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} is set to ${if(value == null, '', value)}.
 
 # VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} is set to @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} is set to ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsCheckingStatusUnsupported.Text(settingName)
-- Checking the status of @{if(settingName == null, '', settingName)} is currently unsupported.
+- Checking the status of ${if(settingName == null, '', settingName)} is currently unsupported.
 
 # VehicleSettingsOutOfDomain.Text
 - Sorry, I don't know how to handle that yet.

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>6a3184c3-074e-45b9-ad93-eceb8268ec01</UserSecretsId>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
@@ -17,19 +17,19 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.ContentModerator" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.7.2-preview" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.8.0-preview1" />
-    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Schema" Version="4.7.2" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.0-rc4-preview" />
+    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.9.0-daily248" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SharpYaml" Version="1.6.5" />
@@ -101,6 +101,21 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AutomotiveSkillMainResponses.cs</LastGenOutput>
     </None>
+    <None Update="Responses\Main\MainDialogActivities.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainDialogActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\MainDialogActivities.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -150,6 +165,21 @@
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Shared\SharedActivities.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Shared\SharedActivities.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Shared\SharedActivities.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -169,6 +199,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Shared\SharedTexts.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\VehicleSettings\VehicleSettingsDialogActivities.lg">

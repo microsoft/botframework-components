@@ -1,6 +1,4 @@
-﻿[import](VehicleSettingsDialogActivities.lg)
-
-# VehicleSettingsConfirmed.Text
+﻿# VehicleSettingsConfirmed.Text
 - D'accord.
 
 # VehicleSettingsMissingSettingName.Text
@@ -13,46 +11,46 @@
 - Désolé, je ne sais pas à quoi tu veux le changer.
 
 # VehicleSettingsSettingValueSelection.Text(settingName)
-- Voici les valeurs possibles pour @{if(settingName == null, '', settingName)}. Lequel?
+- Voici les valeurs possibles pour ${if(settingName == null, '', settingName)}. Lequel?
 
 # VehicleSettingsSettingChangeConfirmation.Text(settingName, value)
-- Donc, vous voulez changer @{if(settingName == null, '', settingName)} À @{if(value == null, '', value)}. Est-ce exact?
+- Donc, vous voulez changer ${if(settingName == null, '', settingName)} À ${if(value == null, '', value)}. Est-ce exact?
 
 # VehicleSettingsSettingChangeConfirmationDenied.Text
 - Ok, ne pas faire de changements.
 
 # VehicleSettingsSettingChangeNoOpValue.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} est déjà mis à @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} est déjà mis à ${if(value == null, '', value)}.
 
 # VehicleSettingsSettingChangeNoOpAmount.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} est déjà mis à @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} est déjà mis à ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsSettingChangeUnsupported.Text(settingName)
-- Modification du réglage @{if(settingName == null, '', settingName)} n’est pas pris en compte.
+- Modification du réglage ${if(settingName == null, '', settingName)} n’est pas pris en compte.
 
 # VehicleSettingsChangingRelativeAmount.Text(increasingDecreasing, settingName, amount, unit)
-- @{if(increasingDecreasing == null, '', increasingDecreasing)} @{if(settingName == null, '', settingName)} Par @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(increasingDecreasing == null, '', increasingDecreasing)} ${if(settingName == null, '', settingName)} Par ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingAmount.Text(settingName, amount, unit)
-- Réglage @{if(settingName == null, '', settingName)} À @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- Réglage ${if(settingName == null, '', settingName)} À ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsChangingValue.Text(settingName, value)
-- Réglage @{if(settingName == null, '', settingName)} À @{if(value == null, '', value)}.
+- Réglage ${if(settingName == null, '', settingName)} À ${if(value == null, '', value)}.
 
 # VehicleSettingsChangingValueKnown.Text(valueIngForm, settingName)
-- @{if(valueIngForm == null, '', valueIngForm)} @{if(settingName == null, '', settingName)}.
+- ${if(valueIngForm == null, '', valueIngForm)} ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatus.Text(settingName)
-- Vérification de l’état de @{if(settingName == null, '', settingName)}.
+- Vérification de l’état de ${if(settingName == null, '', settingName)}.
 
 # VehicleSettingsCheckingStatusValueSuccess.Text(settingName, value)
-- @{if(settingName == null, '', settingName)} est réglé pour @{if(value == null, '', value)}.
+- ${if(settingName == null, '', settingName)} est réglé pour ${if(value == null, '', value)}.
 
 # VehicleSettingsCheckingStatusAmountSuccess.Text(settingName, amount, unit)
-- @{if(settingName == null, '', settingName)} est réglé pour @{if(amount == null, '', amount)}@{if(unit == null, '', unit)}.
+- ${if(settingName == null, '', settingName)} est réglé pour ${if(amount == null, '', amount)}${if(unit == null, '', unit)}.
 
 # VehicleSettingsCheckingStatusUnsupported.Text(settingName)
-- Vérification de l’état de @{if(settingName == null, '', settingName)} n’est pas pris en compte.
+- Vérification de l’état de ${if(settingName == null, '', settingName)} n’est pas pris en compte.
 
 # VehicleSettingsOutOfDomain.Text
 - Désolé, je ne sais pas encore comment gérer ça.

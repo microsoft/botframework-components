@@ -36,8 +36,6 @@ namespace AutomotiveSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
@@ -77,7 +75,7 @@ namespace AutomotiveSkill
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
             // Configure bot state
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -103,33 +101,21 @@ namespace AutomotiveSkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure localized responses
+            var localizedTemplates = new Dictionary<string, string>();
+            var templateFile = "ResponsesAndTexts";
             var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
-            var templateFiles = new Dictionary<string, string>
-            {
-                { "ResponsesAndTexts", "ResponsesAndTexts" },
-            };
 
-            var localizedTemplates = new Dictionary<string, List<string>>();
             foreach (var locale in supportedLocales)
             {
-                var localeTemplateFiles = new List<string>();
-                foreach (var (dialog, template) in templateFiles)
-                {
-                    // LG template for default locale should not include locale in file extension.
-                    if (locale.Equals(settings.DefaultLocale ?? "en-us"))
-                    {
-                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.lg"));
-                    }
-                    else
-                    {
-                        localeTemplateFiles.Add(Path.Combine(".", "Responses", dialog, $"{template}.{locale}.lg"));
-                    }
-                }
+                // LG template for en-us does not include locale in file extension.
+                var localeTemplateFile = locale.Equals("en-us")
+                    ? Path.Combine(".", "Responses", "ResponsesAndTexts", $"{templateFile}.lg")
+                    : Path.Combine(".", "Responses", "ResponsesAndTexts", $"{templateFile}.{locale}.lg");
 
-                localizedTemplates.Add(locale, localeTemplateFiles);
+                localizedTemplates.Add(locale, localeTemplateFile);
             }
 
-            services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
+            services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
             // register dialogs
             services.AddTransient<MainDialog>();
