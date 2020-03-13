@@ -26,7 +26,6 @@ namespace CalendarSkill.Responses.CreateEvent
         public const string ConfirmCreateFailed = "ConfirmCreateFailed";
         public const string EventCreated = "EventCreated";
         public const string EventCreationFailed = "EventCreationFailed";
-        public const string NoAttendees = "NoAttendees";
         public const string PromptTooManyPeople = "PromptTooManyPeople";
         public const string PromptPersonNotFound = "PromptPersonNotFound";
         public const string NoStartDate = "NoStartDate";

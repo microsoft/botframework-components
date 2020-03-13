@@ -1,5 +1,3 @@
-[import](FindMeetingRoomDialogActivities.lg)
-
 # NoBuilding.Text
 - OK, which building?
 
@@ -7,13 +5,13 @@
 - Sorry, I couldn't find that building. Can you say it differently, or choose another building?
 
 # MeetingRoomNotFoundByName.Text(MeetingRoom)
-- It looks like @{MeetingRoom} does not exist.
+- It looks like ${MeetingRoom} does not exist.
 
 # ConfirmMeetingRoomPrompt.Text(MeetingRoom, DateTime)
-- @{MeetingRoom} is available @{DateTime}, do you want to reserve it?
+- ${MeetingRoom} is available ${DateTime}, do you want to reserve it?
 
 # MeetingRoomUnavailable.Text(MeetingRoom, DateTime)
-- It looks like @{MeetingRoom} is unavailable @{DateTime}.
+- It looks like ${MeetingRoom} is unavailable ${DateTime}.
 
 # FloorNumberRetry.Text
 - Sorry, I didn't get that. Can you say it differently?
@@ -22,10 +20,10 @@
 - Alright, do you have a floor preference?
 
 # CannotFindOtherMeetingRoom.Text(Building, FloorNumber, DateTime)
-- It doesn't look like there are any OTHER rooms available@{InBuilding(Building)}@{OnFloorNumber(FloorNumber)} @{DateTime}.
+- It doesn't look like there are any OTHER rooms available${InBuilding(Building)}${OnFloorNumber(FloorNumber)} ${DateTime}.
 
 # MeetingRoomNotFoundByBuildingAndFloor.Text(Building, FloorNumber, DateTime)
-- It doesn't look like any rooms are available@{InBuilding(Building)}@{OnFloorNumber(FloorNumber)} @{DateTime}.
+- It doesn't look like any rooms are available${InBuilding(Building)}${OnFloorNumber(FloorNumber)} ${DateTime}.
 
 # IgnoreMeetingRoom.Text
 - No problem.
@@ -40,13 +38,13 @@
 - Okey, your request has been cancelled.
 
 # ConfirmedMeeting.Text(MeetingRoom, DateTime, Subject)
-- Alright, you're confirmed in @{MeetingRoom} @{DateTime}@{ForSubject(Subject)}.
+- Alright, you're confirmed in ${MeetingRoom} ${DateTime}${ForSubject(Subject)}.
 
 # ConfirmAddMeetingRoom.Text(MeetingRoom, Subject)
-- Alright, I have add @{MeetingRoom} to your meeting@{Subject}.
+- Alright, I have add ${MeetingRoom} to your meeting${Subject}.
 
 # ConfirmChangeMeetingRoom.Text(MeetingRoom, Subject)
-- Alright, I have your meeting@{Subject} changing to @{MeetingRoom}.
+- Alright, I have your meeting${Subject} changing to ${MeetingRoom}.
 
 # ConfirmedMeetingRoom.Text
 - Okey, I'll create a new meeting with that room.
@@ -55,34 +53,34 @@
 - Do you want to confirm?
 
 # MeetingRoomAdded.Text(MeetingRoom, Subject)
-- Alright, I have added @{MeetingRoom} to your meeting@{FixSubject(Subject)}.
+- Alright, I have added ${MeetingRoom} to your meeting${FixSubject(Subject)}.
 
 # MeetingRoomChanged.Text(MeetingRoom, Subject)
-- Alright, I have your meeting@{FixSubject(subject)} changing to @{MeetingRoom}.
+- Alright, I have your meeting${FixSubject(subject)} changing to ${MeetingRoom}.
 
 # MeetingRoomCanceled.Text(MeetingRoom, Subject, DateTime)
-- Alright, I have canceled the room @{MeetingRoom} for your meeting@{FixSubject(subject)} @{DateTime}.
+- Alright, I have canceled the room ${MeetingRoom} for your meeting${FixSubject(subject)} ${DateTime}.
 
 # InBuilding(Building)
-- IF: @{Building && Building != "*"}
-    - @{string(' ')}in @{Building}
+- IF: ${Building && Building != "*"}
+    - ${string(' ')}in ${Building}
 - ELSE: 
     - 
 
 # OnFloorNumber(FloorNumber)
-- IF: @{FloorNumber && FloorNumer != "0"}
-    - @{string(' ')}on floor @{FloorNumber}
+- IF: ${FloorNumber && FloorNumer != "0"}
+    - ${string(' ')}on floor ${FloorNumber}
 - ELSE: 
     - 
 
 # ForSubject(subject)
-- IF: @{subject}
-    - @{string(' ')}for "@{subject}"
+- IF: ${subject}
+    - ${string(' ')}for "${subject}"
 - ELSE: 
     - 
 
 # FixSubject(subject)
-- IF: @{subject}
-    - @{string(' ')}"@{subject}"
+- IF: ${subject}
+    - ${string(' ')}"${subject}"
 - ELSE: 
     - 

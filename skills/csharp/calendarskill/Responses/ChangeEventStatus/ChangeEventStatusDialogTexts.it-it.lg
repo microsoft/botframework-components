@@ -1,16 +1,14 @@
-[import](ChangeEventStatusDialogActivities.lg)
-
 # ConfirmDelete.Text
 - Sei sicuro di voler eliminare questo evento dal tuo calendario?
 
 # ConfirmDeleteFailed.Text(Title, Time)
-- Sei sicuro di voler annullare " @{Title}" all'atto @{Time}?
+- Sei sicuro di voler annullare " ${Title}" all'atto ${Time}?
 
 # ConfirmAccept.Text
 - Sei sicuro di voler accettare questo evento?
 
 # ConfirmAcceptFailed.Text(Title, Time)
-- Sei sicuro di voler accettare il @{Time} " @{Title}" incontro?
+- Sei sicuro di voler accettare il ${Time} " ${Title}" incontro?
 
 # EventDeleted.Text
 - Ho cancellato l'evento dal tuo calendario.

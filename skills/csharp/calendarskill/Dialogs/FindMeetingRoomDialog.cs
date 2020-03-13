@@ -31,13 +31,13 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             FindContactDialog findContactDialog,
             IBotTelemetryClient telemetryClient,
             ISearchService searchService,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(FindMeetingRoomDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(FindMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
             SearchService = searchService;
@@ -149,7 +149,7 @@ namespace CalendarSkill.Dialogs
                     {
                         return await sc.PromptAsync(Actions.BuildingPromptForCreate, new CalendarPromptOptions
                         {
-                            Prompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.NoBuilding),
+                            Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.NoBuilding),
                             MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                         }, cancellationToken);
                     }
@@ -157,8 +157,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.BuildingPromptForCreate, new CalendarPromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.NoBuilding),
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.BuildingNonexistent),
+                    Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.NoBuilding),
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.BuildingNonexistent),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
 
@@ -184,7 +184,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else if (sc.Result == null)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     state.Clear();
                     await sc.CancelAllDialogsAsync();
@@ -250,8 +250,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.FloorNumberPromptForCreate, new CalendarPromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.NoFloorNumber),
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.FloorNumberRetry),
+                    Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.NoFloorNumber),
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.FloorNumberRetry),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
             }
@@ -275,7 +275,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else if (sc.Result == null)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     state.Clear();
                     await sc.CancelAllDialogsAsync();
@@ -311,7 +311,7 @@ namespace CalendarSkill.Dialogs
                     if (!string.IsNullOrEmpty(state.MeetingInfo.MeetingRoomName))
                     {
                         var tokens = new { MeetingRoom = state.MeetingInfo.MeetingRoomName };
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByName, tokens);
+                        var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByName, tokens);
                         await sc.Context.SendActivityAsync(activity);
                         state.MeetingInfo.MeetingRoomName = null;
                     }
@@ -323,7 +323,7 @@ namespace CalendarSkill.Dialogs
                             state.MeetingInfo.FloorNumber,
                             DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                         };
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
+                        var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
                         await sc.Context.SendActivityAsync(activity);
                         if (state.MeetingInfo.FloorNumber.GetValueOrDefault() == 0)
                         {
@@ -387,13 +387,13 @@ namespace CalendarSkill.Dialogs
                         DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), 
                         state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                     };
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
                     await sc.Context.SendActivityAsync(activity);
                 }
                 else
                 {
                     var tokens = new { MeetingRoom = state.MeetingInfo.MeetingRoomName };
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomUnavailable, tokens);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomUnavailable, tokens);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
@@ -426,7 +426,7 @@ namespace CalendarSkill.Dialogs
                         state.MeetingInfo.FloorNumber,
                         DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                     };
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.CannotFindOtherMeetingRoom, tokens);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.CannotFindOtherMeetingRoom, tokens);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
                 }
@@ -439,7 +439,7 @@ namespace CalendarSkill.Dialogs
                     };
 
                     // find an available room, continue
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmMeetingRoomPrompt, tokens);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmMeetingRoomPrompt, tokens);
                     return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions { Prompt = activity }, cancellationToken);
                 }
             }
@@ -465,7 +465,7 @@ namespace CalendarSkill.Dialogs
                 else
                 {
                     state.MeetingInfo.IgnoredMeetingRoom.Add(state.MeetingInfo.UnconfirmedMeetingRoom.First().DisplayName + state.MeetingInfo.StartDateTime.ToString());
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.IgnoreMeetingRoom);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.IgnoreMeetingRoom);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
                 }
@@ -484,8 +484,8 @@ namespace CalendarSkill.Dialogs
             {
                 return await sc.PromptAsync(Actions.RecreateMeetingRoomPrompt, new CalendarPromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.RecreateMeetingRoom),
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.RecreateMeetingRoomAgain),
+                    Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.RecreateMeetingRoom),
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.RecreateMeetingRoomAgain),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
             }
@@ -509,7 +509,7 @@ namespace CalendarSkill.Dialogs
                     {
                         case RecreateMeetingRoomState.Cancel:
                             {
-                                var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.CancelRequest);
+                                var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.CancelRequest);
                                 await sc.Context.SendActivityAsync(activity);
                                 state.Clear();
                                 await sc.CancelAllDialogsAsync();
@@ -603,7 +603,7 @@ namespace CalendarSkill.Dialogs
                 else
                 {
                     // user has tried too many times but can't get result
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     state.Clear();
                     await sc.CancelAllDialogsAsync();

@@ -35,11 +35,11 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(FindContactDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(FindContactDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -148,22 +148,22 @@ namespace CalendarSkill.Dialogs
                 // ask for attendee
                 if (state.InitialIntent == CalendarLuis.Intent.CheckAvailability)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableUserName) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableUserName) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 if (state.InitialIntent == CalendarLuis.Intent.FindMeetingRoom)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreAttendees) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreAttendees) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 else if (options.FindContactReason == FindContactDialogOptions.FindContactReasonType.FirstFindContact)
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.NoAttendees) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.NoAttendees) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
                 else
                 {
-                    var prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreAttendees) as Activity;
+                    var prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreAttendees) as Activity;
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }
             }
@@ -215,7 +215,7 @@ namespace CalendarSkill.Dialogs
                     if (state.MeetingInfo.ContactInfor.ContactsNameList.Count > 1 && !(state.InitialIntent == CalendarLuis.Intent.CheckAvailability))
                     {
                         var nameString = await GetReadyToSendNameListStringAsync(sc);
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new
                         {
                             NameList = nameString
                         });
@@ -374,7 +374,7 @@ namespace CalendarSkill.Dialogs
                         userString = confirmedPerson.Emails.First().Address ?? confirmedPerson.UserPrincipalName;
                     }
 
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.PromptOneNameOneAddress, new
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.PromptOneNameOneAddress, new
                     {
                         User = userString
                     });
@@ -418,7 +418,7 @@ namespace CalendarSkill.Dialogs
                         Actions.Prompt,
                         new PromptOptions
                         {
-                            Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoAttendees) as Activity,
+                            Prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.NoAttendees) as Activity,
                         });
                 }
 
@@ -429,13 +429,13 @@ namespace CalendarSkill.Dialogs
                 {
                     if (options.FirstRetry)
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFound);
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFound);
                         await sc.Context.SendActivityAsync(activity);
                         return await sc.PromptAsync(
                             Actions.Prompt,
                             new PromptOptions
                             {
-                                Prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AskForEmail) as Activity
+                                Prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.AskForEmail) as Activity
                             });
                     }
                     else
@@ -444,7 +444,7 @@ namespace CalendarSkill.Dialogs
                             Actions.Prompt,
                             new PromptOptions
                             {
-                                Prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new
+                                Prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new
                                 {
                                     Source = state.EventSource == Models.EventSource.Microsoft ? "Outlook" : "Gmail",
                                     UserName = currentRecipientName
@@ -474,7 +474,7 @@ namespace CalendarSkill.Dialogs
 
                 if (string.IsNullOrEmpty(userInput) && options.UpdateUserNameReason != FindContactDialogOptions.UpdateUserNameReasonType.Initialize)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new
                     {
                         Source = state.EventSource == EventSource.Microsoft ? "Outlook Calendar" : "Google Calendar",
                         UserName = currentRecipientName
@@ -675,7 +675,7 @@ namespace CalendarSkill.Dialogs
 
                 if (unconfirmedPerson.Count == 1)
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.FindMultipleEmails, new
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.FindMultipleEmails, new
                     {
                         UserName = unconfirmedPerson.First().DisplayName
                     });
@@ -683,7 +683,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.FindMultipleContactNames, new
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.FindMultipleContactNames, new
                     {
                         UserName = state.MeetingInfo.ContactInfor.CurrentContactName
                     });
@@ -733,7 +733,7 @@ namespace CalendarSkill.Dialogs
                         }
                         else
                         {
-                            var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
+                            var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
                             await sc.Context.SendActivityAsync(activity);
                         }
                     }
@@ -760,7 +760,7 @@ namespace CalendarSkill.Dialogs
                 if (state.MeetingInfo.ContactInfor.UnconfirmedContact.Count == 1)
                 {
                     // select email
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.EmailChoiceConfirmation, new
+                    var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.EmailChoiceConfirmation, new
                     {
                         Email = choiceResult.Split(": ")[1]
                     });
@@ -788,8 +788,8 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context);
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreUserPrompt) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AddMoreUserPrompt) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreUserPrompt) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(FindContactResponses.AddMoreUserPrompt) as Activity,
                 }, cancellationToken);
             }
             catch (Exception ex)
@@ -842,14 +842,14 @@ namespace CalendarSkill.Dialogs
                 state.MeetingInfo.ContactInfor.ShowContactsIndex--;
                 pageIndex = state.MeetingInfo.ContactInfor.ShowContactsIndex;
                 skip = pageSize * pageIndex;
-                var activity = TemplateEngine.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
+                var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
                 await sc.Context.SendActivityAsync(activity);
             }
 
             var options = new PromptOptions
             {
                 Choices = new List<Choice>(),
-                Prompt = TemplateEngine.GenerateActivityForLocale(
+                Prompt = TemplateManager.GenerateActivityForLocale(
                     unconfirmedPerson.Count == 1 ? FindContactResponses.ConfirmMultipleContactEmailSinglePage : FindContactResponses.ConfirmMultipleContactNameSinglePage,
                     new
                     {
@@ -859,7 +859,7 @@ namespace CalendarSkill.Dialogs
 
             if (!isSinglePage)
             {
-                options.Prompt = TemplateEngine.GenerateActivityForLocale(
+                options.Prompt = TemplateManager.GenerateActivityForLocale(
                     unconfirmedPerson.Count == 1 ? FindContactResponses.ConfirmMultipleContactEmailMultiPage : FindContactResponses.ConfirmMultipleContactNameMultiPage,
                     new
                     {
@@ -893,7 +893,7 @@ namespace CalendarSkill.Dialogs
                         {
                             options.Prompt.Speak = SpeechUtility.ListToSpeechReadyString(options, ReadPreference.Chronological, ConfigData.GetInstance().MaxReadSize);
                             options.Prompt.Text += "\r\n" + GetSelectPromptEmailString(options, true, unconfirmedPerson.Count != 1);
-                            options.RetryPrompt = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage) as Activity;
+                            options.RetryPrompt = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage) as Activity;
                             return options;
                         }
 
@@ -908,7 +908,7 @@ namespace CalendarSkill.Dialogs
 
             options.Prompt.Speak = SpeechUtility.ListToSpeechReadyString(options, ReadPreference.Chronological, ConfigData.GetInstance().MaxReadSize);
             options.Prompt.Text += "\r\n" + GetSelectPromptEmailString(options, true, unconfirmedPerson.Count != 1);
-            options.RetryPrompt = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage) as Activity;
+            options.RetryPrompt = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage) as Activity;
             return options;
         }
 

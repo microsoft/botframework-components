@@ -5,14 +5,12 @@ using CalendarSkill.Responses.Shared;
 using CalendarSkill.Services;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
-using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Skills;
 using SkillServiceLibrary.Utilities;
 
 namespace CalendarSkill.Adapters
@@ -21,17 +19,15 @@ namespace CalendarSkill.Adapters
     {
         public DefaultAdapter(
             BotSettings settings,
-            UserState userState,
-            ConversationState conversationState,
             ICredentialProvider credentialProvider,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
-                var activity = localeTemplateEngineManager.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
+                var activity = templateManager.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
                 await context.SendActivityAsync(activity);
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Calendar Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
@@ -54,7 +50,6 @@ namespace CalendarSkill.Adapters
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

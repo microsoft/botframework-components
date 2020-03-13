@@ -1,17 +1,18 @@
-[import](FindContactDialogActivities.lg)
+# NoAttendees.Text
+- Sure, who will join?
 
 # AddMoreAttendees.Text
 - Who do you want to add?
 - Who would you like to add?
 
 # BeforeSendingMessage.Text(NameList)
-- OK, you want to send an invitation to @{NameList}.
+- OK, you want to send an invitation to ${NameList}.
 
 # UserNotFound.Text
 - I didn't find anyone matching that name in your contact list.
 
 # UserNotFoundAgain.Text(UserName, Source)
-- Sorry, I can't find "@{UserName}" in your contact list. It's helpful if the person is already added to your contact list in @{Source}.
+- Sorry, I can't find "${UserName}" in your contact list. It's helpful if the person is already added to your contact list in ${Source}.
 
 # AlreadyFirstPage.Text
 - This is already the first page.
@@ -30,22 +31,22 @@
 - Which email address do you want to use? You can also ask me to show you the previous or more options.
 
 # ConfirmMultipleContactNameSinglePage.Text(ContactName)
-- Which @{ContactName} do you want to invite?
+- Which ${ContactName} do you want to invite?
 
 # ConfirmMultipleContactNameMultiPage.Text(ContactName)
-- Which @{ContactName} do you want to invite? You can also ask me to show you the previous or more options.
+- Which ${ContactName} do you want to invite? You can also ask me to show you the previous or more options.
 
 # PromptOneNameOneAddress.Text(User)
-- Alright, I've added @{User}.
+- Alright, I've added ${User}.
 
 # AskForEmail.Text
 - Can you provide an email address?
 
 # FindMultipleEmails.Text(UserName)
-- I found more than one email address for @{UserName}.
+- I found more than one email address for ${UserName}.
 
 # FindMultipleContactNames.Text(UserName)
-- I found more than one contact with the name @{UserName}.
+- I found more than one contact with the name ${UserName}.
 
 # EmailChoiceConfirmation.Text(Email)
-- OK, I'll use @{Email}.
+- OK, I'll use ${Email}.

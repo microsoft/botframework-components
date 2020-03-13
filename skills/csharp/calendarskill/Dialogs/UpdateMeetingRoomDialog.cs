@@ -26,12 +26,12 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             FindMeetingRoomDialog findMeetingRoomDialog,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpdateMeetingRoomDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(UpdateMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -171,7 +171,7 @@ namespace CalendarSkill.Dialogs
                 }
                 else
                 {
-                    var activity = TemplateEngine.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomCanceled, data);
+                    var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomCanceled, data);
                     await sc.Context.SendActivityAsync(activity);
                 }
 
@@ -205,8 +205,8 @@ namespace CalendarSkill.Dialogs
                     var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                     return await sc.PromptAsync(Actions.GetEventPrompt, new GetEventOptions(calendarService, state.GetUserTimeZone())
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.NoUpdateStartTime),
-                        RetryPrompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.EventWithStartTimeNotFound),
+                        Prompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.NoUpdateStartTime),
+                        RetryPrompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.EventWithStartTimeNotFound),
                     }, cancellationToken);
                 }
             }

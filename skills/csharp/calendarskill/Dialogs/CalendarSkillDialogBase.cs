@@ -50,7 +50,7 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
@@ -62,7 +62,7 @@ namespace CalendarSkill.Dialogs
             Accessor = _conversationState.CreateProperty<CalendarSkillState>(nameof(CalendarSkillState));
             ServiceManager = serviceManager;
             TelemetryClient = telemetryClient;
-            TemplateEngine = localeTemplateEngineManager;
+            TemplateManager = templateManager;
 
             AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
             AddDialog(new TextPrompt(Actions.Prompt));
@@ -72,7 +72,7 @@ namespace CalendarSkill.Dialogs
             AddDialog(new GetEventPrompt(Actions.GetEventPrompt));
         }
 
-        protected LocaleTemplateEngineManager TemplateEngine { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected BotSettings Settings { get; set; }
 
@@ -430,7 +430,7 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.CalendarNoMoreEvent);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.CalendarNoMoreEvent);
                         await sc.Context.SendActivityAsync(activity);
                     }
 
@@ -444,7 +444,7 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        var activity = TemplateEngine.GenerateActivityForLocale(SummaryResponses.CalendarNoPreviousEvent);
+                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.CalendarNoPreviousEvent);
                         await sc.Context.SendActivityAsync(activity);
                     }
 
@@ -505,7 +505,7 @@ namespace CalendarSkill.Dialogs
                 else if (!state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
                     // user has tried 3 times but can't get result
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
 
                     return await sc.CancelAllDialogsAsync();
@@ -601,8 +601,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.DatePromptForCreate, new DatePromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoStartDate) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoStartDateRetry) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoStartDate) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoStartDateRetry) as Activity,
                     TimeZone = state.GetUserTimeZone(),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
@@ -666,7 +666,7 @@ namespace CalendarSkill.Dialogs
                 else
                 {
                     // user has tried 5 times but can't get result
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.CancelAllDialogsAsync();
                 }
@@ -690,9 +690,9 @@ namespace CalendarSkill.Dialogs
                 {
                     return await sc.PromptAsync(Actions.TimePromptForCreate, new TimePromptOptions
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoStartTime) as Activity,
-                        RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoStartTimeRetry) as Activity,
-                        NoSkipPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoStartTimeNoSkip) as Activity,
+                        Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoStartTime) as Activity,
+                        RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoStartTimeRetry) as Activity,
+                        NoSkipPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoStartTimeNoSkip) as Activity,
                         TimeZone = state.GetUserTimeZone(),
                         MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                     }, cancellationToken);
@@ -744,7 +744,7 @@ namespace CalendarSkill.Dialogs
                     else
                     {
                         // user has tried 5 times but can't get result
-                        var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                        var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                         await sc.Context.SendActivityAsync(activity);
                         return await sc.CancelAllDialogsAsync();
                     }
@@ -799,8 +799,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.DurationPromptForCreate, new CalendarPromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoDuration) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(CreateEventResponses.NoDurationRetry) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoDuration) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(CreateEventResponses.NoDurationRetry) as Activity,
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
             }
@@ -891,7 +891,7 @@ namespace CalendarSkill.Dialogs
                     else
                     {
                         // user has tried 5 times but can't get result
-                        var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                        var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                         await sc.Context.SendActivityAsync(activity);
                         return await sc.CancelAllDialogsAsync();
                     }
@@ -1002,9 +1002,9 @@ namespace CalendarSkill.Dialogs
                 isOverview = true
             };
 
-            var showMeetingPrompt = TemplateEngine.GenerateActivityForLocale(templateId, tokens) as Activity;
+            var showMeetingPrompt = TemplateManager.GenerateActivityForLocale(templateId, tokens) as Activity;
             var cardName = GetDivergedCardName(dc.Context, SummaryResponses.MeetingListCard);
-            var meetingListCard = TemplateEngine.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
+            var meetingListCard = TemplateManager.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
             showMeetingPrompt.Attachments = meetingListCard.Attachments;
             return showMeetingPrompt;
         }
@@ -1049,13 +1049,13 @@ namespace CalendarSkill.Dialogs
             var cardName = GetDivergedCardName(dc.Context, SummaryResponses.MeetingListCard);
             if (templateId == null)
             {
-                var meetingListCard = TemplateEngine.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
+                var meetingListCard = TemplateManager.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
                 return meetingListCard;
             }
             else
             {
-                var showMeetingPrompt = TemplateEngine.GenerateActivityForLocale(templateId, tokens) as Activity;
-                var meetingListCard = TemplateEngine.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
+                var showMeetingPrompt = TemplateManager.GenerateActivityForLocale(templateId, tokens) as Activity;
+                var meetingListCard = TemplateManager.GenerateActivityForLocale(cardName, overviewCardParams) as Activity;
                 showMeetingPrompt.Attachments = meetingListCard.Attachments;
                 return showMeetingPrompt;
             }
@@ -1096,13 +1096,13 @@ namespace CalendarSkill.Dialogs
             var cardName = GetDivergedCardName(dc.Context, SummaryResponses.MeetingDetailCard);
             if (templateId == null)
             {
-                var meetingDetailCard = TemplateEngine.GenerateActivityForLocale(cardName, data) as Activity;
+                var meetingDetailCard = TemplateManager.GenerateActivityForLocale(cardName, data) as Activity;
                 return meetingDetailCard;
             }
             else
             {
-                var showMeetingPrompt = TemplateEngine.GenerateActivityForLocale(templateId, tokens) as Activity;
-                var meetingDetailCard = TemplateEngine.GenerateActivityForLocale(cardName, data) as Activity;
+                var showMeetingPrompt = TemplateManager.GenerateActivityForLocale(templateId, tokens) as Activity;
+                var meetingDetailCard = TemplateManager.GenerateActivityForLocale(cardName, data) as Activity;
                 showMeetingPrompt.Attachments = meetingDetailCard.Attachments;
                 return showMeetingPrompt;
             }
@@ -1928,7 +1928,7 @@ namespace CalendarSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
+            var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
             await sc.Context.SendActivityAsync(activity);
             await sc.CancelAllDialogsAsync();
 
@@ -1948,12 +1948,12 @@ namespace CalendarSkill.Dialogs
             // send error message to bot user
             if (ex.ExceptionType == SkillExceptionType.APIAccessDenied || ex.ExceptionType == SkillExceptionType.APIUnauthorized || ex.ExceptionType == SkillExceptionType.APIForbidden || ex.ExceptionType == SkillExceptionType.APIBadRequest)
             {
-                var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessageAccountProblem);
+                var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessageAccountProblem);
                 await sc.Context.SendActivityAsync(activity);
             }
             else
             {
-                var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
+                var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage);
                 await sc.Context.SendActivityAsync(activity);
             }
         }

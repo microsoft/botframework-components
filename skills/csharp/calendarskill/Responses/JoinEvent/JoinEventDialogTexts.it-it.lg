@@ -1,5 +1,3 @@
-[import](JoinEventDialogActivities.lg)
-
 # JoinMeeting.Text
 - OK, chiamerò alla riunione.
 
@@ -10,7 +8,7 @@
 - Qual è l'ora di inizio o il titolo dell'evento a cui vuoi partecipare?
 
 # ConfirmPhoneNumber.Text(PhoneNumber)
-- Ecco il numero che sto per chiamare: @{PhoneNumber}. Si prega di essere consapevoli del fatto che potrebbero essere applicati costi aggiuntivi. Vuoi continuare?
+- Ecco il numero che sto per chiamare: ${PhoneNumber}. Si prega di essere consapevoli del fatto che potrebbero essere applicati costi aggiuntivi. Vuoi continuare?
 
 # ConfirmMeetingLink.Text(MeetingLink)
-- Ecco il link a cui sto per partecipare: @{MeetingLink}. Si prega di essere consapevoli del fatto che potrebbero essere applicati costi aggiuntivi. Vuoi continuare?
+- Ecco il link a cui sto per partecipare: ${MeetingLink}. Si prega di essere consapevoli del fatto che potrebbero essere applicati costi aggiuntivi. Vuoi continuare?

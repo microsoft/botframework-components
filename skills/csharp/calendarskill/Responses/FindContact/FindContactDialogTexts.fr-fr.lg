@@ -1,17 +1,18 @@
-[import](FindContactDialogActivities.lg)
+# NoAttendees.Text
+- Bien sûr, qui va rejoindre?
 
 # AddMoreAttendees.Text
 - Qui voulez-vous ajouter?
 - Qui aimeriez-vous ajouter?
 
 # BeforeSendingMessage.Text(NameList)
-- OK, vous voulez envoyer une invitation à @{NameList}.
+- OK, vous voulez envoyer une invitation à ${NameList}.
 
 # UserNotFound.Text
 - Je n'ai trouvé personne correspondant à ce nom dans votre liste de contacts.
 
 # UserNotFoundAgain.Text(UserName, Source)
-- Désolé, je ne trouve pas " @{UserName}" dans votre liste de contacts. Il est utile si la personne est déjà ajoutée à votre liste de contacts dans @{Source}.
+- Désolé, je ne trouve pas " ${UserName}" dans votre liste de contacts. Il est utile si la personne est déjà ajoutée à votre liste de contacts dans ${Source}.
 
 # AlreadyFirstPage.Text
 - C'est déjà la première page.
@@ -30,22 +31,22 @@
 - Quelle adresse e-mail souhaitez-vous utiliser ? Vous pouvez également me demander de vous montrer les options précédentes ou plus.
 
 # ConfirmMultipleContactNameSinglePage.Text(ContactName)
-- Qui @{ContactName} voulez-vous inviter?
+- Qui ${ContactName} voulez-vous inviter?
 
 # ConfirmMultipleContactNameMultiPage.Text(ContactName)
-- Qui @{ContactName} voulez-vous inviter? Vous pouvez également me demander de vous montrer les options précédentes ou plus.
+- Qui ${ContactName} voulez-vous inviter? Vous pouvez également me demander de vous montrer les options précédentes ou plus.
 
 # PromptOneNameOneAddress.Text(User)
-- D'accord, j'ai ajouté @{User}.
+- D'accord, j'ai ajouté ${User}.
 
 # AskForEmail.Text
 - Pouvez-vous fournir une adresse e-mail?
 
 # FindMultipleEmails.Text(UserName)
-- J'ai trouvé plus d'une adresse e-mail pour @{UserName}.
+- J'ai trouvé plus d'une adresse e-mail pour ${UserName}.
 
 # FindMultipleContactNames.Text(UserName)
-- J'ai trouvé plus d'un contact avec le nom @{UserName}.
+- J'ai trouvé plus d'un contact avec le nom ${UserName}.
 
 # EmailChoiceConfirmation.Text(Email)
-- OK, je vais utiliser @{Email}.
+- OK, je vais utiliser ${Email}.

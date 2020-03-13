@@ -26,7 +26,7 @@ namespace CalendarSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleTemplateEngineManager _templateEngine;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<CalendarSkillState> _stateAccessor;
         private Dialog _createEventDialog;
         private Dialog _changeEventStatusDialog;
@@ -47,7 +47,7 @@ namespace CalendarSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _templateEngine = serviceProvider.GetService<LocaleTemplateEngineManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -201,7 +201,7 @@ namespace CalendarSkill.Dialogs
                         case General.Intent.Cancel:
                             {
                                 state.Clear();
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarMainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -210,7 +210,7 @@ namespace CalendarSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -221,7 +221,7 @@ namespace CalendarSkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarMainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -247,12 +247,12 @@ namespace CalendarSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(CalendarMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CalendarWelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(CalendarMainResponses.CalendarWelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -292,7 +292,7 @@ namespace CalendarSkill.Dialogs
                             }
                             else
                             {
-                                var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                 await stepContext.Context.SendActivityAsync(activity);
                             }
 
@@ -310,13 +310,13 @@ namespace CalendarSkill.Dialogs
                                 }
                                 else
                                 {
-                                    var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                    var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                     await stepContext.Context.SendActivityAsync(activity);
                                 }
                             }
                             else
                             {
-                                var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                 await stepContext.Context.SendActivityAsync(activity);
                             }
 
@@ -343,7 +343,7 @@ namespace CalendarSkill.Dialogs
                                 }
                                 else
                                 {
-                                    var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                    var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                     await stepContext.Context.SendActivityAsync(activity);
                                 }
                             }
@@ -365,7 +365,7 @@ namespace CalendarSkill.Dialogs
                                 }
                                 else
                                 {
-                                    var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                    var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                     await stepContext.Context.SendActivityAsync(activity);
                                 }
                             }
@@ -408,7 +408,7 @@ namespace CalendarSkill.Dialogs
                                 }
                                 else
                                 {
-                                    var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                                    var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                                     await stepContext.Context.SendActivityAsync(activity);
                                 }
                             }
@@ -434,7 +434,7 @@ namespace CalendarSkill.Dialogs
                             }
                             else
                             {
-                                var activity = _templateEngine.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage);
+                                var activity = _templateManager.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage);
                                 await stepContext.Context.SendActivityAsync(activity);
                             }
 
@@ -443,7 +443,7 @@ namespace CalendarSkill.Dialogs
 
                     default:
                         {
-                            var activity = _templateEngine.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
+                            var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
                             await stepContext.Context.SendActivityAsync(activity);
                             break;
                         }
@@ -603,7 +603,7 @@ namespace CalendarSkill.Dialogs
             else
             {
                 state.Clear();
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateEngine.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(CalendarMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

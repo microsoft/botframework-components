@@ -32,11 +32,11 @@ namespace CalendarSkill.Dialogs
             BotSettings settings,
             BotServices services,
             ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpdateEventDialog), settings, services, conversationState, localeTemplateEngineManager, serviceManager, telemetryClient, appCredentials)
+            : base(nameof(UpdateEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
         {
             TelemetryClient = telemetryClient;
 
@@ -106,8 +106,8 @@ namespace CalendarSkill.Dialogs
                     var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                     return await sc.PromptAsync(Actions.GetEventPrompt, new GetEventOptions(calendarService, state.GetUserTimeZone())
                     {
-                        Prompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.NoUpdateStartTime) as Activity,
-                        RetryPrompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.EventWithStartTimeNotFound) as Activity,
+                        Prompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.NoUpdateStartTime) as Activity,
+                        RetryPrompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.EventWithStartTimeNotFound) as Activity,
                         MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                     }, cancellationToken);
                 }
@@ -153,7 +153,7 @@ namespace CalendarSkill.Dialogs
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
                     Prompt = replyMessage,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.ConfirmUpdateFailed) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.ConfirmUpdateFailed) as Activity,
                 });
             }
             catch (Exception ex)
@@ -259,8 +259,8 @@ namespace CalendarSkill.Dialogs
 
                 return await sc.PromptAsync(Actions.TimePrompt, new TimePromptOptions
                 {
-                    Prompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.NoNewTime) as Activity,
-                    RetryPrompt = TemplateEngine.GenerateActivityForLocale(UpdateEventResponses.NoNewTimeRetry) as Activity,
+                    Prompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.NoNewTime) as Activity,
+                    RetryPrompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.NoNewTimeRetry) as Activity,
                     TimeZone = state.GetUserTimeZone(),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
@@ -401,7 +401,7 @@ namespace CalendarSkill.Dialogs
                 else
                 {
                     // user has tried 5 times but can't get result
-                    var activity = TemplateEngine.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
+                    var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
                     await sc.Context.SendActivityAsync(activity);
                     return await sc.CancelAllDialogsAsync();
                 }
