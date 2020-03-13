@@ -123,7 +123,6 @@ namespace ToDoSkill.Dialogs
             {
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
-
                     if (sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token))
                     {
                         sc.Context.TurnState[StateProperties.APIToken] = providerTokenResponse.TokenResponse.Token;
@@ -148,6 +147,11 @@ namespace ToDoSkill.Dialogs
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                if (state.IsAction)
+                {
+                    return await sc.NextAsync();
+                }
+
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var generalLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 var topIntent = luisResult.TopIntent().intent;

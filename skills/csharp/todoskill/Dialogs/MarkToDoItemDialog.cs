@@ -15,6 +15,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.MarkToDo;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
@@ -126,6 +127,12 @@ namespace ToDoSkill.Dialogs
 
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
+                    if (state.IsAction)
+                    {
+                        var actionResult = new TodoListInfo() { ActionSuccess = true };
+                        return await sc.EndDialogAsync(actionResult);
+                    }
+
                     var markToDoCard = ToAdaptiveCardForTaskCompletedFlowByLG(
                         sc.Context,
                         state.Tasks,
@@ -137,6 +144,18 @@ namespace ToDoSkill.Dialogs
                 }
                 else
                 {
+                    if (state.IsAction)
+                    {
+                        var todoList = new List<string>();
+                        var uncompletedTasks = state.AllTasks.Where(t => t.IsCompleted == false).ToList();
+                        if (uncompletedTasks != null && uncompletedTasks.Any())
+                        {
+                            uncompletedTasks.ForEach(x => todoList.Add(x.Topic));
+                        }
+
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                    }
+
                     var completedTaskIndex = state.AllTasks.FindIndex(t => t.IsCompleted == true);
                     var taskContent = state.AllTasks[completedTaskIndex].Topic;
                     var markToDoCard = ToAdaptiveCardForTaskCompletedFlowByLG(

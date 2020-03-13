@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Luis;
@@ -11,6 +13,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Responses.ShowToDo;
 using ToDoSkill.Services;
@@ -120,9 +123,22 @@ namespace ToDoSkill.Dialogs
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var service = await InitListTypeIds(sc);
+
+                if (state.IsAction)
+                {
+                    state.AllTasks = await service.GetTasksAsync(state.ListType);
+                    var todoList = new List<string>();
+                    if (state.AllTasks != null && state.AllTasks.Any())
+                    {
+                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
+                    }
+
+                    return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                }
+
                 state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 state.LastListType = state.ListType;
-                var service = await InitListTypeIds(sc);
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var topIntent = luisResult.TopIntent().intent;
                 if (topIntent == ToDoLuis.Intent.ShowToDo || state.GoBackToStart)

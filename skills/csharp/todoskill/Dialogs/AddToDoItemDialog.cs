@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.AddToDo;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
@@ -123,6 +125,13 @@ namespace ToDoSkill.Dialogs
                     state.ShowTaskPageIndex = 0;
                     var rangeCount = Math.Min(state.PageSize, state.AllTasks.Count);
                     state.Tasks = state.AllTasks.GetRange(0, rangeCount);
+
+                    if (state.IsAction)
+                    {
+                        var todoList = new List<string>();
+                        state.AllTasks.ForEach(x => todoList.Add(x.Topic));
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                    }
 
                     var toDoListCard = ToAdaptiveCardForTaskAddedFlowByLG(
                         sc.Context,
@@ -308,9 +317,14 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            if (state.IsAction)
+            {
+                return await sc.EndDialogAsync();
+            }
+
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 state.LastListType = state.ListType;
                 var service = await InitListTypeIds(sc);

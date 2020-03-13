@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using Luis;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
+using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Tests.Flow.Fakes;
 
 namespace ToDoSkill.Tests.Flow.Utterances
@@ -30,6 +34,16 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string ShowShoppingList { get; } = "Show my shopping list";
 
         public static string ShowCustomizedListTypeList { get; } = "Show my homework list";
+
+        public static Activity ShowToDoAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = ActionNames.ShowToDo,
+            Value = JObject.FromObject(new ListInfo()
+            {
+                ListType = MockData.ToDo,
+            })
+        };
 
         private ToDoLuis GetBaseShowTasksIntent(
             string userInput,

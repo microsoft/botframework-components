@@ -15,6 +15,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.DeleteToDo;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
@@ -144,6 +145,17 @@ namespace ToDoSkill.Dialogs
                         false);
 
                     canDeleteAnotherTask = state.AllTasks.Count > 0 ? true : false;
+
+                    if (state.IsAction)
+                    {
+                        var todoList = new List<string>();
+                        if (state.AllTasks != null && state.AllTasks.Any())
+                        {
+                            state.AllTasks.ForEach(x => todoList.Add(x.Topic));
+                        }
+
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                    }
                 }
                 else
                 {
@@ -163,6 +175,12 @@ namespace ToDoSkill.Dialogs
                             string.Empty,
                             state.ListType,
                             true);
+
+                        if (state.IsAction)
+                        {
+                            var actionResult = new TodoListInfo() { ActionSuccess = true };
+                            return await sc.EndDialogAsync(actionResult);
+                        }
                     }
                     else
                     {
@@ -378,9 +396,14 @@ namespace ToDoSkill.Dialogs
 
         protected async Task<DialogTurnResult> AskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            if (state.IsAction)
+            {
+                return await sc.EndDialogAsync();
+            }
+
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
                     var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskDeletionAllConfirmation, new

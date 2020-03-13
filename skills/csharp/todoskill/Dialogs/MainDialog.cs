@@ -7,8 +7,10 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using SkillServiceLibrary.Utilities;
 using ToDoSkill.Models;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.Main;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
@@ -296,22 +298,69 @@ namespace ToDoSkill.Dialogs
             }
             else if (activity.Type == ActivityTypes.Event)
             {
-                var ev = activity.AsEventActivity();
+                // Handle skill actions here
+                var eventActivity = activity.AsEventActivity();
+                if (!string.IsNullOrEmpty(eventActivity.Name))
+                {
+                    var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                    InitializeConfig(state);
 
-                if (!string.IsNullOrEmpty(ev.Name))
-                {
-                    switch (ev.Name)
+                    switch (eventActivity.Name)
                     {
-                        default:
+                        // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
+                        case ActionNames.AddToDo:
                             {
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
-                                break;
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
+                                state.AddDupTask = true;
+                                return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
                             }
+
+                        case ActionNames.DeleteToDo:
+                            {
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
+                            }
+
+                        case ActionNames.DeleteAll:
+                            {
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.MarkOrDeleteAllTasksFlag = true;
+                                state.DeleteTaskConfirmation = true;
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
+                            }
+
+                        case ActionNames.MarkToDo:
+                            {
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
+                            }
+
+                        case ActionNames.MarkAll:
+                            {
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.MarkOrDeleteAllTasksFlag = true;
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
+                            }
+
+                        case ActionNames.ShowToDo:
+                            {
+                                await DigestActionInput(stepContext, activity.Value);
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
+                            }
+
+                        default:
+
+                            // todo: move the response to lg
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+
+                            break;
                     }
-                }
-                else
-                {
-                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."));
                 }
             }
 
@@ -330,6 +379,15 @@ namespace ToDoSkill.Dialogs
                     Code = EndOfConversationCodes.CompletedSuccessfully,
                     Value = stepContext.Result,
                 };
+
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
+                if (state.IsAction)
+                {
+                    if (stepContext.Result == null)
+                    {
+                        endOfConversation.Value = new TodoListInfo() { ActionSuccess = false };
+                    }
+                }
 
                 await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
                 return await stepContext.EndDialogAsync();
@@ -383,6 +441,24 @@ namespace ToDoSkill.Dialogs
                         state.TaskServiceType = ServiceProviderType.OneNote;
                     }
                 }
+            }
+        }
+
+        private async Task DigestActionInput(DialogContext dc, object actionInput)
+        {
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new ToDoSkillState());
+            var value = actionInput as JObject;
+
+            try
+            {
+                var actionData = value.ToObject<ToDoInfo>();
+                state.ListType = actionData.ListType;
+                state.TaskContent = actionData.TaskName;
+                state.TaskContentML = actionData.TaskName;
+                return;
+            }
+            catch
+            {
             }
         }
     }

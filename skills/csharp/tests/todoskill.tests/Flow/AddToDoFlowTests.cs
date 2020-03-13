@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.AddToDo;
 using ToDoSkill.Responses.Main;
 using ToDoSkill.Responses.Shared;
@@ -18,6 +19,18 @@ namespace ToDoSkill.Tests.Flow
     [TestCategory("UnitTests")]
     public class AddToDoFlowTests : ToDoSkillTestBase
     {
+        [TestMethod]
+        public async Task Test_AddToDoAction()
+        {
+            ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
+            await this.GetSkillTestFlow()
+                .Send(AddToDoFlowTestUtterances.AddToDoAction)
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(CheckForEoC(typeof(TodoListInfo), true, MockData.MockTaskItems.Count + 1))
+                .StartTestAsync();
+        }
+
         [TestMethod]
         public async Task Test_AddToDoItem_Prompt_To_Ask_Content()
         {
