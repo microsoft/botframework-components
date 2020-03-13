@@ -130,14 +130,14 @@ namespace BingSearchSkill.Dialogs
 
                         tokens.Add("Speak", StringHelper.EscapeCardString(movieInfo.Description));
 
-                        prompt = TemplateManager.GetCardResponse(
+                        prompt = TemplateManager.GenerateActivity(
                                     SearchResponses.EntityKnowledge,
                                     new Card(GetDivergedCardName(stepContext.Context, "MovieCard"), movieData),
                                     tokens);
                     }
                     else
                     {
-                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
+                        prompt = TemplateManager.GenerateActivity(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
                             { "Answer", StringHelper.EscapeCardString(entitiesResult[0].Description) },
                             { "Url", entitiesResult[0].Url }
@@ -163,7 +163,7 @@ namespace BingSearchSkill.Dialogs
 
                     tokens.Add("Speak", StringHelper.EscapeCardString(entitiesResult[0].Description));
 
-                    prompt = TemplateManager.GetCardResponse(
+                    prompt = TemplateManager.GenerateActivity(
                                 SearchResponses.EntityKnowledge,
                                 new Card(GetDivergedCardName(stepContext.Context, "PersonCard"), celebrityData),
                                 tokens);
@@ -172,7 +172,7 @@ namespace BingSearchSkill.Dialogs
                 {
                     if (userInput.Contains("president"))
                     {
-                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
+                        prompt = TemplateManager.GenerateActivity(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
                             { "Answer", TemplateManager.GetString(CommonStrings.DontKnowAnswer) },
                             { "Url", BingSiteUrl }
@@ -184,7 +184,7 @@ namespace BingSearchSkill.Dialogs
                     }
                     else
                     {
-                        prompt = TemplateManager.GetResponse(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
+                        prompt = TemplateManager.GenerateActivity(SearchResponses.AnswerSearchResultPrompt, new Dictionary<string, object>()
                         {
                             { "Answer", entitiesResult[0].Description },
                             { "Url", entitiesResult[0].Url }
@@ -194,7 +194,7 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                prompt = TemplateManager.GetResponse(SearchResponses.NoResultPrompt);
+                prompt = TemplateManager.GenerateActivity(SearchResponses.NoResultPrompt);
             }
 
             await stepContext.Context.SendActivityAsync(prompt);

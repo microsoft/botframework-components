@@ -174,7 +174,7 @@ namespace BingSearchSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);

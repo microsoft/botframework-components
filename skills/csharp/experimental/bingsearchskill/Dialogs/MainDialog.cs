@@ -122,7 +122,7 @@ namespace BingSearchSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -131,7 +131,7 @@ namespace BingSearchSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -154,11 +154,11 @@ namespace BingSearchSkill.Dialogs
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
-                var prompt = stepContext.Options as Activity ?? _templateManager.GetResponse(MainResponses.FirstPromptMessage);
+                var prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.FirstPromptMessage);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
                 if (state.NewConversation)
                 {
-                    prompt = _templateManager.GetResponse(MainResponses.WelcomeMessage);
+                    prompt = _templateManager.GenerateActivity(MainResponses.WelcomeMessage);
                     state.NewConversation = false;
                 }
 
@@ -205,7 +205,7 @@ namespace BingSearchSkill.Dialogs
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_templateManager.GetResponse(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
                                 break;
                             }
                     }
@@ -272,7 +272,7 @@ namespace BingSearchSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(this.Id, _templateManager.GetResponse(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(this.Id, _templateManager.GenerateActivity(MainResponses.CompletedMessage), cancellationToken);
             }
         }
     }
