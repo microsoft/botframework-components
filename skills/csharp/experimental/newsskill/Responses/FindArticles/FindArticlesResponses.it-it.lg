@@ -1,4 +1,4 @@
-﻿[import](FindArticlesResponsesTexts.lg)
+﻿[import](FindArticlesResponsesTexts.it-it.lg)
 # ShowArticles(Data, Cards, Layout)
 [Activity
     Text = ${ShowArticles.Text(Data)}

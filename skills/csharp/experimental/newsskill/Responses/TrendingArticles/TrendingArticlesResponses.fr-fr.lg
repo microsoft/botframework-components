@@ -1,4 +1,4 @@
-﻿[import](TrendingArticlesResponsesTexts.lg)
+﻿[import](TrendingArticlesResponsesTexts.fr-fr.lg)
 # ShowTrending(Data, Cards, Layout)
 [Activity
     Text = ${ShowTrending.Text(Data)}

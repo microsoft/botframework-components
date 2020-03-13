@@ -2,17 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
-using NewsSkill.Models.Action;
 using NewsSkill.Responses;
 using NewsSkill.Responses.FindArticles;
 using NewsSkill.Services;
@@ -29,9 +24,9 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(FindArticlesDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
+            : base(nameof(FindArticlesDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -64,7 +59,7 @@ namespace NewsSkill.Dialogs
 
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = localeTemplateEngineManager.GenerateActivityForLocale(FindArticlesResponses.TopicPrompt)
+                Prompt = templateManager.GenerateActivityForLocale(FindArticlesResponses.TopicPrompt)
             });
         }
 
@@ -90,7 +85,7 @@ namespace NewsSkill.Dialogs
             var query = (string)sc.Result;
 
             var articles = await _client.GetNewsForTopic(query, userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, localeTemplateEngineManager, articles));
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, templateManager, articles));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)

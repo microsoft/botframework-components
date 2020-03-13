@@ -1,23 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.NewsSearch" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.8.0-preview1" />
-    <PackageReference Include="Microsoft.Bot.Builder.TemplateManager" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.7.2" />
-    <PackageReference Include="Microsoft.Bot.Schema" Version="4.7.2" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.0-rc4" />
+	<PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.0-rc4-preview" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.9.0-daily248" />
+    <PackageReference Include="Microsoft.Bot.Builder.TemplateManager" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.0-rc4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,12 +51,27 @@
     <None Update="LocaleConfigurations\newsskillen.bot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FavoriteTopicsResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -75,6 +91,18 @@
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\FindArticles\FindArticlesResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -82,6 +110,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FindArticlesResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\FindArticles\FindArticlesResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FindArticles\FindArticlesResponsesTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -101,6 +132,18 @@
     <None Update="Responses\FindArticles\FindArticlesResponsesTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Responses\Main\MainStrings.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStrings.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStrings.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\Main\MainStrings.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Main\MainStrings.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -112,6 +155,9 @@
     <None Update="Responses\Main\MainStrings.ttnew">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainStrings.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\Main\MainStrings.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Main\MainStringsTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -149,8 +195,17 @@
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\Shared\LgIdCollection.t4">
-      <Generator></Generator>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.de-de.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.es-es.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.fr-fr.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.it-it.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -158,6 +213,9 @@
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TrendingArticlesResponses.cs</LastGenOutput>
+    </None>
+    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.zh-cn.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\TrendingArticles\TrendingArticlesResponsesTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

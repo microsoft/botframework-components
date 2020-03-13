@@ -39,8 +39,6 @@ namespace NewsSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
@@ -80,7 +78,7 @@ namespace NewsSkill
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
             // Configure bot state
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -93,25 +91,25 @@ namespace NewsSkill
             // Configure localized responses
             var locales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
 
-            var localizedTemplates = new Dictionary<string, List<string>>();
+            var localizedTemplates = new Dictionary<string, string>();
             foreach (var locale in locales)
             {
-                var localeTemplateFiles = new List<string>();
+                string localeTemplateFile;
 
                 // LG template for default locale should not include locale in file extension.
                 if (locale.Equals(locales[0]))
                 {
-                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg"));
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.lg");
                 }
                 else
                 {
-                    localeTemplateFiles.Add(Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg"));
+                    localeTemplateFile = Path.Join(@"Responses\ResponsesAndTexts", $"ResponsesAndTexts.{locale}.lg");
                 }
 
-                localizedTemplates.Add(locale, localeTemplateFiles);
+                localizedTemplates.Add(locale, localeTemplateFile);
             }
 
-            services.AddSingleton(new LocaleTemplateEngineManager(localizedTemplates, locales[0]));
+            services.AddSingleton(new LocaleTemplateManager(localizedTemplates, locales[0]));
 
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();

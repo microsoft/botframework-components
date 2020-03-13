@@ -1,5 +1,3 @@
-[import] (MainStrings.lg)
-
 # CONFUSED.Text(Data)
 - Lo siento, no soy capaz de ayudar con eso.
 
@@ -23,9 +21,6 @@
 
 # COMPLETED.Text(Data)
 - ¿En qué otra cosa puedo ayudarlo?
-
-# GREETING_WITH_NAME.Text(Data)
-- ¡ Oye, {0}!
 
 # INTRO_TEXT.Text(Data)
 - Trate de escribir * decirme noticias * para buscar artículos de noticias relevantes.

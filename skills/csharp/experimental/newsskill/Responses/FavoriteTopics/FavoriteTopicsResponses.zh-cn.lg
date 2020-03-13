@@ -1,4 +1,4 @@
-﻿[import](FavoriteTopicsResponsesTexts.lg)
+﻿[import](FavoriteTopicsResponsesTexts.zh-cn.lg)
 # FavoriteTopicPrompt(Data, Cards, Layout)
 [Activity
     Text = ${FavoriteTopicPrompt.Text(Data)}

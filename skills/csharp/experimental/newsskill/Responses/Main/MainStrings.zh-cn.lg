@@ -1,4 +1,4 @@
-[import](MainStringsTexts.lg)
+[import](MainStringsTexts.zh-cn.lg)
 # CANCELLED(Data, Cards, Layout)
 [Activity
     Text = ${CANCELLED.Text(Data)}

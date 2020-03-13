@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
@@ -28,9 +26,9 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(FavoriteTopicsDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
+            : base(nameof(FavoriteTopicsDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
 
@@ -74,7 +72,7 @@ namespace NewsSkill.Dialogs
 
                 return await sc.PromptAsync(nameof(ChoicePrompt), new PromptOptions()
                 {
-                    Prompt = localeTemplateEngineManager.GenerateActivityForLocale(FavoriteTopicsResponses.FavoriteTopicPrompt),
+                    Prompt = templateManager.GenerateActivityForLocale(FavoriteTopicsResponses.FavoriteTopicPrompt),
                     Choices = categories.Choices
                 });
             }
@@ -90,7 +88,7 @@ namespace NewsSkill.Dialogs
 
             // show favorite articles
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, localeTemplateEngineManager, articles, true));
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, templateManager, articles, true));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
