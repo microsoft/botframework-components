@@ -29,11 +29,11 @@ namespace ITSMSkill.Dialogs
         public ShowKnowledgeDialog(
              BotSettings settings,
              BotServices services,
-             LocaleTemplateManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowKnowledgeDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(ShowKnowledgeDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var showKnowledge = new WaterfallStep[]
             {
@@ -91,7 +91,7 @@ namespace ITSMSkill.Dialogs
 
             var options = new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(KnowledgeResponses.IfCreateTicket)
+                Prompt = TemplateManager.GenerateActivity(KnowledgeResponses.IfCreateTicket)
             };
 
             return await sc.PromptAsync(nameof(ConfirmPrompt), options);

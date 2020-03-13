@@ -30,11 +30,11 @@ namespace ITSMSkill.Dialogs
         public CreateTicketDialog(
              BotSettings settings,
              BotServices services,
-             LocaleTemplateManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(CreateTicketDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(CreateTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var createTicket = new WaterfallStep[]
             {
@@ -103,7 +103,7 @@ namespace ITSMSkill.Dialogs
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketCreated, card, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketCreated, card, null));
             return await sc.EndDialogAsync(await CreateActionResult(sc.Context, true, cancellationToken));
         }
     }

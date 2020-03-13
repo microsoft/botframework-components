@@ -48,20 +48,20 @@ namespace ITSMSkill.Services
                     }
                 }
 
-                //if (config.Knowledgebases != null)
-                //{
-                //    foreach (var kb in config.Knowledgebases)
-                //    {
-                //        var qnaEndpoint = new QnAMakerEndpoint()
-                //        {
-                //            KnowledgeBaseId = kb.KbId,
-                //            EndpointKey = kb.EndpointKey,
-                //            Host = kb.Hostname,
-                //        };
-                //        var qnaMaker = new QnAMaker(qnaEndpoint);
-                //        set.QnAServices.Add(kb.Id, qnaMaker);
-                //    }
-                //}
+                if (config.Knowledgebases != null)
+                {
+                    foreach (var kb in config.Knowledgebases)
+                    {
+                        var qnaEndpoint = new QnAMakerEndpoint()
+                        {
+                            KnowledgeBaseId = kb.KbId,
+                            EndpointKey = kb.EndpointKey,
+                            Host = kb.Hostname,
+                        };
+                        var qnaMaker = new QnAMaker(qnaEndpoint);
+                        set.QnAConfiguration.Add(kb.Id, qnaEndpoint);
+                    }
+                }
 
                 CognitiveModelSets.Add(language, set);
             }

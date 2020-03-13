@@ -31,11 +31,11 @@ namespace ITSMSkill.Dialogs
         public ShowTicketDialog(
              BotSettings settings,
              BotServices services,
-             LocaleTemplateManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowTicketDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(ShowTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var showTicket = new WaterfallStep[]
             {
@@ -139,7 +139,7 @@ namespace ITSMSkill.Dialogs
                     { "Attributes", sb.ToString() }
                 };
 
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.ShowConstraints, token));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowConstraints, token));
             }
 
             state.PageIndex = -1;
@@ -220,7 +220,7 @@ namespace ITSMSkill.Dialogs
                 {
                     var options = new PromptOptions()
                     {
-                        Prompt = ResponseManager.GetResponse(TicketResponses.TicketShowNone)
+                        Prompt = TemplateManager.GenerateActivity(TicketResponses.TicketShowNone)
                     };
 
                     return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options);
@@ -235,7 +235,7 @@ namespace ITSMSkill.Dialogs
 
                     var options = new PromptOptions()
                     {
-                        Prompt = ResponseManager.GetResponse(TicketResponses.TicketEnd, token)
+                        Prompt = TemplateManager.GenerateActivity(TicketResponses.TicketEnd, token)
                     };
 
                     return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options);

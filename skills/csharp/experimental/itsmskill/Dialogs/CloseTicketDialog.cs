@@ -26,11 +26,11 @@ namespace ITSMSkill.Dialogs
         public CloseTicketDialog(
              BotSettings settings,
              BotServices services,
-             LocaleTemplateManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(CloseTicketDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(CloseTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var closeTicket = new WaterfallStep[]
             {
@@ -55,7 +55,7 @@ namespace ITSMSkill.Dialogs
 
             if (state.TicketTarget.State == TicketState.Closed)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.TicketAlreadyClosed));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketAlreadyClosed));
                 return await sc.EndDialogAsync();
             }
 
@@ -75,7 +75,7 @@ namespace ITSMSkill.Dialogs
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketClosed, card, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketClosed, card, null));
             return await sc.NextAsync(await CreateActionResult(sc.Context, true, cancellationToken));
         }
     }
