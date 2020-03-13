@@ -58,7 +58,7 @@
         "$ref": "#/definitions/listInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/actionResult"
+        "$ref": "#/definitions/todoListInfo"
       }
     },
     "markToDo": {
@@ -80,7 +80,7 @@
         "$ref": "#/definitions/listInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/actionResult"
+        "$ref": "#/definitions/todoListInfo"
       }
     },
     "showToDo": {
@@ -133,15 +133,6 @@
           }
         }
       }
-    },
-    "actionResult": {
-      "type": "object",
-      "properties": {
-        "actionSuccess": {
-          "type": "bool",
-          "description": "result of action"
-        }
-      }
-    }
+    }    
   }
 }

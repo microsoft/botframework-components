@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ToDoSkill.Models.Action;
 using ToDoSkill.Responses.Main;
 using ToDoSkill.Responses.MarkToDo;
 using ToDoSkill.Responses.Shared;
@@ -26,7 +27,7 @@ namespace ToDoSkill.Tests.Flow
                 .Send(MarkToDoFlowTestUtterances.MarkAllAction)
                 .AssertReplyOneOf(this.SettingUpOneNote())
                 .AssertReplyOneOf(this.AfterSettingUpOneNote())
-                .AssertReply(CheckForEoC(0))
+                .AssertReply(CheckForEoC(typeof(TodoListInfo), false))
                 .StartTestAsync();
         }
 

@@ -178,7 +178,7 @@ namespace ToDoSkill.Dialogs
 
                         if (state.IsAction)
                         {
-                            var actionResult = new ActionResult() { ActionSuccess = true };
+                            var actionResult = new TodoListInfo() { ActionSuccess = true };
                             return await sc.EndDialogAsync(actionResult);
                         }
                     }

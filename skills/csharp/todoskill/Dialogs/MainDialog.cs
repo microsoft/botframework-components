@@ -385,7 +385,7 @@ namespace ToDoSkill.Dialogs
                 {
                     if (stepContext.Result == null)
                     {
-                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                        endOfConversation.Value = new TodoListInfo() { ActionSuccess = false };
                     }
                 }
 
