@@ -23,22 +23,22 @@ namespace WeatherSkill.Utilities
 
         private const string CardsOnly = "CardsOnly";
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, Card card)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, Card card)
         {
-            return manager.GetCardResponse(new Card[] { card });
+            return manager.GenerateActivity(new Card[] { card });
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, IEnumerable<Card> cards, string attachmentLayout = "carousel")
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, IEnumerable<Card> cards, string attachmentLayout = "carousel")
         {
-            return manager.GetCardResponse(CardsOnly, cards, null, attachmentLayout);
+            return manager.GenerateActivity(CardsOnly, cards, null, attachmentLayout);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null)
         {
-            return manager.GetCardResponse(templateId, new Card[] { card }, tokens);
+            return manager.GenerateActivity(templateId, new Card[] { card }, tokens);
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
         {
             if (string.IsNullOrEmpty(templateId))
             {
@@ -63,7 +63,7 @@ namespace WeatherSkill.Utilities
             }
         }
 
-        public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
             throw new Exception("1. create *Containee.json which only keeps containee's body;2. in the container, write ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
 
@@ -89,9 +89,9 @@ namespace WeatherSkill.Utilities
             }
         }
 
-        public static Activity GetResponse(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)
         {
-            return manager.GetCardResponse(templateId, Array.Empty<Card>(), tokens);
+            return manager.GenerateActivity(templateId, Array.Empty<Card>(), tokens);
         }
 
         public static string GetString(this LocaleTemplateManager manager, string templateId)

@@ -10,17 +10,16 @@ using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Builder.Skills;
-using Microsoft.Bot.Solutions.Authentication;
-using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.Util;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Authentication;
+using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Bot.Solutions.Skills;
+using Microsoft.Bot.Solutions.Util;
 using WeatherSkill.Models;
 using WeatherSkill.Responses.Shared;
 using WeatherSkill.Services;
 using WeatherSkill.Utilities;
-using Microsoft.Bot.Solutions.Skills;
 
 namespace WeatherSkill.Dialogs
 {
@@ -170,7 +169,7 @@ namespace WeatherSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);
