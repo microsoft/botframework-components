@@ -29,11 +29,11 @@
     },
     {
       "type": "Image",
-      "url": "{ImageUrl}"
+      "url": "${if(Data.ImageUrl == null, '', Data.ImageUrl)}"
     },
     {
       "type": "TextBlock",
-      "text": "**{Title}**",
+      "text": "**${if(Data.Title == null, '', Data.Title)}**",
       "size": "Medium",
       "weight": "Bolder"
     },
@@ -42,17 +42,17 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "{StartDate}",
+          "text": "${if(Data.StartDate == null, '', Data.StartDate)}",
           "spacing": "Small"
         },
         {
           "type": "TextBlock",
-          "text": "{Location}",
+          "text": "${if(Data.Location == null, '', Data.Location)}",
           "spacing": "Small"
         },
         {
           "type": "TextBlock",
-          "text": "{Price}",
+          "text": "${if(Data.Price == null, '', Data.Price)}",
           "spacing": "Small"
         }
       ]
@@ -68,10 +68,10 @@
     {
       "type": "Action.OpenUrl",
       "title": "Get Tickets",
-      "url": "{Url}"
+      "url": "${if(Data.Url == null, '', Data.Url)}"
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }

@@ -1,0 +1,86 @@
+# WelcomeMessage.Text(Data)
+- [Entrez votre message d'intro ici]
+
+# HelpMessage.Text(Data)
+- [Entrez votre message d'aide ici]
+
+# GreetingMessage.Text(Data)
+- Il y en a!
+- Salut!
+- Salut!
+
+# GoodbyeMessage.Text(Data)
+- Au revoir!
+
+# LogOut.Text(Data)
+- Votre déconnexion a été couronnée de succès.
+- Vous avez réussi à vous connecter.
+- Vous avez été déconnecté.
+
+# FeatureNotAvailable.Text(Data)
+- Cette fonctionnalité n'est pas encore disponible dans la compétence. S'il vous plaît essayer de demander autre chose.
+
+# CancelMessage.Text(Data)
+- OK, commençons.
+
+# FirstPromptMessage.Text(Data)
+- ${FirstPromptMessageTextAndSpeak1(Data)}
+- ${FirstPromptMessageTextAndSpeak2(Data)}
+- ${FirstPromptMessageTextAndSpeak3(Data)}
+- ${FirstPromptMessageTextAndSpeak4(Data)}
+
+# FirstPromptMessageTextAndSpeak1(Data)
+[Activity
+    Text = Qu'est-ce que je peux t'aider aujourd'hui ?
+    Speak = Qu'est-ce que je peux t'aider aujourd'hui ?
+]
+
+# FirstPromptMessageTextAndSpeak2(Data)
+[Activity
+    Text = Que puis-je pour vous?
+    Speak = Que puis-je pour vous?
+]
+
+# FirstPromptMessageTextAndSpeak3(Data)
+[Activity
+    Text = Y a-t-il quelque chose que je puisse faire pour toi ??
+    Speak = Y a-t-il quelque chose que je puisse faire pour toi ?
+]
+
+# FirstPromptMessageTextAndSpeak4(Data)
+[Activity
+    Text = Comment puis-je vous aider?
+    Speak = Comment puis-je vous aider?
+]
+
+# CompletedMessage.Text(Data)
+- ${CompletedMessageTextAndSpeak1(Data)}
+- ${CompletedMessageTextAndSpeak2(Data)}
+- ${CompletedMessageTextAndSpeak3(Data)}
+- ${CompletedMessageTextAndSpeak4(Data)}
+
+# CompletedMessageTextAndSpeak1(Data)
+[Activity
+    Text = Je suis là si tu as besoin d'autre chose.
+    Speak = Je suis là si tu as besoin d'autre chose.
+]
+
+# CompletedMessageTextAndSpeak2(Data)
+[Activity
+    Text = Faites-moi savoir s'il y a autre chose dont vous avez besoin.
+    Speak = Faites-moi savoir s'il y a autre chose dont vous avez besoin.
+]
+
+# CompletedMessageTextAndSpeak3(Data)
+[Activity
+    Text = Faites-moi savoir si je peux vous aider avec autre chose.
+    Speak = Faites-moi savoir si je peux vous aider avec autre chose.
+]
+
+# CompletedMessageTextAndSpeak4(Data)
+[Activity
+    Text = Tout est fini. Faites-moi savoir si je peux faire autre chose.
+    Speak = Tout est fini. Faites-moi savoir si je peux faire autre chose.s
+]
+
+

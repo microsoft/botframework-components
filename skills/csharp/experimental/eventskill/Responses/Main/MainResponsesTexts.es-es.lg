@@ -1,0 +1,38 @@
+# WelcomeMessage.Text(Data)
+- [Introduzca aquí su mensaje introductorio]
+
+# HelpMessage.Text(Data)
+- [Introduzca su mensaje de ayuda aquí]
+
+# GreetingMessage.Text(Data)
+- ¡ Ahí está!
+- ¡Hola!
+- ¡Hola!
+
+# GoodbyeMessage.Text(Data)
+- ¡Adiós!
+
+# LogOut.Text(Data)
+- Tu sesión fue exitosa.
+- Ha firmado con éxito.
+- Se ha desconectado.
+
+# FeatureNotAvailable.Text(Data)
+- Esta función aún no está disponible en la habilidad. Por favor, intente preguntar algo más.
+
+# CancelMessage.Text(Data)
+- Bien, empecemos de una vez.
+
+# FirstPromptMessage.Text(Data)
+- ¿En qué puedo ayudarte hoy?
+- ¿Qué puedo hacer por usted?
+- ¿Hay algo que pueda hacer por ti?
+- ¿Cómo puedo ayudarle?
+
+# CompletedMessage.Text(Data)
+- Estoy aquí si necesitas algo más.
+- Avísame si necesitas algo más.
+- Avísame si puedo ayudarte con cualquier otra cosa.
+- Ya está. Avísame si puedo hacer algo más.
+
+

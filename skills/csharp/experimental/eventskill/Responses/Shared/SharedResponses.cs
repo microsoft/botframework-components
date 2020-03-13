@@ -9,7 +9,7 @@ namespace EventSkill.Responses.Shared
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class SharedResponses : IResponseIdCollection
+    public class SharedResponses
     {
         // Generated accessors
         public const string DidntUnderstandMessage = "DidntUnderstandMessage";

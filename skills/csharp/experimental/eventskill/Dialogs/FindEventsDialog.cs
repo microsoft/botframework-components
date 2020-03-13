@@ -9,6 +9,7 @@ using EventSkill.Models;
 using EventSkill.Models.Eventbrite;
 using EventSkill.Responses.FindEvents;
 using EventSkill.Services;
+using EventSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -22,11 +23,11 @@ namespace EventSkill.Dialogs
         public FindEventsDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(FindEventsDialog), settings, services, responseManager, conversationState, userState, telemetryClient)
+            : base(nameof(FindEventsDialog), settings, services, templateManager, conversationState, userState, telemetryClient)
         {
             var findEvents = new WaterfallStep[]
             {
@@ -55,8 +56,8 @@ namespace EventSkill.Dialogs
                 {
                     return await sc.PromptAsync(DialogIds.LocationPrompt, new PromptOptions()
                     {
-                        Prompt = ResponseManager.GetResponse(FindEventsResponses.LocationPrompt),
-                        RetryPrompt = ResponseManager.GetResponse(FindEventsResponses.RetryLocationPrompt)
+                        Prompt = TemplateManager.GenerateActivity(FindEventsResponses.LocationPrompt),
+                        RetryPrompt = TemplateManager.GenerateActivity(FindEventsResponses.RetryLocationPrompt)
                     });
                 }
             }
@@ -101,7 +102,7 @@ namespace EventSkill.Dialogs
                 cards.Add(new Card(GetCardName(sc.Context, "EventCard"), eventCardData));
             }
 
-            await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(FindEventsResponses.FoundEvents, cards, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(FindEventsResponses.FoundEvents, cards, null));
 
             return await sc.EndDialogAsync();
         }

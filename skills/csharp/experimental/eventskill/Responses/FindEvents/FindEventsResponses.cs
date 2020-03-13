@@ -9,7 +9,7 @@ namespace EventSkill.Responses.FindEvents
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class FindEventsResponses : IResponseIdCollection
+    public class FindEventsResponses
     {
         // Generated accessors
         public const string LocationPrompt = "LocationPrompt";
