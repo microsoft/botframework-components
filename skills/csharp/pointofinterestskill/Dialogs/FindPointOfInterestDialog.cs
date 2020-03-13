@@ -19,13 +19,13 @@ namespace PointOfInterestSkill.Dialogs
         public FindPointOfInterestDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             RouteDialog routeDialog,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(FindPointOfInterestDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient, httpContext)
+            : base(nameof(FindPointOfInterestDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -68,7 +68,7 @@ namespace PointOfInterestSkill.Dialogs
                 return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = ResponseManager.GetResponse(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
         }
 
         /// <summary>
