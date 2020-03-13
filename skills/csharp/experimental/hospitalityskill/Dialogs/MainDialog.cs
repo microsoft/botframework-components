@@ -25,7 +25,7 @@ namespace HospitalitySkill.Dialogs
     {
         private BotServices _services;
         private IHotelService _hotelService;
-        private LocaleTemplateManager _responseManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
         private IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
 
@@ -36,7 +36,7 @@ namespace HospitalitySkill.Dialogs
         {
             _services = serviceProvider.GetService<BotServices>();
             _hotelService = serviceProvider.GetService<IHotelService>();
-            _responseManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -142,7 +142,7 @@ namespace HospitalitySkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -151,7 +151,7 @@ namespace HospitalitySkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -162,7 +162,7 @@ namespace HospitalitySkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -188,7 +188,7 @@ namespace HospitalitySkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(MainResponses.WelcomeMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.WelcomeMessage)
                 };
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -258,14 +258,14 @@ namespace HospitalitySkill.Dialogs
                         case HospitalityLuis.Intent.None:
                             {
                                 // No intent was identified, send confused message
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(SharedResponses.DidntUnderstandMessage));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage));
                                 return await stepContext.NextAsync();
                             }
 
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
                                 return await stepContext.NextAsync();
                             }
                     }
@@ -350,7 +350,7 @@ namespace HospitalitySkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(SharedResponses.ActionEnded), cancellationToken);
             }
         }
 

@@ -23,12 +23,12 @@ namespace HospitalitySkill.Dialogs
         public LateCheckOutDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(LateCheckOutDialog), settings, services, responseManager, conversationState, userState, hotelService, telemetryClient)
+            : base(nameof(LateCheckOutDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
         {
             var lateCheckOut = new WaterfallStep[]
             {
@@ -51,9 +51,9 @@ namespace HospitalitySkill.Dialogs
             if (userState.LateCheckOut)
             {
                 var cardData = userState.UserReservation;
-                cardData.Title = ResponseManager.GetString(HospitalityStrings.ReservationDetails);
+                cardData.Title = TemplateManager.GetString(HospitalityStrings.ReservationDetails);
 
-                var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
+                var reply = TemplateManager.GenerateActivity(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
                 await sc.Context.SendActivityAsync(reply);
 
                 return await sc.EndDialogAsync();
@@ -61,7 +61,7 @@ namespace HospitalitySkill.Dialogs
 
             // TODO checking availability
             // simulate with time delay
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(LateCheckOutResponses.CheckAvailability));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(LateCheckOutResponses.CheckAvailability));
             await Task.Delay(1600);
             var lateTime = await HotelService.GetLateCheckOutAsync();
 
@@ -88,8 +88,8 @@ namespace HospitalitySkill.Dialogs
 
             return await sc.PromptAsync(DialogIds.LateCheckOutPrompt, new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(LateCheckOutResponses.MoveCheckOutPrompt, tokens),
-                RetryPrompt = ResponseManager.GetResponse(LateCheckOutResponses.RetryMoveCheckOut),
+                Prompt = TemplateManager.GenerateActivity(LateCheckOutResponses.MoveCheckOutPrompt, tokens),
+                RetryPrompt = TemplateManager.GenerateActivity(LateCheckOutResponses.RetryMoveCheckOut),
             });
         }
 
@@ -131,10 +131,10 @@ namespace HospitalitySkill.Dialogs
                 };
 
                 var cardData = userState.UserReservation;
-                cardData.Title = ResponseManager.GetString(HospitalityStrings.UpdateReservation);
+                cardData.Title = TemplateManager.GetString(HospitalityStrings.UpdateReservation);
 
                 // check out time moved confirmation
-                var reply = ResponseManager.GetCardResponse(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
+                var reply = TemplateManager.GenerateActivity(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
 
                 return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));

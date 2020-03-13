@@ -29,7 +29,7 @@ namespace HospitalitySkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             LocaleTemplateManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              UserState userState,
              IHotelService hotelService,
@@ -38,7 +38,7 @@ namespace HospitalitySkill.Dialogs
         {
             Settings = settings;
             Services = services;
-            ResponseManager = responseManager;
+            TemplateManager = templateManager;
             StateAccessor = conversationState.CreateProperty<HospitalitySkillState>(nameof(HospitalitySkillState));
             UserStateAccessor = userState.CreateProperty<HospitalityUserSkillState>(nameof(HospitalityUserSkillState));
             TelemetryClient = telemetryClient;
@@ -61,7 +61,7 @@ namespace HospitalitySkill.Dialogs
 
         protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; set; }
 
-        protected LocaleTemplateManager ResponseManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected IHotelService HotelService { get; set; }
 
@@ -170,7 +170,7 @@ namespace HospitalitySkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);
@@ -184,7 +184,7 @@ namespace HospitalitySkill.Dialogs
             // if user has already checked out shouldn't be able to do anything else
             if (userState.CheckedOut)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.HasCheckedOut));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.HasCheckedOut));
 
                 return await sc.EndDialogAsync();
             }
