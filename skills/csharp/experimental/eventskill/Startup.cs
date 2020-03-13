@@ -97,7 +97,7 @@ namespace EventSkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // Register dialogs
             services.AddTransient<FindEventsDialog>();

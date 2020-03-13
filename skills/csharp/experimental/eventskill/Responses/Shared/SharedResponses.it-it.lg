@@ -30,7 +30,8 @@
 
 # AuthFailed(Data, Cards, Layout)
 [Activity
-    ${AuthFailed.Text(Data)}
+    Text = ${AuthFailed.Text(Data)}
+    Speak = ${AuthFailed.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
