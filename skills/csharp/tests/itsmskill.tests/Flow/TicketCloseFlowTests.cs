@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using ITSMSkill.Responses.Knowledge;
@@ -41,7 +42,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CloseWithNumberReasonTest()
         {
-            var confirmReason = new StringDictionary
+            var confirmReason = new Dictionary<string, object>
             {
                 { "Reason", MockData.CloseTicketReason }
             };
@@ -80,7 +81,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CloseWithNumberReasonActionTest()
         {
-            var confirmReason = new StringDictionary
+            var confirmReason = new Dictionary<string, object>
             {
                 { "Reason", MockData.CloseTicketReason }
             };

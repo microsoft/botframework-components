@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using ITSMSkill.Responses.Knowledge;
@@ -22,7 +23,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -45,7 +46,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowAndHelpTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -71,7 +72,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowAndCancelTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -95,12 +96,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCreateTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
@@ -132,12 +133,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, object>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -160,12 +161,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchNoCreateTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, object>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -190,7 +191,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -211,12 +212,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenRejectActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
@@ -237,12 +238,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, object>
             {
                 { "Search", MockData.CreateTicketTitle }
             };
@@ -263,12 +264,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithSearchThenRejectActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var search = new StringDictionary
+            var search = new Dictionary<string, object>
             {
                 { "Search", MockData.CreateTicketTitle }
             };

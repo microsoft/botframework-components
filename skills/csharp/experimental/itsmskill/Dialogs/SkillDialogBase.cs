@@ -36,7 +36,7 @@ namespace ITSMSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
@@ -44,7 +44,7 @@ namespace ITSMSkill.Dialogs
         {
             Settings = settings;
             Services = services;
-            ResponseManager = responseManager;
+            TemplateManager = templateManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             ServiceManager = serviceManager;
             TelemetryClient = telemetryClient;
@@ -162,7 +162,7 @@ namespace ITSMSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected IServiceManager ServiceManager { get; set; }
 
@@ -228,7 +228,7 @@ namespace ITSMSkill.Dialogs
                 }
                 else
                 {
-                    await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.AuthFailed));
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.AuthFailed));
                     return await sc.CancelAllDialogsAsync();
                 }
             }
@@ -258,14 +258,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Id", state.Id }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmId, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmId, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -279,7 +279,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputId)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputId)
                 };
 
                 return await sc.PromptAsync(nameof(TextPrompt), options);
@@ -306,14 +306,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Attribute", state.AttributeType.ToLocalizedString() }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(ConfirmAttributeResponse, replacements)
+                    Prompt = TemplateManager.GenerateActivity(ConfirmAttributeResponse, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -327,7 +327,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(InputAttributeResponse)
+                    Prompt = TemplateManager.GenerateActivity(InputAttributeResponse)
                 };
 
                 return await sc.PromptAsync(InputAttributePrompt, options);
@@ -406,14 +406,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Search", state.TicketTitle }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmSearch, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmSearch, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -427,7 +427,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputSearch)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputSearch)
                 };
 
                 return await sc.PromptAsync(nameof(TextPrompt), options);
@@ -447,14 +447,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Title", state.TicketTitle }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmTitle, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmTitle, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -468,7 +468,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputTitle)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputTitle)
                 };
 
                 return await sc.PromptAsync(nameof(TextPrompt), options);
@@ -502,14 +502,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Description", state.TicketDescription }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmDescription, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmDescription, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -523,7 +523,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputDescription)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputDescription)
                 };
 
                 return await sc.PromptAsync(nameof(TextPrompt), options);
@@ -550,14 +550,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Reason", state.CloseReason }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmReason, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmReason, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -571,7 +571,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputReason)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputReason)
                 };
 
                 return await sc.PromptAsync(nameof(TextPrompt), options);
@@ -596,7 +596,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputTicketNumber)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputTicketNumber)
                 };
 
                 return await sc.PromptAsync(nameof(TicketNumberPrompt), options);
@@ -627,13 +627,13 @@ namespace ITSMSkill.Dialogs
 
             if (result.Tickets == null || result.Tickets.Length == 0)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.TicketFindNone));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketFindNone));
                 return await sc.CancelAllDialogsAsync();
             }
 
             if (result.Tickets.Length >= 2)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.TicketDuplicateNumber));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketDuplicateNumber));
                 return await sc.CancelAllDialogsAsync();
             }
 
@@ -642,7 +642,7 @@ namespace ITSMSkill.Dialogs
 
             var card = GetTicketCard(sc.Context, state.TicketTarget, false);
 
-            await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketTarget, card, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null));
             return await sc.NextAsync();
         }
 
@@ -660,14 +660,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "Urgency", state.UrgencyLevel.ToString() }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmUrgency, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmUrgency, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -681,7 +681,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputUrgency),
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputUrgency),
                     Choices = new List<Choice>()
                     {
                         new Choice()
@@ -727,14 +727,14 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var replacements = new StringDictionary
+                var replacements = new Dictionary<string, object>
                 {
                     { "State", state.TicketState.ToString() }
                 };
 
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.ConfirmState, replacements)
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmState, replacements)
                 };
 
                 return await sc.PromptAsync(nameof(ConfirmPrompt), options);
@@ -748,7 +748,7 @@ namespace ITSMSkill.Dialogs
             {
                 var options = new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(SharedResponses.InputState),
+                    Prompt = TemplateManager.GenerateActivity(SharedResponses.InputState),
                     Choices = new List<Choice>()
                     {
                         new Choice()
@@ -835,7 +835,7 @@ namespace ITSMSkill.Dialogs
                 {
                     if (!string.IsNullOrEmpty(ShowKnowledgeNoResponse))
                     {
-                        await sc.Context.SendActivityAsync(ResponseManager.GetResponse(ShowKnowledgeNoResponse));
+                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeNoResponse));
                     }
 
                     return await sc.EndDialogAsync();
@@ -843,14 +843,14 @@ namespace ITSMSkill.Dialogs
                 else
                 {
                     // it is unlikely to happen now
-                    var token = new StringDictionary()
+                    var token = new Dictionary<string, object>()
                     {
                         { "Page", (state.PageIndex + 1).ToString() }
                     };
 
                     var options = new PromptOptions()
                     {
-                        Prompt = ResponseManager.GetResponse(ShowKnowledgeEndResponse, token)
+                        Prompt = TemplateManager.GenerateActivity(ShowKnowledgeEndResponse, token)
                     };
 
                     return await sc.PromptAsync(ShowKnowledgePrompt, options);
@@ -862,7 +862,7 @@ namespace ITSMSkill.Dialogs
                 {
                     if (!string.IsNullOrEmpty(ShowKnowledgeHasResponse))
                     {
-                        await sc.Context.SendActivityAsync(ResponseManager.GetResponse(ShowKnowledgeHasResponse));
+                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeHasResponse));
                     }
                 }
 
@@ -955,7 +955,7 @@ namespace ITSMSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);
@@ -964,11 +964,11 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result)
         {
-            var errorReplacements = new StringDictionary
+            var errorReplacements = new Dictionary<string, object>
             {
                 { "Error", result.ErrorMessage }
             };
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ServiceFailed, errorReplacements));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed, errorReplacements));
             return await sc.CancelAllDialogsAsync();
         }
 
@@ -1023,12 +1023,12 @@ namespace ITSMSkill.Dialogs
 
         protected Activity GetNavigatePrompt(ITurnContext context, string response, int pageIndex, int maxPage)
         {
-            var token = new StringDictionary()
+            var token = new Dictionary<string, object>()
             {
                 { "Navigate", GetNavigateString(pageIndex, maxPage) },
             };
 
-            var prompt = ResponseManager.GetResponse(response, token);
+            var prompt = TemplateManager.GenerateActivity(response, token);
 
             return ChoiceFactory.ForChannel(context.Activity.ChannelId, GetNavigateList(pageIndex, maxPage), prompt.Text, prompt.Speak) as Activity;
         }
@@ -1037,17 +1037,17 @@ namespace ITSMSkill.Dialogs
         {
             if (maxPage == 0)
             {
-                return ResponseManager.GetCardResponse(cards.Count == 1 ? SharedResponses.ResultIndicator : SharedResponses.ResultsIndicator, cards);
+                return TemplateManager.GenerateActivity(cards.Count == 1 ? SharedResponses.ResultIndicator : SharedResponses.ResultsIndicator, cards);
             }
             else
             {
-                var token = new StringDictionary()
+                var token = new Dictionary<string, object>()
                 {
                     { "Current", (pageIndex + 1).ToString() },
                     { "Total", (maxPage + 1).ToString() },
                 };
 
-                return ResponseManager.GetCardResponse(SharedResponses.PageIndicator, cards, token);
+                return TemplateManager.GenerateActivity(SharedResponses.PageIndicator, cards, token);
             }
         }
 

@@ -18,10 +18,12 @@ using ITSMSkill.Services;
 using ITSMSkill.Tests.API.Fakes;
 using ITSMSkill.Tests.Flow.Fakes;
 using ITSMSkill.Tests.Flow.Utterances;
+using ITSMSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
@@ -35,7 +37,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Tests.Flow
 {
-    public class SkillTestBase : BotTestBase
+    public class SkillTestBase
     {
         public static readonly string AuthenticationName = "ServiceNow";
 
@@ -49,8 +51,10 @@ namespace ITSMSkill.Tests.Flow
 
         public IServiceCollection Services { get; set; }
 
+        public Templates Templates { get; set; }
+
         [TestInitialize]
-        public override void Initialize()
+        public void Initialize()
         {
             // Initialize service collection
             Services = new ServiceCollection();
@@ -116,13 +120,8 @@ namespace ITSMSkill.Tests.Flow
             Services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            ResponseManager = new ResponseManager(
-                new string[] { "en", "de", "es", "fr", "it", "zh" },
-                new MainResponses(),
-                new TicketResponses(),
-                new KnowledgeResponses(),
-                new SharedResponses());
-            Services.AddSingleton(ResponseManager);
+            Services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
+            Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             // Configure service
             Services.AddSingleton<IServiceManager, MockServiceManager>();
@@ -217,7 +216,7 @@ namespace ITSMSkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertStartsWith(string response, StringDictionary tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertStartsWith(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -229,7 +228,7 @@ namespace ITSMSkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new StringDictionary());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     Assert.IsTrue(collection.Any((reply) =>
                     {
                         return messageActivity.Text.StartsWith(reply);
@@ -240,7 +239,7 @@ namespace ITSMSkill.Tests.Flow
             };
         }
 
-        protected Action<IActivity> AssertContains(string response, StringDictionary tokens = null, params string[] cardIds)
+        protected Action<IActivity> AssertContains(string response, Dictionary<string, object> tokens = null, params string[] cardIds)
         {
             return activity =>
             {
@@ -252,12 +251,17 @@ namespace ITSMSkill.Tests.Flow
                 }
                 else
                 {
-                    var collection = ParseReplies(response, tokens ?? new StringDictionary());
+                    var collection = ParseReplies(response, tokens ?? new Dictionary<string, object>());
                     CollectionAssert.Contains(collection, messageActivity.Text);
                 }
 
                 AssertSameId(messageActivity, cardIds);
             };
+        }
+
+        protected string[] ParseReplies(string templateId, Dictionary<string, object> tokens = null)
+        {
+            return Templates.ParseReplies(templateId, tokens);
         }
 
         private void AssertSameId(IMessageActivity activity, string[] cardIds = null)

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -28,11 +29,11 @@ namespace ITSMSkill.Dialogs
         public UpdateTicketDialog(
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(UpdateTicketDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(UpdateTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var updateTicket = new WaterfallStep[]
             {
@@ -97,11 +98,11 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var token = new StringDictionary()
+                var token = new Dictionary<string, object>()
                 {
                     { "Attributes", sb.ToString() }
                 };
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.ShowUpdates, token));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowUpdates, token));
             }
 
             return await sc.NextAsync();
@@ -123,7 +124,7 @@ namespace ITSMSkill.Dialogs
 
             if (string.IsNullOrEmpty(state.TicketTitle) && string.IsNullOrEmpty(state.TicketDescription) && state.UrgencyLevel == UrgencyLevel.None)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(TicketResponses.TicketNoUpdate));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketNoUpdate));
                 return await sc.NextAsync();
             }
 
@@ -137,7 +138,7 @@ namespace ITSMSkill.Dialogs
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(TicketResponses.TicketUpdated, card, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketUpdated, card, null));
             return await sc.NextAsync(await CreateActionResult(sc.Context, true, cancellationToken));
         }
     }

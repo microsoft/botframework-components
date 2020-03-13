@@ -13,6 +13,7 @@ using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Services;
+using ITSMSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -28,11 +29,11 @@ namespace ITSMSkill.Dialogs
         public ShowKnowledgeDialog(
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowKnowledgeDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(ShowKnowledgeDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             var showKnowledge = new WaterfallStep[]
             {
@@ -90,7 +91,7 @@ namespace ITSMSkill.Dialogs
 
             var options = new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(KnowledgeResponses.IfCreateTicket)
+                Prompt = TemplateManager.GenerateActivity(KnowledgeResponses.IfCreateTicket)
             };
 
             return await sc.PromptAsync(nameof(ConfirmPrompt), options);

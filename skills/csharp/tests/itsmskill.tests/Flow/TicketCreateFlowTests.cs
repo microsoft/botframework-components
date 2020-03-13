@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using ITSMSkill.Responses.Knowledge;
@@ -22,7 +23,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -51,7 +52,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateExistingSolveTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -75,17 +76,17 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyTest()
         {
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new StringDictionary
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
@@ -114,17 +115,17 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyNotConfirmTest()
         {
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new StringDictionary
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
@@ -157,7 +158,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -184,7 +185,7 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateExistingSolveActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
@@ -206,22 +207,22 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task CreateWithTitleUrgencyDescriptionActionTest()
         {
-            var confirmTitle = new StringDictionary
+            var confirmTitle = new Dictionary<string, object>
             {
                 { "Title", MockData.CreateTicketTitle }
             };
 
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var confirmUrgency = new StringDictionary
+            var confirmUrgency = new Dictionary<string, object>
             {
                 { "Urgency", MockData.CreateTicketUrgencyLevel.ToLocalizedString() }
             };
 
-            var confirmDescription = new StringDictionary
+            var confirmDescription = new Dictionary<string, object>
             {
                 { "Description", MockData.CreateTicketDescription }
             };

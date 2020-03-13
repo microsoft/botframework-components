@@ -9,6 +9,7 @@ using ITSMSkill.Models.Actions;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Services;
+using ITSMSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -28,7 +29,7 @@ namespace ITSMSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private BotServices _services;
-        private ResponseManager _responseManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public MainDialog(
@@ -37,7 +38,7 @@ namespace ITSMSkill.Dialogs
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<ResponseManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -142,7 +143,7 @@ namespace ITSMSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -151,7 +152,7 @@ namespace ITSMSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -162,7 +163,7 @@ namespace ITSMSkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -192,7 +193,7 @@ namespace ITSMSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(MainResponses.WelcomeMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.WelcomeMessage)
                 };
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -257,7 +258,7 @@ namespace ITSMSkill.Dialogs
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
                                 return await stepContext.NextAsync();
                             }
                     }
@@ -322,28 +323,22 @@ namespace ITSMSkill.Dialogs
         {
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var value = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
                 if (state.IsAction)
                 {
-                    if (stepContext.Result == null)
+                    if (value == null)
                     {
-                        endOfConversation.Value = new ActionResult(false);
+                        value = new ActionResult(false);
                     }
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                return await stepContext.EndDialogAsync(value, cancellationToken);
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(SharedResponses.ActionEnded), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(SharedResponses.ActionEnded), cancellationToken);
             }
         }
 

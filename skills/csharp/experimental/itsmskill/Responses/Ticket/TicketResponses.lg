@@ -1,0 +1,168 @@
+[import](..\Shared\Shared.lg)
+[import](TicketResponsesTexts.lg)
+
+# TicketCreated(Data, Cards, Layout)
+[Activity
+    Text = ${TicketCreated.Text(Data)}
+    Speak = ${TicketCreated.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ConfirmUpdateAttribute(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmUpdateAttribute.Text(Data)}
+    Speak = ${ConfirmUpdateAttribute.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# UpdateAttribute(Data, Cards, Layout)
+[Activity
+    Text = ${UpdateAttribute.Text(Data)}
+    Speak = ${UpdateAttribute.Text(Data)}
+    SuggestedActions = ${UpdateAttribute.S1(Data)} | ${UpdateAttribute.S2(Data)} | ${UpdateAttribute.S3(Data)} | ${UpdateAttribute.S4(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# TicketUpdated(Data, Cards, Layout)
+[Activity
+    Text = ${TicketUpdated.Text(Data)}
+    Speak = ${TicketUpdated.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketNoUpdate(Data, Cards, Layout)
+[Activity
+    Text = ${TicketNoUpdate.Text(Data)}
+    Speak = ${TicketNoUpdate.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ShowConstraintNone(Data, Cards, Layout)
+[Activity
+    Text = ${ShowConstraintNone.Text(Data)}
+    Speak = ${ShowConstraintNone.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = igoringInput
+]
+
+# ShowConstraints(Data, Cards, Layout)
+[Activity
+    Text = ${ShowConstraints.Text(Data)}
+    Speak = ${ShowConstraints.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = igoringInput
+]
+
+# ShowUpdateNone(Data, Cards, Layout)
+[Activity
+    Text = ${ShowUpdateNone.Text(Data)}
+    Speak = ${ShowUpdateNone.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = igoringInput
+]
+
+# ShowUpdates(Data, Cards, Layout)
+[Activity
+    Text = ${ShowUpdates.Text(Data)}
+    Speak = ${ShowUpdates.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = igoringInput
+]
+
+# ShowAttribute(Data, Cards, Layout)
+[Activity
+    Text = ${ShowAttribute.Text(Data)}
+    Speak = ${ShowAttribute.Text(Data)}
+    SuggestedActions = ${ShowAttribute.S1(Data)} | ${ShowAttribute.S2(Data)} | ${ShowAttribute.S3(Data)} | ${ShowAttribute.S4(Data)} | ${ShowAttribute.S5(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# TicketShow(Data, Cards, Layout)
+[Activity
+    Text = ${TicketShow.Text(Data)}
+    Speak = ${TicketShow.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketEnd(Data, Cards, Layout)
+[Activity
+    Text = ${TicketEnd.Text(Data)}
+    Speak = ${TicketEnd.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketShowNone(Data, Cards, Layout)
+[Activity
+    Text = ${TicketShowNone.Text(Data)}
+    Speak = ${TicketShowNone.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketFindNone(Data, Cards, Layout)
+[Activity
+    Text = ${TicketFindNone.Text(Data)}
+    Speak = ${TicketFindNone.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketDuplicateNumber(Data, Cards, Layout)
+[Activity
+    Text = ${TicketDuplicateNumber.Text(Data)}
+    Speak = ${TicketDuplicateNumber.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketTarget(Data, Cards, Layout)
+[Activity
+    Text = ${TicketTarget.Text(Data)}
+    Speak = ${TicketTarget.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketAlreadyClosed(Data, Cards, Layout)
+[Activity
+    Text = ${TicketAlreadyClosed.Text(Data)}
+    Speak = ${TicketAlreadyClosed.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# TicketClosed(Data, Cards, Layout)
+[Activity
+    Text = ${TicketClosed.Text(Data)}
+    Speak = ${TicketClosed.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

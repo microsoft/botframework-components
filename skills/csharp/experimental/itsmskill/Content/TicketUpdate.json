@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "AdaptiveCard",
   "id": "TicketUpdateCard",
   "body": [
@@ -33,7 +33,7 @@
                   "horizontalAlignment": "Left",
                   "size": "Medium",
                   "color": "Light",
-                  "text": "{Title}",
+                  "text": "${if(Data.Title == null, '', Data.Title)}",
                   "wrap": true
                 }
               ],
@@ -44,39 +44,39 @@
         {
           "type": "TextBlock",
           "color": "Light",
-          "text": "{UrgencyLevel}",
+          "text": "${if(Data.UrgencyLevel == null, '', Data.UrgencyLevel)}",
           "weight": "Bolder"
         },
         {
           "type": "TextBlock",
           "color": "Light",
-          "text": "{State}"
+          "text": "${if(Data.State == null, '', Data.State)}"
         },
         {
           "type": "TextBlock",
           "size": "Small",
           "color": "Light",
-          "text": "{OpenedTime}"
+          "text": "${if(Data.OpenedTime == null, '', Data.OpenedTime)}"
         },
         {
           "type": "TextBlock",
           "size": "Small",
           "color": "Light",
-          "text": "{Number}"
+          "text": "${if(Data.Number == null, '', Data.Number)}"
         }
       ]
     },
     {
       "type": "TextBlock",
       "wrap": true,
-      "text": "{Description}",
+      "text": "${if(Data.Description == null, '', Data.Description)}",
       "maxLines": 5
     },
     {
       "separator": true,
       "type": "TextBlock",
       "wrap": true,
-      "text": "{ResolvedReason}",
+      "text": "${if(Data.ResolvedReason == null, '', Data.ResolvedReason)}",
       "maxLines": 5
     },
     {
@@ -84,8 +84,8 @@
       "actions": [
         {
           "type": "Action.Submit",
-          "title": "{ActionUpdateTitle}",
-          "data": "{ActionUpdateValue}"
+          "title": "${if(Data.ActionUpdateTitle == null, '', Data.ActionUpdateTitle)}",
+          "data": "${if(Data.ActionUpdateValue == null, '', Data.ActionUpdateValue)}"
         }
       ]
     },
@@ -98,12 +98,13 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "default",
-          "text": "{ProviderDisplayText}"
+          "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
         }
       ]
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }
+

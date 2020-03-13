@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "AdaptiveCard",
   "id": "KnowledgeCard",
   "body": [
@@ -17,7 +17,7 @@
                   "horizontalAlignment": "Left",
                   "size": "Medium",
                   "color": "Default",
-                  "text": "{Title}",
+                  "text": "${if(Data.Title == null, '', Data.Title)}",
                   "wrap": true
                 }
               ],
@@ -29,20 +29,20 @@
           "type": "TextBlock",
           "size": "Small",
           "color": "Default",
-          "text": "{UpdatedTime}"
+          "text": "${if(Data.UpdatedTime == null, '', Data.UpdatedTime)}"
         },
         {
           "type": "TextBlock",
           "size": "Small",
           "color": "Default",
-          "text": "{Number}"
+          "text": "${if(Data.Number == null, '', Data.Number)}"
         }
       ]
     },
     {
       "type": "TextBlock",
       "wrap": true,
-      "text": "{Content}",
+      "text": "${if(Data.Content == null, '', Data.Content)}",
       "maxLines": 5
     },
     {
@@ -54,7 +54,7 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "default",
-          "text": "{ProviderDisplayText}"
+          "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
         }
       ]
     }
@@ -62,11 +62,12 @@
   "actions": [
     {
       "type": "Action.OpenUrl",
-      "title": "{UrlTitle}",
-      "url": "{UrlLink}"
+      "title": "${if(Data.UrlTitle == null, '', Data.UrlTitle)}",
+      "url": "${if(Data.UrlLink == null, '', Data.UrlLink)}"
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }
+

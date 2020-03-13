@@ -1,0 +1,117 @@
+# DidntUnderstandMessage.Text(Data)
+- Sorry, I didn't understand what you meant.
+- I didn't understand, perhaps try again in a different way.
+- Can you try to ask in a different way?
+- I didn't get what you mean, can you try in a different way?
+- Could you elaborate?
+- Please say that again in a different way.
+- I didn't quite get that.
+- Can you say that in a different way?
+- Can you try to ask me again? I didn't get what you mean.
+
+# CancellingMessage.Text(Data)
+- Sure, we can do this later.
+- Sure, we can start this later.
+- No problem, you can try again at another time.
+- Alright, let me know when you need my help.
+- Sure, I'm here if you need me.
+
+# NoAuth.Text(Data)
+- Please log in before taking further action.
+- Please log in so I can take further action.
+- Please log in so I can proceed with your request.
+- Can you log in so I can help you out further?
+- You need to log in so I can take further action.
+
+# AuthFailed.Text(Data)
+- ${AuthFailedTextAndSpeak1(Data)}
+- ${AuthFailedTextAndSpeak2(Data)}
+- ${AuthFailedTextAndSpeak3(Data)}
+
+# AuthFailedTextAndSpeak1(Data)
+[Activity
+    Text = Authentication failed. Please try again
+    Speak = Authentication failed. Please try again.
+]
+
+# AuthFailedTextAndSpeak2(Data)
+[Activity
+    Text = You failed to log in. Please try again later.
+    Speak = You failed to log in. please try again later.
+]
+
+# AuthFailedTextAndSpeak3(Data)
+[Activity
+    Text = Your log in failed. Let's try this again.
+    Speak = Your log in failed. Let's try this again.
+]
+
+# ActionEnded.Text(Data)
+- Let me know if you need my help with anything else.
+- I'm here if you need me.
+
+# ErrorMessage.Text(Data)
+- Sorry, it looks like something went wrong!
+- An error occurred, please try again later.
+- Something went wrong, sorry!
+- It seems like something went wrong. Can you try again later?
+- Sorry I can't help right now. Please try again later.
+
+# ConfirmSearch.Text(Data)
+- Is the search text "${if(Data.Search == null, '', Data.Search)}" correct?
+
+# InputSearch.Text(Data)
+- Please provide the search text:
+
+# ConfirmTitle.Text(Data)
+- Is the title "${if(Data.Title == null, '', Data.Title)}" correct?
+
+# InputTitle.Text(Data)
+- Please provide the title:
+
+# ConfirmDescription.Text(Data)
+- Is the description "${if(Data.Description == null, '', Data.Description)}" correct?
+
+# InputDescription.Text(Data)
+- Please provide the description:
+
+# ConfirmReason.Text(Data)
+- Is the reason "${if(Data.Reason == null, '', Data.Reason)}" correct?
+
+# InputReason.Text(Data)
+- Please input the reason:
+
+# ConfirmUrgency.Text(Data)
+- Is the urgency level "${if(Data.Urgency == null, '', Data.Urgency)}" correct?
+
+# InputUrgency.Text(Data)
+- Please input the urgency level:
+
+# ConfirmState.Text(Data)
+- Is the ticket state "${if(Data.State == null, '', Data.State)}" correct?
+
+# InputState.Text(Data)
+- Please input the ticket state:
+
+# ConfirmId.Text(Data)
+- Is the ID "${if(Data.Id == null, '', Data.Id)}" correct?
+
+# InputId.Text(Data)
+- Please input the ID:
+
+# InputTicketNumber.Text(Data)
+- Please provide the ticket number:
+
+# PageIndicator.Text(Data)
+- Page ${if(Data.Current == null, '', Data.Current)}/${if(Data.Total == null, '', Data.Total)}:
+
+# ResultIndicator.Text(Data)
+- Here is the result:
+
+# ResultsIndicator.Text(Data)
+- Here are the results:
+
+# ServiceFailed.Text(Data)
+- Sorry, connecting to the IT Service Management service failed due to ${if(Data.Error == null, '', Data.Error)}.
+
+

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using ITSMSkill.Responses.Knowledge;
@@ -23,12 +24,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
@@ -63,12 +64,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCloseTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", string.Empty }
             };
@@ -95,12 +96,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithTitleTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}" }
             };
@@ -122,12 +123,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}{Environment.NewLine}Urgency: {MockData.CreateTicketUrgencyLevel.ToString()}" }
             };
@@ -160,12 +161,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowThenCloseActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", string.Empty }
             };
@@ -186,12 +187,12 @@ namespace ITSMSkill.Tests.Flow
         [TestMethod]
         public async Task ShowWithTitleActionTest()
         {
-            var navigate = new StringDictionary
+            var navigate = new Dictionary<string, object>
             {
                 { "Navigate", string.Empty }
             };
 
-            var attribute = new StringDictionary
+            var attribute = new Dictionary<string, object>
             {
                 { "Attributes", $"Search text: {MockData.CreateTicketTitle}" }
             };

@@ -1,0 +1,228 @@
+[import](Shared.lg)
+[import](SharedResponsesTexts.lg)
+
+# DidntUnderstandMessage(Data, Cards, Layout)
+[Activity
+    Text = ${DidntUnderstandMessage.Text(Data)}
+    Speak = ${DidntUnderstandMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# CancellingMessage(Data, Cards, Layout)
+[Activity
+    Text = ${CancellingMessage.Text(Data)}
+    Speak = ${CancellingMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# NoAuth(Data, Cards, Layout)
+[Activity
+    Text = ${NoAuth.Text(Data)}
+    Speak = ${NoAuth.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# AuthFailed(Data, Cards, Layout)
+[Activity
+    ${AuthFailed.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ActionEnded(Data, Cards, Layout)
+[Activity
+    Text = ${ActionEnded.Text(Data)}
+    Speak = ${ActionEnded.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ErrorMessage(Data, Cards, Layout)
+[Activity
+    Text = ${ErrorMessage.Text(Data)}
+    Speak = ${ErrorMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ConfirmSearch(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmSearch.Text(Data)}
+    Speak = ${ConfirmSearch.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputSearch(Data, Cards, Layout)
+[Activity
+    Text = ${InputSearch.Text(Data)}
+    Speak = ${InputSearch.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmTitle(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmTitle.Text(Data)}
+    Speak = ${ConfirmTitle.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputTitle(Data, Cards, Layout)
+[Activity
+    Text = ${InputTitle.Text(Data)}
+    Speak = ${InputTitle.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmDescription(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmDescription.Text(Data)}
+    Speak = ${ConfirmDescription.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputDescription(Data, Cards, Layout)
+[Activity
+    Text = ${InputDescription.Text(Data)}
+    Speak = ${InputDescription.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmReason(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmReason.Text(Data)}
+    Speak = ${ConfirmReason.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputReason(Data, Cards, Layout)
+[Activity
+    Text = ${InputReason.Text(Data)}
+    Speak = ${InputReason.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmUrgency(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmUrgency.Text(Data)}
+    Speak = ${ConfirmUrgency.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputUrgency(Data, Cards, Layout)
+[Activity
+    Text = ${InputUrgency.Text(Data)}
+    Speak = ${InputUrgency.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmState(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmState.Text(Data)}
+    Speak = ${ConfirmState.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputState(Data, Cards, Layout)
+[Activity
+    Text = ${InputState.Text(Data)}
+    Speak = ${InputState.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmId(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmId.Text(Data)}
+    Speak = ${ConfirmId.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputId(Data, Cards, Layout)
+[Activity
+    Text = ${InputId.Text(Data)}
+    Speak = ${InputId.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InputTicketNumber(Data, Cards, Layout)
+[Activity
+    Text = ${InputTicketNumber.Text(Data)}
+    Speak = ${InputTicketNumber.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# PageIndicator(Data, Cards, Layout)
+[Activity
+    Text = ${PageIndicator.Text(Data)}
+    Speak = ${PageIndicator.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# ResultIndicator(Data, Cards, Layout)
+[Activity
+    Text = ${ResultIndicator.Text(Data)}
+    Speak = ${ResultIndicator.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# ResultsIndicator(Data, Cards, Layout)
+[Activity
+    Text = ${ResultsIndicator.Text(Data)}
+    Speak = ${ResultsIndicator.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# ServiceFailed(Data, Cards, Layout)
+[Activity
+    Text = ${ServiceFailed.Text(Data)}
+    Speak = ${ServiceFailed.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

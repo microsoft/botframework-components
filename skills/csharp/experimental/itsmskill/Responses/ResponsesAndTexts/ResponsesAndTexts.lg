@@ -1,0 +1,4 @@
+[import](..\Knowledge\KnowledgeResponses.lg)
+[import](..\Main\MainResponses.lg)
+[import](..\Shared\SharedResponses.lg)
+[import](..\Ticket\TicketResponses.lg)

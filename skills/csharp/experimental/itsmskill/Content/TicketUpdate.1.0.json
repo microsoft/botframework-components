@@ -1,4 +1,4 @@
-﻿{
+{
   "type": "AdaptiveCard",
   "id": "TicketUpdateCard",
   "body": [
@@ -17,7 +17,7 @@
                   "horizontalAlignment": "Left",
                   "size": "Medium",
                   "color": "Default",
-                  "text": "{Title}",
+                  "text": "${if(Data.Title == null, '', Data.Title)}",
                   "wrap": true
                 }
               ],
@@ -28,39 +28,39 @@
         {
           "type": "TextBlock",
           "color": "Default",
-          "text": "{UrgencyLevel}",
+          "text": "${if(Data.UrgencyLevel == null, '', Data.UrgencyLevel)}",
           "weight": "Bolder"
         },
         {
           "type": "TextBlock",
           "color": "Default",
-          "text": "{State}"
+          "text": "${if(Data.State == null, '', Data.State)}"
         },
         {
           "type": "TextBlock",
           "size": "Small",
           "color": "Default",
-          "text": "{OpenedTime}"
+          "text": "${if(Data.OpenedTime == null, '', Data.OpenedTime)}"
         },
         {
           "type": "TextBlock",
           "size": "Small",
           "color": "Default",
-          "text": "{Number}"
+          "text": "${if(Data.Number == null, '', Data.Number)}"
         }
       ]
     },
     {
       "type": "TextBlock",
       "wrap": true,
-      "text": "{Description}",
+      "text": "${if(Data.Description == null, '', Data.Description)}",
       "maxLines": 5
     },
     {
       "separator": true,
       "type": "TextBlock",
       "wrap": true,
-      "text": "{ResolvedReason}",
+      "text": "${if(Data.ResolvedReason == null, '', Data.ResolvedReason)}",
       "maxLines": 5
     },
     {
@@ -72,7 +72,7 @@
           "horizontalAlignment": "Right",
           "size": "Small",
           "color": "default",
-          "text": "{ProviderDisplayText}"
+          "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
         }
       ]
     }
@@ -80,16 +80,17 @@
   "actions": [
     {
       "type": "Action.Submit",
-      "title": "{ActionUpdateTitle}",
+      "title": "${if(Data.ActionUpdateTitle == null, '', Data.ActionUpdateTitle)}",
       "data": {
         "msteams": {
           "type": "imBack",
-          "value": "{ActionUpdateValue}"
+          "value": "${if(Data.ActionUpdateValue == null, '', Data.ActionUpdateValue)}"
         }
       }
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }
+
