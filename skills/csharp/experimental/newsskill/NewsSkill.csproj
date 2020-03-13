@@ -195,9 +195,6 @@
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\Shared\LgIdCollection.t4">
-      <Generator></Generator>
-    </None>
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
