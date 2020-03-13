@@ -40,7 +40,7 @@
                           "size": "Large",
                           "weight": "Bolder",
                           "color": "Light",
-                          "text": "{Title}"
+                          "text": "${if(Data.Title == null, '', Data.Title)}"
                         }
                       ],
                       "width": "stretch"
@@ -63,15 +63,15 @@
           "facts": [
             {
               "title": "Check-in Date",
-              "value": "{CheckInDate}"
+              "value": "${if(Data.CheckInDate == null, '', Data.CheckInDate)}"
             },
             {
               "title": "Check-out Date",
-              "value": "{CheckOutDate}"
+              "value": "${if(Data.CheckOutDate == null, '', Data.CheckOutDate)}"
             },
             {
               "title": "Check-out Time",
-              "value": "{CheckOutTime}"
+              "value": "${if(Data.CheckOutTime == null, '', Data.CheckOutTime)}"
             }
           ]
         }
@@ -80,5 +80,5 @@
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }

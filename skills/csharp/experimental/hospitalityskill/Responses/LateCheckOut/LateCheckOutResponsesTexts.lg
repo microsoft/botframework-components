@@ -1,0 +1,16 @@
+# CheckAvailability.Text(Data)
+- Let me check if this is available.
+
+# MoveCheckOutPrompt.Text(Data)
+- We can move your check out time to ${if(Data.Time == null, '', Data.Time)}. Would you like to confirm this?
+
+# RetryMoveCheckOut.Text(Data)
+- Sorry I didn't get that. Would you like me to move your check out time?
+
+# MoveCheckOutSuccess.Text(Data)
+- Ok. Your check out time is now ${if(Data.Time == null, '', Data.Time)} on ${if(Data.Date == null, '', Data.Date)}.
+
+# HasLateCheckOut.Text(Data)
+- You currently have a late check-out time.
+
+

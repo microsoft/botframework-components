@@ -11,6 +11,7 @@ using Bot.Builder.Community.Adapters.Google.Model.Attachments;
 using HospitalitySkill.Models;
 using HospitalitySkill.Responses.RoomService;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
@@ -26,12 +27,12 @@ namespace HospitalitySkill.Dialogs
         public RoomServiceDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(RoomServiceDialog), settings, services, responseManager, conversationState, userState, hotelService, telemetryClient)
+            : base(nameof(RoomServiceDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
         {
             var roomService = new WaterfallStep[]
             {
@@ -63,7 +64,7 @@ namespace HospitalitySkill.Dialogs
             // didn't order, prompt if 1 menu type not identified
             if (convState.FoodList.Count == 0 && string.IsNullOrWhiteSpace(menu?[0][0]) && menu?.Length != 1)
             {
-                var prompt = ResponseManager.GetResponse(RoomServiceResponses.MenuPrompt);
+                var prompt = TemplateManager.GenerateActivity(RoomServiceResponses.MenuPrompt);
 
                 // TODO what does this for ?
                 if (sc.Context.Activity.ChannelId == "google")
@@ -127,7 +128,7 @@ namespace HospitalitySkill.Dialogs
                 return await sc.PromptAsync(DialogIds.MenuPrompt, new PromptOptions()
                 {
                     Prompt = prompt,
-                    RetryPrompt = ResponseManager.GetResponse(RoomServiceResponses.ChooseOneMenu)
+                    RetryPrompt = TemplateManager.GenerateActivity(RoomServiceResponses.ChooseOneMenu)
                 });
             }
 
@@ -171,7 +172,7 @@ namespace HospitalitySkill.Dialogs
                     menuItems.Add(new Card(cardName, item));
                 }
 
-                var prompt = ResponseManager.GetResponse(RoomServiceResponses.FoodOrder);
+                var prompt = TemplateManager.GenerateActivity(RoomServiceResponses.FoodOrder);
                 if (sc.Context.Activity.ChannelId == "google")
                 {
                     List<OptionItem> menuOptions = new List<OptionItem>();
@@ -195,14 +196,14 @@ namespace HospitalitySkill.Dialogs
                 else
                 {
                     // show menu card
-                    await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(null, new Card(GetCardName(sc.Context, "MenuCard"), menu), null, "items", menuItems));
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "MenuCard"), menu), null, "items", menuItems));
                 }
 
                 // prompt for order
                 return await sc.PromptAsync(DialogIds.FoodOrderPrompt, new PromptOptions()
                 {
                     Prompt = prompt,
-                    RetryPrompt = ResponseManager.GetResponse(RoomServiceResponses.RetryFoodOrder)
+                    RetryPrompt = TemplateManager.GenerateActivity(RoomServiceResponses.RetryFoodOrder)
                 });
             }
 
@@ -230,7 +231,7 @@ namespace HospitalitySkill.Dialogs
             // ask if they want to add more items
             return await sc.PromptAsync(DialogIds.AddMore, new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(RoomServiceResponses.AddMore)
+                Prompt = TemplateManager.GenerateActivity(RoomServiceResponses.AddMore)
             });
         }
 
@@ -258,7 +259,7 @@ namespace HospitalitySkill.Dialogs
             {
                 return await sc.PromptAsync(DialogIds.ConfirmOrder, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(RoomServiceResponses.ConfirmOrder)
+                    Prompt = TemplateManager.GenerateActivity(RoomServiceResponses.ConfirmOrder)
                 });
             }
 
@@ -271,7 +272,7 @@ namespace HospitalitySkill.Dialogs
 
             if (confirm)
             {
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RoomServiceResponses.FinalOrderConfirmation));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RoomServiceResponses.FinalOrderConfirmation));
 
                 return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }
@@ -286,7 +287,7 @@ namespace HospitalitySkill.Dialogs
             var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
 
             List<FoodRequestClass> notAvailable = new List<FoodRequestClass>();
-            var unavailableReply = ResponseManager.GetResponse(RoomServiceResponses.ItemsNotAvailable).Text;
+            var unavailableReply = TemplateManager.GenerateActivity(RoomServiceResponses.ItemsNotAvailable).Text;
 
             List<Card> foodItems = new List<Card>();
             var totalFoodOrder = new FoodOrderData { BillTotal = 0 };
@@ -328,7 +329,7 @@ namespace HospitalitySkill.Dialogs
 
             if (convState.FoodList.Count > 0)
             {
-                await turnContext.SendActivityAsync(ResponseManager.GetCardResponse(null, new Card(GetCardName(turnContext, "FoodOrderCard"), totalFoodOrder), null, "items", foodItems));
+                await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(turnContext, "FoodOrderCard"), totalFoodOrder), null, "items", foodItems));
             }
         }
 

@@ -27,7 +27,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };
@@ -50,7 +50,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };
@@ -71,7 +71,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };
@@ -90,7 +90,7 @@ namespace HospitalitySkill.Tests.Flow
         [TestMethod]
         public async Task ExtendStayWithTimeTest()
         {
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Time", LateCheckOutUtterances.Time.ToString(ReservationData.TimeFormat) },
                 { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
@@ -113,7 +113,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };
@@ -134,7 +134,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };
@@ -153,7 +153,7 @@ namespace HospitalitySkill.Tests.Flow
         {
             var extendDate = CheckInDate + TimeSpan.FromDays(HotelService.StayDays + ExtendStayUtterances.Number);
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", extendDate.ToString(ReservationData.DateFormat) }
             };

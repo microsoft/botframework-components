@@ -1,0 +1,19 @@
+# ConfirmCheckOut.Text(Data)
+- Would you like me to check you out now?
+
+# RetryConfirmCheckOut.Text(Data)
+- Sorry I didn't get that. Would you like me to check you out?
+
+# EmailPrompt.Text(Data)
+- What email should I send your receipt to?
+
+# InvalidEmailPrompt.Text(Data)
+- Please try an email address in the format email@domain.com.
+
+# SendEmailMessage.Text(Data)
+- Ok, I'll send the receipt to ${if(Data.Email == null, '', Data.Email)}.
+
+# CheckOutSuccess.Text(Data)
+- You're all checked out! We look forward to seeing you again.
+
+

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using HospitalitySkill.Models;
 using HospitalitySkill.Responses.CheckOut;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -19,12 +21,12 @@ namespace HospitalitySkill.Dialogs
         public CheckOutDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(CheckOutDialog), settings, services, responseManager, conversationState, userState, hotelService, telemetryClient)
+            : base(nameof(CheckOutDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
         {
             var checkOut = new WaterfallStep[]
             {
@@ -44,8 +46,8 @@ namespace HospitalitySkill.Dialogs
             // confirm user wants to check out
             return await sc.PromptAsync(DialogIds.CheckOutPrompt, new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(CheckOutResponses.ConfirmCheckOut),
-                RetryPrompt = ResponseManager.GetResponse(CheckOutResponses.RetryConfirmCheckOut),
+                Prompt = TemplateManager.GenerateActivity(CheckOutResponses.ConfirmCheckOut),
+                RetryPrompt = TemplateManager.GenerateActivity(CheckOutResponses.RetryConfirmCheckOut),
             });
         }
 
@@ -77,8 +79,8 @@ namespace HospitalitySkill.Dialogs
                 // prompt for email to send receipt to
                 return await sc.PromptAsync(DialogIds.EmailPrompt, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(CheckOutResponses.EmailPrompt),
-                    RetryPrompt = ResponseManager.GetResponse(CheckOutResponses.InvalidEmailPrompt)
+                    Prompt = TemplateManager.GenerateActivity(CheckOutResponses.EmailPrompt),
+                    RetryPrompt = TemplateManager.GenerateActivity(CheckOutResponses.InvalidEmailPrompt)
                 });
             }
 
@@ -107,15 +109,15 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.CheckedOut)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, object>
                 {
                     { "Email", userState.Email },
                 };
 
                 // TODO process request to send email receipt
                 // checked out confirmation message
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.SendEmailMessage, tokens));
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(CheckOutResponses.CheckOutSuccess));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.SendEmailMessage, tokens));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.CheckOutSuccess));
 
                 return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
             }

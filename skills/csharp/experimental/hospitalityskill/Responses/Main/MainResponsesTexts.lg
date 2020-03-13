@@ -1,0 +1,32 @@
+# WelcomeMessage.Text(Data)
+- Welcome to the Hospitality Skill!
+
+# HelpMessage.Text(Data)
+- I can answer any questions about the hotel, book you a car, order room service, or change the temperature and lights in your room.
+
+# GreetingMessage.Text(Data)
+- Hi!
+- Hi there!
+- Hello!
+
+# GoodbyeMessage.Text(Data)
+- Goodbye!
+
+# LogOut.Text(Data)
+- Your sign out was successful.
+- You have successfully signed out.
+- You have been logged out.
+
+# FeatureNotAvailable.Text(Data)
+- ${FeatureNotAvailableTextAndSpeak1(Data)}
+
+# FeatureNotAvailableTextAndSpeak1(Data)
+[Activity
+    Text = This feature is not yet available in this skill. Please try asking something else.
+    Speak = This feature is not yet available in thiskill. Please try asking something else.
+]
+
+# CancelMessage.Text(Data)
+- Ok, let's start over.
+
+

@@ -1,0 +1,20 @@
+[import](Shared.lg)
+[import](HospitalityStringsTexts.lg)
+
+# ReservationDetails(Data, Cards, Layout)
+[Activity
+    Text = ${ReservationDetails.Text(Data)}
+    Speak = ${ReservationDetails.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+]
+
+# UpdateReservation(Data, Cards, Layout)
+[Activity
+    Text = ${UpdateReservation.Text(Data)}
+    Speak = ${UpdateReservation.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+]
+
+

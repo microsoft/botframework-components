@@ -1,0 +1,85 @@
+[import](..\Shared\Shared.lg)
+[import](ExtendStayResponsesTexts.lg)
+
+# ExtendDatePrompt(Data, Cards, Layout)
+[Activity
+    Text = ${ExtendDatePrompt.Text(Data)}
+    Speak = ${ExtendDatePrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryExtendDate(Data, Cards, Layout)
+[Activity
+    Text = ${RetryExtendDate.Text(Data)}
+    Speak = ${RetryExtendDate.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# NotFutureDateError(Data, Cards, Layout)
+[Activity
+    Text = ${NotFutureDateError.Text(Data)}
+    Speak = ${NotFutureDateError.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmExtendStay(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmExtendStay.Text(Data)}
+    Speak = ${ConfirmExtendStay.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryConfirmExtendStay(Data, Cards, Layout)
+[Activity
+    Text = ${RetryConfirmExtendStay.Text(Data)}
+    Speak = ${RetryConfirmExtendStay.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ExtendStaySuccess(Data, Cards, Layout)
+[Activity
+    Text = ${ExtendStaySuccess.Text(Data)}
+    Speak = ${ExtendStaySuccess.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# SameDayRequested(Data, Cards, Layout)
+[Activity
+    Text = ${SameDayRequested.Text(Data)}
+    Speak = ${SameDayRequested.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# NumberEntityError(Data, Cards, Layout)
+[Activity
+    Text = ${NumberEntityError.Text(Data)}
+    Speak = ${NumberEntityError.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# ConfirmAddNights(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmAddNights.Text(Data)}
+    Speak = ${ConfirmAddNights.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+

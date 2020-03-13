@@ -11,6 +11,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Responses.ExtendStay;
 using HospitalitySkill.Responses.Shared;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -22,12 +23,12 @@ namespace HospitalitySkill.Dialogs
         public ExtendStayDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(ExtendStayDialog), settings, services, responseManager, conversationState, userState, hotelService, telemetryClient)
+            : base(nameof(ExtendStayDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
         {
             var extendStay = new WaterfallStep[]
             {
@@ -78,14 +79,14 @@ namespace HospitalitySkill.Dialogs
             {
                 convState.NumberEntity = entities.number[0];
 
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, object>
                 {
                     { "Number", convState.NumberEntity.ToString() }
                 };
 
                 return await sc.PromptAsync(DialogIds.CheckNumNights, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(ExtendStayResponses.ConfirmAddNights, tokens)
+                    Prompt = TemplateManager.GenerateActivity(ExtendStayResponses.ConfirmAddNights, tokens)
                 });
             }
 
@@ -124,7 +125,7 @@ namespace HospitalitySkill.Dialogs
                 return await Task.FromResult(true);
             }
 
-            await turnContext.SendActivityAsync(ResponseManager.GetResponse(ExtendStayResponses.NumberEntityError));
+            await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(ExtendStayResponses.NumberEntityError));
             return await Task.FromResult(false);
         }
 
@@ -139,8 +140,8 @@ namespace HospitalitySkill.Dialogs
                 // get extended reservation date
                 return await sc.PromptAsync(DialogIds.ExtendDatePrompt, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(ExtendStayResponses.ExtendDatePrompt),
-                    RetryPrompt = ResponseManager.GetResponse(ExtendStayResponses.RetryExtendDate)
+                    Prompt = TemplateManager.GenerateActivity(ExtendStayResponses.ExtendDatePrompt),
+                    RetryPrompt = TemplateManager.GenerateActivity(ExtendStayResponses.RetryExtendDate)
                 });
             }
 
@@ -196,16 +197,16 @@ namespace HospitalitySkill.Dialogs
                 // same date as current check-out date
                 if (dateObject.ToString(ReservationData.DateFormat) == userState.UserReservation.CheckOutDate)
                 {
-                    await turnContext.SendActivityAsync(ResponseManager.GetResponse(ExtendStayResponses.SameDayRequested));
+                    await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(ExtendStayResponses.SameDayRequested));
                 }
                 else
                 {
-                    var tokens = new StringDictionary
+                    var tokens = new Dictionary<string, object>
                     {
                         { "Date", userState.UserReservation.CheckOutDate }
                     };
 
-                    await turnContext.SendActivityAsync(ResponseManager.GetResponse(ExtendStayResponses.NotFutureDateError, tokens));
+                    await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(ExtendStayResponses.NotFutureDateError, tokens));
                 }
             }
 
@@ -216,7 +217,7 @@ namespace HospitalitySkill.Dialogs
         {
             var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
 
-            var tokens = new StringDictionary
+            var tokens = new Dictionary<string, object>
             {
                 { "Date", convState.UpdatedReservation.CheckOutDate }
             };
@@ -224,8 +225,8 @@ namespace HospitalitySkill.Dialogs
             // confirm reservation extension with user
             return await sc.PromptAsync(DialogIds.ConfirmExtendStay, new PromptOptions()
             {
-                Prompt = ResponseManager.GetResponse(ExtendStayResponses.ConfirmExtendStay, tokens),
-                RetryPrompt = ResponseManager.GetResponse(ExtendStayResponses.RetryConfirmExtendStay, tokens)
+                Prompt = TemplateManager.GenerateActivity(ExtendStayResponses.ConfirmExtendStay, tokens),
+                RetryPrompt = TemplateManager.GenerateActivity(ExtendStayResponses.RetryConfirmExtendStay, tokens)
             });
         }
 
@@ -259,16 +260,16 @@ namespace HospitalitySkill.Dialogs
 
             if (userState.UserReservation.CheckOutDate == convState.UpdatedReservation.CheckOutDate)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, object>
                 {
                     { "Date", userState.UserReservation.CheckOutDate }
                 };
 
                 var cardData = userState.UserReservation;
-                cardData.Title = string.Format(HospitalityStrings.UpdateReservation);
+                cardData.Title = TemplateManager.GetString(HospitalityStrings.UpdateReservation);
 
                 // check out date moved confirmation
-                var reply = ResponseManager.GetCardResponse(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
+                var reply = TemplateManager.GenerateActivity(ExtendStayResponses.ExtendStaySuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
                 await sc.Context.SendActivityAsync(reply);
 
                 return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));

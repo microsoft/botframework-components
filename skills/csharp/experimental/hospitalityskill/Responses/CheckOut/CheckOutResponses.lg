@@ -1,0 +1,58 @@
+[import](..\Shared\Shared.lg)
+[import](CheckOutResponsesTexts.lg)
+
+# ConfirmCheckOut(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmCheckOut.Text(Data)}
+    Speak = ${ConfirmCheckOut.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryConfirmCheckOut(Data, Cards, Layout)
+[Activity
+    Text = ${RetryConfirmCheckOut.Text(Data)}
+    Speak = ${RetryConfirmCheckOut.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# EmailPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${EmailPrompt.Text(Data)}
+    Speak = ${EmailPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# InvalidEmailPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${InvalidEmailPrompt.Text(Data)}
+    Speak = ${InvalidEmailPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# SendEmailMessage(Data, Cards, Layout)
+[Activity
+    Text = ${SendEmailMessage.Text(Data)}
+    Speak = ${SendEmailMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# CheckOutSuccess(Data, Cards, Layout)
+[Activity
+    Text = ${CheckOutSuccess.Text(Data)}
+    Speak = ${CheckOutSuccess.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+

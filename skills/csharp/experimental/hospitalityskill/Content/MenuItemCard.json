@@ -1,7 +1,4 @@
-{
-  "type": "AdaptiveCard",
-  "id": "MenuItemCard",
-  "body": [
+
     {
       "type": "Container",
       "items": [
@@ -14,7 +11,7 @@
               "items": [
                 {
                   "type": "TextBlock",
-                  "text": "{Name} {Price}",
+                  "text": "${if(Data.Name == null, '', Data.Name)} ${if(Data.Price == null, '', Data.Price)}",
                   "weight": "Bolder"
                 }
               ]
@@ -30,7 +27,7 @@
                   "color": "Warning",
                   "weight": "Bolder",
                   "size": "Small",
-                  "isVisible": "{GlutenFree}"
+                  "isVisible": "${if(Data.GlutenFree == null, '', Data.GlutenFree)}"
                 }
               ],
               "verticalContentAlignment": "Center"
@@ -46,7 +43,7 @@
                   "color": "Good",
                   "weight": "Bolder",
                   "size": "Small",
-                  "isVisible": "{Vegetarian}"
+                  "isVisible": "${if(Data.Vegetarian == null, '', Data.Vegetarian)}"
                 }
               ],
               "verticalContentAlignment": "Center"
@@ -55,14 +52,10 @@
         },
         {
           "type": "TextBlock",
-          "text": "{Description}",
+          "text": "${if(Data.Description == null, '', Data.Description)}",
           "wrap": true,
           "horizontalAlignment": "Left",
           "spacing": "None"
         }
       ]
     }
-  ],
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "version": "1.0"
-}

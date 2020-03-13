@@ -1,0 +1,75 @@
+[import](..\Shared\Shared.lg)
+[import](RoomServiceResponsesTexts.lg)
+
+# MenuPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${MenuPrompt.Text(Data)}
+    Speak = ${MenuPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ChooseOneMenu(Data, Cards, Layout)
+[Activity
+    Text = ${ChooseOneMenu.Text(Data)}
+    Speak = ${ChooseOneMenu.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# FoodOrder(Data, Cards, Layout)
+[Activity
+    Text = ${FoodOrder.Text(Data)}
+    Speak = ${FoodOrder.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryFoodOrder(Data, Cards, Layout)
+[Activity
+    Text = ${RetryFoodOrder.Text(Data)}
+    Speak = ${RetryFoodOrder.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ItemsNotAvailable(Data, Cards, Layout)
+[Activity
+    ${ItemsNotAvailable.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# AddMore(Data, Cards, Layout)
+[Activity
+    Text = ${AddMore.Text(Data)}
+    Speak = ${AddMore.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ConfirmOrder(Data, Cards, Layout)
+[Activity
+    Text = ${ConfirmOrder.Text(Data)}
+    Speak = ${ConfirmOrder.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# FinalOrderConfirmation(Data, Cards, Layout)
+[Activity
+    Text = ${FinalOrderConfirmation.Text(Data)}
+    Speak = ${FinalOrderConfirmation.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+

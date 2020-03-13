@@ -1,0 +1,28 @@
+# ExtendDatePrompt.Text(Data)
+- What day would you like to stay until?
+
+# RetryExtendDate.Text(Data)
+- Please specify the month and date you would like to extend your stay until.
+
+# NotFutureDateError.Text(Data)
+- It seems like the date you requested is earlier than your current check-out date, which is ${if(Data.Date == null, '', Data.Date)}. Please specify a later date.
+
+# ConfirmExtendStay.Text(Data)
+- Ok. Should I go ahead and extend your stay until ${if(Data.Date == null, '', Data.Date)}?
+
+# RetryConfirmExtendStay.Text(Data)
+- Sorry I didn't get that. Would you like me to extend your stay until ${if(Data.Date == null, '', Data.Date)}?
+
+# ExtendStaySuccess.Text(Data)
+- Ok. Your check out date is now ${if(Data.Date == null, '', Data.Date)}.
+
+# SameDayRequested.Text(Data)
+- The date you've requested is the same as your current check-out date. Please specify a later date.
+
+# NumberEntityError.Text(Data)
+- Sorry we can't extend your stay for less than 1 night.
+
+# ConfirmAddNights.Text(Data)
+- Are you trying to extend your stay by ${if(Data.Number == null, '', Data.Number)} nights?
+
+

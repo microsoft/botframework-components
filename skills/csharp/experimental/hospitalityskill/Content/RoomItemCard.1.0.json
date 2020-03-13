@@ -1,8 +1,4 @@
-{
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "id": "RoomItemCard",
-  "body": [
+
     {
       "type": "ColumnSet",
       "columns": [
@@ -11,7 +7,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "{Quantity}",
+              "text": "${if(Data.Quantity == null, '', Data.Quantity)}",
               "horizontalAlignment": "Center"
             }
           ],
@@ -22,13 +18,10 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "{Item}"
+              "text": "${if(Data.Item == null, '', Data.Item)}"
             }
           ],
           "width": "stretch"
         }
       ]
     }
-  ],
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
-}

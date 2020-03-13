@@ -1,0 +1,28 @@
+# ItemPrompt.Text(Data)
+- What would you like to request?
+
+# RetryItemPrompt.Text(Data)
+- Sorry I didn't get that. What would you like to request?
+
+# ItemNotAvailable.Text(Data)
+- Sorry it seems like the following items you requested are not available: ${if(Data.Items == null, '', Data.Items)}
+
+# GuestServicesPrompt.Text(Data)
+- Would you like me to send a message to guest services about these items?
+
+# RetryGuestServicesPrompt.Text(Data)
+- Sorry I didn't understand that. Would you like me to send a message to guest services?
+
+# GuestServicesConfirm.Text(Data)
+- ${GuestServicesConfirmTextAndSpeak1(Data)}
+
+# GuestServicesConfirmTextAndSpeak1(Data)
+[Activity
+    Text = Ok! I have forwarded your specific request to guest services. You should hear from them within the next hour.
+    Speak = Ok! I have forwarded your specific request to guest services. You should hear from them within the next hour
+]
+
+# ItemsRequested.Text(Data)
+- These items will be brought to your room shortly.
+
+

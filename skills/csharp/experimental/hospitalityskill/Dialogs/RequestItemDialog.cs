@@ -11,6 +11,7 @@ using HospitalitySkill.Models;
 using HospitalitySkill.Models.ActionDefinitions;
 using HospitalitySkill.Responses.RequestItem;
 using HospitalitySkill.Services;
+using HospitalitySkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
@@ -23,12 +24,12 @@ namespace HospitalitySkill.Dialogs
         public RequestItemDialog(
             BotSettings settings,
             BotServices services,
-            ResponseManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             UserState userState,
             IHotelService hotelService,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(RequestItemDialog), settings, services, responseManager, conversationState, userState, hotelService, telemetryClient)
+            : base(nameof(RequestItemDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
         {
             var requestItem = new WaterfallStep[]
             {
@@ -56,8 +57,8 @@ namespace HospitalitySkill.Dialogs
                 // prompt for item
                 return await sc.PromptAsync(DialogIds.ItemPrompt, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(RequestItemResponses.ItemPrompt),
-                    RetryPrompt = ResponseManager.GetResponse(RequestItemResponses.RetryItemPrompt)
+                    Prompt = TemplateManager.GenerateActivity(RequestItemResponses.ItemPrompt),
+                    RetryPrompt = TemplateManager.GenerateActivity(RequestItemResponses.RetryItemPrompt)
                 });
             }
 
@@ -135,17 +136,17 @@ namespace HospitalitySkill.Dialogs
 
             if (notAvailable.Count > 0)
             {
-                var tokens = new StringDictionary
+                var tokens = new Dictionary<string, object>
                 {
                     { "Items", notAvailable.Aggregate(string.Empty, (last, item) => last + $"{Environment.NewLine}- {item.Item[0]}") }
                 };
-                var reply = ResponseManager.GetResponse(RequestItemResponses.ItemNotAvailable, tokens);
+                var reply = TemplateManager.GenerateActivity(RequestItemResponses.ItemNotAvailable, tokens);
                 await sc.Context.SendActivityAsync(reply);
 
                 return await sc.PromptAsync(DialogIds.GuestServicesPrompt, new PromptOptions()
                 {
-                    Prompt = ResponseManager.GetResponse(RequestItemResponses.GuestServicesPrompt),
-                    RetryPrompt = ResponseManager.GetResponse(RequestItemResponses.RetryGuestServicesPrompt)
+                    Prompt = TemplateManager.GenerateActivity(RequestItemResponses.GuestServicesPrompt),
+                    RetryPrompt = TemplateManager.GenerateActivity(RequestItemResponses.RetryGuestServicesPrompt)
                 });
             }
 
@@ -159,7 +160,7 @@ namespace HospitalitySkill.Dialogs
                 if (promptContext.Recognized.Value)
                 {
                     // send request to guest services here
-                    await promptContext.Context.SendActivityAsync(ResponseManager.GetResponse(RequestItemResponses.GuestServicesConfirm));
+                    await promptContext.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.GuestServicesConfirm));
                 }
 
                 return await Task.FromResult(true);
@@ -197,8 +198,8 @@ namespace HospitalitySkill.Dialogs
                 await HotelService.RequestItems(convState.ItemList);
 
                 // if at least one item was available send this card reply
-                await sc.Context.SendActivityAsync(ResponseManager.GetCardResponse(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems));
-                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RequestItemResponses.ItemsRequested));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.ItemsRequested));
 
                 if (result != null)
                 {

@@ -34,7 +34,7 @@
                   "size": "Large",
                   "weight": "Bolder",
                   "color": "Light",
-                  "text": "{Type} Menu"
+                  "text": "${if(Data.Type == null, '', Data.Type)} Menu"
                 }
               ],
               "width": "stretch"
@@ -43,7 +43,7 @@
         },
         {
           "type": "TextBlock",
-          "text": "{TimeAvailable}",
+          "text": "${if(Data.TimeAvailable == null, '', Data.TimeAvailable)}",
           "weight": "Bolder",
           "color": "Light"
         }
@@ -52,10 +52,12 @@
     {
       "type": "Container",
       "id": "items",
-      "items": []
+      "items": [
+        ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}
+      ]
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.0",
-  "speak": "{Speak}"
+  "speak": "${if(Data.Speak == null, '', Data.Speak)}"
 }

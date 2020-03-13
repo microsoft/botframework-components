@@ -1,0 +1,66 @@
+[import](..\Shared\Shared.lg)
+[import](RequestItemResponsesTexts.lg)
+
+# ItemPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${ItemPrompt.Text(Data)}
+    Speak = ${ItemPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryItemPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${RetryItemPrompt.Text(Data)}
+    Speak = ${RetryItemPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# ItemNotAvailable(Data, Cards, Layout)
+[Activity
+    Text = ${ItemNotAvailable.Text(Data)}
+    Speak = ${ItemNotAvailable.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+# GuestServicesPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${GuestServicesPrompt.Text(Data)}
+    Speak = ${GuestServicesPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryGuestServicesPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${RetryGuestServicesPrompt.Text(Data)}
+    Speak = ${RetryGuestServicesPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# GuestServicesConfirm(Data, Cards, Layout)
+[Activity
+    ${GuestServicesConfirm.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+# ItemsRequested(Data, Cards, Layout)
+[Activity
+    Text = ${ItemsRequested.Text(Data)}
+    Speak = ${ItemsRequested.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]
+
+
