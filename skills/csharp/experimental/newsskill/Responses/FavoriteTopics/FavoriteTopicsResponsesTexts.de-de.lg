@@ -1,16 +1,14 @@
-﻿[import] (FavoriteTopicsResponses.lg)
-
-# FavoriteTopicPrompt.Text(Data)
+﻿# FavoriteTopicPrompt.Text(Data)
 - Was ist dein Lieblingsnachrichtenthema?
 
 # ShowFavoriteTopics.Text(Data)
 - Folgendes habe ich zu Ihrem Lieblingsthema gefunden:
 
 # ShowMultipleFavoriteTopics.Speak(Data)
-- Ich habe ein paar Nachrichten gefunden, hier eine Zusammenfassung der ersten: @{if(Data == null, '', Data)}
+- Ich habe ein paar Nachrichten gefunden, hier eine Zusammenfassung der ersten: ${if(Data == null, '', Data)}
 
 # ShowOneFavoriteTopics.Speak(Data)
-- @{if(Data == null, '', Data)}
+- ${if(Data == null, '', Data)}
 
 # NoFavoriteTopics.Text(Data)
 - Entschuldigung, ich konnte keine Artikel zu diesem Thema finden.

@@ -1,13 +1,11 @@
-﻿[import] (TrendingArticlesResponses.lg)
-
-# ShowTrending.Text(Data)
+﻿# ShowTrending.Text(Data)
 - Here's what's trending:
 
 # ShowMultipleTrending.Speak(Data)
-- I found a few news stories, here's the title of the first: @{if(Data == null, '', Data)}
+- I found a few news stories, here's the title of the first: ${if(Data == null, '', Data)}
 
 # ShowOneTrending.Speak(Data)
-- @{if(Data == null, '', Data)}
+- ${if(Data == null, '', Data)}
 
 # NoTrending.Text(Data)
 - Sorry, I couldn't find any trending articles.

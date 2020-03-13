@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
@@ -6,16 +8,12 @@ using NewsSkill.Responses.FavoriteTopics;
 using NewsSkill.Responses.FindArticles;
 using NewsSkill.Responses.Main;
 using NewsSkill.Responses.TrendingArticles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NewsSkill.Responses
 {
     public class HeroCardResponses
     {
-        public static IMessageActivity SendIntroCard(ITurnContext turnContext, LocaleTemplateEngineManager localeTemplateEngineManager)
+        public static IMessageActivity SendIntroCard(ITurnContext turnContext, LocaleTemplateManager localeTemplateEngineManager)
         {
             var response = turnContext.Activity.CreateReply();
 
@@ -31,7 +29,7 @@ namespace NewsSkill.Responses
             return response;
         }
 
-        public static IMessageActivity SendHelpCard(ITurnContext turnContext, LocaleTemplateEngineManager localeTemplateEngineManager)
+        public static IMessageActivity SendHelpCard(ITurnContext turnContext, LocaleTemplateManager localeTemplateEngineManager)
         {
             var response = turnContext.Activity.CreateReply();
             response.Attachments = new List<Attachment>
@@ -51,7 +49,7 @@ namespace NewsSkill.Responses
             return response;
         }
 
-        public static IMessageActivity ShowFindArticleCards(ITurnContext context, LocaleTemplateEngineManager localeTemplateEngineManager, dynamic data, bool isFindingFavorite = false)
+        public static IMessageActivity ShowFindArticleCards(ITurnContext context, LocaleTemplateManager localeTemplateEngineManager, dynamic data, bool isFindingFavorite = false)
         {
             var response = context.Activity.CreateReply();
             var articles = data as List<NewsArticle>;
@@ -110,7 +108,7 @@ namespace NewsSkill.Responses
             return response;
         }
 
-        public static Activity ShowTrendingCards(ITurnContext context, LocaleTemplateEngineManager localeTemplateEngineManager, dynamic data)
+        public static Activity ShowTrendingCards(ITurnContext context, LocaleTemplateManager localeTemplateEngineManager, dynamic data)
         {
             var response = context.Activity.CreateReply();
             var articles = data as List<NewsTopic>;

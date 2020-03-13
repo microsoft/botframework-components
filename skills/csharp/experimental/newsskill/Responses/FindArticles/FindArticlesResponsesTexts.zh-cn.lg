@@ -1,13 +1,11 @@
-﻿[import] (FindArticlesResponses.lg)
-
-# ShowArticles.Text(Data)
+﻿# ShowArticles.Text(Data)
 - 以下是我找到的新闻：
 
 # ShowMultipleArticles.Speak(Data)
-- 我找到了一些新闻，第一个是： @{if(Data == null, '', Data)}
+- 我找到了一些新闻，第一个是： ${if(Data == null, '', Data)}
 
 # ShowOneArticles.Speak(Data)
-- @{if(Data == null, '', Data)}
+- ${if(Data == null, '', Data)}
 
 # NoArticles.Text(Data)
 - 抱歉，我没有找到和这个话题相关的文章。

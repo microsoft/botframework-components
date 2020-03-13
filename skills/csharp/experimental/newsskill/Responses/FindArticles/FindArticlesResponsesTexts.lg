@@ -1,13 +1,11 @@
-﻿[import] (FindArticlesResponses.lg)
-
-# ShowArticles.Text(Data)
+﻿# ShowArticles.Text(Data)
 - Here's what I found:
 
 # ShowMultipleArticles.Speak(Data)
-- I found a few news stories, here's a summary of the first: @{if(Data == null, '', Data)}
+- I found a few news stories, here's a summary of the first: ${if(Data == null, '', Data)}
 
 # ShowOneArticles.Speak(Data)
-- @{if(Data == null, '', Data)}
+- ${if(Data == null, '', Data)}
 
 # NoArticles.Text(Data)
 - Sorry, I couldn't find any articles on that topic.

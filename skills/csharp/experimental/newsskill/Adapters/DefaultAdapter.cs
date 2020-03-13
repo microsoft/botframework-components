@@ -27,13 +27,13 @@ namespace NewsSkill.Adapters
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager templateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.ERROR));
+                await context.SendActivityAsync(templateManager.GenerateActivityForLocale(MainStrings.ERROR));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"News Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
 
@@ -55,7 +55,6 @@ namespace NewsSkill.Adapters
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }

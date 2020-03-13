@@ -8,19 +8,16 @@ using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Dialogs;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
-using NewsSkill.Models;
-using NewsSkill.Responses.Main;
-using NewsSkill.Services;
-using SkillServiceLibrary.Utilities;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using NewsSkill.Models;
 using NewsSkill.Models.Action;
-using Newtonsoft.Json.Linq;
 using NewsSkill.Responses;
+using NewsSkill.Responses.Main;
+using NewsSkill.Services;
+using Newtonsoft.Json.Linq;
+using SkillServiceLibrary.Utilities;
 
 namespace NewsSkill.Dialogs
 {
@@ -33,19 +30,17 @@ namespace NewsSkill.Dialogs
         private Dialog _findArticlesDialog;
         private Dialog _trendingArticlesDialog;
         private Dialog _favoriteTopicsDialog;
-        private LocaleTemplateEngineManager _localeTemplateEngineManager;
-        //private MainResponses _responder = new MainResponses();
+        private LocaleTemplateManager _templateManager;
 
         public MainDialog(
             IServiceProvider serviceProvider,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager localeTemplateEngineManager)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            //_responseManager = serviceProvider.GetService<ResponseManager>();
-            _localeTemplateEngineManager = localeTemplateEngineManager;
+            _templateManager = localeTemplateEngineManager;
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -154,8 +149,7 @@ namespace NewsSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.CANCELLED));
-                                //await _responder.ReplyWith(innerDc.Context, MainResponses.Cancelled);
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CANCELLED));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -164,8 +158,7 @@ namespace NewsSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _localeTemplateEngineManager));
-                                //await _responder.ReplyWith(innerDc.Context, MainResponses.Help);
+                                await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _templateManager));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -188,12 +181,12 @@ namespace NewsSkill.Dialogs
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
-                var prompt = stepContext.Options as Activity ?? HeroCardResponses.SendIntroCard(stepContext.Context, _localeTemplateEngineManager);
+                var prompt = stepContext.Options as Activity ?? HeroCardResponses.SendIntroCard(stepContext.Context, _templateManager);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
                 var activity = stepContext.Context.Activity;
                 if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    prompt = HeroCardResponses.SendIntroCard(stepContext.Context, _localeTemplateEngineManager);
+                    prompt = HeroCardResponses.SendIntroCard(stepContext.Context, _templateManager);
                 }
 
                 var promptOptions = new PromptOptions
@@ -243,8 +236,7 @@ namespace NewsSkill.Dialogs
                     case NewsLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.CONFUSED));
-                            //await _responder.ReplyWith(stepContext.Context, MainResponses.Confused);
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CONFUSED));
                             break;
                         }
 
@@ -339,7 +331,7 @@ namespace NewsSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.COMPLETED), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(MainStrings.COMPLETED), cancellationToken);
             }
         }
 

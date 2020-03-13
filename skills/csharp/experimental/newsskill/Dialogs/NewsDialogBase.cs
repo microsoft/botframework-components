@@ -19,7 +19,7 @@ namespace NewsSkill.Dialogs
     public class NewsDialogBase : ComponentDialog
     {
         protected const string LuisResultKey = "LuisResult";
-        protected LocaleTemplateEngineManager localeTemplateEngineManager;
+        protected LocaleTemplateManager templateManager;
         private AzureMapsService _mapsService;
 
         public NewsDialogBase(
@@ -29,7 +29,7 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IBotTelemetryClient telemetryClient)
             : base(dialogId)
         {
@@ -37,7 +37,7 @@ namespace NewsSkill.Dialogs
             ConvAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
             UserAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
             TelemetryClient = telemetryClient;
-            this.localeTemplateEngineManager = localeTemplateEngineManager;
+            this.templateManager = templateManager;
 
             var mapsKey = settings.AzureMapsKey ?? throw new Exception("The AzureMapsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
             _mapsService = mapsService;
@@ -93,8 +93,8 @@ namespace NewsSkill.Dialogs
             // Prompt user for location
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.MarketPrompt),
-                RetryPrompt = localeTemplateEngineManager.GenerateActivityForLocale(MainStrings.MarketRetryPrompt)
+                Prompt = templateManager.GenerateActivityForLocale(MainStrings.MarketPrompt),
+                RetryPrompt = templateManager.GenerateActivityForLocale(MainStrings.MarketRetryPrompt)
             });
         }
 

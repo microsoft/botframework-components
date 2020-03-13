@@ -9,7 +9,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using NewsSkill.Models;
 using NewsSkill.Responses;
-using NewsSkill.Responses.TrendingArticles;
 using NewsSkill.Services;
 
 namespace NewsSkill.Dialogs
@@ -24,12 +23,11 @@ namespace NewsSkill.Dialogs
             ConversationState conversationState,
             UserState userState,
             AzureMapsService mapsService,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager templateManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(TrendingArticlesDialog), settings, services, conversationState, userState, mapsService, localeTemplateEngineManager, telemetryClient)
+            : base(nameof(TrendingArticlesDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
         {
             TelemetryClient = telemetryClient;
-            base.localeTemplateEngineManager = localeTemplateEngineManager;
 
             var key = settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
@@ -51,7 +49,7 @@ namespace NewsSkill.Dialogs
             var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
 
             var articles = await _client.GetTrendingNews(userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, localeTemplateEngineManager, articles));
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, templateManager, articles));
 
             var skillOptions = sc.Options as NewsSkillOptionBase;
             if (skillOptions != null && skillOptions.IsAction)
