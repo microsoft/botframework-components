@@ -1,5 +1,3 @@
-[import] (MainResponses.lg)
-
 # WelcomeMessage.Text(Data)
 - Ich bin der Wetterkünstler und kann das Wetter nachschlagen.
 

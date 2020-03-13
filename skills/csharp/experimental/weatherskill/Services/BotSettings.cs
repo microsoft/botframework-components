@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Microsoft.Bot.Builder.Skills.Models.Manifest;
 using Microsoft.Bot.Solutions;
 
 namespace WeatherSkill.Services

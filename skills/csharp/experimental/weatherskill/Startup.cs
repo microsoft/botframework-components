@@ -13,8 +13,6 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Builder.Skills;
-using Microsoft.Bot.Builder.Skills.Auth;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.TaskExtensions;
@@ -40,8 +38,6 @@ namespace WeatherSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -77,7 +73,7 @@ namespace WeatherSkill
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
             // Configure storage
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -101,7 +97,7 @@ namespace WeatherSkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(EngineWrapper.CreateLocaleTemplateEngineManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // Register dialogs
             services.AddTransient<MainDialog>();

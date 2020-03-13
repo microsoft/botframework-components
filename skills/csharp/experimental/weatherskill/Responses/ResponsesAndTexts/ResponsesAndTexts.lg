@@ -1,3 +1,2 @@
-[import] (..\Main\MainResponsesTexts.lg)
-[import] (..\Shared\SharedResponsesTexts.lg)
-[import] (..\Shared\Shared.lg)
+[import](..\Main\MainResponses.lg)
+[import](..\Shared\SharedResponses.lg)

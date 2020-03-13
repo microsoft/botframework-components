@@ -31,11 +31,11 @@ namespace WeatherSkill.Dialogs
         public ForecastDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateEngineManager localeTemplateEngineManager,
+            LocaleTemplateManager localeTemplateManager,
             ConversationState conversationState,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(ForecastDialog), settings, services, localeTemplateEngineManager, conversationState, telemetryClient)
+            : base(nameof(ForecastDialog), settings, services, localeTemplateManager, conversationState, telemetryClient)
         {
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _services = services;
@@ -86,7 +86,7 @@ namespace WeatherSkill.Dialogs
         /// </summary>
         private async Task<DialogTurnResult> GeographyPrompt(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var prompt = LocaleTemplateEngineManager.GetResponse(SharedResponses.LocationPrompt);
+            var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
             return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt });
         }
 
@@ -97,7 +97,7 @@ namespace WeatherSkill.Dialogs
         {
             if (!promptContext.Recognized.Succeeded)
             {
-                var prompt = LocaleTemplateEngineManager.GetResponse(SharedResponses.LocationPrompt);
+                var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
                 await promptContext.Context.SendActivityAsync(prompt, cancellationToken: cancellationToken);
                 return false;
             }
@@ -197,7 +197,7 @@ namespace WeatherSkill.Dialogs
 
             var templateId = SharedResponses.SixHourForecast;
             var card = new Card(GetDivergedCardName(stepContext.Context, "SixHourForecast"), forecastModel);
-            var response = LocaleTemplateEngineManager.GetCardResponse(templateId, card, tokens: null);
+            var response = LocaleTemplateManager.GenerateActivity(templateId, card, tokens: null);
 
             await stepContext.Context.SendActivityAsync(response);
 

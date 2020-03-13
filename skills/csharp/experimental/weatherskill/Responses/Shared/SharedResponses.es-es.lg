@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](SharedResponsesTexts.lg)
+[import](SharedResponsesTexts.es-es.lg)
 
 # LocationPrompt(Data, Cards, Layout)
 [Activity

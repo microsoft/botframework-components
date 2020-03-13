@@ -1,3 +1,2 @@
-[import] (..\Main\MainResponsesTexts.fr-fr.lg)
-[import] (..\Shared\SharedResponsesTexts.fr-fr.lg)
-[import] (..\Shared\Shared.lg)
+[import](..\Main\MainResponses.fr-fr.lg)
+[import](..\Shared\SharedResponses.fr-fr.lg)
