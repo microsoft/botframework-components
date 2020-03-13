@@ -28,13 +28,13 @@ namespace ITSMSkill.Bots
             ConversationState conversationState,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            LocaleTemplateManager responseManager)
+            LocaleTemplateManager templateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(responseManager.GenerateActivity(SharedResponses.ErrorMessage));
+                await context.SendActivityAsync(templateManager.GenerateActivity(SharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
                 if (context.IsSkill())

@@ -58,7 +58,7 @@ namespace ITSMSkill.Services
                             EndpointKey = kb.EndpointKey,
                             Host = kb.Hostname,
                         };
-                        var qnaMaker = new QnAMaker(qnaEndpoint);
+
                         set.QnAConfiguration.Add(kb.Id, qnaEndpoint);
                     }
                 }
