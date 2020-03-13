@@ -101,7 +101,7 @@ namespace RestaurantBookingSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GetResponse(RestaurantBookingSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.ErrorMessage));
 
             // clear state
             var state = await ConversationStateAccessor.GetAsync(sc.Context);
