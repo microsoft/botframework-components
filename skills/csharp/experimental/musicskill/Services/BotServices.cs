@@ -58,8 +58,7 @@ namespace MusicSkill.Services
                             EndpointKey = kb.EndpointKey,
                             Host = kb.Hostname,
                         };
-                        var qnaMaker = new QnAMaker(qnaEndpoint);
-                        set.QnAServices.Add(kb.Id, qnaMaker);
+                        set.QnAConfiguration.Add(kb.Id, qnaEndpoint);
                     }
                 }
 

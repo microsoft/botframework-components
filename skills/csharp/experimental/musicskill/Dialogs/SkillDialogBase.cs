@@ -26,13 +26,13 @@ namespace MusicSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             LocaleTemplateEngineManager localeTemplateEngineManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
-            LocaleTemplateEngineManager = localeTemplateEngineManager;
+            LocaleTemplateManager = templateManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
             Settings = settings;
@@ -52,7 +52,7 @@ namespace MusicSkill.Dialogs
 
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
-        protected LocaleTemplateEngineManager LocaleTemplateEngineManager { get; set; }
+        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -174,7 +174,7 @@ namespace MusicSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateEngineManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
         }
     }
 }

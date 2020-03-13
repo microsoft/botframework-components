@@ -25,7 +25,7 @@ namespace MusicSkill.Dialogs
     {
         private BotSettings _settings;
         private BotServices _services;
-        private LocaleTemplateEngineManager _localeTemplateEngineManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<SkillState> _stateAccessor;
         private Dialog _playMusicDialog;
 
@@ -36,7 +36,7 @@ namespace MusicSkill.Dialogs
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _localeTemplateEngineManager = serviceProvider.GetService<LocaleTemplateEngineManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Create conversation state properties
@@ -168,7 +168,7 @@ namespace MusicSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -177,7 +177,7 @@ namespace MusicSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -187,7 +187,7 @@ namespace MusicSkill.Dialogs
                             {
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -213,12 +213,12 @@ namespace MusicSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(MainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.WelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(MainResponses.WelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -247,14 +247,14 @@ namespace MusicSkill.Dialogs
                     case MusicSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(SharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
@@ -330,7 +330,7 @@ namespace MusicSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateEngineManager.GenerateActivityForLocale(MainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(MainResponses.CompletedMessage), cancellationToken);
             }
         }
 

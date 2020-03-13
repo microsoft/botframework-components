@@ -25,15 +25,13 @@ namespace MusicSkill.Bots
             ICredentialProvider credentialProvider,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            UserState userState,
-            ConversationState conversationState,
-            LocaleTemplateEngineManager localeTemplateEngineManager)
+            LocaleTemplateManager templateManager)
             : base(credentialProvider)
         {
             OnTurnError = async (context, exception) =>
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(context.Activity.Locale ?? "en-us");
-                await context.SendActivityAsync(localeTemplateEngineManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
+                await context.SendActivityAsync(templateManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
                 await context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Skill Error: {exception.Message} | {exception.StackTrace}"));
                 telemetryClient.TrackException(exception);
 
@@ -56,7 +54,6 @@ namespace MusicSkill.Bots
             Use(new ShowTypingMiddleware());
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
-            Use(new SkillMiddleware(userState, conversationState, conversationState.CreateProperty<DialogState>(nameof(DialogState))));
             Use(new SetSpeakMiddleware());
         }
     }
