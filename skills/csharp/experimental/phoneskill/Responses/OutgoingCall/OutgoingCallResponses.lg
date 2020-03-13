@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import] (OutgoingCallResponses.lg)
+[import](OutgoingCallResponsesTexts.lg)
 
 # RecipientPrompt(Data, Cards, Layout)
 [Activity

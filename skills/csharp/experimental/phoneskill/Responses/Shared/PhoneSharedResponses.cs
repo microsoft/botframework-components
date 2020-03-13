@@ -9,7 +9,7 @@ namespace PhoneSkill.Responses.Shared
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class PhoneSharedResponses : IResponseIdCollection
+    public class PhoneSharedResponses
     {
         // Generated accessors
         public const string DidntUnderstandMessage = "DidntUnderstandMessage";

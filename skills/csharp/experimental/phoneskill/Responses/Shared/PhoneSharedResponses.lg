@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import] (PhoneSharedResponses.lg)
+[import](PhoneSharedResponsesTexts.lg)
 
 # DidntUnderstandMessage(Data, Cards, Layout)
 [Activity

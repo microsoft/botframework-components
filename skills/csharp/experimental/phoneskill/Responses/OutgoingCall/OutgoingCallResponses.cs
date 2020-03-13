@@ -9,7 +9,7 @@ namespace PhoneSkill.Responses.OutgoingCall
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class OutgoingCallResponses : IResponseIdCollection
+    public class OutgoingCallResponses
     {
         // Generated accessors
         public const string RecipientPrompt = "RecipientPrompt";
