@@ -95,7 +95,7 @@ namespace BingSearchSkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(EngineWrapper.CreateLocaleTemplateEngineManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateEngineManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // Register dialogs
             services.AddTransient<SearchDialog>();

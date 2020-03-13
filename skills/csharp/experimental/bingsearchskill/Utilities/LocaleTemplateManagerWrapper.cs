@@ -13,12 +13,12 @@ using Microsoft.Bot.Solutions.Responses;
 
 namespace BingSearchSkill.Utilities
 {
-    public static class EngineWrapper
+    public static class LocaleTemplateManagerWrapper
     {
         // TODO may not all be same
         public static readonly string PathBase = @"..\..\Content";
 
-        public static Activity GenerateActivity(this LocaleTemplateManager manager, Card card)
+        public static Activity GetCardResponse(this LocaleTemplateManager manager, Card card)
         {
             return manager.GenerateActivity(new Card[] { card });
         }
