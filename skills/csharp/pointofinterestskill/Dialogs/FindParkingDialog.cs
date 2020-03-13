@@ -23,13 +23,13 @@ namespace PointOfInterestSkill.Dialogs
         public FindParkingDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             RouteDialog routeDialog,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(FindParkingDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient, httpContext)
+            : base(nameof(FindParkingDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -72,7 +72,7 @@ namespace PointOfInterestSkill.Dialogs
                 return await sc.ReplaceDialogAsync(Actions.FindParking);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = ResponseManager.GetResponse(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (cards.Count == 0)
                 {
-                    var replyMessage = ResponseManager.GetResponse(POISharedResponses.NoLocationsFound);
+                    var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoLocationsFound);
                     await sc.Context.SendActivityAsync(replyMessage);
                     return await sc.EndDialogAsync();
                 }

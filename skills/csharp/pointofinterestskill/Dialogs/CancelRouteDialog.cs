@@ -20,12 +20,12 @@ namespace PointOfInterestSkill.Dialogs
         public CancelRouteDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(CancelRouteDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient, httpContext)
+            : base(nameof(CancelRouteDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -48,14 +48,14 @@ namespace PointOfInterestSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context);
                 if (state.ActiveRoute != null)
                 {
-                    var replyMessage = ResponseManager.GetResponse(CancelRouteResponses.CancelActiveRoute);
+                    var replyMessage = TemplateManager.GenerateActivity(CancelRouteResponses.CancelActiveRoute);
                     await sc.Context.SendActivityAsync(replyMessage);
                     state.ActiveRoute = null;
                     state.Destination = null;
                 }
                 else
                 {
-                    var replyMessage = ResponseManager.GetResponse(CancelRouteResponses.CannotCancelActiveRoute);
+                    var replyMessage = TemplateManager.GenerateActivity(CancelRouteResponses.CannotCancelActiveRoute);
                     await sc.Context.SendActivityAsync(replyMessage);
                 }
 

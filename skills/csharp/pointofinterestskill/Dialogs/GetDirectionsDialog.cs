@@ -19,12 +19,12 @@ namespace PointOfInterestSkill.Dialogs
         public GetDirectionsDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(GetDirectionsDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient, httpContext)
+            : base(nameof(GetDirectionsDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -59,7 +59,7 @@ namespace PointOfInterestSkill.Dialogs
                 return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = ResponseManager.GetResponse(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
         }
 
         protected async Task<DialogTurnResult> RouteToFindPointOfInterestDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
@@ -84,7 +84,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                 {
-                    await sc.Context.SendActivityAsync(ResponseManager.GetResponse(POISharedResponses.CancellingMessage));
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage));
                     return await sc.EndDialogAsync();
                 }
 

@@ -26,7 +26,7 @@ namespace PointOfInterestSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private BotServices _services;
-        private LocaleTemplateManager _responseManager;
+        private LocaleTemplateManager _templateManager;
         private IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
         private Dialog _routeDialog;
         private Dialog _cancelRouteDialog;
@@ -40,7 +40,7 @@ namespace PointOfInterestSkill.Dialogs
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
-            _responseManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             TelemetryClient = telemetryClient;
 
             // Initialize state accessor
@@ -179,7 +179,7 @@ namespace PointOfInterestSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(POISharedResponses.CancellingMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.CancellingMessage));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -188,7 +188,7 @@ namespace PointOfInterestSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(POIMainResponses.HelpMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
                                 interrupted = true;
                                 break;
@@ -199,7 +199,7 @@ namespace PointOfInterestSkill.Dialogs
                                 // Log user out of all accounts.
                                 await LogUserOut(innerDc);
 
-                                await innerDc.Context.SendActivityAsync(_responseManager.GetResponse(POIMainResponses.LogOut));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
                                 await innerDc.BeginDialogAsync(InitialDialogId);
                                 interrupted = true;
@@ -227,12 +227,12 @@ namespace PointOfInterestSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _responseManager.GetResponse(POIMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(POIMainResponses.FirstPromptMessage)
                 };
 
                 if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
                 {
-                    promptOptions.Prompt = _responseManager.GetResponse(POIMainResponses.PointOfInterestWelcomeMessage);
+                    promptOptions.Prompt = _templateManager.GenerateActivity(POIMainResponses.PointOfInterestWelcomeMessage);
                 }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
@@ -277,13 +277,13 @@ namespace PointOfInterestSkill.Dialogs
 
                     case PointOfInterestLuis.Intent.None:
                         {
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(POISharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.DidntUnderstandMessage));
                             break;
                         }
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_responseManager.GetResponse(POIMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.FeatureNotAvailable));
                             break;
                         }
                 }
@@ -351,7 +351,7 @@ namespace PointOfInterestSkill.Dialogs
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _responseManager.GetResponse(POIMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(POIMainResponses.CompletedMessage), cancellationToken);
             }
         }
 

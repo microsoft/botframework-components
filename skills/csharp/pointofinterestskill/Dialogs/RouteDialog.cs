@@ -28,12 +28,12 @@ namespace PointOfInterestSkill.Dialogs
         public RouteDialog(
             BotSettings settings,
             BotServices services,
-            LocaleTemplateManager responseManager,
+            LocaleTemplateManager templateManager,
             ConversationState conversationState,
             IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(RouteDialog), settings, services, responseManager, conversationState, serviceManager, telemetryClient, httpContext)
+            : base(nameof(RouteDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
         {
             TelemetryClient = telemetryClient;
 
@@ -76,7 +76,7 @@ namespace PointOfInterestSkill.Dialogs
                 return await sc.ReplaceDialogAsync(Actions.FindRouteToActiveLocation);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = ResponseManager.GetResponse(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace PointOfInterestSkill.Dialogs
                 if (state.Destination == null || !state.CheckForValidCurrentCoordinates())
                 {
                     // should not happen
-                    await sc.Context.SendActivityAsync(ResponseManager.GetResponse(RouteResponses.MissingActiveLocationErrorMessage));
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RouteResponses.MissingActiveLocationErrorMessage));
                     return await sc.EndDialogAsync();
                 }
 
@@ -213,14 +213,14 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (cards.Count() == 0)
                 {
-                    var replyMessage = ResponseManager.GetResponse(POISharedResponses.NoRouteFound);
+                    var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoRouteFound);
                     await sc.Context.SendActivityAsync(replyMessage);
 
                     return await sc.EndDialogAsync();
                 }
                 else if (cards.Count() == 1)
                 {
-                    var options = new PromptOptions { Prompt = ResponseManager.GetCardResponse(cards[0]) };
+                    var options = new PromptOptions { Prompt = TemplateManager.GenerateActivity(cards[0]) };
 
                     if (state.DestinationActionType == DestinationActionType.ShowDirectionsThenStartNavigation)
                     {
@@ -278,7 +278,7 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else
                 {
-                    var replyMessage = ResponseManager.GetResponse(RouteResponses.AskAboutRouteLater);
+                    var replyMessage = TemplateManager.GenerateActivity(RouteResponses.AskAboutRouteLater);
                     await sc.Context.SendActivityAsync(replyMessage);
                 }
 
@@ -301,7 +301,7 @@ namespace PointOfInterestSkill.Dialogs
             if (promptContext.Context.Activity.Type == ActivityTypes.Message)
             {
                 var message = promptContext.Context.Activity.AsMessageActivity();
-                if (message.Text.Contains(ResponseManager.GetString(PointOfInterestSharedStrings.START), StringComparison.InvariantCultureIgnoreCase))
+                if (message.Text.Contains(TemplateManager.GetString(PointOfInterestSharedStrings.START), StringComparison.InvariantCultureIgnoreCase))
                 {
                     promptContext.Recognized.Value = true;
                     return Task.FromResult(true);
@@ -325,7 +325,7 @@ namespace PointOfInterestSkill.Dialogs
                 {
                     { "Id", (i + 1).ToString() },
                 };
-                var suggestedActionValue = ResponseManager.GetResponse(RouteResponses.RouteSuggestedActionName, promptReplacements).Text;
+                var suggestedActionValue = TemplateManager.GenerateActivity(RouteResponses.RouteSuggestedActionName, promptReplacements).Text;
 
                 var choice = new Choice()
                 {
@@ -336,7 +336,7 @@ namespace PointOfInterestSkill.Dialogs
                 (cards[i].Data as RouteDirectionsModel).SubmitText = suggestedActionValue;
             }
 
-            options.Prompt = cards == null ? ResponseManager.GetResponse(prompt) : ResponseManager.GetCardResponse(prompt, cards);
+            options.Prompt = cards == null ? TemplateManager.GenerateActivity(prompt) : TemplateManager.GenerateActivity(prompt, cards);
             options.Prompt.Speak = SpeechUtility.ListToSpeechReadyString(options.Prompt);
 
             return options;
