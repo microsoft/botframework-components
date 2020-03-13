@@ -24,9 +24,9 @@
 - You need to log in so I can take further action.
 
 # AuthFailed.Text(Data)
-- @{AuthFailedTextAndSpeak1(Data)}
-- @{AuthFailedTextAndSpeak2(Data)}
-- @{AuthFailedTextAndSpeak3(Data)}
+- ${AuthFailedTextAndSpeak1(Data)}
+- ${AuthFailedTextAndSpeak2(Data)}
+- ${AuthFailedTextAndSpeak3(Data)}
 
 # AuthFailedTextAndSpeak1(Data)
 [Activity

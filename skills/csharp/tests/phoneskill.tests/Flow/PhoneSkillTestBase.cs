@@ -10,16 +10,16 @@ using System.Threading;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
-using Microsoft.Bot.Configuration;
-using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PhoneSkill.Bots;
@@ -29,7 +29,6 @@ using PhoneSkill.Models;
 using PhoneSkill.Services;
 using PhoneSkill.Tests.TestDouble;
 using PhoneSkill.Utilities;
-using Microsoft.Bot.Builder.LanguageGeneration;
 
 namespace PhoneSkill.Tests.Flow
 {
@@ -51,7 +50,7 @@ namespace PhoneSkill.Tests.Flow
 
         public IServiceManager ServiceManager { get; set; }
 
-        public LocaleTemplateManager TemplateEngine { get; set; }
+        public LocaleTemplateManager TemplateManager { get; set; }
 
         public Templates Templates { get; set; }
 
@@ -103,8 +102,8 @@ namespace PhoneSkill.Tests.Flow
             });
 
             // Configure localized responses
-            TemplateEngine = LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us");
-            Services.AddSingleton(TemplateEngine);
+            TemplateManager = LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us");
+            Services.AddSingleton(TemplateManager);
             Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
