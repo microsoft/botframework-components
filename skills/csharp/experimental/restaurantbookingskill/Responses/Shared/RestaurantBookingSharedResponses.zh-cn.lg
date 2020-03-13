@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](RestaurantBookingSharedResponsesTexts.lg)
+[import](RestaurantBookingSharedResponsesTexts.zh-cn.lg)
 
 # DidntUnderstandMessage(Data, Cards, Layout)
 [Activity

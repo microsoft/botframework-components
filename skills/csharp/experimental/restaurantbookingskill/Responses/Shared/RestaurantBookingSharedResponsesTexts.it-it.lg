@@ -1,5 +1,3 @@
-[import] (RestaurantBookingSharedResponses.lg)
-
 # BookRestaurantDatePrompt.Text(Data)
 - Che giorno vorresti per la tua prenotazione?
 
@@ -15,7 +13,7 @@
 - Che tipo di ristorante ti interessa?
 
 # BookRestaurantFoodSelectionPromptTextAndSpeak1.Speak(Data)
-- Che tipo di ristorante ti interessa? @{if(Data.FoodTypeList == null, '', Data.FoodTypeList)}
+- Che tipo di ristorante ti interessa? ${if(Data.FoodTypeList == null, '', Data.FoodTypeList)}
 
 # BookRestaurantFoodSelectionPrompt.S1(Data)
 - Annulla
@@ -90,7 +88,7 @@
 - Ho trovato le opzioni di "0" .
 
 # BookRestaurantRestaurantSelectionPromptTextAndSpeak1.Speak(Data)
-- Ho trovato le opzioni di "0" . @{if(Data.RestaurantList == null, '', Data.RestaurantList)}.
+- Ho trovato le opzioni di "0" . ${if(Data.RestaurantList == null, '', Data.RestaurantList)}.
 
 # BookRestaurantRestaurantSelectionPrompt.S1(Data)
 - Annulla

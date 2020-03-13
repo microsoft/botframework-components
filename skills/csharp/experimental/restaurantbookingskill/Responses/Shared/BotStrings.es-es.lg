@@ -1,5 +1,5 @@
 [import](..\Shared\Shared.lg)
-[import](BotStringsTexts.lg)
+[import](BotStringsTexts.es-es.lg)
 
 # Afternoon(Data, Cards, Layout)
 [Activity

@@ -9,7 +9,7 @@ namespace RestaurantBookingSkill.Utilities
 {
     public static class DateTimeExtensions
     {
-        public static string ToSpeakString(this DateTime dateTime, LocaleTemplateEngineManager localeTemplateEngine, bool includePrefix = false)
+        public static string ToSpeakString(this DateTime dateTime, LocaleTemplateManager localeTemplateEngine, bool includePrefix = false)
         {
             if (dateTime.ToShortDateString().ToLower() == DateTime.UtcNow.ToShortDateString())
             {
