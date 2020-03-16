@@ -308,20 +308,23 @@ namespace WeatherSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
+
             if (stepContext.Context.IsSkill())
             {
                 var result = stepContext.Result;
 
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
-                if (state.IsAction && result == null)
+                if (state.IsAction && result as ActionResult == null)
                 {
                     result = new ActionResult() { ActionSuccess = false };
                 }
 
+                state.Clear();
                 return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _localeTemplateManager.GenerateActivity(MainResponses.CompletedMessage), cancellationToken);
             }
         }

@@ -371,20 +371,23 @@ namespace ToDoSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
+
             if (stepContext.Context.IsSkill())
             {
                 var result = stepContext.Result;
 
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
                 if (state.IsAction && result == null)
                 {
                     result = new TodoListInfo() { ActionSuccess = false };
                 }
 
+                state.Clear();
                 return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(ToDoMainResponses.CompletedMessage), cancellationToken);
             }
         }

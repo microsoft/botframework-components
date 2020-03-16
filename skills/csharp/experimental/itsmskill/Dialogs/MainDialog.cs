@@ -326,7 +326,7 @@ namespace ITSMSkill.Dialogs
                 var result = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
-                if (state.IsAction && result == null)
+                if (state.IsAction && result as ActionResult == null)
                 {
                     result = new ActionResult(false);
                 }

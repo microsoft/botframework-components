@@ -315,15 +315,17 @@ namespace MusicSkill.Dialogs
             {
                 var result = stepContext.Result;
 
-                if (state.IsAction && result == null)
+                if (state.IsAction && result as ActionResult == null)
                 {
                     result = new ActionResult() { ActionSuccess = false };
                 }
 
+                state.Clear();
                 return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivityForLocale(MainResponses.CompletedMessage), cancellationToken);
             }
         }
