@@ -1,13 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using EventSkill.Bots;
 using EventSkill.Dialogs;
-using EventSkill.Responses.FindEvents;
-using EventSkill.Responses.Main;
-using EventSkill.Responses.Shared;
 using EventSkill.Services;
+using EventSkill.Utilities;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,10 +15,9 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Responses;
-using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Solutions;
+using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,8 +34,6 @@ namespace EventSkill
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("cognitivemodels.json", optional: true)
                 .AddJsonFile($"cognitivemodels.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("skills.json", optional: true)
-                .AddJsonFile($"skills.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -88,7 +82,7 @@ namespace EventSkill
             // Configure storage
             // Uncomment the following line for local development without Cosmos Db
             // services.AddSingleton<IStorage, MemoryStorage>();
-            services.AddSingleton<IStorage>(new CosmosDbStorage(settings.CosmosDb));
+            services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -103,11 +97,7 @@ namespace EventSkill
             services.AddHostedService<QueuedHostedService>();
 
             // Configure responses
-            services.AddSingleton(sp => new ResponseManager(
-                settings.CognitiveModels.Select(l => l.Key).ToArray(),
-                new MainResponses(),
-                new SharedResponses(),
-                new FindEventsResponses()));
+            services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 
             // Register dialogs
             services.AddTransient<FindEventsDialog>();

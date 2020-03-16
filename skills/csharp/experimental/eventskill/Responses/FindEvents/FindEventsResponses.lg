@@ -1,0 +1,31 @@
+[import](..\Shared\Shared.lg)
+[import](FindEventsResponsesTexts.lg)
+
+# LocationPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${LocationPrompt.Text(Data)}
+    Speak = ${LocationPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# RetryLocationPrompt(Data, Cards, Layout)
+[Activity
+    Text = ${RetryLocationPrompt.Text(Data)}
+    Speak = ${RetryLocationPrompt.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]
+
+# FoundEvents(Data, Cards, Layout)
+[Activity
+    Text = ${FoundEvents.Text(Data)}
+    Speak = ${FoundEvents.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = ignoringInput
+]
+
+

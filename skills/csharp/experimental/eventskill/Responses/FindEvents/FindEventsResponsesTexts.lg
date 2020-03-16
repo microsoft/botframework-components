@@ -1,0 +1,10 @@
+# LocationPrompt.Text(Data)
+- Where are you?
+
+# RetryLocationPrompt.Text(Data)
+- Please provide your location.
+
+# FoundEvents.Text(Data)
+- Here's what I found happening this week:
+
+

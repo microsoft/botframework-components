@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using EventSkill.Models;
 using EventSkill.Responses.Shared;
 using EventSkill.Services;
+using EventSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -28,14 +28,14 @@ namespace EventSkill.Dialogs
              string dialogId,
              BotSettings settings,
              BotServices services,
-             ResponseManager responseManager,
+             LocaleTemplateManager templateManager,
              ConversationState conversationState,
              UserState userState,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
-            ResponseManager = responseManager;
+            TemplateManager = templateManager;
             StateAccessor = conversationState.CreateProperty<EventSkillState>(nameof(EventSkillState));
             UserAccessor = userState.CreateProperty<EventSkillUserState>(nameof(EventSkillUserState));
             TelemetryClient = telemetryClient;
@@ -57,7 +57,7 @@ namespace EventSkill.Dialogs
 
         protected IStatePropertyAccessor<EventSkillUserState> UserAccessor { get; set; }
 
-        protected ResponseManager ResponseManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -170,7 +170,7 @@ namespace EventSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
 
             // clear state
             var state = await StateAccessor.GetAsync(sc.Context);

@@ -9,7 +9,7 @@ namespace EventSkill.Responses.Main
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class MainResponses : IResponseIdCollection
+    public class MainResponses
     {
         // Generated accessors
         public const string WelcomeMessage = "WelcomeMessage";
