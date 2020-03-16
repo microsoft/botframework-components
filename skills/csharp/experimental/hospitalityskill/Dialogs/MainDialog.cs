@@ -338,12 +338,9 @@ namespace HospitalitySkill.Dialogs
                 var result = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
-                if (state.IsAction)
+                if (state.IsAction && result == null)
                 {
-                    if (result == null)
-                    {
-                        result = new ActionResult(false);
-                    }
+                    result = new ActionResult(false);
                 }
 
                 return await stepContext.EndDialogAsync(result, cancellationToken);

@@ -584,21 +584,15 @@ namespace CalendarSkill.Dialogs
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var result = stepContext.Result;
 
-                if (state.IsAction && stepContext.Result as ActionResult == null)
+                if (state.IsAction && result == null)
                 {
-                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    result = new ActionResult() { ActionSuccess = false };
                 }
 
                 state.Clear();
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {

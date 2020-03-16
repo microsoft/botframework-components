@@ -338,13 +338,11 @@ namespace PointOfInterestSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 var result = stepContext.Result;
+
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
-                if (state.IsAction)
+                if (state.IsAction && result == null)
                 {
-                    if (result == null)
-                    {
-                        result = new SingleDestinationResponse { ActionSuccess = false };
-                    }
+                    result = new SingleDestinationResponse { ActionSuccess = false };
                 }
 
                 return await stepContext.EndDialogAsync(result, cancellationToken);

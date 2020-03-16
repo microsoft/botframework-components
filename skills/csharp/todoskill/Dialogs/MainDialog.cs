@@ -375,7 +375,8 @@ namespace ToDoSkill.Dialogs
             {
                 var result = stepContext.Result;
 
-                if (state.IsAction && stepContext.Result == null)
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
+                if (state.IsAction && result == null)
                 {
                     result = new TodoListInfo() { ActionSuccess = false };
                 }

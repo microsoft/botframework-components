@@ -313,20 +313,14 @@ namespace MusicSkill.Dialogs
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var result = stepContext.Result;
 
-                if (state.IsAction && stepContext.Result == null)
+                if (state.IsAction && result == null)
                 {
-                    endOfConversation.Value = new ActionResult() { ActionSuccess = false };
+                    result = new ActionResult() { ActionSuccess = false };
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
