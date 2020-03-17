@@ -70,7 +70,7 @@ if (-not $appId) {
 }
 
 if (-not $tenantId) {
-    $tenantId = Read-Host '? The tenantId corresponding to the application. If you have set "Supported account types" as "Multitenant" and your account has a differet tanent, please use "common"'
+    $tenantId = Read-Host '? The tenantId corresponding to the application. If you have set "Supported account types" as "Multitenant" and your account has a differet tenant, please use "common"'
 }
 
 # Check the CosmosDB package and install it
