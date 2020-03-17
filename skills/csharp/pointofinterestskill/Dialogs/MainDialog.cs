@@ -183,7 +183,8 @@ namespace PointOfInterestSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new SingleDestinationResponse { ActionSuccess = false }, cancellationToken: cancellationToken);
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new SingleDestinationResponse { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {
@@ -210,7 +211,8 @@ namespace PointOfInterestSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new SingleDestinationResponse { ActionSuccess = false }, cancellationToken: cancellationToken);
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new SingleDestinationResponse { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {

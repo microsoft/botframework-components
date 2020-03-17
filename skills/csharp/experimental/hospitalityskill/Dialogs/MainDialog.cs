@@ -146,7 +146,8 @@ namespace HospitalitySkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new ActionResult(false), cancellationToken: cancellationToken);
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {
@@ -173,7 +174,8 @@ namespace HospitalitySkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new ActionResult(false), cancellationToken: cancellationToken);
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {

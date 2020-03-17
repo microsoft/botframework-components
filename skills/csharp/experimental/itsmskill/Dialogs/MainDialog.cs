@@ -147,7 +147,7 @@ namespace ITSMSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new ActionResult(false), cancellationToken: cancellationToken);
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {
@@ -174,7 +174,7 @@ namespace ITSMSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(new ActionResult(false), cancellationToken: cancellationToken);
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {
