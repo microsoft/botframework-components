@@ -22,8 +22,6 @@ namespace WeatherSkill.Models
 
         public double Longitude { get; set; } = double.NaN;
 
-        public Location GeographyLocation { get; set; }
-
         public bool IsAction { get; set; }
 
         public void Clear()
@@ -31,7 +29,6 @@ namespace WeatherSkill.Models
             Geography = string.Empty;
             Latitude = double.NaN;
             Longitude = double.NaN;
-            GeographyLocation = null;
         }
     }
 }
