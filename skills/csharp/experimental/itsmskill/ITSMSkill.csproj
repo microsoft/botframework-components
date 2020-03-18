@@ -39,54 +39,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Responses\Knowledge\TicketResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TicketResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\CreateTicket\MainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MainResponses.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Update="Responses\Knowledge\KnowledgeResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>KnowledgeResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Knowledge\TicketResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TicketResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\CreateTicket\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\SharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SharedResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Shared\SharedStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SharedStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Ticket\TicketResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TicketResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -152,19 +114,5 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Responses\Knowledge\KnowledgeResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Main\MainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\SharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SharedResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Ticket\TicketResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TicketResponses.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>
