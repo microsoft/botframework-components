@@ -333,23 +333,23 @@ namespace HospitalitySkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+
             if (stepContext.Context.IsSkill())
             {
                 var result = stepContext.Result;
 
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
-                if (state.IsAction)
+                if (state.IsAction && result as ActionResult == null)
                 {
-                    if (result == null)
-                    {
-                        result = new ActionResult(false);
-                    }
+                    result = new ActionResult(false);
                 }
 
+                state.Clear();
                 return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(SharedResponses.ActionEnded), cancellationToken);
             }
         }

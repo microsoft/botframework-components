@@ -5,6 +5,7 @@ Param(
     [string] $cosmosDbAccount,
     [string] $primaryKey,
     [string] $appId,
+    [string] $tenantId,
     [string] $databaseId = "room-db",
     [string] $collectionId = "room-collection",
     [string] $dataSourceName = "room-datasource",
@@ -68,8 +69,16 @@ if (-not $appId) {
     $appId = Read-Host "? A registered MSA appId in Azure App registrations service (used for user authentification to get room data from MSGraph)"
 }
 
+if (-not $tenantId) {
+    $tenantId = Read-Host '? The tenantId corresponding to the application. If you have set "Supported account types" as "Multitenant" and your account has a differet tenant, please use "common"'
+}
+
 # Check the CosmosDB package and install it
-if(!(Get-Package CosmosDB)) {Install-Module -Name CosmosDB}
+if(!(Get-Package CosmosDB -ErrorAction SilentlyContinue)) {
+    Write-Host "> Installing CosmosDB package ..."
+    Install-Module -Name CosmosDB -AllowClobber
+    Write-Host "Done." -ForegroundColor Green
+}
 
 # Create database for importing meeting room data
 $key = ConvertTo-SecureString -String $primaryKey -AsPlainText -Force
@@ -98,7 +107,7 @@ $timestamp = Get-Date -f MMddyyyyHHmmss
 
 # Deploy Azure Search service
 Write-Host "> Validating Azure Search deployment ..." -NoNewline
-$validation = az group deployment validate `
+$validation = az deployment group validate `
 	--resource-group $resourcegroup `
 	--template-file "$(Join-Path $PSScriptRoot '..' 'Resources' 'azuresearch.json')" `
 	--output json
@@ -110,7 +119,7 @@ if ($validation) {
 	if (-not $validation.error) {
 		Write-Host "validate pass." -ForegroundColor Green
 		Write-Host "> Deploying Azure Search services (this could take a while)..." -ForegroundColor Yellow -NoNewline
-		$deployment = az group deployment create `
+		$deployment = az deployment group create `
 			--name $timestamp `
 			--resource-group $resourceGroup `
 			--template-file "$(Join-Path $PSScriptRoot '..' 'Resources' 'azuresearch.json')" `
@@ -127,7 +136,7 @@ if ($validation) {
 }
 
 #Get deployment outputs
-$outputs = (az group deployment show `
+$outputs = (az deployment group show `
 	--name $timestamp `
 	--resource-group $resourceGroup `
 	--query properties.outputs `
@@ -145,7 +154,9 @@ if ($outputs)
 
 # Authentificate and then connect to MSGraph to get meeting room data
 $authorizationResult = RequestAuthorization `
-    -appId $appId 2>> $logFile
+    -appId $appId `
+    -tenantId $tenantId 2>> $logFile
+
 if ($authorizationResult.error)
 {
     Write-Host "! Error: $($authorizationResult.error_description)"  -ForegroundColor Red
@@ -166,6 +177,7 @@ if ($confirmSignedIn -ne 'y') {
 
 $accessTokenResult =  RequestAccessToken `
         -appId $appId `
+        -tenantId $tenantId `
         -deviceCode $deviceCode 2>> $logFile
 
 if ($accessTokenResult.error)

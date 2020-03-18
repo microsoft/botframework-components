@@ -333,29 +333,23 @@ namespace PhoneSkill.Dialogs
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+
             if (stepContext.Context.IsSkill())
             {
-                // EndOfConversation activity should be passed back to indicate that VA should resume control of the conversation
-                var endOfConversation = new Activity(ActivityTypes.EndOfConversation)
-                {
-                    Code = EndOfConversationCodes.CompletedSuccessfully,
-                    Value = stepContext.Result,
-                };
+                var result = stepContext.Result;
 
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
-                if (state.IsAction)
+                if (state.IsAction && result as ActionResult == null)
                 {
-                    if (stepContext.Result == null)
-                    {
-                        endOfConversation.Value = new ActionResult() { ActionSuccess = false };
-                    }
+                    result = new ActionResult() { ActionSuccess = false };
                 }
 
-                await stepContext.Context.SendActivityAsync(endOfConversation, cancellationToken);
-                return await stepContext.EndDialogAsync();
+                state.Clear();
+                return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
+                state.Clear();
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(PhoneMainResponses.CompletedMessage), cancellationToken);
             }
         }

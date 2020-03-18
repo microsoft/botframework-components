@@ -323,18 +323,15 @@ namespace ITSMSkill.Dialogs
         {
             if (stepContext.Context.IsSkill())
             {
-                var value = stepContext.Result;
+                var result = stepContext.Result;
 
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
-                if (state.IsAction)
+                if (state.IsAction && result as ActionResult == null)
                 {
-                    if (value == null)
-                    {
-                        value = new ActionResult(false);
-                    }
+                    result = new ActionResult(false);
                 }
 
-                return await stepContext.EndDialogAsync(value, cancellationToken);
+                return await stepContext.EndDialogAsync(result, cancellationToken);
             }
             else
             {
