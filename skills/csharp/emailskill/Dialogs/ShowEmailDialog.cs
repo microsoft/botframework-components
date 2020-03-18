@@ -98,6 +98,12 @@ namespace EmailSkill.Dialogs
                 HandleMore,
             };
 
+            var selectEmail = new WaterfallStep[]
+            {
+                SelectEmailPrompt,
+                HandleMore
+            };
+
             var forwardEmailDialog = serviceProvider.GetService<ForwardEmailDialog>();
             var replyEmailDialog = serviceProvider.GetService<ReplyEmailDialog>();
             var deleteEmailDialog = serviceProvider.GetService<DeleteEmailDialog>();
@@ -111,6 +117,7 @@ namespace EmailSkill.Dialogs
             AddDialog(new WaterfallDialog(Actions.Display, displayEmail) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.DisplayFiltered, displayFilteredEmail) { TelemetryClient = telemetryClient });
             AddDialog(new WaterfallDialog(Actions.ReDisplay, redisplayEmail) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.SelectEmail, selectEmail) { TelemetryClient = telemetryClient });
             AddDialog(deleteEmailDialog ?? throw new ArgumentNullException(nameof(deleteEmailDialog)));
             AddDialog(replyEmailDialog ?? throw new ArgumentNullException(nameof(replyEmailDialog)));
             AddDialog(forwardEmailDialog ?? throw new ArgumentNullException(nameof(forwardEmailDialog)));
@@ -124,7 +131,7 @@ namespace EmailSkill.Dialogs
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
 
                 // Clear focus item
-                state.UserSelectIndex = 0;
+                state.UserSelectIndex = -1;
 
                 // Clear search condition
                 state.SenderName = null;
@@ -145,7 +152,23 @@ namespace EmailSkill.Dialogs
             try
             {
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
-                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOut, new { messageList = state.MessageList });
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ReadOut, new { messageList = state.MessageList });
+                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
+            }
+            catch (Exception ex)
+            {
+                await HandleDialogExceptions(sc, ex);
+
+                return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
+            }
+        }
+
+        protected async Task<DialogTurnResult> SelectEmailPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            try
+            {
+                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ActionPrompt);
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -160,7 +183,7 @@ namespace EmailSkill.Dialogs
         {
             try
             {
-                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOutMore);
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ReadOutMore);
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -264,7 +287,7 @@ namespace EmailSkill.Dialogs
 
                     emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, message.ToRecipients);
                     var replyMessage = TemplateManager.GenerateActivityForLocale(
-                        ShowEmailResponses.ReadOutMessage,
+                        ShowEmailActivities.ReadOutMessage,
                         new
                         {
                             emailDetailsWithoutContent = SpeakHelper.ToSpeechEmailDetailString(message, state.GetUserTimeZone()),
@@ -351,19 +374,32 @@ namespace EmailSkill.Dialogs
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
-                if (topIntent == EmailLuis.Intent.Delete)
+                if (topIntent == EmailLuis.Intent.Delete ||
+                    topIntent == EmailLuis.Intent.Forward ||
+                    topIntent == EmailLuis.Intent.Reply)
                 {
-                    return await sc.BeginDialogAsync(Actions.Delete, skillOptions);
+                    if (state.Message.Count == 0)
+                    {
+                        return await sc.ReplaceDialogAsync(Actions.SelectEmail, skillOptions);
+                    }
+                    else
+                    {
+                        if (topIntent == EmailLuis.Intent.Delete)
+                        {
+                            return await sc.BeginDialogAsync(Actions.Delete, skillOptions);
+                        }
+                        else if (topIntent == EmailLuis.Intent.Forward)
+                        {
+                            return await sc.BeginDialogAsync(Actions.Forward, skillOptions);
+                        }
+                        else if (topIntent == EmailLuis.Intent.Reply)
+                        {
+                            return await sc.BeginDialogAsync(Actions.Reply, skillOptions);
+                        }
+                    }
                 }
-                else if (topIntent == EmailLuis.Intent.Forward)
-                {
-                    return await sc.BeginDialogAsync(Actions.Forward, skillOptions);
-                }
-                else if (topIntent == EmailLuis.Intent.Reply)
-                {
-                    return await sc.BeginDialogAsync(Actions.Reply, skillOptions);
-                }
-                else if (IsReadMoreIntent(topGeneralIntent, userInput)
+
+                if (IsReadMoreIntent(topGeneralIntent, userInput)
                     || (topIntent == EmailLuis.Intent.ShowNext || topIntent == EmailLuis.Intent.ShowPrevious || topGeneralIntent == General.Intent.ShowPrevious || topGeneralIntent == General.Intent.ShowNext))
                 {
                     return await sc.ReplaceDialogAsync(Actions.Display, skillOptions);

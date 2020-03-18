@@ -13,3 +13,6 @@
 # ReadOutMessage.Speak(emailDetailsWithContent)
 - Hier sind Details der E-Mail: ${emailDetailsWithoutContent}
 
+# ActionPrompt.Text
+- To take an action on an email, first select it, then you can delete, forward, or reply.
+

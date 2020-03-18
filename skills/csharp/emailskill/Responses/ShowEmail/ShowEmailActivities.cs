@@ -9,16 +9,13 @@ namespace EmailSkill.Responses.ShowEmail
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class ShowEmailResponses : IResponseIdCollection
+    public class ShowEmailActivities : IResponseIdCollection
     {
         // Generated accessors
-        public const string ReadOutMessage = "ReadOutMessage";
-        public const string ReadOutMorePrompt = "ReadOutMorePrompt";
-        public const string ReadOutOnlyOnePrompt = "ReadOutOnlyOnePrompt";
-        public const string ReadOutPrompt = "ReadOutPrompt";
         public const string ReadOut = "ReadOut";
+        public const string ReadOutText = "ReadOutText";
         public const string ReadOutMore = "ReadOutMore";
-        public const string ReadOutForOneEmail = "ReadOutForOneEmail";
-        public const string ReadOutForMultiEmails = "ReadOutForMultiEmails";
+        public const string ReadOutMessage = "ReadOutMessage";
+        public const string ActionPrompt = "ActionPrompt";
     }
 }

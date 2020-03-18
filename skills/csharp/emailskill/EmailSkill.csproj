@@ -64,10 +64,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EmailSharedResponses.tt</DependentUpon>
     </Compile>
-    <Compile Update="Responses\ShowEmail\ShowEmailResponses.cs">
+    <Compile Update="Responses\ShowEmail\ShowEmailActivities.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ShowEmailResponses.tt</DependentUpon>
+      <DependentUpon>ShowEmailActivities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -269,7 +269,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmailSharedResponses.cs</LastGenOutput>
     </None>
-    <None Update="Responses\Shared\ResponseIdCollection.t4">
+    <None Update="Responses\Shared\LgIdCollection.t4">
       <Generator></Generator>
     </None>
     <None Update="Responses\Shared\ResponsesAndTexts.de-de.lg">
@@ -344,9 +344,9 @@
     <None Update="Responses\ShowEmail\ShowEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\ShowEmail\ShowEmailResponses.tt">
+    <None Update="Responses\ShowEmail\ShowEmailActivities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ShowEmailResponses.cs</LastGenOutput>
+      <LastGenOutput>ShowEmailActivities.cs</LastGenOutput>
     </None>
     <None Update="Responses\ShowEmail\ShowEmailTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

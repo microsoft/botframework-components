@@ -681,7 +681,7 @@ namespace EmailSkill.Dialogs
                 {
                     state.MessageList = displayMessages;
                     state.Message.Clear();
-                    state.Message.Add(displayMessages[0]);
+                    //state.Message.Add(displayMessages[0]);
 
                     await ShowMailList(sc, displayMessages, totalCount, importantCount, cancellationToken);
                     return await sc.NextAsync();
@@ -1270,12 +1270,61 @@ namespace EmailSkill.Dialogs
         protected async Task DigestFocusEmailAsync(WaterfallStepContext sc)
         {
             var state = await EmailStateAccessor.GetAsync(sc.Context);
+            sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
+            var luisResult = sc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
+
+            var userInput = content != null ? content.ToString() : sc.Context.Activity.Text;
 
             // Get focus message if any
             if (state.MessageList != null && state.UserSelectIndex >= 0 && state.UserSelectIndex < state.MessageList.Count())
             {
                 state.Message.Clear();
                 state.Message.Add(state.MessageList[state.UserSelectIndex]);
+            }
+
+            // Get focus message by title
+            if (state.Message.Count <= 0)
+            {
+                var subject = userInput;
+                if (luisResult.Entities.EmailSubject != null)
+                {
+                    subject = luisResult.Entities.EmailSubject[0];
+                }
+
+                foreach (var message in state.MessageList)
+                {
+                    if (message.Subject.ToLower().Contains(subject.ToLower()))
+                    {
+                        state.Message.Add(message);
+                    }
+                }
+            }
+
+            // Get focus message by sender
+            if (state.Message.Count <= 0)
+            {
+                var contactName = userInput;
+                if (luisResult.Entities.ContactName != null)
+                {
+                    contactName = luisResult.Entities.ContactName[0];
+                }
+
+                foreach (var message in state.MessageList)
+                {
+                    if (message.Sender.EmailAddress != null && message.Sender.EmailAddress.Name != null &&
+                        message.Sender.EmailAddress.Name.ToLower().Contains(contactName.ToLower()))
+                    {
+                        state.Message.Add(message);
+                        break;
+                    }
+
+                    if (message.Sender.EmailAddress != null && message.Sender.EmailAddress.Address != null &&
+                        message.Sender.EmailAddress.Address.ToLower().Contains(contactName.ToLower()))
+                    {
+                        state.Message.Add(message);
+                        break;
+                    }
+                }
             }
         }
 

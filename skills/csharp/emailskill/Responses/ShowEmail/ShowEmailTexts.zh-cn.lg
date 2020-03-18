@@ -13,3 +13,6 @@
 # ReadOutMessage.Speak(emailDetailsWithContent)
 - 以下是电子邮件的详细信息：${emailDetailsWithoutContent}
 
+# ActionPrompt.Text
+- To take an action on an email, first select it, then you can delete, forward, or reply.
+
