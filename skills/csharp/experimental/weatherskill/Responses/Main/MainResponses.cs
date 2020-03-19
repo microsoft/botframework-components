@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace WeatherSkill.Responses.Main
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class MainResponses : IResponseIdCollection
+    public class MainResponses
     {
         // Generated accessors
         public const string WelcomeMessage = "WelcomeMessage";

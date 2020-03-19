@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace ToDoSkill.Responses.MarkToDo
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class MarkToDoResponses : IResponseIdCollection
+    public class MarkToDoResponses
     {
         // Generated accessors
         public const string AfterTaskCompleted = "AfterTaskCompleted";
