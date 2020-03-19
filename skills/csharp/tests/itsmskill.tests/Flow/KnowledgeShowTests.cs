@@ -210,6 +210,28 @@ namespace ITSMSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task ShowAndCancelActionTest()
+        {
+            var navigate = new Dictionary<string, object>
+            {
+                { "Navigate", string.Empty }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(KnowledgeShowUtterances.ShowAction)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertContains(SharedResponses.InputSearch))
+                .Send(MockData.CreateTicketTitle)
+                .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.Knowledge))
+                .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
+                .Send(GeneralTestUtterances.Cancel)
+                .AssertReply(AssertContains(MainResponses.CancelMessage))
+                .AssertReply(SkillActionEndMessage(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task ShowThenRejectActionTest()
         {
             var navigate = new Dictionary<string, object>
