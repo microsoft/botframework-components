@@ -211,7 +211,7 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
+          "type": "boolean",
           "description": "result of action"
         },
         "emailList": {
