@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace HospitalitySkill.Responses.CheckOut
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class CheckOutResponses : IResponseIdCollection
+    public class CheckOutResponses
     {
         // Generated accessors
         public const string ConfirmCheckOut = "ConfirmCheckOut";

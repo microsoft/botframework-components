@@ -102,7 +102,7 @@ namespace HospitalitySkill.Tests.Flow
             Services.AddSingleton<IHotelService>(new HotelService(CheckInDate));
 
             // Configure responses
-            Services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
+            Services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us"));
             Templates = LocaleTemplateManagerWrapper.CreateTemplates();
 
             // Register dialogs
