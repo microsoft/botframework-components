@@ -10,13 +10,6 @@
             ".lg"
           ]
         }
-      },
-      "allExtensions": {
-        "remove": {
-          ".*": [
-            ".tt"
-          ]
-        }
       }
     }
   }

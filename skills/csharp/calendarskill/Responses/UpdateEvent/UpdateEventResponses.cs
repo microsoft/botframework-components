@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace CalendarSkill.Responses.UpdateEvent
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class UpdateEventResponses : IResponseIdCollection
+    public class UpdateEventResponses
     {
         // Generated accessors
         public const string NotEventOrganizer = "NotEventOrganizer";
