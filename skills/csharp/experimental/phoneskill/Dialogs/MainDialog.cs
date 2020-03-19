@@ -159,10 +159,11 @@ namespace PhoneSkill.Dialogs
         {
             DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
-            var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PhoneSkillState());
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PhoneSkillState());
+
                 // Get connected LUIS result from turn state.
                 var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
@@ -328,8 +329,9 @@ namespace PhoneSkill.Dialogs
                                 {
                                     await DigestActionInput(stepContext, actionData);
                                 }
-                                state.IsAction = true;
                             }
+
+                            state.IsAction = true;
 
                             return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
                         }
