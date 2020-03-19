@@ -63,4 +63,11 @@
     InputHint = acceptingInput
 ]
 
-
+# FirstPromptMessage
+[Activity
+    Text = ${FirstPromptMessage.Text(Data)}
+    Speak = ${FirstPromptMessage.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = acceptingInput
+]

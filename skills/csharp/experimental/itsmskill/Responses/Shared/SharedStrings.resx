@@ -154,13 +154,13 @@
     <value>urgency</value>
   </data>
   <data name="OpenedAt" xml:space="preserve">
-    <value>Opened at </value>
+    <value>Opened at {0}</value>
   </data>
   <data name="TicketState" xml:space="preserve">
     <value>State: {0}</value>
   </data>
   <data name="UpdatedAt" xml:space="preserve">
-    <value>Updated at </value>
+    <value>Updated at {0}</value>
   </data>
   <data name="Urgency" xml:space="preserve">
     <value>Urgency: {0}</value>

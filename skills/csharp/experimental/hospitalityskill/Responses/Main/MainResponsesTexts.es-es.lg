@@ -23,4 +23,8 @@
 # CancelMessage.Text(Data)
 - Bien, empecemos de una vez.
 
-
+# FirstPromptMessage.Text
+- ¿En qué puedo ayudarte hoy?
+- ¿Qué puedo hacer por usted?
+- ¿Hay algo que pueda hacer por ti?
+- ¿Cómo puedo ayudarle?

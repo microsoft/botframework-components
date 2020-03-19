@@ -185,14 +185,13 @@ namespace ITSMSkill.Responses.Shared {
                 return ResourceManager.GetString("ID", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to GetUserId is invalid..
         /// </summary>
         public static string InvalidGetUserId {
             get {
                 return ResourceManager.GetString("InvalidGetUserId", resourceCulture);
-
             }
         }
         
@@ -206,7 +205,7 @@ namespace ITSMSkill.Responses.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opened at .
+        ///   Looks up a localized string similar to Opened at {0}.
         /// </summary>
         public static string OpenedAt {
             get {
@@ -359,7 +358,7 @@ namespace ITSMSkill.Responses.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated at .
+        ///   Looks up a localized string similar to Updated at {0}.
         /// </summary>
         public static string UpdatedAt {
             get {
