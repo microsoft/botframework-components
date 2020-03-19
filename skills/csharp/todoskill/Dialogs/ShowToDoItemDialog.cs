@@ -123,6 +123,7 @@ namespace ToDoSkill.Dialogs
             try
             {
                 var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 var service = await InitListTypeIds(sc);
 
                 if (state.IsAction)
@@ -137,7 +138,6 @@ namespace ToDoSkill.Dialogs
                     return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
                 }
 
-                state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 state.LastListType = state.ListType;
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var topIntent = luisResult.TopIntent().intent;
