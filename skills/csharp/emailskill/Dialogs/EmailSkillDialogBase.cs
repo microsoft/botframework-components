@@ -467,8 +467,6 @@ namespace EmailSkill.Dialogs
                 }
                 else
                 {
-                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
-                    await sc.Context.SendActivityAsync(activity);
                     var skillOptions = sc.Options as EmailSkillDialogOptions;
                     if (skillOptions != null && skillOptions.IsAction)
                     {

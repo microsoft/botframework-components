@@ -207,7 +207,7 @@ namespace EmailSkill.Dialogs
                 var topIntent = luisResult?.TopIntent().intent;
                 if (topIntent == null)
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync();
                 }
 
                 sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
@@ -215,9 +215,7 @@ namespace EmailSkill.Dialogs
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(false);
+                    return await sc.EndDialogAsync();
                 }
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == true)
                 {
@@ -332,9 +330,7 @@ namespace EmailSkill.Dialogs
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync();
                 }
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == true)
                 {
