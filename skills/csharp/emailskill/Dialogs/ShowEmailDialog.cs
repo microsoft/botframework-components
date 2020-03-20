@@ -374,12 +374,17 @@ namespace EmailSkill.Dialogs
                     topIntent == EmailLuis.Intent.Forward ||
                     topIntent == EmailLuis.Intent.Reply)
                 {
-                    if (state.Message.Count == 0)
+                    if (state.Message.Count == 0 && state.MessageList.Count > 1)
                     {
                         return await sc.ReplaceDialogAsync(Actions.SelectEmail, skillOptions);
                     }
                     else
                     {
+                        if (state.Message.Count == 0)
+                        {
+                            state.Message.Add(state.MessageList[0]);
+                        }
+
                         if (topIntent == EmailLuis.Intent.Delete)
                         {
                             return await sc.BeginDialogAsync(Actions.Delete, skillOptions);

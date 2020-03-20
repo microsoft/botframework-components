@@ -33,7 +33,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(CancelResponses())
                 .StartTestAsync();
         }
 
@@ -96,7 +95,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(BaseTestUtterances.FirstOne)
                 .AssertReply(AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(CancelResponses())
                 .AssertReply(CheckForEoC(true, false))
                 .StartTestAsync();
         }

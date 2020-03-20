@@ -31,7 +31,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(BaseTestUtterances.FirstOne)
                 .AssertReply(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.CancelResponses())
                 .StartTestAsync();
         }
 
@@ -54,7 +53,6 @@ namespace EmailSkill.Tests.Flow
         [TestMethod]
         public async Task Test_DeleteEmailAction()
         {
-
             await this.GetSkillTestFlow()
                 .Send(DeleteEmailUtterances.DeleteEmailAction)
                 .AssertReply(this.ShowEmailList())
@@ -78,7 +76,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(BaseTestUtterances.FirstOne)
                 .AssertReply(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.CancelResponses())
                 .AssertReply(CheckForEoC(true, false))
                 .StartTestAsync();
         }

@@ -1280,10 +1280,10 @@ namespace EmailSkill.Dialogs
             }
 
             // Get focus message by title
-            if (state.Message.Count <= 0)
+            if (state.Message.Count <= 0 && userInput != null)
             {
                 var subject = userInput;
-                if (luisResult.Entities.EmailSubject != null)
+                if (luisResult != null && luisResult.Entities != null && luisResult.Entities.EmailSubject != null)
                 {
                     subject = luisResult.Entities.EmailSubject[0];
                 }
@@ -1298,10 +1298,10 @@ namespace EmailSkill.Dialogs
             }
 
             // Get focus message by sender
-            if (state.Message.Count <= 0)
+            if (state.Message.Count <= 0 && userInput != null)
             {
                 var contactName = userInput;
-                if (luisResult.Entities.ContactName != null)
+                if (luisResult != null && luisResult.Entities != null && luisResult.Entities.ContactName != null)
                 {
                     contactName = luisResult.Entities.ContactName[0];
                 }

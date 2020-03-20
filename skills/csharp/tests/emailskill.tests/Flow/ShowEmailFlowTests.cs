@@ -134,7 +134,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -168,7 +167,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -189,7 +187,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -213,7 +210,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -232,7 +228,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(DeleteEmailUtterances.DeleteEmailsWithSelection)
                 .AssertReplyOneOf(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -254,7 +249,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(DeleteEmailUtterances.DeleteCurrentEmail)
                 .AssertReplyOneOf(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -368,7 +362,7 @@ namespace EmailSkill.Tests.Flow
 
         private string[] NotShowingMessage()
         {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
+            return GetTemplates(EmailMainResponses.CompletedMessage);
         }
 
         private string[] ReadOutPrompt()
@@ -408,11 +402,6 @@ namespace EmailSkill.Tests.Flow
         private string[] CollectEmailContentMessageForReply()
         {
             return GetTemplates(EmailSharedResponses.NoEmailContentForReply);
-        }
-
-        private string[] NotSendingMessage()
-        {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
         }
 
         private string[] DeleteConfirm()

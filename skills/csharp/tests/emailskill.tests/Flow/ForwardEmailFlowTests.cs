@@ -223,7 +223,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(GeneralTestUtterances.No)
                 .AssertReply(AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(CancelResponses())
                 .AssertReply(CheckForEoC(true, false))
                 .StartTestAsync();
         }
@@ -256,7 +255,7 @@ namespace EmailSkill.Tests.Flow
 
         private string[] NotSendingMessage()
         {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
+            return GetTemplates(EmailMainResponses.CompletedMessage);
         }
 
         private Action<IActivity> ShowEmailList()
