@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace BingSearchSkill.Responses.Search
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class SearchResponses : IResponseIdCollection
+    public class SearchResponses
     {
         // Generated accessors
         public const string AskEntityPrompt = "AskEntityPrompt";
@@ -18,4 +16,3 @@ namespace BingSearchSkill.Responses.Search
         public const string AnswerSearchResultPrompt = "AnswerSearchResultPrompt";
     }
 }
-

@@ -9,7 +9,7 @@ namespace EmailSkill.Responses.ShowEmail
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class ShowEmailResponses : IResponseIdCollection
+    public class ShowEmailResponses
     {
         // Generated accessors
         public const string ReadOutMessage = "ReadOutMessage";
