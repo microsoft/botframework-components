@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace HospitalitySkill.Responses.ExtendStay
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class ExtendStayResponses : IResponseIdCollection
+    public class ExtendStayResponses
     {
         // Generated accessors
         public const string ExtendDatePrompt = "ExtendDatePrompt";

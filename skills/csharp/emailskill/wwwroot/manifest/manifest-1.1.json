@@ -210,7 +210,10 @@
     "summaryResult": {
       "type": "object",
       "properties": {
-        "$ref": "#/definitions/actionResult",
+        "actionSuccess": {
+          "type": "boolean",
+          "description": "result of action"
+        },
         "emailList": {
           "type": "array",
           "description": "List of recent emails",

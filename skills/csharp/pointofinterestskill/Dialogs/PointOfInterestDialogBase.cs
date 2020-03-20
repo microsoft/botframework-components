@@ -975,6 +975,11 @@ namespace PointOfInterestSkill.Dialogs
                 }
 
                 var poiResult = promptContext.Context.TurnState.Get<PointOfInterestLuis>(StateProperties.POILuisResultKey);
+                if (poiResult == null)
+                {
+                    return false;
+                }
+
                 var topIntent = poiResult.TopIntent();
 
                 if (topIntent.score > 0.5 && topIntent.intent != PointOfInterestLuis.Intent.None)
@@ -998,6 +1003,11 @@ namespace PointOfInterestSkill.Dialogs
             else
             {
                 var generalLuisResult = promptContext.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
+                if (generalLuisResult == null)
+                {
+                    return false;
+                }
+
                 var intent = generalLuisResult.TopIntent().intent;
                 if (intent == General.Intent.Reject || intent == General.Intent.SelectNone)
                 {
