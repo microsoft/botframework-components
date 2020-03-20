@@ -66,10 +66,6 @@
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FavoriteTopicsResponses.cs</LastGenOutput>
-    </None>
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponses.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -89,29 +85,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FavoriteTopics\FavoriteTopicsResponsesTexts.zh-cn.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.de-de.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.es-es.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.fr-fr.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.it-it.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.tt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FindArticlesResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\FindArticles\FindArticlesResponses.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\FindArticles\FindArticlesResponsesTexts.de-de.lg">
@@ -146,15 +119,6 @@
     </None>
     <None Update="Responses\Main\MainStrings.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Main\MainStrings.tt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MainStrings.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Main\MainStrings.ttnew">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MainStrings.cs</LastGenOutput>
     </None>
     <None Update="Responses\Main\MainStrings.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -210,10 +174,6 @@
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\TrendingArticles\TrendingArticlesResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TrendingArticlesResponses.cs</LastGenOutput>
-    </None>
     <None Update="Responses\TrendingArticles\TrendingArticlesResponses.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -238,30 +198,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Responses\FavoriteTopics\FavoriteTopicsResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FavoriteTopicsResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindArticles\FindArticlesResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FindArticlesResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\MainStrings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainStrings.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Main\MainStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\TrendingArticles\TrendingArticlesResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TrendingArticlesResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
