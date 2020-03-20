@@ -152,7 +152,7 @@ namespace EmailSkill.Dialogs
             try
             {
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
-                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ReadOut, new { messageList = state.MessageList });
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOut, new { messageList = state.MessageList });
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -168,7 +168,7 @@ namespace EmailSkill.Dialogs
             try
             {
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
-                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ActionPrompt);
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ActionPrompt);
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -183,7 +183,7 @@ namespace EmailSkill.Dialogs
         {
             try
             {
-                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailActivities.ReadOutMore);
+                var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOutMore);
                 return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
             }
             catch (Exception ex)
@@ -285,7 +285,7 @@ namespace EmailSkill.Dialogs
 
                     emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, message.ToRecipients);
                     var replyMessage = TemplateManager.GenerateActivityForLocale(
-                        ShowEmailActivities.ReadOutMessage,
+                        ShowEmailResponses.ReadOutMessage,
                         new
                         {
                             emailDetailsWithoutContent = SpeakHelper.ToSpeechEmailDetailString(message, state.GetUserTimeZone()),

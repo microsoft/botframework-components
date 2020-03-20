@@ -679,7 +679,6 @@ namespace EmailSkill.Dialogs
                 {
                     state.MessageList = displayMessages;
                     state.Message.Clear();
-                    //state.Message.Add(displayMessages[0]);
 
                     await ShowMailList(sc, displayMessages, totalCount, importantCount, cancellationToken);
                     return await sc.NextAsync();
