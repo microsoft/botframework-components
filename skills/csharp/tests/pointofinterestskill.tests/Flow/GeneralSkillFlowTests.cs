@@ -33,8 +33,8 @@ namespace PointOfInterestSkill.Tests.Flow
 
             CollectionAssert.Contains(ParseReplies(POISharedResponses.PointOfInterestSuggestedActionName, data), "NAME at ADDRESS");
 
-            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "I found the following.");
-            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "Here's a match.");
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleRouteFound, data), "I found a route. Let's begin!");
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleRouteFound, data), "I found a route. Let's start!");
         }
 
         [TestMethod]

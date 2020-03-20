@@ -17,4 +17,10 @@
 # RouteSuggestedActionName.Text(Data)
 - Route ${if(Data.Id == null, '', Data.Id)}
 
+# RouteDetails.Text(Data)
+- ${RouteDetailsTextAndSpeak1(Data)}
 
+# RouteDetailsTextAndSpeak1(Data)
+[Activity
+    Speak = It is ${Data.Distance} away and it takes about ${Data.TravelTime}. You could start navigation now.
+]
