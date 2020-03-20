@@ -161,21 +161,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Responses\FindEvents\FindEventsResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FindEventsResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Main\MainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MainResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Shared\SharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SharedResponses.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
@@ -209,26 +194,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>readme.md</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindEvents\FindEventsResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FindEventsResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\ResponseIdCollection.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ResponseIdCollection.t4</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\SharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SharedResponses.tt</DependentUpon>
     </Compile>
     <Compile Update="__TemplateIcon.cs">
       <DesignTime>True</DesignTime>

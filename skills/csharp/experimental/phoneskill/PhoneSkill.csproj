@@ -59,39 +59,6 @@
     </ItemGroup>
 
   <ItemGroup>
-    <None Update="Responses\Main\PhoneMainResponses.tt">
-      <LastGenOutput>PhoneMainResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\OutgoingCall\OutgoingCallResponses.tt">
-      <LastGenOutput>OutgoingCallResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\PhoneSharedResponses.tt">
-      <LastGenOutput>PhoneSharedResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Responses\Main\PhoneMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PhoneMainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\OutgoingCall\OutgoingCallResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>OutgoingCallResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\PhoneSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PhoneSharedResponses.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="*.bot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
