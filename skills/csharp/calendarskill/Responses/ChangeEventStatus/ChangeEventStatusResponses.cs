@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace CalendarSkill.Responses.ChangeEventStatus
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class ChangeEventStatusResponses : IResponseIdCollection
+    public class ChangeEventStatusResponses
     {
         // Generated accessors
         public const string ConfirmDelete = "ConfirmDelete";

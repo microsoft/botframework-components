@@ -111,16 +111,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>readme.md</DependentUpon>
     </Compile>
-    <Compile Update="Responses\Main\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\SharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SharedResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="__TemplateIcon.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
