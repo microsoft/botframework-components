@@ -39,9 +39,9 @@ namespace ToDoSkill.Dialogs
 
             var addTask = new WaterfallStep[]
             {
+                ClearContext,
                 GetAuthToken,
                 AfterGetAuthToken,
-                ClearContext,
                 DoAddTask,
             };
 
