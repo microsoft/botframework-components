@@ -34,11 +34,11 @@ function BuildIndex($azureSearchAccount, $indexName, $apiKey)
     {
     "name": "$indexName",
     "fields": [
-        {"name": "Id", "type": "Edm.String", "facetable": false, "key": true, "retrievable": true, "searchable": true, "sortable": false, "filterable": false},
+        {"name": "Id", "type": "Edm.String", "facetable": false, "key": true, "retrievable": true, "searchable": false, "sortable": false, "filterable": false},
         {"name": "DisplayName", "type": "Edm.String", "facetable": false, "key": false, "retrievable": true, "searchable": true, "sortable": false, "filterable": false},
-        {"name": "EmailAddress", "type": "Edm.String", "facetable": false, "key": false, "retrievable": true, "searchable": true, "sortable": false, "filterable": false},
+        {"name": "EmailAddress", "type": "Edm.String", "facetable": false, "key": false, "retrievable": true, "searchable": false, "sortable": false, "filterable": false},
         {"name": "Building", "type": "Edm.String", "facetable": false, "key": false, "retrievable": true, "searchable": true, "sortable": false, "filterable": false},
-        {"name": "FloorNumber", "type": "Edm.String", "facetable": false, "key": false, "retrievable": true, "searchable": false, "sortable": false, "filterable": true}
+        {"name": "FloorNumber", "type": "Edm.Int32", "facetable": false, "key": false, "retrievable": true, "searchable": false, "sortable": false, "filterable": true}
     ]
     }
 "@

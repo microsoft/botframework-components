@@ -105,7 +105,7 @@ namespace CalendarSkill.Prompts
             else
             {
                 var message = turnContext.Activity.AsMessageActivity();
-                List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(message.Text);
+                List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(building: message.Text);
                 if (meetingRooms.Count > 0)
                 {
                     result.Succeeded = true;

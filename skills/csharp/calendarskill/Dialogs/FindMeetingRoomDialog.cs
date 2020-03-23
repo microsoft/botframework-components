@@ -140,7 +140,7 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Building))
                 {
-                    List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.Building);
+                    List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(building: state.MeetingInfo.Building);
                     if (meetingRooms.Any())
                     {
                         return await sc.NextAsync(result: meetingRooms, cancellationToken: cancellationToken);
@@ -149,7 +149,7 @@ namespace CalendarSkill.Dialogs
                     {
                         return await sc.PromptAsync(Actions.BuildingPromptForCreate, new CalendarPromptOptions
                         {
-                            Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.NoBuilding),
+                            Prompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.BuildingNonexistent),
                             MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                         }, cancellationToken);
                     }
@@ -161,7 +161,6 @@ namespace CalendarSkill.Dialogs
                     RetryPrompt = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.BuildingNonexistent),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
                 }, cancellationToken);
-
             }
             catch (Exception ex)
             {
@@ -178,8 +177,7 @@ namespace CalendarSkill.Dialogs
                 var luisResult = sc.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
                 if (luisResult.TopIntent().intent == CalendarLuis.Intent.RejectCalendar && luisResult.TopIntent().score > 0.8)
                 {
-                    // '*' matches any buildings
-                    state.MeetingInfo.Building = "*";
+                    state.MeetingInfo.Building = null;
                     state.MeetingInfo.FloorNumber = null;
                 }
                 else if (sc.Result == null)
@@ -226,7 +224,7 @@ namespace CalendarSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
-                if (state.MeetingInfo.MeetingRoomName != null || state.MeetingInfo.Building == null || state.MeetingInfo.Building == "*" || state.MeetingInfo.FloorNumber != null)
+                if (state.MeetingInfo.MeetingRoomName != null || state.MeetingInfo.Building == null || state.MeetingInfo.FloorNumber != null)
                 {
                     return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
@@ -269,7 +267,7 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
 
-                if (luisResult.TopIntent().intent == CalendarLuis.Intent.RejectCalendar && luisResult.TopIntent().score > 0.7)
+                if (luisResult.TopIntent().intent == CalendarLuis.Intent.RejectCalendar && luisResult.TopIntent().score > 0.8)
                 {
                     state.MeetingInfo.FloorNumber = 0;
                 }

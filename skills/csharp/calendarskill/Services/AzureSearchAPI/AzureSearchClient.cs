@@ -20,37 +20,37 @@ namespace CalendarSkill.Services.AzureSearchAPI
             _indexClient = searchClient.Indexes.GetClient(searchIndexName);
         }
 
-        public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom, string building, int floorNumber = 0)
+        public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom = null, string building = null, int floorNumber = 0)
         {
+            // Enable fuzzy match, and search top50 for if given building but just top1 if given room name.
             string query = "*";
-            if (!string.IsNullOrEmpty(meetingRoom) && string.IsNullOrEmpty(building))
+            int topN = 1;
+            if (!string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
+            {
+                query = building + "* " + meetingRoom;
+            }
+            else if (!string.IsNullOrEmpty(meetingRoom))
             {
                 query = meetingRoom + "*";
             }
-            else if (string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
+            else if (!string.IsNullOrEmpty(building))
             {
                 query = building + "*";
-            }
-            else if (!string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
-            {
-                query = meetingRoom + "* " + building + "*";
+                topN = 50;
             }
 
-            return await GetMeetingRoomAsync(query, floorNumber);
+            return await GetMeetingRoomAsync(query, floorNumber, topN);
         }
 
-        public async Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0)
+        private async Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0, int topN = 50)
         {
-            // Enable fuzzy match.
-            query = query == "*" ? query : query + "*";
-
             List<RoomModel> meetingRooms = new List<RoomModel>();
 
-            DocumentSearchResult<RoomModel> searchResults = await SearchMeetingRoomAsync(SearchMode.All, query, floorNumber);
+            DocumentSearchResult<RoomModel> searchResults = await SearchMeetingRoomAsync(SearchMode.All, query, floorNumber, topN);
 
             if (searchResults.Results.Count() == 0)
             {
-                searchResults = await SearchMeetingRoomAsync(SearchMode.Any, query, floorNumber);
+                searchResults = await SearchMeetingRoomAsync(SearchMode.Any, query, floorNumber, topN);
             }
 
             foreach (SearchResult<RoomModel> result in searchResults.Results)
@@ -87,12 +87,13 @@ namespace CalendarSkill.Services.AzureSearchAPI
             return new SkillException(skillExceptionType, ex.Message, ex);
         }
 
-        private async Task<DocumentSearchResult<RoomModel>> SearchMeetingRoomAsync(SearchMode searchMode, string query, int floorNumber = 0)
+        private async Task<DocumentSearchResult<RoomModel>> SearchMeetingRoomAsync(SearchMode searchMode, string query, int floorNumber = 0, int topN = 50)
         {
             SearchParameters parameters = new SearchParameters()
             {
                 SearchMode = searchMode,
-                Filter = floorNumber == 0 ? null : SearchFilters.FloorNumberFilter + floorNumber.ToString()
+                Filter = floorNumber == 0 ? null : SearchFilters.FloorNumberFilter + floorNumber.ToString(),
+                Top = topN
             };
             try
             {
