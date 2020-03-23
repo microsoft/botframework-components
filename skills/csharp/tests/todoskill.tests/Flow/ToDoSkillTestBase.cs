@@ -38,6 +38,10 @@ namespace ToDoSkill.Tests.Flow
     {
         public static readonly string Provider = "Azure Active Directory v2";
 
+        public static readonly string MagicCode = "000000";
+
+        public static readonly string TestToken = "test";
+
         public IServiceCollection Services { get; set; }
 
         public MockServiceManager ServiceManager { get; set; }
@@ -102,7 +106,7 @@ namespace ToDoSkill.Tests.Flow
             Services.AddSingleton<TestAdapter>(sp =>
             {
                 var adapter = new DefaultTestAdapter();
-                adapter.AddUserToken("Azure Active Directory v2", Channels.Test, "user1", "test");
+                adapter.AddUserToken(Provider, Channels.Test, "user1", TestToken);
                 return adapter;
             });
 
@@ -150,6 +154,7 @@ namespace ToDoSkill.Tests.Flow
         {
             var sp = Services.BuildServiceProvider();
             var adapter = sp.GetService<TestAdapter>();
+            adapter.AddUserToken(Provider, adapter.Conversation.ChannelId, adapter.Conversation.User.Id, TestToken, MagicCode);
 
             var testFlow = new TestFlow(adapter, async (context, token) =>
             {
@@ -203,6 +208,16 @@ namespace ToDoSkill.Tests.Flow
                 {
                     Assert.AreEqual(actionResult.ToDoList.Count, taskCount);
                 }
+            };
+        }
+
+        protected Action<IActivity> ShowAuth()
+        {
+            return activity =>
+            {
+                var message = activity.AsMessageActivity();
+                Assert.AreEqual(1, message.Attachments.Count);
+                Assert.AreEqual("application/vnd.microsoft.card.oauth", message.Attachments[0].ContentType);
             };
         }
     }

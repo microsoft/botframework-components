@@ -142,7 +142,7 @@ namespace ToDoSkill.Dialogs
 
                 ToDoLuis.Intent topIntent = ToDoLuis.Intent.ShowToDo;
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
-                if (luisResult != null)
+                if (luisResult != null && luisResult.TopIntent().intent != ToDoLuis.Intent.None)
                 {
                     topIntent = luisResult.TopIntent().intent;
                 }
