@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using Luis;
 using Microsoft.Bot.Builder;
 
-namespace ToDoSkill.Tests.Flow.Utterances
+namespace WeatherSkill.Tests.Flow.Utterances
 {
-    public class BaseTestUtterances : Dictionary<string, ToDoLuis>
+    public class BaseTestUtterances : Dictionary<string, WeatherSkillLuis>
     {
         public BaseTestUtterances()
         {
@@ -15,41 +15,21 @@ namespace ToDoSkill.Tests.Flow.Utterances
 
         public static double TopIntentScore { get; } = 0.9;
 
-        public ToDoLuis GetBaseNoneIntent()
+        public WeatherSkillLuis GetNoneIntent()
         {
-            return GetToDoIntent();
+            return GetWeatherIntent();
         }
 
-        public ToDoLuis GetNoneIntent(string[] listType = null)
-        {
-            return GetToDoIntent(listType: listType);
-        }
-
-        protected ToDoLuis GetToDoIntent(
+        protected WeatherSkillLuis GetWeatherIntent(
             string userInput = null,
-            ToDoLuis.Intent intents = ToDoLuis.Intent.None,
-            double[] ordinal = null,
-            double[] number = null,
-            string[] containsAll = null,
-            string[] listType = null,
-            string[] taskContentML = null,
-            string[] shopContent = null,
-            string[] taskContentPattern = null,
-            string[][] foodOfGrocery = null,
-            string[][] shopVerb = null)
+            WeatherSkillLuis.Intent intents = WeatherSkillLuis.Intent.None)
         {
-            var intent = new ToDoLuis();
+            var intent = new WeatherSkillLuis();
             intent.Text = userInput;
-            intent.Intents = new Dictionary<ToDoLuis.Intent, IntentScore>();
+            intent.Intents = new Dictionary<WeatherSkillLuis.Intent, IntentScore>();
             intent.Intents.Add(intents, new IntentScore() { Score = TopIntentScore });
-            intent.Entities = new ToDoLuis._Entities();
-            intent.Entities._instance = new ToDoLuis._Entities._Instance();
-            intent.Entities.ordinal = ordinal;
-            intent.Entities.ContainsAll = containsAll;
-            intent.Entities.ListType = listType;
-            intent.Entities.TaskContent = taskContentML;
-            intent.Entities.FoodOfGrocery = foodOfGrocery;
-            intent.Entities.ShopVerb = shopVerb;
+            intent.Entities = new WeatherSkillLuis._Entities();
+            intent.Entities._instance = new WeatherSkillLuis._Entities._Instance();
 
             return intent;
         }

@@ -7,29 +7,11 @@ namespace WeatherSkill.Tests.Flow.Fakes
 {
     public static class MockData
     {
-        public const string ToDo = "To Do";
-
-        public const string Shopping = "Shopping";
-
-        public const string Grocery = "Grocery";
-
-        public const string CustomizedListType = "Homework";
-
-        public const string ListType = "listType";
-
-        public const string TaskCount = "taskCount";
-
-        public const string ToDoTask = "toDoTask";
-
-        public const string TaskId = "MockTaskId";
-
-        public const string LocaleEN = "en";
-
-        public const string LocaleENUS = "en-us";
-
         public const string LuisGeneral = "General";
 
-        public const string LuisToDo = "ToDo";
+        public const string LuisWeather = "Weather";
+
+
 
         public const string TaskContent = "taskContent";
 

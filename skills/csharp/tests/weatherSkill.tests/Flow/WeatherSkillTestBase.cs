@@ -24,8 +24,11 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WeatherSkill.Bots;
 using WeatherSkill.Dialogs;
 using WeatherSkill.Services;
+using WeatherSkill.Tests.Flow.Fakes;
+using WeatherSkill.Tests.Flow.Utterances;
 
 namespace WeatherSkill.Tests.Flow
 {
@@ -66,9 +69,9 @@ namespace WeatherSkill.Tests.Flow
                             {
                                 { MockData.LuisGeneral, new MockLuisRecognizer(new GeneralTestUtterances()) },
                                 {
-                                    MockData.LuisToDo, new MockLuisRecognizer(
+                                    MockData.LuisWeather, new MockLuisRecognizer(
                                     new DeleteToDoFlowTestUtterances(),
-                                    new AddToDoFlowTestUtterances(),
+                                    new ForecastUtterances(),
                                     new MarkToDoFlowTestUtterances(),
                                     new ShowToDoFlowTestUtterances())
                                 }
@@ -103,7 +106,7 @@ namespace WeatherSkill.Tests.Flow
 
             Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             Services.AddTransient<ForecastDialog>();
-            Services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
+            Services.AddTransient<IBot, DialogBot<MainDialog>>();
 
             // Configure localized responses
             var localizedTemplates = new Dictionary<string, string>();
