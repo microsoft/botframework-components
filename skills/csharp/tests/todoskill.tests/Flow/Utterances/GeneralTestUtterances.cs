@@ -22,6 +22,10 @@ namespace ToDoSkill.Tests.Flow.Utterances
             this.Add(ReadMore, GetGeneralIntent(
                 ReadMore,
                 General.Intent.ShowNext));
+
+            this.Add(Logout, GetGeneralIntent(
+                ReadMore,
+                General.Intent.Logout));
         }
 
         public static double TopIntentScore { get; } = 0.9;
@@ -31,6 +35,8 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string ShowPrevious { get; } = "show previous";
 
         public static string ReadMore { get; } = "read more";
+
+        public static string Logout { get; } = "log out";
 
         public static string UnknownIntent { get; } = "what's the weather?";
 

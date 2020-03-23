@@ -39,9 +39,9 @@ namespace ToDoSkill.Dialogs
 
             var showTasks = new WaterfallStep[]
             {
+                ClearContext,
                 GetAuthToken,
                 AfterGetAuthToken,
-                ClearContext,
                 DoShowTasks,
             };
 
@@ -139,8 +139,21 @@ namespace ToDoSkill.Dialogs
                 }
 
                 state.LastListType = state.ListType;
+
+                ToDoLuis.Intent topIntent = ToDoLuis.Intent.ShowToDo;
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
-                var topIntent = luisResult.TopIntent().intent;
+                if (luisResult != null && luisResult.TopIntent().intent != ToDoLuis.Intent.None)
+                {
+                    topIntent = luisResult.TopIntent().intent;
+                }
+
+                General.Intent generalTopIntent = General.Intent.None;
+                var generalLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
+                if (generalLuisResult != null)
+                {
+                    generalTopIntent = generalLuisResult.TopIntent().intent;
+                }
+
                 if (topIntent == ToDoLuis.Intent.ShowToDo || state.GoBackToStart)
                 {
                     state.AllTasks = await service.GetTasksAsync(state.ListType);
@@ -149,8 +162,6 @@ namespace ToDoSkill.Dialogs
                 var allTasksCount = state.AllTasks.Count;
                 var currentTaskIndex = state.ShowTaskPageIndex * state.PageSize;
                 state.Tasks = state.AllTasks.GetRange(currentTaskIndex, Math.Min(state.PageSize, allTasksCount - currentTaskIndex));
-                var generalLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
-                var generalTopIntent = generalLuisResult.TopIntent().intent;
                 if (state.Tasks.Count <= 0)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(ShowToDoResponses.NoTasksMessage, new
