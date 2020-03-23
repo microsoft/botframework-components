@@ -40,21 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Responses\Main\AutomotiveSkillMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AutomotiveSkillMainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\AutomotiveSkillSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AutomotiveSkillSharedResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\VehicleSettings\VehicleSettingsResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>VehicleSettingsResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\VehicleSettings\VehicleSettingsStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -97,10 +82,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Responses\Main\AutomotiveSkillMainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AutomotiveSkillMainResponses.cs</LastGenOutput>
-    </None>
     <None Update="Responses\Main\MainDialogActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -137,15 +118,8 @@
     <None Update="Responses\Main\MainDialogTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\Shared\AutomotiveSkillSharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AutomotiveSkillSharedResponses.cs</LastGenOutput>
-    </None>
     <None Update="Responses\Shared\Card.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Shared\ResponseIdCollection.t4">
-      <Generator></Generator>
     </None>
     <None Update="Responses\ResponsesAndTexts\ResponsesAndTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -236,10 +210,6 @@
     </None>
     <None Update="Responses\VehicleSettings\VehicleSettingsDialogTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\VehicleSettings\VehicleSettingsResponses.tt">
-      <LastGenOutput>VehicleSettingsResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
   </ItemGroup>
 

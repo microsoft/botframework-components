@@ -38,75 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Dialogs\DeleteEvent\Resources\ChangeEventStatusResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChangeEventStatusResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\ChangeEventStatus\ChangeEventStatusResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChangeEventStatusResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\CheckPersonAvailable\CheckPersonAvailableResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CheckPersonAvailableResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\CreateEvent\CreateEventResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CreateEventResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindContact\FindContactResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FindContactResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindMeetingRoom\FindMeetingRoomResponses.cs">
-      <DependentUpon>FindMeetingRoomResponses.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Responses\JoinEvent\JoinEventResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>JoinEventResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\CalendarMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CalendarMainResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Shared\CalendarCommonStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CalendarCommonStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\CalendarSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CalendarSharedResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Summary\SummaryResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SummaryResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\TimeRemaining\TimeRemainingResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TimeRemainingResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\UpcomingEvent\UpcomingEventResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>UpcomingEventResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\UpdateEvent\UpdateEventResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>UpdateEventResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

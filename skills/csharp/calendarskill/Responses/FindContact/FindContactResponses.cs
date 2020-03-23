@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace CalendarSkill.Responses.FindContact
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class FindContactResponses : IResponseIdCollection
+    public class FindContactResponses
     {
         // Generated accessors
         public const string PromptOneNameOneAddress = "PromptOneNameOneAddress";

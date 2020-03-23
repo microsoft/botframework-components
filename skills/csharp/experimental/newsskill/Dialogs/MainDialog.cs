@@ -345,7 +345,18 @@ namespace NewsSkill.Dialogs
             var userState = await _userStateAccessor.GetAsync(dc.Context, () => new NewsSkillUserState());
             userState.Market = request.Market;
             var convState = await _stateAccessor.GetAsync(dc.Context, () => new NewsSkillState());
-            convState.LuisResult = new NewsLuis() { Entities = new NewsLuis._Entities() { topic = new string[] { request.Query }, site = new string[] { request.Site } } };
+            var newsLuis = new NewsLuis() { Entities = new NewsLuis._Entities() };
+            if (request.Query != null)
+            {
+                newsLuis.Entities.topic = new string[] { request.Query };
+            }
+
+            if (request.Site != null)
+            {
+                newsLuis.Entities.site = new string[] { request.Site };
+            }
+
+            convState.LuisResult = newsLuis;
         }
     }
 }

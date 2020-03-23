@@ -37,20 +37,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RestaurantImages.resx</DependentUpon>
     </Compile>
-    <Compile Update="Responses\Main\RestaurantBookingMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RestaurantBookingMainResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Shared\BotStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>BotStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\RestaurantBookingSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RestaurantBookingSharedResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -148,11 +138,6 @@
     </None>
     <None Update="Responses\Main\RestaurantBookingMainResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Main\RestaurantBookingMainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RestaurantBookingMainResponses.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Responses\Main\RestaurantBookingMainResponses.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
