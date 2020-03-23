@@ -270,6 +270,27 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task RouteToPointOfInterestAndInterruptSkillTest()
+        {
+            await GetSkillTestFlow()
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(FindPointOfInterestUtterances.WhatsNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(FindPointOfInterestUtterances.WhatsNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(FindPointOfInterestUtterances.WhatsNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task RouteToPointOfInterestActionTest()
         {
             await GetSkillTestFlow()
