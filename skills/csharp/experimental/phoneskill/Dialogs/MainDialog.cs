@@ -99,10 +99,10 @@ namespace PhoneSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -144,10 +144,10 @@ namespace PhoneSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -155,13 +155,15 @@ namespace PhoneSkill.Dialogs
         }
 
         // Runs on every turn of the conversation to check if the conversation should be interrupted.
-        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PhoneSkillState());
+
                 // Get connected LUIS result from turn state.
                 var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
@@ -175,8 +177,15 @@ namespace PhoneSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
                                 break;
                             }
 
@@ -184,7 +193,7 @@ namespace PhoneSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
-                                interrupted = true;
+                                interrupted = EndOfTurn;
                                 break;
                             }
 
@@ -194,8 +203,15 @@ namespace PhoneSkill.Dialogs
 
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult() { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
                                 break;
                             }
                     }
@@ -313,8 +329,9 @@ namespace PhoneSkill.Dialogs
                                 {
                                     await DigestActionInput(stepContext, actionData);
                                 }
-                                state.IsAction = true;
                             }
+
+                            state.IsAction = true;
 
                             return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
                         }

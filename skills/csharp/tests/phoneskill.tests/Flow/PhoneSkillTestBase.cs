@@ -26,6 +26,7 @@ using PhoneSkill.Bots;
 using PhoneSkill.Common;
 using PhoneSkill.Dialogs;
 using PhoneSkill.Models;
+using PhoneSkill.Models.Actions;
 using PhoneSkill.Services;
 using PhoneSkill.Tests.TestDouble;
 using PhoneSkill.Utilities;
@@ -234,6 +235,23 @@ namespace PhoneSkill.Tests.Flow
                 Assert.AreEqual("PhoneSkill.OutgoingCall", eventReceived.Name);
                 Assert.IsInstanceOfType(eventReceived.Value, typeof(OutgoingCall));
                 Assert.AreEqual(expectedCall, (OutgoingCall)eventReceived.Value);
+            };
+        }
+
+        protected Action<IActivity> SkillActionEndMessage(bool? success = null)
+        {
+            return activity =>
+            {
+                Assert.AreEqual(activity.Type, ActivityTypes.EndOfConversation);
+                if (success.HasValue)
+                {
+                    var result = ((Activity)activity).Value as ActionResult;
+                    Assert.AreEqual(result.ActionSuccess, success.Value);
+                }
+                else
+                {
+                    Assert.IsNull(((Activity)activity).Value);
+                }
             };
         }
 
