@@ -69,6 +69,7 @@ namespace PhoneSkill.Tests.Flow
                    Number = "555 666 6666",
                    Contact = StubContactProvider.BobBotter,
                }))
+               .AssertReply(SkillActionEndMessage(true))
                .StartTestAsync();
         }
 
