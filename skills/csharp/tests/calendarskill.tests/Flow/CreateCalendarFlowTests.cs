@@ -73,7 +73,38 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
-        public async Task Test_CalendarCreateAction()
+        public async Task Test_CalendarCreate_Action()
+        {
+            await GetSkillTestFlow()
+                .Send(CreateMeetingTestUtterances.BaseCreateMeetingAction)
+                .AssertReplyOneOf(AskForParticpantsPrompt())
+                .Send(Strings.Strings.DefaultUserName)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultContent)
+                .AssertReplyOneOf(AskForDatePrompt())
+                .Send(Strings.Strings.DefaultStartDate)
+                .AssertReplyOneOf(AskForStartTimePrompt())
+                .Send(Strings.Strings.DefaultStartTime)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForLocationPrompt())
+                .Send(Strings.Strings.DefaultLocation)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_CalendarCreate_WithAllSlot_Action()
         {
             await GetSkillTestFlow()
                 .Send(CreateMeetingTestUtterances.CreateEventAction)
@@ -106,7 +137,7 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
-        public async Task Test_CalendarCreate_ConfirmNo_RetryTooMany()
+        public async Task Test_CalendarCreate_ConfirmNo_RetryTooMany_Action()
         {
             await GetTestFlow()
                 .Send(string.Empty)
@@ -141,6 +172,44 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(AskForRecreateInfoReprompt())
                 .Send("test")
                 .AssertReplyOneOf(RetryTooManyResponse())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_CalendarCreate_ConfirmNo_RetryTooMany()
+        {
+            await GetSkillTestFlow()
+                .Send(CreateMeetingTestUtterances.CreateMeetingWithOneContactEntityAction)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultContent)
+                .AssertReplyOneOf(AskForDatePrompt())
+                .Send(Strings.Strings.DefaultStartDate)
+                .AssertReplyOneOf(AskForStartTimePrompt())
+                .Send(Strings.Strings.DefaultStartTime)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForLocationPrompt())
+                .Send(Strings.Strings.DefaultLocation)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForRecreateInfoPrompt())
+                .Send("test")
+                .AssertReplyOneOf(AskForRecreateInfoReprompt())
+                .Send("test")
+                .AssertReplyOneOf(AskForRecreateInfoReprompt())
+                .Send("test")
+                .AssertReplyOneOf(AskForRecreateInfoReprompt())
+                .Send("test")
+                .AssertReplyOneOf(RetryTooManyResponse())
+                .AssertReply(CheckForOperationStatus(false))
                 .StartTestAsync();
         }
 
