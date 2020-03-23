@@ -10,13 +10,6 @@
             ".resx"
           ]
         }
-      },
-      "allExtensions": {
-        "remove": {
-          ".*": [
-            ".tt"
-          ]
-        }
       }
     }
   }

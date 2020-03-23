@@ -34,40 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Responses\DeleteEmail\DeleteEmailResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DeleteEmailResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindContact\FindContactResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FindContactResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\EmailMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmailMainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\SendEmail\SendEmailResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SendEmailResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Shared\EmailCommonStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EmailCommonStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\EmailSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmailSharedResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\ShowEmail\ShowEmailResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ShowEmailResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -123,10 +93,6 @@
     <None Update="Responses\DeleteEmail\DeleteEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\DeleteEmail\DeleteEmailResponses.tt">
-      <LastGenOutput>DeleteEmailResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Responses\DeleteEmail\DeleteEmailTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -163,10 +129,6 @@
     <None Update="Responses\FindContact\FindContactActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\FindContact\FindContactResponses.tt">
-      <LastGenOutput>FindContactResponses.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Responses\FindContact\FindContactTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -184,10 +146,6 @@
     </None>
     <None Update="Responses\FindContact\FindContactTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Main\EmailMainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EmailMainResponses.cs</LastGenOutput>
     </None>
     <None Update="Responses\Main\MainDialogActivities.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -243,10 +201,6 @@
     <None Update="Responses\SendEmail\SendEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Responses\SendEmail\SendEmailResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SendEmailResponses.cs</LastGenOutput>
-    </None>
     <None Update="Responses\SendEmail\SendEmailTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -264,13 +218,6 @@
     </None>
     <None Update="Responses\SendEmail\SendEmailTexts.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\Shared\EmailSharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EmailSharedResponses.cs</LastGenOutput>
-    </None>
-    <None Update="Responses\Shared\ResponseIdCollection.t4">
-      <Generator></Generator>
     </None>
     <None Update="Responses\Shared\ResponsesAndTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -343,10 +290,6 @@
     </None>
     <None Update="Responses\ShowEmail\ShowEmailActivities.zh-cn.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\ShowEmail\ShowEmailResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ShowEmailResponses.cs</LastGenOutput>
     </None>
     <None Update="Responses\ShowEmail\ShowEmailTexts.de-de.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
