@@ -4,7 +4,7 @@
   "name": "ITSM Skill",
   "description": "The IT Service Management Skill provides ticket and knowledge base related capabilities and supports SerivceNow.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.0",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/ItsmSkill.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",
@@ -169,7 +169,7 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
+          "type": "boolean",
           "description": "result of action"
         }
       }

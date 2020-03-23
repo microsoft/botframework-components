@@ -4,7 +4,7 @@
   "name": "Hospitality Skill",
   "description": "The Hospitality skill provides capabilities that are needed in a hotel room, such as checking out, changing your reservation, and requesting items.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.0",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/Hospitality.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",
@@ -128,7 +128,7 @@
           "type": "array",
           "description": "Items requested",
           "items": {
-            "type": "#/definitions/item"
+            "$ref": "#/definitions/item"
           }
         }
       }
@@ -144,7 +144,7 @@
           "type": "array",
           "description": "Food requested",
           "items": {
-            "type": "#/definitions/food"
+            "$ref": "#/definitions/food"
           }
         }
       }
@@ -153,7 +153,7 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
+          "type": "boolean",
           "description": "result of action"
         }
       }
