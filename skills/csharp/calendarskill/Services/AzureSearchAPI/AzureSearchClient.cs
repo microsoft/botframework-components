@@ -20,6 +20,25 @@ namespace CalendarSkill.Services.AzureSearchAPI
             _indexClient = searchClient.Indexes.GetClient(searchIndexName);
         }
 
+        public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom, string building, int floorNumber = 0)
+        {
+            string query = "*";
+            if (!string.IsNullOrEmpty(meetingRoom) && string.IsNullOrEmpty(building))
+            {
+                query = meetingRoom + "*";
+            }
+            else if (string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
+            {
+                query = building + "*";
+            }
+            else if (!string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
+            {
+                query = meetingRoom + "* " + building + "*";
+            }
+
+            return await GetMeetingRoomAsync(query, floorNumber);
+        }
+
         public async Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0)
         {
             // Enable fuzzy match.
@@ -27,11 +46,11 @@ namespace CalendarSkill.Services.AzureSearchAPI
 
             List<RoomModel> meetingRooms = new List<RoomModel>();
 
-            DocumentSearchResult<RoomModel> searchResults = await SearchMeetongRoomAsync(SearchMode.All, query, floorNumber);
+            DocumentSearchResult<RoomModel> searchResults = await SearchMeetingRoomAsync(SearchMode.All, query, floorNumber);
 
             if (searchResults.Results.Count() == 0)
             {
-                searchResults = await SearchMeetongRoomAsync(SearchMode.Any, query, floorNumber);
+                searchResults = await SearchMeetingRoomAsync(SearchMode.Any, query, floorNumber);
             }
 
             foreach (SearchResult<RoomModel> result in searchResults.Results)
@@ -68,7 +87,7 @@ namespace CalendarSkill.Services.AzureSearchAPI
             return new SkillException(skillExceptionType, ex.Message, ex);
         }
 
-        private async Task<DocumentSearchResult<RoomModel>> SearchMeetongRoomAsync(SearchMode searchMode, string query, int floorNumber = 0)
+        private async Task<DocumentSearchResult<RoomModel>> SearchMeetingRoomAsync(SearchMode searchMode, string query, int floorNumber = 0)
         {
             SearchParameters parameters = new SearchParameters()
             {

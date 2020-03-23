@@ -269,7 +269,7 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
 
-                if (luisResult.TopIntent().intent == CalendarLuis.Intent.RejectCalendar)
+                if (luisResult.TopIntent().intent == CalendarLuis.Intent.RejectCalendar && luisResult.TopIntent().score > 0.7)
                 {
                     state.MeetingInfo.FloorNumber = 0;
                 }
@@ -302,9 +302,7 @@ namespace CalendarSkill.Dialogs
             {
                 var state = await Accessor.GetAsync(sc.Context);
 
-                state.MeetingInfo.UnconfirmedMeetingRoom = !string.IsNullOrEmpty(state.MeetingInfo.MeetingRoomName) ?
-                        await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName) :
-                        await SearchService.GetMeetingRoomAsync(state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
+                state.MeetingInfo.UnconfirmedMeetingRoom = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
 
                 if (state.MeetingInfo.UnconfirmedMeetingRoom.Count == 0)
                 {
