@@ -157,8 +157,7 @@ namespace EmailSkill.Dialogs
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var subject);
-                    var subjectInput = subject != null ? subject.ToString() : sc.Context.Activity.Text;
+                    var subjectInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(subjectInput))
                     {
@@ -195,8 +194,7 @@ namespace EmailSkill.Dialogs
 
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var subject);
-                    var subjectInput = subject != null ? subject.ToString() : sc.Context.Activity.Text;
+                    var subjectInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(subjectInput))
                     {
@@ -279,8 +277,7 @@ namespace EmailSkill.Dialogs
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
-                    var contentInput = content != null ? content.ToString() : sc.Context.Activity.Text;
+                    var contentInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(contentInput))
                     {
