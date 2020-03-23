@@ -102,6 +102,10 @@
     "luisAuthoringLocation": {
       "type": "string"
     },
+    "azureMapsServiceName": {
+      "type": "string",
+      "defaultValue": "[concat(parameters('name'), '-maps')]"
+    },
     "resourceTagName": {
       "type": "string",
       "defaultValue": "bot"
@@ -295,6 +299,16 @@
         "[resourceId('Microsoft.CognitiveServices/accounts', parameters('luisRuntimeName'))]"
       ],
       "condition": "[parameters('useLuisAuthoring')]"
+    },
+    {
+      "type": "Microsoft.Maps/accounts",
+      "apiVersion": "2018-05-01",
+      "name": "[parameters('azureMapsServiceName')]",
+      "location": "global",
+      "sku": {
+        "name": "s1",
+        "tier": "Standard"
+      }
     }
   ],
   "outputs": {
@@ -338,6 +352,10 @@
         "authoringKey": "[if(parameters('useLuisAuthoring'), listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('luisAuthoringName')),'2016-02-01-preview').key1, '')]",
         "endpoint": "[if(parameters('useLuisAuthoring'), reference(resourceId('Microsoft.CognitiveServices/accounts', parameters('luisAuthoringName')),'2016-02-01-preview').endpoint, '')]"
       }
+    },
+    "azureMapsKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Maps/accounts', parameters('azureMapsServiceName')),'2018-05-01').primaryKey]"
     }
   }
 }

@@ -102,6 +102,14 @@
     "luisAuthoringLocation": {
       "type": "string"
     },
+    "bingServiceName": {
+      "type": "string",
+      "defaultValue": "[concat(parameters('name'), '-bing')]"
+    },
+    "azureMapsServiceName": {
+      "type": "string",
+      "defaultValue": "[concat(parameters('name'), '-maps')]"
+    },
     "resourceTagName": {
       "type": "string",
       "defaultValue": "bot"
@@ -338,6 +346,14 @@
         "authoringKey": "[if(parameters('useLuisAuthoring'), listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('luisAuthoringName')),'2016-02-01-preview').key1, '')]",
         "endpoint": "[if(parameters('useLuisAuthoring'), reference(resourceId('Microsoft.CognitiveServices/accounts', parameters('luisAuthoringName')),'2016-02-01-preview').endpoint, '')]"
       }
+    },
+    "BingNewsKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('bingServiceName')),'2017-04-18').key1]"
+    },
+    "AzureMapsKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Maps/accounts', parameters('azureMapsServiceName')),'2018-05-01').primaryKey]"
     }
   }
 }
