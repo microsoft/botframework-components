@@ -181,7 +181,8 @@ namespace WeatherSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(cancellationToken: cancellationToken);
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
                                 {
