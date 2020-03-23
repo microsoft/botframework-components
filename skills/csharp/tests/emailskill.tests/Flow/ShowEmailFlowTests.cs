@@ -243,6 +243,8 @@ namespace EmailSkill.Tests.Flow
                 .Send(ShowEmailUtterances.ShowEmails)
                 .AssertReply(this.ShowEmailList())
                 .AssertReplyOneOf(this.ReadOutPrompt())
+                .Send(DeleteEmailUtterances.DeleteCurrentEmail)
+                .AssertReplyOneOf(this.ChooseMessagePrompt())
                 .Send(BaseTestUtterances.FirstOne)
                 .AssertReply(this.AssertSelectOneOfTheMessage(1))
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
@@ -412,6 +414,11 @@ namespace EmailSkill.Tests.Flow
         private string[] AddMoreContacts(object recipientDict)
         {
             return GetTemplates(FindContactResponses.AddMoreContactsPrompt, recipientDict);
+        }
+
+        private string[] ChooseMessagePrompt()
+        {
+            return GetTemplates(ShowEmailResponses.ActionPrompt);
         }
 
         private Action<IActivity> AssertSelectOneOfTheMessage(int selection)
