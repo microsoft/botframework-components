@@ -33,9 +33,10 @@ namespace WeatherSkill.Dialogs
             BotServices services,
             LocaleTemplateManager localeTemplateManager,
             ConversationState conversationState,
+            IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient,
             IHttpContextAccessor httpContext)
-            : base(nameof(ForecastDialog), settings, services, localeTemplateManager, conversationState, telemetryClient)
+            : base(nameof(ForecastDialog), settings, services, localeTemplateManager, conversationState, serviceManager, telemetryClient)
         {
             _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _services = services;
@@ -121,7 +122,7 @@ namespace WeatherSkill.Dialogs
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context);
 
-            var service = new AzureMapsWeatherService(ApiKey);
+            var service = ServiceManager.InitService(Settings);
 
             if (!string.IsNullOrEmpty(state.Geography))
             {

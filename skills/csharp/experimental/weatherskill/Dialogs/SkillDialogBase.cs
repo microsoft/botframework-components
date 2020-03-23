@@ -31,14 +31,15 @@ namespace WeatherSkill.Dialogs
              BotServices services,
              LocaleTemplateManager localeTemplateManager,
              ConversationState conversationState,
+             IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
             LocaleTemplateManager = localeTemplateManager;
+            ServiceManager = serviceManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
-            GetApiKey(settings);
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!Settings.OAuthConnections.Any())
@@ -56,6 +57,8 @@ namespace WeatherSkill.Dialogs
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
         protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+
+        protected IServiceManager ServiceManager { get; set; }
 
         protected string ApiKey { get; set; }
 
@@ -212,11 +215,6 @@ namespace WeatherSkill.Dialogs
             {
                 return card;
             }
-        }
-
-        private void GetApiKey(BotSettings settings)
-        {
-            ApiKey = settings.WeatherApiKey ?? throw new Exception("Could not get the required AccuWeather API key. Please make sure your settings are correctly configured.");
         }
 
         private class DialogIds

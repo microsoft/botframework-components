@@ -9,23 +9,30 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SkillServiceLibrary.Models.AzureMaps;
+using SkillServiceLibrary.Services;
 
 namespace WeatherSkill.Services
 {
-    public sealed class AzureMapsWeatherService
+    public sealed class AzureMapsWeatherService : IWeatherService
     {
         private static readonly string FindByAddressNoCoordinatesQueryUrl = $"https://atlas.microsoft.com/search/address/json?api-version=1.0&query={{0}}&subscription-key={{1}}&limit=1";
         private static readonly string FindAddressByCoordinateUrl = $"https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0&query={{0}}&subscription-key={{1}}&limit=1";
         private static readonly string ForecastDailyUrl = $"https://atlas.microsoft.com/weather/forecast/daily/json?api-version=1.0&query={{0}}&duration={{1}}&subscription-key={{2}}&limit=1";
         private static readonly string ForecastHourlyUrl = $"https://atlas.microsoft.com/weather/forecast/hourly/json?api-version=1.0&query={{0}}&duration={{1}}&subscription-key={{2}}&limit=1";
-
         private static HttpClient _httpClient;
         private string _apiKey;
 
-        public AzureMapsWeatherService(string apikey)
+        public AzureMapsWeatherService(string apikey, HttpClient client = null)
         {
             _apiKey = apikey;
-            _httpClient = new HttpClient();
+            if (client != null)
+            {
+                _httpClient = client;
+            }
+            else
+            {
+                _httpClient = new HttpClient();
+            }
         }
 
         public async Task<(double, double)> GetCoordinatesByQueryAsync(string query)
