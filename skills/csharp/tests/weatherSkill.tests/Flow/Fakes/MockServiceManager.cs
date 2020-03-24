@@ -20,7 +20,7 @@ namespace WeatherSkill.Tests.Flow.Fakes
         public IWeatherService InitService(BotSettings settings)
         {
             var apiKey = settings.WeatherApiKey;
-            return new AzureMapsWeatherService(apiKey, mockClient);
+            return new AzureMapsWeatherService(apiKey, client: mockClient);
         }
     }
 }
