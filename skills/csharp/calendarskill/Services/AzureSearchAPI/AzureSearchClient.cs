@@ -22,7 +22,7 @@ namespace CalendarSkill.Services.AzureSearchAPI
 
         public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom = null, string building = null, int floorNumber = 0)
         {
-            // Enable fuzzy match, and search top50 for if given building but just top1 if given room name.
+            // Enable fuzzy match, and search top50 candidates if given building but just top1 if given room name.
             string query = "*";
             int topN = 1;
             if (!string.IsNullOrEmpty(meetingRoom) && !string.IsNullOrEmpty(building))
