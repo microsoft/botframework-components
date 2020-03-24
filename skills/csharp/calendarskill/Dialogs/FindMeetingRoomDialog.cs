@@ -300,13 +300,18 @@ namespace CalendarSkill.Dialogs
             {
                 var state = await Accessor.GetAsync(sc.Context);
 
-                state.MeetingInfo.UnconfirmedMeetingRoom = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
+                var meetingRooms = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
 
-                if (state.MeetingInfo.UnconfirmedMeetingRoom.Count == 0)
+                if (meetingRooms.Count == 0)
                 {
                     if (!string.IsNullOrEmpty(state.MeetingInfo.MeetingRoomName))
                     {
-                        var tokens = new { MeetingRoom = state.MeetingInfo.MeetingRoomName };
+                        var tokens = new
+                        {
+                            MeetingRoom = state.MeetingInfo.MeetingRoomName,
+                            state.MeetingInfo.Building,
+                            state.MeetingInfo.FloorNumber,
+                        };
                         var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByName, tokens);
                         await sc.Context.SendActivityAsync(activity);
                         state.MeetingInfo.MeetingRoomName = null;
@@ -332,6 +337,7 @@ namespace CalendarSkill.Dialogs
                     return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
                 }
 
+                state.MeetingInfo.UnconfirmedMeetingRoom = meetingRooms;
                 return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -380,8 +386,9 @@ namespace CalendarSkill.Dialogs
                     {
                         state.MeetingInfo.Building,
                         state.MeetingInfo.FloorNumber,
-                        DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), 
-                        state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
+                        DateTime = SpeakHelper.ToSpeechMeetingTime(
+                            TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()),
+                            state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                     };
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
                     await sc.Context.SendActivityAsync(activity);
@@ -521,7 +528,7 @@ namespace CalendarSkill.Dialogs
                                 {
                                     state.MeetingInfo.FloorNumber = null;
 
-                                    // Keep building if use just change floorNumber, or clear current conditions.
+                                    // Keep building if user just changes floorNumber, or clear all current conditions.
                                     if (luisResult.Entities.FloorNumber == null)
                                     {
                                         state.MeetingInfo.Building = null;
@@ -611,27 +618,6 @@ namespace CalendarSkill.Dialogs
                 await HandleDialogExceptions(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
-        }
-
-        private int? ParseFloorNumber(string utterance, string culture)
-        {
-            var model_ordinal = new NumberRecognizer(culture).GetOrdinalModel(culture);
-            var result = model_ordinal.Parse(utterance);
-            if (result.Any())
-            {
-                return int.Parse(result.First().Resolution["value"].ToString());
-            }
-            else
-            {
-                var model_number = new NumberRecognizer(culture).GetNumberModel(culture);
-                result = model_number.Parse(utterance);
-                if (result.Any())
-                {
-                    return int.Parse(result.First().Resolution["value"].ToString());
-                }
-            }
-
-            return null;
         }
     }
 }

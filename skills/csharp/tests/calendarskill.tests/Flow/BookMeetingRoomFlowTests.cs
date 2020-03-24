@@ -504,6 +504,8 @@ namespace CalendarSkill.Test.Flow
         [TestMethod]
         public async Task Test_BookMeetingRoom_ChangeRoomWithRoomName()
         {
+
+
             await GetTestFlow()
                 .Send(string.Empty)
                 .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
@@ -519,7 +521,10 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(ReplyMeetingRoomIgnored())
                 .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
                 .Send(BookMeetingRoomTestUtterances.BookMeetingRoomWithMeetingRoomEntity)
-                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .AssertReplyOneOf(ReplyMeetingRoomNotFound(building: string.Format(Strings.Strings.Building, 2), floorNumber: 2))
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeMeetingRoom)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt(8))
                 .Send(Strings.Strings.ConfirmYes)
                 .AssertReplyOneOf(ConfirmedMeetingRoom())
                 .AssertReplyOneOf(AskForParticpantsPrompt())
@@ -978,11 +983,16 @@ namespace CalendarSkill.Test.Flow
             return GetTemplates(CalendarSharedResponses.RetryTooManyResponse);
         }
 
-        private string[] ReplyMeetingRoomNotFound()
+        private string[] ReplyMeetingRoomNotFound(
+            string meetingRoom = Strings.Strings.DefaultMeetingRoomName,
+            string building = null,
+            int floorNumber = 0)
         {
             return GetTemplates(FindMeetingRoomResponses.MeetingRoomNotFoundByName, new
             {
-                MeetingRoom = Strings.Strings.DefaultMeetingRoomName,
+                MeetingRoom = meetingRoom,
+                Building = building,
+                FloorNumber = floorNumber,
             });
         }
 
