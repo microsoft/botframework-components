@@ -1,0 +1,68 @@
+{
+  "type": "AdaptiveCard",
+  "id": "PointOfInterestOverviewDetailsCard",
+  "body": [
+    {
+      "type": "Container",
+      "backgroundImage": {
+        "url": "${if(Data.PointOfInterestImageUrl == null, '', Data.PointOfInterestImageUrl)}",
+        "verticalAlignment": "Center",
+        "horizontalAlignment": "Center"
+      },
+      "bleed": true,
+      "minHeight": "100px"
+    },
+    {
+      "type": "TextBlock",
+      "horizontalAlignment": "Left",
+      "spacing": "None",
+      "size": "Medium",
+      "weight": "Bolder",
+      "color": "default",
+      "text": "${if(Data.Name == null, '', Data.Name)}"
+    },
+    {
+      "type": "TextBlock",
+      "spacing": "None",
+      "color": "default",
+      "text": "${if(Data.AvailableDetails == null, '', Data.AvailableDetails)}"
+    },
+    {
+      "type": "TextBlock",
+      "spacing": "None",
+      "color": "default",
+      "text": "${if(Data.Address == null, '', Data.Address)}",
+      "maxLines": 1,
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "spacing": "None",
+      "color": "default",
+      "text": "${if(Data.Hours == null, '', Data.Hours)}",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "id": "Phone",
+      "spacing": "None",
+      "color": "default",
+      "text": "${if(Data.Phone == null, '', concat('Phone: ', Data.Phone))}",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "id": "Website",
+      "spacing": "None",
+      "color": "default",
+      "text": "${if(Data.Website == null, '', concat('Website: ', Data.Website))}",
+      "wrap": true
+    }
+  ],
+  "selectAction": {
+    "type": "Action.Submit",
+    "data": "${if(Data.SubmitText == null, '', Data.SubmitText)}"
+  },
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}

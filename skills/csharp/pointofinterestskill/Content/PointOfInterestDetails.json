@@ -91,6 +91,22 @@
           "color": "default",
           "text": "${if(Data.Hours == null, '', Data.Hours)}",
           "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "id": "Phone",
+          "spacing": "None",
+          "color": "default",
+          "text": "${if(Data.Phone == null, '', concat('Phone: ', Data.Phone))}",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "id": "Website",
+          "spacing": "None",
+          "color": "default",
+          "text": "${if(Data.Website == null, '', concat('Website: ', Data.Website))}",
+          "wrap": true
         }
       ]
     },

@@ -605,7 +605,7 @@ namespace PointOfInterestSkill.Dialogs
                 pointOfInterestList[0].SubmitText = GetConfirmPromptTrue();
             }
 
-            options.Prompt = TemplateManager.GenerateActivity(prompt, containerCard, null, container, cards);
+            options.Prompt = TemplateManager.GenerateActivity(prompt, cards);
 
             // Restore Value to SubmitText
             for (var i = 0; i < pointOfInterestList.Count; ++i)
@@ -677,7 +677,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 foreach (var pointOfInterest in pointOfInterestList)
                 {
-                    cards.Add(new Card(GetDivergedCardName(sc.Context, "PointOfInterestOverview"), pointOfInterest));
+                    cards.Add(new Card(GetDivergedCardName(sc.Context, "PointOfInterestOverviewDetails"), pointOfInterest));
                 }
             }
 
