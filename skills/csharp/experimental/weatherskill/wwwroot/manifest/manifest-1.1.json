@@ -44,10 +44,10 @@
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
-    "weatherForcast": {
-      "description": "Weather forcast in a Geography or Latitude & Longitude",
+    "weatherForecast": {
+      "description": "Weather forecast in a Geography or Latitude & Longitude",
       "type": "event",
-      "name": "WeatherForcast",
+      "name": "WeatherForecast",
       "value": {
         "$ref": "#/definitions/locationInfo"
       },
