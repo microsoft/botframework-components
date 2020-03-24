@@ -232,9 +232,13 @@ namespace PointOfInterestSkill.Dialogs
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
+            bool shouldInterrupt = stepContext.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
-            if (stepContext.Context.IsSkill() || state.ShouldInterrupt)
+            if (stepContext.Context.IsSkill() || shouldInterrupt)
             {
+                // Clear interrupt state
+                stepContext.Context.TurnState.Remove(StateProperties.InterruptKey);
+
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
             }
@@ -243,13 +247,10 @@ namespace PointOfInterestSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(POIMainResponses.FirstPromptMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
+                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
+                        POIMainResponses.PointOfInterestWelcomeMessage : POIMainResponses.FirstPromptMessage)
                 };
-
-                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-                {
-                    promptOptions.Prompt = _templateManager.GenerateActivity(POIMainResponses.PointOfInterestWelcomeMessage);
-                }
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
             }
@@ -352,8 +353,9 @@ namespace PointOfInterestSkill.Dialogs
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
-            
-            if (stepContext.Context.IsSkill())
+            bool shouldInterrupt = stepContext.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
+
+            if (stepContext.Context.IsSkill() && !shouldInterrupt)
             {
                 var result = stepContext.Result;
 

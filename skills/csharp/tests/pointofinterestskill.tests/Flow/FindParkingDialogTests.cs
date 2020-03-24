@@ -79,6 +79,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .StartTestAsync();
         }
 

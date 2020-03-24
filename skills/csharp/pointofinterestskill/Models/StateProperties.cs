@@ -9,6 +9,7 @@ namespace PointOfInterestSkill.Models
     {
         public const string GeneralLuisResultKey = "GeneralLuisResultKey";
         public const string POILuisResultKey = "POILuisResultKey";
-        public const string LocationKey = "location";
+        public const string LocationKey = "LocationKey";
+        public const string InterruptKey = "InterruptKey";
     }
 }

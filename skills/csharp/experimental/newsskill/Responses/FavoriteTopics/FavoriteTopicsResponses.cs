@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace NewsSkill.Responses.FavoriteTopics
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class FavoriteTopicsResponses : IResponseIdCollection
+    public class FavoriteTopicsResponses
     {
         // Generated accessors
         public const string FavoriteTopicPrompt = "FavoriteTopicPrompt";
@@ -17,4 +15,3 @@ namespace NewsSkill.Responses.FavoriteTopics
         public const string NoFavoriteTopics = "NoFavoriteTopics";
     }
 }
-

@@ -49,6 +49,28 @@ namespace ToDoSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task Test_ShowToDoItemsWithSignin()
+        {
+            ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);
+            await this.GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.FirstPromptMessage))
+                .Send(GeneralTestUtterances.Logout)
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.LogOut))
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.FirstPromptMessage))
+                .Send(ShowToDoFlowTestUtterances.ShowToDoList)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReplyOneOf(this.SettingUpOneNote())
+                .AssertReplyOneOf(this.AfterSettingUpOneNote())
+                .AssertReply(this.ShowToDoCard())
+                .AssertReplyOneOf(this.ReadMoreTasksPrompt())
+                .Send(MockData.ConfirmNo)
+                .AssertReplyOneOf(this.FirstReadMoreRefused())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_ShowGroceryItems()
         {
             ServiceManager.MockTaskService.ChangeData(DataOperationType.OperationType.ResetAllData);

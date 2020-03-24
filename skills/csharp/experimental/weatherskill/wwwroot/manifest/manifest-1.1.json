@@ -4,7 +4,7 @@
   "name": "Weather Skill",
   "description": "The Weather skill provides an example of displaying the current weather using AccuWeather.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.1",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/WeatherSkill.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",
@@ -44,10 +44,10 @@
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     },
-    "weatherForcast": {
-      "description": "Weather forcast in a Geography or Latitude & Longitude",
+    "weatherForecast": {
+      "description": "Weather forecast in a Geography or Latitude & Longitude",
       "type": "event",
-      "name": "WeatherForcast",
+      "name": "WeatherForecast",
       "value": {
         "$ref": "#/definitions/locationInfo"
       },
@@ -70,7 +70,7 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
+          "type": "boolean",
           "description": "result of action"
         },
         "summary": {

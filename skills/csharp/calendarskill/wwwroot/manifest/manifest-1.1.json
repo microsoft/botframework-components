@@ -4,7 +4,7 @@
   "name": "Calendar Skill",
   "description": "The Calendar skill provides calendaring related capabilities and supports Office and Google calendars.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.1",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/CalendarSkill.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",

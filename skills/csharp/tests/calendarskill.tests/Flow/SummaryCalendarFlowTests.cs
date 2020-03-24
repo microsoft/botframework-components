@@ -52,7 +52,7 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
-        public async Task Test_CalendarSummaryEvent()
+        public async Task Test_CalendarSummary_Action()
         {
             await this.GetSkillTestFlow()
                 .Send(FindMeetingTestUtterances.SummaryAction)
@@ -70,6 +70,16 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(this.FoundOneEventAgainPrompt($"about {Strings.Strings.DefaultEventName}"))
                 .AssertReplyOneOf(this.AskForOrgnizerActionPrompt())
                 .Send(Strings.Strings.ConfirmNo)
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_CalendarSearchByTitle_Action()
+        {
+            await this.GetSkillTestFlow()
+                .Send(FindMeetingTestUtterances.FindMeetingByTitleAction)
+                .AssertReplyOneOf(this.FoundOneEventAgainPrompt($"about {Strings.Strings.DefaultEventName}"))
+                .AssertReply(CheckForEventInfoOutput())
                 .StartTestAsync();
         }
 
@@ -231,10 +241,10 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
-        public async Task Test_CalendarSummaryByStartTimeEvent()
+        public async Task Test_CalendarSummaryByStartTime_Action()
         {
             await this.GetSkillTestFlow()
-                .Send(FindMeetingTestUtterances.ShowEventAction)
+                .Send(FindMeetingTestUtterances.FindMeetingByStartTimeAction)
                 .AssertReplyOneOf(this.FoundOneEventPrompt("tomorrow", "tomorrow"))
                 .AssertReply(CheckForEventInfoOutput())
                 .StartTestAsync();

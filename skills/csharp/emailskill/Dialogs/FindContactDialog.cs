@@ -796,6 +796,10 @@ namespace EmailSkill.Dialogs
             foreach (var person in personList)
             {
                 var mailAddress = person.Emails[0] ?? person.UserPrincipalName;
+                if (mailAddress == null)
+                {
+                    continue;
+                }
 
                 var isDup = false;
                 foreach (var formattedPerson in formattedPersonList)
@@ -818,6 +822,10 @@ namespace EmailSkill.Dialogs
             foreach (var user in userList)
             {
                 var mailAddress = user.Emails[0] ?? user.UserPrincipalName;
+                if (mailAddress == null)
+                {
+                    continue;
+                }
 
                 var isDup = false;
                 foreach (var formattedPerson in formattedPersonList)

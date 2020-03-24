@@ -233,6 +233,10 @@ namespace PointOfInterestSkill.Tests.Flow
                         Assert.IsFalse(string.IsNullOrEmpty(dest.Name));
                     }
                 }
+                else
+                {
+                    Assert.IsNull(eoc.Value);
+                }
             };
         }
 

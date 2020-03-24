@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace EmailSkill.Responses.DeleteEmail
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class DeleteEmailResponses : IResponseIdCollection
+    public class DeleteEmailResponses
     {
         // Generated accessors
         public const string DeletePrompt = "DeletePrompt";
