@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WeatherSkill.Bots;
 using WeatherSkill.Dialogs;
+using WeatherSkill.Models.Action;
 using WeatherSkill.Services;
 using WeatherSkill.Tests.Flow.Fakes;
 using WeatherSkill.Tests.Flow.Utterances;
@@ -70,10 +71,7 @@ namespace WeatherSkill.Tests.Flow
                                 { MockData.LuisGeneral, new MockLuisRecognizer(new GeneralTestUtterances()) },
                                 {
                                     MockData.LuisWeather, new MockLuisRecognizer(
-                                    new DeleteToDoFlowTestUtterances(),
-                                    new ForecastUtterances(),
-                                    new MarkToDoFlowTestUtterances(),
-                                    new ShowToDoFlowTestUtterances())
+                                    new ForecastUtterances())
                                 }
                             }
                         }
@@ -105,6 +103,7 @@ namespace WeatherSkill.Tests.Flow
             });
 
             Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            Services.AddTransient<MainDialog>();
             Services.AddTransient<ForecastDialog>();
             Services.AddTransient<IBot, DialogBot<MainDialog>>();
 
@@ -117,8 +116,8 @@ namespace WeatherSkill.Tests.Flow
             {
                 // LG template for en-us does not include locale in file extension.
                 var localeTemplateFile = locale.Equals("en-us")
-                    ? Path.Combine(".", "Responses", "Shared", $"{templateFile}.lg")
-                    : Path.Combine(".", "Responses", "Shared", $"{templateFile}.{locale}.lg");
+                    ? Path.Combine(".", "Responses", "ResponsesAndTexts", $"{templateFile}.lg")
+                    : Path.Combine(".", "Responses", "ResponsesAndTexts", $"{templateFile}.{locale}.lg");
 
                 localizedTemplates.Add(locale, localeTemplateFile);
             }
@@ -126,7 +125,7 @@ namespace WeatherSkill.Tests.Flow
             Services.AddSingleton(new LocaleTemplateManager(localizedTemplates, "en-us"));
 
             // Configure files for generating all responses. Response from bot should equal one of them.
-            var allTemplates = Templates.ParseFile(Path.Combine("Responses", "Shared", "ResponsesAndTexts.lg"));
+            var allTemplates = Templates.ParseFile(Path.Combine("Responses", "ResponsesAndTexts", "ResponsesAndTexts.lg"));
             Services.AddSingleton(allTemplates);
 
             Services.AddSingleton<IStorage>(new MemoryStorage());
@@ -175,28 +174,19 @@ namespace WeatherSkill.Tests.Flow
             return testFlow;
         }
 
-        protected string[] ActionEndMessage()
-        {
-            return GetTemplates(ToDoMainResponses.CompletedMessage);
-        }
-
-        protected Action<IActivity> CheckForEoC(Type expectedResultType, bool resultContainsToDoList, int taskCount = 0)
+        protected Action<IActivity> CheckForEoC()
         {
             return activity =>
             {
                 var eoc = (Activity)activity;
 
                 Assert.AreEqual(ActivityTypes.EndOfConversation, eoc.Type);
-                Assert.AreEqual(expectedResultType, eoc.Value.GetType());
+                Assert.AreEqual(typeof(ActionResult), eoc.Value.GetType());
 
-                var actionResult = eoc.Value as TodoListInfo;
+                var actionResult = eoc.Value as ActionResult;
                 Assert.IsNotNull(actionResult);
+                Assert.IsNotNull(actionResult.Summary);
                 Assert.AreEqual(actionResult.ActionSuccess, true);
-
-                if (resultContainsToDoList)
-                {
-                    Assert.AreEqual(actionResult.ToDoList.Count, taskCount);
-                }
             };
         }
     }

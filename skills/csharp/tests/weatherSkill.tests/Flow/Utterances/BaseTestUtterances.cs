@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Luis;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.AI.Luis;
 
 namespace WeatherSkill.Tests.Flow.Utterances
 {
@@ -15,23 +16,24 @@ namespace WeatherSkill.Tests.Flow.Utterances
 
         public static double TopIntentScore { get; } = 0.9;
 
-        public WeatherSkillLuis GetNoneIntent()
+        public WeatherSkillLuis GetLuisWithNoneIntent()
         {
-            return GetWeatherIntent();
+            return GetWeatherSkillLuis();
         }
 
-        protected WeatherSkillLuis GetWeatherIntent(
+        protected WeatherSkillLuis GetWeatherSkillLuis(
             string userInput = null,
-            WeatherSkillLuis.Intent intents = WeatherSkillLuis.Intent.None)
+            WeatherSkillLuis.Intent intent = WeatherSkillLuis.Intent.None,
+            GeographyV2[] geographyV2s = null)
         {
-            var intent = new WeatherSkillLuis();
-            intent.Text = userInput;
-            intent.Intents = new Dictionary<WeatherSkillLuis.Intent, IntentScore>();
-            intent.Intents.Add(intents, new IntentScore() { Score = TopIntentScore });
-            intent.Entities = new WeatherSkillLuis._Entities();
-            intent.Entities._instance = new WeatherSkillLuis._Entities._Instance();
-
-            return intent;
+            var weatherSkillLuis = new WeatherSkillLuis();
+            weatherSkillLuis.Text = userInput;
+            weatherSkillLuis.Intents = new Dictionary<WeatherSkillLuis.Intent, IntentScore>();
+            weatherSkillLuis.Intents.Add(intent, new IntentScore() { Score = TopIntentScore });
+            weatherSkillLuis.Entities = new WeatherSkillLuis._Entities();
+            weatherSkillLuis.Entities._instance = new WeatherSkillLuis._Entities._Instance();
+            weatherSkillLuis.Entities.geographyV2 = geographyV2s;
+            return weatherSkillLuis;
         }
     }
 }

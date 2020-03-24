@@ -59,14 +59,14 @@ namespace WeatherSkill.Tests.Flow.Fakes
             var text = turnContext.Activity.Text;
             if (t.Name.Equals(typeof(WeatherSkillLuis).Name))
             {
-                var mockToDo = utterancesManager.GetValueOrDefault(text, utterancesManager.GetBaseNoneIntent());
+                var mockWeatherSkillIntent = utterancesManager.GetValueOrDefault(text, utterancesManager.GetLuisWithNoneIntent());
 
-                var test = mockToDo as object;
+                var test = mockWeatherSkillIntent as object;
                 mockResult = (T)test;
             }
-            else if (t.Name.Equals(typeof(General).Name))
+            else if (t.Name.Equals(typeof(GeneralLuis).Name))
             {
-                var mockGeneralIntent = generalUtterancesManager.GetValueOrDefault(text, generalUtterancesManager.GetBaseNoneIntent());
+                var mockGeneralIntent = generalUtterancesManager.GetValueOrDefault(text, generalUtterancesManager.GetLuisWithNoneIntent());
 
                 var test = mockGeneralIntent as object;
                 mockResult = (T)test;

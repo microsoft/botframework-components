@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net.Http;
+using SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes;
 using SkillServiceLibrary.Services;
 using WeatherSkill.Services;
 
@@ -13,7 +14,7 @@ namespace WeatherSkill.Tests.Flow.Fakes
 
         public MockServiceManager()
         {
-            mockClient = new HttpClient(new MockHttpClientHandlerGen().GetMockHttpClientHandler());
+            mockClient = new HttpClient(new MockHttpClientHandlerWeatherGen().GetMockHttpClientHandler());
         }
 
         public IWeatherService InitService(BotSettings settings)

@@ -20,6 +20,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\..\experimental\weatherskill\WeatherSkill.csproj" />
+    <ProjectReference Include="..\SkillServiceLibrary.Fakes\SkillServiceLibrary.Fakes.csproj" />
   </ItemGroup>
 
 </Project>
