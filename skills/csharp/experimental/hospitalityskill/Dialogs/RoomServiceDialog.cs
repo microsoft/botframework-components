@@ -240,7 +240,7 @@ namespace HospitalitySkill.Dialogs
             var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
             var entities = convState.LuisResult?.Entities;
 
-            if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
+            if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities?.Food?[0])))
             {
                 // added an item
                 await GetFoodEntities(promptContext.Context);
