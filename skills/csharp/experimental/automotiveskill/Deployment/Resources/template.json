@@ -120,7 +120,7 @@
   "resources": [
     {
       "apiVersion": "2018-02-01",
-      "name": "02170180-24c4-499e-81e4-68ec3e59163f",s
+      "name": "02170180-24c4-499e-81e4-68ec3e59163f",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
