@@ -523,18 +523,6 @@ namespace CalendarSkill.Dialogs
                             {
                                 state.MeetingInfo.MeetingRoomName = null;
 
-                                // No rooms in current condition.
-                                if (state.MeetingInfo.UnconfirmedMeetingRoom.Count == 0)
-                                {
-                                    state.MeetingInfo.FloorNumber = null;
-
-                                    // Keep building if user just changes floorNumber, or clear all current conditions.
-                                    if (luisResult.Entities.FloorNumber == null)
-                                    {
-                                        state.MeetingInfo.Building = null;
-                                    }
-                                }
-
                                 if (luisResult.Entities.Building != null)
                                 {
                                     state.MeetingInfo.Building = GetBuildingFromEntity(luisResult.Entities);
@@ -592,6 +580,21 @@ namespace CalendarSkill.Dialogs
                                     state.MeetingInfo.Duration = 0;
                                 }
 
+                                return await sc.ReplaceDialogAsync(Actions.FindMeetingRoom, options: sc.Options, cancellationToken: cancellationToken);
+                            }
+
+                        case RecreateMeetingRoomState.ChangeBuilding:
+                            {
+                                state.MeetingInfo.MeetingRoomName = null;
+                                state.MeetingInfo.Building = null;
+                                state.MeetingInfo.FloorNumber = null;
+                                return await sc.ReplaceDialogAsync(Actions.FindMeetingRoom, options: sc.Options, cancellationToken: cancellationToken);
+                            }
+
+                        case RecreateMeetingRoomState.ChangeFloorNumber:
+                            {
+                                state.MeetingInfo.MeetingRoomName = null;
+                                state.MeetingInfo.FloorNumber = null;
                                 return await sc.ReplaceDialogAsync(Actions.FindMeetingRoom, options: sc.Options, cancellationToken: cancellationToken);
                             }
 

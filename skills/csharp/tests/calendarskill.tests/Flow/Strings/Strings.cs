@@ -80,5 +80,9 @@ namespace CalendarSkill.Test.Flow.Strings
         public const string SlotAttributeTime = "time";
 
         public const string SlotAttributeRoom = "room";
+
+        public const string SlotAttributeBuilding = "building";
+
+        public const string SlotAttributeFloor = "floor";
     }
 }
