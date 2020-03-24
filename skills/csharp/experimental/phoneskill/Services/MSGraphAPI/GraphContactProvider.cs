@@ -18,16 +18,16 @@ namespace PhoneSkill.Services.MSGraphAPI
             this._graphClient = serviceClient;
         }
 
-        public async Task<IList<ContactCandidate>> GetContacts()
+        public async Task<IList<ContactCandidate>> GetContactsAsync()
         {
-            List<ContactCandidate> candidates = await GetUsers();
-            candidates.AddRange(await GetPeople());
-            candidates.AddRange(await GetGraphContacts());
+            List<ContactCandidate> candidates = await GetUsersAsync();
+            candidates.AddRange(await GetPeopleAsync());
+            candidates.AddRange(await GetGraphContactsAsync());
 
             return ContactDeduplicator.DeduplicateByPhoneNumbers(candidates);
         }
 
-        private async Task<List<ContactCandidate>> GetUsers()
+        private async Task<List<ContactCandidate>> GetUsersAsync()
         {
             var optionList = new List<QueryOption>();
             var columns = "id,displayName,mobilePhone,businessPhones";
@@ -46,7 +46,7 @@ namespace PhoneSkill.Services.MSGraphAPI
             return ToContactCandidates(users);
         }
 
-        private async Task<List<ContactCandidate>> GetPeople()
+        private async Task<List<ContactCandidate>> GetPeopleAsync()
         {
             var optionList = new List<QueryOption>();
             var columns = "id,displayName,phones";
@@ -65,7 +65,7 @@ namespace PhoneSkill.Services.MSGraphAPI
             return ToContactCandidates(people);
         }
 
-        private async Task<List<ContactCandidate>> GetGraphContacts()
+        private async Task<List<ContactCandidate>> GetGraphContactsAsync()
         {
             var optionList = new List<QueryOption>();
             var columns = "id,displayName,homePhones,mobilePhone,businessPhones";

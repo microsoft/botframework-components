@@ -16,6 +16,6 @@ namespace PhoneSkill.Common
         /// Get all contacts in the user's contact list.
         /// </summary>
         /// <returns>All contacts in the user's contact list.</returns>
-        Task<IList<ContactCandidate>> GetContacts();
+        Task<IList<ContactCandidate>> GetContactsAsync();
     }
 }

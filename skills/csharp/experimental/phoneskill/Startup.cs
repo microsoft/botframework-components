@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,17 +13,14 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhoneSkill.Adapters;
+using PhoneSkill.Authentication;
 using PhoneSkill.Bots;
 using PhoneSkill.Dialogs;
-using PhoneSkill.Responses.Main;
-using PhoneSkill.Responses.OutgoingCall;
-using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Utilities;
 
@@ -51,7 +47,7 @@ namespace PhoneSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -69,6 +65,9 @@ namespace PhoneSkill
             Configuration.Bind(settings);
             services.AddSingleton<BotSettings>(settings);
             services.AddSingleton<BotSettingsBase>(settings);
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // Configure bot services
             services.AddSingleton<BotServices>();
@@ -136,6 +135,9 @@ namespace PhoneSkill
                 .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
+            // Uncomment this to support HTTPS.
+            // app.UseHttpsRedirection();
         }
     }
 }
