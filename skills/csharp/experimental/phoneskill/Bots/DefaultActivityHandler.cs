@@ -46,7 +46,6 @@ namespace PhoneSkill.Bots
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            await turnContext.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.WelcomeMessage), cancellationToken);
             await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
