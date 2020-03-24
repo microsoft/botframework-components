@@ -441,7 +441,7 @@ namespace PointOfInterestSkill.Dialogs
 
                     var card = new Card
                     {
-                        Name = GetDivergedCardName(sc.Context, string.IsNullOrEmpty(state.Destination.Phone) ? "PointOfInterestDetailsNoCall" : "PointOfInterestDetails"),
+                        Name = GetDivergedCardName(sc.Context, !hasCall ? "PointOfInterestDetailsNoCall" : "PointOfInterestDetails"),
                         Data = state.Destination,
                     };
 

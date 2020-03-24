@@ -213,6 +213,8 @@ namespace SkillServiceLibrary.Models
         /// </value>
         public string CardTitle { get; set; }
 
+        public string Website { get; set; }
+
         public string ActionCall { get; set; }
 
         public string ActionShowDirections { get; set; }
