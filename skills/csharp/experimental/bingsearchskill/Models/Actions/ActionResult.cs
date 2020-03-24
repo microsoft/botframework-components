@@ -2,8 +2,13 @@
 
 namespace BingSearchSkill.Models.Actions
 {
-    public class KeywordSearchResponse
+    public class ActionResult
     {
+        public ActionResult(bool actionSuccess)
+        {
+            ActionSuccess = actionSuccess;
+        }
+
         [JsonProperty("url")]
         public string Url { get; set; }
 

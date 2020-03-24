@@ -114,7 +114,7 @@ namespace EmailSkill.Dialogs
                 var generalLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
                 var generalTopIntent = generalLuisResult?.TopIntent().intent;
 
-                if (skillOptions == null || (!skillOptions.SubFlowMode && !skillOptions.IsAction))
+                if (skillOptions == null || (!skillOptions.SubFlowMode && !state.IsAction))
                 {
                     // Clear email state data
                     await ClearConversationState(sc);
@@ -469,10 +469,10 @@ namespace EmailSkill.Dialogs
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage);
                     await sc.Context.SendActivityAsync(activity);
-                    var skillOptions = sc.Options as EmailSkillDialogOptions;
-                    if (skillOptions != null && skillOptions.IsAction)
+                    var state = await EmailStateAccessor.GetAsync(sc.Context);
+                    if (state.IsAction)
                     {
-                        var actionResult = new ActionResult() { ActionSuccess = false };
+                        var actionResult = new ActionResult(false);
                         return await sc.EndDialogAsync(actionResult);
                     }
 
