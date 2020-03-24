@@ -40,9 +40,9 @@ namespace ToDoSkill.Dialogs
 
             var deleteTask = new WaterfallStep[]
             {
+                ClearContext,
                 GetAuthToken,
                 AfterGetAuthToken,
-                ClearContext,
                 CollectListTypeForDelete,
                 GetAuthToken,
                 AfterGetAuthToken,

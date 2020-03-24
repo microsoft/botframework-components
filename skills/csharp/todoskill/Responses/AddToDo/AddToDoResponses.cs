@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace ToDoSkill.Responses.AddToDo
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class AddToDoResponses : IResponseIdCollection
+    public class AddToDoResponses
     {
         // Generated accessors
         public const string AskTaskContentText = "AskTaskContentText";

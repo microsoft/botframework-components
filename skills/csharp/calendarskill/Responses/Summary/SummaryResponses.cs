@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace CalendarSkill.Responses.Summary
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class SummaryResponses : IResponseIdCollection
+    public class SummaryResponses
     {
         // Generated accessors
         public const string CalendarNoMoreEvent = "CalendarNoMoreEvent";

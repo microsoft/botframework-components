@@ -86,7 +86,11 @@ namespace CalendarSkill.Models.ActionInfos
         {
             state.MeetingInfo.Title = Title;
             state.MeetingInfo.Content = Content;
-            state.MeetingInfo.ContactInfor.ContactsNameList = new List<string>(Attendees.Split(","));
+            if (!string.IsNullOrEmpty(Attendees))
+            {
+                state.MeetingInfo.ContactInfor.ContactsNameList = new List<string>(Attendees.Split(","));
+            }
+
             if (!string.IsNullOrEmpty(Timezone))
             {
                 state.UserInfo.Timezone = DateTimeHelper.ConvertTimeZoneInfo(Timezone);

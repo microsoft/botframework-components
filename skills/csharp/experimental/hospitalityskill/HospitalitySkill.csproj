@@ -103,56 +103,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>readme.md</DependentUpon>
     </Compile>
-    <Compile Update="Responses\RequestItem\RequestItemResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RequestItemResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\GetReservation\GetReservationResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GetReservationResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\ExtendStay\ExtendStayResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ExtendStayResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\LateCheckOut\LateCheckOutResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LateCheckOutResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\MainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\CheckOut\CheckOutResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CheckOutResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\RoomService\RoomServiceResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RoomServiceResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\HospitalityStrings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>HospitalityStrings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\ResponseIdCollection.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ResponseIdCollection.t4</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\SharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SharedResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="__TemplateIcon.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -161,6 +111,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Update="Responses\ExtendStay\ExtendStayResponses.lg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Responses\Shared\Shared.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -168,9 +121,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\CheckOut\CheckOutResponsesTexts.lg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Responses\ExtendStay\ExtendStayResponses.lg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Responses\ExtendStay\ExtendStayResponsesTexts.lg">
@@ -340,33 +290,5 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Responses\CheckOut\CheckOutResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\ExtendStay\ExtendStayResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\GetReservation\GetReservationResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\LateCheckOut\LateCheckOutResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Main\MainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\RequestItem\RequestItemResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\RoomService\RoomServiceResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\SharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\HospitalityStrings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HospitalityStrings.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>

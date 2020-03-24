@@ -4,7 +4,7 @@
   "name": "Email Skill",
   "description": "The Email skill provides email related capabilities and supports Office and Google calendars.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.1",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/EmailSkill.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",
@@ -91,6 +91,63 @@
       "*": "#/activities/message"
     }
   },
+  "activities": {
+    "message": {
+      "type": "message",
+      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    },
+    "sendEmail": {
+      "description": "Send an Email",
+      "type": "event",
+      "name": "SendEmail",
+      "value": {
+        "$ref": "#/definitions/emailInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "deleteEmail": {
+      "description": "Delete an Email",
+      "type": "event",
+      "name": "DeleteEmail",
+      "value": {},
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "replyEmail": {
+      "description": "Reply to an Email",
+      "type": "event",
+      "name": "ReplyEmail",
+      "value": {
+        "$ref": "#/definitions/replyEmailInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "forwardEmail": {
+      "description": "Forward an Email",
+      "type": "event",
+      "name": "ForwardEmail",
+      "value": {
+        "$ref": "#/definitions/forwardEmailInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/actionResult"
+      }
+    },
+    "summary": {
+      "description": "Summary of recent emails",
+      "type": "event",
+      "name": "EmailSummary",
+      "value": {},
+      "resultValue": {
+        "$ref": "#/definitions/summaryResult"
+      }
+    }
+  },
   "definitions": {
     "emailInfo": {
       "type": "object",
@@ -145,7 +202,7 @@
       "type": "object",
       "properties": {
         "actionSuccess": {
-          "type": "bool",
+          "type": "boolean",
           "description": "result of action"
         }
       }
@@ -153,12 +210,15 @@
     "summaryResult": {
       "type": "object",
       "properties": {
-        "$ref": "#/definitions/actionResult",
+        "actionSuccess": {
+          "type": "boolean",
+          "description": "result of action"
+        },
         "emailList": {
           "type": "array",
           "description": "List of recent emails",
-          "item": {
-            "type": "#/definitions/emailInfo"
+          "items": {
+            "$ref": "#/definitions/emailInfo"
           }
         }
       }

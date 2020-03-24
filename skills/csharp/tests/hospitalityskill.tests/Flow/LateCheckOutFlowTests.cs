@@ -124,7 +124,7 @@ namespace HospitalitySkill.Tests.Flow
                 .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
-                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .StartTestAsync();
         }
 
@@ -182,6 +182,25 @@ namespace HospitalitySkill.Tests.Flow
                 .Send(NonLuisUtterances.Yes)
                 .AssertReply(AssertContains(LateCheckOutResponses.MoveCheckOutSuccess, tokens, CardStrings.ReservationDetails))
                 .AssertReply(SkillActionEndMessage(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task LateCheckOutAndCancelActionTest()
+        {
+            var tokens = new Dictionary<string, object>
+            {
+                { "Time", HotelService.LateTime.ToString(ReservationData.TimeFormat) },
+                { "Date", CheckInDate.AddDays(HotelService.StayDays).ToString(ReservationData.DateFormat) }
+            };
+
+            await this.GetSkillTestFlow()
+                .Send(LateCheckOutUtterances.LateCheckOutAction)
+                .AssertReply(AssertContains(LateCheckOutResponses.CheckAvailability))
+                .AssertReply(AssertStartsWith(LateCheckOutResponses.MoveCheckOutPrompt, tokens))
+                .Send(GeneralTestUtterances.Cancel)
+                .AssertReply(AssertContains(MainResponses.CancelMessage))
+                .AssertReply(SkillActionEndMessage(false))
                 .StartTestAsync();
         }
     }

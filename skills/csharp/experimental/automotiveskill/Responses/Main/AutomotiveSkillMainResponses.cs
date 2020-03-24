@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace AutomotiveSkill.Responses.Main
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class AutomotiveSkillMainResponses : IResponseIdCollection
+    public class AutomotiveSkillMainResponses
     {
         // Generated accessors
         public const string WelcomeMessage = "WelcomeMessage";

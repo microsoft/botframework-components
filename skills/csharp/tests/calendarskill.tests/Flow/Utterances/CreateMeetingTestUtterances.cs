@@ -53,6 +53,25 @@ namespace CalendarSkill.Test.Flow.Utterances
 
         public static string CreateEventName { get; } = "CreateEvent";
 
+        public static Activity BaseCreateMeetingAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = CreateEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+            })
+        };
+
+        public static Activity CreateMeetingWithOneContactEntityAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = CreateEventName,
+            Value = JObject.FromObject(new EventInfo()
+            {
+                Attendees = Strings.Strings.DefaultUserName
+            })
+        };
+
         public static Activity CreateEventAction { get; } = new Activity()
         {
             Type = ActivityTypes.Event,

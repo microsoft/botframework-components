@@ -89,6 +89,27 @@ namespace CalendarSkill.Test.Flow.Utterances
             })
         };
 
+        public static Activity FindMeetingByTitleAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = ShowEventName,
+            Value = JObject.FromObject(new ChooseEventInfo()
+            {
+                Title = Strings.Strings.DefaultEventName
+            })
+        };
+
+        public static Activity FindMeetingByStartTimeAction { get; } = new Activity()
+        {
+            Type = ActivityTypes.Event,
+            Name = ShowEventName,
+            Value = JObject.FromObject(new ChooseEventInfo()
+            {
+                StartDate = "tomorrow",
+                StartTime = "6 pm",
+            })
+        };
+
         private CalendarLuis GetBaseFindMeetingIntent(
             string userInput,
             CalendarLuis.Intent intents = CalendarLuis.Intent.FindCalendarEntry,

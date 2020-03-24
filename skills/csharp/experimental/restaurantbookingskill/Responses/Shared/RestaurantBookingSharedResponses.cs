@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace RestaurantBookingSkill.Responses.Shared
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class RestaurantBookingSharedResponses : IResponseIdCollection
+    public class RestaurantBookingSharedResponses
     {
         // Generated accessors
         public const string DidntUnderstandMessage = "DidntUnderstandMessage";

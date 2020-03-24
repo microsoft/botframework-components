@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace AutomotiveSkill.Responses.VehicleSettings
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class VehicleSettingsResponses : IResponseIdCollection
+    public class VehicleSettingsResponses
     {
         // Generated accessors
         public const string VehicleSettingsConfirmed = "VehicleSettingsConfirmed";

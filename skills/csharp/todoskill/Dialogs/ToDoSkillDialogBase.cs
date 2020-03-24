@@ -296,16 +296,13 @@ namespace ToDoSkill.Dialogs
                 var state = await ToDoStateAccessor.GetAsync(dc.Context);
                 var luisResult = dc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var generalLuisResult = dc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
-                var entities = luisResult.Entities;
-                var generalEntities = generalLuisResult.Entities;
-                if (entities.ContainsAll != null)
-                {
-                    state.MarkOrDeleteAllTasksFlag = true;
-                }
 
-                if (entities.ordinal != null || (generalEntities != null && generalEntities.number != null))
+                var entities = luisResult?.Entities;
+                var generalEntities = generalLuisResult?.Entities;
+
+                if (entities?.ordinal != null || (generalEntities?.number != null))
                 {
-                    var indexOfOrdinal = entities.ordinal == null ? 0 : (int)entities.ordinal[0];
+                    var indexOfOrdinal = entities?.ordinal == null ? 0 : (int)entities.ordinal[0];
                     var indexOfNumber = generalEntities?.number == null ? 0 : (int)generalEntities.number[0];
                     var index = 0;
                     if (indexOfOrdinal > 0 && indexOfOrdinal <= state.PageSize)
@@ -330,44 +327,52 @@ namespace ToDoSkill.Dialogs
                     }
                 }
 
-                if (entities.ListType != null)
+                if (entities != null)
                 {
-                    var topListType = entities.ListType[0];
-
-                    var toDoStringProperties = typeof(ToDoStrings).GetProperties();
-                    foreach (PropertyInfo toDoStringProperty in toDoStringProperties)
+                    if (entities.ContainsAll != null)
                     {
-                        var listTypeSynonymKey = toDoStringProperty.Name;
-                        if (listTypeSynonymKey.Contains(Synonym))
+                        state.MarkOrDeleteAllTasksFlag = true;
+                    }
+
+                    if (entities.ListType != null)
+                    {
+                        var topListType = entities.ListType[0];
+
+                        var toDoStringProperties = typeof(ToDoStrings).GetProperties();
+                        foreach (PropertyInfo toDoStringProperty in toDoStringProperties)
                         {
-                            string listTypeSynonymValue = toDoStringProperty.GetValue(null).ToString();
-                            if (listTypeSynonymValue.Contains(topListType, StringComparison.InvariantCultureIgnoreCase))
+                            var listTypeSynonymKey = toDoStringProperty.Name;
+                            if (listTypeSynonymKey.Contains(Synonym))
                             {
-                                string listTypeKey = listTypeSynonymKey.Substring(0, listTypeSynonymKey.Length - Synonym.Length);
-                                state.ListType = toDoStringProperties.Where(x => x.Name == listTypeKey).First().GetValue(null).ToString();
+                                string listTypeSynonymValue = toDoStringProperty.GetValue(null).ToString();
+                                if (listTypeSynonymValue.Contains(topListType, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    string listTypeKey = listTypeSynonymKey.Substring(0, listTypeSynonymKey.Length - Synonym.Length);
+                                    state.ListType = toDoStringProperties.Where(x => x.Name == listTypeKey).First().GetValue(null).ToString();
+                                }
                             }
                         }
                     }
-                }
 
-                if (entities.FoodOfGrocery != null)
-                {
-                    state.FoodOfGrocery = entities.FoodOfGrocery[0][0];
-                }
+                    if (entities.FoodOfGrocery != null)
+                    {
+                        state.FoodOfGrocery = entities.FoodOfGrocery[0][0];
+                    }
 
-                if (entities.ShopVerb != null && (entities.TaskContent != null || entities.FoodOfGrocery != null))
-                {
-                    state.HasShopVerb = true;
-                }
+                    if (entities.ShopVerb != null && (entities.TaskContent != null || entities.FoodOfGrocery != null))
+                    {
+                        state.HasShopVerb = true;
+                    }
 
-                if (entities.TaskContent != null)
-                {
-                    state.ShopContent = entities.TaskContent[0];
-                }
+                    if (entities.TaskContent != null)
+                    {
+                        state.ShopContent = entities.TaskContent[0];
+                    }
 
-                if (entities.TaskContent != null)
-                {
-                    state.TaskContentML = entities.TaskContent[0];
+                    if (entities.TaskContent != null)
+                    {
+                        state.TaskContentML = entities.TaskContent[0];
+                    }
                 }
             }
             catch

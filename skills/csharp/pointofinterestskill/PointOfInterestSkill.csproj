@@ -28,36 +28,6 @@
     <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Responses\CancelRoute\CancelRouteResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CancelRouteResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\FindPointOfInterest\FindPointOfInterestResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FindPointOfInterestResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\POIMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>POIMainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Route\RouteResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RouteResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\PointOfInterestSharedStrings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PointOfInterestSharedStrings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\POISharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>POISharedResponses.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="*.bot">
@@ -72,9 +42,6 @@
     <ProjectReference Include="..\shared\SkillServiceLibrary\SkillServiceLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Responses\Shared\ResponseIdCollection.t4">
-      <Generator></Generator>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
@@ -356,24 +323,5 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Responses\CancelRoute\CancelRouteResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\FindPointOfInterest\FindPointOfInterestResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Main\POIMainResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Route\RouteResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\POISharedResponses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Responses\Shared\PointOfInterestSharedStrings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PointOfInterestSharedStrings.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>

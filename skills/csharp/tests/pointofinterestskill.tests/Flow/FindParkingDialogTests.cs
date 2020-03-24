@@ -79,6 +79,7 @@ namespace PointOfInterestSkill.Tests.Flow
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .StartTestAsync();
         }
 
@@ -173,7 +174,6 @@ namespace PointOfInterestSkill.Tests.Flow
                 .StartTestAsync();
         }
 
-        // TODO this waits for update
         [TestMethod]
         public async Task ParkingNearestAndCancelActionTest()
         {
@@ -182,7 +182,24 @@ namespace PointOfInterestSkill.Tests.Flow
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
-                // .AssertReply(CheckForEoC(false))
+                .AssertReply(CheckForEoC(false))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ParkingNearestAndHelpActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindParkingUtterances.FindParkingNearestAction)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(GeneralTestUtterances.Help)
+                .AssertReply(AssertContains(POIMainResponses.HelpMessage, null))
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
                 .StartTestAsync();
         }
 
