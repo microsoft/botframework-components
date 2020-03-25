@@ -14,5 +14,5 @@
 - 以下是电子邮件的详细信息：${emailDetailsWithoutContent}
 
 # ActionPrompt.Text
-- To take an action on an email, first select it, then you can delete, forward, or reply.
+- 要对电子邮件执行操作，请先选择一个，然后可以您可以选择删除、转发或回复邮件。
 

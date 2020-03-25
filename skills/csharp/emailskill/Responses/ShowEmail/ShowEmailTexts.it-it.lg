@@ -14,5 +14,5 @@
 - Ecco i dettagli dell'e-mail: ${emailDetailsWithoutContent}
 
 # ActionPrompt.Text
-- To take an action on an email, first select it, then you can delete, forward, or reply.
+- Per eseguire un'azione su un messaggio di posta elettronica, selezionalo prima, quindi puoi eliminare, inoltrare o rispondere.
 
