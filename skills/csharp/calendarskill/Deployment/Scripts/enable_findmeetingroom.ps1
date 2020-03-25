@@ -6,6 +6,7 @@ Param(
     [string] $primaryKey,
     [string] $appId,
     [string] $tenantId,
+    [string] $migrationToolPath,
     [string] $databaseId = "room-db",
     [string] $collectionId = "room-collection",
     [string] $dataSourceName = "room-datasource",
@@ -31,7 +32,7 @@ if (Get-Command az -ErrorAction SilentlyContinue) {
     $azcliversionoutput = az -v
     [regex]$regex = '(\d{1,3}.\d{1,3}.\d{1,3})'
     [version]$azcliversion = $regex.Match($azcliversionoutput[0]).value
-    [version]$minversion = '2.0.72'
+    [version]$minversion = '2.2.0'
 
     if ($azcliversion -ge $minversion) {
         $azclipassmessage = "AZ CLI passes minimum version. Current version is $azcliversion"
@@ -71,6 +72,14 @@ if (-not $appId) {
 
 if (-not $tenantId) {
     $tenantId = Read-Host '? The tenantId corresponding to the application. If you have set "Supported account types" as "Multitenant" and your account has a differet tenant, please use "common"'
+}
+
+if (-not $migrationToolPath) {
+    $useMigrationTool = Read-Host "? Use data migration tool to migrate your data to Azure Cosmos DB? (This is recommended if you have a large amount of meeting room data. You can download the tool here: https://docs.microsoft.com/en-us/azure/cosmos-db/import-data) [y/n]"
+
+    if ($useMigrationTool -eq 'y') {
+        $migrationToolPath = Read-Host '? The local path to your migration tool "dt.exe", e.g., C:\Users\tools\dt1.8.3\drop.'
+    }
 }
 
 # Check the CosmosDB package and install it
@@ -157,8 +166,7 @@ $authorizationResult = RequestAuthorization `
     -appId $appId `
     -tenantId $tenantId 2>> $logFile
 
-if ($authorizationResult.error)
-{
+if ($authorizationResult.error) {
     Write-Host "! Error: $($authorizationResult.error_description)"  -ForegroundColor Red
     Write-Host "+ Verify the -appId parameter are correct." -ForegroundColor Magenta
     break
@@ -180,8 +188,7 @@ $accessTokenResult =  RequestAccessToken `
         -tenantId $tenantId `
         -deviceCode $deviceCode 2>> $logFile
 
-if ($accessTokenResult.error)
-{
+if ($accessTokenResult.error) {
     Write-Host "! Error: $($accessTokenResult.error_description)"  -ForegroundColor Red
     break
 }
@@ -189,20 +196,36 @@ if ($accessTokenResult.error)
 $accessToken = $accessTokenResult.access_token
 Write-Host "> getting data from MSGraph ..." -NoNewline
 $roomData = GetMeetingRoom -accessToken $accessToken 2>> $logFile
-if (-not $roomData)
-{
+if (-not $roomData) {
     Write-Host "! Error"  -ForegroundColor Red
     Write-Host "! Log: $($logFile)" -ForegroundColor Red
     break
 }
 Write-Host "Done." -ForegroundColor Green
 
-Write-Host "> importing data into CosmosDb (this could take a while)..." -NoNewline
-foreach ($room in $roomData.value)
-{
-    $room = ConvertTo-Json $room
-    New-CosmosDbDocument -Context $cosmosDbContext -CollectionId $collectionId -DocumentBody $room 2>> $logFile | Out-Null
+Write-Host "> importing data into CosmosDb (this could take a while)..."
+if (-not $migrationToolPath) {
+    foreach ($room in $roomData.value) {
+        $room = ConvertTo-Json $room
+        New-CosmosDbDocument -Context $cosmosDbContext -CollectionId $collectionId -DocumentBody $room 2>> $logFile | Out-Null
+    }
 }
+else {
+    $roomFile = $(Join-Path $PSScriptRoot .. "rooms.txt")
+    if (Test-Path $roomFile) {
+	Clear-Content $roomFile -Force | Out-Null
+    }
+    else {
+	    New-Item -Path $roomFile | Out-Null
+    }
+
+    foreach ($room in $roomData.value) {
+        $room = ConvertTo-Json $room
+        $room >> $roomFile | Out-Null
+    }
+    Invoke-Expression "$(Join-Path $($migrationToolPath) 'dt.exe') /s:JsonFile /s.Files:$roomFile /t:DocumentDB /t.ConnectionString:""AccountEndpoint=https://$cosmosDbAccount.documents.azure.com:443/;AccountKey=$primaryKey;Database=$databaseId;"" /t.Collection:$collectionId /t.PartitionKey:/id /t.ParallelRequests:50 2>> $logFile"
+}
+
 Write-Host "Done." -ForegroundColor Green
 
 # Create data source in Azure Search
