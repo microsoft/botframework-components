@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace ToDoSkill.Responses.ShowToDo
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class ShowToDoResponses : IResponseIdCollection
+    public class ShowToDoResponses
     {
         // Generated accessors
         public const string LatestTask = "LatestTask";

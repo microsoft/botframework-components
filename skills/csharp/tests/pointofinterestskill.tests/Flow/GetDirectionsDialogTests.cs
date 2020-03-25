@@ -40,6 +40,20 @@ namespace PointOfInterestSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task GetDirectionsAndInterruptTest()
+        {
+            await GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(RouteFromXToYUtterances.GetToMicrosoft)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(RouteFromXToYUtterances.GetToNearestPharmacy)
+                .AssertReply(CheckForEvent())
+                .StartTestAsync();
+        }
+
         /// <summary>
         /// Get directions to some nearest place.
         /// </summary>
@@ -97,10 +111,37 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task GetDirectionsAndInterruptSkillTest()
+        {
+            await GetSkillTestFlow()
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(RouteFromXToYUtterances.GetToMicrosoft)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(RouteFromXToYUtterances.GetToNearestPharmacy)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task GetDirectionsActionTest()
         {
             await GetSkillTestFlow()
                 .Send(RouteFromXToYUtterances.FindRouteAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task GetDirectionsAndInterruptActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(RouteFromXToYUtterances.FindRouteAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(RouteFromXToYUtterances.GetToNearestPharmacy)
                 .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
                 .Send(BaseTestUtterances.OptionOne)
                 .AssertReply(CheckForEvent())

@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace WeatherSkill.Responses.Shared
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class SharedResponses : IResponseIdCollection
+    public class SharedResponses
     {
         // Generated accessors
         public const string LocationPrompt = "LocationPrompt";

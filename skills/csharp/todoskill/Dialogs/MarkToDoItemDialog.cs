@@ -40,9 +40,9 @@ namespace ToDoSkill.Dialogs
 
             var markTask = new WaterfallStep[]
             {
+                ClearContext,
                 GetAuthToken,
                 AfterGetAuthToken,
-                ClearContext,
                 CollectListTypeForComplete,
                 GetAuthToken,
                 AfterGetAuthToken,

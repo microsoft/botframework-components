@@ -45,40 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Responses\AddToDo\AddToDoResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AddToDoResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\DeleteToDo\DeleteToDoResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DeleteToDoResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Main\ToDoMainResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ToDoMainResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\MarkToDo\MarkToDoResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MarkToDoResponses.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\Shared\ToDoSharedResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ToDoSharedResponses.tt</DependentUpon>
-    </Compile>
     <Compile Update="Responses\Shared\ToDoStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ToDoStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Responses\ShowToDo\ShowToDoResponses.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ShowToDoResponses.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

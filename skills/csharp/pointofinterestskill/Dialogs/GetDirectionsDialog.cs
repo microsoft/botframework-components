@@ -8,6 +8,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Solutions.Responses;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
@@ -69,6 +70,13 @@ namespace PointOfInterestSkill.Dialogs
 
         protected async Task<DialogTurnResult> SendEvent(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
+            bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
+
+            if (shouldInterrupt)
+            {
+                return await sc.CancelAllDialogsAsync();
+            }
+
             var state = await Accessor.GetAsync(sc.Context);
             var userSelectIndex = 0;
 

@@ -2,14 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Solutions.Responses;
-
 namespace NewsSkill.Responses.Main
 {
     /// <summary>
     /// Contains bot responses.
     /// </summary>
-    public class MainStrings : IResponseIdCollection
+    public class MainStrings
     {
         // Generated accessors
         public const string CANCELLED = "CANCELLED";
@@ -28,4 +26,3 @@ namespace NewsSkill.Responses.Main
         public const string MarketRetryPrompt = "MarketRetryPrompt";
     }
 }
-

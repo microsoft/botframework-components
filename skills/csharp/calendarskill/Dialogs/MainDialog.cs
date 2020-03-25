@@ -99,16 +99,20 @@ namespace CalendarSkill.Dialogs
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
 
-                // Run LUIS recognition on Skill model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("Calendar", out var skillLuisService);
-                if (skillLuisService != null)
+                var luisResult = innerDc.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
+                if (luisResult == null)
                 {
-                    var skillResult = await skillLuisService.RecognizeAsync<CalendarLuis>(innerDc.Context, cancellationToken);
-                    innerDc.Context.TurnState[StateProperties.CalendarLuisResultKey] = skillResult;
-                }
-                else
-                {
-                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                    // Run LUIS recognition on Skill model and store result in turn state.
+                    localizedServices.LuisServices.TryGetValue("Calendar", out var skillLuisService);
+                    if (skillLuisService != null)
+                    {
+                        var skillResult = await skillLuisService.RecognizeAsync<CalendarLuis>(innerDc.Context, cancellationToken);
+                        innerDc.Context.TurnState[StateProperties.CalendarLuisResultKey] = skillResult;
+                    }
+                    else
+                    {
+                        throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                    }
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
@@ -126,10 +130,10 @@ namespace CalendarSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -144,16 +148,20 @@ namespace CalendarSkill.Dialogs
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
 
-                // Run LUIS recognition on Skill model and store result in turn state.
-                localizedServices.LuisServices.TryGetValue("Calendar", out var skillLuisService);
-                if (skillLuisService != null)
+                var luisResult = innerDc.Context.TurnState.Get<CalendarLuis>(StateProperties.CalendarLuisResultKey);
+                if (luisResult == null)
                 {
-                    var skillResult = await skillLuisService.RecognizeAsync<CalendarLuis>(innerDc.Context, cancellationToken);
-                    innerDc.Context.TurnState[StateProperties.CalendarLuisResultKey] = skillResult;
-                }
-                else
-                {
-                    throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                    // Run LUIS recognition on Skill model and store result in turn state.
+                    localizedServices.LuisServices.TryGetValue("Calendar", out var skillLuisService);
+                    if (skillLuisService != null)
+                    {
+                        var skillResult = await skillLuisService.RecognizeAsync<CalendarLuis>(innerDc.Context, cancellationToken);
+                        innerDc.Context.TurnState[StateProperties.CalendarLuisResultKey] = skillResult;
+                    }
+                    else
+                    {
+                        throw new Exception("The skill LUIS Model could not be found in your Bot Services configuration.");
+                    }
                 }
 
                 // Run LUIS recognition on General model and store result in turn state.
@@ -171,10 +179,10 @@ namespace CalendarSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -182,9 +190,9 @@ namespace CalendarSkill.Dialogs
         }
 
         // Runs on every turn of the conversation to check if the conversation should be interrupted.
-        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -203,8 +211,16 @@ namespace CalendarSkill.Dialogs
                                 state.Clear();
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
+                                interrupted = EndOfTurn;
                                 break;
                             }
 
@@ -212,7 +228,7 @@ namespace CalendarSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
-                                interrupted = true;
+                                interrupted = EndOfTurn;
                                 break;
                             }
 
@@ -223,8 +239,16 @@ namespace CalendarSkill.Dialogs
 
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.LogOut));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
+                                interrupted = EndOfTurn;
                                 break;
                             }
                     }

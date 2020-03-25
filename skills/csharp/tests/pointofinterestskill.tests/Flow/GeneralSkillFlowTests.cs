@@ -23,7 +23,7 @@ namespace PointOfInterestSkill.Tests.Flow
         /// </summary>
         /// <returns>Task object.</returns>
         [TestMethod]
-        public async Task Test_TestFunctions()
+        public async Task TestFunctionsTest()
         {
             var data = new Dictionary<string, object>()
             {
@@ -38,7 +38,31 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
-        public async Task Test_SkillModeCompletion()
+        public async Task HelpTest()
+        {
+            await this.GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .Send(GeneralTestUtterances.Help)
+                .AssertReply(AssertContains(POIMainResponses.HelpMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task CancelTest()
+        {
+            await this.GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .Send(GeneralTestUtterances.Cancel)
+                .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task SkillModeCompletionTest()
         {
             await this.GetSkillTestFlow()
                 .Send(GeneralTestUtterances.UnknownIntent)

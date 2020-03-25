@@ -4,7 +4,7 @@
   "name": "Automotive Skill",
   "description": "The Automotive skill provides automotive related capabilities such as control of vehicle settings.",
   "publisherName": "Microsoft",
-  "version": "0.8",
+  "version": "1.1",
   "iconUrl": "https://{YOUR_SKILL_URL}/images/AutomotiveSkill.png",
   "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
   "license": "",

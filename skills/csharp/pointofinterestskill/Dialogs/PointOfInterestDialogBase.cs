@@ -119,37 +119,6 @@ namespace PointOfInterestSkill.Dialogs
             return replyEvent;
         }
 
-        public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext outerDc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var result = await base.ContinueDialogAsync(outerDc, cancellationToken);
-            var state = await Accessor.GetAsync(outerDc.Context);
-            if (state.ShouldInterrupt)
-            {
-                // Assume already call CancelAllDialogsAsync
-                // TODO Empty indicates RouteAsync in RouterDialog
-                state.ShouldInterrupt = false;
-                return new DialogTurnResult(DialogTurnStatus.Empty);
-            }
-            else
-            {
-                return result;
-            }
-        }
-
-        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Clear interrupt state
-            var state = await Accessor.GetAsync(dc.Context);
-            state.ShouldInterrupt = false;
-
-            return await base.OnBeginDialogAsync(dc, options, cancellationToken);
-        }
-
-        protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await base.OnContinueDialogAsync(dc, cancellationToken);
-        }
-
         /// <summary>
         /// Looks up the current location and prompts user to select one.
         /// </summary>
@@ -210,8 +179,9 @@ namespace PointOfInterestSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context);
+                bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
-                if (state.ShouldInterrupt)
+                if (shouldInterrupt)
                 {
                     return await sc.CancelAllDialogsAsync();
                 }
@@ -393,8 +363,9 @@ namespace PointOfInterestSkill.Dialogs
             try
             {
                 var state = await Accessor.GetAsync(sc.Context);
+                bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
-                if (state.ShouldInterrupt)
+                if (shouldInterrupt)
                 {
                     return await sc.CancelAllDialogsAsync();
                 }
@@ -512,8 +483,9 @@ namespace PointOfInterestSkill.Dialogs
         protected async Task<DialogTurnResult> ProcessPointOfInterestAction(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             var state = await Accessor.GetAsync(sc.Context);
+            bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
-            if (state.ShouldInterrupt)
+            if (shouldInterrupt)
             {
                 return await sc.CancelAllDialogsAsync();
             }
@@ -964,7 +936,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (topIntent.score > 0.5 && topIntent.intent != PointOfInterestLuis.Intent.None)
                 {
-                    state.ShouldInterrupt = true;
+                    promptContext.Context.TurnState.Add(StateProperties.InterruptKey, new object());
                     return true;
                 }
                 else

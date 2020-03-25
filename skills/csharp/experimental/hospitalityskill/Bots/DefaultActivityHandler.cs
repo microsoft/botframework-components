@@ -31,6 +31,11 @@ namespace HospitalitySkill.Bots
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
         {
+            if (turnContext.Activity.Type == ActivityTypes.Message && turnContext.Activity.Text == null)
+            {
+                turnContext.Activity.Text = string.Empty;
+            }
+
             await base.OnTurnAsync(turnContext, cancellationToken);
 
             // Save any state changes that might have occured during the turn.

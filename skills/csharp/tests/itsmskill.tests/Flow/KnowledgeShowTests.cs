@@ -89,7 +89,7 @@ namespace ITSMSkill.Tests.Flow
                 .AssertReply(AssertStartsWith(KnowledgeResponses.IfFindWanted, navigate))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
-                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .StartTestAsync();
         }
 

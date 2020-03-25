@@ -204,7 +204,9 @@ namespace HospitalitySkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var promptOptions = new PromptOptions
                 {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.WelcomeMessage)
+                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
+                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
+                        MainResponses.WelcomeMessage : MainResponses.FirstPromptMessage)
                 };
 
                 return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
