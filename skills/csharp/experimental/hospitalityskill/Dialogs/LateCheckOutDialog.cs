@@ -21,14 +21,8 @@ namespace HospitalitySkill.Dialogs
     public class LateCheckOutDialog : HospitalityDialogBase
     {
         public LateCheckOutDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(LateCheckOutDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(LateCheckOutDialog), serviceProvider)
         {
             var lateCheckOut = new WaterfallStep[]
             {
@@ -36,8 +30,6 @@ namespace HospitalitySkill.Dialogs
                 LateCheckOutPrompt,
                 EndDialog
             };
-
-            HotelService = hotelService;
 
             AddDialog(new WaterfallDialog(nameof(LateCheckOutDialog), lateCheckOut));
             AddDialog(new ConfirmPrompt(DialogIds.LateCheckOutPrompt, ValidateLateCheckOutAsync));

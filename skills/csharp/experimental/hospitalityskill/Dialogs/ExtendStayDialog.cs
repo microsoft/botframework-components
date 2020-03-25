@@ -21,14 +21,8 @@ namespace HospitalitySkill.Dialogs
     public class ExtendStayDialog : HospitalityDialogBase
     {
         public ExtendStayDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(ExtendStayDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(ExtendStayDialog), serviceProvider)
         {
             var extendStay = new WaterfallStep[]
             {
@@ -38,8 +32,6 @@ namespace HospitalitySkill.Dialogs
                 ConfirmExtentionPrompt,
                 EndDialog
             };
-
-            HotelService = hotelService;
 
             AddDialog(new WaterfallDialog(nameof(ExtendStayDialog), extendStay));
             AddDialog(new ConfirmPrompt(DialogIds.CheckNumNights, ValidateCheckNumNightsPrompt));

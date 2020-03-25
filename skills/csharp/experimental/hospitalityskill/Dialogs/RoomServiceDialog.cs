@@ -25,14 +25,8 @@ namespace HospitalitySkill.Dialogs
     public class RoomServiceDialog : HospitalityDialogBase
     {
         public RoomServiceDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(RoomServiceDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(RoomServiceDialog), serviceProvider)
         {
             var roomService = new WaterfallStep[]
             {
@@ -43,8 +37,6 @@ namespace HospitalitySkill.Dialogs
                 ConfirmOrderPrompt,
                 EndDialog
             };
-
-            HotelService = hotelService;
 
             AddDialog(new WaterfallDialog(nameof(RoomServiceDialog), roomService));
             AddDialog(new TextPrompt(DialogIds.MenuPrompt, ValidateMenuPrompt));

@@ -22,14 +22,8 @@ namespace HospitalitySkill.Dialogs
     public class RequestItemDialog : HospitalityDialogBase
     {
         public RequestItemDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(RequestItemDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(RequestItemDialog), serviceProvider)
         {
             var requestItem = new WaterfallStep[]
             {
@@ -38,8 +32,6 @@ namespace HospitalitySkill.Dialogs
                 ItemRequest,
                 EndDialog
             };
-
-            HotelService = hotelService;
 
             AddDialog(new WaterfallDialog(nameof(RequestItemDialog), requestItem));
             AddDialog(new TextPrompt(DialogIds.ItemPrompt, ValidateItemPrompt));

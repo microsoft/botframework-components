@@ -20,6 +20,7 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalitySkill.Dialogs
 {
@@ -27,22 +28,17 @@ namespace HospitalitySkill.Dialogs
     {
         public HospitalityDialogBase(
              string dialogId,
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             UserState userState,
-             IHotelService hotelService,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
              : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            var conversationState = serviceProvider.GetService<ConversationState>();
+            var userState = serviceProvider.GetService<UserState>();
             StateAccessor = conversationState.CreateProperty<HospitalitySkillState>(nameof(HospitalitySkillState));
             UserStateAccessor = userState.CreateProperty<HospitalityUserSkillState>(nameof(HospitalityUserSkillState));
-            TelemetryClient = telemetryClient;
-            HotelService = hotelService;
+            HotelService = serviceProvider.GetService<IHotelService>();
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!Settings.OAuthConnections.Any())
@@ -53,17 +49,17 @@ namespace HospitalitySkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(services));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<HospitalitySkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<HospitalitySkillState> StateAccessor { get; }
 
-        protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; set; }
+        protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected IHotelService HotelService { get; set; }
+        protected IHotelService HotelService { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {

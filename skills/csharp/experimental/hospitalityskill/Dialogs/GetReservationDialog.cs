@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalitySkill.Models;
@@ -17,22 +18,14 @@ namespace HospitalitySkill.Dialogs
     public class GetReservationDialog : HospitalityDialogBase
     {
         public GetReservationDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(GetReservationDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(GetReservationDialog), serviceProvider)
         {
             var getReservation = new WaterfallStep[]
             {
                 HasCheckedOut,
                 ShowReservation
             };
-
-            HotelService = hotelService;
 
             AddDialog(new WaterfallDialog(nameof(GetReservationDialog), getReservation));
         }
