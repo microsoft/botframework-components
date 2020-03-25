@@ -21,5 +21,8 @@ namespace SkillServiceLibrary.Models.AzureMaps
 
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
+
+        [JsonProperty(PropertyName = "openingHours")]
+        public OpeningHours OpeningHours { get; set; }
     }
 }

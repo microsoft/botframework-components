@@ -41,6 +41,27 @@ namespace SkillServiceLibrary.Models
             Phone = azureMapsPoi.Poi?.Phone;
             Provider = new SortedSet<string> { AzureMapsGeoSpatialService.ProviderName };
             Website = azureMapsPoi.Poi?.Url;
+            var hours = azureMapsPoi.Poi?.OpeningHours?.TimeRanges;
+            if (hours != null)
+            {
+                var now = DateTime.UtcNow;
+                foreach (var hour in hours)
+                {
+                    var start = hour.StartTime.ToDateTime();
+                    if (now < start)
+                    {
+                        Hours = $"Closed. Open at {start.ToShortTimeString()}";
+                        break;
+                    }
+
+                    var end = hour.EndTime.ToDateTime();
+                    if (now < end)
+                    {
+                        Hours = $"Open until {end.ToShortTimeString()}";
+                        break;
+                    }
+                }
+            }
 
             // TODO for better display. English style now.
             if (string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address))
