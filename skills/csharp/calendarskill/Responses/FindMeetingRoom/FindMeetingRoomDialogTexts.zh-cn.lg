@@ -4,8 +4,8 @@
 # BuildingNonexistent.Text
 - 对不起，我找不到那栋楼。你能用不同的方式说，还是选择另一栋楼？
 
-# MeetingRoomNotFoundByName.Text(MeetingRoom)
-- 它看起来像${MeetingRoom}不存在。
+# MeetingRoomNotFoundByName.Text(MeetingRoom, Building, FloorNumber)
+- 它看起来像${MeetingRoom}不存在${InBuilding(Building)}${OnFloorNumber(FloorNumber)}。
 
 # ConfirmMeetingRoomPrompt.Text(MeetingRoom, DateTime)
 - ${MeetingRoom}可用${DateTime}，你想保留吗？

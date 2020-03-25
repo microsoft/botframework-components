@@ -16,8 +16,8 @@
 
 # MeetingRoomNotFoundByName
 [Activity
-    Text = ${MeetingRoomNotFoundByName.Text(MeetingRoom)}
-    Speak = ${MeetingRoomNotFoundByName.Text(MeetingRoom)}
+    Text = ${MeetingRoomNotFoundByName.Text(MeetingRoom, Building, FloorNumber)}
+    Speak = ${MeetingRoomNotFoundByName.Text(MeetingRoom, Building, FloorNumber)}
     InputHint = acceptingInput
 ]
 

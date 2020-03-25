@@ -11,7 +11,7 @@ namespace CalendarSkill.Services.AzureSearchAPI
         {
         }
 
-        public async Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0)
+        public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom = null, string building = null, int floorNumber = 0)
         {
             List<RoomModel> meetingRooms = new List<RoomModel>();
 
