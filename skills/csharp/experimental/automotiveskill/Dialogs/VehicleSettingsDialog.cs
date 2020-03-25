@@ -126,7 +126,7 @@ namespace AutomotiveSkill.Dialogs
             if (!settingNames.Any())
             {
                 // missing setting name
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName), cancellationToken);
                 return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             else if (settingNames.Count() > 1)
@@ -159,8 +159,8 @@ namespace AutomotiveSkill.Dialogs
                     ImageUrl = GetSettingCardImageUri(FallbackSettingImageFileName)
                 };
 
-                var card = TemplateEngine.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
-                options.Prompt = TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
+                var card = TemplateManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
+                options.Prompt = TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingNameSelection);
                 options.Prompt.Attachments = card.Attachments;
 
                 // Default Text property is clumsy for speech
@@ -235,7 +235,7 @@ namespace AutomotiveSkill.Dialogs
                 if (!settingValues.Any())
                 {
                     // This shouldn't happen because the SettingFilter would just add all possible values to let the user select from them.
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue), cancellationToken);
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue), cancellationToken);
                     return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
@@ -278,8 +278,8 @@ namespace AutomotiveSkill.Dialogs
                             ImageUrl = GetSettingCardImageUri(imageName)
                         };
 
-                        var card = TemplateEngine.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
-                        options.Prompt = TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingValueSelection, promptReplacements);
+                        var card = TemplateManager.GenerateActivityForLocale(GetDivergedCardName(sc.Context, "AutomotiveCard"), cardModel);
+                        options.Prompt = TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingValueSelection, promptReplacements);
                         options.Prompt.Attachments = card.Attachments;
 
                         // Default Text property is clumsy for speech
@@ -304,7 +304,7 @@ namespace AutomotiveSkill.Dialogs
             else
             {
                 // No setting value was understood
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain), cancellationToken);
                 return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
@@ -383,7 +383,7 @@ namespace AutomotiveSkill.Dialogs
                         };
 
                         // TODO - Explore moving to ConfirmPrompt following usability testing
-                        var prompt = TemplateEngine.GenerateActivityForLocale(promptTemplate, promptReplacements);
+                        var prompt = TemplateManager.GenerateActivityForLocale(promptTemplate, promptReplacements);
                         return await sc.PromptAsync(Actions.SettingConfirmationPrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                     }
                     else
@@ -394,13 +394,13 @@ namespace AutomotiveSkill.Dialogs
                 }
                 else
                 {
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
                     return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
             }
             else
             {
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
                 return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
@@ -428,11 +428,11 @@ namespace AutomotiveSkill.Dialogs
                     string promptTemplate = VehicleSettingsResponses.VehicleSettingsConfirmed;
 
                     await SendActionToDeviceAsync(sc, change, cancellationToken);
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(promptTemplate), cancellationToken);
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(promptTemplate), cancellationToken);
             }
             else
             {
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied), cancellationToken);
             }
 
             if (state.IsAction)

@@ -27,7 +27,7 @@ namespace AutomotiveSkill.Dialogs
         {
             Settings = serviceProvider.GetService<BotSettings>();
             Services = serviceProvider.GetService<BotServices>();
-            TemplateEngine = serviceProvider.GetService<LocaleTemplateManager>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
             // Initialize skill state
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -40,7 +40,7 @@ namespace AutomotiveSkill.Dialogs
 
         protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; set; }
 
-        protected LocaleTemplateManager TemplateEngine { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; set; }
 
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
@@ -70,7 +70,7 @@ namespace AutomotiveSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage), cancellationToken);
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage), cancellationToken);
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2
