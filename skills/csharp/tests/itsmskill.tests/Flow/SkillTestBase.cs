@@ -28,6 +28,7 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
+using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
@@ -68,6 +69,8 @@ namespace ITSMSkill.Tests.Flow
             settings.LimitSize = MockData.LimitSize;
             settings.ServiceNowUrl = MockData.ServiceNowUrl;
             settings.ServiceNowGetUserId = MockData.ServiceNowGetUserId;
+            settings.MicrosoftAppId = MockData.MicrosoftAppId;
+            settings.MicrosoftAppPassword = MockData.MicrosoftAppPassword;
             Services.AddSingleton(settings);
             Services.AddSingleton<BotSettingsBase>(settings);
 
@@ -108,6 +111,7 @@ namespace ITSMSkill.Tests.Flow
             Services.AddSingleton<IStorage, MemoryStorage>();
             Services.AddSingleton<UserState>();
             Services.AddSingleton<ConversationState>();
+            Services.AddSingleton<ProactiveState>();
             Services.AddSingleton(sp =>
             {
                 var userState = sp.GetService<UserState>();
