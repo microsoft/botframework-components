@@ -24,6 +24,7 @@ namespace AutomotiveSkill.Bots
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
             _dialog = dialog;
+            _dialog.TelemetryClient = serviceProvider.GetService<IBotTelemetryClient>();
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));

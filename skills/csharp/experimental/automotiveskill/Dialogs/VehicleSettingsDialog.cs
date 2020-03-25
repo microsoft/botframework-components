@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,7 +11,6 @@ using System.Threading.Tasks;
 using AutomotiveSkill.Models;
 using AutomotiveSkill.Models.Actions;
 using AutomotiveSkill.Responses.VehicleSettings;
-using AutomotiveSkill.Services;
 using AutomotiveSkill.Utilities;
 using Luis;
 using Microsoft.AspNetCore.Http;
@@ -86,16 +84,16 @@ namespace AutomotiveSkill.Dialogs
             // Setting Change waterfall
             var processVehicleSettingChangeWaterfall = new WaterfallStep[]
             {
-                ProcessSetting,
-                ProcessVehicleSettingsChange,
-                ProcessChange,
-                SendChange
+                ProcessSettingAsync,
+                ProcessVehicleSettingsChangeAsync,
+                ProcessChangeAsync,
+                SendChangeAsync
             };
             AddDialog(new WaterfallDialog(Actions.ProcessVehicleSettingChange, processVehicleSettingChangeWaterfall) { TelemetryClient = TelemetryClient });
 
             // Prompts
-            AddDialog(new ChoicePrompt(Actions.SettingNameSelectionPrompt, SettingNameSelectionValidator, Culture.English) { Style = ListStyle.Auto, ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
-            AddDialog(new ChoicePrompt(Actions.SettingValueSelectionPrompt, SettingValueSelectionValidator, Culture.English) { Style = ListStyle.Auto, ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
+            AddDialog(new ChoicePrompt(Actions.SettingNameSelectionPrompt, SettingNameSelectionValidatorAsync, Culture.English) { Style = ListStyle.Auto, ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
+            AddDialog(new ChoicePrompt(Actions.SettingValueSelectionPrompt, SettingValueSelectionValidatorAsync, Culture.English) { Style = ListStyle.Auto, ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
 
             AddDialog(new ConfirmPrompt(Actions.SettingConfirmationPrompt));
 
@@ -112,9 +110,9 @@ namespace AutomotiveSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        public async Task<DialogTurnResult> ProcessSetting(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ProcessSettingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context, () => new AutomotiveSkillState());
+            var state = await Accessor.GetAsync(sc.Context, () => new AutomotiveSkillState(), cancellationToken);
             var skillResult = sc.Context.TurnState.Get<SettingsLuis>(StateProperties.SettingsLuisResultKey);
             bool isDeclarative = skillResult?.TopIntent().intent == SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE;
 
@@ -128,8 +126,8 @@ namespace AutomotiveSkill.Dialogs
             if (!settingNames.Any())
             {
                 // missing setting name
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
-                return await sc.EndDialogAsync();
+                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingName), cancellationToken);
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             else if (settingNames.Count() > 1)
             {
@@ -171,16 +169,16 @@ namespace AutomotiveSkill.Dialogs
                 // Workaround. In teams, prompt will be changed to HeroCard and adaptive card could not be shown. So send them separatly
                 if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
                 {
-                    await sc.Context.SendActivityAsync(options.Prompt);
+                    await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
                     options.Prompt = null;
                 }
 
-                return await sc.PromptAsync(Actions.SettingNameSelectionPrompt, options);
+                return await sc.PromptAsync(Actions.SettingNameSelectionPrompt, options, cancellationToken);
             }
             else
             {
                 // Only one setting detected so move on to next stage
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
         }
 
@@ -190,9 +188,9 @@ namespace AutomotiveSkill.Dialogs
         /// <param name="promptContext">Prompt context to validate.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Whether setting was validated.</returns>
-        private async Task<bool> SettingNameSelectionValidator(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> SettingNameSelectionValidatorAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(promptContext.Context);
+            var state = await Accessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // Use the name selection LUIS model to perform validation of the user's entered setting name
             var nameSelectionResult = await vehicleSettingNameSelectionLuisRecognizer.RecognizeAsync<SettingsNameLuis>(promptContext.Context, CancellationToken.None);
@@ -227,9 +225,9 @@ namespace AutomotiveSkill.Dialogs
         /// </summary>
         /// <param name="sc">Step Context.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> ProcessVehicleSettingsChange(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ProcessVehicleSettingsChangeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
             if (state.Changes.Any())
             {
@@ -237,8 +235,8 @@ namespace AutomotiveSkill.Dialogs
                 if (!settingValues.Any())
                 {
                     // This shouldn't happen because the SettingFilter would just add all possible values to let the user select from them.
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue));
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsMissingSettingValue), cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -290,24 +288,24 @@ namespace AutomotiveSkill.Dialogs
                         // Workaround. In teams, prompt will be changed to HeroCard and adaptive card could not be shown. So send them separatly
                         if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
                         {
-                            await sc.Context.SendActivityAsync(options.Prompt);
+                            await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
                             options.Prompt = null;
                         }
 
-                        return await sc.PromptAsync(Actions.SettingValueSelectionPrompt, options);
+                        return await sc.PromptAsync(Actions.SettingValueSelectionPrompt, options, cancellationToken);
                     }
                     else
                     {
                         // We only have one setting value so proceed to next step
-                        return await sc.NextAsync();
+                        return await sc.NextAsync(cancellationToken: cancellationToken);
                     }
                 }
             }
             else
             {
                 // No setting value was understood
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain));
-                return await sc.EndDialogAsync();
+                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsOutOfDomain), cancellationToken);
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
 
@@ -317,9 +315,9 @@ namespace AutomotiveSkill.Dialogs
         /// <param name="promptContext">Prompt Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Whether prompt value was validated.</returns>
-        private async Task<bool> SettingValueSelectionValidator(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> SettingValueSelectionValidatorAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(promptContext.Context);
+            var state = await Accessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // Use the value selection LUIS model to perform validation of the users entered setting value
             var valueSelectionResult = await vehicleSettingValueSelectionLuisRecognizer.RecognizeAsync<SettingsValueLuis>(promptContext.Context, CancellationToken.None);
@@ -360,9 +358,9 @@ namespace AutomotiveSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> ProcessChange(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ProcessChangeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
             // Perform the request change
             if (state.Changes.Any())
@@ -386,30 +384,30 @@ namespace AutomotiveSkill.Dialogs
 
                         // TODO - Explore moving to ConfirmPrompt following usability testing
                         var prompt = TemplateEngine.GenerateActivityForLocale(promptTemplate, promptReplacements);
-                        return await sc.PromptAsync(Actions.SettingConfirmationPrompt, new PromptOptions { Prompt = prompt });
+                        return await sc.PromptAsync(Actions.SettingConfirmationPrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                     }
                     else
                     {
                         // No confirmation required so we skip to sending the change
-                        return await sc.NextAsync();
+                        return await sc.NextAsync(cancellationToken: cancellationToken);
                     }
                 }
                 else
                 {
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
             }
             else
             {
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported));
-                return await sc.EndDialogAsync();
+                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeUnsupported), cancellationToken);
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
 
-        private async Task<DialogTurnResult> SendChange(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> SendChangeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
             var change = state.Changes[0];
             var settingChangeConfirmed = false;
@@ -429,20 +427,20 @@ namespace AutomotiveSkill.Dialogs
             {
                     string promptTemplate = VehicleSettingsResponses.VehicleSettingsConfirmed;
 
-                    await SendActionToDevice(sc, change);
-                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(promptTemplate));
+                    await SendActionToDeviceAsync(sc, change, cancellationToken);
+                    await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(promptTemplate), cancellationToken);
             }
             else
             {
-                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied));
+                await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(VehicleSettingsResponses.VehicleSettingsSettingChangeConfirmationDenied), cancellationToken);
             }
 
             if (state.IsAction)
             {
-                return await sc.EndDialogAsync(new ActionResult(true));
+                return await sc.EndDialogAsync(new ActionResult(true), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
         private string UnitToString(string unit)
@@ -464,7 +462,7 @@ namespace AutomotiveSkill.Dialogs
         /// <param name="sc">The WaterfallStepContext.</param>
         /// <param name="change">The change that we want the client to make.</param>
         /// <returns>A Task.</returns>
-        private async Task SendActionToDevice(WaterfallStepContext sc, SettingChange change)
+        private async Task SendActionToDeviceAsync(WaterfallStepContext sc, SettingChange change, CancellationToken cancellationToken)
         {
             // workaround. if connect skill directly to teams, the following reply does not work.
             if (!sc.Context.IsSkill() && Channel.GetChannelId(sc.Context) == Channels.Msteams)
@@ -479,7 +477,7 @@ namespace AutomotiveSkill.Dialogs
             actionEvent.Name = $"AutomotiveSkill.{change.SettingName}";
             actionEvent.Value = change;
 
-            await sc.Context.SendActivityAsync(actionEvent);
+            await sc.Context.SendActivityAsync(actionEvent, cancellationToken);
         }
 
         private string GetSettingCardImageUri(string imagePath)
