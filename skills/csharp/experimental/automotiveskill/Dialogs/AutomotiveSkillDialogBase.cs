@@ -15,24 +15,24 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AutomotiveSkill.Dialogs
 {
     public class AutomotiveSkillDialogBase : ComponentDialog
     {
         public AutomotiveSkillDialogBase(
-            string dialogId,
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IBotTelemetryClient telemetryClient)
+             string dialogId,
+             IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Services = services;
-            LocaleTemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateEngine = serviceProvider.GetService<LocaleTemplateManager>();
+
+            // Initialize skill state
+            var conversationState = serviceProvider.GetService<ConversationState>();
             Accessor = conversationState.CreateProperty<AutomotiveSkillState>(nameof(AutomotiveSkillState));
-            TelemetryClient = telemetryClient;
         }
 
         protected BotSettings Settings { get; set; }
@@ -41,7 +41,7 @@ namespace AutomotiveSkill.Dialogs
 
         protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; set; }
 
-        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateEngine { get; set; }
 
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
@@ -71,7 +71,7 @@ namespace AutomotiveSkill.Dialogs
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateEngine.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2

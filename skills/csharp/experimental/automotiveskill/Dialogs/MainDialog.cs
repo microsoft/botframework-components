@@ -22,11 +22,11 @@ namespace AutomotiveSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<AutomotiveSkillState> _stateAccessor;
-        private Dialog _vehicleSettingsDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<AutomotiveSkillState> _stateAccessor;
+        private readonly Dialog _vehicleSettingsDialog;
 
         public MainDialog(
             IServiceProvider serviceProvider,
