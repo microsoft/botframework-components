@@ -64,6 +64,16 @@ namespace CalendarSkill.Models
             /// Change the meeting room and recreate.
             /// </summary>
             ChangeMeetingRoom = 2,
+
+            /// <summary>
+            /// Change the building and recreate.
+            /// </summary>
+            ChangeBuilding = 3,
+
+            /// <summary>
+            /// Change the floor number and recreate.
+            /// </summary>
+            ChangeFloorNumber = 4,
         }
     }
 }

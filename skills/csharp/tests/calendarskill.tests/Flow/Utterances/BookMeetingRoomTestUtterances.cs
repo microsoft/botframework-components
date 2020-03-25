@@ -33,13 +33,27 @@ namespace CalendarSkill.Test.Flow.Utterances
             this.Add(BookMeetingRoomWithDurationEntity, GetBookMeetingRoomIntent(
                 BookMeetingRoomWithDurationEntity,
                 duration: new string[] { Strings.Strings.DefaultDuration }));
-            this.Add(ChangeMeetingRoom, GetBookMeetingRoomIntent(
-                ChangeMeetingRoom));
-            this.Add(ChangeMeetingRoomWithFloorNumberEntity, GetBookMeetingRoomIntent(
-                ChangeMeetingRoomWithFloorNumberEntity,
+            this.Add(BookMeetingRoomWithFloorNumberEntity, GetBookMeetingRoomIntent(
+                BookMeetingRoomWithFloorNumberEntity,
                 floorNumber: new string[] { Strings.Strings.DefaultFloorNumber }));
             this.Add(CancelRequest, GetCancelCalendarIntent(
                 CancelRequest));
+            this.Add(ChangeMeetingRoom, GetChangeCalendarEntryIntent(
+                ChangeMeetingRoom,
+                slotAttribute: new string[] { Strings.Strings.SlotAttributeRoom },
+                slotAttributeName: new string[][] { new string[] { Strings.Strings.SlotAttributeRoom } }));
+            this.Add(ChangeBuilding, GetChangeCalendarEntryIntent(
+                ChangeBuilding,
+                slotAttributeName: new string[][] { new string[] { Strings.Strings.SlotAttributeBuilding } }));
+            this.Add(ChangeFloorNumber, GetChangeCalendarEntryIntent(
+                ChangeFloorNumber,
+                slotAttributeName: new string[][] { new string[] { Strings.Strings.SlotAttributeFloor } }));
+            this.Add(ChangeBuildingWithBuildingEntity, GetChangeCalendarEntryIntent(
+                ChangeBuildingWithBuildingEntity,
+                building: new string[] { Strings.Strings.DefaultBuilding }));
+            this.Add(ChangeFloorNumberWithFloorNumberEntity, GetChangeCalendarEntryIntent(
+                ChangeFloorNumberWithFloorNumberEntity,
+                floorNumber: new string[] { Strings.Strings.DefaultFloorNumber }));
             this.Add(ChangeTime, GetChangeCalendarEntryIntent(
                 ChangeTime,
                 slotAttribute: new string[] { Strings.Strings.SlotAttributeTime },
@@ -60,6 +74,8 @@ namespace CalendarSkill.Test.Flow.Utterances
 
         public static string BookMeetingRoomWithBuildingEntity { get; } = $"book a meeting room in {Strings.Strings.DefaultBuilding}";
 
+        public static string BookMeetingRoomWithFloorNumberEntity { get; } = $"book a meeting room on {Strings.Strings.DefaultFloorNumber}";
+
         public static string BookMeetingRoomWithBuildingAndFloorNumberEntity { get; } = $"book a meeting room at {Strings.Strings.DefaultBuilding} on {Strings.Strings.DefaultFloorNumber}";
 
         public static string BookMeetingRoomWithDateTimeEntity { get; } = $"book a meeting room {Strings.Strings.DefaultStartDate} {Strings.Strings.DefaultStartTime} to {Strings.Strings.DefaultStartDate} {Strings.Strings.DefaultEndTime}";
@@ -70,7 +86,13 @@ namespace CalendarSkill.Test.Flow.Utterances
 
         public static string ChangeMeetingRoom { get; } = "change a different room";
 
-        public static string ChangeMeetingRoomWithFloorNumberEntity { get; } = $"book a meeting room on {Strings.Strings.DefaultFloorNumber}";
+        public static string ChangeBuilding { get; } = "change a different building";
+
+        public static string ChangeFloorNumber { get; } = "change a different floor";
+
+        public static string ChangeBuildingWithBuildingEntity { get; } = $"change building to {Strings.Strings.DefaultBuilding}";
+
+        public static string ChangeFloorNumberWithFloorNumberEntity { get; } = $"change floorNumber to {Strings.Strings.DefaultFloorNumber}";
 
         public static string CancelRequest { get; } = "cancel request";
 

@@ -4,8 +4,8 @@
 # BuildingNonexistent.Text
 - Désolé, je n'ai pas trouvé ce bâti ment. Pouvez-vous dis-le différemment, ou choisir un autre bâtiment?
 
-# MeetingRoomNotFoundByName.Text(MeetingRoom)
-- On dirait ${MeetingRoom} n'existe pas.
+# MeetingRoomNotFoundByName.Text(MeetingRoom, Building, FloorNumber)
+- On dirait ${MeetingRoom} n'existe pas${InBuilding(Building)}${OnFloorNumber(FloorNumber)}.
 
 # ConfirmMeetingRoomPrompt.Text(MeetingRoom, DateTime)
 - ${MeetingRoom} est disponible ${DateTime}, voulez-vous le réserver?
