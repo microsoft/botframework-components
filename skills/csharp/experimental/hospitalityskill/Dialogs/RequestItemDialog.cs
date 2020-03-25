@@ -27,22 +27,22 @@ namespace HospitalitySkill.Dialogs
         {
             var requestItem = new WaterfallStep[]
             {
-                HasCheckedOut,
-                ItemPrompt,
-                ItemRequest,
-                EndDialog
+                HasCheckedOutAsync,
+                ItemPromptAsync,
+                ItemRequestAsync,
+                EndDialogAsync
             };
 
             AddDialog(new WaterfallDialog(nameof(RequestItemDialog), requestItem));
-            AddDialog(new TextPrompt(DialogIds.ItemPrompt, ValidateItemPrompt));
-            AddDialog(new ConfirmPrompt(DialogIds.GuestServicesPrompt, ValidateGuestServicesPrompt));
+            AddDialog(new TextPrompt(DialogIds.ItemPrompt, ValidateItemPromptAsync));
+            AddDialog(new ConfirmPrompt(DialogIds.GuestServicesPrompt, ValidateGuestServicesPromptAsync));
         }
 
-        private async Task<DialogTurnResult> ItemPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ItemPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
             convState.ItemList = new List<ItemRequestClass>();
-            await GetEntities(sc.Context);
+            await GetEntitiesAsync(sc.Context, cancellationToken);
 
             if (convState.ItemList.Count == 0)
             {
@@ -51,15 +51,15 @@ namespace HospitalitySkill.Dialogs
                 {
                     Prompt = TemplateManager.GenerateActivity(RequestItemResponses.ItemPrompt),
                     RetryPrompt = TemplateManager.GenerateActivity(RequestItemResponses.RetryItemPrompt)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task GetEntities(ITurnContext turnContext)
+        private async Task GetEntitiesAsync(ITurnContext turnContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState(), cancellationToken);
             var entities = convState.LuisResult?.Entities;
 
             if (entities?.ItemRequest != null)
@@ -79,13 +79,13 @@ namespace HospitalitySkill.Dialogs
             }
         }
 
-        private async Task<bool> ValidateItemPrompt(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateItemPromptAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState(), cancellationToken);
             if (promptContext.Recognized.Succeeded && !string.IsNullOrWhiteSpace(promptContext.Recognized.Value))
             {
                 var numWords = promptContext.Recognized.Value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
-                await GetEntities(promptContext.Context);
+                await GetEntitiesAsync(promptContext.Context, cancellationToken);
 
                 // TODO handle if item not recognized as entity
                 if (convState.ItemList.Count == 0 && (numWords == 1 || numWords == 2))
@@ -103,9 +103,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> ItemRequest(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ItemRequestAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
 
             // check json, if item is available
             List<ItemRequestClass> notAvailable = new List<ItemRequestClass>();
@@ -133,26 +133,26 @@ namespace HospitalitySkill.Dialogs
                     { "Items", notAvailable.Aggregate(string.Empty, (last, item) => last + $"{Environment.NewLine}- {item.Item[0]}") }
                 };
                 var reply = TemplateManager.GenerateActivity(RequestItemResponses.ItemNotAvailable, tokens);
-                await sc.Context.SendActivityAsync(reply);
+                await sc.Context.SendActivityAsync(reply, cancellationToken);
 
                 return await sc.PromptAsync(DialogIds.GuestServicesPrompt, new PromptOptions()
                 {
                     Prompt = TemplateManager.GenerateActivity(RequestItemResponses.GuestServicesPrompt),
                     RetryPrompt = TemplateManager.GenerateActivity(RequestItemResponses.RetryGuestServicesPrompt)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<bool> ValidateGuestServicesPrompt(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateGuestServicesPromptAsync(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
             if (promptContext.Recognized.Succeeded)
             {
                 if (promptContext.Recognized.Value)
                 {
                     // send request to guest services here
-                    await promptContext.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.GuestServicesConfirm));
+                    await promptContext.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.GuestServicesConfirm), cancellationToken);
                 }
 
                 return await Task.FromResult(true);
@@ -161,9 +161,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> EndDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EndDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
 
             var result = convState.IsAction ? new ActionResult(false) : null;
 
@@ -190,8 +190,8 @@ namespace HospitalitySkill.Dialogs
                 await HotelService.RequestItems(convState.ItemList);
 
                 // if at least one item was available send this card reply
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems));
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.ItemsRequested));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "RequestItemCard")), null, "items", roomItems), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RequestItemResponses.ItemsRequested), cancellationToken);
 
                 if (result != null)
                 {
@@ -199,10 +199,10 @@ namespace HospitalitySkill.Dialogs
                 }
             }
 
-            return await sc.EndDialogAsync(result);
+            return await sc.EndDialogAsync(result, cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string ItemPrompt = "itemPrompt";
             public const string GuestServicesPrompt = "guestServicesRequest";

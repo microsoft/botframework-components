@@ -26,18 +26,18 @@ namespace HospitalitySkill.Dialogs
         {
             var lateCheckOut = new WaterfallStep[]
             {
-                HasCheckedOut,
-                LateCheckOutPrompt,
-                EndDialog
+                HasCheckedOutAsync,
+                LateCheckOutPromptAsync,
+                EndDialogAsync
             };
 
             AddDialog(new WaterfallDialog(nameof(LateCheckOutDialog), lateCheckOut));
             AddDialog(new ConfirmPrompt(DialogIds.LateCheckOutPrompt, ValidateLateCheckOutAsync));
         }
 
-        private async Task<DialogTurnResult> LateCheckOutPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> LateCheckOutPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             // already requested late check out
             if (userState.LateCheckOut)
@@ -46,18 +46,18 @@ namespace HospitalitySkill.Dialogs
                 cardData.Title = TemplateManager.GetString(HospitalityStrings.ReservationDetails);
 
                 var reply = TemplateManager.GenerateActivity(LateCheckOutResponses.HasLateCheckOut, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), null);
-                await sc.Context.SendActivityAsync(reply);
+                await sc.Context.SendActivityAsync(reply, cancellationToken);
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             // TODO checking availability
             // simulate with time delay
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(LateCheckOutResponses.CheckAvailability));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(LateCheckOutResponses.CheckAvailability), cancellationToken);
             await Task.Delay(1600);
             var lateTime = await HotelService.GetLateCheckOutAsync();
 
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
             var entities = convState?.LuisResult?.Entities;
             if (entities != null && entities.datetime != null && (entities.datetime[0].Type == "time" || entities.datetime[0].Type == "timerange"))
             {
@@ -82,12 +82,12 @@ namespace HospitalitySkill.Dialogs
             {
                 Prompt = TemplateManager.GenerateActivity(LateCheckOutResponses.MoveCheckOutPrompt, tokens),
                 RetryPrompt = TemplateManager.GenerateActivity(LateCheckOutResponses.RetryMoveCheckOut),
-            });
+            }, cancellationToken);
         }
 
         private async Task<bool> ValidateLateCheckOutAsync(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             if (promptContext.Recognized.Succeeded)
             {
@@ -97,7 +97,7 @@ namespace HospitalitySkill.Dialogs
                     // TODO process late check out request here
                     userState.LateCheckOut = true;
 
-                    var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
+                    var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState(), cancellationToken);
                     userState.UserReservation.CheckOutTimeData = convState.UpdatedReservation.CheckOutTimeData;
 
                     // set new checkout in hotel service
@@ -110,9 +110,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> EndDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EndDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             if (userState.LateCheckOut)
             {
@@ -127,15 +127,15 @@ namespace HospitalitySkill.Dialogs
 
                 // check out time moved confirmation
                 var reply = TemplateManager.GenerateActivity(LateCheckOutResponses.MoveCheckOutSuccess, new Card(GetCardName(sc.Context, "ReservationDetails"), cardData), tokens);
-                await sc.Context.SendActivityAsync(reply);
+                await sc.Context.SendActivityAsync(reply, cancellationToken);
 
-                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
+                return await sc.EndDialogAsync(await CreateSuccessActionResultAsync(sc.Context, cancellationToken), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string LateCheckOutPrompt = "lateCheckOutPrompt";
         }
