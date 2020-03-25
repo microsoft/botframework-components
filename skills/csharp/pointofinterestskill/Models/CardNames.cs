@@ -3,7 +3,7 @@
 
 namespace PointOfInterestSkill.Models
 {
-    public class CardNames
+    public static class CardNames
     {
         public const string PointOfInterestDetails = "PointOfInterestDetails";
 

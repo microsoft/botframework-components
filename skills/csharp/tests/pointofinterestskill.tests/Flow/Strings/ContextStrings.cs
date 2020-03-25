@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PointOfInterestSkill.Tests.Flow.Strings
 {
-    public class ContextStrings
+    public static class ContextStrings
     {
         public const string MicrosoftWay = "Microsoft Way";
 

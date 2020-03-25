@@ -5,7 +5,7 @@ using PointOfInterestSkill.Models;
 
 namespace PointOfInterestSkill.Tests.Flow.Strings
 {
-    public class CardStrings
+    public static class CardStrings
     {
         public const string Details = CardNames.PointOfInterestDetails + "Card";
 
