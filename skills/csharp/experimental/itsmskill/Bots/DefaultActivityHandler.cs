@@ -88,7 +88,7 @@ namespace ITSMSkill.Bots
                         var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
 
                         // TODO: Implement a proactive subscription manager for mapping Notification to ConversationReference
-                        var conversationReference = proactiveModel["29:1L2z9sqte3pWsVlRFyFpw5RiB8N0eoUM9MBkywGgU6rGNKPd95Jx15AvIetaNLO5L8ZJ3C76pmnuy-mx5_oIDDQ"].Conversation;
+                        var conversationReference = proactiveModel["Key"].Conversation;
 
                         await turnContext.Adapter.ContinueConversationAsync(_appCredentials.MicrosoftAppId, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
                         break;
