@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -64,7 +64,7 @@ namespace EventSkill.Utilities
         public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
             throw new Exception("1. create *Containee.new.json which only keeps containee's body;2. in the container, write ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
-
+            /*
             if (string.IsNullOrEmpty(templateId))
             {
                 templateId = CardsOnly;
@@ -85,6 +85,7 @@ namespace EventSkill.Utilities
                 result.Text = ex.Message;
                 return (Activity)result;
             }
+            */
         }
 
         public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)
