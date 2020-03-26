@@ -139,7 +139,6 @@ namespace MusicSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-
                 if (interrupted != null)
                 {
                     // If dialog was interrupted, return interrupted result
@@ -369,7 +368,7 @@ namespace MusicSkill.Dialogs
             }
         }
 
-        private class Events
+        private static class Events
         {
             public const string PlayMusic = "PlayMusic";
         }

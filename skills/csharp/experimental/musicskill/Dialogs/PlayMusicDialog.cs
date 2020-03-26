@@ -3,7 +3,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -11,10 +10,6 @@ using Microsoft.Bot.Solutions.Responses;
 using MusicSkill.Models;
 using MusicSkill.Responses.Main;
 using MusicSkill.Services;
-using SpotifyAPI.Web;
-using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 
 namespace MusicSkill.Dialogs
 {
@@ -27,8 +22,9 @@ namespace MusicSkill.Dialogs
             BotServices services,
             LocaleTemplateManager templateManager,
             ConversationState conversationState,
+            IServiceManager serviceManager,
             IBotTelemetryClient telemetryClient)
-            : base(nameof(PlayMusicDialog), settings, services, templateManager, conversationState, telemetryClient)
+            : base(nameof(PlayMusicDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
         {
             _templateManager = templateManager;
 
@@ -57,21 +53,14 @@ namespace MusicSkill.Dialogs
                 var searchQuery = state.Query;
 
                 // Get music api client
-                var client = await GetSpotifyWebAPIClient(Settings);
+                IMusicService musicService = ServiceManager.InitMusicService();
 
                 // Search library
-                var searchItems = await client.SearchItemsEscapedAsync(searchQuery, SearchType.All, 5);
-
-                // If any results exist, get the first playlist, then artist result
-                if (searchItems.Playlists?.Total != 0)
+                var searchItems = await musicService.SearchMusic(searchQuery);
+                if (!string.IsNullOrEmpty(searchItems))
                 {
                     status = true;
-                    await SendOpenDefaultAppEventActivity(stepContext, searchItems.Playlists.Items[0].Uri, cancellationToken);
-                }
-                else if (searchItems.Artists?.Total != 0)
-                {
-                    status = true;
-                    await SendOpenDefaultAppEventActivity(stepContext, searchItems.Artists.Items[0].Uri, cancellationToken);
+                    await SendOpenDefaultAppEventActivity(stepContext, searchItems, cancellationToken);
                 }
                 else
                 {
@@ -81,14 +70,6 @@ namespace MusicSkill.Dialogs
 
             // End dialog
             return await stepContext.EndDialogAsync(new Models.ActionInfos.ActionResult() { ActionSuccess = status });
-        }
-
-        private async Task<SpotifyWebAPI> GetSpotifyWebAPIClient(BotSettings settings)
-        {
-            CredentialsAuth auth = new CredentialsAuth(settings.SpotifyClientId, settings.SpotifyClientSecret);
-            Token token = await auth.GetToken();
-            SpotifyWebAPI api = new SpotifyWebAPI() { TokenType = token.TokenType, AccessToken = token.AccessToken };
-            return api;
         }
 
         private async Task SendOpenDefaultAppEventActivity(WaterfallStepContext stepContext, string spotifyResultUri, CancellationToken cancellationToken)

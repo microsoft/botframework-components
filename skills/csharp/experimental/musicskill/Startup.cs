@@ -118,6 +118,9 @@ namespace MusicSkill
 
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
+            // Configure service manager
+            services.AddSingleton<IServiceManager>(new ServiceManager(settings));
+
             // Register dialogs
             services.AddTransient<PlayMusicDialog>();
             services.AddTransient<MainDialog>();

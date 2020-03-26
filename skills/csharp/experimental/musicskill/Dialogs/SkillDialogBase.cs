@@ -28,6 +28,7 @@ namespace MusicSkill.Dialogs
              BotServices services,
              LocaleTemplateManager templateManager,
              ConversationState conversationState,
+             IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
@@ -36,6 +37,7 @@ namespace MusicSkill.Dialogs
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
             Settings = settings;
+            ServiceManager = serviceManager;
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!settings.OAuthConnections.Any())
@@ -53,6 +55,8 @@ namespace MusicSkill.Dialogs
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
         protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+
+        protected IServiceManager ServiceManager { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
