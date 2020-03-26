@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using BingSearchSkill.Authentication;
 using BingSearchSkill.Bots;
 using BingSearchSkill.Dialogs;
 using BingSearchSkill.Services;
@@ -45,7 +46,7 @@ namespace BingSearchSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -63,6 +64,9 @@ namespace BingSearchSkill
             Configuration.Bind(settings);
             services.AddSingleton(settings);
             services.AddSingleton<BotSettingsBase>(settings);
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // Configure credentials
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
@@ -122,6 +126,9 @@ namespace BingSearchSkill
                 .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
+            // Uncomment this to support HTTPS.
+            // app.UseHttpsRedirection();
         }
     }
 }

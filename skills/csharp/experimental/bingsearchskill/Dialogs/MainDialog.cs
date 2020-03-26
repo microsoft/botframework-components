@@ -22,21 +22,19 @@ namespace BingSearchSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
-        private Dialog _searchDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly Dialog _searchDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -122,17 +120,17 @@ namespace BingSearchSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
+                                await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
                                 interrupted = true;
                                 break;
                             }
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = true;
                                 break;
                             }

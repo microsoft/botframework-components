@@ -56,6 +56,8 @@ namespace BingSearchSkill.Utilities
         public static Activity GetCardResponse(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
             throw new Exception("1. create *Containee.new.json which only keeps containee's body;2. in the container, write @{if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
+            
+            /*
             var input = new
             {
                 Data = tokens,
@@ -71,6 +73,7 @@ namespace BingSearchSkill.Utilities
                 result.Text = ex.Message;
                 return (Activity)result;
             }
+            */
         }
 
         public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Dictionary<string, object> tokens = null)
