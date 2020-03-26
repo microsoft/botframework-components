@@ -18,32 +18,23 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BingSearchSkill.Dialogs
 {
     public class SearchDialog : SkillDialogBase
     {
         private const string BingSiteUrl = "https://www.bing.com";
-        private BotServices _services;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public SearchDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(SearchDialog), settings, services, templateManager, conversationState, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(SearchDialog), serviceProvider)
         {
-            _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            _services = services;
-            Settings = settings;
-
             var sample = new WaterfallStep[]
             {
-                PromptForQuestion,
-                ShowResult,
-                End,
+                PromptForQuestionAsync,
+                ShowResultAsync,
+                EndAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(SearchDialog), sample));
@@ -52,24 +43,24 @@ namespace BingSearchSkill.Dialogs
             InitialDialogId = nameof(SearchDialog);
         }
 
-        private async Task<DialogTurnResult> PromptForQuestion(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> PromptForQuestionAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             GetEntityFromLuis(stepContext);
 
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
             if (string.IsNullOrWhiteSpace(state.SearchEntityName))
             {
                 var prompt = TemplateManager.GenerateActivity(SearchResponses.AskEntityPrompt);
-                return await stepContext.PromptAsync(DialogIds.NamePrompt, new PromptOptions { Prompt = prompt });
+                return await stepContext.PromptAsync(DialogIds.NamePrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
             }
 
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<DialogTurnResult> ShowResult(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowResultAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
             GetEntityFromLuis(stepContext);
             var userInput = string.Empty;
@@ -197,27 +188,27 @@ namespace BingSearchSkill.Dialogs
                 prompt = TemplateManager.GenerateActivity(SearchResponses.NoResultPrompt);
             }
 
-            await stepContext.Context.SendActivityAsync(prompt);
+            await stepContext.Context.SendActivityAsync(prompt, cancellationToken);
 
             if (state.IsAction == true)
             {
-                return await stepContext.NextAsync(actionResult);
+                return await stepContext.NextAsync(actionResult, cancellationToken);
             }
 
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<DialogTurnResult> End(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
             state.Clear();
 
-            return await stepContext.EndDialogAsync(stepContext.Result);
+            return await stepContext.EndDialogAsync(stepContext.Result, cancellationToken);
         }
 
         private async void GetEntityFromLuis(WaterfallStepContext stepContext)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context);
             if (state.LuisResult == null)
             {
                 return;
@@ -245,7 +236,7 @@ namespace BingSearchSkill.Dialogs
             }
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string NamePrompt = "namePrompt";
         }

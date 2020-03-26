@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BingSearchSkill.Authentication;
 using BingSearchSkill.Bots;
 using BingSearchSkill.Dialogs;
 using BingSearchSkill.Services;
@@ -22,6 +21,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 
 namespace BingSearchSkill
 {
