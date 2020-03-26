@@ -82,6 +82,8 @@ namespace EmailSkill.Models
 
         public MailSource MailSourceType { get; set; }
 
+        public bool IsAction { get; set; } = false;
+
         public int UserSelectIndex { get; set; }
 
         public TimeZoneInfo GetUserTimeZone()

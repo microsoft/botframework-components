@@ -58,11 +58,12 @@ namespace BingSearchSkill.Dialogs
 
             var state = await _stateAccessor.GetAsync(stepContext.Context);
 
-            // if (string.IsNullOrWhiteSpace(state.SearchEntityName))
-            // {
-            //    var prompt = ResponseManager.GetResponse(SearchResponses.AskEntityPrompt);
-            //    return await stepContext.PromptAsync(DialogIds.NamePrompt, new PromptOptions { Prompt = prompt });
-            // }
+            if (string.IsNullOrWhiteSpace(state.SearchEntityName))
+            {
+                var prompt = TemplateManager.GenerateActivity(SearchResponses.AskEntityPrompt);
+                return await stepContext.PromptAsync(DialogIds.NamePrompt, new PromptOptions { Prompt = prompt });
+            }
+
             return await stepContext.NextAsync();
         }
 
@@ -74,8 +75,7 @@ namespace BingSearchSkill.Dialogs
             var userInput = string.Empty;
             if (string.IsNullOrWhiteSpace(state.SearchEntityName))
             {
-                stepContext.Context.Activity.Properties.TryGetValue("OriginText", out var content);
-                userInput = content != null ? content.ToString() : stepContext.Context.Activity.Text;
+                userInput = stepContext.Context.Activity.Text ?? string.Empty;
 
                 state.SearchEntityName = userInput;
                 state.SearchEntityType = SearchResultModel.EntityType.Unknown;
@@ -88,7 +88,7 @@ namespace BingSearchSkill.Dialogs
             // https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/cognitive-services/Labs/Answer-Search/overview.md
             var entitiesResult = await client.GetSearchResult(state.SearchEntityName, "en-us", state.SearchEntityType);
 
-            var actionResult = new KeywordSearchResponse() { ActionSuccess = false };
+            var actionResult = new ActionResult(false);
             if (entitiesResult != null && entitiesResult.Count > 0)
             {
                 actionResult.Url = entitiesResult[0].Url;
@@ -199,8 +199,7 @@ namespace BingSearchSkill.Dialogs
 
             await stepContext.Context.SendActivityAsync(prompt);
 
-            var skillOptions = stepContext.Options as BingSearchSkillDialogOptionBase;
-            if (skillOptions != null && skillOptions.IsAction == true)
+            if (state.IsAction == true)
             {
                 return await stepContext.NextAsync(actionResult);
             }

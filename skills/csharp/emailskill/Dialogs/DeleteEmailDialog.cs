@@ -131,10 +131,9 @@ namespace EmailSkill.Dialogs
                 var activity = TemplateManager.GenerateActivityForLocale(DeleteEmailResponses.DeleteSuccessfully);
                 await sc.Context.SendActivityAsync(activity);
 
-                var skillOptions = sc.Options as EmailSkillDialogOptions;
-                if (skillOptions != null && skillOptions.IsAction)
+                if (state.IsAction)
                 {
-                    var actionResult = new ActionResult() { ActionSuccess = true };
+                    var actionResult = new ActionResult(true);
                     return await sc.EndDialogAsync(actionResult);
                 }
 
