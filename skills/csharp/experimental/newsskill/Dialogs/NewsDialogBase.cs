@@ -9,6 +9,7 @@ using Microsoft.Azure.CognitiveServices.Search.NewsSearch.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 using NewsSkill.Models;
 using NewsSkill.Models.Action;
 using NewsSkill.Responses.Main;
@@ -19,30 +20,28 @@ namespace NewsSkill.Dialogs
     public class NewsDialogBase : ComponentDialog
     {
         protected const string LuisResultKey = "LuisResult";
-        protected LocaleTemplateManager templateManager;
-        private AzureMapsService _mapsService;
+        private readonly AzureMapsService _mapsService;
 
         public NewsDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            AzureMapsService mapsService,
-            LocaleTemplateManager templateManager,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Services = services;
-            ConvAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
-            UserAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
-            TelemetryClient = telemetryClient;
-            this.templateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
-            var mapsKey = settings.AzureMapsKey ?? throw new Exception("The AzureMapsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
-            _mapsService = mapsService;
+            var conversationState = serviceProvider.GetService<ConversationState>();
+            ConvAccessor = conversationState.CreateProperty<NewsSkillState>(nameof(NewsSkillState));
+            var userState = serviceProvider.GetService<UserState>();
+            UserAccessor = userState.CreateProperty<NewsSkillUserState>(nameof(NewsSkillUserState));
+
+            var mapsKey = Settings.AzureMapsKey ?? throw new Exception("The AzureMapsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            _mapsService = serviceProvider.GetService<AzureMapsService>();
             _mapsService.InitKeyAsync(mapsKey);
         }
+
+        protected BotSettings Settings { get; }
 
         protected BotServices Services { get; set; }
 
@@ -50,57 +49,59 @@ namespace NewsSkill.Dialogs
 
         protected IStatePropertyAccessor<NewsSkillUserState> UserAccessor { get; set; }
 
-        // This method is called by any waterfall step that throws an exception to ensure consistency
-        public async Task<Exception> HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
-        {
-            await sc.Context.SendActivityAsync(sc.Context.Activity.CreateReply(MainStrings.ERROR));
+        protected LocaleTemplateManager TemplateManager { get; }
 
-            await sc.CancelAllDialogsAsync();
+        // This method is called by any waterfall step that throws an exception to ensure consistency
+        public async Task<Exception> HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
+        {
+            await sc.Context.SendActivityAsync(sc.Context.Activity.CreateReply(MainStrings.ERROR), cancellationToken);
+
+            await sc.CancelAllDialogsAsync(cancellationToken);
 
             return ex;
         }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await ConvAccessor.GetAsync(dc.Context);
+            var state = await ConvAccessor.GetAsync(dc.Context, cancellationToken: cancellationToken);
 
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await ConvAccessor.GetAsync(dc.Context);
+            var state = await ConvAccessor.GetAsync(dc.Context, cancellationToken: cancellationToken);
 
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> GetMarket(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> GetMarketAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
+            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
 
             // Check if there's already a location
             if (!string.IsNullOrWhiteSpace(userState.Market))
             {
-                return await sc.NextAsync(userState.Market);
+                return await sc.NextAsync(userState.Market, cancellationToken);
             }
             else if (!string.IsNullOrWhiteSpace(convState.CurrentCoordinates))
             {
                 // make maps service query with location coordinates instead of user input
-                return await sc.NextAsync(convState.CurrentCoordinates);
+                return await sc.NextAsync(convState.CurrentCoordinates, cancellationToken);
             }
 
             // Prompt user for location
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = templateManager.GenerateActivityForLocale(MainStrings.MarketPrompt),
-                RetryPrompt = templateManager.GenerateActivityForLocale(MainStrings.MarketRetryPrompt)
+                Prompt = TemplateManager.GenerateActivityForLocale(MainStrings.MarketPrompt),
+                RetryPrompt = TemplateManager.GenerateActivityForLocale(MainStrings.MarketRetryPrompt)
             });
         }
 
-        protected async Task<DialogTurnResult> SetMarket(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> SetMarketAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
             if (string.IsNullOrWhiteSpace(userState.Market))
             {
@@ -110,7 +111,7 @@ namespace NewsSkill.Dialogs
                 userState.Market = await _mapsService.GetCountryCodeAsync(countryregion);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
         protected async Task<bool> MarketPromptValidatorAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
