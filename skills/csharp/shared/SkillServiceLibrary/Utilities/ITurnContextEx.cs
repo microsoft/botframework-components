@@ -1,4 +1,7 @@
-﻿using System.Security.Claims;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Security.Claims;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Connector.Authentication;
 

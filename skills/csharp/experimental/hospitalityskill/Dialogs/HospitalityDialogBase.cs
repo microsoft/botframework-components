@@ -20,6 +20,7 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HospitalitySkill.Dialogs
 {
@@ -27,22 +28,17 @@ namespace HospitalitySkill.Dialogs
     {
         public HospitalityDialogBase(
              string dialogId,
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             UserState userState,
-             IHotelService hotelService,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
              : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            var conversationState = serviceProvider.GetService<ConversationState>();
+            var userState = serviceProvider.GetService<UserState>();
             StateAccessor = conversationState.CreateProperty<HospitalitySkillState>(nameof(HospitalitySkillState));
             UserStateAccessor = userState.CreateProperty<HospitalityUserSkillState>(nameof(HospitalityUserSkillState));
-            TelemetryClient = telemetryClient;
-            HotelService = hotelService;
+            HotelService = serviceProvider.GetService<IHotelService>();
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!Settings.OAuthConnections.Any())
@@ -53,49 +49,49 @@ namespace HospitalitySkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(services));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<HospitalitySkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<HospitalitySkillState> StateAccessor { get; }
 
-        protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; set; }
+        protected IStatePropertyAccessor<HospitalityUserSkillState> UserStateAccessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected IHotelService HotelService { get; set; }
+        protected IHotelService HotelService { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions());
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions(), cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -103,27 +99,27 @@ namespace HospitalitySkill.Dialogs
                 // When the token is cached we get a TokenResponse object.
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
-                    return await sc.NextAsync(providerTokenResponse);
+                    return await sc.NextAsync(providerTokenResponse, cancellationToken);
                 }
                 else
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Validators
-        protected Task<bool> TokenResponseValidator(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
+        protected Task<bool> TokenResponseValidatorAsync(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
         {
             var activity = pc.Recognized.Value;
             if (activity != null && activity.Type == ActivityTypes.Event)
@@ -136,7 +132,7 @@ namespace HospitalitySkill.Dialogs
             }
         }
 
-        protected Task<bool> AuthPromptValidator(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
+        protected Task<bool> AuthPromptValidatorAsync(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
         {
             var token = promptContext.Recognized.Value;
             if (token != null)
@@ -150,51 +146,51 @@ namespace HospitalitySkill.Dialogs
         }
 
         // Helpers
-        protected async Task GetLuisResult(DialogContext dc)
+        protected async Task GetLuisResultAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                var state = await StateAccessor.GetAsync(dc.Context, () => new HospitalitySkillState());
+                var state = await StateAccessor.GetAsync(dc.Context, () => new HospitalitySkillState(), cancellationToken);
                 state.LuisResult = dc.Context.TurnState.Get<HospitalityLuis>(StateProperties.SkillLuisResult);
             }
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage), cancellationToken);
 
             // clear state
-            var state = await StateAccessor.GetAsync(sc.Context);
+            var state = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
             state.Clear();
         }
 
-        protected async Task<DialogTurnResult> HasCheckedOut(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> HasCheckedOutAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             // if user has already checked out shouldn't be able to do anything else
             if (userState.CheckedOut)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.HasCheckedOut));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.HasCheckedOut), cancellationToken);
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<ActionResult> CreateSuccessActionResult(ITurnContext context)
+        protected async Task<ActionResult> CreateSuccessActionResultAsync(ITurnContext context, CancellationToken cancellationToken)
         {
-            var state = await StateAccessor.GetAsync(context, () => new HospitalitySkillState());
+            var state = await StateAccessor.GetAsync(context, () => new HospitalitySkillState(), cancellationToken);
             if (state.IsAction)
             {
                 return new ActionResult(true);
