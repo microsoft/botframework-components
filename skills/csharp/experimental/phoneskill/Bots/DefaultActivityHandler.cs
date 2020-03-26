@@ -44,9 +44,9 @@ namespace PhoneSkill.Bots
             await _userState.SaveChangesAsync(turnContext, false, cancellationToken);
         }
 
-        protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
+        protected override Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
         protected override Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)

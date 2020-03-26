@@ -18,11 +18,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhoneSkill.Adapters;
-using PhoneSkill.Authentication;
 using PhoneSkill.Bots;
 using PhoneSkill.Dialogs;
 using PhoneSkill.Services;
 using PhoneSkill.Utilities;
+using SkillServiceLibrary.Utilities;
 
 namespace PhoneSkill
 {
