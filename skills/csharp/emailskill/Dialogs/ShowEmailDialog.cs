@@ -481,7 +481,7 @@ namespace EmailSkill.Dialogs
             {
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
                 var options = sc.Options as EmailSkillDialogOptions;
-                if (options != null && options.IsAction)
+                if (state.IsAction)
                 {
                     sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
                     var serivce = ServiceManager.InitMailService(token as string, state.GetUserTimeZone(), state.MailSourceType);

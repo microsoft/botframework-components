@@ -99,9 +99,11 @@ namespace CalendarSkill.Test.Flow.Fakes
             });
         }
 
-        public async Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0)
+        public async Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom = null, string building = null, int floorNumber = 0)
         {
-            return meetingRooms.FindAll(room => (room.Building == query || room.DisplayName == query) && (floorNumber == 0 || room.FloorNumber == floorNumber));
+            return meetingRooms.FindAll(room => (string.IsNullOrEmpty(building) || room.Building == building)
+            && (string.IsNullOrEmpty(meetingRoom) || room.DisplayName == meetingRoom)
+            && (floorNumber == 0 || room.FloorNumber == floorNumber));
         }
     }
 }

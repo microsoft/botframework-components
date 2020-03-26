@@ -219,7 +219,7 @@ namespace PhoneSkill.Tests.TestDouble
             GerardoSanchez,
         };
 
-        public Task<IList<ContactCandidate>> GetContacts()
+        public Task<IList<ContactCandidate>> GetContactsAsync()
         {
             return Task.FromResult<IList<ContactCandidate>>(contacts);
         }

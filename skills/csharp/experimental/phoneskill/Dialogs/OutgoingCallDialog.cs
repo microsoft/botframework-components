@@ -28,29 +28,22 @@ namespace PhoneSkill.Dialogs
         private ContactFilter contactFilter;
 
         public OutgoingCallDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(OutgoingCallDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(OutgoingCallDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var outgoingCall = new List<WaterfallStep>
             {
-                GetAuthToken,
-                AfterGetAuthToken,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
             };
 
             var outgoingCallNoAuth = new List<WaterfallStep>
             {
-                PromptForRecipient,
-                AskToSelectContact,
-                ConfirmChangeOfPhoneNumberType,
-                AskToSelectPhoneNumber,
-                ExecuteCall,
+                PromptForRecipientAsync,
+                AskToSelectContactAsync,
+                ConfirmChangeOfPhoneNumberTypeAsync,
+                AskToSelectPhoneNumberAsync,
+                ExecuteCallAsync,
             };
 
             foreach (var step in outgoingCallNoAuth)
@@ -61,19 +54,19 @@ namespace PhoneSkill.Dialogs
             AddDialog(new WaterfallDialog(nameof(OutgoingCallDialog), outgoingCall));
             AddDialog(new WaterfallDialog(DialogIds.OutgoingCallNoAuth, outgoingCallNoAuth));
 
-            AddDialog(new TextPrompt(DialogIds.RecipientPrompt, ValidateRecipient));
+            AddDialog(new TextPrompt(DialogIds.RecipientPrompt, ValidateRecipientAsync));
 
-            AddDialog(new ChoicePrompt(DialogIds.ContactSelection, ValidateContactChoice)
+            AddDialog(new ChoicePrompt(DialogIds.ContactSelection, ValidateContactChoiceAsync)
             {
                 Style = ListStyle.List,
             });
 
-            AddDialog(new ConfirmPrompt(DialogIds.PhoneNumberTypeConfirmation, ValidatePhoneNumberTypeConfirmation)
+            AddDialog(new ConfirmPrompt(DialogIds.PhoneNumberTypeConfirmation, ValidatePhoneNumberTypeConfirmationAsync)
             {
                 Style = ListStyle.None,
             });
 
-            AddDialog(new ChoicePrompt(DialogIds.PhoneNumberSelection, ValidatePhoneNumberChoice)
+            AddDialog(new ChoicePrompt(DialogIds.PhoneNumberSelection, ValidatePhoneNumberChoiceAsync)
             {
                 Style = ListStyle.List,
             });
@@ -83,95 +76,95 @@ namespace PhoneSkill.Dialogs
             contactFilter = new ContactFilter();
         }
 
-        public async Task OnCancel(DialogContext dialogContext)
+        public async Task OnCancelAsync(DialogContext dialogContext, CancellationToken cancellationToken)
         {
-            var state = await PhoneStateAccessor.GetAsync(dialogContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(dialogContext.Context, cancellationToken: cancellationToken);
             state.ClearExceptAuth();
         }
 
-        public async Task OnLogout(DialogContext dialogContext)
+        public async Task OnLogoutAsync(DialogContext dialogContext, CancellationToken cancellationToken)
         {
-            var state = await PhoneStateAccessor.GetAsync(dialogContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(dialogContext.Context, cancellationToken: cancellationToken);
 
             // When the user logs out, remove the login token and all their personal data from the state.
             state.Clear();
         }
 
-        private async Task<DialogTurnResult> PromptForRecipient(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> PromptForRecipientAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
+                var state = await PhoneStateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
                 var contactProvider = GetContactProvider(state);
-                await contactFilter.Filter(state, contactProvider);
+                await contactFilter.FilterAsync(state, contactProvider);
 
-                var hasRecipient = await CheckRecipientAndExplainFailureToUser(stepContext.Context, state);
+                var hasRecipient = await CheckRecipientAndExplainFailureToUserAsync(stepContext.Context, state, cancellationToken);
                 if (hasRecipient)
                 {
-                    return await stepContext.NextAsync();
+                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var prompt = TemplateManager.GenerateActivity(OutgoingCallResponses.RecipientPrompt);
-                return await stepContext.PromptAsync(DialogIds.RecipientPrompt, new PromptOptions { Prompt = prompt });
+                return await stepContext.PromptAsync(DialogIds.RecipientPrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(stepContext, ex);
+                await HandleDialogExceptionsAsync(stepContext, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<bool> ValidateRecipient(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateRecipientAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             var phoneResult = promptContext.Context.TurnState.Get<PhoneLuis>(StateProperties.PhoneLuisResultKey);
             contactFilter.OverrideEntities(state, phoneResult);
 
             var contactProvider = GetContactProvider(state);
-            await contactFilter.Filter(state, contactProvider);
+            await contactFilter.FilterAsync(state, contactProvider);
 
-            return await CheckRecipientAndExplainFailureToUser(promptContext.Context, state);
+            return await CheckRecipientAndExplainFailureToUserAsync(promptContext.Context, state, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> AskToSelectContact(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskToSelectContactAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
-                await contactFilter.Filter(state, contactProvider: null);
+                var state = await PhoneStateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
+                await contactFilter.FilterAsync(state, contactProvider: null);
 
                 if (contactFilter.IsContactDisambiguated(state))
                 {
-                    return await stepContext.NextAsync();
+                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var options = new PromptOptions();
                 UpdateContactSelectionPromptOptions(options, state);
 
-                return await stepContext.PromptAsync(DialogIds.ContactSelection, options);
+                return await stepContext.PromptAsync(DialogIds.ContactSelection, options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(stepContext, ex);
+                await HandleDialogExceptionsAsync(stepContext, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<bool> ValidateContactChoice(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateContactChoiceAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             if (contactFilter.IsContactDisambiguated(state))
             {
                 return true;
             }
 
-            var contactSelectionResult = await RunLuis<ContactSelectionLuis>(promptContext.Context, "contactSelection");
+            var contactSelectionResult = await RunLuisAsync<ContactSelectionLuis>(promptContext.Context, "contactSelection", cancellationToken);
             contactFilter.OverrideEntities(state, contactSelectionResult);
-            var (isFiltered, _) = await contactFilter.Filter(state, contactProvider: null);
+            var (isFiltered, _) = await contactFilter.FilterAsync(state, contactProvider: null);
             if (contactFilter.IsContactDisambiguated(state))
             {
                 return true;
@@ -192,18 +185,18 @@ namespace PhoneSkill.Dialogs
             return contactFilter.IsContactDisambiguated(state);
         }
 
-        private async Task<DialogTurnResult> ConfirmChangeOfPhoneNumberType(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ConfirmChangeOfPhoneNumberTypeAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
-                var (isFiltered, hasPhoneNumberOfRequestedType) = await contactFilter.Filter(state, contactProvider: null);
+                var state = await PhoneStateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
+                var (isFiltered, hasPhoneNumberOfRequestedType) = await contactFilter.FilterAsync(state, contactProvider: null);
 
                 if (hasPhoneNumberOfRequestedType
                     || !state.ContactResult.Matches.Any()
                     || !state.ContactResult.RequestedPhoneNumberType.Any())
                 {
-                    return await stepContext.NextAsync();
+                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var notFoundTokens = new Dictionary<string, object>()
@@ -212,11 +205,11 @@ namespace PhoneSkill.Dialogs
                     { "phoneNumberType", GetSpeakablePhoneNumberType(state.ContactResult.RequestedPhoneNumberType) },
                 };
                 var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactHasNoPhoneNumberOfRequestedType, notFoundTokens);
-                await stepContext.Context.SendActivityAsync(response);
+                await stepContext.Context.SendActivityAsync(response, cancellationToken);
 
                 if (state.ContactResult.Matches[0].PhoneNumbers.Count != 1)
                 {
-                    return await stepContext.NextAsync();
+                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var confirmationTokens = new Dictionary<string, object>()
@@ -225,17 +218,17 @@ namespace PhoneSkill.Dialogs
                 };
                 var options = new PromptOptions();
                 options.Prompt = TemplateManager.GenerateActivity(OutgoingCallResponses.ConfirmAlternativePhoneNumberType, confirmationTokens);
-                return await stepContext.PromptAsync(DialogIds.PhoneNumberTypeConfirmation, options);
+                return await stepContext.PromptAsync(DialogIds.PhoneNumberTypeConfirmation, options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(stepContext, ex);
+                await HandleDialogExceptionsAsync(stepContext, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<bool> ValidatePhoneNumberTypeConfirmation(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidatePhoneNumberTypeConfirmationAsync(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
             if (!promptContext.Recognized.Succeeded)
             {
@@ -243,7 +236,7 @@ namespace PhoneSkill.Dialogs
                 return false;
             }
 
-            var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             if (promptContext.Recognized.Value)
             {
                 // The user said yes.
@@ -260,50 +253,50 @@ namespace PhoneSkill.Dialogs
             return true;
         }
 
-        private async Task<DialogTurnResult> AskToSelectPhoneNumber(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskToSelectPhoneNumberAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
+                var state = await PhoneStateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
                 // If the user said 'no' to the PhoneNumberTypeConfirmation prompt,
                 // then the state would have been cleared and we need to restart the whole dialog.
                 if (!contactFilter.HasRecipient(state))
                 {
-                    return await stepContext.ReplaceDialogAsync(DialogIds.OutgoingCallNoAuth);
+                    return await stepContext.ReplaceDialogAsync(DialogIds.OutgoingCallNoAuth, cancellationToken: cancellationToken);
                 }
 
-                await contactFilter.Filter(state, contactProvider: null);
+                await contactFilter.FilterAsync(state, contactProvider: null);
 
                 if (contactFilter.IsPhoneNumberDisambiguated(state))
                 {
-                    return await stepContext.NextAsync();
+                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var options = new PromptOptions();
                 UpdatePhoneNumberSelectionPromptOptions(options, state);
 
-                return await stepContext.PromptAsync(DialogIds.PhoneNumberSelection, options);
+                return await stepContext.PromptAsync(DialogIds.PhoneNumberSelection, options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(stepContext, ex);
+                await HandleDialogExceptionsAsync(stepContext, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<bool> ValidatePhoneNumberChoice(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidatePhoneNumberChoiceAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await PhoneStateAccessor.GetAsync(promptContext.Context);
+            var state = await PhoneStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             if (contactFilter.IsPhoneNumberDisambiguated(state))
             {
                 return true;
             }
 
-            var phoneNumberSelectionResult = await RunLuis<PhoneNumberSelectionLuis>(promptContext.Context, "phoneNumberSelection");
+            var phoneNumberSelectionResult = await RunLuisAsync<PhoneNumberSelectionLuis>(promptContext.Context, "phoneNumberSelection", cancellationToken);
             contactFilter.OverrideEntities(state, phoneNumberSelectionResult);
-            var (isFiltered, _) = await contactFilter.Filter(state, contactProvider: null);
+            var (isFiltered, _) = await contactFilter.FilterAsync(state, contactProvider: null);
             if (contactFilter.IsPhoneNumberDisambiguated(state))
             {
                 return true;
@@ -325,12 +318,12 @@ namespace PhoneSkill.Dialogs
             return contactFilter.IsPhoneNumberDisambiguated(state);
         }
 
-        private async Task<DialogTurnResult> ExecuteCall(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ExecuteCallAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await PhoneStateAccessor.GetAsync(stepContext.Context);
-                await contactFilter.Filter(state, contactProvider: null);
+                var state = await PhoneStateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
+                await contactFilter.FilterAsync(state, contactProvider: null);
 
                 var templateId = OutgoingCallResponses.ExecuteCall;
                 var tokens = new Dictionary<string, object>();
@@ -357,9 +350,9 @@ namespace PhoneSkill.Dialogs
                 }
 
                 var response = TemplateManager.GenerateActivity(templateId, tokens);
-                await stepContext.Context.SendActivityAsync(response);
+                await stepContext.Context.SendActivityAsync(response, cancellationToken);
 
-                await SendEvent(stepContext, outgoingCall);
+                await SendEventAsync(stepContext, outgoingCall, cancellationToken);
 
                 ActionResult actionResult = null;
                 if (state.IsAction)
@@ -368,11 +361,11 @@ namespace PhoneSkill.Dialogs
                 }
 
                 state.Clear();
-                return await stepContext.EndDialogAsync(actionResult);
+                return await stepContext.EndDialogAsync(actionResult, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(stepContext, ex);
+                await HandleDialogExceptionsAsync(stepContext, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
@@ -389,7 +382,7 @@ namespace PhoneSkill.Dialogs
             return ServiceManager.GetContactProvider(state.Token, state.SourceOfContacts.Value);
         }
 
-        private async Task<bool> CheckRecipientAndExplainFailureToUser(ITurnContext context, PhoneSkillState state)
+        private async Task<bool> CheckRecipientAndExplainFailureToUserAsync(ITurnContext context, PhoneSkillState state, CancellationToken cancellationToken)
         {
             if (contactFilter.HasRecipient(state))
             {
@@ -407,7 +400,7 @@ namespace PhoneSkill.Dialogs
                         { "contact", contactsWithNoPhoneNumber[0].Name },
                     };
                     var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactHasNoPhoneNumber, tokens);
-                    await context.SendActivityAsync(response);
+                    await context.SendActivityAsync(response, cancellationToken);
                 }
                 else
                 {
@@ -416,7 +409,7 @@ namespace PhoneSkill.Dialogs
                         { "contactName", state.ContactResult.SearchQuery },
                     };
                     var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactsHaveNoPhoneNumber, tokens);
-                    await context.SendActivityAsync(response);
+                    await context.SendActivityAsync(response, cancellationToken);
                 }
 
                 state.ContactResult.SearchQuery = string.Empty;
@@ -430,7 +423,7 @@ namespace PhoneSkill.Dialogs
                     { "contactName", state.ContactResult.SearchQuery },
                 };
                 var response = TemplateManager.GenerateActivity(OutgoingCallResponses.ContactNotFound, tokens);
-                await context.SendActivityAsync(response);
+                await context.SendActivityAsync(response, cancellationToken);
             }
 
             return false;
@@ -542,7 +535,7 @@ namespace PhoneSkill.Dialogs
         /// <param name="stepContext">The WaterfallStepContext.</param>
         /// <param name="outgoingCall">The phone call to make.</param>
         /// <returns>A Task.</returns>
-        private async Task SendEvent(WaterfallStepContext stepContext, OutgoingCall outgoingCall)
+        private async Task SendEventAsync(WaterfallStepContext stepContext, OutgoingCall outgoingCall, CancellationToken cancellationToken)
         {
             var actionEvent = stepContext.Context.Activity.CreateReply();
             actionEvent.Type = ActivityTypes.Event;
@@ -550,10 +543,10 @@ namespace PhoneSkill.Dialogs
             actionEvent.Name = "PhoneSkill.OutgoingCall";
             actionEvent.Value = outgoingCall;
 
-            await stepContext.Context.SendActivityAsync(actionEvent);
+            await stepContext.Context.SendActivityAsync(actionEvent, cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string OutgoingCallNoAuth = "OutgoingCallNoAuth";
             public const string RecipientPrompt = "RecipientPrompt";

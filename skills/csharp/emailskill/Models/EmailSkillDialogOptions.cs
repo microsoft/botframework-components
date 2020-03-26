@@ -6,7 +6,5 @@ namespace EmailSkill.Models
     public class EmailSkillDialogOptions
     {
         public bool SubFlowMode { get; set; } = false;
-
-        public bool IsAction { get; set; } = false;
     }
 }

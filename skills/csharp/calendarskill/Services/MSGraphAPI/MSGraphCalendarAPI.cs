@@ -174,6 +174,7 @@ namespace CalendarSkill.Services.MSGraphAPI
                     if (page.AvailabilityView == null)
                     {
                         availability.Add(false);
+                        continue;
                     }
 
                     // AvailabilityViem is empty, should not get into this state.

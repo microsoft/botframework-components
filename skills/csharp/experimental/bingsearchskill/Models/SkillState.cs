@@ -20,7 +20,7 @@ namespace BingSearchSkill.Models
 
         public SearchResultModel.EntityType SearchEntityType { get; set; }
 
-        public bool NewConversation { get; set; } = true;
+        public bool IsAction { get; set; } = false;
 
         public void Clear()
         {
