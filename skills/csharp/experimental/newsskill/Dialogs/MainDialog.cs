@@ -90,10 +90,10 @@ namespace NewsSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -121,10 +121,10 @@ namespace NewsSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -132,9 +132,9 @@ namespace NewsSkill.Dialogs
         }
 
         // Runs on every turn of the conversation to check if the conversation should be interrupted.
-        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -151,8 +151,16 @@ namespace NewsSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CANCELLED));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new NewsSkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
                                 break;
                             }
 
@@ -160,7 +168,7 @@ namespace NewsSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _templateManager));
                                 await innerDc.RepromptDialogAsync();
-                                interrupted = true;
+                                interrupted = EndOfTurn;
                                 break;
                             }
                     }
@@ -203,6 +211,7 @@ namespace NewsSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
+            state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -269,7 +278,8 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
                             }
 
                         case "GetFavoriteTopics":
@@ -283,7 +293,8 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), new NewsSkillOptionBase() { IsAction = true });
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
                             }
 
                         case "FindArticles":
@@ -297,7 +308,8 @@ namespace NewsSkill.Dialogs
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), new NewsSkillOptionBase() { IsAction = true });
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
                             }
 
                         default:

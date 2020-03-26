@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace BingSearchSkill.Models.Actions
 {
-    public class KeywordSearchRequest
+    public class KeywordSearchInfo
     {
         [JsonProperty("keyword")]
         public string Keyword { get; set; }

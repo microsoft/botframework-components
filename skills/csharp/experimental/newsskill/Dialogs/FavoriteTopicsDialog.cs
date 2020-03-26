@@ -90,8 +90,8 @@ namespace NewsSkill.Dialogs
             var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
             await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, templateManager, articles, true));
 
-            var skillOptions = sc.Options as NewsSkillOptionBase;
-            if (skillOptions != null && skillOptions.IsAction)
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            if (state.IsAction)
             {
                 return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
             }

@@ -23,21 +23,19 @@ namespace HospitalitySkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotServices _services;
-        private IHotelService _hotelService;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
-        private IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
+        private readonly BotServices _services;
+        private readonly IHotelService _hotelService;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<HospitalitySkillState> _stateAccessor;
+        private readonly IStatePropertyAccessor<HospitalityUserSkillState> _userStateAccessor;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
             _hotelService = serviceProvider.GetService<IHotelService>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -142,11 +140,11 @@ namespace HospitalitySkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -159,8 +157,8 @@ namespace HospitalitySkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -168,13 +166,13 @@ namespace HospitalitySkill.Dialogs
                         case GeneralLuis.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new HospitalitySkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -197,27 +195,23 @@ namespace HospitalitySkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
-            {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
-                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
-                        MainResponses.WelcomeMessage : MainResponses.FirstPromptMessage)
-                };
 
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
-            }
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
+            {
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.FirstPromptMessage)
+            };
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             // Reset before all dialogs
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState(), cancellationToken);
             state.IsAction = false;
 
             var activity = stepContext.Context.Activity;
@@ -240,51 +234,51 @@ namespace HospitalitySkill.Dialogs
                         case HospitalityLuis.Intent.CheckOut:
                             {
                                 // handle checking out
-                                return await stepContext.BeginDialogAsync(nameof(CheckOutDialog));
+                                return await stepContext.BeginDialogAsync(nameof(CheckOutDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.ExtendStay:
                             {
                                 // extend reservation dates
-                                return await stepContext.BeginDialogAsync(nameof(ExtendStayDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ExtendStayDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.LateCheckOut:
                             {
                                 // set a late check out time
-                                return await stepContext.BeginDialogAsync(nameof(LateCheckOutDialog));
+                                return await stepContext.BeginDialogAsync(nameof(LateCheckOutDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.GetReservationDetails:
                             {
                                 // show reservation details card
-                                return await stepContext.BeginDialogAsync(nameof(GetReservationDialog));
+                                return await stepContext.BeginDialogAsync(nameof(GetReservationDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.RequestItem:
                             {
                                 // requesting item for room
-                                return await stepContext.BeginDialogAsync(nameof(RequestItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(RequestItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.RoomService:
                             {
                                 // ordering room service
-                                return await stepContext.BeginDialogAsync(nameof(RoomServiceDialog));
+                                return await stepContext.BeginDialogAsync(nameof(RoomServiceDialog), cancellationToken: cancellationToken);
                             }
 
                         case HospitalityLuis.Intent.None:
                             {
                                 // No intent was identified, send confused message
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage));
-                                return await stepContext.NextAsync();
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage), cancellationToken);
+                                return await stepContext.NextAsync(cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
-                                return await stepContext.NextAsync();
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
+                                return await stepContext.NextAsync(cancellationToken: cancellationToken);
                             }
                     }
                 }
@@ -333,25 +327,25 @@ namespace HospitalitySkill.Dialogs
 
                         default:
                             {
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
                 }
                 else
                 {
-                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."));
+                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: "An event with no name was received but not processed."), cancellationToken);
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState(), cancellationToken);
 
             if (stepContext.Context.IsSkill())
             {
@@ -372,23 +366,22 @@ namespace HospitalitySkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
-            IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
             if (supported)
             {
-                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
+                var tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -399,7 +392,7 @@ namespace HospitalitySkill.Dialogs
         private async Task<DialogTurnResult> ProcessAction<T>(string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
             where T : IActionInput
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new HospitalitySkillState(), cancellationToken);
             state.IsAction = true;
 
             var ev = stepContext.Context.Activity.AsEventActivity();

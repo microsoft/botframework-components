@@ -19,9 +19,10 @@ namespace HospitalitySkill.Tests.Flow
             await this.GetTestFlow()
                 .Send(StartActivity)
                 .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .Send(GeneralTestUtterances.Help)
                 .AssertReply(AssertContains(MainResponses.HelpMessage))
-                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .StartTestAsync();
         }
 
@@ -31,6 +32,7 @@ namespace HospitalitySkill.Tests.Flow
             await this.GetTestFlow()
                 .Send(StartActivity)
                 .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(MainResponses.CancelMessage))
                 .AssertReply(AssertContains(MainResponses.FirstPromptMessage))

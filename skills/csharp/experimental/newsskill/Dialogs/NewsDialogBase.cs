@@ -127,9 +127,9 @@ namespace NewsSkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        protected NewsResult GenerateNewsActionResult(IList<NewsArticle> articles, bool actionSuccess)
+        protected ActionResult GenerateNewsActionResult(IList<NewsArticle> articles, bool actionSuccess)
         {
-            var actionResult = new NewsResult()
+            var actionResult = new ActionResult()
             {
                 NewsList = new List<NewsInfo>(),
                 ActionSuccess = actionSuccess
@@ -152,9 +152,9 @@ namespace NewsSkill.Dialogs
             return actionResult;
         }
 
-        protected NewsResult GenerateNewsActionResult(IList<NewsTopic> articles, bool actionSuccess)
+        protected ActionResult GenerateNewsActionResult(IList<NewsTopic> articles, bool actionSuccess)
         {
-            var actionResult = new NewsResult()
+            var actionResult = new ActionResult()
             {
                 NewsList = new List<NewsInfo>(),
                 ActionSuccess = actionSuccess
