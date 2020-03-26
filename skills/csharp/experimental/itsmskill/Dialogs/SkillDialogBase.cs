@@ -55,67 +55,67 @@ namespace ITSMSkill.Dialogs
 
             var setSearch = new WaterfallStep[]
             {
-                CheckSearch,
-                InputSearch,
-                SetTitle
+                CheckSearchAsync,
+                InputSearchAsync,
+                SetTitleAsync
             };
 
             var setTitle = new WaterfallStep[]
             {
-                CheckTitle,
-                InputTitle,
-                SetTitle
+                CheckTitleAsync,
+                InputTitleAsync,
+                SetTitleAsync
             };
 
             var setDescription = new WaterfallStep[]
             {
-                CheckDescription,
-                InputDescription,
-                SetDescription
+                CheckDescriptionAsync,
+                InputDescriptionAsync,
+                SetDescriptionAsync
             };
 
             var setUrgency = new WaterfallStep[]
             {
-                CheckUrgency,
-                InputUrgency,
-                SetUrgency
+                CheckUrgencyAsync,
+                InputUrgencyAsync,
+                SetUrgencyAsync
             };
 
             var setId = new WaterfallStep[]
             {
-                CheckId,
-                InputId,
-                SetId
+                CheckIdAsync,
+                InputIdAsync,
+                SetIdAsync
             };
 
             var setState = new WaterfallStep[]
             {
-                CheckState,
-                InputState,
-                SetState
+                CheckStateAsync,
+                InputStateAsync,
+                SetStateAsync
             };
 
             // TODO since number is ServiceNow specific regex, no need to check
             var setNumber = new WaterfallStep[]
             {
-                InputTicketNumber,
-                SetTicketNumber,
+                InputTicketNumberAsync,
+                SetTicketNumberAsync,
             };
 
             var setNumberThenId = new WaterfallStep[]
             {
-                InputTicketNumber,
-                SetTicketNumber,
-                GetAuthToken,
-                AfterGetAuthToken,
-                SetIdFromNumber,
+                InputTicketNumberAsync,
+                SetTicketNumberAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                SetIdFromNumberAsync,
             };
 
             var baseAuth = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                BeginInitialDialog
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                BeginInitialDialogAsync
             };
 
             var navigateYesNo = new HashSet<GeneralLuis.Intent>()
@@ -192,65 +192,65 @@ namespace ITSMSkill.Dialogs
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions());
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions(), cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await StateAccessor.GetAsync(sc.Context);
+                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
                 // When the user authenticates interactively we pass on the tokens/Response event which surfaces as a JObject
                 // When the token is cached we get a TokenResponse object.
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
-                    return await sc.NextAsync(providerTokenResponse.TokenResponse);
+                    return await sc.NextAsync(providerTokenResponse.TokenResponse, cancellationToken);
                 }
                 else
                 {
-                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.AuthFailed));
-                    return await sc.CancelAllDialogsAsync();
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.AuthFailed), cancellationToken);
+                    return await sc.CancelAllDialogsAsync(cancellationToken);
                 }
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> BeginInitialDialog(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> BeginInitialDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(InitialDialogId);
+            return await sc.ReplaceDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckId(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.Id))
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -264,13 +264,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmId, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputId(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || string.IsNullOrEmpty(state.Id))
             {
                 var options = new PromptOptions()
@@ -278,27 +278,27 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputId)
                 };
 
-                return await sc.PromptAsync(nameof(TextPrompt), options);
+                return await sc.PromptAsync(nameof(TextPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.Id);
+                return await sc.NextAsync(state.Id, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetId(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.Id = (string)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (state.AttributeType == AttributeType.None)
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -312,13 +312,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(ConfirmAttributeResponse, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || state.AttributeType == AttributeType.None)
             {
                 var options = new PromptOptions()
@@ -326,65 +326,65 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(InputAttributeResponse)
                 };
 
-                return await sc.PromptAsync(InputAttributePrompt, options);
+                return await sc.PromptAsync(InputAttributePrompt, options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.AttributeType);
+                return await sc.NextAsync(state.AttributeType, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (sc.Result == null)
             {
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.AttributeType = (AttributeType)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> UpdateSelectedAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> UpdateSelectedAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             var attribute = state.AttributeType;
             state.AttributeType = AttributeType.None;
             if (attribute == AttributeType.Description)
             {
                 state.TicketDescription = null;
-                return await sc.BeginDialogAsync(Actions.SetDescription);
+                return await sc.BeginDialogAsync(Actions.SetDescription, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.Title)
             {
                 state.TicketTitle = null;
-                return await sc.BeginDialogAsync(Actions.SetTitle);
+                return await sc.BeginDialogAsync(Actions.SetTitle, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.Search)
             {
                 state.TicketTitle = null;
-                return await sc.BeginDialogAsync(Actions.SetSearch);
+                return await sc.BeginDialogAsync(Actions.SetSearch, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.Urgency)
             {
                 state.UrgencyLevel = UrgencyLevel.None;
-                return await sc.BeginDialogAsync(Actions.SetUrgency);
+                return await sc.BeginDialogAsync(Actions.SetUrgency, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.Id)
             {
                 state.Id = null;
-                return await sc.BeginDialogAsync(Actions.SetId);
+                return await sc.BeginDialogAsync(Actions.SetId, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.State)
             {
                 state.TicketState = TicketState.None;
-                return await sc.BeginDialogAsync(Actions.SetState);
+                return await sc.BeginDialogAsync(Actions.SetState, cancellationToken: cancellationToken);
             }
             else if (attribute == AttributeType.Number)
             {
                 state.TicketNumber = null;
-                return await sc.BeginDialogAsync(Actions.SetNumber);
+                return await sc.BeginDialogAsync(Actions.SetNumber, cancellationToken: cancellationToken);
             }
             else
             {
@@ -393,12 +393,12 @@ namespace ITSMSkill.Dialogs
         }
 
         // Actually Title
-        protected async Task<DialogTurnResult> CheckSearch(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckSearchAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.TicketTitle))
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -412,13 +412,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmSearch, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputSearch(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputSearchAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || string.IsNullOrEmpty(state.TicketTitle))
             {
                 var options = new PromptOptions()
@@ -426,20 +426,20 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputSearch)
                 };
 
-                return await sc.PromptAsync(nameof(TextPrompt), options);
+                return await sc.PromptAsync(nameof(TextPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.TicketTitle);
+                return await sc.NextAsync(state.TicketTitle, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> CheckTitle(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckTitleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.TicketTitle))
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -453,13 +453,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmTitle, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputTitle(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputTitleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || string.IsNullOrEmpty(state.TicketTitle))
             {
                 var options = new PromptOptions()
@@ -467,34 +467,34 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputTitle)
                 };
 
-                return await sc.PromptAsync(nameof(TextPrompt), options);
+                return await sc.PromptAsync(nameof(TextPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.TicketTitle);
+                return await sc.NextAsync(state.TicketTitle, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetTitle(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetTitleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.TicketTitle = (string)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckDescriptionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             // TODO in CreateTicketDialog, after display knowledge loop
             // Since we use EndDialogAsync to pass result, it needs to end here explicitly
             if (sc.Result is EndFlowResult endFlow)
             {
-                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
+                return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, endFlow.Result, cancellationToken), cancellationToken);
             }
 
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.TicketDescription))
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -508,13 +508,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmDescription, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputDescriptionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || string.IsNullOrEmpty(state.TicketDescription))
             {
                 var options = new PromptOptions()
@@ -522,27 +522,27 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputDescription)
                 };
 
-                return await sc.PromptAsync(nameof(TextPrompt), options);
+                return await sc.PromptAsync(nameof(TextPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.TicketDescription);
+                return await sc.NextAsync(state.TicketDescription, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetDescription(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetDescriptionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.TicketDescription = (string)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckReason(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckReasonAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.CloseReason))
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -556,13 +556,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmReason, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputReason(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputReasonAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || string.IsNullOrEmpty(state.CloseReason))
             {
                 var options = new PromptOptions()
@@ -570,24 +570,24 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputReason)
                 };
 
-                return await sc.PromptAsync(nameof(TextPrompt), options);
+                return await sc.PromptAsync(nameof(TextPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.CloseReason);
+                return await sc.NextAsync(state.CloseReason, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetReason(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetReasonAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.CloseReason = (string)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> InputTicketNumber(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputTicketNumberAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (string.IsNullOrEmpty(state.TicketNumber))
             {
                 var options = new PromptOptions()
@@ -595,42 +595,42 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.InputTicketNumber)
                 };
 
-                return await sc.PromptAsync(nameof(TicketNumberPrompt), options);
+                return await sc.PromptAsync(nameof(TicketNumberPrompt), options, cancellationToken);
             }
             else
             {
-                return await sc.NextAsync(state.TicketNumber);
+                return await sc.NextAsync(state.TicketNumber, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetTicketNumber(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetTicketNumberAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.TicketNumber = (string)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> SetIdFromNumber(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetIdFromNumberAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             var management = ServiceManager.CreateManagement(Settings, sc.Result as TokenResponse, state.ServiceCache);
             var result = await management.SearchTicket(0, number: state.TicketNumber);
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             if (result.Tickets == null || result.Tickets.Length == 0)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketFindNone));
-                return await sc.CancelAllDialogsAsync();
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketFindNone), cancellationToken);
+                return await sc.CancelAllDialogsAsync(cancellationToken);
             }
 
             if (result.Tickets.Length >= 2)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketDuplicateNumber));
-                return await sc.CancelAllDialogsAsync();
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketDuplicateNumber), cancellationToken);
+                return await sc.CancelAllDialogsAsync(cancellationToken);
             }
 
             state.TicketTarget = result.Tickets[0];
@@ -638,21 +638,21 @@ namespace ITSMSkill.Dialogs
 
             var card = GetTicketCard(sc.Context, state.TicketTarget, false);
 
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null));
-            return await sc.NextAsync();
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null), cancellationToken);
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> BeginSetNumberThenId(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> BeginSetNumberThenIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.BeginDialogAsync(Actions.SetNumberThenId);
+            return await sc.BeginDialogAsync(Actions.SetNumberThenId, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckUrgency(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckUrgencyAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (state.UrgencyLevel == UrgencyLevel.None)
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -666,13 +666,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmUrgency, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputUrgency(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputUrgencyAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || state.UrgencyLevel == UrgencyLevel.None)
             {
                 var options = new PromptOptions()
@@ -695,31 +695,33 @@ namespace ITSMSkill.Dialogs
                     }
                 };
 
-                return await sc.PromptAsync(nameof(ChoicePrompt), options);
+                return await sc.PromptAsync(nameof(ChoicePrompt), options, cancellationToken);
             }
             else
             {
                 // use Index to skip localization
-                return await sc.NextAsync(new FoundChoice()
-                {
-                    Index = (int)state.UrgencyLevel - 1
-                });
+                return await sc.NextAsync(
+                    new FoundChoice()
+                    {
+                        Index = (int)state.UrgencyLevel - 1,
+                    },
+                    cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetUrgency(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetUrgencyAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.UrgencyLevel = (UrgencyLevel)(((FoundChoice)sc.Result).Index + 1);
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CheckState(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckStateAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (state.TicketState == TicketState.None)
             {
-                return await sc.NextAsync(false);
+                return await sc.NextAsync(false, cancellationToken);
             }
             else
             {
@@ -733,13 +735,13 @@ namespace ITSMSkill.Dialogs
                     Prompt = TemplateManager.GenerateActivity(SharedResponses.ConfirmState, replacements)
                 };
 
-                return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+                return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> InputState(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InputStateAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             if (!(bool)sc.Result || state.TicketState == TicketState.None)
             {
                 var options = new PromptOptions()
@@ -774,28 +776,30 @@ namespace ITSMSkill.Dialogs
                     }
                 };
 
-                return await sc.PromptAsync(nameof(ChoicePrompt), options);
+                return await sc.PromptAsync(nameof(ChoicePrompt), options, cancellationToken);
             }
             else
             {
                 // use Index to skip localization
-                return await sc.NextAsync(new FoundChoice()
-                {
-                    Index = (int)state.TicketState - 1
-                });
+                return await sc.NextAsync(
+                    new FoundChoice()
+                    {
+                        Index = (int)state.TicketState - 1,
+                    },
+                    cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> SetState(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SetStateAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.TicketState = (TicketState)(((FoundChoice)sc.Result).Index + 1);
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> ShowKnowledge(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowKnowledgeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             bool firstDisplay = false;
             if (state.PageIndex == -1)
@@ -810,7 +814,7 @@ namespace ITSMSkill.Dialogs
 
             if (!countResult.Success)
             {
-                return await SendServiceErrorAndCancel(sc, countResult);
+                return await SendServiceErrorAndCancelAsync(sc, countResult, cancellationToken);
             }
 
             // adjust PageIndex
@@ -822,7 +826,7 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             if (result.Knowledges == null || result.Knowledges.Length == 0)
@@ -831,10 +835,10 @@ namespace ITSMSkill.Dialogs
                 {
                     if (!string.IsNullOrEmpty(ShowKnowledgeNoResponse))
                     {
-                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeNoResponse));
+                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeNoResponse), cancellationToken);
                     }
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -849,7 +853,7 @@ namespace ITSMSkill.Dialogs
                         Prompt = TemplateManager.GenerateActivity(ShowKnowledgeEndResponse, token)
                     };
 
-                    return await sc.PromptAsync(ShowKnowledgePrompt, options);
+                    return await sc.PromptAsync(ShowKnowledgePrompt, options, cancellationToken);
                 }
             }
             else
@@ -858,7 +862,7 @@ namespace ITSMSkill.Dialogs
                 {
                     if (!string.IsNullOrEmpty(ShowKnowledgeHasResponse))
                     {
-                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeHasResponse));
+                        await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(ShowKnowledgeHasResponse), cancellationToken);
                     }
                 }
 
@@ -872,39 +876,39 @@ namespace ITSMSkill.Dialogs
                     });
                 }
 
-                await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards));
+                await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards), cancellationToken);
 
                 var options = new PromptOptions()
                 {
                     Prompt = GetNavigatePrompt(sc.Context, ShowKnowledgeResponse, state.PageIndex, maxPage),
                 };
 
-                return await sc.PromptAsync(ShowKnowledgePrompt, options);
+                return await sc.PromptAsync(ShowKnowledgePrompt, options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> IfKnowledgeHelp(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> IfKnowledgeHelpAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             var intent = (GeneralLuis.Intent)sc.Result;
             if (intent == GeneralLuis.Intent.Confirm)
             {
-                return await sc.EndDialogAsync(new EndFlowResult(true));
+                return await sc.EndDialogAsync(new EndFlowResult(true), cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.Reject)
             {
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.ShowNext)
             {
-                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
                 state.PageIndex += 1;
-                return await sc.ReplaceDialogAsync(KnowledgeHelpLoop);
+                return await sc.ReplaceDialogAsync(KnowledgeHelpLoop, cancellationToken: cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.ShowPrevious)
             {
-                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
                 state.PageIndex = Math.Max(0, state.PageIndex - 1);
-                return await sc.ReplaceDialogAsync(KnowledgeHelpLoop);
+                return await sc.ReplaceDialogAsync(KnowledgeHelpLoop, cancellationToken: cancellationToken);
             }
             else
             {
@@ -913,7 +917,7 @@ namespace ITSMSkill.Dialogs
         }
 
         // Validators
-        protected Task<bool> TokenResponseValidator(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
+        protected Task<bool> TokenResponseValidatorAsync(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
         {
             var activity = pc.Recognized.Value;
             if (activity != null && activity.Type == ActivityTypes.Event)
@@ -926,7 +930,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected Task<bool> AuthPromptValidator(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
+        protected Task<bool> AuthPromptValidatorAsync(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
         {
             var token = promptContext.Recognized.Value;
             if (token != null)
@@ -941,31 +945,31 @@ namespace ITSMSkill.Dialogs
 
         // Helpers
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage), cancellationToken);
 
             // clear state
-            var state = await StateAccessor.GetAsync(sc.Context);
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.ClearLuisResult();
         }
 
-        protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result)
+        protected async Task<DialogTurnResult> SendServiceErrorAndCancelAsync(WaterfallStepContext sc, ResultBase result, CancellationToken cancellationToken)
         {
             var errorReplacements = new Dictionary<string, object>
             {
                 { "Error", result.ErrorMessage }
             };
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed, errorReplacements));
-            return await sc.CancelAllDialogsAsync();
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed, errorReplacements), cancellationToken);
+            return await sc.CancelAllDialogsAsync(cancellationToken);
         }
 
         protected string GetNavigateString(int page, int maxPage)
@@ -1102,7 +1106,7 @@ namespace ITSMSkill.Dialogs
             return card;
         }
 
-        protected async Task<ActionResult> CreateActionResult(ITurnContext context, bool success, CancellationToken cancellationToken)
+        protected async Task<ActionResult> CreateActionResultAsync(ITurnContext context, bool success, CancellationToken cancellationToken)
         {
             var state = await StateAccessor.GetAsync(context, () => new SkillState(), cancellationToken);
             if (success && state.IsAction)
@@ -1127,7 +1131,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected class Actions
+        protected static class Actions
         {
             public const string SetSearch = "SetSearch";
             public const string SetTitle = "SetTitle";

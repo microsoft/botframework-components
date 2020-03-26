@@ -132,7 +132,7 @@ namespace ITSMSkill.Dialogs
                 var generalResult = innerDc.Context.TurnState.Get<GeneralLuis>(StateProperties.GeneralLuisResult);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
-                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState(), cancellationToken);
 
                 if (generalScore > 0.5)
                 {
@@ -141,8 +141,8 @@ namespace ITSMSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
@@ -157,8 +157,8 @@ namespace ITSMSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -166,10 +166,10 @@ namespace ITSMSkill.Dialogs
                         case GeneralLuis.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
@@ -198,7 +198,7 @@ namespace ITSMSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
 
             // If bot is in local mode, prompt with intro or continuation message
@@ -241,35 +241,35 @@ namespace ITSMSkill.Dialogs
                     {
                         case ITSMLuis.Intent.TicketCreate:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(CreateTicketDialog));
+                                return await stepContext.BeginDialogAsync(nameof(CreateTicketDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.TicketUpdate:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(UpdateTicketDialog));
+                                return await stepContext.BeginDialogAsync(nameof(UpdateTicketDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.TicketShow:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(ShowTicketDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ShowTicketDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.TicketClose:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(CloseTicketDialog));
+                                return await stepContext.BeginDialogAsync(nameof(CloseTicketDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.KnowledgeShow:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(ShowKnowledgeDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ShowKnowledgeDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.None:
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
-                                return await stepContext.NextAsync();
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
+                                return await stepContext.NextAsync(cancellationToken: cancellationToken);
                             }
                     }
                 }
@@ -288,44 +288,44 @@ namespace ITSMSkill.Dialogs
                     {
                         case ActionNames.CreateTicket:
                             {
-                                return await ProcessAction<CreateTicketInput>(ITSMLuis.Intent.TicketCreate, nameof(CreateTicketDialog), stepContext, cancellationToken);
+                                return await ProcessActionAsync<CreateTicketInput>(ITSMLuis.Intent.TicketCreate, nameof(CreateTicketDialog), stepContext, cancellationToken);
                             }
 
                         case ActionNames.UpdateTicket:
                             {
-                                return await ProcessAction<UpdateTicketInput>(ITSMLuis.Intent.TicketUpdate, nameof(UpdateTicketDialog), stepContext, cancellationToken);
+                                return await ProcessActionAsync<UpdateTicketInput>(ITSMLuis.Intent.TicketUpdate, nameof(UpdateTicketDialog), stepContext, cancellationToken);
                             }
 
                         case ActionNames.ShowTicket:
                             {
-                                return await ProcessAction<ShowTicketInput>(ITSMLuis.Intent.TicketShow, nameof(ShowTicketDialog), stepContext, cancellationToken);
+                                return await ProcessActionAsync<ShowTicketInput>(ITSMLuis.Intent.TicketShow, nameof(ShowTicketDialog), stepContext, cancellationToken);
                             }
 
                         case ActionNames.CloseTicket:
                             {
-                                return await ProcessAction<CloseTicketInput>(ITSMLuis.Intent.TicketClose, nameof(CloseTicketDialog), stepContext, cancellationToken);
+                                return await ProcessActionAsync<CloseTicketInput>(ITSMLuis.Intent.TicketClose, nameof(CloseTicketDialog), stepContext, cancellationToken);
                             }
 
                         case ActionNames.ShowKnowledge:
                             {
-                                return await ProcessAction<ShowKnowledgeInput>(ITSMLuis.Intent.KnowledgeShow, nameof(ShowKnowledgeDialog), stepContext, cancellationToken);
+                                return await ProcessActionAsync<ShowKnowledgeInput>(ITSMLuis.Intent.KnowledgeShow, nameof(ShowKnowledgeDialog), stepContext, cancellationToken);
                             }
 
                         default:
                             {
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
                 }
                 else
                 {
-                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."));
+                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."), cancellationToken);
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -349,7 +349,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             var supported = dc.Context.Adapter is IUserTokenProvider;
             if (supported)
@@ -357,14 +357,14 @@ namespace ITSMSkill.Dialogs
                 var tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -372,7 +372,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        private async Task<DialogTurnResult> ProcessAction<T>(ITSMLuis.Intent intent, string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ProcessActionAsync<T>(ITSMLuis.Intent intent, string dialogId, WaterfallStepContext stepContext, CancellationToken cancellationToken)
              where T : IActionInput
         {
             ITSMLuis result = null;

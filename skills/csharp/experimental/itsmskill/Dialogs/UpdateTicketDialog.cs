@@ -32,21 +32,21 @@ namespace ITSMSkill.Dialogs
         {
             var updateTicket = new WaterfallStep[]
             {
-                BeginSetNumberThenId,
-                UpdateAttributeLoop,
-                GetAuthToken,
-                AfterGetAuthToken,
-                UpdateTicket
+                BeginSetNumberThenIdAsync,
+                UpdateAttributeLoopAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                UpdateTicketAsync
             };
 
             var updateAttribute = new WaterfallStep[]
             {
-                ShowUpdates,
-                CheckAttribute,
-                InputAttribute,
-                SetAttribute,
-                UpdateSelectedAttribute,
-                UpdateLoop
+                ShowUpdatesAsync,
+                CheckAttributeAsync,
+                InputAttributeAsync,
+                SetAttributeAsync,
+                UpdateSelectedAttributeAsync,
+                UpdateLoopAsync
             };
 
             var attributesForUpdate = new AttributeType[] { AttributeType.Title, AttributeType.Description, AttributeType.Urgency };
@@ -62,14 +62,14 @@ namespace ITSMSkill.Dialogs
             InputAttributePrompt = Actions.UpdateAttributePrompt;
         }
 
-        protected async Task<DialogTurnResult> UpdateAttributeLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> UpdateAttributeLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.BeginDialogAsync(Actions.UpdateAttribute);
+            return await sc.BeginDialogAsync(Actions.UpdateAttribute, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> ShowUpdates(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowUpdatesAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             var sb = new StringBuilder();
 
             if (!string.IsNullOrEmpty(state.TicketTitle))
@@ -97,30 +97,30 @@ namespace ITSMSkill.Dialogs
                 {
                     { "Attributes", sb.ToString() }
                 };
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowUpdates, token));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowUpdates, token), cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> UpdateLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> UpdateLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             // state.AttributeType from Luis should be used first
             state.AttributeType = AttributeType.None;
 
-            return await sc.ReplaceDialogAsync(Actions.UpdateAttribute);
+            return await sc.ReplaceDialogAsync(Actions.UpdateAttribute, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> UpdateTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> UpdateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             if (string.IsNullOrEmpty(state.TicketTitle) && string.IsNullOrEmpty(state.TicketDescription) && state.UrgencyLevel == UrgencyLevel.None)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketNoUpdate));
-                return await sc.NextAsync();
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketNoUpdate), cancellationToken);
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
 
             var management = ServiceManager.CreateManagement(Settings, sc.Result as TokenResponse, state.ServiceCache);
@@ -128,13 +128,13 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketUpdated, card, null));
-            return await sc.NextAsync(await CreateActionResult(sc.Context, true, cancellationToken));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketUpdated, card, null), cancellationToken);
+            return await sc.NextAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
         }
     }
 }
