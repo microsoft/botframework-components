@@ -29,13 +29,8 @@ namespace ITSMSkill.Dialogs
     public class ShowTicketDialog : SkillDialogBase
     {
         public ShowTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(ShowTicketDialog), serviceProvider)
         {
             var showTicket = new WaterfallStep[]
             {
@@ -73,10 +68,10 @@ namespace ITSMSkill.Dialogs
                 GeneralLuis.Intent.Reject
             };
 
-            AddDialog(new WaterfallDialog(Actions.ShowTicket, showTicket) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowAttribute, showAttribute) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowTicket, showTicket));
+            AddDialog(new WaterfallDialog(Actions.ShowAttribute, showAttribute));
             AddDialog(new AttributeWithNoPrompt(Actions.ShowAttributePrompt, attributesForShow));
-            AddDialog(new WaterfallDialog(Actions.ShowTicketLoop, showTicketLoop) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowTicketLoop, showTicketLoop));
             AddDialog(new GeneralPrompt(Actions.ShowNavigatePrompt, navigateYesNo, StateAccessor, ShowNavigateValidator));
 
             InitialDialogId = Actions.ShowTicket;

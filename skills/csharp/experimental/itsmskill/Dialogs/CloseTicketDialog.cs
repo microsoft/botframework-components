@@ -24,13 +24,8 @@ namespace ITSMSkill.Dialogs
     public class CloseTicketDialog : SkillDialogBase
     {
         public CloseTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(CloseTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(CloseTicketDialog), serviceProvider)
         {
             var closeTicket = new WaterfallStep[]
             {

@@ -27,13 +27,8 @@ namespace ITSMSkill.Dialogs
     public class ShowKnowledgeDialog : SkillDialogBase
     {
         public ShowKnowledgeDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowKnowledgeDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(ShowKnowledgeDialog), serviceProvider)
         {
             var showKnowledge = new WaterfallStep[]
             {

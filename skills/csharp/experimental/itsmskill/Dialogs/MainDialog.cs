@@ -28,18 +28,16 @@ namespace ITSMSkill.Dialogs
     // Dialog providing activity routing and message/event processing.
     public class MainDialog : ComponentDialog
     {
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -202,18 +200,14 @@ namespace ITSMSkill.Dialogs
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
             }
-            else
-            {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
-                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
-                        MainResponses.WelcomeMessage : MainResponses.FirstPromptMessage)
-                };
 
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
-            }
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
+            {
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.FirstPromptMessage)
+            };
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
@@ -357,11 +351,10 @@ namespace ITSMSkill.Dialogs
 
         private async Task LogUserOut(DialogContext dc)
         {
-            IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
             if (supported)
             {
-                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
+                var tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
                 var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);

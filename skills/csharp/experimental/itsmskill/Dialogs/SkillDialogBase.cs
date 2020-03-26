@@ -26,6 +26,7 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
@@ -34,28 +35,23 @@ namespace ITSMSkill.Dialogs
     {
         public SkillDialogBase(
              string dialogId,
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
              : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            var conversationState = serviceProvider.GetService<ConversationState>();
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            ServiceManager = serviceManager;
-            TelemetryClient = telemetryClient;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
 
             // NOTE: Uncomment the following if your skill requires authentication
-            if (!settings.OAuthConnections.Any())
+            if (!Settings.OAuthConnections.Any())
             {
                 throw new Exception("You must configure an authentication connection before using this component.");
             }
 
-            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
 
             var setSearch = new WaterfallStep[]
             {
@@ -156,15 +152,15 @@ namespace ITSMSkill.Dialogs
             base.InitialDialogId = Actions.BaseAuth;
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<SkillState> StateAccessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
         protected new string InitialDialogId { get; set; }
 

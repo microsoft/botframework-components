@@ -28,13 +28,8 @@ namespace ITSMSkill.Dialogs
     public class CreateTicketDialog : SkillDialogBase
     {
         public CreateTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(CreateTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(CreateTicketDialog), serviceProvider)
         {
             var createTicket = new WaterfallStep[]
             {

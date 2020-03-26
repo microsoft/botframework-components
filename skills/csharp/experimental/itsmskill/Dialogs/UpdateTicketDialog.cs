@@ -27,13 +27,8 @@ namespace ITSMSkill.Dialogs
     public class UpdateTicketDialog : SkillDialogBase
     {
         public UpdateTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(UpdateTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(UpdateTicketDialog), serviceProvider)
         {
             var updateTicket = new WaterfallStep[]
             {
@@ -56,8 +51,8 @@ namespace ITSMSkill.Dialogs
 
             var attributesForUpdate = new AttributeType[] { AttributeType.Title, AttributeType.Description, AttributeType.Urgency };
 
-            AddDialog(new WaterfallDialog(Actions.UpdateTicket, updateTicket) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateAttribute, updateAttribute) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateTicket, updateTicket));
+            AddDialog(new WaterfallDialog(Actions.UpdateAttribute, updateAttribute));
             AddDialog(new AttributeWithNoPrompt(Actions.UpdateAttributePrompt, attributesForUpdate));
 
             InitialDialogId = Actions.UpdateTicket;
