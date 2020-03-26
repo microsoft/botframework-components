@@ -63,6 +63,7 @@ namespace PhoneSkill.Utilities
         {
             throw new Exception("1. create *Containee.json which only keeps containee's body;2. in the container, write ${if(Cards==null,'',join(foreach(Cards,Card,CreateStringNoContainer(Card.Name,Card.Data)),','))}");
 
+            /*
             if (string.IsNullOrEmpty(templateId))
             {
                 templateId = CardsOnly;
@@ -83,6 +84,7 @@ namespace PhoneSkill.Utilities
                 result.Text = ex.Message;
                 return (Activity)result;
             }
+            */
         }
 
         public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IDictionary<string, object> tokens = null)

@@ -28,7 +28,7 @@ namespace PhoneSkill.Common
         /// <param name="contactProvider">The provider for the user's contact list. This may be null if the contact list is not to be used.</param>
         /// <returns>The first boolean indicates whether filtering was actually performed. (In some cases, no filtering is necessary.)
         /// The second boolean indicates whether any of the contacts has a phone number whose type matches the requested type.</returns>
-        public async Task<(bool, bool)> Filter(PhoneSkillState state, IContactProvider contactProvider)
+        public async Task<(bool, bool)> FilterAsync(PhoneSkillState state, IContactProvider contactProvider)
         {
             var isFiltered = false;
 
@@ -47,7 +47,7 @@ namespace PhoneSkill.Common
                 }
                 else if (contactProvider != null)
                 {
-                    contacts = await contactProvider.GetContacts();
+                    contacts = await contactProvider.GetContactsAsync();
                 }
                 else
                 {
