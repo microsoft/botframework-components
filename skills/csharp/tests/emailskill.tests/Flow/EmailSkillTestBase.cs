@@ -215,10 +215,5 @@ namespace EmailSkill.Tests.Flow
                 }
             };
         }
-
-        protected string[] CancelResponses()
-        {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
-        }
     }
 }

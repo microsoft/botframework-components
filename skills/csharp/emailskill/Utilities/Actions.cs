@@ -48,5 +48,7 @@ namespace EmailSkill.Utilities
         public const string Help = "help";
 
         public const string GetRecreateInfoPrompt = "getRecreateInfoPrompt";
+
+        public const string SelectEmail = "selectEmail";
     }
 }
