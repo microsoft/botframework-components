@@ -29,14 +29,12 @@ namespace AutomotiveSkill.Dialogs
         private readonly Dialog _vehicleSettingsDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
