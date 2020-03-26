@@ -213,7 +213,7 @@ if (-not $migrationToolPath) {
 else {
     $roomFile = $(Join-Path $PSScriptRoot .. "rooms.txt")
     if (Test-Path $roomFile) {
-	Clear-Content $roomFile -Force | Out-Null
+	    Clear-Content $roomFile -Force | Out-Null
     }
     else {
 	    New-Item -Path $roomFile | Out-Null
@@ -223,7 +223,13 @@ else {
         $room = ConvertTo-Json $room
         $room >> $roomFile | Out-Null
     }
-    Invoke-Expression "$(Join-Path $($migrationToolPath) 'dt.exe') /s:JsonFile /s.Files:$roomFile /t:DocumentDB /t.ConnectionString:""AccountEndpoint=https://$cosmosDbAccount.documents.azure.com:443/;AccountKey=$primaryKey;Database=$databaseId;"" /t.Collection:$collectionId /t.PartitionKey:/id /t.ParallelRequests:50 2>> $logFile"
+
+    $migrationLog = $(Join-Path $PSScriptRoot .. "data_migration_log.csv")
+    if (Test-Path $migrationLog) {
+	    Remove-Item -Path $migrationLog -Force | Out-Null
+    }
+
+    Invoke-Expression "$(Join-Path $($migrationToolPath) 'dt.exe') /ErrorLog:$migrationLog /s:JsonFile /s.Files:$roomFile /t:DocumentDB /t.ConnectionString:""AccountEndpoint=https://$cosmosDbAccount.documents.azure.com:443/;AccountKey=$primaryKey;Database=$databaseId;"" /t.Collection:$collectionId /t.PartitionKey:/id /t.ParallelRequests:20 2>> $logFile"
 }
 
 Write-Host "Done." -ForegroundColor Green
