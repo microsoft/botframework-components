@@ -35,7 +35,7 @@
         "$ref": "#/definitions/trendingArticlesInput"
       },
       "resultValue": {
-        "$ref": "#/definitions/newsResult"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "getFavoriteTopics": {
@@ -46,7 +46,7 @@
         "$ref": "#/definitions/favoriteTopicsInput"
       },
       "resultValue": {
-        "$ref": "#/definitions/newsResult"
+        "$ref": "#/definitions/actionResult"
       }
     },
     "findArticles": {
@@ -57,7 +57,7 @@
         "$ref": "#/definitions/findArticlesInput"
       },
       "resultValue": {
-        "$ref": "#/definitions/newsResult"
+        "$ref": "#/definitions/actionResult"
       }
     }
   },
@@ -101,7 +101,7 @@
         }
       }
     },
-    "newsResult": {
+    "actionResult": {
       "type": "object",
       "properties": {
         "newsList": {

@@ -195,8 +195,7 @@ namespace EmailSkill.Dialogs
                 // get name list from sc.result
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
-                    var userInput = content != null ? content.ToString() : sc.Context.Activity.Text;
+                    var userInput = sc.Context.Activity.Text;
 
                     if (state.MailSourceType != MailSource.Other)
                     {

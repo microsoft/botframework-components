@@ -157,8 +157,7 @@ namespace EmailSkill.Dialogs
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var subject);
-                    var subjectInput = subject != null ? subject.ToString() : sc.Context.Activity.Text;
+                    var subjectInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(subjectInput))
                     {
@@ -195,8 +194,7 @@ namespace EmailSkill.Dialogs
 
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var subject);
-                    var subjectInput = subject != null ? subject.ToString() : sc.Context.Activity.Text;
+                    var subjectInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(subjectInput))
                     {
@@ -279,8 +277,7 @@ namespace EmailSkill.Dialogs
                 var state = await EmailStateAccessor.GetAsync(sc.Context);
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
-                    var contentInput = content != null ? content.ToString() : sc.Context.Activity.Text;
+                    var contentInput = sc.Context.Activity.Text;
 
                     if (!EmailCommonPhrase.GetIsSkip(contentInput))
                     {
@@ -370,6 +367,15 @@ namespace EmailSkill.Dialogs
                     });
 
                 await sc.Context.SendActivityAsync(replyMessage);
+                if (state.IsAction)
+                {
+                    var actionResult = new ActionResult(true);
+                    await ClearConversationState(sc);
+                    return await sc.EndDialogAsync(actionResult);
+                }
+
+                await ClearConversationState(sc);
+                return await sc.EndDialogAsync(true);
             }
             catch (SkillException ex)
             {
@@ -383,16 +389,6 @@ namespace EmailSkill.Dialogs
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
-
-            await ClearConversationState(sc);
-            var skillOptions = sc.Options as EmailSkillDialogOptions;
-            if (skillOptions != null && skillOptions.IsAction)
-            {
-                var actionResult = new ActionResult() { ActionSuccess = true };
-                return await sc.EndDialogAsync(actionResult);
-            }
-
-            return await sc.EndDialogAsync(true);
         }
 
         public async Task<DialogTurnResult> GetRecreateInfo(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))

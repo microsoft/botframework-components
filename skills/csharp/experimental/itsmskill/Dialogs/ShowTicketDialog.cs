@@ -29,38 +29,33 @@ namespace ITSMSkill.Dialogs
     public class ShowTicketDialog : SkillDialogBase
     {
         public ShowTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(ShowTicketDialog), serviceProvider)
         {
             var showTicket = new WaterfallStep[]
             {
-                ShowConstraints,
+                ShowConstraintsAsync,
 
-                // BeginShowTicketLoop,
-                // BeginShowAttributeLoop,
-                // LoopShowTicket,
+                // BeginShowTicketLoopAsync,
+                // BeginShowAttributeLoopAsync,
+                // LoopShowTicketAsync,
             };
 
             var showAttribute = new WaterfallStep[]
             {
-                CheckAttribute,
-                InputAttribute,
-                SetAttribute,
-                UpdateSelectedAttribute,
-                LoopShowAttribute,
+                CheckAttributeAsync,
+                InputAttributeAsync,
+                SetAttributeAsync,
+                UpdateSelectedAttributeAsync,
+                LoopShowAttributeAsync,
             };
 
             var showTicketLoop = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowTicket,
-                IfContinueShow
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowTicketAsync,
+                IfContinueShowAsync
             };
 
             var attributesForShow = new AttributeType[] { AttributeType.Number, AttributeType.Search, AttributeType.Urgency, AttributeType.State };
@@ -73,11 +68,11 @@ namespace ITSMSkill.Dialogs
                 GeneralLuis.Intent.Reject
             };
 
-            AddDialog(new WaterfallDialog(Actions.ShowTicket, showTicket) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowAttribute, showAttribute) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowTicket, showTicket));
+            AddDialog(new WaterfallDialog(Actions.ShowAttribute, showAttribute));
             AddDialog(new AttributeWithNoPrompt(Actions.ShowAttributePrompt, attributesForShow));
-            AddDialog(new WaterfallDialog(Actions.ShowTicketLoop, showTicketLoop) { TelemetryClient = telemetryClient });
-            AddDialog(new GeneralPrompt(Actions.ShowNavigatePrompt, navigateYesNo, StateAccessor, ShowNavigateValidator));
+            AddDialog(new WaterfallDialog(Actions.ShowTicketLoop, showTicketLoop));
+            AddDialog(new GeneralPrompt(Actions.ShowNavigatePrompt, navigateYesNo, StateAccessor, ShowNavigateValidatorAsync));
 
             InitialDialogId = Actions.ShowTicket;
 
@@ -87,22 +82,22 @@ namespace ITSMSkill.Dialogs
             InputAttributePrompt = Actions.ShowAttributePrompt;
         }
 
-        protected async Task<DialogTurnResult> BeginShowAttributeLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> BeginShowAttributeLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.BeginDialogAsync(Actions.ShowAttribute);
+            return await sc.BeginDialogAsync(Actions.ShowAttribute, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> BeginShowTicketLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> BeginShowTicketLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.PageIndex = -1;
 
-            return await sc.BeginDialogAsync(Actions.ShowTicketLoop);
+            return await sc.BeginDialogAsync(Actions.ShowTicketLoop, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> ShowConstraints(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowConstraintsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             // always prompt for search
             state.AttributeType = AttributeType.None;
@@ -139,39 +134,39 @@ namespace ITSMSkill.Dialogs
                     { "Attributes", sb.ToString() }
                 };
 
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowConstraints, token));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.ShowConstraints, token), cancellationToken);
             }
 
             state.PageIndex = -1;
 
-            return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop);
+            return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> LoopShowTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> LoopShowTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(Actions.ShowTicket);
+            return await sc.ReplaceDialogAsync(Actions.ShowTicket, cancellationToken: cancellationToken);
         }
 
-        protected new async Task<DialogTurnResult> SetAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected new async Task<DialogTurnResult> SetAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (sc.Result == null)
             {
-                return await sc.ReplaceDialogAsync(Actions.ShowTicket);
+                return await sc.ReplaceDialogAsync(Actions.ShowTicket, cancellationToken: cancellationToken);
             }
 
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.AttributeType = (AttributeType)sc.Result;
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> LoopShowAttribute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> LoopShowAttributeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(Actions.ShowAttribute);
+            return await sc.ReplaceDialogAsync(Actions.ShowAttribute, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> ShowTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.InterruptedIntent = ITSMLuis.Intent.None;
 
             bool firstDisplay = false;
@@ -199,7 +194,7 @@ namespace ITSMSkill.Dialogs
 
             if (!countResult.Success)
             {
-                return await SendServiceErrorAndCancel(sc, countResult);
+                return await SendServiceErrorAndCancelAsync(sc, countResult, cancellationToken);
             }
 
             // adjust PageIndex
@@ -211,7 +206,7 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             if (result.Tickets == null || result.Tickets.Length == 0)
@@ -223,7 +218,7 @@ namespace ITSMSkill.Dialogs
                         Prompt = TemplateManager.GenerateActivity(TicketResponses.TicketShowNone)
                     };
 
-                    return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options);
+                    return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options, cancellationToken);
                 }
                 else
                 {
@@ -238,7 +233,7 @@ namespace ITSMSkill.Dialogs
                         Prompt = TemplateManager.GenerateActivity(TicketResponses.TicketEnd, token)
                     };
 
-                    return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options);
+                    return await sc.PromptAsync(Actions.NavigateYesNoPrompt, options, cancellationToken);
                 }
             }
             else
@@ -249,29 +244,29 @@ namespace ITSMSkill.Dialogs
                     cards.Add(GetTicketCard(sc.Context, ticket));
                 }
 
-                await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards));
+                await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards), cancellationToken);
 
                 var options = new PromptOptions()
                 {
                     Prompt = GetNavigatePrompt(sc.Context, TicketResponses.TicketShow, state.PageIndex, maxPage),
                 };
 
-                return await sc.PromptAsync(Actions.ShowNavigatePrompt, options);
+                return await sc.PromptAsync(Actions.ShowNavigatePrompt, options, cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> IfContinueShow(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> IfContinueShowAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             // Skip in Action mode in ShowNavigateValidator
             if (state.InterruptedIntent == ITSMLuis.Intent.TicketClose)
             {
-                return await sc.ReplaceDialogAsync(nameof(CloseTicketDialog));
+                return await sc.ReplaceDialogAsync(nameof(CloseTicketDialog), cancellationToken: cancellationToken);
             }
             else if (state.InterruptedIntent == ITSMLuis.Intent.TicketUpdate)
             {
-                return await sc.ReplaceDialogAsync(nameof(UpdateTicketDialog));
+                return await sc.ReplaceDialogAsync(nameof(UpdateTicketDialog), cancellationToken: cancellationToken);
             }
             else if (state.InterruptedIntent != ITSMLuis.Intent.None)
             {
@@ -281,21 +276,21 @@ namespace ITSMSkill.Dialogs
             var intent = (GeneralLuis.Intent)sc.Result;
             if (intent == GeneralLuis.Intent.Reject)
             {
-                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, true, cancellationToken));
+                return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.Confirm)
             {
-                return await sc.ReplaceDialogAsync(Actions.ShowAttribute);
+                return await sc.ReplaceDialogAsync(Actions.ShowAttribute, cancellationToken: cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.ShowNext)
             {
                 state.PageIndex += 1;
-                return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop);
+                return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop, cancellationToken: cancellationToken);
             }
             else if (intent == GeneralLuis.Intent.ShowPrevious)
             {
                 state.PageIndex = Math.Max(0, state.PageIndex - 1);
-                return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop);
+                return await sc.ReplaceDialogAsync(Actions.ShowTicketLoop, cancellationToken: cancellationToken);
             }
             else
             {
@@ -303,7 +298,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected async Task<bool> ShowNavigateValidator(PromptValidatorContext<GeneralLuis.Intent> promptContext, CancellationToken cancellationToken)
+        protected async Task<bool> ShowNavigateValidatorAsync(PromptValidatorContext<GeneralLuis.Intent> promptContext, CancellationToken cancellationToken)
         {
             if (promptContext.Recognized.Succeeded)
             {
@@ -311,7 +306,7 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
-                var state = await StateAccessor.GetAsync(promptContext.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(promptContext.Context, () => new SkillState(), cancellationToken);
                 if (state.IsAction)
                 {
                     return false;

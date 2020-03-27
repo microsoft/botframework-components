@@ -176,7 +176,7 @@ namespace ITSMSkill.Tests.API
             var controller = new ServiceNowController(mockMessageReceiver.Object, It.IsAny<IBotTelemetryClient>());
 
             // Act
-            var actionResult = await controller.Post(It.IsAny<ServiceNowNotification>(), It.IsAny<CancellationToken>());
+            var actionResult = await controller.Post(It.IsAny<string>(), It.IsAny<CancellationToken>());
 
             // Assert
             Assert.IsNotNull(actionResult);

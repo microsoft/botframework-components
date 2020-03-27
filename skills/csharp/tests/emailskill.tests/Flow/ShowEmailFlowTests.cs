@@ -134,7 +134,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -168,7 +167,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -189,7 +187,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -213,7 +210,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(ContextStrings.TestContent)
                 .AssertReply(this.AssertComfirmBeforeSendingPrompt())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -232,7 +228,6 @@ namespace EmailSkill.Tests.Flow
                 .Send(DeleteEmailUtterances.DeleteEmailsWithSelection)
                 .AssertReplyOneOf(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -248,13 +243,14 @@ namespace EmailSkill.Tests.Flow
                 .Send(ShowEmailUtterances.ShowEmails)
                 .AssertReply(this.ShowEmailList())
                 .AssertReplyOneOf(this.ReadOutPrompt())
+                .Send(DeleteEmailUtterances.DeleteCurrentEmail)
+                .AssertReplyOneOf(this.ChooseMessagePrompt())
                 .Send(BaseTestUtterances.FirstOne)
                 .AssertReply(this.AssertSelectOneOfTheMessage(1))
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(DeleteEmailUtterances.DeleteCurrentEmail)
                 .AssertReplyOneOf(this.DeleteConfirm())
                 .Send(GeneralTestUtterances.No)
-                .AssertReplyOneOf(this.NotSendingMessage())
                 .AssertReplyOneOf(this.ReadOutMorePrompt())
                 .Send(GeneralTestUtterances.No)
                 .AssertReplyOneOf(this.NotShowingMessage())
@@ -368,7 +364,7 @@ namespace EmailSkill.Tests.Flow
 
         private string[] NotShowingMessage()
         {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
+            return GetTemplates(EmailMainResponses.CompletedMessage);
         }
 
         private string[] ReadOutPrompt()
@@ -410,11 +406,6 @@ namespace EmailSkill.Tests.Flow
             return GetTemplates(EmailSharedResponses.NoEmailContentForReply);
         }
 
-        private string[] NotSendingMessage()
-        {
-            return GetTemplates(EmailSharedResponses.CancellingMessage);
-        }
-
         private string[] DeleteConfirm()
         {
             return GetTemplates(DeleteEmailResponses.DeleteConfirm);
@@ -423,6 +414,11 @@ namespace EmailSkill.Tests.Flow
         private string[] AddMoreContacts(object recipientDict)
         {
             return GetTemplates(FindContactResponses.AddMoreContactsPrompt, recipientDict);
+        }
+
+        private string[] ChooseMessagePrompt()
+        {
+            return GetTemplates(ShowEmailResponses.ActionPrompt);
         }
 
         private Action<IActivity> AssertSelectOneOfTheMessage(int selection)

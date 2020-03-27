@@ -58,7 +58,7 @@ namespace ITSMSkill.Prompts
 
             var result = new PromptRecognizerResult<GeneralLuis.Intent>();
 
-            var skillState = await stateAccessor.GetAsync(turnContext);
+            var skillState = await stateAccessor.GetAsync(turnContext, () => new SkillState(), cancellationToken);
 
             if (intents.Contains(skillState.GeneralIntent))
             {

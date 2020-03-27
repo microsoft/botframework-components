@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
@@ -144,7 +145,7 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, "PointOfInterestOverviewContainer", state.CurrentCoordinates, pointOfInterestList, addressMapsService);
+                    var containerCard = await GetContainerCard(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, addressMapsService);
 
                     var options = GetPointOfInterestPrompt(POISharedResponses.MultipleLocationsFound, containerCard, "Container", cards);
 
