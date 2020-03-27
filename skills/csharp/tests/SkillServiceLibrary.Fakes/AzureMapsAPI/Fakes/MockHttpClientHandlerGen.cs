@@ -37,6 +37,12 @@ namespace SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes
             return uri.StartsWith("https://atlas.microsoft.com/route/directions/json") && places.Any(place => uri.Contains(place));
         }
 
+        private static bool ShouldReturnZipcode(HttpRequestMessage httpRequestMessage)
+        {
+            var uri = httpRequestMessage.RequestUri.ToString();
+            return uri.StartsWith("hhttps://atlas.microsoft.com/search/fuzzy/json") && uri.Contains("idxSet=Geo");
+        }
+
         private HttpClientHandler GenerateMockHttpClientHandler()
         {
             var mockClient = new Mock<HttpClientHandler>(MockBehavior.Strict);
@@ -66,6 +72,18 @@ namespace SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes
                .ReturnsAsync(() => new HttpResponseMessage()
                {
                    Content = new StringContent(this.GetAzureMapsPointOfInterest()),
+               });
+
+            // if this fails, fallback to GetAzureMapsPointOfInterest
+            mockClient
+               .Protected()
+               .Setup<Task<HttpResponseMessage>>(
+               MockData.SendAsync,
+               ItExpr.Is<HttpRequestMessage>(r => ShouldReturnZipcode(r)),
+               ItExpr.IsAny<CancellationToken>())
+               .ReturnsAsync(() => new HttpResponseMessage()
+               {
+                   Content = new StringContent(this.GetAddressSearch()),
                });
 
             mockClient

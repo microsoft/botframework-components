@@ -14,5 +14,7 @@ namespace PointOfInterestSkill.Tests.Flow.Strings
         public const string Route = CardNames.PointOfInterestDetailsWithRoute + "Card";
 
         public const string Overview = CardNames.PointOfInterestOverviewContainer + "Card";
+
+        public const string OverviewDetails = CardNames.PointOfInterestOverviewDetails + "Card";
     }
 }

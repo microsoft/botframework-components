@@ -14,5 +14,7 @@ namespace PointOfInterestSkill.Models
         public const string PointOfInterestOverview = "PointOfInterestOverview";
 
         public const string PointOfInterestOverviewContainer = "PointOfInterestOverviewContainer";
+
+        public const string PointOfInterestOverviewDetails = "PointOfInterestOverviewDetails";
     }
 }

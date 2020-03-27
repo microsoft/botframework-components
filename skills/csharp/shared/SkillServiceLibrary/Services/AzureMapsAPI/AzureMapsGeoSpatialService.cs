@@ -30,6 +30,7 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
         private static readonly int DefaultZoom = 14;
         private static readonly string FindByFuzzyQueryApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&lat={{0}}&lon={{1}}&query={{2}}&radius={{3}}&limit={{4}}&openingHours=nextSevenDays";
         private static readonly string FindByFuzzyQueryNoCoordinatesApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&query={{0}}&limit={{1}}&openingHours=nextSevenDays";
+        private static readonly string FindByZipcodeUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&query={{0}}&countrySet={{1}}&idxSet=Geo";
         private static readonly string FindByAddressQueryUrl = $"https://atlas.microsoft.com/search/address/json?api-version=1.0&lat={{0}}&lon={{1}}&query={{2}}&radius={{3}}&limit={{4}}";
         private static readonly string FindByAddressNoCoordinatesQueryUrl = $"https://atlas.microsoft.com/search/address/json?api-version=1.0&query={{0}}&limit={{1}}";
         private static readonly string FindAddressByCoordinateUrl = $"https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0&query={{0}},{{1}}";
@@ -258,6 +259,13 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
             pointOfInterest.PointOfInterestImageUrl = imageUrl;
 
             return pointOfInterest;
+        }
+
+        public async Task<PointOfInterestModel> GetZipcodeAsync(string zipcode, string countrySet)
+        {
+            var results = await GetPointsOfInterestAsync(
+                string.Format(CultureInfo.InvariantCulture, FindByZipcodeUrl, zipcode, countrySet));
+            return results.FirstOrDefault();
         }
 
         /// <summary>

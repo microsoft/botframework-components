@@ -18,6 +18,7 @@ using PointOfInterestSkill.Responses.Main;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
+using SkillServiceLibrary.Models;
 using SkillServiceLibrary.Utilities;
 
 namespace PointOfInterestSkill.Dialogs
@@ -33,6 +34,8 @@ namespace PointOfInterestSkill.Dialogs
         private Dialog _findPointOfInterestDialog;
         private Dialog _findParkingDialog;
         private Dialog _getDirectionsDialog;
+        private IServiceManager _serviceManager;
+        private BotSettings _settings;
 
         public MainDialog(
             IServiceProvider serviceProvider,
@@ -41,6 +44,8 @@ namespace PointOfInterestSkill.Dialogs
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _serviceManager = serviceProvider.GetService<IServiceManager>();
+            _settings = serviceProvider.GetService<BotSettings>();
             TelemetryClient = telemetryClient;
 
             // Initialize state accessor
@@ -322,7 +327,23 @@ namespace PointOfInterestSkill.Dialogs
 
                         case ActionNames.FindPointOfInterestAction:
                             {
-                                await DigestActionInput<FindPointOfInterestInput>(stepContext, ev);
+                                var input = await DigestActionInput<FindPointOfInterestInput>(stepContext, ev);
+                                if (input != null && !string.IsNullOrEmpty(input.Zipcode))
+                                {
+                                    var service = _serviceManager.InitAddressMapsService(_settings);
+                                    PointOfInterestModel model;
+                                    if (string.IsNullOrEmpty(input.CountrySet))
+                                    {
+                                        model = await service.GetZipcodeAsync(input.Zipcode);
+                                    }
+                                    else
+                                    {
+                                        model = await service.GetZipcodeAsync(input.Zipcode, input.CountrySet);
+                                    }
+
+                                    state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
+                                }
+
                                 return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog));
                             }
 
@@ -480,7 +501,7 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput<T>(DialogContext dc, IEventActivity ev)
+        private async Task<T> DigestActionInput<T>(DialogContext dc, IEventActivity ev)
             where T : ActionBaseInput
         {
             var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState());
@@ -490,7 +511,10 @@ namespace PointOfInterestSkill.Dialogs
             {
                 T actionData = eventValue.ToObject<T>();
                 actionData.DigestActionInput(state);
+                return actionData;
             }
+
+            return null;
         }
     }
 }

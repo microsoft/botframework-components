@@ -166,6 +166,14 @@
           "type": "number",
           "description": "Current longitude."
         },
+        "zipcode": {
+          "type": "string",
+          "description": "Zipcode."
+        },
+        "countrySet": {
+          "type": "string",
+          "description": "CountrySet for zipcode like US."
+        },
         "keyword": {
           "type": "string",
           "description": "POI keyword like papa john's, lowe's."

@@ -223,6 +223,11 @@ namespace SkillServiceLibrary.Services.FoursquareAPI
             return pointOfInterestList.FirstOrDefault() ?? pointOfInterest;
         }
 
+        public Task<PointOfInterestModel> GetZipcodeAsync(string zipcode, string countrySet)
+        {
+            throw new NotSupportedException();
+        }
+
         /// <summary>
         /// Gets a request to Foursquare API & convert to PointOfInterestModels.
         /// </summary>

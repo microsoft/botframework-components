@@ -40,6 +40,11 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
             showRoute = true,
         }));
 
+        public static readonly Activity WhatsNearbyZipcodeAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new
+        {
+            zipcode = "98027",
+        }));
+
         public FindPointOfInterestUtterances()
         {
             this.Add(WhatsNearby, CreateIntent(WhatsNearby, PointOfInterestLuis.Intent.FindPointOfInterest));
