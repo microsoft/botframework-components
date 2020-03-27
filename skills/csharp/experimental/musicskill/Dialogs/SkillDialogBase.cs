@@ -81,7 +81,7 @@ namespace MusicSkill.Dialogs
         {
             try
             {
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions());
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions(), cancellationToken);
             }
             catch (SkillException ex)
             {
