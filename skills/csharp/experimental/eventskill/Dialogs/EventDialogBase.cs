@@ -48,15 +48,15 @@ namespace EventSkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<EventSkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<EventSkillState> StateAccessor { get; }
 
-        protected IStatePropertyAccessor<EventSkillUserState> UserAccessor { get; set; }
+        protected IStatePropertyAccessor<EventSkillUserState> UserAccessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {

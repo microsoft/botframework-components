@@ -43,11 +43,11 @@ namespace NewsSkill.Dialogs
 
         protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<NewsSkillState> ConvAccessor { get; set; }
+        protected IStatePropertyAccessor<NewsSkillState> ConvAccessor { get; }
 
-        protected IStatePropertyAccessor<NewsSkillUserState> UserAccessor { get; set; }
+        protected IStatePropertyAccessor<NewsSkillUserState> UserAccessor { get; }
 
         protected LocaleTemplateManager TemplateManager { get; }
 

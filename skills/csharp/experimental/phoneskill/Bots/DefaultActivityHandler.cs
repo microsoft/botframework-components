@@ -23,7 +23,6 @@ namespace PhoneSkill.Bots
         private readonly BotState _conversationState;
         private readonly BotState _userState;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
-        private readonly LocaleTemplateManager _templateManager;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -32,7 +31,6 @@ namespace PhoneSkill.Bots
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
-            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
