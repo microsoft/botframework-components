@@ -18,24 +18,16 @@ namespace PointOfInterestSkill.Dialogs
     public class CancelRouteDialog : PointOfInterestDialogBase
     {
         public CancelRouteDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(CancelRouteDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(CancelRouteDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var cancelRoute = new WaterfallStep[]
             {
                 CancelActiveRoute,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CancelActiveRoute, cancelRoute) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CancelActiveRoute, cancelRoute));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CancelActiveRoute;

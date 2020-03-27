@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -18,17 +19,9 @@ namespace PointOfInterestSkill.Dialogs
     public class GetDirectionsDialog : PointOfInterestDialogBase
     {
         public GetDirectionsDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(GetDirectionsDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(GetDirectionsDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkCurrentLocation = new WaterfallStep[]
             {
                 CheckForCurrentCoordinatesBeforeGetDirections,
@@ -44,8 +37,8 @@ namespace PointOfInterestSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindPointOfInterest, findPointOfInterest) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation));
+            AddDialog(new WaterfallDialog(Actions.FindPointOfInterest, findPointOfInterest));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;

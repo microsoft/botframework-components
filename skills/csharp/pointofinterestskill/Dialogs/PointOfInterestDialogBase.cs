@@ -21,6 +21,7 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Models;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.FindPointOfInterest;
 using PointOfInterestSkill.Responses.Shared;
@@ -51,26 +52,20 @@ namespace PointOfInterestSkill.Dialogs
             { Chinese, "是的" },
         };
 
-        private IHttpContextAccessor _httpContext;
+        private readonly IHttpContextAccessor _httpContext;
 
         public PointOfInterestDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
+            IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            var conversationState = serviceProvider.GetService<ConversationState>();
             Accessor = conversationState.CreateProperty<PointOfInterestSkillState>(nameof(PointOfInterestSkillState));
-            ServiceManager = serviceManager;
-            TelemetryClient = telemetryClient;
-            _httpContext = httpContext;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
+            _httpContext = serviceProvider.GetService<IHttpContextAccessor>();
 
             AddDialog(new TextPrompt(Actions.CurrentLocationPrompt));
             AddDialog(new ConfirmPrompt(Actions.ConfirmPrompt) { Style = ListStyle.Auto, });
@@ -92,15 +87,15 @@ namespace PointOfInterestSkill.Dialogs
             Map,
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<PointOfInterestSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<PointOfInterestSkillState> Accessor { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         public static Activity CreateOpenDefaultAppReply(Activity activity, PointOfInterestModel destination, OpenDefaultAppType type)
         {

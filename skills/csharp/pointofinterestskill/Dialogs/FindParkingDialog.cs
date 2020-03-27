@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
@@ -22,18 +23,9 @@ namespace PointOfInterestSkill.Dialogs
     public class FindParkingDialog : PointOfInterestDialogBase
     {
         public FindParkingDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            RouteDialog routeDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(FindParkingDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindParkingDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkCurrentLocation = new WaterfallStep[]
             {
                 CheckForCurrentCoordinatesBeforeFindParking,
@@ -50,9 +42,9 @@ namespace PointOfInterestSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindParking, findParking) { TelemetryClient = telemetryClient });
-            AddDialog(routeDialog ?? throw new ArgumentNullException(nameof(routeDialog)));
+            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation));
+            AddDialog(new WaterfallDialog(Actions.FindParking, findParking));
+            AddDialog(serviceProvider.GetService<RouteDialog>());
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;

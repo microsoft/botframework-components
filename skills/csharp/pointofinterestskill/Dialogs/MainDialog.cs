@@ -25,23 +25,21 @@ namespace PointOfInterestSkill.Dialogs
     // Dialog providing activity routing and message/event processing.
     public class MainDialog : ComponentDialog
     {
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
-        private Dialog _routeDialog;
-        private Dialog _cancelRouteDialog;
-        private Dialog _findPointOfInterestDialog;
-        private Dialog _findParkingDialog;
-        private Dialog _getDirectionsDialog;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
+        private readonly Dialog _routeDialog;
+        private readonly Dialog _cancelRouteDialog;
+        private readonly Dialog _findPointOfInterestDialog;
+        private readonly Dialog _findParkingDialog;
+        private readonly Dialog _getDirectionsDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Initialize state accessor
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -242,18 +240,14 @@ namespace PointOfInterestSkill.Dialogs
                 // If the bot is in skill mode, skip directly to route and do not prompt
                 return await stepContext.NextAsync();
             }
-            else
-            {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
-                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
-                        POIMainResponses.PointOfInterestWelcomeMessage : POIMainResponses.FirstPromptMessage)
-                };
 
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
-            }
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
+            {
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(POIMainResponses.FirstPromptMessage)
+            };
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
