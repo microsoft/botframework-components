@@ -34,13 +34,13 @@ namespace AutomotiveSkill.Dialogs
             Accessor = conversationState.CreateProperty<AutomotiveSkillState>(nameof(AutomotiveSkillState));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))

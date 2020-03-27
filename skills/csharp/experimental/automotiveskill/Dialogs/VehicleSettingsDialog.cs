@@ -193,7 +193,7 @@ namespace AutomotiveSkill.Dialogs
             var state = await Accessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // Use the name selection LUIS model to perform validation of the user's entered setting name
-            var nameSelectionResult = await vehicleSettingNameSelectionLuisRecognizer.RecognizeAsync<SettingsNameLuis>(promptContext.Context, CancellationToken.None);
+            var nameSelectionResult = await vehicleSettingNameSelectionLuisRecognizer.RecognizeAsync<SettingsNameLuis>(promptContext.Context, cancellationToken);
             state.AddRecognizerResult(nameSelectionResult);
 
             var selectedSettingNames = new List<string>();

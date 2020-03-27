@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using AutomotiveSkill.Services;
+using AutomotiveSkill.Responses.Shared;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
@@ -73,7 +74,7 @@ namespace AutomotiveSkill.Adapters
                 _telemetryClient.TrackException(exception);
 
                 // Send a message to the user.
-                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale("ErrorMessage"));
+                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
 
                 // Send a trace activity, which will be displayed in the Bot Framework Emulator.
                 // Note: we return the entire exception in the value property to help the developer;

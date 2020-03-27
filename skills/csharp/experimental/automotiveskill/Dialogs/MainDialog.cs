@@ -318,7 +318,7 @@ namespace AutomotiveSkill.Dialogs
             }
         }
 
-        private class Events
+        private static class Events
         {
             public const string ChangeVehicleSetting = "ChangeVehicleSetting";
         }
