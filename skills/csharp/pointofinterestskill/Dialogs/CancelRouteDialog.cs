@@ -9,8 +9,8 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.CancelRoute;
-using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
 
 namespace PointOfInterestSkill.Dialogs
@@ -23,7 +23,7 @@ namespace PointOfInterestSkill.Dialogs
         {
             var cancelRoute = new WaterfallStep[]
             {
-                CancelActiveRoute,
+                CancelActiveRouteAsync,
             };
 
             // Define the conversation flow using a waterfall model.
@@ -33,29 +33,29 @@ namespace PointOfInterestSkill.Dialogs
             InitialDialogId = Actions.CancelActiveRoute;
         }
 
-        public async Task<DialogTurnResult> CancelActiveRoute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> CancelActiveRouteAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 if (state.ActiveRoute != null)
                 {
                     var replyMessage = TemplateManager.GenerateActivity(CancelRouteResponses.CancelActiveRoute);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                     state.ActiveRoute = null;
                     state.Destination = null;
                 }
                 else
                 {
                     var replyMessage = TemplateManager.GenerateActivity(CancelRouteResponses.CannotCancelActiveRoute);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

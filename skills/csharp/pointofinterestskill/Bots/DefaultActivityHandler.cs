@@ -50,7 +50,7 @@ namespace PointOfInterestSkill.Bots
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            await turnContext.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.PointOfInterestWelcomeMessage));
+            await turnContext.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.PointOfInterestWelcomeMessage), cancellationToken);
             await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
@@ -69,7 +69,7 @@ namespace PointOfInterestSkill.Bots
             var ev = turnContext.Activity.AsEventActivity();
             var value = ev.Value?.ToString();
 
-            var state = await _stateAccessor.GetAsync(turnContext, () => new PointOfInterestSkillState());
+            var state = await _stateAccessor.GetAsync(turnContext, () => new PointOfInterestSkillState(), cancellationToken);
 
             switch (ev.Name)
             {

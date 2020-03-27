@@ -10,7 +10,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using PointOfInterestSkill.Responses.Shared;
-using PointOfInterestSkill.Services;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Utilities;
 
 namespace PointOfInterestSkill.Dialogs
@@ -23,17 +23,17 @@ namespace PointOfInterestSkill.Dialogs
         {
             var checkCurrentLocation = new WaterfallStep[]
             {
-                CheckForCurrentCoordinatesBeforeFindPointOfInterest,
-                ConfirmCurrentLocation,
-                ProcessCurrentLocationSelection,
-                RouteToFindPointOfInterestDialog
+                CheckForCurrentCoordinatesBeforeFindPointOfInterestAsync,
+                ConfirmCurrentLocationAsync,
+                ProcessCurrentLocationSelectionAsync,
+                RouteToFindPointOfInterestDialogAsync,
             };
 
             var findPointOfInterest = new WaterfallStep[]
             {
-                GetPointOfInterestLocations,
-                ProcessPointOfInterestSelection,
-                ProcessPointOfInterestAction,
+                GetPointOfInterestLocationsAsync,
+                ProcessPointOfInterestSelectionAsync,
+                ProcessPointOfInterestActionAsync,
             };
 
             // Define the conversation flow using a waterfall model.
@@ -51,16 +51,16 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeFindPointOfInterest(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeFindPointOfInterestAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var hasCurrentCoordinates = state.CheckForValidCurrentCoordinates();
             if (hasCurrentCoordinates || !string.IsNullOrEmpty(state.Address))
             {
-                return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
+                return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest, cancellationToken: cancellationToken);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) }, cancellationToken);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">WaterfallStepContext.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>DialogTurnResult.</returns>
-        protected async Task<DialogTurnResult> RouteToFindPointOfInterestDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> RouteToFindPointOfInterestDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
+            return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest, cancellationToken: cancellationToken);
         }
     }
 }
