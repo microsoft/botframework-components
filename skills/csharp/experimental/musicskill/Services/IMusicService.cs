@@ -7,6 +7,6 @@ namespace MusicSkill.Services
 {
     public interface IMusicService
     {
-        public Task<string> SearchMusic(string searchQuery);
+        public Task<string> SearchMusicAsync(string searchQuery);
     }
 }

@@ -23,21 +23,20 @@ namespace MusicSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
-        private Dialog _playMusicDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly Dialog _playMusicDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
+            TelemetryClient = TelemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -168,7 +167,7 @@ namespace MusicSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.CancelMessage), cancellationToken);
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
@@ -184,18 +183,18 @@ namespace MusicSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
 
                         case GeneralLuis.Intent.Logout:
                             {
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult() { ActionSuccess = false } : null, cancellationToken: cancellationToken);
@@ -220,7 +219,7 @@ namespace MusicSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
@@ -243,7 +242,7 @@ namespace MusicSkill.Dialogs
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var a = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
             state.Clear();
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -255,20 +254,20 @@ namespace MusicSkill.Dialogs
                 {
                     case MusicSkillLuis.Intent.PlayMusic:
                         {
-                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id);
+                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id, cancellationToken: cancellationToken);
                         }
 
                     case MusicSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(SharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -282,7 +281,7 @@ namespace MusicSkill.Dialogs
                     case TokenEvents.TokenResponseEventName:
                         {
                             // Auth dialog completion
-                            var result = await stepContext.ContinueDialogAsync();
+                            var result = await stepContext.ContinueDialogAsync(cancellationToken);
 
                             // If the dialog completed when we sent the token, end the skill conversation
                             if (result.Status != DialogTurnStatus.Waiting)
@@ -290,7 +289,7 @@ namespace MusicSkill.Dialogs
                                 var response = stepContext.Context.Activity.CreateReply();
                                 response.Type = ActivityTypes.EndOfConversation;
 
-                                await stepContext.Context.SendActivityAsync(response);
+                                await stepContext.Context.SendActivityAsync(response, cancellationToken);
                             }
 
                             break;
@@ -306,25 +305,25 @@ namespace MusicSkill.Dialogs
                                 actionData.DigestState(state);
                             }
 
-                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id);
+                            return await stepContext.BeginDialogAsync(_playMusicDialog.Id, cancellationToken: cancellationToken);
                         }
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                             break;
                         }
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
             if (stepContext.Context.IsSkill())
             {
                 var result = stepContext.Result;
@@ -344,23 +343,22 @@ namespace MusicSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
-            IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
             if (supported)
             {
-                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
+                var tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {

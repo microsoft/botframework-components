@@ -17,7 +17,7 @@ namespace MusicSkill.Services
             client = new SpotifyWebAPI() { TokenType = token.TokenType, AccessToken = token.AccessToken };
         }
 
-        public async Task<string> SearchMusic(string searchQuery)
+        public async Task<string> SearchMusicAsync(string searchQuery)
         {
             // Search library
             var searchItems = await client.SearchItemsEscapedAsync(searchQuery, SearchType.All, 5);

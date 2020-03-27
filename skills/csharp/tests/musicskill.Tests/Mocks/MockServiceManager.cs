@@ -16,7 +16,7 @@ namespace MusicSkill.Tests.Mocks
         {
             // music
             mockMusicService = new Mock<IMusicService>();
-            mockMusicService.Setup(service => service.SearchMusic(It.IsAny<string>())).Returns(Task.FromResult("spotify:playlist:37i9dQZF1DXcCnTAt8Cf"));
+            mockMusicService.Setup(service => service.SearchMusicAsync(It.IsAny<string>())).Returns(Task.FromResult("spotify:playlist:37i9dQZF1DXcCnTAt8Cf"));
 
             // manager
             mockServiceManager = new Mock<IServiceManager>();
