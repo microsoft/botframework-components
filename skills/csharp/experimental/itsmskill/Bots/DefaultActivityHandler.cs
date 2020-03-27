@@ -96,7 +96,7 @@ namespace ITSMSkill.Bots
 
                 default:
                     {
-                        await turnContext.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                        await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
                         break;
                     }
             }

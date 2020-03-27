@@ -35,6 +35,7 @@ namespace ITSMSkill.Controllers.ServiceNow
         public Task<IActionResult> Post([FromBody] string request, CancellationToken cancellationToken)
         {
             var notiication = JsonConvert.DeserializeObject<ServiceNowNotification>(request);
+
             return this.Post(notiication, cancellationToken);
         }
     }

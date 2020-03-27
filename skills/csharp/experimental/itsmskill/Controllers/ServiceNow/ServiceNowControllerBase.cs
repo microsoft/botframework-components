@@ -23,7 +23,7 @@ namespace ITSMSkill.Controllers.ServiceNow
 
         protected IBotTelemetryClient TelemetryClient { get; }
 
-        public async Task<IActionResult> Post(
+        protected async Task<IActionResult> Post(
         ServiceNowNotification request,
         CancellationToken cancellationToken)
         {
