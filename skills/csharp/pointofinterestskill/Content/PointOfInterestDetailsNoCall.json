@@ -65,15 +65,15 @@
           "spacing": "None",
           "size": "Medium",
           "weight": "Bolder",
-          "color": "default",
+          "color": "Accent",
           "text": "${if(Data.Name == null, '', Data.Name)}"
         },
         {
           "type": "TextBlock",
-          "id": "AvailableDetails",
+          "id": "Category",
           "spacing": "None",
           "color": "default",
-          "text": "${if(Data.AvailableDetails == null, '', Data.AvailableDetails)}"
+          "text": "${if(Data.Category == null, '', Data.Category)}"
         },
         {
           "type": "TextBlock",

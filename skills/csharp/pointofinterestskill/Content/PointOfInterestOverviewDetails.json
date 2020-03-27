@@ -14,29 +14,33 @@
     },
     {
       "type": "TextBlock",
+      "id": "Name",
       "horizontalAlignment": "Left",
       "spacing": "None",
       "size": "Medium",
       "weight": "Bolder",
-      "color": "default",
+      "color": "Accent",
       "text": "${if(Data.Name == null, '', Data.Name)}"
     },
     {
       "type": "TextBlock",
+      "id": "Category",
       "spacing": "None",
       "color": "default",
-      "text": "${if(Data.AvailableDetails == null, '', Data.AvailableDetails)}"
+      "text": "${if(Data.Category == null, '', Data.Category)}"
     },
     {
       "type": "TextBlock",
+      "id": "Address",
       "spacing": "None",
       "color": "default",
       "text": "${if(Data.Address == null, '', Data.Address)}",
-      "maxLines": 1,
-      "wrap": true
+      "wrap": true,
+      "maxLines": 2
     },
     {
       "type": "TextBlock",
+      "id": "Hours",
       "spacing": "None",
       "color": "default",
       "text": "${if(Data.Hours == null, '', Data.Hours)}",
