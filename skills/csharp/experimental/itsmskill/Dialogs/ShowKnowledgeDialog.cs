@@ -27,32 +27,27 @@ namespace ITSMSkill.Dialogs
     public class ShowKnowledgeDialog : SkillDialogBase
     {
         public ShowKnowledgeDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowKnowledgeDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(ShowKnowledgeDialog), serviceProvider)
         {
             var showKnowledge = new WaterfallStep[]
             {
-                CheckSearch,
-                InputSearch,
-                SetTitle,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowKnowledgeLoop,
-                IfCreateTicket,
-                AfterIfCreateTicket
+                CheckSearchAsync,
+                InputSearchAsync,
+                SetTitleAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowKnowledgeLoopAsync,
+                IfCreateTicketAsync,
+                AfterIfCreateTicketAsync
             };
 
             var showKnowledgeLoop = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowKnowledge,
-                IfKnowledgeHelp
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowKnowledgeAsync,
+                IfKnowledgeHelpAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.ShowKnowledge, showKnowledge));
@@ -67,19 +62,19 @@ namespace ITSMSkill.Dialogs
             KnowledgeHelpLoop = Actions.ShowKnowledgeLoop;
         }
 
-        protected async Task<DialogTurnResult> ShowKnowledgeLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowKnowledgeLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             state.PageIndex = -1;
 
-            return await sc.BeginDialogAsync(Actions.ShowKnowledgeLoop);
+            return await sc.BeginDialogAsync(Actions.ShowKnowledgeLoop, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> IfCreateTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> IfCreateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (sc.Result is EndFlowResult endFlow)
             {
-                return await sc.EndDialogAsync(await CreateActionResult(sc.Context, endFlow.Result, cancellationToken));
+                return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, endFlow.Result, cancellationToken), cancellationToken);
             }
 
             // Skip create ticket in action mode
@@ -94,18 +89,18 @@ namespace ITSMSkill.Dialogs
                 Prompt = TemplateManager.GenerateActivity(KnowledgeResponses.IfCreateTicket)
             };
 
-            return await sc.PromptAsync(nameof(ConfirmPrompt), options);
+            return await sc.PromptAsync(nameof(ConfirmPrompt), options, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> AfterIfCreateTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterIfCreateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             if ((bool)sc.Result)
             {
-                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
                 state.DisplayExisting = false;
 
                 // note that it replaces the active WaterfallDialog instead of ShowKnowledgeDialog
-                return await sc.ReplaceDialogAsync(nameof(CreateTicketDialog));
+                return await sc.ReplaceDialogAsync(nameof(CreateTicketDialog), cancellationToken: cancellationToken);
             }
             else
             {

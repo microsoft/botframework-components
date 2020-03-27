@@ -24,7 +24,7 @@ namespace ITSMSkill.Tests.Flow.Fakes
         private readonly BaseTestUtterances<TConvert> utterancesManager;
 
         public BaseMockLuisRecognizer(params BaseTestUtterances<TConvert>[] utterancesManagers)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             utterancesManager = utterancesManagers[0];
 
