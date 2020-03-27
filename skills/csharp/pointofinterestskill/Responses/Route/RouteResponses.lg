@@ -46,4 +46,10 @@
     InputHint = ignoringInput
 ]
 
-
+# RouteDetails(Data, Cards, Layout)
+[Activity
+    ${RouteDetails.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]

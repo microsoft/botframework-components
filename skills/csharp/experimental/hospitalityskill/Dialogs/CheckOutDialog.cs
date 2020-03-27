@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
@@ -19,21 +20,15 @@ namespace HospitalitySkill.Dialogs
     public class CheckOutDialog : HospitalityDialogBase
     {
         public CheckOutDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(CheckOutDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(CheckOutDialog), serviceProvider)
         {
             var checkOut = new WaterfallStep[]
             {
-                HasCheckedOut,
-                CheckOutPrompt,
-                EmailPrompt,
-                EndDialog
+                HasCheckedOutAsync,
+                CheckOutPromptAsync,
+                EmailPromptAsync,
+                EndDialogAsync
             };
 
             AddDialog(new WaterfallDialog(nameof(CheckOutDialog), checkOut));
@@ -41,19 +36,19 @@ namespace HospitalitySkill.Dialogs
             AddDialog(new TextPrompt(DialogIds.EmailPrompt, ValidateEmailAsync));
         }
 
-        private async Task<DialogTurnResult> CheckOutPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> CheckOutPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             // confirm user wants to check out
             return await sc.PromptAsync(DialogIds.CheckOutPrompt, new PromptOptions()
             {
                 Prompt = TemplateManager.GenerateActivity(CheckOutResponses.ConfirmCheckOut),
                 RetryPrompt = TemplateManager.GenerateActivity(CheckOutResponses.RetryConfirmCheckOut),
-            });
+            }, cancellationToken);
         }
 
         private async Task<bool> ValidateCheckOutAsync(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             if (promptContext.Recognized.Succeeded)
             {
@@ -71,9 +66,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> EmailPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EmailPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
             if (userState.CheckedOut && string.IsNullOrWhiteSpace(userState.Email))
             {
                 // prompt for email to send receipt to
@@ -81,15 +76,15 @@ namespace HospitalitySkill.Dialogs
                 {
                     Prompt = TemplateManager.GenerateActivity(CheckOutResponses.EmailPrompt),
                     RetryPrompt = TemplateManager.GenerateActivity(CheckOutResponses.InvalidEmailPrompt)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
         private async Task<bool> ValidateEmailAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(promptContext.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             // check for valid email input
             string response = promptContext.Recognized?.Value;
@@ -103,9 +98,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> EndDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EndDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService));
+            var userState = await UserStateAccessor.GetAsync(sc.Context, () => new HospitalityUserSkillState(HotelService), cancellationToken);
 
             if (userState.CheckedOut)
             {
@@ -116,16 +111,16 @@ namespace HospitalitySkill.Dialogs
 
                 // TODO process request to send email receipt
                 // checked out confirmation message
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.SendEmailMessage, tokens));
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.CheckOutSuccess));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.SendEmailMessage, tokens), cancellationToken);
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(CheckOutResponses.CheckOutSuccess), cancellationToken);
 
-                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
+                return await sc.EndDialogAsync(await CreateSuccessActionResultAsync(sc.Context, cancellationToken), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string CheckOutPrompt = "checkOutPrompt";
             public const string EmailPrompt = "emailPrompt";

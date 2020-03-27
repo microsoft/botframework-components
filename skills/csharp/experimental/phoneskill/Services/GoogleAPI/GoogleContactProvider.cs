@@ -28,14 +28,14 @@ namespace PhoneSkill.Services.GoogleAPI
             });
         }
 
-        public async Task<IList<ContactCandidate>> GetContacts()
+        public async Task<IList<ContactCandidate>> GetContactsAsync()
         {
-            IList<Person> people = await GetPeople();
+            IList<Person> people = await GetPeopleAsync();
             IList<ContactCandidate> contacts = ToContactCandidates(people);
             return ContactDeduplicator.DeduplicateByPhoneNumbers(contacts);
         }
 
-        private async Task<IList<Person>> GetPeople()
+        private async Task<IList<Person>> GetPeopleAsync()
         {
             try
             {

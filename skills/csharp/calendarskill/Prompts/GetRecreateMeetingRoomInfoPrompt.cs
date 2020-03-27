@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Models;
 using CalendarSkill.Prompts.Options;
-using CalendarSkill.Responses.Shared;
-using CalendarSkill.Utilities;
 using CalendarSkill.Services;
+using CalendarSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -142,9 +140,21 @@ namespace CalendarSkill.Prompts
                             return result;
                         }
 
-                        if (luisResult.Entities.MeetingRoom != null || luisResult.Entities.MeetingRoomPatternAny != null || CalendarCommonUtil.ContainMeetingRoomSlot(luisResult))
+                        if (luisResult.Entities.Building != null || luisResult.Entities.FloorNumber != null || luisResult.Entities.MeetingRoom != null || luisResult.Entities.MeetingRoomPatternAny != null || CalendarCommonUtil.ContainMeetingRoomSlot(luisResult))
                         {
                             result = RecreateMeetingRoomState.ChangeMeetingRoom;
+                            return result;
+                        }
+
+                        if (CalendarCommonUtil.ContainBuildingSlot(luisResult))
+                        {
+                            result = RecreateMeetingRoomState.ChangeBuilding;
+                            return result;
+                        }
+
+                        if (CalendarCommonUtil.ContainFloorSlot(luisResult))
+                        {
+                            result = RecreateMeetingRoomState.ChangeFloorNumber;
                             return result;
                         }
 

@@ -57,8 +57,7 @@
 
 # MultipleLocationsFound(Data, Cards, Layout)
 [Activity
-    Text = ${MultipleLocationsFound.Text(Data)}
-    Speak = ${MultipleLocationsFound.Text(Data)}
+    ${MultipleLocationsFound.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
@@ -66,8 +65,7 @@
 
 # SingleLocationFound(Data, Cards, Layout)
 [Activity
-    Text = ${SingleLocationFound.Text(Data)}
-    Speak = ${SingleLocationFound.Text(Data)}
+    ${SingleLocationFound.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
@@ -138,8 +136,7 @@
 
 # CurrentLocationMultipleSelection(Data, Cards, Layout)
 [Activity
-    Text = ${CurrentLocationMultipleSelection.Text(Data)}
-    Speak = ${CurrentLocationMultipleSelection.Text(Data)}
+    ${CurrentLocationMultipleSelection.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
@@ -147,8 +144,7 @@
 
 # CurrentLocationSingleSelection(Data, Cards, Layout)
 [Activity
-    Text = ${CurrentLocationSingleSelection.Text(Data)}
-    Speak = ${CurrentLocationSingleSelection.Text(Data)}
+    ${CurrentLocationSingleSelection.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput

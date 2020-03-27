@@ -34,13 +34,22 @@
 - Sure, I can help you with this later.
 
 # MultipleLocationsFound.Text(Data)
-- I found the following.
-- Here are some options.
-- What do you think of these?
+- ${MultipleLocationsFoundTextAndSpeak1(Data)}
+
+# MultipleLocationsFoundTextAndSpeak1(Data)
+[Activity
+    Text = I found the following.
+    Speak = I've found ${Data.Count} options. ${Data.Options} Which one would you like?
+]
 
 # SingleLocationFound.Text(Data)
-- I found the following.
-- Here's a match.
+- ${SingleLocationFoundTextAndSpeak1(Data)}
+
+# SingleLocationFoundTextAndSpeak1(Data)
+[Activity
+    Text = I found the following.
+    Speak = I've found ${Data.Options}. Do you like it?
+]
 
 # MultipleLocationsFoundAlongActiveRoute.Text(Data)
 - I found the following.
@@ -70,11 +79,22 @@
 - Which would you like?
 
 # CurrentLocationMultipleSelection.Text(Data)
-- Which one?
-- One of these?
+- ${CurrentLocationMultipleSelectionTextAndSpeak1(Data)}
+
+# CurrentLocationMultipleSelectionTextAndSpeak1(Data)
+[Activity
+    Text = Which one?
+    Speak = I've found ${Data.Count} options. ${Data.Options} Which one is correct?
+]
 
 # CurrentLocationSingleSelection.Text(Data)
-- This one?
+- ${CurrentLocationSingleSelectionTextAndSpeak1(Data)}
+
+# CurrentLocationSingleSelectionTextAndSpeak1(Data)
+[Activity
+    Text = This one?
+    Speak = I've found ${Data.Options}. Is this correct?
+]
 
 # PointOfInterestSuggestedActionName.Text(Data)
 - ${if(Data.Name == null, '', Data.Name)} at ${if(Data.Address == null, '', Data.Address)}

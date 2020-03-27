@@ -38,15 +38,6 @@ namespace PointOfInterestSkill.Dialogs
         private const string FallbackPointOfInterestImageFileName = "default_pointofinterest.png";
 
         // Constants
-        // TODO consider other languages
-        private static readonly Dictionary<string, string> SpeakDefaults = new Dictionary<string, string>()
-        {
-            { "en-US", "en-US-JessaNeural" },
-            { "de-DE", "de-DE-KatjaNeural" },
-            { "it-IT", "it-IT-ElsaNeural" },
-            { "zh-CN", "zh-CN-XiaoxiaoNeural" }
-        };
-
         // TODO same as the one in ConfirmPrompt
         private static readonly Dictionary<string, string> ChoiceDefaults = new Dictionary<string, string>()
         {
@@ -153,7 +144,7 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, "PointOfInterestOverviewContainer", state.CurrentCoordinates, pointOfInterestList, service);
+                    var containerCard = await GetContainerCard(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, service);
 
                     var options = GetPointOfInterestPrompt(cards.Count == 1 ? POISharedResponses.CurrentLocationSingleSelection : POISharedResponses.CurrentLocationMultipleSelection, containerCard, "Container", cards);
 
@@ -347,7 +338,7 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, "PointOfInterestOverviewContainer", state.CurrentCoordinates, pointOfInterestList, addressMapsService);
+                    var containerCard = await GetContainerCard(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, addressMapsService);
 
                     var options = GetPointOfInterestPrompt(POISharedResponses.MultipleLocationsFound, containerCard, "Container", cards);
 
@@ -385,18 +376,13 @@ namespace PointOfInterestSkill.Dialogs
                 {
                     var userSelectIndex = 0;
 
-                    string promptResponse = null;
-
                     if (sc.Result is bool)
                     {
-                        // promptResponse = POISharedResponses.SingleLocationFound;
                         state.Destination = state.LastFoundPointOfInterests[userSelectIndex];
                         state.LastFoundPointOfInterests = null;
                     }
                     else if (sc.Result is FoundChoice)
                     {
-                        // promptResponse = FindPointOfInterestResponses.PointOfInterestDetails;
-
                         // Update the destination state with user choice.
                         userSelectIndex = (sc.Result as FoundChoice).Index;
 
@@ -441,9 +427,11 @@ namespace PointOfInterestSkill.Dialogs
 
                     var card = new Card
                     {
-                        Name = GetDivergedCardName(sc.Context, !hasCall ? "PointOfInterestDetailsNoCall" : "PointOfInterestDetails"),
+                        Name = GetDivergedCardName(sc.Context, hasCall ? CardNames.PointOfInterestDetails : CardNames.PointOfInterestDetailsNoCall),
                         Data = state.Destination,
                     };
+
+                    string promptResponse = hasCall ? FindPointOfInterestResponses.PointOfInterestDetails : FindPointOfInterestResponses.PointOfInterestDetailsNoCall;
 
                     if (promptResponse == null)
                     {
@@ -451,7 +439,7 @@ namespace PointOfInterestSkill.Dialogs
                     }
                     else
                     {
-                        options.Prompt = TemplateManager.GenerateActivity(promptResponse, card, null);
+                        options.Prompt = TemplateManager.GenerateActivity(promptResponse, card, card.Data);
                     }
 
                     // If DestinationActionType is provided, skip the SelectActionPrompt with appropriate choice index
@@ -605,6 +593,14 @@ namespace PointOfInterestSkill.Dialogs
                 pointOfInterestList[0].SubmitText = GetConfirmPromptTrue();
             }
 
+            options.Prompt = new Activity();
+
+            var data = new
+            {
+                Count = options.Choices.Count,
+                Options = SpeechUtility.ListToSpeechReadyString(options),
+            };
+
             options.Prompt = TemplateManager.GenerateActivity(prompt, cards);
 
             // Restore Value to SubmitText
@@ -677,7 +673,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 foreach (var pointOfInterest in pointOfInterestList)
                 {
-                    cards.Add(new Card(GetDivergedCardName(sc.Context, "PointOfInterestOverviewDetails"), pointOfInterest));
+                    cards.Add(new Card(GetDivergedCardName(sc.Context, CardNames.PointOfInterestOverviewDetails), pointOfInterest));
                 }
             }
 
@@ -822,7 +818,7 @@ namespace PointOfInterestSkill.Dialogs
                         TravelDelaySpeak = GetFormattedTrafficDelayString(trafficTimeSpan),
                         ProviderDisplayText = destination.GenerateProviderDisplayText(),
                         Speak = GetFormattedTravelTimeSpanString(travelTimeSpan),
-                        ActionStartNavigation = TemplateManager.GetString(PointOfInterestSharedStrings.START),
+                        ActionStartNavigation = TemplateManager.GetString(PointOfInterestSharedStrings.START_NAVIGATION),
                         CardTitle = TemplateManager.GetString(PointOfInterestSharedStrings.CARD_TITLE)
                     };
 
@@ -832,7 +828,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 foreach (var data in cardData)
                 {
-                    cards.Add(new Card(GetDivergedCardName(sc.Context, "PointOfInterestDetailsWithRoute"), data));
+                    cards.Add(new Card(GetDivergedCardName(sc.Context, CardNames.PointOfInterestDetailsWithRoute), data));
                 }
             }
 
@@ -879,22 +875,6 @@ namespace PointOfInterestSkill.Dialogs
             {
                 return card;
             }
-        }
-
-        /// <summary>
-        /// Decorate speak for speech-synthesis-markup-language.
-        /// </summary>
-        /// <param name="speak">Speak text that has been converted for html.</param>
-        /// <returns>Speak text surrounded by speak voice elements.</returns>
-        protected string DecorateSpeak(string speak)
-        {
-            var culture = CultureInfo.CurrentUICulture.Name;
-            if (!SpeakDefaults.ContainsKey(culture))
-            {
-                culture = "en-US";
-            }
-
-            return $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xml:lang='{culture}'><voice name='{SpeakDefaults[culture]}'>{speak}</voice></speak>";
         }
 
         protected string GetConfirmPromptTrue()

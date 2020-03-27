@@ -2008,6 +2008,12 @@ $SlotAttributeName:room=
 $SlotAttributeName:time=
 - Zeit
 
+$SlotAttributeName:building=
+- Edificio
+
+$SlotAttributeName:floor=
+- Pavimento
+
 > # RegEx entities
 $MeetingRoomKeywordsDesc:/((conf|conference|meeting)\s+)?(room|rm|office)/
 

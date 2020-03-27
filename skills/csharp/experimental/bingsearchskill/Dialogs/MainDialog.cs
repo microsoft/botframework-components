@@ -66,10 +66,10 @@ namespace BingSearchSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -84,10 +84,10 @@ namespace BingSearchSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -95,9 +95,9 @@ namespace BingSearchSkill.Dialogs
         }
 
         // Runs on every turn of the conversation to check if the conversation should be interrupted.
-        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -124,8 +124,16 @@ namespace BingSearchSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
                                 await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
                                 break;
                             }
 
@@ -133,7 +141,7 @@ namespace BingSearchSkill.Dialogs
                             {
                                 await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
                                 await innerDc.RepromptDialogAsync();
-                                interrupted = true;
+                                interrupted = EndOfTurn;
                                 break;
                             }
                     }
@@ -156,10 +164,10 @@ namespace BingSearchSkill.Dialogs
                 // If bot is in local mode, prompt with intro or continuation message
                 var prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.FirstPromptMessage);
                 var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
-                if (state.NewConversation)
+                var activity = stepContext.Context.Activity;
+                if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
                     prompt = _templateManager.GenerateActivity(MainResponses.WelcomeMessage);
-                    state.NewConversation = false;
                 }
 
                 var promptOptions = new PromptOptions
@@ -176,6 +184,7 @@ namespace BingSearchSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -223,16 +232,17 @@ namespace BingSearchSkill.Dialogs
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
                         case "BingSearch":
                             {
-                                KeywordSearchRequest actionData = null;
+                                KeywordSearchInfo actionData = null;
 
                                 var eventValue = a.Value as JObject;
                                 if (eventValue != null)
                                 {
-                                    actionData = eventValue.ToObject<KeywordSearchRequest>();
+                                    actionData = eventValue.ToObject<KeywordSearchInfo>();
                                     await DigestActionInput(stepContext, actionData);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(SearchDialog), new BingSearchSkillDialogOptionBase() { IsAction = true });
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(SearchDialog));
                             }
 
                         default:
@@ -249,7 +259,7 @@ namespace BingSearchSkill.Dialogs
             return await stepContext.NextAsync();
         }
 
-        private async Task DigestActionInput(DialogContext dc, KeywordSearchRequest request)
+        private async Task DigestActionInput(DialogContext dc, KeywordSearchInfo request)
         {
             var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
             state.SearchEntityName = request.Keyword;

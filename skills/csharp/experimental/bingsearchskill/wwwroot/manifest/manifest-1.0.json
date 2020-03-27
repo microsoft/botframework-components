@@ -32,15 +32,15 @@
       "type": "event",
       "name": "BingSearch",
       "value": {
-        "$ref": "#/definitions/keywordSearchRequest"
+        "$ref": "#/definitions/keywordSearchInfo"
       },
       "resultValue": {
-        "$ref": "#/definitions/keywordSearchResponse"
+        "$ref": "#/definitions/actionResult"
       }
     }
   },
   "definitions": {
-    "keywordSearchRequest": {
+    "keywordSearchInfo": {
       "type": "object",
       "properties": {
         "keyword": {
@@ -49,7 +49,7 @@
         }
       }
     },
-    "keywordSearchResponse": {
+    "actionResult": {
       "type": "object",
       "properties": {
         "url": {

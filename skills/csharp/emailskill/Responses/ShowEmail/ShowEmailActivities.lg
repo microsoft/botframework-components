@@ -28,3 +28,10 @@
     Attachments = ${json(EmailDetailCard(emailDetails))}
     InputHint = acceptingInput
 ]
+
+# ActionPrompt
+[Activity
+    Text = ${ActionPrompt.Text()}
+    Speak = ${ActionPrompt.Text()}
+    InputHint = expectingInput
+]

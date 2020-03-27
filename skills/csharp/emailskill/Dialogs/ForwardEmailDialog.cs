@@ -110,6 +110,16 @@ namespace EmailSkill.Dialogs
                     });
 
                 await sc.Context.SendActivityAsync(reply);
+
+                if (state.IsAction)
+                {
+                    var actionResult = new ActionResult(true);
+                    await ClearConversationState(sc);
+                    return await sc.EndDialogAsync(actionResult);
+                }
+
+                await ClearConversationState(sc);
+                return await sc.EndDialogAsync(true);
             }
             catch (Exception ex)
             {
@@ -117,16 +127,6 @@ namespace EmailSkill.Dialogs
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
-
-            await ClearConversationState(sc);
-            var skillOptions = sc.Options as EmailSkillDialogOptions;
-            if (skillOptions != null && skillOptions.IsAction)
-            {
-                var actionResult = new ActionResult() { ActionSuccess = true };
-                return await sc.EndDialogAsync(actionResult);
-            }
-
-            return await sc.EndDialogAsync(true);
         }
     }
 }
