@@ -35,7 +35,6 @@ namespace MusicSkill.Dialogs
             // Initialize skill state
             var conversationState = serviceProvider.GetService<ConversationState>();
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            TelemetryClient = TelemetryClient;
             ServiceManager = serviceProvider.GetService<IServiceManager>();
 
             // NOTE: Uncomment the following if your skill requires authentication
@@ -47,15 +46,15 @@ namespace MusicSkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<SkillState> StateAccessor { get; }
 
-        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+        protected LocaleTemplateManager LocaleTemplateManager { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {

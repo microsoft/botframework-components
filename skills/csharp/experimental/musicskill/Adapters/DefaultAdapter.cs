@@ -13,6 +13,7 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.Logging;
+using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
 using SkillServiceLibrary.Utilities;
 
@@ -73,7 +74,7 @@ namespace MusicSkill.Bots
                 _telemetryClient.TrackException(exception);
 
                 // Send a message to the user.
-                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale("ErrorMessage"));
+                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale(SharedResponses.ErrorMessage));
 
                 // Send a trace activity, which will be displayed in the Bot Framework Emulator.
                 // Note: we return the entire exception in the value property to help the developer;
