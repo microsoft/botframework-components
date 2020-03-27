@@ -220,7 +220,7 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else if (cards.Count() == 1)
                 {
-                    var options = new PromptOptions { Prompt = TemplateManager.GenerateActivity(cards[0]) };
+                    var options = new PromptOptions { Prompt = TemplateManager.GenerateActivity(RouteResponses.RouteDetails, cards[0], cards[0].Data) };
 
                     if (state.DestinationActionType == DestinationActionType.ShowDirectionsThenStartNavigation)
                     {

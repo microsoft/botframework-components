@@ -11,5 +11,6 @@ namespace PointOfInterestSkill.Responses.FindPointOfInterest
     {
         // Generated accessors
         public const string PointOfInterestDetails = "PointOfInterestDetails";
+        public const string PointOfInterestDetailsNoCall = "PointOfInterestDetailsNoCall";
     }
 }
