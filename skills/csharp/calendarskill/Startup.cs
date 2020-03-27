@@ -26,6 +26,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 
 namespace CalendarSkill
 {
@@ -49,7 +50,7 @@ namespace CalendarSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -61,6 +62,12 @@ namespace CalendarSkill
             {
                 options.AllowSynchronousIO = true;
             });
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // Load settings
             var settings = new BotSettings();

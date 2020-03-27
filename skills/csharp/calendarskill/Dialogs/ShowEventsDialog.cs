@@ -11,17 +11,14 @@ using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.Summary;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using static CalendarSkill.Models.DialogOptions.ShowMeetingsDialogOptions;
 using static Microsoft.Recognizers.Text.Culture;
 
@@ -30,19 +27,9 @@ namespace CalendarSkill.Dialogs
     public class ShowEventsDialog : CalendarSkillDialogBase
     {
         public ShowEventsDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            UpdateEventDialog updateEventDialog,
-            ChangeEventStatusDialog changeEventStatusDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(ShowEventsDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(ShowEventsDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var showMeetings = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -119,19 +106,19 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.ShowEvents, showMeetings) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.SearchEvents, searchEvents) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowNextEvent, showNextMeeting) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowEventsOverview, showEventsOverview) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowEventsOverviewAgain, showEventsOverviewAgain) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowFilteredEvents, showFilteredEvents) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChangeEventStatus, changeEventStatus) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateEvent, updateEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ConnectToMeeting, connectToMeeting) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Read, readEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Reshow, reshow) { TelemetryClient = telemetryClient });
-            AddDialog(updateEventDialog ?? throw new ArgumentNullException(nameof(updateEventDialog)));
-            AddDialog(changeEventStatusDialog ?? throw new ArgumentNullException(nameof(changeEventStatusDialog)));
+            AddDialog(new WaterfallDialog(Actions.ShowEvents, showMeetings) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.SearchEvents, searchEvents) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowNextEvent, showNextMeeting) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowEventsOverview, showEventsOverview) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowEventsOverviewAgain, showEventsOverviewAgain) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowFilteredEvents, showFilteredEvents) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChangeEventStatus, changeEventStatus) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateEvent, updateEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ConnectToMeeting, connectToMeeting) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.Read, readEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.Reshow, reshow) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<UpdateEventDialog>() ?? throw new ArgumentNullException(nameof(UpdateEventDialog)));
+            AddDialog(serviceProvider.GetService<ChangeEventStatusDialog>() ?? throw new ArgumentNullException(nameof(ChangeEventStatusDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.ShowEvents;

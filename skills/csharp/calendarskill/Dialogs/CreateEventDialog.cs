@@ -12,18 +12,15 @@ using CalendarSkill.Prompts;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.CreateEvent;
 using CalendarSkill.Responses.Shared;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Extensions;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Graph;
 using static CalendarSkill.Models.CreateEventStateModel;
 
@@ -32,18 +29,9 @@ namespace CalendarSkill.Dialogs
     public class CreateEventDialog : CalendarSkillDialogBase
     {
         public CreateEventDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            FindContactDialog findContactDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(CreateEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(CreateEventDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var createEvent = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -116,20 +104,20 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CreateEvent, createEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectTitle, collectTitle) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectContent, collectContent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectLocation, collectLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.GetRecreateInfo, getRecreateInfo) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ShowRestParticipants, showRestParticipants) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CreateEvent, createEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectTitle, collectTitle) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectContent, collectContent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectLocation, collectLocation) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.GetRecreateInfo, getRecreateInfo) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowRestParticipants, showRestParticipants) { TelemetryClient = TelemetryClient });
             AddDialog(new DatePrompt(Actions.DatePromptForCreate));
             AddDialog(new TimePrompt(Actions.TimePromptForCreate));
             AddDialog(new DurationPrompt(Actions.DurationPromptForCreate));
             AddDialog(new GetRecreateInfoPrompt(Actions.GetRecreateInfoPrompt));
-            AddDialog(findContactDialog ?? throw new ArgumentNullException(nameof(findContactDialog)));
+            AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CreateEvent;

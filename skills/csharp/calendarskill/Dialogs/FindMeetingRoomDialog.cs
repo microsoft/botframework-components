@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,12 +15,9 @@ using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
 using Microsoft.Azure.Search;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Recognizers.Text.Number;
+using Microsoft.Extensions.DependencyInjection;
 using static CalendarSkill.Models.CreateEventStateModel;
 using static Microsoft.Recognizers.Text.Culture;
 
@@ -28,19 +28,10 @@ namespace CalendarSkill.Dialogs
         private ISearchService SearchService { get; set; }
 
         public FindMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindContactDialog findContactDialog,
-            IBotTelemetryClient telemetryClient,
-            ISearchService searchService,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(FindMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-            SearchService = searchService;
+            SearchService = serviceProvider.GetService<ISearchService>();
 
             // entry, get the name list
             var findMeetingRoom = new WaterfallStep[]
@@ -94,20 +85,20 @@ namespace CalendarSkill.Dialogs
                 AfterRecreateMeetingRoomPrompt
             };
 
-            AddDialog(new WaterfallDialog(Actions.FindMeetingRoom, findMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectBuilding, collectBuilding) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectFloorNumber, collectFloorNumber) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.RecreateMeetingRoom, recreatMeetingRoom) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindMeetingRoom, findMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectBuilding, collectBuilding) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectFloorNumber, collectFloorNumber) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.RecreateMeetingRoom, recreatMeetingRoom) { TelemetryClient = TelemetryClient });
             AddDialog(new DatePrompt(Actions.DatePromptForCreate));
             AddDialog(new TimePrompt(Actions.TimePromptForCreate));
             AddDialog(new DurationPrompt(Actions.DurationPromptForCreate));
-            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, services, searchService));
-            AddDialog(new GetFloorNumberPrompt(Actions.FloorNumberPromptForCreate, services));
-            AddDialog(new GetRecreateMeetingRoomInfoPrompt(Actions.RecreateMeetingRoomPrompt, services));
-            AddDialog(findContactDialog ?? throw new ArgumentNullException(nameof(findContactDialog)));
+            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, Services, SearchService));
+            AddDialog(new GetFloorNumberPrompt(Actions.FloorNumberPromptForCreate, Services));
+            AddDialog(new GetRecreateMeetingRoomInfoPrompt(Actions.RecreateMeetingRoomPrompt, Services));
+            AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             InitialDialogId = Actions.FindMeetingRoom;
         }

@@ -10,13 +10,9 @@ using CalendarSkill.Models;
 using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.TimeRemaining;
-using CalendarSkill.Services;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions.Extensions;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 
@@ -25,17 +21,9 @@ namespace CalendarSkill.Dialogs
     public class TimeRemainingDialog : CalendarSkillDialogBase
     {
         public TimeRemainingDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(TimeRemainingDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(TimeRemainingDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var timeRemain = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -44,7 +32,7 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.ShowTimeRemaining, timeRemain) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowTimeRemaining, timeRemain) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.ShowTimeRemaining;

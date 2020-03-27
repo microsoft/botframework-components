@@ -1,32 +1,24 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Responses.FindMeetingRoom;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalendarSkill.Dialogs
 {
     public class BookMeetingRoomDialog : CalendarSkillDialogBase
     {
         public BookMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindMeetingRoomDialog findMeetingRoomDialog,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(BookMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(BookMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
             var bookMeetingRoom = new WaterfallStep[]
             {
                 FindMeetingRoom,
@@ -34,8 +26,8 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
-            AddDialog(new WaterfallDialog(Actions.BookMeetingRoom, bookMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(findMeetingRoomDialog ?? throw new ArgumentNullException(nameof(findMeetingRoomDialog)));
+            AddDialog(new WaterfallDialog(Actions.BookMeetingRoom, bookMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindMeetingRoomDialog>() ?? throw new ArgumentNullException(nameof(FindMeetingRoomDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.BookMeetingRoom;

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,14 +11,11 @@ using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.FindMeetingRoom;
 using CalendarSkill.Responses.UpdateEvent;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Graph;
 
 namespace CalendarSkill.Dialogs
@@ -23,18 +23,9 @@ namespace CalendarSkill.Dialogs
     public class UpdateMeetingRoomDialog : CalendarSkillDialogBase
     {
         public UpdateMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindMeetingRoomDialog findMeetingRoomDialog,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpdateMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(UpdateMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var updateMeetingRoom = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -62,10 +53,10 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
-            AddDialog(new WaterfallDialog(Actions.UpdateMeetingRoom, updateMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = telemetryClient });
-            AddDialog(findMeetingRoomDialog ?? throw new ArgumentNullException(nameof(findMeetingRoomDialog)));
+            AddDialog(new WaterfallDialog(Actions.UpdateMeetingRoom, updateMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindMeetingRoomDialog>() ?? throw new ArgumentNullException(nameof(FindMeetingRoomDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.UpdateMeetingRoom;

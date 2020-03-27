@@ -13,13 +13,9 @@ using CalendarSkill.Options;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.UpdateEvent;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
@@ -29,17 +25,9 @@ namespace CalendarSkill.Dialogs
     public class UpdateEventDialog : CalendarSkillDialogBase
     {
         public UpdateEventDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpdateEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(UpdateEventDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var updateEvent = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -77,10 +65,10 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.UpdateEventTime, updateEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.GetNewStartTime, getNewStartTime) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateEventTime, updateEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.GetNewStartTime, getNewStartTime) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.UpdateEventTime;

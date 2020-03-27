@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,33 +11,21 @@ using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Options;
 using CalendarSkill.Responses.CheckPersonAvailable;
 using CalendarSkill.Responses.Shared;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalendarSkill.Dialogs
 {
     public class CheckPersonAvailableDialog : CalendarSkillDialogBase
     {
         public CheckPersonAvailableDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            FindContactDialog findContactDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(CheckPersonAvailableDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(CheckPersonAvailableDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkAvailable = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -65,11 +56,11 @@ namespace CalendarSkill.Dialogs
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckAvailable, checkAvailable) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindNextAvailableTime, findNextAvailableTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectTime, collectTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CreateMeetingWithAvailableTime, createMeetingWithAvailableTime) { TelemetryClient = telemetryClient });
-            AddDialog(findContactDialog ?? throw new ArgumentNullException(nameof(findContactDialog)));
+            AddDialog(new WaterfallDialog(Actions.CheckAvailable, checkAvailable) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindNextAvailableTime, findNextAvailableTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectTime, collectTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CreateMeetingWithAvailableTime, createMeetingWithAvailableTime) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckAvailable;

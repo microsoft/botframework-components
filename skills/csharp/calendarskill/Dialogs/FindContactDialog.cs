@@ -10,16 +10,13 @@ using System.Threading.Tasks;
 using CalendarSkill.Models;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Responses.CheckPersonAvailable;
-using CalendarSkill.Responses.CreateEvent;
 using CalendarSkill.Responses.FindContact;
 using CalendarSkill.Responses.Shared;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
@@ -32,17 +29,9 @@ namespace CalendarSkill.Dialogs
     public class FindContactDialog : CalendarSkillDialogBase
     {
         public FindContactDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(FindContactDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindContactDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             // entry, get the name list
             var confirmNameList = new WaterfallStep[]
             {
@@ -110,12 +99,12 @@ namespace CalendarSkill.Dialogs
                 AfterAddMoreUserPrompt
             };
 
-            AddDialog(new WaterfallDialog(Actions.ConfirmNameList, confirmNameList) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.LoopNameList, loopNameList) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ConfirmAttendee, confirmAttendee) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateName, updateName) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.SelectEmail, selectEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.AddMoreUserPrompt, addMoreUserPrompt) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ConfirmNameList, confirmNameList) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.LoopNameList, loopNameList) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ConfirmAttendee, confirmAttendee) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateName, updateName) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.SelectEmail, selectEmail) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.AddMoreUserPrompt, addMoreUserPrompt) { TelemetryClient = TelemetryClient });
             InitialDialogId = Actions.ConfirmNameList;
         }
 

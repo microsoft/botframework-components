@@ -23,18 +23,17 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Resources;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Recognizers.Text;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using Microsoft.Recognizers.Text.DateTime;
 using Microsoft.Recognizers.Text.Number;
-using SkillServiceLibrary.Utilities;
 using static CalendarSkill.Models.CreateEventStateModel;
 using static Microsoft.Recognizers.Text.Culture;
 using Constants = Microsoft.Recognizers.Text.DataTypes.TimexExpression.Constants;
@@ -47,24 +46,20 @@ namespace CalendarSkill.Dialogs
 
         public CalendarSkillDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
+            IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+
+            // Initialize skill state
+            var conversationState = serviceProvider.GetService<ConversationState>();
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
             Accessor = _conversationState.CreateProperty<CalendarSkillState>(nameof(CalendarSkillState));
-            ServiceManager = serviceManager;
-            TelemetryClient = telemetryClient;
-            TemplateManager = templateManager;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
 
-            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.TakeFurtherAction, null, Culture.English) { Style = ListStyle.SuggestedAction });
             AddDialog(new ChoicePrompt(Actions.Choice, ChoiceValidator, Culture.English) { Style = ListStyle.None, });
@@ -72,15 +67,15 @@ namespace CalendarSkill.Dialogs
             AddDialog(new GetEventPrompt(Actions.GetEventPrompt));
         }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<CalendarSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<CalendarSkillState> Accessor { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {

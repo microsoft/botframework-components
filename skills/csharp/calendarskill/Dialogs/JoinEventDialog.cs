@@ -11,15 +11,11 @@ using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.JoinEvent;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using HtmlAgilityPack;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Models;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Newtonsoft.Json;
@@ -29,17 +25,9 @@ namespace CalendarSkill.Dialogs
     public class JoinEventDialog : CalendarSkillDialogBase
     {
         public JoinEventDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(JoinEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(JoinEventDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var joinMeeting = new WaterfallStep[]
             {
                 GetAuthToken,
@@ -70,10 +58,10 @@ namespace CalendarSkill.Dialogs
                 AfterChooseEvent
             };
 
-            AddDialog(new WaterfallDialog(Actions.ConnectToMeeting, joinMeeting) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.GetEvents, getEvents) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ConnectToMeeting, joinMeeting) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.GetEvents, getEvents) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.ConnectToMeeting;

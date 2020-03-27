@@ -24,31 +24,29 @@ namespace CalendarSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<CalendarSkillState> _stateAccessor;
-        private Dialog _createEventDialog;
-        private Dialog _changeEventStatusDialog;
-        private Dialog _timeRemainingDialog;
-        private Dialog _showEventsDialog;
-        private Dialog _updateEventDialog;
-        private Dialog _joinEventDialog;
-        private Dialog _upcomingEventDialog;
-        private Dialog _checkPersonAvailableDialog;
-        private Dialog _findMeetingRoomDialog;
-        private Dialog _updateMeetingRoomDialog;
-        private Dialog _bookMeetingRoomDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<CalendarSkillState> _stateAccessor;
+        private readonly Dialog _createEventDialog;
+        private readonly Dialog _changeEventStatusDialog;
+        private readonly Dialog _timeRemainingDialog;
+        private readonly Dialog _showEventsDialog;
+        private readonly Dialog _updateEventDialog;
+        private readonly Dialog _joinEventDialog;
+        private readonly Dialog _upcomingEventDialog;
+        private readonly Dialog _checkPersonAvailableDialog;
+        private readonly Dialog _findMeetingRoomDialog;
+        private readonly Dialog _updateMeetingRoomDialog;
+        private readonly Dialog _bookMeetingRoomDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -659,7 +657,7 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private class Events
+        private static class Events
         {
             public const string DeviceStart = "DeviceStart";
             public const string CreateEvent = "CreateEvent";
