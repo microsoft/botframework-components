@@ -407,6 +407,7 @@ namespace PointOfInterestSkill.Dialogs
                     // TODO since we can only search one per search, only the 1st one is considered
                     if (entities.Keyword != null)
                     {
+                        // instance is needed for real category content
                         if (entities._instance.KeywordCategory == null || !entities._instance.KeywordCategory.Any(c => c.Text.Equals(entities.Keyword[0], StringComparison.InvariantCultureIgnoreCase)))
                         {
                             state.Keyword = entities.Keyword[0];
