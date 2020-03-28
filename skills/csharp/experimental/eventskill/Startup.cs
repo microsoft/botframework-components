@@ -72,6 +72,9 @@ namespace EventSkill
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
+
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();
             services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
