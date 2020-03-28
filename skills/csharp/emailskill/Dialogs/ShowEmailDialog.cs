@@ -13,11 +13,9 @@ using EmailSkill.Responses.Shared;
 using EmailSkill.Responses.ShowEmail;
 using EmailSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,80 +26,76 @@ namespace EmailSkill.Dialogs
     public class ShowEmailDialog : EmailSkillDialogBase
     {
         public ShowEmailDialog(
-            LocaleTemplateManager templateManager,
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(ShowEmailDialog), templateManager, serviceProvider, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(ShowEmailDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var showEmail = new WaterfallStep[]
             {
-                IfClearContextStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                Display
+                IfClearContextStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                DisplayAsync
             };
 
             var readEmail = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                ReadEmail,
-                Reshow
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ReadEmailAsync,
+                ReshowAsync
             };
 
             var deleteEmail = new WaterfallStep[]
             {
-                DeleteEmail,
-                Reshow
+                DeleteEmailAsync,
+                ReshowAsync
             };
 
             var forwardEmail = new WaterfallStep[]
             {
-                ForwardEmail,
-                Reshow
+                ForwardEmailAsync,
+                ReshowAsync
             };
 
             var replyEmail = new WaterfallStep[]
             {
-                ReplyEmail,
-                Reshow
+                ReplyEmailAsync,
+                ReshowAsync
             };
 
             var displayEmail = new WaterfallStep[]
             {
-                IfClearPagingConditionStep,
-                PagingStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowEmails,
-                PromptToHandle,
-                CheckRead,
-                HandleMore
+                IfClearPagingConditionStepAsync,
+                PagingStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowEmailsAsync,
+                PromptToHandleAsync,
+                CheckReadAsync,
+                HandleMoreAsync
             };
 
             var displayFilteredEmail = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowFilteredEmails,
-                PromptToHandle,
-                CheckRead,
-                HandleMore
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowFilteredEmailsAsync,
+                PromptToHandleAsync,
+                CheckReadAsync,
+                HandleMoreAsync
             };
 
             var redisplayEmail = new WaterfallStep[]
             {
-                PromptToReshow,
-                CheckReshow,
-                HandleMore,
+                PromptToReshowAsync,
+                CheckReshowAsync,
+                HandleMoreAsync,
             };
 
             var selectEmail = new WaterfallStep[]
             {
-                SelectEmailPrompt,
-                HandleMore
+                SelectEmailPromptAsync,
+                HandleMoreAsync
             };
 
             var forwardEmailDialog = serviceProvider.GetService<ForwardEmailDialog>();
@@ -109,26 +103,26 @@ namespace EmailSkill.Dialogs
             var deleteEmailDialog = serviceProvider.GetService<DeleteEmailDialog>();
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.Show, showEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Read, readEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Delete, deleteEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Forward, forwardEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Reply, replyEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Display, displayEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.DisplayFiltered, displayFilteredEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ReDisplay, redisplayEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.SelectEmail, selectEmail) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.Show, showEmail));
+            AddDialog(new WaterfallDialog(Actions.Read, readEmail));
+            AddDialog(new WaterfallDialog(Actions.Delete, deleteEmail));
+            AddDialog(new WaterfallDialog(Actions.Forward, forwardEmail));
+            AddDialog(new WaterfallDialog(Actions.Reply, replyEmail));
+            AddDialog(new WaterfallDialog(Actions.Display, displayEmail));
+            AddDialog(new WaterfallDialog(Actions.DisplayFiltered, displayFilteredEmail));
+            AddDialog(new WaterfallDialog(Actions.ReDisplay, redisplayEmail));
+            AddDialog(new WaterfallDialog(Actions.SelectEmail, selectEmail));
             AddDialog(deleteEmailDialog ?? throw new ArgumentNullException(nameof(deleteEmailDialog)));
             AddDialog(replyEmailDialog ?? throw new ArgumentNullException(nameof(replyEmailDialog)));
             AddDialog(forwardEmailDialog ?? throw new ArgumentNullException(nameof(forwardEmailDialog)));
             InitialDialogId = Actions.Show;
         }
 
-        protected async Task<DialogTurnResult> IfClearPagingConditionStep(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> IfClearPagingConditionStepAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 // Clear focus item
                 state.UserSelectIndex = -1;
@@ -137,105 +131,105 @@ namespace EmailSkill.Dialogs
                 state.SenderName = null;
                 state.SearchTexts = null;
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> PromptToHandle(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> PromptToHandleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOut, new { messageList = state.MessageList });
-                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
+                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> SelectEmailPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> SelectEmailPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ActionPrompt);
-                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
+                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> PromptToReshow(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> PromptToReshowAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var activity = TemplateManager.GenerateActivityForLocale(ShowEmailResponses.ReadOutMore);
-                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity });
+                return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CheckRead(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckReadAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
 
                 var topIntent = luisResult?.TopIntent().intent;
                 if (topIntent == null)
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
 
                 var userInput = sc.Context.Activity.Text;
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == true)
                 {
-                    return await sc.ReplaceDialogAsync(Actions.Read, skillOptions);
+                    return await sc.ReplaceDialogAsync(Actions.Read, skillOptions, cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ReadEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ReadEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
 
                 var userInput = sc.Context.Activity.Text;
@@ -247,10 +241,10 @@ namespace EmailSkill.Dialogs
 
                 if (topIntent == null)
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
 
-                await DigestFocusEmailAsync(sc);
+                await DigestFocusEmailAsync(sc, cancellationToken);
 
                 var message = state.Message.FirstOrDefault();
                 if (message == null)
@@ -267,7 +261,7 @@ namespace EmailSkill.Dialogs
                     || (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == true))
                     && message != null)
                 {
-                    var senderIcon = await GetUserPhotoUrlAsync(sc.Context, message.Sender.EmailAddress);
+                    var senderIcon = await GetUserPhotoUrlAsync(sc.Context, message.Sender.EmailAddress, cancellationToken);
                     var emailCard = new EmailCardData
                     {
                         Subject = message.Subject,
@@ -281,7 +275,7 @@ namespace EmailSkill.Dialogs
                         SenderIcon = senderIcon
                     };
 
-                    emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, message.ToRecipients);
+                    emailCard = await ProcessRecipientPhotoUrlAsync(sc.Context, emailCard, message.ToRecipients, cancellationToken);
                     var replyMessage = TemplateManager.GenerateActivityForLocale(
                         ShowEmailResponses.ReadOutMessage,
                         new
@@ -296,30 +290,30 @@ namespace EmailSkill.Dialogs
                     var service = ServiceManager.InitMailService(token as string, state.GetUserTimeZone(), state.MailSourceType);
                     await service.MarkMessageAsReadAsync(message.Id);
 
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CheckReshow(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckReshowAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
@@ -327,28 +321,28 @@ namespace EmailSkill.Dialogs
                 var promptRecognizerResult = ConfirmRecognizerHelper.ConfirmYesOrNo(userInput, sc.Context.Activity.Locale);
                 if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == true)
                 {
-                    return await sc.ReplaceDialogAsync(Actions.Display, skillOptions);
+                    return await sc.ReplaceDialogAsync(Actions.Display, skillOptions, cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> HandleMore(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> HandleMoreAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
                 var topIntent = luisResult?.TopIntent().intent;
 
@@ -356,12 +350,12 @@ namespace EmailSkill.Dialogs
                 var topGeneralIntent = generalIntent?.TopIntent().intent;
                 if (topIntent == null)
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
 
                 var userInput = sc.Context.Activity.Text;
 
-                await DigestFocusEmailAsync(sc);
+                await DigestFocusEmailAsync(sc, cancellationToken);
 
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
@@ -372,7 +366,7 @@ namespace EmailSkill.Dialogs
                 {
                     if (state.Message.Count == 0 && state.MessageList.Count > 1)
                     {
-                        return await sc.ReplaceDialogAsync(Actions.SelectEmail, skillOptions);
+                        return await sc.ReplaceDialogAsync(Actions.SelectEmail, skillOptions, cancellationToken);
                     }
                     else
                     {
@@ -383,15 +377,15 @@ namespace EmailSkill.Dialogs
 
                         if (topIntent == EmailLuis.Intent.Delete)
                         {
-                            return await sc.BeginDialogAsync(Actions.Delete, skillOptions);
+                            return await sc.BeginDialogAsync(Actions.Delete, skillOptions, cancellationToken);
                         }
                         else if (topIntent == EmailLuis.Intent.Forward)
                         {
-                            return await sc.BeginDialogAsync(Actions.Forward, skillOptions);
+                            return await sc.BeginDialogAsync(Actions.Forward, skillOptions, cancellationToken);
                         }
                         else if (topIntent == EmailLuis.Intent.Reply)
                         {
-                            return await sc.BeginDialogAsync(Actions.Reply, skillOptions);
+                            return await sc.BeginDialogAsync(Actions.Reply, skillOptions, cancellationToken);
                         }
                     }
                 }
@@ -403,83 +397,83 @@ namespace EmailSkill.Dialogs
                 }
                 else
                 {
-                    await DigestEmailLuisResult(sc, true);
-                    await SearchEmailsFromList(sc, cancellationToken);
+                    await DigestEmailLuisResultAsync(sc, true, cancellationToken);
+                    await SearchEmailsFromListAsync(sc, cancellationToken);
 
                     if (state.MessageList.Count > 0)
                     {
-                        return await sc.ReplaceDialogAsync(Actions.DisplayFiltered, skillOptions);
+                        return await sc.ReplaceDialogAsync(Actions.DisplayFiltered, skillOptions, cancellationToken);
                     }
 
                     var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(true);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> DeleteEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DeleteEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
-                return await sc.BeginDialogAsync(nameof(DeleteEmailDialog), skillOptions);
+                return await sc.BeginDialogAsync(nameof(DeleteEmailDialog), skillOptions, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ForwardEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ForwardEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
-                return await sc.BeginDialogAsync(nameof(ForwardEmailDialog), skillOptions);
+                return await sc.BeginDialogAsync(nameof(ForwardEmailDialog), skillOptions, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ReplyEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ReplyEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
                 skillOptions.SubFlowMode = true;
 
-                return await sc.BeginDialogAsync(nameof(ReplyEmailDialog), skillOptions);
+                return await sc.BeginDialogAsync(nameof(ReplyEmailDialog), skillOptions, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> Display(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DisplayAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = sc.Options as EmailSkillDialogOptions;
                 if (state.IsAction)
                 {
@@ -512,39 +506,39 @@ namespace EmailSkill.Dialogs
 
                     actionResult.ActionSuccess = true;
 
-                    return await sc.EndDialogAsync(actionResult);
+                    return await sc.EndDialogAsync(actionResult, cancellationToken);
                 }
 
-                return await sc.ReplaceDialogAsync(Actions.Display, options);
+                return await sc.ReplaceDialogAsync(Actions.Display, options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> Reshow(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ReshowAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var skillOptions = (EmailSkillDialogOptions)sc.Options;
-                return await sc.ReplaceDialogAsync(Actions.ReDisplay, skillOptions);
+                return await sc.ReplaceDialogAsync(Actions.ReDisplay, skillOptions, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ShowFilteredEmails(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ShowFilteredEmailsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 if (state.MessageList.Count > 0)
                 {
@@ -564,40 +558,40 @@ namespace EmailSkill.Dialogs
                                 }
                             }
 
-                            await ShowMailList(sc, state.MessageList, state.MessageList.Count(), importCount, cancellationToken);
-                            return await sc.NextAsync();
+                            await ShowMailListAsync(sc, state.MessageList, state.MessageList.Count(), importCount, cancellationToken);
+                            return await sc.NextAsync(cancellationToken: cancellationToken);
                         }
                         else if (state.MessageList.Count == 1)
                         {
-                            return await sc.ReplaceDialogAsync(Actions.Read, options: sc.Options);
+                            return await sc.ReplaceDialogAsync(Actions.Read, options: sc.Options, cancellationToken);
                         }
                     }
                     else
                     {
-                        return await sc.ReplaceDialogAsync(Actions.Read, options: sc.Options);
+                        return await sc.ReplaceDialogAsync(Actions.Read, options: sc.Options, cancellationToken);
                     }
 
                     var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(true);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
                 else
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailNotFound);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

@@ -22,7 +22,7 @@ namespace EmailSkill.Tests.Flow.Fakes
         private GeneralTestUtterances generalUtterancesManager;
 
         public MockGeneralLuisRecognizer()
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.generalUtterancesManager = new GeneralTestUtterances();
         }
