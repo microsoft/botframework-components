@@ -76,7 +76,7 @@ namespace BingSearchSkill.Bots
                 _telemetryClient.TrackException(exception);
 
                 // Send a message to the user.
-                await turnContext.SendActivityAsync(_templateManager.GenerateActivityForLocale("ErrorMessage"));
+                await turnContext.SendActivityAsync(_templateManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
 
                 // Send a trace activity, which will be displayed in the Bot Framework Emulator.
                 // Note: we return the entire exception in the value property to help the developer;

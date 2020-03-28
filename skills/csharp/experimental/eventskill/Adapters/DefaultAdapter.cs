@@ -77,7 +77,7 @@ namespace EventSkill.Bots
                 // Send a message to the user.
                 CultureInfo.CurrentUICulture = new CultureInfo(turnContext.Activity.Locale ?? "en-us");
                 await turnContext.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.ErrorMessage));
-                await turnContext.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Phone Skill Error: {exception.Message} | {exception.StackTrace}"));
+                await turnContext.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Event Skill Error: {exception.Message} | {exception.StackTrace}"));
 
                 _telemetryClient.TrackException(exception);
 
