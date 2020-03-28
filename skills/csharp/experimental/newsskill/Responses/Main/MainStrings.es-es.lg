@@ -77,3 +77,8 @@
     Speak = ${MarketRetryPrompt.Text(Data)}
 ]
 
+# FeatuerNotAvailable(Data, Cards, Layout)
+[Activity
+    Text = ${FeatureNotAvailable.Text(Data)}
+    Speak = ${FeatureNotAvailable.Text(Data)}
+]

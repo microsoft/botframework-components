@@ -18,46 +18,38 @@ namespace NewsSkill.Dialogs
         private NewsClient _client;
 
         public TrendingArticlesDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            AzureMapsService mapsService,
-            LocaleTemplateManager templateManager,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(TrendingArticlesDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(TrendingArticlesDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
-            var key = settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            var key = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
             _client = new NewsClient(key);
 
             var trendingArticles = new WaterfallStep[]
             {
-                GetMarket,
-                SetMarket,
-                ShowArticles,
+                GetMarketAsync,
+                SetMarketAsync,
+                ShowArticlesAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(TrendingArticlesDialog), trendingArticles));
             AddDialog(new TextPrompt(nameof(TextPrompt), MarketPromptValidatorAsync));
         }
 
-        private async Task<DialogTurnResult> ShowArticles(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowArticlesAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
-            var articles = await _client.GetTrendingNews(userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, templateManager, articles));
+            var articles = await _client.GetTrendingNewsAsync(userState.Market);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, TemplateManager, articles), cancellationToken);
 
-            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
             if (state.IsAction)
             {
-                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
     }
 }
