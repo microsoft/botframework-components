@@ -28,28 +28,28 @@ namespace CalendarSkill.Dialogs
         {
             var updateMeetingRoom = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckFocusedEvent,
-                FindMeetingRoom,
-                GetAuthToken,
-                AfterGetAuthToken,
-                UpdateMeetingRoom
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckFocusedEventAsync,
+                FindMeetingRoomAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                UpdateMeetingRoomAsync
             };
 
             var findEvent = new WaterfallStep[]
             {
-                SearchEventsWithEntities,
-                GetEventsPrompt,
-                AfterGetEventsPrompt,
-                AddConflictFlag,
-                ChooseEvent
+                SearchEventsWithEntitiesAsync,
+                GetEventsPromptAsync,
+                AfterGetEventsPromptAsync,
+                AddConflictFlagAsync,
+                ChooseEventAsync
             };
 
             var chooseEvent = new WaterfallStep[]
             {
-                ChooseEventPrompt,
-                AfterChooseEvent
+                ChooseEventPromptAsync,
+                AfterChooseEventAsync
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
@@ -62,7 +62,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.UpdateMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> FindMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> FindMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -85,12 +85,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> UpdateMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> UpdateMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -121,7 +121,7 @@ namespace CalendarSkill.Dialogs
                 {
                     if (state.MeetingInfo.MeetingRoom == null)
                     {
-                        throw new NullReferenceException("UpdateMeetingRoom received a null MeetingRoom.");
+                        throw new NullReferenceException("UpdateMeetingRoomAsync received a null MeetingRoom.");
                     }
 
                     attendees.Add(new EventModel.Attendee
@@ -171,12 +171,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> GetEventsPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetEventsPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -203,7 +203,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

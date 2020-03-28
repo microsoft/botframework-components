@@ -27,31 +27,31 @@ namespace CalendarSkill.Dialogs
         {
             var changeEventStatus = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckFocusedEvent,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ConfirmBeforeAction,
-                AfterConfirmBeforeAction,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ChangeEventStatus
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckFocusedEventAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ConfirmBeforeActionAsync,
+                AfterConfirmBeforeActionAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ChangeEventStatusAsync
             };
 
             var findEvent = new WaterfallStep[]
             {
-                SearchEventsWithEntities,
-                GetEvents,
-                AfterGetEventsPrompt,
-                AddConflictFlag,
-                ChooseEvent
+                SearchEventsWithEntitiesAsync,
+                GetEventsAsync,
+                AfterGetEventsPromptAsync,
+                AddConflictFlagAsync,
+                ChooseEventAsync
             };
 
             var chooseEvent = new WaterfallStep[]
             {
-                ChooseEventPrompt,
-                AfterChooseEvent
+                ChooseEventPromptAsync,
+                AfterChooseEventAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.ChangeEventStatus, changeEventStatus) { TelemetryClient = TelemetryClient });
@@ -62,7 +62,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.ChangeEventStatus;
         }
 
-        private async Task<DialogTurnResult> ConfirmBeforeAction(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ConfirmBeforeActionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -101,12 +101,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmBeforeAction(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmBeforeActionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -135,12 +135,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> ChangeEventStatus(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ChangeEventStatusAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -187,17 +187,17 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> GetEvents(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetEventsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -238,12 +238,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

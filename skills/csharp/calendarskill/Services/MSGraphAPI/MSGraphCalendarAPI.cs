@@ -21,9 +21,9 @@ namespace CalendarSkill.Services.MSGraphAPI
         }
 
         /// <inheritdoc/>
-        public async Task<EventModel> CreateEventAysnc(EventModel newEvent)
+        public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
-            Event new_event = await CreateEvent(newEvent.Value);
+            Event new_event = await CreateEventAsync(newEvent.Value);
             if (new_event == null)
             {
                 return null;
@@ -102,7 +102,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         /// <inheritdoc/>
         public async Task<EventModel> UpdateEventByIdAsync(EventModel updateEvent)
         {
-            return new EventModel(await this.UpdateEvent(updateEvent.Value));
+            return new EventModel(await this.UpdateEventAsync(updateEvent.Value));
         }
 
         /// <inheritdoc/>
@@ -143,7 +143,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         }
 
         // Check the availability of people/rooms with corresponding emails on condition of startTime and duration.
-        public async Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval)
+        public async Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval)
         {
             try
             {
@@ -290,7 +290,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         /// </summary>
         /// <param name="updateEvent">new event info.</param>
         /// <returns>The updated event.</returns>
-        private async Task<Event> UpdateEvent(Event updateEvent)
+        private async Task<Event> UpdateEventAsync(Event updateEvent)
         {
             try
             {
@@ -424,7 +424,7 @@ namespace CalendarSkill.Services.MSGraphAPI
             return items;
         }
 
-        private async Task<Event> CreateEvent(Event newEvent)
+        private async Task<Event> CreateEventAsync(Event newEvent)
         {
             try
             {

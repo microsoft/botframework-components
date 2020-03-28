@@ -35,16 +35,16 @@ namespace CalendarSkill.Dialogs
             // entry, get the name list
             var confirmNameList = new WaterfallStep[]
             {
-                ConfirmNameList,
-                AfterConfirmNameList,
+                ConfirmNameListAsync,
+                AfterConfirmNameListAsync,
             };
 
             // go through the name list, replace the confirmNameList
             // set state.MeetingInfo.ContactInfor.CurrentContactName
             var loopNameList = new WaterfallStep[]
             {
-                LoopNameList,
-                AfterLoopNameList
+                LoopNameListAsync,
+                AfterLoopNameListAsync
             };
 
             // check on the attendee of state.MeetingInfo.ContactInfor.CurrentContactName.
@@ -53,16 +53,16 @@ namespace CalendarSkill.Dialogs
             {
                 // call updateName to get the person state.MeetingInfo.ContactInfor.ConfirmedContact.
                 // state.MeetingInfo.ContactInfor.ConfirmedContact should be set after this step
-                ConfirmName,
+                ConfirmNameAsync,
 
                 // check if the state.MeetingInfo.ContactInfor.ConfirmedContact
                 //  - null : failed to parse this name for multiple try.
                 //  - one email : check if this one is wanted
                 //  - multiple emails : call selectEmail
-                ConfirmEmail,
+                ConfirmEmailAsync,
 
                 // if got no on last step, replace/restart this flow.
-                AfterConfirmEmail
+                AfterConfirmEmailAsync
             };
 
             // use the user name of state.MeetingInfo.ContactInfor.CurrentContactName or user input to find the persons.
@@ -73,30 +73,30 @@ namespace CalendarSkill.Dialogs
                 // check whether should the bot ask for attendee name.
                 // if called by confirmAttendee then skip this step.
                 // if called by itself when can not find the last input, it will ask back or end this one when multiple try.
-                UpdateUserName,
+                UpdateUserNameAsync,
 
                 // check if email. add email direct into attendee and set state.MeetingInfo.ContactInfor.ConfirmedContact null.
                 // if not, search for the attendee.
                 // if got multiple persons, call selectPerson. use replace
                 // if got no person, replace/restart this flow.
-                AfterUpdateUserName,
-                GetAuthToken,
-                AfterGetAuthToken,
-                GetUserFromUserName
+                AfterUpdateUserNameAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                GetUserFromUserNameAsync
             };
 
             // select email.
             // called by ConfirmEmail
             var selectEmail = new WaterfallStep[]
             {
-                SelectEmail,
-                AfterSelectEmail
+                SelectEmailAsync,
+                AfterSelectEmailAsync
             };
 
             var addMoreUserPrompt = new WaterfallStep[]
             {
-                AddMoreUserPrompt,
-                AfterAddMoreUserPrompt
+                AddMoreUserPromptAsync,
+                AfterAddMoreUserPromptAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.ConfirmNameList, confirmNameList) { TelemetryClient = TelemetryClient });
@@ -108,7 +108,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.ConfirmNameList;
         }
 
-        private async Task<DialogTurnResult> ConfirmNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ConfirmNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -158,13 +158,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -224,13 +224,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> LoopNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> LoopNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -261,13 +261,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterLoopNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterLoopNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -279,13 +279,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> ConfirmName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ConfirmNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -302,19 +302,19 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException skillEx)
             {
-                await HandleDialogExceptions(sc, skillEx);
+                await HandleDialogExceptionsAsync(sc, skillEx);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> ConfirmEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ConfirmEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -335,12 +335,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -350,7 +350,7 @@ namespace CalendarSkill.Dialogs
                 var result = sc.Result as string;
 
                 // Highest probability
-                if (!(state.InitialIntent == CalendarLuis.Intent.CheckAvailability) && (string.IsNullOrEmpty(result) || !result.Equals(nameof(AfterSelectEmail))))
+                if (!(state.InitialIntent == CalendarLuis.Intent.CheckAvailability) && (string.IsNullOrEmpty(result) || !result.Equals(nameof(AfterSelectEmailAsync))))
                 {
                     var name = confirmedPerson.DisplayName;
                     var userString = string.Empty;
@@ -385,13 +385,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> UpdateUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> UpdateUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -446,13 +446,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterUpdateUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterUpdateUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -492,12 +492,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> GetUserFromUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetUserFromUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -638,19 +638,19 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException skillEx)
             {
-                await HandleDialogExceptions(sc, skillEx);
+                await HandleDialogExceptionsAsync(sc, skillEx);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> SelectEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> SelectEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -681,22 +681,22 @@ namespace CalendarSkill.Dialogs
 
                 if (emailCount <= ConfigData.GetInstance().MaxDisplaySize)
                 {
-                    return await sc.PromptAsync(Actions.Choice, await GenerateOptionsForEmail(sc, unconfirmedPerson, sc.Context, true));
+                    return await sc.PromptAsync(Actions.Choice, await GenerateOptionsForEmailAsync(sc, unconfirmedPerson, sc.Context, true));
                 }
                 else
                 {
-                    return await sc.PromptAsync(Actions.Choice, await GenerateOptionsForEmail(sc, unconfirmedPerson, sc.Context, false));
+                    return await sc.PromptAsync(Actions.Choice, await GenerateOptionsForEmailAsync(sc, unconfirmedPerson, sc.Context, false));
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterSelectEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterSelectEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -754,7 +754,7 @@ namespace CalendarSkill.Dialogs
                         Email = choiceResult.Split(": ")[1]
                     });
                     await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(nameof(AfterSelectEmail));
+                    return await sc.EndDialogAsync(nameof(AfterSelectEmailAsync));
                 }
                 else
                 {
@@ -764,13 +764,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AddMoreUserPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AddMoreUserPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -783,13 +783,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterAddMoreUserPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterAddMoreUserPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -807,13 +807,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<PromptOptions> GenerateOptionsForEmail(WaterfallStepContext sc, List<CustomizedPerson> unconfirmedPerson, ITurnContext context, bool isSinglePage = true)
+        private async Task<PromptOptions> GenerateOptionsForEmailAsync(WaterfallStepContext sc, List<CustomizedPerson> unconfirmedPerson, ITurnContext context, bool isSinglePage = true)
         {
             var state = await Accessor.GetAsync(context);
             var pageIndex = state.MeetingInfo.ContactInfor.ShowContactsIndex;
@@ -924,7 +924,7 @@ namespace CalendarSkill.Dialogs
             return result;
         }
 
-        private class PronounType
+        private static class PronounType
         {
             public const string FirstPerson = "FirstPerson";
             public const string ThirdPerson = "ThirdPerson";

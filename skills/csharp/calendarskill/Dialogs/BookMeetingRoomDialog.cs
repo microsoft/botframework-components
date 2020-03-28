@@ -21,8 +21,8 @@ namespace CalendarSkill.Dialogs
         {
             var bookMeetingRoom = new WaterfallStep[]
             {
-                FindMeetingRoom,
-                CreateMeeting
+                FindMeetingRoomAsync,
+                CreateMeetingAsync
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
@@ -33,7 +33,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.BookMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> FindMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> FindMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -54,12 +54,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CreateMeeting(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CreateMeetingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -75,7 +75,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

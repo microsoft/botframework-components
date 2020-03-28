@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using CalendarSkill.Responses.Shared;
 using CalendarSkill.Services;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Azure;
@@ -73,7 +74,7 @@ namespace CalendarSkill.Adapters
                 _telemetryClient.TrackException(exception);
 
                 // Send a message to the user.
-                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale("ErrorMessage"));
+                await turnContext.SendActivityAsync(_templateEngine.GenerateActivityForLocale(CalendarSharedResponses.CalendarErrorMessage));
 
                 // Send a trace activity, which will be displayed in the Bot Framework Emulator.
                 // Note: we return the entire exception in the value property to help the developer;

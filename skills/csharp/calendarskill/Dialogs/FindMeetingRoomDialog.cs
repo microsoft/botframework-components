@@ -36,53 +36,53 @@ namespace CalendarSkill.Dialogs
             // entry, get the name list
             var findMeetingRoom = new WaterfallStep[]
             {
-                CollectStartDate,
-                CollectStartTime,
-                CollectDuration,
-                CollectBuilding,
-                CollectFloorNumber,
-                GetMeetingRooms,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckRoomAvailable,
-                CheckRoomRejected,
-                AfterConfirmMeetingRoom
+                CollectStartDatetAsync,
+                CollectStartTimeAsync,
+                CollectDurationAsync,
+                CollectBuildingAsync,
+                CollectFloorNumberAsync,
+                GetMeetingRoomsAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckRoomAvailableAsync,
+                CheckRoomRejectedAsync,
+                AfterConfirmMeetingRoomAsync
             };
 
             var updateStartDate = new WaterfallStep[]
             {
-                UpdateStartDateForCreate,
-                AfterUpdateStartDateForCreate,
+                UpdateStartDateForCreateAsync,
+                AfterUpdateStartDateForCreateAsync,
             };
 
             var updateStartTime = new WaterfallStep[]
             {
-                UpdateStartTimeForCreate,
-                AfterUpdateStartTimeForCreate,
+                UpdateStartTimeForCreateAsync,
+                AfterUpdateStartTimeForCreateAsync,
             };
 
             var updateDuration = new WaterfallStep[]
             {
-                UpdateDurationForCreate,
-                AfterUpdateDurationForCreate,
+                UpdateDurationForCreateAsync,
+                AfterUpdateDurationForCreateAsync,
             };
 
             var collectBuilding = new WaterfallStep[]
             {
-                CollectBuildingPrompt,
-                AfterCollectBuildingPrompt
+                CollectBuildingPromptAsync,
+                AfterCollectBuildingPromptAsync
             };
 
             var collectFloorNumber = new WaterfallStep[]
             {
-                CollectFloorNumberPrompt,
-                AfterCollectFloorNumberPrompt
+                CollectFloorNumberPromptAsync,
+                AfterCollectFloorNumberPromptAsync
             };
 
             var recreatMeetingRoom = new WaterfallStep[]
             {
-                RecreateMeetingRoomPrompt,
-                AfterRecreateMeetingRoomPrompt
+                RecreateMeetingRoomPromptAsync,
+                AfterRecreateMeetingRoomPromptAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.FindMeetingRoom, findMeetingRoom) { TelemetryClient = TelemetryClient });
@@ -103,7 +103,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.FindMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> CollectBuilding(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectBuildingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -119,12 +119,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectBuildingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectBuildingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -155,12 +155,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterCollectBuildingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCollectBuildingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -205,12 +205,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectFloorNumber(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectFloorNumberAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -226,12 +226,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectFloorNumberPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectFloorNumberPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -246,12 +246,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterCollectFloorNumberPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCollectFloorNumberPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -279,13 +279,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Get the rooms with given conditions.
-        private async Task<DialogTurnResult> GetMeetingRooms(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetMeetingRoomsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -333,13 +333,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Check whether the candidate rooms are free.
-        private async Task<DialogTurnResult> CheckRoomAvailable(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckRoomAvailableAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -354,7 +354,7 @@ namespace CalendarSkill.Dialogs
                 }
 
                 // roomAvailablility indicates whether the room is free.
-                List<bool> roomAvailablity = await service.CheckAvailable(users, (DateTime)state.MeetingInfo.StartDateTime, state.MeetingInfo.Duration / 60);
+                List<bool> roomAvailablity = await service.CheckAvailableAsync(users, (DateTime)state.MeetingInfo.StartDateTime, state.MeetingInfo.Duration / 60);
                 List<RoomModel> meetingRooms = new List<RoomModel>();
                 for (int i = 0; i < state.MeetingInfo.UnconfirmedMeetingRoom.Count(); i++)
                 {
@@ -395,14 +395,14 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // If the room has been rejected, it needs to be filterd.
-        private async Task<DialogTurnResult> CheckRoomRejected(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckRoomRejectedAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -439,13 +439,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -466,13 +466,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> RecreateMeetingRoomPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> RecreateMeetingRoomPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -485,12 +485,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterRecreateMeetingRoomPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterRecreateMeetingRoomPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -592,7 +592,7 @@ namespace CalendarSkill.Dialogs
                         default:
                             {
                                 // should not go to this part. place an error handling for save.
-                                await HandleDialogExceptions(sc, new Exception("Get unexpect state in recreate."));
+                                await HandleDialogExceptionsAsync(sc, new Exception("Get unexpect state in recreate."));
                                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                             }
                     }
@@ -609,7 +609,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

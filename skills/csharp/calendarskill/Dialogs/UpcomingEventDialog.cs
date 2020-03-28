@@ -35,9 +35,9 @@ namespace CalendarSkill.Dialogs
 
             var upcomingMeeting = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                QueueUpcomingEventWorker
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                QueueUpcomingEventWorkerAsync
             };
 
             // Define the conversation flow using a waterfall model.
@@ -47,7 +47,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.ShowUpcomingMeeting;
         }
 
-        private async Task<DialogTurnResult> QueueUpcomingEventWorker(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> QueueUpcomingEventWorkerAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -77,7 +77,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 throw;
             }
         }

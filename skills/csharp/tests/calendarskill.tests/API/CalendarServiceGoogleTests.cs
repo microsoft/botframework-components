@@ -50,7 +50,7 @@ namespace CalendarSkill.Test.API
             {
                 Id = "create_event"
             };
-            EventModel createResult = await calendarService.CreateEventAysnc(createEvent);
+            EventModel createResult = await calendarService.CreateEventAsync(createEvent);
             Assert.IsTrue(createEvent.Id == createResult.Id);
         }
 

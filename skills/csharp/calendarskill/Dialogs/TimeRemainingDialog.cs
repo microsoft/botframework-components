@@ -26,9 +26,9 @@ namespace CalendarSkill.Dialogs
         {
             var timeRemain = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckTimeRemain,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckTimeRemainAsync,
             };
 
             // Define the conversation flow using a waterfall model.
@@ -38,7 +38,7 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.ShowTimeRemaining;
         }
 
-        private async Task<DialogTurnResult> CheckTimeRemain(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckTimeRemainAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -180,12 +180,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

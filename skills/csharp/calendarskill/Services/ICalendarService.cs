@@ -19,7 +19,7 @@ namespace CalendarSkill.Services
         /// </summary>
         /// <param name="newEvent">event info to create.</param>
         /// <returns>the created meeting.</returns>
-        Task<EventModel> CreateEventAysnc(EventModel newEvent);
+        Task<EventModel> CreateEventAsync(EventModel newEvent);
 
         /// <summary>
         /// Get the meetings that start time after now. Order by start time.
@@ -95,7 +95,7 @@ namespace CalendarSkill.Services
         /// <param name="startTime">the start time.</param>
         /// <param name="availabilityViewInterval">the availability View Interval.</param>
         /// <returns>complete task.</returns>
-        Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval);
+        Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval);
 
     }
 }
