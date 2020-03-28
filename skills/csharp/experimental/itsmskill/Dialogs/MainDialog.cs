@@ -320,7 +320,7 @@ namespace ITSMSkill.Dialogs
                 }
                 else
                 {
-                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."), cancellationToken);
+                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: "An event with no name was received but not processed."), cancellationToken);
                 }
             }
 
