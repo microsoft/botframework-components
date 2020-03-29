@@ -37,7 +37,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 DateTime dateNow = TimeConverter.ConvertUtcToUserTime(DateTime.UtcNow, state.GetUserTimeZone());
 
                 // With no info about Time in user's query, we will use "right now" here. Or we will collect all the time info in FindMeetingRoomDialog.
@@ -54,7 +54,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -63,19 +63,19 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.MeetingInfo.MeetingRoom == null)
                 {
                     throw new NullReferenceException("CreateMeeting received a null MeetingRoom.");
                 }
 
                 var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmedMeetingRoom);
-                await sc.Context.SendActivityAsync(activity);
-                return await sc.ReplaceDialogAsync(nameof(CreateEventDialog), sc.Options);
+                await sc.Context.SendActivityAsync(activity, cancellationToken);
+                return await sc.ReplaceDialogAsync(nameof(CreateEventDialog), sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

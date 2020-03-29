@@ -127,11 +127,11 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.GetEvents, sc.Options);
+                return await sc.BeginDialogAsync(Actions.GetEvents, sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -140,14 +140,14 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.ShowMeetingInfo.FocusedEvents.Any())
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -163,12 +163,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -177,7 +177,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 var validEvents = new List<EventModel>();
                 foreach (var item in state.ShowMeetingInfo.ShowingMeetings)
@@ -191,16 +191,16 @@ namespace CalendarSkill.Dialogs
                 state.ShowMeetingInfo.ShowingMeetings = validEvents;
                 if (validEvents.Any())
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.BeginDialogAsync(Actions.GetEvents, sc.Options);
+                    return await sc.BeginDialogAsync(Actions.GetEvents, sc.Options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -209,7 +209,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 var selectedEvent = state.ShowMeetingInfo.FocusedEvents.First();
                 var phoneNumber = GetDialInNumberFromMeeting(selectedEvent);
@@ -225,11 +225,11 @@ namespace CalendarSkill.Dialogs
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions()
                 {
                     Prompt = TemplateManager.GenerateActivityForLocale(responseName, responseParams) as Activity,
-                });
+                }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -238,7 +238,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (CalendarSkillDialogOptions)sc.Options;
                 var status = false;
                 if (sc.Result is bool)
@@ -247,7 +247,7 @@ namespace CalendarSkill.Dialogs
                     {
                         var selectedEvent = state.ShowMeetingInfo.FocusedEvents.First();
                         var activity = TemplateManager.GenerateActivityForLocale(JoinEventResponses.JoinMeeting);
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                         var replyEvent = sc.Context.Activity.CreateReply();
                         replyEvent.Type = ActivityTypes.Event;
                         replyEvent.Name = "OpenDefaultApp";
@@ -263,7 +263,7 @@ namespace CalendarSkill.Dialogs
                     else
                     {
                         var activity = TemplateManager.GenerateActivityForLocale(JoinEventResponses.NotJoinMeeting);
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                     }
                 }
 
@@ -274,19 +274,19 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = status });
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = status }, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

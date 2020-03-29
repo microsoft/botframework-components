@@ -78,15 +78,15 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 if (state.ShowMeetingInfo.FocusedEvents.Any())
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -102,12 +102,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -116,11 +116,11 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.GetNewStartTime, sc.Options);
+                return await sc.BeginDialogAsync(Actions.GetNewStartTime, sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -129,24 +129,24 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var newStartTime = (DateTime)state.UpdateMeetingInfo.NewStartDateTime;
                 var origin = state.ShowMeetingInfo.FocusedEvents[0];
                 var last = origin.EndTime - origin.StartTime;
                 origin.StartTime = newStartTime;
                 origin.EndTime = (newStartTime + last).AddSeconds(1);
 
-                var replyMessage = await GetDetailMeetingResponseAsync(sc, origin, UpdateEventResponses.ConfirmUpdate);
+                var replyMessage = await GetDetailMeetingResponseAsync(sc, origin, UpdateEventResponses.ConfirmUpdate, cancellationToken);
 
                 return await sc.PromptAsync(Actions.TakeFurtherAction, new PromptOptions
                 {
                     Prompt = replyMessage,
                     RetryPrompt = TemplateManager.GenerateActivityForLocale(UpdateEventResponses.ConfirmUpdateFailed) as Activity,
-                });
+                }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -155,12 +155,12 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (CalendarSkillDialogOptions)sc.Options;
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -173,12 +173,12 @@ namespace CalendarSkill.Dialogs
                         state.Clear();
                     }
 
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -187,7 +187,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (CalendarSkillDialogOptions)sc.Options;
 
                 var newStartTime = (DateTime)state.UpdateMeetingInfo.NewStartDateTime;
@@ -208,9 +208,9 @@ namespace CalendarSkill.Dialogs
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
                 var newEvent = await calendarService.UpdateEventByIdAsync(updateEvent);
 
-                var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, UpdateEventResponses.EventUpdated);
+                var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, UpdateEventResponses.EventUpdated, cancellationToken);
 
-                await sc.Context.SendActivityAsync(replyMessage);
+                await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 if (options != null && options.SubFlowMode)
                 {
                     state.UpdateMeetingInfo.Clear();
@@ -218,19 +218,19 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true });
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true }, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -239,10 +239,10 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.UpdateMeetingInfo.NewStartDate.Any() || state.UpdateMeetingInfo.NewStartTime.Any() || state.UpdateMeetingInfo.MoveTimeSpan != 0)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 return await sc.PromptAsync(Actions.TimePrompt, new TimePromptOptions
@@ -255,7 +255,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -264,7 +264,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.UpdateMeetingInfo.NewStartDate.Any() || state.UpdateMeetingInfo.NewStartTime.Any() || state.UpdateMeetingInfo.MoveTimeSpan != 0)
                 {
                     var originalEvent = state.ShowMeetingInfo.FocusedEvents[0];
@@ -315,12 +315,12 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        return await sc.BeginDialogAsync(Actions.GetNewStartTime, new UpdateDateTimeDialogOptions(UpdateDateTimeDialogOptions.UpdateReason.NotFound));
+                        return await sc.BeginDialogAsync(Actions.GetNewStartTime, new UpdateDateTimeDialogOptions(UpdateDateTimeDialogOptions.UpdateReason.NotFound), cancellationToken);
                     }
 
                     state.UpdateMeetingInfo.NewStartDateTime = TimeZoneInfo.ConvertTimeToUtc(state.UpdateMeetingInfo.NewStartDateTime.Value, state.GetUserTimeZone());
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (sc.Result != null)
                 {
@@ -379,24 +379,24 @@ namespace CalendarSkill.Dialogs
                     {
                         state.UpdateMeetingInfo.NewStartDateTime = newStartTime;
 
-                        return await sc.EndDialogAsync();
+                        return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                     }
                     else
                     {
-                        return await sc.BeginDialogAsync(Actions.GetNewStartTime, new UpdateDateTimeDialogOptions(UpdateDateTimeDialogOptions.UpdateReason.NotADateTime));
+                        return await sc.BeginDialogAsync(Actions.GetNewStartTime, new UpdateDateTimeDialogOptions(UpdateDateTimeDialogOptions.UpdateReason.NotADateTime), cancellationToken);
                     }
                 }
                 else
                 {
                     // user has tried 5 times but can't get result
                     var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.CancelAllDialogsAsync();
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    return await sc.CancelAllDialogsAsync(cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

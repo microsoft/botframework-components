@@ -51,7 +51,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var calendarState = await Accessor.GetAsync(sc.Context, () => new CalendarSkillState());
+                var calendarState = await Accessor.GetAsync(sc.Context, () => new CalendarSkillState(), cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var apiToken);
 
                 if (!string.IsNullOrWhiteSpace((string)apiToken))
@@ -77,7 +77,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 throw;
             }
         }
@@ -86,14 +86,14 @@ namespace CalendarSkill.Dialogs
         {
             return async (eventModel, cancellationToken) =>
             {
-                await sc.Context.Adapter.ContinueConversationAsync(Settings.MicrosoftAppId, proactiveModel[MD5Util.ComputeHash(userId)].Conversation, UpcomingEventContinueConversationCallback(eventModel, sc), cancellationToken);
+                await sc.Context.Adapter.ContinueConversationAsync(Settings.MicrosoftAppId, proactiveModel[MD5Util.ComputeHash(userId)].Conversation, UpcomingEventContinueConversationCallback(eventModel, sc, cancellationToken), cancellationToken);
             };
         }
 
         // Creates the turn logic to use for the proactive message.
-        private BotCallbackHandler UpcomingEventContinueConversationCallback(EventModel eventModel, WaterfallStepContext sc)
+        private BotCallbackHandler UpcomingEventContinueConversationCallback(EventModel eventModel, WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            sc.EndDialogAsync();
+            sc.EndDialogAsync(cancellationToken: cancellationToken);
 
             return async (turnContext, token) =>
             {
@@ -116,7 +116,7 @@ namespace CalendarSkill.Dialogs
                 }
 
                 var activity = TemplateManager.GenerateActivityForLocale(responseString, responseParams);
-                await turnContext.SendActivityAsync(activity);
+                await turnContext.SendActivityAsync(activity, cancellationToken);
             };
         }
     }

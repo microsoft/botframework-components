@@ -42,7 +42,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
 
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
@@ -78,7 +78,7 @@ namespace CalendarSkill.Dialogs
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
-                    await sc.Context.SendActivityAsync(prompt);
+                    await sc.Context.SendActivityAsync(prompt, cancellationToken);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace CalendarSkill.Dialogs
                             RemainingTime = remainingTime
                         };
                         var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
-                        await sc.Context.SendActivityAsync(prompt);
+                        await sc.Context.SendActivityAsync(prompt, cancellationToken);
                     }
                     else
                     {
@@ -167,25 +167,25 @@ namespace CalendarSkill.Dialogs
                         };
 
                         var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
-                        await sc.Context.SendActivityAsync(prompt);
+                        await sc.Context.SendActivityAsync(prompt, cancellationToken);
                     }
                 }
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status });
+                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status }, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptionsAsync(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
