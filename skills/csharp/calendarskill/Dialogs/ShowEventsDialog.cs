@@ -48,7 +48,7 @@ namespace CalendarSkill.Dialogs
 
             var showNextMeeting = new WaterfallStep[]
             {
-                ShowNextMeeting,
+                ShowNextMeetingAsync,
             };
 
             var showEventsOverview = new WaterfallStep[]
@@ -342,7 +342,7 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private async Task<DialogTurnResult> ShowNextMeeting(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ShowNextMeetingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -576,7 +576,7 @@ namespace CalendarSkill.Dialogs
                 {
                     // answer yes
                     state.ShowMeetingInfo.FocusedEvents.Add(state.ShowMeetingInfo.ShowingMeetings.First());
-                    return await sc.BeginDialogAsync(Actions.Read, cancellationToken);
+                    return await sc.BeginDialogAsync(Actions.Read, cancellationToken: cancellationToken);
                 }
                 else if (promptRecognizerResult.Succeeded && promptRecognizerResult.Value == false)
                 {
@@ -646,7 +646,7 @@ namespace CalendarSkill.Dialogs
                     }
                     else
                     {
-                        return await sc.BeginDialogAsync(Actions.Read, cancellationToken);
+                        return await sc.BeginDialogAsync(Actions.Read, cancellationToken: cancellationToken);
                     }
                 }
             }
@@ -667,11 +667,11 @@ namespace CalendarSkill.Dialogs
             var newFlowOptions = new CalendarSkillDialogOptions() { SubFlowMode = false };
             if (topIntent == CalendarLuis.Intent.DeleteCalendarEntry || topIntent == CalendarLuis.Intent.AcceptEventEntry)
             {
-                return await sc.BeginDialogAsync(Actions.ChangeEventStatus, cancellationToken);
+                return await sc.BeginDialogAsync(Actions.ChangeEventStatus, cancellationToken: cancellationToken);
             }
             else if (topIntent == CalendarLuis.Intent.ChangeCalendarEntry)
             {
-                return await sc.BeginDialogAsync(Actions.UpdateEvent, cancellationToken);
+                return await sc.BeginDialogAsync(Actions.UpdateEvent, cancellationToken: cancellationToken);
             }
             else if (topIntent == CalendarLuis.Intent.CheckAvailability)
             {
@@ -680,7 +680,7 @@ namespace CalendarSkill.Dialogs
             }
             else if (topIntent == CalendarLuis.Intent.ConnectToMeeting)
             {
-                return await sc.BeginDialogAsync(Actions.ConnectToMeeting, cancellationToken);
+                return await sc.BeginDialogAsync(Actions.ConnectToMeeting, cancellationToken: cancellationToken);
             }
             else if (topIntent == CalendarLuis.Intent.CreateCalendarEntry)
             {
@@ -874,7 +874,7 @@ namespace CalendarSkill.Dialogs
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.Reshow, cancellationToken);
+                return await sc.BeginDialogAsync(Actions.Reshow, cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {

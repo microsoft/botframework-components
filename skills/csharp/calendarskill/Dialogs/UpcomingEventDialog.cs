@@ -21,9 +21,9 @@ namespace CalendarSkill.Dialogs
 {
     public class UpcomingEventDialog : CalendarSkillDialogBase
     {
-        private IBackgroundTaskQueue _backgroundTaskQueue;
-        private ProactiveState _proactiveState;
-        private IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
+        private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+        private readonly ProactiveState _proactiveState;
+        private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
 
         public UpcomingEventDialog(
             IServiceProvider serviceProvider)

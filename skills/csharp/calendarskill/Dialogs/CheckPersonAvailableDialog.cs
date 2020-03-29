@@ -51,8 +51,8 @@ namespace CalendarSkill.Dialogs
 
             var createMeetingWithAvailableTime = new WaterfallStep[]
             {
-                CreateMeetingAsyncPromptAsync,
-                AfterCreateMeetingAsyncPromptAsync
+                CreateMeetingPromptAsync,
+                AfterCreateMeetingPromptAsync
             };
 
             // Define the conversation flow using a waterfall model.
@@ -418,7 +418,7 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private async Task<DialogTurnResult> CreateMeetingAsyncPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CreateMeetingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -443,7 +443,7 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private async Task<DialogTurnResult> AfterCreateMeetingAsyncPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCreateMeetingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {

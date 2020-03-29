@@ -539,7 +539,7 @@ namespace CalendarSkill.Dialogs
                 // show at most 5 user names, ask user show rest users
                 if (state.MeetingInfo.ContactInfor.Contacts.Count > 5)
                 {
-                    return await sc.BeginDialogAsync(Actions.ShowRestParticipants, cancellationToken);
+                    return await sc.BeginDialogAsync(Actions.ShowRestParticipants, cancellationToken: cancellationToken);
                 }
                 else
                 {

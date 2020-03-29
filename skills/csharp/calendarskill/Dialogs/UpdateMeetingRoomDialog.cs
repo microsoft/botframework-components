@@ -121,7 +121,7 @@ namespace CalendarSkill.Dialogs
                 {
                     if (state.MeetingInfo.MeetingRoom == null)
                     {
-                        throw new NullReferenceException("UpdateMeetingRoomAsync received a null MeetingRoom.");
+                        throw new NullReferenceException("UpdateMeetingRoom received a null MeetingRoom.");
                     }
 
                     attendees.Add(new EventModel.Attendee

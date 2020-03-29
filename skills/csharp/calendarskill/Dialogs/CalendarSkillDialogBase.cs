@@ -380,7 +380,7 @@ namespace CalendarSkill.Dialogs
                         state.ShowMeetingInfo.ShowingCardTitle = CalendarCommonStrings.MeetingsToChoose;
                     }
 
-                    var prompt = await GetGeneralMeetingListResponseAsync(sc, state, false, CalendarSharedResponses.MultipleEventsFound, cancellationToken);
+                    var prompt = await GetGeneralMeetingListResponseAsync(sc, state, false, CalendarSharedResponses.MultipleEventsFound);
 
                     return await sc.PromptAsync(Actions.Prompt, new PromptOptions { Prompt = prompt }, cancellationToken);
                 }

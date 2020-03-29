@@ -25,13 +25,13 @@ namespace CalendarSkill.Dialogs
 {
     public class FindMeetingRoomDialog : CalendarSkillDialogBase
     {
-        private ISearchService SearchService { get; set; }
+        private readonly ISearchService searchService;
 
         public FindMeetingRoomDialog(
             IServiceProvider serviceProvider)
             : base(nameof(FindMeetingRoomDialog), serviceProvider)
         {
-            SearchService = serviceProvider.GetService<ISearchService>();
+            searchService = serviceProvider.GetService<ISearchService>();
 
             // entry, get the name list
             var findMeetingRoom = new WaterfallStep[]
@@ -95,13 +95,15 @@ namespace CalendarSkill.Dialogs
             AddDialog(new DatePrompt(Actions.DatePromptForCreate));
             AddDialog(new TimePrompt(Actions.TimePromptForCreate));
             AddDialog(new DurationPrompt(Actions.DurationPromptForCreate));
-            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, Services, SearchService));
+            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, Services, searchService));
             AddDialog(new GetFloorNumberPrompt(Actions.FloorNumberPromptForCreate, Services));
             AddDialog(new GetRecreateMeetingRoomInfoPrompt(Actions.RecreateMeetingRoomPrompt, Services));
             AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             InitialDialogId = Actions.FindMeetingRoom;
         }
+
+
 
         private async Task<DialogTurnResult> CollectBuildingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -131,7 +133,7 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Building))
                 {
-                    List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(building: state.MeetingInfo.Building);
+                    List<RoomModel> meetingRooms = await searchService.GetMeetingRoomAsync(building: state.MeetingInfo.Building);
                     if (meetingRooms.Any())
                     {
                         return await sc.NextAsync(result: meetingRooms, cancellationToken: cancellationToken);
@@ -291,7 +293,7 @@ namespace CalendarSkill.Dialogs
             {
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
-                var meetingRooms = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
+                var meetingRooms = await searchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
 
                 if (meetingRooms.Count == 0)
                 {

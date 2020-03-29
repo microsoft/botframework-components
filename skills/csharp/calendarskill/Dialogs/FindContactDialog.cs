@@ -331,7 +331,7 @@ namespace CalendarSkill.Dialogs
                     return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
-                return await sc.BeginDialogAsync(Actions.SelectEmail, cancellationToken);
+                return await sc.BeginDialogAsync(Actions.SelectEmail, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {

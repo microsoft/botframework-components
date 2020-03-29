@@ -71,7 +71,7 @@ namespace CalendarSkill.Services.GoogleAPI
         public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
             await Task.CompletedTask;
-            return new EventModel(CreateEventAsync(newEvent.Value));
+            return new EventModel(CreateEvent(newEvent.Value));
         }
 
         /// <inheritdoc/>

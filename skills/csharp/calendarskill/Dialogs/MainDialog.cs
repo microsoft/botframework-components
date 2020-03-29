@@ -416,7 +416,7 @@ namespace CalendarSkill.Dialogs
 
                     case CalendarLuis.Intent.TimeRemaining:
                         {
-                            return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id, cancellationToken);
+                            return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id, cancellationToken: cancellationToken);
                         }
 
                     case CalendarLuis.Intent.CheckAvailability:
