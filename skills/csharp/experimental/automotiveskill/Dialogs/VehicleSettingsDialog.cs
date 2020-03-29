@@ -89,7 +89,7 @@ namespace AutomotiveSkill.Dialogs
                 ProcessChangeAsync,
                 SendChangeAsync
             };
-            AddDialog(new WaterfallDialog(Actions.ProcessVehicleSettingChange, processVehicleSettingChangeWaterfall) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ProcessVehicleSettingChange, processVehicleSettingChangeWaterfall));
 
             // Prompts
             AddDialog(new ChoicePrompt(Actions.SettingNameSelectionPrompt, SettingNameSelectionValidatorAsync, Culture.English) { Style = ListStyle.Auto, ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
