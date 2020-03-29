@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Moq;
 using MusicSkill.Services;
+using MusicSkill.Tests.Utterances;
 
 namespace MusicSkill.Tests.Mocks
 {
@@ -16,7 +17,7 @@ namespace MusicSkill.Tests.Mocks
         {
             // music
             mockMusicService = new Mock<IMusicService>();
-            mockMusicService.Setup(service => service.SearchMusicAsync(It.IsAny<string>())).Returns(Task.FromResult("spotify:playlist:37i9dQZF1DXcCnTAt8Cf"));
+            mockMusicService.Setup(service => service.SearchMusicAsync(It.IsAny<string>())).Returns(Task.FromResult(PlayMusicDialogUtterances.DefaultUri));
 
             // manager
             mockServiceManager = new Mock<IServiceManager>();

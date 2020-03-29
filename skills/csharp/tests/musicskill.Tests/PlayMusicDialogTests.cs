@@ -17,7 +17,7 @@ namespace MusicSkill.Tests
     public class PlayMusicDialogTests : SkillTestBase
     {
         [TestMethod]
-        public async Task Test_Sample_Dialog()
+        public async Task Test_PlayMusic_Dialog()
         {
             await GetTestFlow()
                 .Send(string.Empty)
@@ -28,14 +28,14 @@ namespace MusicSkill.Tests
                     var a = (Activity)activity;
                     Assert.AreEqual(ActivityTypes.Event, a.Type);
                     Assert.AreEqual(typeof(OpenDefaultApp), a.Value.GetType());
-                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, "spotify:playlist:37i9dQZF1DXcCnTAt8Cf");
+                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, PlayMusicDialogUtterances.DefaultUri);
                 })
                 .AssertReplyOneOf(ParseReplies(MainResponses.CompletedMessage))
                 .StartTestAsync();
         }
 
         [TestMethod]
-        public async Task Test_Sample_Action()
+        public async Task Test_PlayMusic_Action()
         {
             await GetSkillTestFlow()
                .Send(new Activity(type: ActivityTypes.Event, name: Events.PlayMusic))
@@ -51,7 +51,7 @@ namespace MusicSkill.Tests
         }
 
         [TestMethod]
-        public async Task Test_Sample_Action_w_Input()
+        public async Task Test_PlayMusic_Action_With_Input()
         {
             var actionInput = new SearchInfo() { MusicInfo = "music" };
 
@@ -62,7 +62,7 @@ namespace MusicSkill.Tests
                     var a = (Activity)activity;
                     Assert.AreEqual(ActivityTypes.Event, a.Type);
                     Assert.AreEqual(typeof(OpenDefaultApp), a.Value.GetType());
-                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, "spotify:playlist:37i9dQZF1DXcCnTAt8Cf");
+                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, PlayMusicDialogUtterances.DefaultUri);
                 })
                .AssertReply((activity) =>
                {
@@ -75,7 +75,7 @@ namespace MusicSkill.Tests
         }
 
         [TestMethod]
-        public async Task Test_Sample_Dialog_SkillMode()
+        public async Task Test_PlayMusic_Dialog_SkillMode()
         {
             await GetSkillTestFlow()
                .Send(PlayMusicDialogUtterances.PlayMusic)
@@ -84,7 +84,7 @@ namespace MusicSkill.Tests
                     var a = (Activity)activity;
                     Assert.AreEqual(ActivityTypes.Event, a.Type);
                     Assert.AreEqual(typeof(OpenDefaultApp), a.Value.GetType());
-                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, "spotify:playlist:37i9dQZF1DXcCnTAt8Cf");
+                    Assert.AreEqual((a.Value as OpenDefaultApp).MusicUri, PlayMusicDialogUtterances.DefaultUri);
                 })
                .AssertReply((activity) => { Assert.AreEqual(ActivityTypes.EndOfConversation, activity.Type); })
                .StartTestAsync();

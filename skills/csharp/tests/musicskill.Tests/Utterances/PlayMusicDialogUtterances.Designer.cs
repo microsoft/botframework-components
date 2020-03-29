@@ -61,6 +61,15 @@ namespace MusicSkill.Tests.Utterances {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to spotify:playlist:37i9dQZF1DXcCnTAt8Cf.
+        /// </summary>
+        public static string DefaultUri {
+            get {
+                return ResourceManager.GetString("DefaultUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to none.
         /// </summary>
         public static string None {
