@@ -105,7 +105,7 @@ namespace EmailSkill.Dialogs
                         emailDetails = emailCard
                     });
 
-                await sc.Context.SendActivityAsync(reply);
+                await sc.Context.SendActivityAsync(reply, cancellationToken);
 
                 if (state.IsAction)
                 {

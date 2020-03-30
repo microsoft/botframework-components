@@ -393,7 +393,7 @@ namespace EmailSkill.Dialogs
                 if (IsReadMoreIntent(topGeneralIntent, userInput)
                     || (topIntent == EmailLuis.Intent.ShowNext || topIntent == EmailLuis.Intent.ShowPrevious || topGeneralIntent == General.Intent.ShowPrevious || topGeneralIntent == General.Intent.ShowNext))
                 {
-                    return await sc.ReplaceDialogAsync(Actions.Display, skillOptions);
+                    return await sc.ReplaceDialogAsync(Actions.Display, skillOptions, cancellationToken);
                 }
                 else
                 {
