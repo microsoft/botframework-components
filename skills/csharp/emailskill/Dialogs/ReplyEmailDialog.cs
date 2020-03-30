@@ -20,60 +20,56 @@ namespace EmailSkill.Dialogs
     public class ReplyEmailDialog : EmailSkillDialogBase
     {
         public ReplyEmailDialog(
-            LocaleTemplateManager templateManager,
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(ReplyEmailDialog), templateManager, serviceProvider, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(ReplyEmailDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var replyEmail = new WaterfallStep[]
             {
-                IfClearContextStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                SetDisplayConfig,
-                CollectSelectedEmail,
-                AfterCollectSelectedEmail,
-                CollectAdditionalText,
-                AfterCollectAdditionalText,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ConfirmBeforeSending,
-                AfterConfirmPrompt,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ReplyEmail,
+                IfClearContextStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                SetDisplayConfigAsync,
+                CollectSelectedEmailAsync,
+                AfterCollectSelectedEmailAsync,
+                CollectAdditionalTextAsync,
+                AfterCollectAdditionalTextAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ConfirmBeforeSendingAsync,
+                AfterConfirmPromptAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ReplyEmailAsync,
             };
 
             var showEmail = new WaterfallStep[]
             {
-                PagingStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowEmails,
+                PagingStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowEmailsAsync,
             };
 
             var updateSelectMessage = new WaterfallStep[]
             {
-                UpdateMessage,
-                PromptUpdateMessage,
-                AfterUpdateMessage,
+                UpdateMessageAsync,
+                PromptUpdateMessageAsync,
+                AfterUpdateMessageAsync,
             };
             AddDialog(new WaterfallDialog(Actions.Reply, replyEmail));
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.Show, showEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateSelectMessage, updateSelectMessage) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.Show, showEmail));
+            AddDialog(new WaterfallDialog(Actions.UpdateSelectMessage, updateSelectMessage));
 
             InitialDialogId = Actions.Reply;
         }
 
-        public async Task<DialogTurnResult> ReplyEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ReplyEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
                 var message = state.Message.FirstOrDefault();
 
@@ -91,7 +87,7 @@ namespace EmailSkill.Dialogs
                     Subject = state.Subject.Equals(EmailCommonStrings.EmptySubject) ? null : state.Subject,
                     EmailContent = state.Content.Equals(EmailCommonStrings.EmptyContent) ? null : state.Content,
                 };
-                emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, state.FindContactInfor.Contacts);
+                emailCard = await ProcessRecipientPhotoUrlAsync(sc.Context, emailCard, state.FindContactInfor.Contacts, cancellationToken);
 
                 var stringToken = new StringDictionary
                 {
@@ -111,16 +107,16 @@ namespace EmailSkill.Dialogs
                 if (state.IsAction)
                 {
                     var actionResult = new ActionResult(true);
-                    await ClearConversationState(sc);
-                    return await sc.EndDialogAsync(actionResult);
+                    await ClearConversationStateAsync(sc, cancellationToken);
+                    return await sc.EndDialogAsync(actionResult, cancellationToken);
                 }
 
-                await ClearConversationState(sc);
-                return await sc.EndDialogAsync(true);
+                await ClearConversationStateAsync(sc, cancellationToken);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

@@ -19,69 +19,65 @@ namespace EmailSkill.Dialogs
     public class ForwardEmailDialog : EmailSkillDialogBase
     {
         public ForwardEmailDialog(
-            LocaleTemplateManager templateManager,
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(ForwardEmailDialog), templateManager, serviceProvider, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(ForwardEmailDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var forwardEmail = new WaterfallStep[]
             {
-                IfClearContextStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                SetDisplayConfig,
-                CollectSelectedEmail,
-                AfterCollectSelectedEmail,
-                CollectRecipient,
-                CollectAdditionalText,
-                AfterCollectAdditionalText,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ConfirmBeforeSending,
-                ConfirmAllRecipient,
-                AfterConfirmPrompt,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ForwardEmail,
+                IfClearContextStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                SetDisplayConfigAsync,
+                CollectSelectedEmailAsync,
+                AfterCollectSelectedEmailAsync,
+                CollectRecipientAsync,
+                CollectAdditionalTextAsync,
+                AfterCollectAdditionalTextAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ConfirmBeforeSendingAsync,
+                ConfirmAllRecipientAsync,
+                AfterConfirmPromptAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ForwardEmailAsync,
             };
 
             var showEmail = new WaterfallStep[]
             {
-                PagingStep,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowEmails,
+                PagingStepAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowEmailsAsync,
             };
 
             var collectRecipients = new WaterfallStep[]
             {
-                PromptRecipientCollection,
-                GetRecipients,
+                PromptRecipientCollectionAsync,
+                GetRecipientsAsync,
             };
 
             var updateSelectMessage = new WaterfallStep[]
             {
-                UpdateMessage,
-                PromptUpdateMessage,
-                AfterUpdateMessage,
+                UpdateMessageAsync,
+                PromptUpdateMessageAsync,
+                AfterUpdateMessageAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.Forward, forwardEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.Show, showEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectRecipient, collectRecipients) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateSelectMessage, updateSelectMessage) { TelemetryClient = telemetryClient });
-            AddDialog(new FindContactDialog(templateManager, serviceProvider, telemetryClient));
+            AddDialog(new WaterfallDialog(Actions.Forward, forwardEmail));
+            AddDialog(new WaterfallDialog(Actions.Show, showEmail));
+            AddDialog(new WaterfallDialog(Actions.CollectRecipient, collectRecipients));
+            AddDialog(new WaterfallDialog(Actions.UpdateSelectMessage, updateSelectMessage));
+            AddDialog(new FindContactDialog(serviceProvider));
             InitialDialogId = Actions.Forward;
         }
 
-        public async Task<DialogTurnResult> ForwardEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ForwardEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await EmailStateAccessor.GetAsync(sc.Context);
+                var state = await EmailStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
                 var message = state.Message;
@@ -99,7 +95,7 @@ namespace EmailSkill.Dialogs
                     Subject = state.Subject.Equals(EmailCommonStrings.EmptySubject) ? null : state.Subject,
                     EmailContent = state.Content.Equals(EmailCommonStrings.EmptyContent) ? null : state.Content,
                 };
-                emailCard = await ProcessRecipientPhotoUrl(sc.Context, emailCard, state.FindContactInfor.Contacts);
+                emailCard = await ProcessRecipientPhotoUrlAsync(sc.Context, emailCard, state.FindContactInfor.Contacts, cancellationToken);
 
                 var reply = TemplateManager.GenerateActivityForLocale(
                     EmailSharedResponses.SentSuccessfully,
@@ -109,21 +105,21 @@ namespace EmailSkill.Dialogs
                         emailDetails = emailCard
                     });
 
-                await sc.Context.SendActivityAsync(reply);
+                await sc.Context.SendActivityAsync(reply, cancellationToken);
 
                 if (state.IsAction)
                 {
                     var actionResult = new ActionResult(true);
-                    await ClearConversationState(sc);
-                    return await sc.EndDialogAsync(actionResult);
+                    await ClearConversationStateAsync(sc, cancellationToken);
+                    return await sc.EndDialogAsync(actionResult, cancellationToken);
                 }
 
-                await ClearConversationState(sc);
-                return await sc.EndDialogAsync(true);
+                await ClearConversationStateAsync(sc, cancellationToken);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
