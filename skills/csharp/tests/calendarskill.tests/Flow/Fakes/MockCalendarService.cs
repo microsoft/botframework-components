@@ -154,7 +154,7 @@ namespace CalendarSkill.Test.Flow.Fakes
             return new EventModel(createdEvent);
         }
 
-        public async Task<EventModel> CreateEventAysnc(EventModel newEvent)
+        public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
             return await Task.FromResult(newEvent);
         }
@@ -206,7 +206,7 @@ namespace CalendarSkill.Test.Flow.Fakes
             throw new NotImplementedException();
         }
 
-        public Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval)
+        public Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval)
         {
             throw new NotImplementedException();
         }

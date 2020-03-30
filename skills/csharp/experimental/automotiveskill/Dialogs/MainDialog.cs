@@ -22,21 +22,19 @@ namespace AutomotiveSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<AutomotiveSkillState> _stateAccessor;
-        private Dialog _vehicleSettingsDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<AutomotiveSkillState> _stateAccessor;
+        private readonly Dialog _vehicleSettingsDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -157,7 +155,7 @@ namespace AutomotiveSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Get connected LUIS result from turn state.
-                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new AutomotiveSkillState());
+                var state = await _stateAccessor.GetAsync(innerDc.Context, () => new AutomotiveSkillState(), cancellationToken);
                 var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
@@ -167,7 +165,7 @@ namespace AutomotiveSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.CancelMessage), cancellationToken);
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
@@ -183,8 +181,8 @@ namespace AutomotiveSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -201,30 +199,28 @@ namespace AutomotiveSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
+
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
             {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FirstPromptMessage)
-                };
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FirstPromptMessage)
+            };
 
-                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-                {
-                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.WelcomeMessage);
-                }
-
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
+            {
+                promptOptions.Prompt = _templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.WelcomeMessage);
             }
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var a = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new AutomotiveSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new AutomotiveSkillState(), cancellationToken);
             state.Clear();
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
@@ -239,24 +235,24 @@ namespace AutomotiveSkill.Dialogs
                     case SettingsLuis.Intent.VEHICLE_SETTINGS_CHANGE:
                     case SettingsLuis.Intent.VEHICLE_SETTINGS_DECLARATIVE:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog));
+                            return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog), cancellationToken: cancellationToken);
                         }
 
                     case SettingsLuis.Intent.VEHICLE_SETTINGS_CHECK:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
 
                     case SettingsLuis.Intent.None:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(AutomotiveSkillMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -281,13 +277,13 @@ namespace AutomotiveSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog));
+                                return await stepContext.BeginDialogAsync(nameof(VehicleSettingsDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
                                 // todo: move the response to lg
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
@@ -295,7 +291,7 @@ namespace AutomotiveSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -322,7 +318,7 @@ namespace AutomotiveSkill.Dialogs
             }
         }
 
-        private class Events
+        private static class Events
         {
             public const string ChangeVehicleSetting = "ChangeVehicleSetting";
         }

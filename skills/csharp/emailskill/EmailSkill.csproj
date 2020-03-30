@@ -10,20 +10,10 @@
     <PackageReference Include="Google.Apis" Version="1.40.2" />
     <PackageReference Include="Google.Apis.Gmail.v1" Version="1.40.2.1613" />
     <PackageReference Include="Google.Apis.People.v1" Version="1.25.0.830" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.NewsSearch" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.8.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.LanguageGeneration" Version="4.8.1-rc0" />
-    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Schema" Version="4.8.1" />
     <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
     <PackageReference Include="MimeKit" Version="2.2.0" />

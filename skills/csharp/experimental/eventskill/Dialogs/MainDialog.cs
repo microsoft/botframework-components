@@ -21,21 +21,19 @@ namespace EventSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<EventSkillState> _stateAccessor;
-        private Dialog _findEventsDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<EventSkillState> _stateAccessor;
+        private readonly Dialog _findEventsDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -170,8 +168,8 @@ namespace EventSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(cancellationToken: cancellationToken);
@@ -186,18 +184,18 @@ namespace EventSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
 
                         case GeneralLuis.Intent.Logout:
                             {
-                                await OnLogout(innerDc);
+                                await OnLogoutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(cancellationToken: cancellationToken);
@@ -222,7 +220,7 @@ namespace EventSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
@@ -256,25 +254,25 @@ namespace EventSkill.Dialogs
                 {
                     case EventLuis.Intent.FindEvents:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(FindEventsDialog));
+                            return await stepContext.BeginDialogAsync(nameof(FindEventsDialog), cancellationToken: cancellationToken);
                         }
 
                     case EventLuis.Intent.None:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -290,7 +288,7 @@ namespace EventSkill.Dialogs
             }
         }
 
-        private async Task OnLogout(DialogContext dc)
+        private async Task OnLogoutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
@@ -299,14 +297,14 @@ namespace EventSkill.Dialogs
                 tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {

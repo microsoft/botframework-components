@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -18,66 +19,58 @@ namespace PointOfInterestSkill.Dialogs
     public class GetDirectionsDialog : PointOfInterestDialogBase
     {
         public GetDirectionsDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(GetDirectionsDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(GetDirectionsDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkCurrentLocation = new WaterfallStep[]
             {
-                CheckForCurrentCoordinatesBeforeGetDirections,
-                ConfirmCurrentLocation,
-                ProcessCurrentLocationSelection,
-                RouteToFindPointOfInterestDialog
+                CheckForCurrentCoordinatesBeforeGetDirectionsAsync,
+                ConfirmCurrentLocationAsync,
+                ProcessCurrentLocationSelectionAsync,
+                RouteToFindPointOfInterestDialogAsync
             };
 
             var findPointOfInterest = new WaterfallStep[]
             {
-                GetPointOfInterestLocations,
-                SendEvent,
+                GetPointOfInterestLocationsAsync,
+                SendEventAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindPointOfInterest, findPointOfInterest) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation));
+            AddDialog(new WaterfallDialog(Actions.FindPointOfInterest, findPointOfInterest));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;
         }
 
-        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeGetDirections(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeGetDirectionsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var hasCurrentCoordinates = state.CheckForValidCurrentCoordinates();
             if (hasCurrentCoordinates || !string.IsNullOrEmpty(state.Address))
             {
-                return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
+                return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest, cancellationToken: cancellationToken);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) }, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> RouteToFindPointOfInterestDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> RouteToFindPointOfInterestDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest);
+            return await sc.ReplaceDialogAsync(Actions.FindPointOfInterest, cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> SendEvent(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> SendEventAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
             if (shouldInterrupt)
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.CancelAllDialogsAsync(cancellationToken);
             }
 
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var userSelectIndex = 0;
 
             if (sc.Result is bool)
@@ -92,8 +85,8 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                 {
-                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage));
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage), cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
 
                 state.Destination = state.LastFoundPointOfInterests[userSelectIndex];
@@ -102,12 +95,12 @@ namespace PointOfInterestSkill.Dialogs
 
             if (SupportOpenDefaultAppReply(sc.Context))
             {
-                await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
+                await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map), cancellationToken);
             }
 
             var response = state.IsAction ? ConvertToResponse(state.Destination) : null;
 
-            return await sc.NextAsync(response);
+            return await sc.NextAsync(response, cancellationToken);
         }
     }
 }

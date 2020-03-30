@@ -10,14 +10,10 @@ using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.ChangeEventStatus;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 
@@ -26,59 +22,51 @@ namespace CalendarSkill.Dialogs
     public class ChangeEventStatusDialog : CalendarSkillDialogBase
     {
         public ChangeEventStatusDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(ChangeEventStatusDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(ChangeEventStatusDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var changeEventStatus = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckFocusedEvent,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ConfirmBeforeAction,
-                AfterConfirmBeforeAction,
-                GetAuthToken,
-                AfterGetAuthToken,
-                ChangeEventStatus
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckFocusedEventAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ConfirmBeforeActionAsync,
+                AfterConfirmBeforeActionAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ChangeEventStatusAsync
             };
 
             var findEvent = new WaterfallStep[]
             {
-                SearchEventsWithEntities,
-                GetEvents,
-                AfterGetEventsPrompt,
-                AddConflictFlag,
-                ChooseEvent
+                SearchEventsWithEntitiesAsync,
+                GetEventsAsync,
+                AfterGetEventsPromptAsync,
+                AddConflictFlagAsync,
+                ChooseEventAsync
             };
 
             var chooseEvent = new WaterfallStep[]
             {
-                ChooseEventPrompt,
-                AfterChooseEvent
+                ChooseEventPromptAsync,
+                AfterChooseEventAsync
             };
 
-            AddDialog(new WaterfallDialog(Actions.ChangeEventStatus, changeEventStatus) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChangeEventStatus, changeEventStatus) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.ChangeEventStatus;
         }
 
-        private async Task<DialogTurnResult> ConfirmBeforeAction(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ConfirmBeforeActionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (ChangeEventStatusDialogOptions)sc.Options;
 
                 var deleteEvent = state.ShowMeetingInfo.FocusedEvents[0];
@@ -109,26 +97,26 @@ namespace CalendarSkill.Dialogs
                 {
                     Prompt = replyMessage,
                     RetryPrompt = retryMessage,
-                });
+                }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmBeforeAction(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmBeforeActionAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (ChangeEventStatusDialogOptions)sc.Options;
 
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -142,21 +130,21 @@ namespace CalendarSkill.Dialogs
                         state.Clear();
                     }
 
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> ChangeEventStatus(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> ChangeEventStatusAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (ChangeEventStatusDialogOptions)sc.Options;
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
 
@@ -174,14 +162,14 @@ namespace CalendarSkill.Dialogs
                     }
 
                     var activity = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventDeleted);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
                 else
                 {
                     await calendarService.AcceptEventByIdAsync(deleteEvent.Id);
 
                     var activity = TemplateManager.GenerateActivityForLocale(ChangeEventStatusResponses.EventAccepted);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
 
                 if (options.SubFlowMode)
@@ -192,37 +180,37 @@ namespace CalendarSkill.Dialogs
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true });
+                    return await sc.EndDialogAsync(new ActionResult() { ActionSuccess = true }, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> GetEvents(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetEventsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (ChangeEventStatusDialogOptions)sc.Options;
 
                 if (state.ShowMeetingInfo.FocusedEvents.Any())
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -250,12 +238,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

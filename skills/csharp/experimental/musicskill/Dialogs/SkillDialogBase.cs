@@ -14,6 +14,7 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using MusicSkill.Models;
 using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
@@ -24,18 +25,17 @@ namespace MusicSkill.Dialogs
     {
         public SkillDialogBase(
              string dialogId,
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
              : base(dialogId)
         {
-            Services = services;
-            LocaleTemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            LocaleTemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+
+            // Initialize skill state
+            var conversationState = serviceProvider.GetService<ConversationState>();
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            TelemetryClient = telemetryClient;
-            Settings = settings;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!settings.OAuthConnections.Any())
@@ -46,19 +46,21 @@ namespace MusicSkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<SkillState> StateAccessor { get; }
 
-        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+        protected LocaleTemplateManager LocaleTemplateManager { get; }
+
+        protected IServiceManager ServiceManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                await DigestLuisResult(dc);
+                await DigestLuisResultAsync(dc, cancellationToken);
             }
 
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
@@ -68,31 +70,31 @@ namespace MusicSkill.Dialogs
         {
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                await DigestLuisResult(dc);
+                await DigestLuisResultAsync(dc, cancellationToken);
             }
 
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions());
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions(), cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -104,22 +106,22 @@ namespace MusicSkill.Dialogs
                     state.Token = providerTokenResponse.TokenResponse.Token;
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Validators
-        protected Task<bool> TokenResponseValidator(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
+        protected Task<bool> TokenResponseValidatorAsync(PromptValidatorContext<Activity> pc, CancellationToken cancellationToken)
         {
             var activity = pc.Recognized.Value;
             if (activity != null && activity.Type == ActivityTypes.Event)
@@ -132,7 +134,7 @@ namespace MusicSkill.Dialogs
             }
         }
 
-        protected Task<bool> AuthPromptValidator(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
+        protected Task<bool> AuthPromptValidatorAsync(PromptValidatorContext<TokenResponse> promptContext, CancellationToken cancellationToken)
         {
             var token = promptContext.Recognized.Value;
             if (token != null)
@@ -146,12 +148,12 @@ namespace MusicSkill.Dialogs
         }
 
         // Helpers
-        protected async Task DigestLuisResult(DialogContext dc)
+        protected async Task DigestLuisResultAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             var luisResult = dc.Context.TurnState.Get<MusicSkillLuis>(StateProperties.MusicLuisResultKey);
             if (luisResult != null)
             {
-                var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState(), cancellationToken);
                 var intent = luisResult.TopIntent().intent;
                 var entities = luisResult.Entities;
 
@@ -164,17 +166,17 @@ namespace MusicSkill.Dialogs
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(SharedResponses.ErrorMessage), cancellationToken);
         }
     }
 }

@@ -50,6 +50,7 @@ namespace PhoneSkill.Services
                         {
                             TelemetryClient = telemetryClient,
                             LogPersonalInformation = true,
+                            PredictionOptions = new Microsoft.Bot.Builder.AI.LuisV3.LuisPredictionOptions() { IncludeInstanceData = true }
                         };
                         set.LuisServices.Add(model.Id, new LuisRecognizer(luisOptions));
                     }

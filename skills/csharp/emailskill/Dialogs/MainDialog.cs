@@ -20,25 +20,23 @@ namespace EmailSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<EmailSkillState> _stateAccessor;
-        private Dialog _forwardEmailDialog;
-        private Dialog _sendEmailDialog;
-        private Dialog _showEmailDialog;
-        private Dialog _replyEmailDialog;
-        private Dialog _deleteEmailDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<EmailSkillState> _stateAccessor;
+        private readonly Dialog _forwardEmailDialog;
+        private readonly Dialog _sendEmailDialog;
+        private readonly Dialog _showEmailDialog;
+        private readonly Dialog _replyEmailDialog;
+        private readonly Dialog _deleteEmailDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -178,11 +176,11 @@ namespace EmailSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.CancellingMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new EmailSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -195,8 +193,8 @@ namespace EmailSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -204,13 +202,13 @@ namespace EmailSkill.Dialogs
                         case General.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new EmailSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -233,7 +231,7 @@ namespace EmailSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
@@ -256,7 +254,7 @@ namespace EmailSkill.Dialogs
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var activity = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new EmailSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
             state.IsAction = false;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -276,17 +274,17 @@ namespace EmailSkill.Dialogs
                 {
                     case EmailLuis.Intent.SendEmail:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(SendEmailDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(SendEmailDialog), skillOptions, cancellationToken);
                         }
 
                     case EmailLuis.Intent.Forward:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(ForwardEmailDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(ForwardEmailDialog), skillOptions, cancellationToken);
                         }
 
                     case EmailLuis.Intent.Reply:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(ReplyEmailDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(ReplyEmailDialog), skillOptions, cancellationToken);
                         }
 
                     case EmailLuis.Intent.SearchMessages:
@@ -294,12 +292,12 @@ namespace EmailSkill.Dialogs
                     case EmailLuis.Intent.ReadAloud:
                     case EmailLuis.Intent.QueryLastText:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), skillOptions, cancellationToken);
                         }
 
                     case EmailLuis.Intent.Delete:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(DeleteEmailDialog), skillOptions);
+                            return await stepContext.BeginDialogAsync(nameof(DeleteEmailDialog), skillOptions, cancellationToken);
                         }
 
                     case EmailLuis.Intent.ShowNext:
@@ -311,11 +309,11 @@ namespace EmailSkill.Dialogs
                                 || generalIntent == General.Intent.ShowNext
                                 || generalIntent == General.Intent.ShowPrevious)
                             {
-                                return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), skillOptions);
+                                return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), skillOptions, cancellationToken);
                             }
                             else
                             {
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailSharedResponses.DidntUnderstandMessage), cancellationToken);
                             }
 
                             break;
@@ -323,7 +321,7 @@ namespace EmailSkill.Dialogs
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(EmailMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -346,17 +344,17 @@ namespace EmailSkill.Dialogs
                                 if (eventValue != null)
                                 {
                                     actionData = eventValue.ToObject<EmailInfo>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    await DigestActionInputAsync(stepContext, actionData, cancellationToken);
                                 }
 
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(SendEmailDialog), new EmailSkillDialogOptions());
+                                return await stepContext.BeginDialogAsync(nameof(SendEmailDialog), new EmailSkillDialogOptions(), cancellationToken);
                             }
 
                         case "DeleteEmail":
                             {
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(DeleteEmailDialog), new EmailSkillDialogOptions());
+                                return await stepContext.BeginDialogAsync(nameof(DeleteEmailDialog), new EmailSkillDialogOptions(), cancellationToken);
                             }
 
                         case "ReplyEmail":
@@ -367,11 +365,11 @@ namespace EmailSkill.Dialogs
                                 if (eventValue != null)
                                 {
                                     actionData = eventValue.ToObject<ReplyEmailInfo>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    await DigestActionInputAsync(stepContext, actionData, cancellationToken);
                                 }
 
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(ReplyEmailDialog), new EmailSkillDialogOptions());
+                                return await stepContext.BeginDialogAsync(nameof(ReplyEmailDialog), new EmailSkillDialogOptions(), cancellationToken);
                             }
 
                         case "ForwardEmail":
@@ -382,23 +380,23 @@ namespace EmailSkill.Dialogs
                                 if (eventValue != null)
                                 {
                                     actionData = eventValue.ToObject<ForwardEmailInfo>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    await DigestActionInputAsync(stepContext, actionData, cancellationToken);
                                 }
 
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(ForwardEmailDialog), new EmailSkillDialogOptions());
+                                return await stepContext.BeginDialogAsync(nameof(ForwardEmailDialog), new EmailSkillDialogOptions(), cancellationToken);
                             }
 
                         case "EmailSummary":
                             {
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), new EmailSkillDialogOptions());
+                                return await stepContext.BeginDialogAsync(nameof(ShowEmailDialog), new EmailSkillDialogOptions(), cancellationToken);
                             }
 
                         default:
 
                             // todo: move the response to lg
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
 
                             break;
                     }
@@ -406,7 +404,7 @@ namespace EmailSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -422,7 +420,7 @@ namespace EmailSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
@@ -431,14 +429,14 @@ namespace EmailSkill.Dialogs
                 tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -454,9 +452,9 @@ namespace EmailSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, EmailInfo emailInfo)
+        private async Task DigestActionInputAsync(DialogContext dc, EmailInfo emailInfo, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
             state.Subject = emailInfo.Subject;
             state.Content = emailInfo.Content;
             if (emailInfo.Reciever != null)
@@ -472,15 +470,15 @@ namespace EmailSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, ReplyEmailInfo replyEmailInfo)
+        private async Task DigestActionInputAsync(DialogContext dc, ReplyEmailInfo replyEmailInfo, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
             state.Content = replyEmailInfo.ReplyMessage;
         }
 
-        private async Task DigestActionInput(DialogContext dc, ForwardEmailInfo forwardEmailInfo)
+        private async Task DigestActionInputAsync(DialogContext dc, ForwardEmailInfo forwardEmailInfo, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new EmailSkillState(), cancellationToken: cancellationToken);
             state.Content = forwardEmailInfo.ForwardMessage;
             if (forwardEmailInfo.ForwardReciever != null)
             {

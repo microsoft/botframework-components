@@ -43,9 +43,10 @@ namespace PointOfInterestSkill.Tests.Flow
             await this.GetTestFlow()
                 .SendConversationUpdate()
                 .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(GeneralTestUtterances.Help)
                 .AssertReply(AssertContains(POIMainResponses.HelpMessage, null))
-                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .StartTestAsync();
         }
 
@@ -55,6 +56,7 @@ namespace PointOfInterestSkill.Tests.Flow
             await this.GetTestFlow()
                 .SendConversationUpdate()
                 .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
                 .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
