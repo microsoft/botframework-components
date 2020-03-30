@@ -53,8 +53,15 @@ namespace EmailSkill.Dialogs
             ServiceManager = serviceProvider.GetService<IServiceManager>();
             TelemetryClient = telemetryClient;
 
-            var appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
-            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.TakeFurtherAction, null, Culture.English) { Style = ListStyle.SuggestedAction });
         }

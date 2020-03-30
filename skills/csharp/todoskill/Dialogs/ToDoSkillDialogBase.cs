@@ -62,7 +62,15 @@ namespace ToDoSkill.Dialogs
             ServiceManager = serviceManager;
             TelemetryClient = telemetryClient;
 
-            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (_settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(_settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(_settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(_settings.OAuthCredentials.MicrosoftAppId, _settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.ConfirmPrompt, null, Culture.English) { Style = ListStyle.SuggestedAction });
         }

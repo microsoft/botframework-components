@@ -17,6 +17,7 @@ using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.Summary;
 using CalendarSkill.Services;
 using CalendarSkill.Utilities;
+using Google.Apis.Calendar.v3.Data;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
@@ -64,7 +65,15 @@ namespace CalendarSkill.Dialogs
             TelemetryClient = telemetryClient;
             TemplateManager = templateManager;
 
-            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.TakeFurtherAction, null, Culture.English) { Style = ListStyle.SuggestedAction });
             AddDialog(new ChoicePrompt(Actions.Choice, ChoiceValidator, Culture.English) { Style = ListStyle.None, });
