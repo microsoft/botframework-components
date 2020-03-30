@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace MusicSkill.Models
+namespace MusicSkill.Services
 {
-    public class OpenDefaultApp
+    public interface IServiceManager
     {
-        public string MusicUri { get; set; }
+        IMusicService InitMusicService();
     }
 }
