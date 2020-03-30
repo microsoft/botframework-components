@@ -163,7 +163,7 @@ namespace CalendarSkill.Prompts
                         startDateList.Add(startTimeValue);
                     }
 
-                    events = await CalendarCommonUtil.GetEventsByTime(startDateList, startTimeList, endDateList, endTimeList, userTimeZone, calendarService);
+                    events = await CalendarCommonUtil.GetEventsByTimeAsync(startDateList, startTimeList, endDateList, endTimeList, userTimeZone, calendarService);
                     if (events != null && events.Count > 0)
                     {
                         break;

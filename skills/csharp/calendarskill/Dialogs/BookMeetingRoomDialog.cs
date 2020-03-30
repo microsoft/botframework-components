@@ -1,51 +1,43 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CalendarSkill.Responses.FindMeetingRoom;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalendarSkill.Dialogs
 {
     public class BookMeetingRoomDialog : CalendarSkillDialogBase
     {
         public BookMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindMeetingRoomDialog findMeetingRoomDialog,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(BookMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(BookMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
             var bookMeetingRoom = new WaterfallStep[]
             {
-                FindMeetingRoom,
-                CreateMeeting
+                FindMeetingRoomAsync,
+                CreateMeetingAsync
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
-            AddDialog(new WaterfallDialog(Actions.BookMeetingRoom, bookMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(findMeetingRoomDialog ?? throw new ArgumentNullException(nameof(findMeetingRoomDialog)));
+            AddDialog(new WaterfallDialog(Actions.BookMeetingRoom, bookMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindMeetingRoomDialog>() ?? throw new ArgumentNullException(nameof(FindMeetingRoomDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.BookMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> FindMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> FindMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 DateTime dateNow = TimeConverter.ConvertUtcToUserTime(DateTime.UtcNow, state.GetUserTimeZone());
 
                 // With no info about Time in user's query, we will use "right now" here. Or we will collect all the time info in FindMeetingRoomDialog.
@@ -62,28 +54,28 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CreateMeeting(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CreateMeetingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.MeetingInfo.MeetingRoom == null)
                 {
                     throw new NullReferenceException("CreateMeeting received a null MeetingRoom.");
                 }
 
                 var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.ConfirmedMeetingRoom);
-                await sc.Context.SendActivityAsync(activity);
-                return await sc.ReplaceDialogAsync(nameof(CreateEventDialog), sc.Options);
+                await sc.Context.SendActivityAsync(activity, cancellationToken);
+                return await sc.ReplaceDialogAsync(nameof(CreateEventDialog), sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

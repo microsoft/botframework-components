@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using CalendarSkill.Test.Flow.Utterances;
 using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
-using Microsoft.Bot.Builder.Dialogs;
 
 namespace CalendarSkill.Test.Flow.Fakes
 {
@@ -26,13 +24,13 @@ namespace CalendarSkill.Test.Flow.Fakes
         private GeneralTestUtterances generalUtterancesManager;
 
         public MockLuisRecognizer(BaseTestUtterances utterancesManager)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.utterancesManager = utterancesManager;
         }
 
         public MockLuisRecognizer(params BaseTestUtterances[] utterancesManagers)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.utterancesManager = new BaseTestUtterances();
 
@@ -46,7 +44,7 @@ namespace CalendarSkill.Test.Flow.Fakes
         }
 
         public MockLuisRecognizer()
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.generalUtterancesManager = new GeneralTestUtterances();
         }

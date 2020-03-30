@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,12 +15,9 @@ using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
 using Microsoft.Azure.Search;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
-using Microsoft.Recognizers.Text.Number;
+using Microsoft.Extensions.DependencyInjection;
 using static CalendarSkill.Models.CreateEventStateModel;
 using static Microsoft.Recognizers.Text.Culture;
 
@@ -25,94 +25,87 @@ namespace CalendarSkill.Dialogs
 {
     public class FindMeetingRoomDialog : CalendarSkillDialogBase
     {
-        private ISearchService SearchService { get; set; }
+        private readonly ISearchService searchService;
 
         public FindMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindContactDialog findContactDialog,
-            IBotTelemetryClient telemetryClient,
-            ISearchService searchService,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(FindMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-            SearchService = searchService;
+            searchService = serviceProvider.GetService<ISearchService>();
 
             // entry, get the name list
             var findMeetingRoom = new WaterfallStep[]
             {
-                CollectStartDate,
-                CollectStartTime,
-                CollectDuration,
-                CollectBuilding,
-                CollectFloorNumber,
-                GetMeetingRooms,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckRoomAvailable,
-                CheckRoomRejected,
-                AfterConfirmMeetingRoom
+                CollectStartDatetAsync,
+                CollectStartTimeAsync,
+                CollectDurationAsync,
+                CollectBuildingAsync,
+                CollectFloorNumberAsync,
+                GetMeetingRoomsAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckRoomAvailableAsync,
+                CheckRoomRejectedAsync,
+                AfterConfirmMeetingRoomAsync
             };
 
             var updateStartDate = new WaterfallStep[]
             {
-                UpdateStartDateForCreate,
-                AfterUpdateStartDateForCreate,
+                UpdateStartDateForCreateAsync,
+                AfterUpdateStartDateForCreateAsync,
             };
 
             var updateStartTime = new WaterfallStep[]
             {
-                UpdateStartTimeForCreate,
-                AfterUpdateStartTimeForCreate,
+                UpdateStartTimeForCreateAsync,
+                AfterUpdateStartTimeForCreateAsync,
             };
 
             var updateDuration = new WaterfallStep[]
             {
-                UpdateDurationForCreate,
-                AfterUpdateDurationForCreate,
+                UpdateDurationForCreateAsync,
+                AfterUpdateDurationForCreateAsync,
             };
 
             var collectBuilding = new WaterfallStep[]
             {
-                CollectBuildingPrompt,
-                AfterCollectBuildingPrompt
+                CollectBuildingPromptAsync,
+                AfterCollectBuildingPromptAsync
             };
 
             var collectFloorNumber = new WaterfallStep[]
             {
-                CollectFloorNumberPrompt,
-                AfterCollectFloorNumberPrompt
+                CollectFloorNumberPromptAsync,
+                AfterCollectFloorNumberPromptAsync
             };
 
             var recreatMeetingRoom = new WaterfallStep[]
             {
-                RecreateMeetingRoomPrompt,
-                AfterRecreateMeetingRoomPrompt
+                RecreateMeetingRoomPromptAsync,
+                AfterRecreateMeetingRoomPromptAsync
             };
 
-            AddDialog(new WaterfallDialog(Actions.FindMeetingRoom, findMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectBuilding, collectBuilding) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectFloorNumber, collectFloorNumber) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.RecreateMeetingRoom, recreatMeetingRoom) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindMeetingRoom, findMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartDateForCreate, updateStartDate) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateStartTimeForCreate, updateStartTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.UpdateDurationForCreate, updateDuration) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectBuilding, collectBuilding) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectFloorNumber, collectFloorNumber) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.RecreateMeetingRoom, recreatMeetingRoom) { TelemetryClient = TelemetryClient });
             AddDialog(new DatePrompt(Actions.DatePromptForCreate));
             AddDialog(new TimePrompt(Actions.TimePromptForCreate));
             AddDialog(new DurationPrompt(Actions.DurationPromptForCreate));
-            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, services, searchService));
-            AddDialog(new GetFloorNumberPrompt(Actions.FloorNumberPromptForCreate, services));
-            AddDialog(new GetRecreateMeetingRoomInfoPrompt(Actions.RecreateMeetingRoomPrompt, services));
-            AddDialog(findContactDialog ?? throw new ArgumentNullException(nameof(findContactDialog)));
+            AddDialog(new GetBuildingPrompt(Actions.BuildingPromptForCreate, Services, searchService));
+            AddDialog(new GetFloorNumberPrompt(Actions.FloorNumberPromptForCreate, Services));
+            AddDialog(new GetRecreateMeetingRoomInfoPrompt(Actions.RecreateMeetingRoomPrompt, Services));
+            AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             InitialDialogId = Actions.FindMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> CollectBuilding(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+
+
+        private async Task<DialogTurnResult> CollectBuildingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -128,19 +121,19 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectBuildingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectBuildingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!string.IsNullOrEmpty(state.MeetingInfo.Building))
                 {
-                    List<RoomModel> meetingRooms = await SearchService.GetMeetingRoomAsync(building: state.MeetingInfo.Building);
+                    List<RoomModel> meetingRooms = await searchService.GetMeetingRoomAsync(building: state.MeetingInfo.Building);
                     if (meetingRooms.Any())
                     {
                         return await sc.NextAsync(result: meetingRooms, cancellationToken: cancellationToken);
@@ -164,12 +157,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterCollectBuildingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCollectBuildingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -183,9 +176,9 @@ namespace CalendarSkill.Dialogs
                 else if (sc.Result == null)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                     state.Clear();
-                    await sc.CancelAllDialogsAsync();
+                    await sc.CancelAllDialogsAsync(cancellationToken);
                     return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                 }
                 else
@@ -210,16 +203,16 @@ namespace CalendarSkill.Dialogs
                     }
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectFloorNumber(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectFloorNumberAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -235,12 +228,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectFloorNumberPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectFloorNumberPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -255,12 +248,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterCollectFloorNumberPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCollectFloorNumberPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -274,9 +267,9 @@ namespace CalendarSkill.Dialogs
                 else if (sc.Result == null)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                     state.Clear();
-                    await sc.CancelAllDialogsAsync();
+                    await sc.CancelAllDialogsAsync(cancellationToken);
                     return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                 }
                 else
@@ -284,23 +277,23 @@ namespace CalendarSkill.Dialogs
                     state.MeetingInfo.FloorNumber = sc.Result as int?;
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Get the rooms with given conditions.
-        private async Task<DialogTurnResult> GetMeetingRooms(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetMeetingRoomsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
-                var meetingRooms = await SearchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
+                var meetingRooms = await searchService.GetMeetingRoomAsync(state.MeetingInfo.MeetingRoomName, state.MeetingInfo.Building, state.MeetingInfo.FloorNumber.GetValueOrDefault());
 
                 if (meetingRooms.Count == 0)
                 {
@@ -313,7 +306,7 @@ namespace CalendarSkill.Dialogs
                             state.MeetingInfo.FloorNumber,
                         };
                         var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByName, tokens);
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                         state.MeetingInfo.MeetingRoomName = null;
                     }
                     else
@@ -325,7 +318,7 @@ namespace CalendarSkill.Dialogs
                             DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                         };
                         var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                         if (state.MeetingInfo.FloorNumber.GetValueOrDefault() == 0)
                         {
                             state.MeetingInfo.Building = null;
@@ -342,17 +335,17 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // Check whether the candidate rooms are free.
-        private async Task<DialogTurnResult> CheckRoomAvailable(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckRoomAvailableAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
                 var service = ServiceManager.InitCalendarService(token as string, state.EventSource);
 
@@ -363,7 +356,7 @@ namespace CalendarSkill.Dialogs
                 }
 
                 // roomAvailablility indicates whether the room is free.
-                List<bool> roomAvailablity = await service.CheckAvailable(users, (DateTime)state.MeetingInfo.StartDateTime, state.MeetingInfo.Duration / 60);
+                List<bool> roomAvailablity = await service.CheckAvailableAsync(users, (DateTime)state.MeetingInfo.StartDateTime, state.MeetingInfo.Duration / 60);
                 List<RoomModel> meetingRooms = new List<RoomModel>();
                 for (int i = 0; i < state.MeetingInfo.UnconfirmedMeetingRoom.Count(); i++)
                 {
@@ -391,31 +384,31 @@ namespace CalendarSkill.Dialogs
                             state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                     };
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomNotFoundByBuildingAndFloor, tokens);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
                 else
                 {
                     var tokens = new { MeetingRoom = state.MeetingInfo.MeetingRoomName };
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomUnavailable, tokens);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
 
                 return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
         // If the room has been rejected, it needs to be filterd.
-        private async Task<DialogTurnResult> CheckRoomRejected(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckRoomRejectedAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (string.IsNullOrEmpty(state.MeetingInfo.MeetingRoomName))
                 {
                     state.MeetingInfo.UnconfirmedMeetingRoom = state.MeetingInfo.UnconfirmedMeetingRoom.FindAll(x => !state.MeetingInfo.IgnoredMeetingRoom.Contains(x.DisplayName + state.MeetingInfo.StartDateTime.ToString()));
@@ -430,7 +423,7 @@ namespace CalendarSkill.Dialogs
                         DateTime = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()), state.MeetingInfo.AllDay == true, DateTime.UtcNow > state.MeetingInfo.StartDateTime),
                     };
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.CannotFindOtherMeetingRoom, tokens);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                     return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
                 }
                 else
@@ -448,13 +441,13 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterConfirmMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterConfirmMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -463,25 +456,25 @@ namespace CalendarSkill.Dialogs
                 if (confirmResult)
                 {
                     state.MeetingInfo.MeetingRoom = state.MeetingInfo.UnconfirmedMeetingRoom.First();
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
                     state.MeetingInfo.IgnoredMeetingRoom.Add(state.MeetingInfo.UnconfirmedMeetingRoom.First().DisplayName + state.MeetingInfo.StartDateTime.ToString());
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.IgnoreMeetingRoom);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                     return await sc.ReplaceDialogAsync(Actions.RecreateMeetingRoom, cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> RecreateMeetingRoomPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> RecreateMeetingRoomPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -494,12 +487,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterRecreateMeetingRoomPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterRecreateMeetingRoomPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -513,9 +506,9 @@ namespace CalendarSkill.Dialogs
                         case RecreateMeetingRoomState.Cancel:
                             {
                                 var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.CancelRequest);
-                                await sc.Context.SendActivityAsync(activity);
+                                await sc.Context.SendActivityAsync(activity, cancellationToken);
                                 state.Clear();
-                                await sc.CancelAllDialogsAsync();
+                                await sc.CancelAllDialogsAsync(cancellationToken);
                                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                             }
 
@@ -601,7 +594,7 @@ namespace CalendarSkill.Dialogs
                         default:
                             {
                                 // should not go to this part. place an error handling for save.
-                                await HandleDialogExceptions(sc, new Exception("Get unexpect state in recreate."));
+                                await HandleDialogExceptionsAsync(sc, new Exception("Get unexpect state in recreate."), cancellationToken);
                                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                             }
                     }
@@ -610,15 +603,15 @@ namespace CalendarSkill.Dialogs
                 {
                     // user has tried too many times but can't get result
                     var activity = TemplateManager.GenerateActivityForLocale(CalendarSharedResponses.RetryTooManyResponse);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                     state.Clear();
-                    await sc.CancelAllDialogsAsync();
+                    await sc.CancelAllDialogsAsync(cancellationToken);
                     return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

@@ -19,8 +19,7 @@ namespace CalendarSkill.Utilities
 
         public const int AvailabilityViewInterval = 5;
 
-
-        public static async Task<List<EventModel>> GetEventsByTime(List<DateTime> startDateList, List<DateTime> startTimeList, List<DateTime> endDateList, List<DateTime> endTimeList, TimeZoneInfo userTimeZone, ICalendarService calendarService)
+        public static async Task<List<EventModel>> GetEventsByTimeAsync(List<DateTime> startDateList, List<DateTime> startTimeList, List<DateTime> endDateList, List<DateTime> endTimeList, TimeZoneInfo userTimeZone, ICalendarService calendarService)
         {
             // todo: check input datetime is utc
             var rawEvents = new List<EventModel>();
