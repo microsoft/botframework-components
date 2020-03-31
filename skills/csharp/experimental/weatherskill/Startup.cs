@@ -19,6 +19,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 using WeatherSkill.Bots;
 using WeatherSkill.Dialogs;
 using WeatherSkill.Responses.Main;
@@ -49,7 +50,13 @@ namespace WeatherSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -114,7 +121,7 @@ namespace WeatherSkill
 
             // Configure bot
             services.AddTransient<MainDialog>();
-            services.AddTransient<IBot, DialogBot<MainDialog>>();
+            services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
