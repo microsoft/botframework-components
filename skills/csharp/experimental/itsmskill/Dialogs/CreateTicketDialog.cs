@@ -7,6 +7,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveCards;
+using ITSMSkill.Dialogs.Teams;
 using ITSMSkill.Models;
 using ITSMSkill.Models.Actions;
 using ITSMSkill.Prompts;
@@ -48,6 +50,14 @@ namespace ITSMSkill.Dialogs
                 CreateTicketAsync
             };
 
+            // TaskModule Based WaterFallStep
+            var createTicketTaskModule = new WaterfallStep[]
+            {
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CreateTicketTeamsTaskModuleAsync
+            };
+
             var displayExisting = new WaterfallStep[]
             {
                 GetAuthTokenAsync,
@@ -68,6 +78,31 @@ namespace ITSMSkill.Dialogs
             ShowKnowledgeResponse = KnowledgeResponses.IfExistingSolve;
             ShowKnowledgePrompt = Actions.NavigateYesNoPrompt;
             KnowledgeHelpLoop = Actions.DisplayExisting;
+        }
+
+        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
+        {
+            if (dc.Context.Activity.ChannelId.Contains("msteams"))
+            {
+                return await dc.BeginDialogAsync(Actions.CreateTickTeamsTaskModule, options, cancellationToken);
+            }
+
+            return await base.OnBeginDialogAsync(dc, options, cancellationToken);
+        }
+
+        protected async Task<DialogTurnResult> CreateTicketTeamsTaskModuleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var reply = sc.Context.Activity.CreateReply();
+
+            var adaptiveCard = TicketDialogHelper.ServiceNowTickHubAdaptiveCard();
+            reply = sc.Context.Activity.CreateReply();
+            reply.Attachments = new List<Attachment>()
+            {
+                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = adaptiveCard }
+            };
+
+            await sc.Context.SendActivityAsync(reply, cancellationToken);
+            return await sc.EndDialogAsync();
         }
 
         protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
