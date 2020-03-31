@@ -19,11 +19,12 @@ namespace RestaurantBookingSkill.Bots
         private readonly Dialog _dialog;
         private readonly BotState _conversationState;
         private readonly BotState _userState;
-        private IStatePropertyAccessor<DialogState> _dialogStateAccessor;
+        private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
             _dialog = dialog;
+            _dialog.TelemetryClient = serviceProvider.GetService<IBotTelemetryClient>();
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
@@ -38,6 +39,11 @@ namespace RestaurantBookingSkill.Bots
             await _userState.SaveChangesAsync(turnContext, false, cancellationToken);
         }
 
+        protected override Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        {
+            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+        }
+
         protected override Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
@@ -48,12 +54,12 @@ namespace RestaurantBookingSkill.Bots
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
-        protected override Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        protected override Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
         {
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
-        protected override Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
+        protected override Task OnEndOfConversationActivityAsync(ITurnContext<IEndOfConversationActivity> turnContext, CancellationToken cancellationToken)
         {
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
