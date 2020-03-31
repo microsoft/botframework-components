@@ -23,6 +23,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 
 namespace AutomotiveSkill
 {
@@ -51,7 +52,7 @@ namespace AutomotiveSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -69,6 +70,9 @@ namespace AutomotiveSkill
             Configuration.Bind(settings);
             services.AddSingleton<BotSettings>(settings);
             services.AddSingleton<BotSettingsBase>(settings);
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
 
             // Configure credentials
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
@@ -116,6 +120,9 @@ namespace AutomotiveSkill
             }
 
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // register dialogs
             services.AddTransient<MainDialog>();

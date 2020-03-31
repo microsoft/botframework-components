@@ -203,8 +203,6 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(ReplyMeetingRoomNotFoundByBuilding(floorNumber: floorNumberNonexistent))
                 .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
                 .Send(BookMeetingRoomTestUtterances.ChangeMeetingRoom)
-                .AssertReplyOneOf(AskForBuildingPrompt())
-                .Send(Strings.Strings.DefaultBuilding)
                 .AssertReplyOneOf(AskForFloorNumberPrompt())
                 .Send(Strings.Strings.DefaultFloorNumber)
                 .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
@@ -244,6 +242,9 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(ReplyMeetingRoomBusy(floorNumber: floorNumberBusy))
                 .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
                 .Send(BookMeetingRoomTestUtterances.ChangeMeetingRoom)
+                .AssertReplyOneOf(ReplyMeetingRoomBusy(floorNumber: floorNumberBusy))
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeBuilding)
                 .AssertReplyOneOf(AskForBuildingPrompt())
                 .Send(Strings.Strings.DefaultBuilding)
                 .AssertReplyOneOf(AskForFloorNumberPrompt())
@@ -442,7 +443,79 @@ namespace CalendarSkill.Test.Flow
                 .Send(string.Format(Strings.Strings.FloorNumber, 10))
                 .AssertReplyOneOf(ReplyMeetingRoomNotFoundByBuilding(floorNumber: 10))
                 .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
-                .Send(BookMeetingRoomTestUtterances.ChangeMeetingRoomWithFloorNumberEntity)
+                .Send(BookMeetingRoomTestUtterances.BookMeetingRoomWithFloorNumberEntity)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(ConfirmedMeetingRoom())
+                .AssertReplyOneOf(AskForParticpantsPrompt())
+                .Send(Strings.Strings.DefaultUserName)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_BookMeetingRoom_ChangeRoomWithFloorNumber_ChangeCalendarEntryIntent()
+        {
+            await GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
+                .Send(BookMeetingRoomTestUtterances.BaseBookMeetingRoom)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForBuildingPrompt())
+                .Send(Strings.Strings.DefaultBuilding)
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(string.Format(Strings.Strings.FloorNumber, 10))
+                .AssertReplyOneOf(ReplyMeetingRoomNotFoundByBuilding(floorNumber: 10))
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeFloorNumberWithFloorNumberEntity)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(ConfirmedMeetingRoom())
+                .AssertReplyOneOf(AskForParticpantsPrompt())
+                .Send(Strings.Strings.DefaultUserName)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_BookMeetingRoom_ChangeFloor()
+        {
+            await GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
+                .Send(BookMeetingRoomTestUtterances.BaseBookMeetingRoom)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForBuildingPrompt())
+                .Send(Strings.Strings.DefaultBuilding)
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(string.Format(Strings.Strings.FloorNumber, 10))
+                .AssertReplyOneOf(ReplyMeetingRoomNotFoundByBuilding(floorNumber: 10))
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeFloorNumber)
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(Strings.Strings.DefaultFloorNumber)
                 .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
                 .Send(Strings.Strings.ConfirmYes)
                 .AssertReplyOneOf(ConfirmedMeetingRoom())
@@ -502,6 +575,86 @@ namespace CalendarSkill.Test.Flow
         }
 
         [TestMethod]
+        public async Task Test_BookMeetingRoom_ChangeRoomWithBuilding_ChangeCalendarEntryIntent()
+        {
+            await GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
+                .Send(BookMeetingRoomTestUtterances.BaseBookMeetingRoom)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForBuildingPrompt())
+                .Send(string.Format(Strings.Strings.Building, 2))
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(string.Format(Strings.Strings.FloorNumber, 2))
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt(7))
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(ReplyMeetingRoomIgnored())
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeBuildingWithBuildingEntity)
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(Strings.Strings.DefaultFloorNumber)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(ConfirmedMeetingRoom())
+                .AssertReplyOneOf(AskForParticpantsPrompt())
+                .Send(Strings.Strings.DefaultUserName)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task Test_BookMeetingRoom_ChangeBuilding_ChangeCalendarEntryIntent()
+        {
+            await GetTestFlow()
+                .Send(string.Empty)
+                .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
+                .Send(BookMeetingRoomTestUtterances.BaseBookMeetingRoom)
+                .AssertReplyOneOf(AskForDurationPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReplyOneOf(AskForBuildingPrompt())
+                .Send(string.Format(Strings.Strings.Building, 2))
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(string.Format(Strings.Strings.FloorNumber, 2))
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt(7))
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(ReplyMeetingRoomIgnored())
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeBuilding)
+                .AssertReplyOneOf(AskForBuildingPrompt())
+                .Send(Strings.Strings.DefaultBuilding)
+                .AssertReplyOneOf(AskForFloorNumberPrompt())
+                .Send(Strings.Strings.DefaultFloorNumber)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(ConfirmedMeetingRoom())
+                .AssertReplyOneOf(AskForParticpantsPrompt())
+                .Send(Strings.Strings.DefaultUserName)
+                .AssertReplyOneOf(ConfirmOneNameOneAddress())
+                .AssertReplyOneOf(AddMoreUserPrompt())
+                .Send(Strings.Strings.ConfirmNo)
+                .AssertReplyOneOf(AskForSubjectWithContactNamePrompt())
+                .Send(Strings.Strings.DefaultEventName)
+                .AssertReplyOneOf(AskForContentPrompt())
+                .Send(Strings.Strings.DefaultDuration)
+                .AssertReply(ShowCalendarList())
+                .AssertReplyOneOf(ConfirmPrompt())
+                .Send(Strings.Strings.ConfirmYes)
+                .AssertReplyOneOf(BookedMeeting())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task Test_BookMeetingRoom_ChangeRoomWithRoomName()
         {
             await GetTestFlow()
@@ -519,7 +672,10 @@ namespace CalendarSkill.Test.Flow
                 .AssertReplyOneOf(ReplyMeetingRoomIgnored())
                 .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
                 .Send(BookMeetingRoomTestUtterances.BookMeetingRoomWithMeetingRoomEntity)
-                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt())
+                .AssertReplyOneOf(ReplyMeetingRoomNotFound(building: string.Format(Strings.Strings.Building, 2), floorNumber: 2))
+                .AssertReplyOneOf(AskForRecreateMeetingRoomPrompt())
+                .Send(BookMeetingRoomTestUtterances.ChangeMeetingRoom)
+                .AssertReplyOneOf(AskForConfirmMeetingRoomPrompt(8))
                 .Send(Strings.Strings.ConfirmYes)
                 .AssertReplyOneOf(ConfirmedMeetingRoom())
                 .AssertReplyOneOf(AskForParticpantsPrompt())
@@ -978,11 +1134,16 @@ namespace CalendarSkill.Test.Flow
             return GetTemplates(CalendarSharedResponses.RetryTooManyResponse);
         }
 
-        private string[] ReplyMeetingRoomNotFound()
+        private string[] ReplyMeetingRoomNotFound(
+            string meetingRoom = Strings.Strings.DefaultMeetingRoomName,
+            string building = null,
+            int floorNumber = 0)
         {
             return GetTemplates(FindMeetingRoomResponses.MeetingRoomNotFoundByName, new
             {
-                MeetingRoom = Strings.Strings.DefaultMeetingRoomName,
+                MeetingRoom = meetingRoom,
+                Building = building,
+                FloorNumber = floorNumber,
             });
         }
 

@@ -11,6 +11,8 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
+using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
@@ -21,37 +23,28 @@ namespace PointOfInterestSkill.Dialogs
     public class FindParkingDialog : PointOfInterestDialogBase
     {
         public FindParkingDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            RouteDialog routeDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(FindParkingDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindParkingDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkCurrentLocation = new WaterfallStep[]
             {
-                CheckForCurrentCoordinatesBeforeFindParking,
-                ConfirmCurrentLocation,
-                ProcessCurrentLocationSelection,
-                RouteToFindFindParkingDialog
+                CheckForCurrentCoordinatesBeforeFindParkingAsync,
+                ConfirmCurrentLocationAsync,
+                ProcessCurrentLocationSelectionAsync,
+                RouteToFindFindParkingDialogAsync,
             };
 
             var findParking = new WaterfallStep[]
             {
-                GetParkingInterestPoints,
-                ProcessPointOfInterestSelection,
-                ProcessPointOfInterestAction,
+                GetParkingInterestPointsAsync,
+                ProcessPointOfInterestSelectionAsync,
+                ProcessPointOfInterestActionAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindParking, findParking) { TelemetryClient = telemetryClient });
-            AddDialog(routeDialog ?? throw new ArgumentNullException(nameof(routeDialog)));
+            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation));
+            AddDialog(new WaterfallDialog(Actions.FindParking, findParking));
+            AddDialog(serviceProvider.GetService<RouteDialog>());
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;
@@ -63,16 +56,16 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeFindParking(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeFindParkingAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var hasCurrentCoordinates = state.CheckForValidCurrentCoordinates();
             if (hasCurrentCoordinates || !string.IsNullOrEmpty(state.Address))
             {
-                return await sc.ReplaceDialogAsync(Actions.FindParking);
+                return await sc.ReplaceDialogAsync(Actions.FindParking, cancellationToken: cancellationToken);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) }, cancellationToken);
         }
 
         /// <summary>
@@ -81,9 +74,9 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">WaterfallStepContext.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>DialogTurnResult.</returns>
-        protected async Task<DialogTurnResult> RouteToFindFindParkingDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> RouteToFindFindParkingDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            return await sc.ReplaceDialogAsync(Actions.FindParking);
+            return await sc.ReplaceDialogAsync(Actions.FindParking, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -92,11 +85,11 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> GetParkingInterestPoints(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> GetParkingInterestPointsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
 
                 var mapsService = ServiceManager.InitMapsService(Settings, sc.Context.Activity.Locale);
                 var addressMapsService = ServiceManager.InitAddressMapsService(Settings, sc.Context.Activity.Locale);
@@ -115,45 +108,45 @@ namespace PointOfInterestSkill.Dialogs
 
                         // TODO nearest here is not for state.CurrentCoordinates
                         pointOfInterestList = await mapsService.GetPointOfInterestListByParkingCategoryAsync(pointOfInterest.Geolocation.Latitude, pointOfInterest.Geolocation.Longitude, state.PoiType);
-                        cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, mapsService);
+                        cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, mapsService, cancellationToken);
                     }
                     else
                     {
                         // Find parking lot near address
                         pointOfInterestList = await mapsService.GetPointOfInterestListByParkingCategoryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.PoiType);
-                        cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, mapsService);
+                        cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, mapsService, cancellationToken);
                     }
                 }
                 else
                 {
                     // No entities identified, find nearby parking lots
                     pointOfInterestList = await mapsService.GetPointOfInterestListByParkingCategoryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.PoiType);
-                    cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, mapsService);
+                    cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, mapsService, cancellationToken);
                 }
 
                 if (cards.Count == 0)
                 {
                     var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoLocationsFound);
-                    await sc.Context.SendActivityAsync(replyMessage);
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (cards.Count == 1)
                 {
                     // only to indicate it is only one result
-                    return await sc.NextAsync(true);
+                    return await sc.NextAsync(true, cancellationToken);
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, "PointOfInterestOverviewContainer", state.CurrentCoordinates, pointOfInterestList, addressMapsService);
+                    var containerCard = await GetContainerCardAsync(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, addressMapsService, cancellationToken);
 
                     var options = GetPointOfInterestPrompt(POISharedResponses.MultipleLocationsFound, containerCard, "Container", cards);
 
-                    return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options);
+                    return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

@@ -30,6 +30,7 @@ using PointOfInterestSkill.Responses.Route;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
+using SkillServiceLibrary.Utilities;
 
 namespace PointOfInterestSkill
 {
@@ -53,7 +54,7 @@ namespace PointOfInterestSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -72,9 +73,25 @@ namespace PointOfInterestSkill
             services.AddSingleton<BotSettings>(settings);
             services.AddSingleton<BotSettingsBase>(settings);
 
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
+
             // Configure credentials
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
-            services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
+
+            // Configure telemetry
+            services.AddApplicationInsightsTelemetry();
+            services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
+            services.AddSingleton<ITelemetryInitializer, OperationCorrelationTelemetryInitializer>();
+            services.AddSingleton<ITelemetryInitializer, TelemetryBotIdInitializer>();
+            services.AddSingleton<TelemetryInitializerMiddleware>();
+            services.AddSingleton<TelemetryLoggerMiddleware>();
+
+            // Configure bot services
+            services.AddSingleton<BotServices>();
 
             // Configure bot state
             // Uncomment the following line for local development without Cosmos Db
@@ -88,17 +105,6 @@ namespace PointOfInterestSkill
                 var conversationState = sp.GetService<ConversationState>();
                 return new BotStateSet(userState, conversationState);
             });
-
-            // Configure telemetry
-            services.AddApplicationInsightsTelemetry();
-            services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
-            services.AddSingleton<ITelemetryInitializer, OperationCorrelationTelemetryInitializer>();
-            services.AddSingleton<ITelemetryInitializer, TelemetryBotIdInitializer>();
-            services.AddSingleton<TelemetryInitializerMiddleware>();
-            services.AddSingleton<TelemetryLoggerMiddleware>();
-
-            // Configure bot services
-            services.AddSingleton<BotServices>();
 
             // Configure proactive
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
@@ -145,6 +151,9 @@ namespace PointOfInterestSkill
                 .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
+            // Uncomment this to support HTTPS.
+            // app.UseHttpsRedirection();
         }
     }
 }

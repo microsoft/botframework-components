@@ -20,5 +20,6 @@ namespace EmailSkill.Responses.ShowEmail
         public const string ReadOutMore = "ReadOutMore";
         public const string ReadOutForOneEmail = "ReadOutForOneEmail";
         public const string ReadOutForMultiEmails = "ReadOutForMultiEmails";
+        public const string ActionPrompt = "ActionPrompt";
     }
 }

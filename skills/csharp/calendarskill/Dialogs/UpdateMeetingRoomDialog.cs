@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,14 +11,11 @@ using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Prompts.Options;
 using CalendarSkill.Responses.FindMeetingRoom;
 using CalendarSkill.Responses.UpdateEvent;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Graph;
 
 namespace CalendarSkill.Dialogs
@@ -23,59 +23,50 @@ namespace CalendarSkill.Dialogs
     public class UpdateMeetingRoomDialog : CalendarSkillDialogBase
     {
         public UpdateMeetingRoomDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            FindMeetingRoomDialog findMeetingRoomDialog,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpdateMeetingRoomDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(UpdateMeetingRoomDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var updateMeetingRoom = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckFocusedEvent,
-                FindMeetingRoom,
-                GetAuthToken,
-                AfterGetAuthToken,
-                UpdateMeetingRoom
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckFocusedEventAsync,
+                FindMeetingRoomAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                UpdateMeetingRoomAsync
             };
 
             var findEvent = new WaterfallStep[]
             {
-                SearchEventsWithEntities,
-                GetEventsPrompt,
-                AfterGetEventsPrompt,
-                AddConflictFlag,
-                ChooseEvent
+                SearchEventsWithEntitiesAsync,
+                GetEventsPromptAsync,
+                AfterGetEventsPromptAsync,
+                AddConflictFlagAsync,
+                ChooseEventAsync
             };
 
             var chooseEvent = new WaterfallStep[]
             {
-                ChooseEventPrompt,
-                AfterChooseEvent
+                ChooseEventPromptAsync,
+                AfterChooseEventAsync
             };
 
             // Define the conversation flow using a waterfall model.UpdateMeetingRoom
-            AddDialog(new WaterfallDialog(Actions.UpdateMeetingRoom, updateMeetingRoom) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = telemetryClient });
-            AddDialog(findMeetingRoomDialog ?? throw new ArgumentNullException(nameof(findMeetingRoomDialog)));
+            AddDialog(new WaterfallDialog(Actions.UpdateMeetingRoom, updateMeetingRoom) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindEvent, findEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ChooseEvent, chooseEvent) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindMeetingRoomDialog>() ?? throw new ArgumentNullException(nameof(FindMeetingRoomDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.UpdateMeetingRoom;
         }
 
-        private async Task<DialogTurnResult> FindMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> FindMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (CalendarSkillDialogOptions)sc.Options;
                 var origin = state.ShowMeetingInfo.FocusedEvents[0];
                 var updateEvent = new EventModel(origin.Source);
@@ -87,23 +78,23 @@ namespace CalendarSkill.Dialogs
 
                 if (state.InitialIntent == CalendarLuis.Intent.DeleteCalendarEntry)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 return await sc.BeginDialogAsync(nameof(FindMeetingRoomDialog), sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> UpdateMeetingRoom(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> UpdateMeetingRoomAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var origin = state.ShowMeetingInfo.FocusedEvents[0];
                 var updateEvent = new EventModel(origin.Source);
                 string meetingRoom = state.MeetingInfo.MeetingRoom?.DisplayName;
@@ -161,43 +152,43 @@ namespace CalendarSkill.Dialogs
                 };
                 if (state.InitialIntent == CalendarLuis.Intent.AddCalendarEntryAttribute)
                 {
-                    var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, FindMeetingRoomResponses.MeetingRoomAdded, data);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, FindMeetingRoomResponses.MeetingRoomAdded, data, cancellationToken);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
                 else if (state.InitialIntent == CalendarLuis.Intent.ChangeCalendarEntry)
                 {
-                    var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, FindMeetingRoomResponses.MeetingRoomChanged, data);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    var replyMessage = await GetDetailMeetingResponseAsync(sc, newEvent, FindMeetingRoomResponses.MeetingRoomChanged, data, cancellationToken);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
                 else
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(FindMeetingRoomResponses.MeetingRoomCanceled, data);
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
                 }
 
                 state.Clear();
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> GetEventsPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetEventsPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 if (state.ShowMeetingInfo.FocusedEvents.Any())
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (state.ShowMeetingInfo.ShowingMeetings.Any())
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -212,7 +203,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

@@ -13,3 +13,6 @@
 # ReadOutMessage.Speak(emailDetailsWithContent)
 - Aquí están los detalles del correo electrónico: ${emailDetailsWithoutContent}
 
+# ActionPrompt.Text
+- Para realizar una acción en un correo electrónico, primero selecciónelo, luego puede eliminar, reenviar o responder.
+

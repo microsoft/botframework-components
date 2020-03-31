@@ -33,14 +33,11 @@ namespace EmailSkill.Dialogs
         public static readonly int MaxAcceptContactsNum = 20;
 
         public FindContactDialog(
-            LocaleTemplateManager templateManager,
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(FindContactDialog))
         {
-            TemplateManager = templateManager;
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
-            TelemetryClient = telemetryClient;
             Services = serviceProvider.GetService<BotServices>();
             var conversationState = serviceProvider.GetService<ConversationState>();
             Accessor = conversationState.CreateProperty<EmailSkillState>(nameof(EmailSkillState));
@@ -50,16 +47,16 @@ namespace EmailSkill.Dialogs
             // entry, get the name list
             var confirmNameList = new WaterfallStep[]
             {
-                ConfirmNameList,
-                AfterConfirmNameList,
+                ConfirmNameListAsync,
+                AfterConfirmNameListAsync,
             };
 
             // go through the name list, replace the confirmNameList
             // set state.CurrentAttendeeName
             var loopNameList = new WaterfallStep[]
             {
-                LoopNameList,
-                AfterLoopNameList
+                LoopNameListAsync,
+                AfterLoopNameListAsync
             };
 
             // called by loopNameList
@@ -67,16 +64,16 @@ namespace EmailSkill.Dialogs
             {
                 // call updateName to get the person state.ConfirmedPerson.
                 // state.ConfirmedPerson should be set after this step
-                ConfirmName,
+                ConfirmNameAsync,
 
                 // check if the state.ConfirmedPerson
                 //  - null : failed to parse this name for multiple try.
                 //  - one email : check if this one is wanted
                 //  - multiple emails : call selectEmail
-                ConfirmEmail,
+                ConfirmEmailAsync,
 
                 // if got no on last step, replace/restart this flow.
-                AfterConfirmEmail
+                AfterConfirmEmailAsync
             };
 
             // use the user name of state.CurrentAttendeeName or user input to find the persons.
@@ -87,69 +84,69 @@ namespace EmailSkill.Dialogs
                 // check whether should the bot ask for attendee name.
                 // if called by confirmAttendee then skip this step.
                 // if called by itself when can not find the last input, it will ask back or end this one when multiple try.
-                UpdateUserName,
+                UpdateUserNameAsync,
 
                 // check if email. add email direct into attendee and set state.ConfirmedPerson null.
                 // if not, search for the attendee.
                 // if got multiple persons, call selectPerson. use replace
                 // if got no person, replace/restart this flow.
-                AfterUpdateUserName,
-                GetAuthToken,
-                AfterGetAuthToken,
-                GetUserFromUserName
+                AfterUpdateUserNameAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                GetUserFromUserNameAsync
             };
 
             // select person, called bt updateName with replace.
             var selectPerson = new WaterfallStep[]
             {
-                SelectPerson,
-                AfterSelectPerson
+                SelectPersonAsync,
+                AfterSelectPersonAsync
             };
 
             // select email.
             // called by ConfirmEmail
             var selectEmail = new WaterfallStep[]
             {
-                SelectEmail,
-                AfterSelectEmail
+                SelectEmailAsync,
+                AfterSelectEmailAsync
             };
 
             var addMoreContactsPrompt = new WaterfallStep[]
             {
-                AddMoreUserPrompt,
-                AfterAddMoreUserPrompt
+                AddMoreUserPromptAsync,
+                AfterAddMoreUserPromptAsync
             };
 
             AddDialog(new TextPrompt(FindContactAction.Prompt));
             AddDialog(new ConfirmPrompt(FindContactAction.TakeFurtherAction, null, Culture.English) { Style = ListStyle.SuggestedAction });
-            AddDialog(new WaterfallDialog(FindContactAction.ConfirmNameList, confirmNameList) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(FindContactAction.LoopNameList, loopNameList) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(FindContactAction.ConfirmAttendee, confirmContacts) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(FindContactAction.UpdateName, updateName) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(FindContactAction.SelectPerson, selectPerson) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(FindContactAction.SelectEmail, selectEmail) { TelemetryClient = telemetryClient });
-            AddDialog(new ChoicePrompt(FindContactAction.Choice, ChoiceValidator, Culture.English) { Style = ListStyle.None, });
-            AddDialog(new WaterfallDialog(FindContactAction.AddMoreContactsPrompt, addMoreContactsPrompt) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(FindContactAction.ConfirmNameList, confirmNameList));
+            AddDialog(new WaterfallDialog(FindContactAction.LoopNameList, loopNameList));
+            AddDialog(new WaterfallDialog(FindContactAction.ConfirmAttendee, confirmContacts));
+            AddDialog(new WaterfallDialog(FindContactAction.UpdateName, updateName));
+            AddDialog(new WaterfallDialog(FindContactAction.SelectPerson, selectPerson));
+            AddDialog(new WaterfallDialog(FindContactAction.SelectEmail, selectEmail));
+            AddDialog(new ChoicePrompt(FindContactAction.Choice, ChoiceValidatorAsync, Culture.English) { Style = ListStyle.None, });
+            AddDialog(new WaterfallDialog(FindContactAction.AddMoreContactsPrompt, addMoreContactsPrompt));
             InitialDialogId = FindContactAction.ConfirmNameList;
         }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<EmailSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<EmailSkillState> Accessor { get; }
 
-        protected IStatePropertyAccessor<DialogState> DialogStateAccessor { get; set; }
+        protected IStatePropertyAccessor<DialogState> DialogStateAccessor { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
-        public async Task<DialogTurnResult> ConfirmNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ConfirmNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = sc.Options as FindContactDialogOptions;
 
                 // got attendee name list already.
@@ -163,7 +160,7 @@ namespace EmailSkill.Dialogs
                         }
                     }
 
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 // ask for attendee
@@ -180,23 +177,22 @@ namespace EmailSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterConfirmNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterConfirmNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 // get name list from sc.result
                 if (sc.Result != null)
                 {
-                    sc.Context.Activity.Properties.TryGetValue("OriginText", out var content);
-                    var userInput = content != null ? content.ToString() : sc.Context.Activity.Text;
+                    var userInput = sc.Context.Activity.Text;
 
                     if (state.MailSourceType != MailSource.Other)
                     {
@@ -215,8 +211,8 @@ namespace EmailSkill.Dialogs
                 {
                     if (state.FindContactInfor.ContactsNameList.Count > 1)
                     {
-                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new { nameList = await GetNameListStringAsync(sc) });
-                        await sc.Context.SendActivityAsync(activity);
+                        var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.BeforeSendingMessage, new { nameList = await GetNameListStringAsync(sc, cancellationToken) });
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                     }
 
                     // go to loop to go through all the names
@@ -227,21 +223,21 @@ namespace EmailSkill.Dialogs
                 state.FindContactInfor.ContactsNameList = new List<string>();
                 state.FindContactInfor.CurrentContactName = string.Empty;
                 state.FindContactInfor.ConfirmContactsNameIndex = 0;
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> LoopNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> LoopNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.FindContactInfor.ConfirmContactsNameIndex < state.FindContactInfor.ContactsNameList.Count)
                 {
                     state.FindContactInfor.CurrentContactName = state.FindContactInfor.ContactsNameList[state.FindContactInfor.ConfirmContactsNameIndex];
@@ -258,44 +254,44 @@ namespace EmailSkill.Dialogs
                     var options = sc.Options as FindContactDialogOptions;
                     if (options.PromptMoreContact && state.FindContactInfor.Contacts.Count < MaxAcceptContactsNum)
                     {
-                        return await sc.ReplaceDialogAsync(FindContactAction.AddMoreContactsPrompt, options);
+                        return await sc.ReplaceDialogAsync(FindContactAction.AddMoreContactsPrompt, options, cancellationToken);
                     }
                     else
                     {
-                        return await sc.EndDialogAsync();
+                        return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                     }
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterLoopNameList(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterLoopNameListAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 state.FindContactInfor.ConfirmContactsNameIndex = state.FindContactInfor.ConfirmContactsNameIndex + 1;
                 state.FindContactInfor.ConfirmedContact = null;
                 return await sc.ReplaceDialogAsync(FindContactAction.LoopNameList, sc.Options, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> ConfirmName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ConfirmNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 // when called bt LoopNameList, the options reason is initialize.
                 // when replaced by itself, the reason will be Confirm No.
@@ -307,25 +303,25 @@ namespace EmailSkill.Dialogs
             }
             catch (SkillException skillEx)
             {
-                await HandleDialogExceptions(sc, skillEx);
+                await HandleDialogExceptionsAsync(sc, skillEx, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> ConfirmEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> ConfirmEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var confirmedPerson = state.FindContactInfor.ConfirmedContact;
             if (confirmedPerson == null)
             {
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             var name = confirmedPerson.DisplayName;
@@ -333,19 +329,19 @@ namespace EmailSkill.Dialogs
             {
                 // Highest probability
                 var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.PromptOneNameOneAddress, new { userName = name, emailAddress = confirmedPerson.Emails.First() ?? confirmedPerson.UserPrincipalName });
-                return await sc.PromptAsync(FindContactAction.TakeFurtherAction, new PromptOptions { Prompt = activity as Activity });
+                return await sc.PromptAsync(FindContactAction.TakeFurtherAction, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
             }
             else
             {
-                return await sc.BeginDialogAsync(FindContactAction.SelectEmail);
+                return await sc.BeginDialogAsync(FindContactAction.SelectEmail, cancellationToken: cancellationToken);
             }
         }
 
-        public async Task<DialogTurnResult> AfterConfirmEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterConfirmEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var confirmedPerson = state.FindContactInfor.ConfirmedContact;
                 var name = confirmedPerson.DisplayName;
 
@@ -367,28 +363,28 @@ namespace EmailSkill.Dialogs
                         state.FindContactInfor.Contacts.Add(attendee);
                     }
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var options = sc.Options as FindContactDialogOptions;
                     options.UpdateUserNameReason = FindContactDialogOptions.UpdateUserNameReasonType.ConfirmNo;
-                    return await sc.ReplaceDialogAsync(FindContactAction.ConfirmAttendee, options);
+                    return await sc.ReplaceDialogAsync(FindContactAction.ConfirmAttendee, options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> UpdateUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> UpdateUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 state.FindContactInfor.UnconfirmedContact.Clear();
                 state.FindContactInfor.ConfirmedContact = null;
                 var options = (FindContactDialogOptions)sc.Options;
@@ -397,7 +393,7 @@ namespace EmailSkill.Dialogs
                 if (options.UpdateUserNameReason == FindContactDialogOptions.UpdateUserNameReasonType.ConfirmNo)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoRecipients);
-                    return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity });
+                    return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
                 }
 
                 var currentRecipientName = state.FindContactInfor.CurrentContactName;
@@ -410,79 +406,79 @@ namespace EmailSkill.Dialogs
                         state.FindContactInfor.FirstRetryInFindContact = false;
 
                         var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFound, new { userName = currentRecipientName });
-                        return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity });
+                        return await sc.PromptAsync(FindContactAction.Prompt, new PromptOptions { Prompt = activity as Activity }, cancellationToken);
                     }
                     else
                     {
                         var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = currentRecipientName, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
 
                         state.FindContactInfor.FirstRetryInFindContact = true;
                         state.FindContactInfor.CurrentContactName = string.Empty;
-                        return await sc.EndDialogAsync();
+                        return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                     }
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterUpdateUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterUpdateUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var userInput = sc.Result as string;
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (FindContactDialogOptions)sc.Options;
 
                 if (string.IsNullOrEmpty(userInput) && options.UpdateUserNameReason != FindContactDialogOptions.UpdateUserNameReasonType.Initialize)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.UserNotFoundAgain, new { userName = userInput, source = state.MailSourceType == MailSource.Microsoft ? "Outlook" : "Gmail" });
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
 
                 var currentRecipientName = string.IsNullOrEmpty(userInput) ? state.FindContactInfor.CurrentContactName : userInput;
                 state.FindContactInfor.CurrentContactName = currentRecipientName;
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException skillEx)
             {
-                await HandleDialogExceptions(sc, skillEx);
+                await HandleDialogExceptionsAsync(sc, skillEx, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> GetUserFromUserName(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> GetUserFromUserNameAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (FindContactDialogOptions)sc.Options;
                 var currentRecipientName = state.FindContactInfor.CurrentContactName;
                 var unionList = new List<PersonModel>();
 
-                var originPersonList = await GetPeopleWorkWithAsync(sc, currentRecipientName);
-                var originContactList = await GetContactsAsync(sc, currentRecipientName);
+                var originPersonList = await GetPeopleWorkWithAsync(sc, currentRecipientName, cancellationToken);
+                var originContactList = await GetContactsAsync(sc, currentRecipientName, cancellationToken);
                 originPersonList.AddRange(originContactList);
 
                 var originUserList = new List<PersonModel>();
                 try
                 {
-                    originUserList = await GetUserAsync(sc, currentRecipientName);
+                    originUserList = await GetUserAsync(sc, currentRecipientName, cancellationToken);
                 }
                 catch
                 {
@@ -556,17 +552,17 @@ namespace EmailSkill.Dialogs
 
                         state.FindContactInfor.CurrentContactName = string.Empty;
                         state.FindContactInfor.ConfirmedContact = null;
-                        return await sc.EndDialogAsync();
+                        return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                     }
 
                     options.UpdateUserNameReason = FindContactDialogOptions.UpdateUserNameReasonType.NotFound;
-                    return await sc.ReplaceDialogAsync(FindContactAction.UpdateName, options);
+                    return await sc.ReplaceDialogAsync(FindContactAction.UpdateName, options, cancellationToken);
                 }
                 else
                 if (unionList.Count == 1)
                 {
                     state.FindContactInfor.ConfirmedContact = unionList.First();
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -575,40 +571,40 @@ namespace EmailSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> SelectPerson(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> SelectPersonAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var unionList = state.FindContactInfor.UnconfirmedContact;
                 if (unionList.Count <= ConfigData.GetInstance().MaxDisplaySize)
                 {
-                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForName(sc, unionList, sc.Context, true));
+                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForNameAsync(sc, unionList, sc.Context, true, cancellationToken), cancellationToken);
                 }
                 else
                 {
-                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForName(sc, unionList, sc.Context, false));
+                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForNameAsync(sc, unionList, sc.Context, false, cancellationToken), cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterSelectPerson(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterSelectPersonAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
                 var topIntent = luisResult?.TopIntent().intent;
                 var generlLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
@@ -629,7 +625,7 @@ namespace EmailSkill.Dialogs
                         else
                         {
                             var activity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyFirstPage);
-                            await sc.Context.SendActivityAsync(activity);
+                            await sc.Context.SendActivityAsync(activity, cancellationToken);
                         }
                     }
                     else
@@ -652,47 +648,47 @@ namespace EmailSkill.Dialogs
                     state.FindContactInfor.ConfirmedContact = confirmedPerson;
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> SelectEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> SelectEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var confirmedPerson = state.FindContactInfor.ConfirmedContact;
                 var emailString = string.Empty;
                 var emailList = confirmedPerson.Emails.ToList();
 
                 if (emailList.Count <= ConfigData.GetInstance().MaxDisplaySize)
                 {
-                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForEmail(sc, confirmedPerson, sc.Context, true));
+                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForEmailAsync(sc, confirmedPerson, sc.Context, true, cancellationToken), cancellationToken);
                 }
                 else
                 {
-                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForEmail(sc, confirmedPerson, sc.Context, false));
+                    return await sc.PromptAsync(FindContactAction.Choice, await GenerateOptionsForEmailAsync(sc, confirmedPerson, sc.Context, false, cancellationToken), cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterSelectEmail(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterSelectEmailAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var luisResult = sc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
                 var topIntent = luisResult?.TopIntent().intent;
                 var generlLuisResult = sc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
@@ -735,21 +731,21 @@ namespace EmailSkill.Dialogs
                     state.FindContactInfor.ShowContactsIndex = 0;
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AddMoreUserPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AddMoreUserPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var nameString = state.FindContactInfor.Contacts.ToSpeechString(
                      CommonStrings.And,
                      li => !string.IsNullOrEmpty(li.EmailAddress.Name) && Util.IsEmail(li.EmailAddress.Name) ? li.EmailAddress.Name : $"{li.EmailAddress.Name ?? li.EmailAddress.Name}: {li.EmailAddress.Address}");
@@ -758,13 +754,13 @@ namespace EmailSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> AfterAddMoreUserPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> AfterAddMoreUserPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -773,16 +769,16 @@ namespace EmailSkill.Dialogs
                 {
                     var options = sc.Options as FindContactDialogOptions;
                     options.FindContactReason = FindContactDialogOptions.FindContactReasonType.FindContactAgain;
-                    return await sc.ReplaceDialogAsync(FindContactAction.ConfirmNameList, options);
+                    return await sc.ReplaceDialogAsync(FindContactAction.ConfirmNameList, options, cancellationToken);
                 }
                 else
                 {
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
@@ -863,10 +859,10 @@ namespace EmailSkill.Dialogs
             return (formattedPersonList, formattedUserList);
         }
 
-        protected async Task<List<PersonModel>> GetContactsAsync(WaterfallStepContext sc, string name)
+        protected async Task<List<PersonModel>> GetContactsAsync(WaterfallStepContext sc, string name, CancellationToken cancellationToken)
         {
             var result = new List<PersonModel>();
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
             var service = ServiceManager.InitUserService(token as string, state.GetUserTimeZone(), state.MailSourceType);
 
@@ -875,10 +871,10 @@ namespace EmailSkill.Dialogs
             return result;
         }
 
-        protected async Task<List<PersonModel>> GetPeopleWorkWithAsync(WaterfallStepContext sc, string name)
+        protected async Task<List<PersonModel>> GetPeopleWorkWithAsync(WaterfallStepContext sc, string name, CancellationToken cancellationToken)
         {
             var result = new List<PersonModel>();
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
             var service = ServiceManager.InitUserService(token as string, state.GetUserTimeZone(), state.MailSourceType);
 
@@ -888,10 +884,10 @@ namespace EmailSkill.Dialogs
             return result;
         }
 
-        protected async Task<List<PersonModel>> GetUserAsync(WaterfallStepContext sc, string name)
+        protected async Task<List<PersonModel>> GetUserAsync(WaterfallStepContext sc, string name, CancellationToken cancellationToken)
         {
             var result = new List<PersonModel>();
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
             var service = ServiceManager.InitUserService(token as string, state.GetUserTimeZone(), state.MailSourceType);
 
@@ -920,27 +916,27 @@ namespace EmailSkill.Dialogs
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
             var activity = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.EmailErrorMessage);
-            await sc.Context.SendActivityAsync(activity);
+            await sc.Context.SendActivityAsync(activity, cancellationToken);
 
             // clear state
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             state.Clear();
         }
 
-        protected async Task<bool> ChoiceValidator(PromptValidatorContext<FoundChoice> pc, CancellationToken cancellationToken)
+        protected async Task<bool> ChoiceValidatorAsync(PromptValidatorContext<FoundChoice> pc, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(pc.Context);
+            var state = await Accessor.GetAsync(pc.Context, cancellationToken: cancellationToken);
             var generalLuisResult = pc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResult);
             var generalTopIntent = generalLuisResult?.TopIntent().intent;
             var emailLuisResult = pc.Context.TurnState.Get<EmailLuis>(StateProperties.EmailLuisResult);
@@ -969,9 +965,9 @@ namespace EmailSkill.Dialogs
             return false;
         }
 
-        private async Task<PromptOptions> GenerateOptionsForEmail(WaterfallStepContext sc, PersonModel confirmedPerson, ITurnContext context, bool isSinglePage = true)
+        private async Task<PromptOptions> GenerateOptionsForEmailAsync(WaterfallStepContext sc, PersonModel confirmedPerson, ITurnContext context, bool isSinglePage = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var pageIndex = state.FindContactInfor.ShowContactsIndex;
             var pageSize = 3;
             var skip = pageSize * pageIndex;
@@ -1060,9 +1056,9 @@ namespace EmailSkill.Dialogs
             return result;
         }
 
-        private async Task<PromptOptions> GenerateOptionsForName(WaterfallStepContext sc, List<PersonModel> unionList, ITurnContext context, bool isSinglePage = true)
+        private async Task<PromptOptions> GenerateOptionsForNameAsync(WaterfallStepContext sc, List<PersonModel> unionList, ITurnContext context, bool isSinglePage = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var pageIndex = state.FindContactInfor.ShowContactsIndex;
             var pageSize = 3;
             var skip = pageSize * pageIndex;
@@ -1075,7 +1071,7 @@ namespace EmailSkill.Dialogs
                 pageIndex = state.FindContactInfor.ShowContactsIndex;
                 skip = pageSize * pageIndex;
                 var replyActivity = TemplateManager.GenerateActivityForLocale(FindContactResponses.AlreadyLastPage);
-                await sc.Context.SendActivityAsync(replyActivity);
+                await sc.Context.SendActivityAsync(replyActivity, cancellationToken);
             }
 
             var reply = TemplateManager.GenerateActivityForLocale(FindContactResponses.ConfirmMultiplContactEmailSinglePage, new { userName = currentRecipientName });
@@ -1132,9 +1128,9 @@ namespace EmailSkill.Dialogs
             return options;
         }
 
-        private async Task<string> GetNameListStringAsync(WaterfallStepContext sc)
+        private async Task<string> GetNameListStringAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var unionList = state.FindContactInfor.ContactsNameList.ToList();
             if (unionList.Count == 1)
             {
@@ -1145,27 +1141,27 @@ namespace EmailSkill.Dialogs
             return nameString;
         }
 
-        private async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var retry = TemplateManager.GenerateActivityForLocale(EmailSharedResponses.NoAuth);
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retry });
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retry }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
-                    var state = await Accessor.GetAsync(sc.Context);
+                    var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                     if (sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token))
                     {
@@ -1192,11 +1188,11 @@ namespace EmailSkill.Dialogs
                     }
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
 
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }

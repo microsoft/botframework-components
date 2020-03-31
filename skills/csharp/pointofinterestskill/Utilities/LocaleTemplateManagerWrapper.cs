@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Newtonsoft.Json.Linq;
 
 namespace PointOfInterestSkill.Utilities
 {
@@ -28,12 +29,12 @@ namespace PointOfInterestSkill.Utilities
             return manager.GenerateActivity("CardsOnly", cards, null, attachmentLayout);
         }
 
-        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, object tokens = null)
         {
             return manager.GenerateActivity(templateId, new Card[] { card }, tokens);
         }
 
-        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, IDictionary<string, object> tokens = null, string attachmentLayout = "carousel")
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, IEnumerable<Card> cards, object tokens = null, string attachmentLayout = "carousel")
         {
             var input = new
             {
@@ -53,7 +54,7 @@ namespace PointOfInterestSkill.Utilities
             }
         }
 
-        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, IDictionary<string, object> tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
+        public static Activity GenerateActivity(this LocaleTemplateManager manager, string templateId, Card card, object tokens = null, string containerName = null, IEnumerable<Card> containerItems = null)
         {
             var input = new
             {
@@ -88,7 +89,15 @@ namespace PointOfInterestSkill.Utilities
             {
                 Data = data
             };
-            return manager.ExpandTemplate(name + ".Text", input).ToArray();
+
+            // Not use .Text in case text and speak are different
+            var list = manager.ExpandTemplate(name, input);
+            var result = list.Select(value =>
+            {
+                return JObject.Parse(value)["text"].ToString();
+            }).ToArray();
+
+            return result;
         }
 
         public static Templates CreateTemplates()

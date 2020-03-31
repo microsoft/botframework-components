@@ -39,8 +39,8 @@ namespace WeatherSkill.Tests.Flow
         public async Task Test_AskWeatherWithLocation()
         {
             await this.GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(GetTemplates(MainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReplyOneOf(GetTemplates(MainResponses.WelcomeMessage))
                 .Send(ForecastUtterances.AskWeatherWithLocation)
                 .AssertReply(this.ForecastCard())
                 .StartTestAsync();
@@ -50,8 +50,8 @@ namespace WeatherSkill.Tests.Flow
         public async Task Test_AskWeatherWithoutLocation()
         {
             await this.GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(GetTemplates(MainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReplyOneOf(GetTemplates(MainResponses.WelcomeMessage))
                 .Send(ForecastUtterances.AskWeatherWithoutLocation)
                 .AssertReplyOneOf(GetTemplates(SharedResponses.LocationPrompt))
                 .Send(ForecastUtterances.Coordinates)

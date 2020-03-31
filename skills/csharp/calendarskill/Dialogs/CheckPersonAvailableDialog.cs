@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,74 +11,62 @@ using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Options;
 using CalendarSkill.Responses.CheckPersonAvailable;
 using CalendarSkill.Responses.Shared;
-using CalendarSkill.Services;
 using CalendarSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalendarSkill.Dialogs
 {
     public class CheckPersonAvailableDialog : CalendarSkillDialogBase
     {
         public CheckPersonAvailableDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            FindContactDialog findContactDialog,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(CheckPersonAvailableDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(CheckPersonAvailableDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkAvailable = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CollectContacts,
-                CollectTime,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckAvailable,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CollectContactsAsync,
+                CollectTimeAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckAvailableAsync,
             };
 
             var collectTime = new WaterfallStep[]
             {
-                AskForTimePrompt,
-                AfterAskForTimePrompt
+                AskForTimePromptAsync,
+                AfterAskForTimePromptAsync
             };
 
             var findNextAvailableTime = new WaterfallStep[]
             {
-                FindNextAvailableTimePrompt,
-                AfterFindNextAvailableTimePrompt,
+                FindNextAvailableTimePromptAsync,
+                AfterFindNextAvailableTimePromptAsync,
             };
 
             var createMeetingWithAvailableTime = new WaterfallStep[]
             {
-                CreateMeetingPrompt,
-                AfterCreateMeetingPrompt
+                CreateMeetingPromptAsync,
+                AfterCreateMeetingPromptAsync
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckAvailable, checkAvailable) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindNextAvailableTime, findNextAvailableTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectTime, collectTime) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CreateMeetingWithAvailableTime, createMeetingWithAvailableTime) { TelemetryClient = telemetryClient });
-            AddDialog(findContactDialog ?? throw new ArgumentNullException(nameof(findContactDialog)));
+            AddDialog(new WaterfallDialog(Actions.CheckAvailable, checkAvailable) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.FindNextAvailableTime, findNextAvailableTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectTime, collectTime) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CreateMeetingWithAvailableTime, createMeetingWithAvailableTime) { TelemetryClient = TelemetryClient });
+            AddDialog(serviceProvider.GetService<FindContactDialog>() ?? throw new ArgumentNullException(nameof(FindContactDialog)));
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckAvailable;
         }
 
-        private async Task<DialogTurnResult> CollectContacts(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectContactsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -83,12 +74,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CollectTime(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CollectTimeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -105,7 +96,7 @@ namespace CalendarSkill.Dialogs
 
                 if (state.MeetingInfo.StartTime.Any())
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -114,12 +105,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AskForTimePrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AskForTimePromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -130,16 +121,16 @@ namespace CalendarSkill.Dialogs
                     RetryPrompt = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AskForCheckAvailableTime) as Activity,
                     TimeZone = state.GetUserTimeZone(),
                     MaxReprompt = CalendarCommonUtil.MaxRepromptCount
-                });
+                }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterAskForTimePrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterAskForTimePromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -162,21 +153,21 @@ namespace CalendarSkill.Dialogs
                         }
                         catch (FormatException ex)
                         {
-                            await HandleExpectedDialogExceptions(sc, ex);
+                            await HandleExpectedDialogExceptionsAsync(sc, ex, cancellationToken);
                         }
                     }
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CheckAvailable(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckAvailableAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -205,7 +196,7 @@ namespace CalendarSkill.Dialogs
 
                 var dateTime = state.MeetingInfo.StartDateTime;
 
-                var me = await GetMe(sc.Context);
+                var me = await GetMeAsync(sc.Context, cancellationToken);
 
                 // the last one in result is the current user
                 var availabilityResult = await calendarService.GetUserAvailabilityAsync(me.Emails[0], new List<string>() { state.MeetingInfo.ContactInfor.Contacts[0].Address }, dateTime.Value, CalendarCommonUtil.AvailabilityViewInterval);
@@ -232,11 +223,11 @@ namespace CalendarSkill.Dialogs
                         Time = timeString,
                         Date = startDateString
                     });
-                    await sc.Context.SendActivityAsync(activity);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
 
                     state.MeetingInfo.AvailabilityResult = availabilityResult;
 
-                    return await sc.BeginDialogAsync(Actions.FindNextAvailableTime, sc.Options);
+                    return await sc.BeginDialogAsync(Actions.FindNextAvailableTime, sc.Options, cancellationToken);
                 }
                 else
                 {
@@ -272,7 +263,7 @@ namespace CalendarSkill.Dialogs
                             Date = DisplayHelper.ToDisplayDate(endAvailableTime, state.GetUserTimeZone()),
                             UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address
                         });
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
                     }
                     else
                     {
@@ -299,7 +290,7 @@ namespace CalendarSkill.Dialogs
                                 EventEndTime = TimeConverter.ConvertUtcToUserTime(conflictMeetingTitleList.First().EndTime, state.GetUserTimeZone()).ToString(CommonStrings.DisplayTime)
                             };
                             var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithOneConflict, responseParams);
-                            await sc.Context.SendActivityAsync(activity);
+                            await sc.Context.SendActivityAsync(activity, cancellationToken);
                         }
                         else
                         {
@@ -312,21 +303,21 @@ namespace CalendarSkill.Dialogs
                                 ConflictEventsCount = conflictMeetingTitleList.Count.ToString()
                             };
                             var activity = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.AttendeeIsAvailableOrgnizerIsUnavailableWithMutipleConflicts, responseParams);
-                            await sc.Context.SendActivityAsync(activity);
+                            await sc.Context.SendActivityAsync(activity, cancellationToken);
                         }
                     }
 
-                    return await sc.BeginDialogAsync(Actions.CreateMeetingWithAvailableTime, sc.Options);
+                    return await sc.BeginDialogAsync(Actions.CreateMeetingWithAvailableTime, sc.Options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> FindNextAvailableTimePrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> FindNextAvailableTimePromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -345,12 +336,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterFindNextAvailableTimePrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterFindNextAvailableTimePromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -400,34 +391,34 @@ namespace CalendarSkill.Dialogs
                             EndTime = TimeConverter.ConvertUtcToUserTime(endAvailableTime, state.GetUserTimeZone()).ToString(CommonStrings.DisplayTime),
                             EndDate = DisplayHelper.ToDisplayDate(TimeConverter.ConvertUtcToUserTime(endAvailableTime, state.GetUserTimeZone()), state.GetUserTimeZone())
                         });
-                        await sc.Context.SendActivityAsync(activity);
+                        await sc.Context.SendActivityAsync(activity, cancellationToken);
 
-                        return await sc.BeginDialogAsync(Actions.CreateMeetingWithAvailableTime, sc.Options);
+                        return await sc.BeginDialogAsync(Actions.CreateMeetingWithAvailableTime, sc.Options, cancellationToken);
                     }
 
                     var activityNoNextBothAvailableTime = TemplateManager.GenerateActivityForLocale(CheckPersonAvailableResponses.NoNextBothAvailableTime, new
                     {
                         UserName = state.MeetingInfo.ContactInfor.Contacts[0].DisplayName ?? state.MeetingInfo.ContactInfor.Contacts[0].Address
                     });
-                    await sc.Context.SendActivityAsync(activityNoNextBothAvailableTime);
+                    await sc.Context.SendActivityAsync(activityNoNextBothAvailableTime, cancellationToken);
 
                     state.Clear();
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
                     state.Clear();
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> CreateMeetingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CreateMeetingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -447,12 +438,12 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private async Task<DialogTurnResult> AfterCreateMeetingPrompt(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> AfterCreateMeetingPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -460,17 +451,17 @@ namespace CalendarSkill.Dialogs
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
                 {
-                    return await sc.BeginDialogAsync(nameof(CreateEventDialog), sc.Options);
+                    return await sc.BeginDialogAsync(nameof(CreateEventDialog), sc.Options, cancellationToken);
                 }
                 else
                 {
                     state.Clear();
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

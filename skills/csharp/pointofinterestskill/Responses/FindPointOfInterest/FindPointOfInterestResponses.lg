@@ -3,11 +3,16 @@
 
 # PointOfInterestDetails(Data, Cards, Layout)
 [Activity
-    Text = ${PointOfInterestDetails.Text(Data)}
-    Speak = ${PointOfInterestDetails.Text(Data)}
+    ${PointOfInterestDetails.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = expectingInput
 ]
 
-
+# PointOfInterestDetailsNoCall(Data, Cards, Layout)
+[Activity
+    ${PointOfInterestDetailsNoCall.Text(Data)}
+    Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
+    AttachmentLayout = ${if(Layout == null, 'list', Layout)}
+    InputHint = expectingInput
+]

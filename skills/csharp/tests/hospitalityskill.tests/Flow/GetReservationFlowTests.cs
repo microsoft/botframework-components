@@ -20,6 +20,7 @@ namespace HospitalitySkill.Tests.Flow
             await this.GetTestFlow()
                 .Send(StartActivity)
                 .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
                 .Send(GetReservationUtterances.GetReservation)
                 .AssertReply(AssertContains(GetReservationResponses.ShowReservationDetails, null, CardStrings.ReservationDetails))
                 .AssertReply(ActionEndMessage())

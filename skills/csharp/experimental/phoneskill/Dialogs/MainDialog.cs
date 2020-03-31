@@ -8,41 +8,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using Luis;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using PhoneSkill.Models;
 using PhoneSkill.Models.Actions;
 using PhoneSkill.Responses.Main;
 using PhoneSkill.Responses.Shared;
 using PhoneSkill.Services;
 using PhoneSkill.Services.Luis;
-using Newtonsoft.Json.Linq;
-using Microsoft.Bot.Builder.AI.Luis;
-using SkillServiceLibrary.Utilities;
 using PhoneSkill.Utilities;
+using SkillServiceLibrary.Utilities;
 
 namespace PhoneSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
         private readonly OutgoingCallDialog outgoingCallDialog;
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<PhoneSkillState> _stateAccessor;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<PhoneSkillState> _stateAccessor;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(MainDialog))
+            IServiceProvider serviceProvider)
+             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -175,8 +172,8 @@ namespace PhoneSkill.Dialogs
                         case General.Intent.Cancel:
                         case General.Intent.StartOver:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
@@ -191,18 +188,18 @@ namespace PhoneSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
 
                         case General.Intent.Logout:
                             {
-                                await OnLogout(innerDc);
+                                await OnLogoutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult() { ActionSuccess = false } : null, cancellationToken: cancellationToken);
@@ -227,7 +224,7 @@ namespace PhoneSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
@@ -250,7 +247,7 @@ namespace PhoneSkill.Dialogs
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var a = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState(), cancellationToken: cancellationToken);
             state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
@@ -264,20 +261,20 @@ namespace PhoneSkill.Dialogs
                 {
                     case PhoneLuis.Intent.OutgoingCall:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), cancellationToken: cancellationToken);
                         }
 
                     case PhoneLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneSharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -302,7 +299,7 @@ namespace PhoneSkill.Dialogs
                     case Events.TokenResponseEvent:
                         {
                             // Auth dialog completion
-                            var result = await stepContext.ContinueDialogAsync();
+                            var result = await stepContext.ContinueDialogAsync(cancellationToken);
 
                             // If the dialog completed when we sent the token, end the skill conversation
                             if (result.Status != DialogTurnStatus.Waiting)
@@ -310,7 +307,7 @@ namespace PhoneSkill.Dialogs
                                 var response = stepContext.Context.Activity.CreateReply();
                                 response.Type = ActivityTypes.EndOfConversation;
 
-                                await stepContext.Context.SendActivityAsync(response);
+                                await stepContext.Context.SendActivityAsync(response, cancellationToken);
                             }
 
                             break;
@@ -333,24 +330,24 @@ namespace PhoneSkill.Dialogs
 
                             state.IsAction = true;
 
-                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog));
+                            return await stepContext.BeginDialogAsync(nameof(OutgoingCallDialog), cancellationToken: cancellationToken);
                         }
 
                     default:
-                        await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                        await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
 
                         break;
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PhoneSkillState(), cancellationToken: cancellationToken);
 
             if (stepContext.Context.IsSkill())
             {
@@ -367,7 +364,7 @@ namespace PhoneSkill.Dialogs
             else
             {
                 state.Clear();
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(PhoneMainResponses.CompletedMessage), cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, _templateManager.GenerateActivity(PhoneMainResponses.CompletedMessage), cancellationToken: cancellationToken);
             }
         }
 
@@ -414,7 +411,7 @@ namespace PhoneSkill.Dialogs
             dc.Context.TurnState.Add(StateProperties.PhoneLuisResultKey, state.LuisResult);
         }
 
-        private async Task OnLogout(DialogContext dc)
+        private async Task OnLogoutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             BotFrameworkAdapter adapter;
             var supported = dc.Context.Adapter is BotFrameworkAdapter;
@@ -428,18 +425,18 @@ namespace PhoneSkill.Dialogs
             }
 
             // Sign out user
-            var tokens = await adapter.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+            var tokens = await adapter.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
             foreach (var token in tokens)
             {
-                await adapter.SignOutUserAsync(dc.Context, token.ConnectionName);
+                await adapter.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
             }
 
-            await dc.CancelAllDialogsAsync();
+            await dc.CancelAllDialogsAsync(cancellationToken);
 
-            await outgoingCallDialog.OnLogout(dc);
+            await outgoingCallDialog.OnLogoutAsync(dc, cancellationToken);
         }
 
-        private class Events
+        private static class Events
         {
             public const string TokenResponseEvent = "tokens/response";
             public const string SkillBeginEvent = "skillBegin";

@@ -33,8 +33,8 @@ namespace PointOfInterestSkill.Tests.Flow
 
             CollectionAssert.Contains(ParseReplies(POISharedResponses.PointOfInterestSuggestedActionName, data), "NAME at ADDRESS");
 
-            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "I found the following.");
-            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleLocationFound, data), "Here's a match.");
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleRouteFound, data), "I found a route. Let's begin!");
+            CollectionAssert.Contains(ParseReplies(POISharedResponses.SingleRouteFound, data), "I found a route. Let's start!");
         }
 
         [TestMethod]
@@ -43,9 +43,10 @@ namespace PointOfInterestSkill.Tests.Flow
             await this.GetTestFlow()
                 .SendConversationUpdate()
                 .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(GeneralTestUtterances.Help)
                 .AssertReply(AssertContains(POIMainResponses.HelpMessage, null))
-                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .StartTestAsync();
         }
 
@@ -55,6 +56,7 @@ namespace PointOfInterestSkill.Tests.Flow
             await this.GetTestFlow()
                 .SendConversationUpdate()
                 .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(GeneralTestUtterances.Cancel)
                 .AssertReply(AssertContains(POISharedResponses.CancellingMessage, null))
                 .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))

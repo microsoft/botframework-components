@@ -7,47 +7,37 @@ using System.Threading.Tasks;
 using CalendarSkill.Models;
 using CalendarSkill.Proactive;
 using CalendarSkill.Responses.UpcomingEvent;
-using CalendarSkill.Services;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions.Extensions;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using static CalendarSkill.Proactive.CheckUpcomingEventHandler;
 
 namespace CalendarSkill.Dialogs
 {
     public class UpcomingEventDialog : CalendarSkillDialogBase
     {
-        private IBackgroundTaskQueue _backgroundTaskQueue;
-        private ProactiveState _proactiveState;
-        private IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
+        private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+        private readonly ProactiveState _proactiveState;
+        private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
 
         public UpcomingEventDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            ProactiveState proactiveState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IBackgroundTaskQueue backgroundTaskQueue,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(UpcomingEventDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(UpcomingEventDialog), serviceProvider)
         {
-            _backgroundTaskQueue = backgroundTaskQueue;
-            _proactiveState = proactiveState;
+            _backgroundTaskQueue = serviceProvider.GetService<BackgroundTaskQueue>();
+            _proactiveState = serviceProvider.GetService<ProactiveState>();
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
 
             var upcomingMeeting = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                QueueUpcomingEventWorker
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                QueueUpcomingEventWorkerAsync
             };
 
             // Define the conversation flow using a waterfall model.
@@ -57,11 +47,11 @@ namespace CalendarSkill.Dialogs
             InitialDialogId = Actions.ShowUpcomingMeeting;
         }
 
-        private async Task<DialogTurnResult> QueueUpcomingEventWorker(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> QueueUpcomingEventWorkerAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var calendarState = await Accessor.GetAsync(sc.Context, () => new CalendarSkillState());
+                var calendarState = await Accessor.GetAsync(sc.Context, () => new CalendarSkillState(), cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var apiToken);
 
                 if (!string.IsNullOrWhiteSpace((string)apiToken))
@@ -87,7 +77,7 @@ namespace CalendarSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 throw;
             }
         }
@@ -96,14 +86,14 @@ namespace CalendarSkill.Dialogs
         {
             return async (eventModel, cancellationToken) =>
             {
-                await sc.Context.Adapter.ContinueConversationAsync(Settings.MicrosoftAppId, proactiveModel[MD5Util.ComputeHash(userId)].Conversation, UpcomingEventContinueConversationCallback(eventModel, sc), cancellationToken);
+                await sc.Context.Adapter.ContinueConversationAsync(Settings.MicrosoftAppId, proactiveModel[MD5Util.ComputeHash(userId)].Conversation, UpcomingEventContinueConversationCallback(eventModel, sc, cancellationToken), cancellationToken);
             };
         }
 
         // Creates the turn logic to use for the proactive message.
-        private BotCallbackHandler UpcomingEventContinueConversationCallback(EventModel eventModel, WaterfallStepContext sc)
+        private BotCallbackHandler UpcomingEventContinueConversationCallback(EventModel eventModel, WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            sc.EndDialogAsync();
+            sc.EndDialogAsync(cancellationToken: cancellationToken);
 
             return async (turnContext, token) =>
             {
@@ -126,7 +116,7 @@ namespace CalendarSkill.Dialogs
                 }
 
                 var activity = TemplateManager.GenerateActivityForLocale(responseString, responseParams);
-                await turnContext.SendActivityAsync(activity);
+                await turnContext.SendActivityAsync(activity, cancellationToken);
             };
         }
     }

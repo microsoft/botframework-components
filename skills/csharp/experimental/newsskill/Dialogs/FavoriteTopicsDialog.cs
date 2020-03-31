@@ -21,27 +21,19 @@ namespace NewsSkill.Dialogs
         private NewsClient _client;
 
         public FavoriteTopicsDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            AzureMapsService mapsService,
-            LocaleTemplateManager templateManager,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(FavoriteTopicsDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(FavoriteTopicsDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
-            var newsKey = settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            var newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
             _client = new NewsClient(newsKey);
 
             var favoriteTopics = new WaterfallStep[]
             {
-                GetMarket,
-                SetMarket,
-                SetFavorites,
-                ShowArticles,
+                GetMarketAsync,
+                SetMarketAsync,
+                SetFavoritesAsync,
+                ShowArticlesAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(FavoriteTopicsDialog), favoriteTopics));
@@ -49,10 +41,10 @@ namespace NewsSkill.Dialogs
             AddDialog(new TextPrompt(nameof(TextPrompt), MarketPromptValidatorAsync));
         }
 
-        private async Task<DialogTurnResult> SetFavorites(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> SetFavoritesAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
+            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
             // if intent is SetFavorites or not set in state yet
             if ((convState.LuisResult != null && convState.LuisResult.TopIntent().intent == Luis.NewsLuis.Intent.SetFavoriteTopics) || userState.Category == null)
@@ -72,31 +64,32 @@ namespace NewsSkill.Dialogs
 
                 return await sc.PromptAsync(nameof(ChoicePrompt), new PromptOptions()
                 {
-                    Prompt = templateManager.GenerateActivityForLocale(FavoriteTopicsResponses.FavoriteTopicPrompt),
+                    Prompt = TemplateManager.GenerateActivityForLocale(FavoriteTopicsResponses.FavoriteTopicPrompt),
                     Choices = categories.Choices
-                });
+                },
+                cancellationToken);
             }
 
-            return await sc.NextAsync(userState.Category);
+            return await sc.NextAsync(userState.Category, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> ShowArticles(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowArticlesAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
             userState.Category = (FoundChoice)sc.Result;
 
             // show favorite articles
-            var articles = await _client.GetNewsByCategory(userState.Category.Value, userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, templateManager, articles, true));
+            var articles = await _client.GetNewsByCategoryAsync(userState.Category.Value, userState.Market);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, TemplateManager, articles, true));
 
-            var skillOptions = sc.Options as NewsSkillOptionBase;
-            if (skillOptions != null && skillOptions.IsAction)
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
+            if (state.IsAction)
             {
-                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
     }
 }

@@ -25,39 +25,31 @@ namespace HospitalitySkill.Dialogs
     public class RoomServiceDialog : HospitalityDialogBase
     {
         public RoomServiceDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IHotelService hotelService,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(RoomServiceDialog), settings, services, templateManager, conversationState, userState, hotelService, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(RoomServiceDialog), serviceProvider)
         {
             var roomService = new WaterfallStep[]
             {
-                HasCheckedOut,
-                MenuPrompt,
-                ShowMenuCard,
-                AddItemsPrompt,
-                ConfirmOrderPrompt,
-                EndDialog
+                HasCheckedOutAsync,
+                MenuPromptAsync,
+                ShowMenuCardAsync,
+                AddItemsPromptAsync,
+                ConfirmOrderPromptAsync,
+                EndDialogAsync
             };
 
-            HotelService = hotelService;
-
             AddDialog(new WaterfallDialog(nameof(RoomServiceDialog), roomService));
-            AddDialog(new TextPrompt(DialogIds.MenuPrompt, ValidateMenuPrompt));
-            AddDialog(new TextPrompt(DialogIds.AddMore, ValidateAddItems));
+            AddDialog(new TextPrompt(DialogIds.MenuPrompt, ValidateMenuPromptAsync));
+            AddDialog(new TextPrompt(DialogIds.AddMore, ValidateAddItemsAsync));
             AddDialog(new ConfirmPrompt(DialogIds.ConfirmOrder));
-            AddDialog(new TextPrompt(DialogIds.FoodOrderPrompt, ValidateFoodOrder));
+            AddDialog(new TextPrompt(DialogIds.FoodOrderPrompt, ValidateFoodOrderAsync));
         }
 
-        private async Task<DialogTurnResult> MenuPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> MenuPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
             convState.FoodList = new List<FoodRequestClass>();
-            await GetFoodEntities(sc.Context);
+            await GetFoodEntitiesAsync(sc.Context, cancellationToken);
 
             var menu = convState.LuisResult?.Entities?.Menu;
 
@@ -129,15 +121,15 @@ namespace HospitalitySkill.Dialogs
                 {
                     Prompt = prompt,
                     RetryPrompt = TemplateManager.GenerateActivity(RoomServiceResponses.ChooseOneMenu)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<bool> ValidateMenuPrompt(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateMenuPromptAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState(), cancellationToken);
 
             // can only choose one menu type
             var menu = convState.LuisResult?.Entities?.Menu;
@@ -149,9 +141,9 @@ namespace HospitalitySkill.Dialogs
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> ShowMenuCard(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowMenuCardAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
 
             if (convState.FoodList.Count == 0)
             {
@@ -196,7 +188,7 @@ namespace HospitalitySkill.Dialogs
                 else
                 {
                     // show menu card
-                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "MenuCard"), menu), null, "items", menuItems));
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(sc.Context, "MenuCard"), menu), null, "items", menuItems), cancellationToken);
                 }
 
                 // prompt for order
@@ -204,87 +196,87 @@ namespace HospitalitySkill.Dialogs
                 {
                     Prompt = prompt,
                     RetryPrompt = TemplateManager.GenerateActivity(RoomServiceResponses.RetryFoodOrder)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<bool> ValidateFoodOrder(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateFoodOrderAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState(), cancellationToken);
             var entities = convState.LuisResult?.Entities;
 
             if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities.Food?[0])))
             {
-                await GetFoodEntities(promptContext.Context);
+                await GetFoodEntitiesAsync(promptContext.Context, cancellationToken);
                 return await Task.FromResult(true);
             }
 
             return await Task.FromResult(false);
         }
 
-        private async Task<DialogTurnResult> AddItemsPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AddItemsPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            await ShowFoodOrder(sc.Context);
+            await ShowFoodOrderAsync(sc.Context, cancellationToken);
 
             // ask if they want to add more items
             return await sc.PromptAsync(DialogIds.AddMore, new PromptOptions()
             {
                 Prompt = TemplateManager.GenerateActivity(RoomServiceResponses.AddMore)
-            });
+            }, cancellationToken);
         }
 
-        private async Task<bool> ValidateAddItems(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateAddItemsAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(promptContext.Context, () => new HospitalitySkillState(), cancellationToken);
             var entities = convState.LuisResult?.Entities;
 
             if (promptContext.Recognized.Succeeded && (entities?.FoodRequest != null || !string.IsNullOrWhiteSpace(entities?.Food?[0])))
             {
                 // added an item
-                await GetFoodEntities(promptContext.Context);
-                await ShowFoodOrder(promptContext.Context);
+                await GetFoodEntitiesAsync(promptContext.Context, cancellationToken);
+                await ShowFoodOrderAsync(promptContext.Context, cancellationToken);
             }
 
             // only asks once
             return await Task.FromResult(true);
         }
 
-        private async Task<DialogTurnResult> ConfirmOrderPrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ConfirmOrderPromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new HospitalitySkillState(), cancellationToken);
 
             if (convState.FoodList.Count > 0)
             {
                 return await sc.PromptAsync(DialogIds.ConfirmOrder, new PromptOptions()
                 {
                     Prompt = TemplateManager.GenerateActivity(RoomServiceResponses.ConfirmOrder)
-                });
+                }, cancellationToken);
             }
 
-            return await sc.NextAsync(false);
+            return await sc.NextAsync(false, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> EndDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> EndDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             var confirm = (bool)sc.Result;
 
             if (confirm)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RoomServiceResponses.FinalOrderConfirmation));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RoomServiceResponses.FinalOrderConfirmation), cancellationToken);
 
-                return await sc.EndDialogAsync(await CreateSuccessActionResult(sc.Context));
+                return await sc.EndDialogAsync(await CreateSuccessActionResultAsync(sc.Context, cancellationToken), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
         // Create and show list of items that were requested but not on the menu
         // Build adaptive card of items added to the order
-        private async Task ShowFoodOrder(ITurnContext turnContext)
+        private async Task ShowFoodOrderAsync(ITurnContext turnContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState(), cancellationToken);
 
             List<FoodRequestClass> notAvailable = new List<FoodRequestClass>();
             var unavailableReply = TemplateManager.GenerateActivity(RoomServiceResponses.ItemsNotAvailable).Text;
@@ -324,18 +316,18 @@ namespace HospitalitySkill.Dialogs
             // there were items not available
             if (notAvailable.Count > 0)
             {
-                await turnContext.SendActivityAsync(unavailableReply);
+                await turnContext.SendActivityAsync(unavailableReply, cancellationToken: cancellationToken);
             }
 
             if (convState.FoodList.Count > 0)
             {
-                await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(turnContext, "FoodOrderCard"), totalFoodOrder), null, "items", foodItems));
+                await turnContext.SendActivityAsync(TemplateManager.GenerateActivity(null, new Card(GetCardName(turnContext, "FoodOrderCard"), totalFoodOrder), null, "items", foodItems), cancellationToken);
             }
         }
 
-        private async Task GetFoodEntities(ITurnContext turnContext)
+        private async Task GetFoodEntitiesAsync(ITurnContext turnContext, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState());
+            var convState = await StateAccessor.GetAsync(turnContext, () => new HospitalitySkillState(), cancellationToken);
             var entities = convState.LuisResult?.Entities;
 
             if (entities?.FoodRequest != null)
@@ -355,7 +347,7 @@ namespace HospitalitySkill.Dialogs
             }
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string MenuPrompt = "menuPrompt";
             public const string AddMore = "addMore";

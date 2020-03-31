@@ -8,6 +8,6 @@ namespace CalendarSkill.Services
 {
     public interface ISearchService
     {
-        Task<List<RoomModel>> GetMeetingRoomAsync(string query, int floorNumber = 0);
+        Task<List<RoomModel>> GetMeetingRoomAsync(string meetingRoom = null, string building = null, int floorNumber = 0);
     }
 }

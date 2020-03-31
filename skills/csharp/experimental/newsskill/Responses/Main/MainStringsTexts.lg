@@ -36,3 +36,6 @@
 
 # MarketRetryPrompt.Text(Data)
 - Couldn't find that country or region. What country or region do you want to search in?
+
+# FeatureNotAvailable.Text(Data)
+- This feature is not yet available in this skill. Please try asking something else.

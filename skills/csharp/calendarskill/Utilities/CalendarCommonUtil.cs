@@ -19,8 +19,7 @@ namespace CalendarSkill.Utilities
 
         public const int AvailabilityViewInterval = 5;
 
-
-        public static async Task<List<EventModel>> GetEventsByTime(List<DateTime> startDateList, List<DateTime> startTimeList, List<DateTime> endDateList, List<DateTime> endTimeList, TimeZoneInfo userTimeZone, ICalendarService calendarService)
+        public static async Task<List<EventModel>> GetEventsByTimeAsync(List<DateTime> startDateList, List<DateTime> startTimeList, List<DateTime> endDateList, List<DateTime> endTimeList, TimeZoneInfo userTimeZone, ICalendarService calendarService)
         {
             // todo: check input datetime is utc
             var rawEvents = new List<EventModel>();
@@ -175,9 +174,38 @@ namespace CalendarSkill.Utilities
             return ContainSlot(luis, SlotNames.Time);
         }
 
+        public static bool ContainBuildingSlot(CalendarLuis luis)
+        {
+            return ContainSlotName(luis, SlotNames.Building);
+        }
+
+        public static bool ContainFloorSlot(CalendarLuis luis)
+        {
+            return ContainSlotName(luis, SlotNames.Floor);
+        }
+
+        // Check whether the SlotAttributeName contains the specific slotName
+        private static bool ContainSlotName(CalendarLuis luis, string slotName)
+        {
+            if (luis == null || luis.Entities == null || luis.Entities.SlotAttributeName == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < luis.Entities.SlotAttributeName.Length; i++)
+            {
+                if (luis.Entities.SlotAttributeName[i][0] == slotName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /*
          SlotAttributeName is entity list, while SlotAttribute is simple entity. SlotAttributeName is the canonical form of SlotAttribute.
-         When both SlotAttributeName and SlotAttribute are recognized, this entity is confirmed.
+         When both SlotAttributeName and SlotAttribute are recognized(SlotAttributeName may be a part of SlotAttribute), this entity is confirmed.
          */
         private static bool ContainSlot(CalendarLuis luis, string slotName)
         {
@@ -191,9 +219,9 @@ namespace CalendarSkill.Utilities
                 for (int j = 0; j < luis.Entities.SlotAttribute.Length; j++)
                 {
                     if (luis.Entities.SlotAttributeName[i][0] == slotName &&
-                        luis.Entities._instance.SlotAttributeName[i].Text == luis.Entities._instance.SlotAttribute[j].Text &&
-                        luis.Entities._instance.SlotAttributeName[i].StartIndex == luis.Entities._instance.SlotAttribute[j].StartIndex &&
-                        luis.Entities._instance.SlotAttributeName[i].EndIndex == luis.Entities._instance.SlotAttribute[j].EndIndex)
+                        luis.Entities._instance.SlotAttribute[j].Text.Contains(luis.Entities._instance.SlotAttributeName[i].Text) &&
+                        luis.Entities._instance.SlotAttributeName[i].StartIndex >= luis.Entities._instance.SlotAttribute[j].StartIndex &&
+                        luis.Entities._instance.SlotAttributeName[i].EndIndex <= luis.Entities._instance.SlotAttribute[j].EndIndex)
                     {
                         return true;
                     }
@@ -207,6 +235,8 @@ namespace CalendarSkill.Utilities
         {
             public const string Time = "time";
             public const string Room = "room";
+            public const string Building = "building";
+            public const string Floor = "floor";
         }
     }
 }

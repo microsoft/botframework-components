@@ -1,20 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using PointOfInterestSkill.Models;
 
 namespace PointOfInterestSkill.Tests.Flow.Strings
 {
-    public class CardStrings
+    public static class CardStrings
     {
-        public const string Details = "PointOfInterestDetailsCard";
+        public const string Details = CardNames.PointOfInterestDetails + "Card";
 
-        public const string DetailsNoCall = "PointOfInterestDetailsNoCallCard";
+        public const string DetailsNoCall = CardNames.PointOfInterestDetailsNoCall + "Card";
 
-        public const string Route = "PointOfInterestDetailsWithRouteCard";
+        public const string Route = CardNames.PointOfInterestDetailsWithRoute + "Card";
 
-        public const string Overview = "PointOfInterestOverviewContainerCard";
+        public const string Overview = CardNames.PointOfInterestOverviewContainer + "Card";
     }
 }

@@ -21,9 +21,9 @@ namespace CalendarSkill.Services.MSGraphAPI
         }
 
         /// <inheritdoc/>
-        public async Task<EventModel> CreateEventAysnc(EventModel newEvent)
+        public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
-            Event new_event = await CreateEvent(newEvent.Value);
+            Event new_event = await CreateEventAsync(newEvent.Value);
             if (new_event == null)
             {
                 return null;
@@ -36,7 +36,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         public async Task<List<EventModel>> GetUpcomingEventsAsync(TimeSpan? timeSpan = null)
         {
             var eventList = new List<EventModel>();
-            var msftEvents = await GetMyUpcomingCalendarView(timeSpan);
+            var msftEvents = await GetMyUpcomingCalendarViewAsync(timeSpan);
             foreach (var msftEvent in msftEvents)
             {
                 var newEvent = new EventModel(msftEvent);
@@ -53,7 +53,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         public async Task<List<EventModel>> GetEventsByTimeAsync(DateTime startTime, DateTime endTime)
         {
             var eventList = new List<EventModel>();
-            var msftEvents = await GetMyCalendarViewByTime(startTime, endTime);
+            var msftEvents = await GetMyCalendarViewByTimeAsync(startTime, endTime);
             foreach (var msftEvent in msftEvents)
             {
                 eventList.Add(new EventModel(msftEvent));
@@ -65,7 +65,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         /// <inheritdoc/>
         public async Task<List<EventModel>> GetEventsByStartTimeAsync(DateTime startTime)
         {
-            var allEvents = await GetMyStartTimeEvents(startTime);
+            var allEvents = await GetMyStartTimeEventsAsync(startTime);
             var result = new List<EventModel>();
 
             foreach (var item in allEvents)
@@ -102,7 +102,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         /// <inheritdoc/>
         public async Task<EventModel> UpdateEventByIdAsync(EventModel updateEvent)
         {
-            return new EventModel(await this.UpdateEvent(updateEvent.Value));
+            return new EventModel(await this.UpdateEventAsync(updateEvent.Value));
         }
 
         /// <inheritdoc/>
@@ -143,7 +143,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         }
 
         // Check the availability of people/rooms with corresponding emails on condition of startTime and duration.
-        public async Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval)
+        public async Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval)
         {
             try
             {
@@ -174,6 +174,7 @@ namespace CalendarSkill.Services.MSGraphAPI
                     if (page.AvailabilityView == null)
                     {
                         availability.Add(false);
+                        continue;
                     }
 
                     // AvailabilityViem is empty, should not get into this state.
@@ -289,7 +290,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         /// </summary>
         /// <param name="updateEvent">new event info.</param>
         /// <returns>The updated event.</returns>
-        private async Task<Event> UpdateEvent(Event updateEvent)
+        private async Task<Event> UpdateEventAsync(Event updateEvent)
         {
             try
             {
@@ -303,7 +304,7 @@ namespace CalendarSkill.Services.MSGraphAPI
         }
 
         // Get events in all the current user's mail folders.
-        private async Task<List<Event>> GetMyStartTimeEvents(DateTime startTime)
+        private async Task<List<Event>> GetMyStartTimeEventsAsync(DateTime startTime)
         {
             var items = new List<Event>();
 
@@ -343,7 +344,7 @@ namespace CalendarSkill.Services.MSGraphAPI
 
         // Get user's calendar view.
         // This snippets gets events for the next seven days.
-        private async Task<List<Event>> GetMyUpcomingCalendarView(TimeSpan? timeSpan = null)
+        private async Task<List<Event>> GetMyUpcomingCalendarViewAsync(TimeSpan? timeSpan = null)
         {
             var items = new List<Event>();
 
@@ -383,7 +384,7 @@ namespace CalendarSkill.Services.MSGraphAPI
             return items;
         }
 
-        private async Task<List<Event>> GetMyCalendarViewByTime(DateTime startTime, DateTime endTime)
+        private async Task<List<Event>> GetMyCalendarViewByTimeAsync(DateTime startTime, DateTime endTime)
         {
             var items = new List<Event>();
 
@@ -423,7 +424,7 @@ namespace CalendarSkill.Services.MSGraphAPI
             return items;
         }
 
-        private async Task<Event> CreateEvent(Event newEvent)
+        private async Task<Event> CreateEventAsync(Event newEvent)
         {
             try
             {
@@ -437,7 +438,7 @@ namespace CalendarSkill.Services.MSGraphAPI
             }
         }
 
-        private async Task<MeetingTimeSuggestionsResult> FindMeetingTimes(IEnumerable<AttendeeBase> attendees, TimeConstraint timeConstraint = null, bool isOrgnizerOptional = true)
+        private async Task<MeetingTimeSuggestionsResult> FindMeetingTimesAsync(IEnumerable<AttendeeBase> attendees, TimeConstraint timeConstraint = null, bool isOrgnizerOptional = true)
         {
             try
             {

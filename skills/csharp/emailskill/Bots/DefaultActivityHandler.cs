@@ -10,24 +10,26 @@ using EmailSkill.Services;
 using EmailSkill.Services.AzureMapsAPI;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmailSkill.Bots
 {
-    public class DefaultActivityHandler<T> : ActivityHandler
+    public class DefaultActivityHandler<T> : TeamsActivityHandler
         where T : Dialog
     {
         private readonly Dialog _dialog;
         private readonly BotState _conversationState;
         private readonly BotState _userState;
-        private BotSettings _settings;
-        private IStatePropertyAccessor<DialogState> _dialogStateAccessor;
-        private IStatePropertyAccessor<EmailSkillState> _stateAccessor;
+        private readonly BotSettings _settings;
+        private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
+        private readonly IStatePropertyAccessor<EmailSkillState> _stateAccessor;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
             _dialog = dialog;
+            _dialog.TelemetryClient = serviceProvider.GetService<IBotTelemetryClient>();
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _settings = serviceProvider.GetService<BotSettings>();
@@ -50,6 +52,11 @@ namespace EmailSkill.Bots
         }
 
         protected override Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+        }
+
+        protected override Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
         {
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }

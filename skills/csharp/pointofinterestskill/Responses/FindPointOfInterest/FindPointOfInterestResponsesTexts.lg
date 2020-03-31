@@ -1,4 +1,15 @@
 # PointOfInterestDetails.Text(Data)
-- Here are details.
+- ${PointOfInterestDetailsTextAndSpeak1(Data)}
 
+# PointOfInterestDetailsTextAndSpeak1(Data)
+[Activity
+    Speak = ${Data.Name} is at ${Data.Address}. Would you like to call, show directions or start navigation?
+]
 
+# PointOfInterestDetailsNoCall.Text(Data)
+- ${PointOfInterestDetailsNoCallTextAndSpeak1(Data)}
+
+# PointOfInterestDetailsNoCallTextAndSpeak1(Data)
+[Activity
+    Speak = ${Data.Name} is at ${Data.Address}. Would you like to show directions or start navigation?
+]

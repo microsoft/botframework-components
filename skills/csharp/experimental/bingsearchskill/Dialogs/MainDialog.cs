@@ -22,21 +22,19 @@ namespace BingSearchSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
-        private Dialog _searchDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly Dialog _searchDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -66,10 +64,10 @@ namespace BingSearchSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -84,10 +82,10 @@ namespace BingSearchSkill.Dialogs
                 // Check for any interruptions
                 var interrupted = await InterruptDialogAsync(innerDc, cancellationToken);
 
-                if (interrupted)
+                if (interrupted != null)
                 {
-                    // If dialog was interrupted, return EndOfTurn
-                    return EndOfTurn;
+                    // If dialog was interrupted, return interrupted result
+                    return interrupted;
                 }
             }
 
@@ -95,9 +93,9 @@ namespace BingSearchSkill.Dialogs
         }
 
         // Runs on every turn of the conversation to check if the conversation should be interrupted.
-        protected async Task<bool> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> InterruptDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            DialogTurnResult interrupted = null;
             var activity = innerDc.Context.Activity;
 
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
@@ -122,18 +120,26 @@ namespace BingSearchSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
-                                await innerDc.BeginDialogAsync(InitialDialogId);
-                                interrupted = true;
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
+                                if (innerDc.Context.IsSkill())
+                                {
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState(), cancellationToken: cancellationToken);
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    interrupted = await innerDc.BeginDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+                                }
+
                                 break;
                             }
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
-                                interrupted = true;
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
+                                interrupted = EndOfTurn;
                                 break;
                             }
                     }
@@ -149,17 +155,17 @@ namespace BingSearchSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
                 var prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(MainResponses.FirstPromptMessage);
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
-                if (state.NewConversation)
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken: cancellationToken);
+                var activity = stepContext.Context.Activity;
+                if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
                     prompt = _templateManager.GenerateActivity(MainResponses.WelcomeMessage);
-                    state.NewConversation = false;
                 }
 
                 var promptOptions = new PromptOptions
@@ -176,6 +182,7 @@ namespace BingSearchSkill.Dialogs
         {
             var a = stepContext.Context.Activity;
             var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
             {
@@ -190,7 +197,7 @@ namespace BingSearchSkill.Dialogs
                 }
                 else
                 {
-                    var result = await luisService.RecognizeAsync<BingSearchSkillLuis>(stepContext.Context, CancellationToken.None);
+                    var result = await luisService.RecognizeAsync<BingSearchSkillLuis>(stepContext.Context, cancellationToken);
                     var intent = result?.TopIntent().intent;
 
                     switch (intent)
@@ -199,13 +206,13 @@ namespace BingSearchSkill.Dialogs
                         case BingSearchSkillLuis.Intent.SearchMovieInfo:
                         case BingSearchSkillLuis.Intent.None:
                             {
-                                return await stepContext.BeginDialogAsync(nameof(SearchDialog));
+                                return await stepContext.BeginDialogAsync(nameof(SearchDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
                                 // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
+                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
                                 break;
                             }
                     }
@@ -223,22 +230,23 @@ namespace BingSearchSkill.Dialogs
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
                         case "BingSearch":
                             {
-                                KeywordSearchRequest actionData = null;
+                                KeywordSearchInfo actionData = null;
 
                                 var eventValue = a.Value as JObject;
                                 if (eventValue != null)
                                 {
-                                    actionData = eventValue.ToObject<KeywordSearchRequest>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    actionData = eventValue.ToObject<KeywordSearchInfo>();
+                                    await DigestActionInputAsync(stepContext, actionData, cancellationToken);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(SearchDialog), new BingSearchSkillDialogOptionBase() { IsAction = true });
+                                state.IsAction = true;
+                                return await stepContext.BeginDialogAsync(nameof(SearchDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
 
                             // todo: move the response to lg
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
 
                             break;
                     }
@@ -246,12 +254,12 @@ namespace BingSearchSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task DigestActionInput(DialogContext dc, KeywordSearchRequest request)
+        private async Task DigestActionInputAsync(DialogContext dc, KeywordSearchInfo request, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState(), cancellationToken: cancellationToken);
             state.SearchEntityName = request.Keyword;
         }
 

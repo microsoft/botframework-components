@@ -19,37 +19,29 @@ namespace NewsSkill.Dialogs
         private NewsClient _client;
 
         public FindArticlesDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            AzureMapsService mapsService,
-            LocaleTemplateManager templateManager,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(FindArticlesDialog), settings, services, conversationState, userState, mapsService, templateManager, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindArticlesDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
-            var newsKey = settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            var newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
             _client = new NewsClient(newsKey);
 
             var findArticles = new WaterfallStep[]
             {
-                GetMarket,
-                SetMarket,
-                GetQuery,
-                GetSite,
-                ShowArticles,
+                GetMarketAsync,
+                SetMarketAsync,
+                GetQueryAsync,
+                GetSiteAsync,
+                ShowArticlesAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(FindArticlesDialog), findArticles));
             AddDialog(new TextPrompt(nameof(TextPrompt), MarketPromptValidatorAsync));
         }
 
-        private async Task<DialogTurnResult> GetQuery(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GetQueryAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
 
             // Let's see if we have a topic
             if (convState.LuisResult != null && convState.LuisResult.Entities.topic != null && convState.LuisResult.Entities.topic.Length > 0)
@@ -59,13 +51,13 @@ namespace NewsSkill.Dialogs
 
             return await sc.PromptAsync(nameof(TextPrompt), new PromptOptions()
             {
-                Prompt = templateManager.GenerateActivityForLocale(FindArticlesResponses.TopicPrompt)
+                Prompt = TemplateManager.GenerateActivityForLocale(FindArticlesResponses.TopicPrompt)
             });
         }
 
-        private async Task<DialogTurnResult> GetSite(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GetSiteAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState());
+            var convState = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
 
             string query = (string)sc.Result;
 
@@ -75,25 +67,25 @@ namespace NewsSkill.Dialogs
                 query = string.Concat(query, $" site:{site}");
             }
 
-            return await sc.NextAsync(query);
+            return await sc.NextAsync(query, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> ShowArticles(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowArticlesAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
             var query = (string)sc.Result;
 
-            var articles = await _client.GetNewsForTopic(query, userState.Market);
-            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, templateManager, articles));
+            var articles = await _client.GetNewsForTopicAsync(query, userState.Market);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, TemplateManager, articles), cancellationToken);
 
-            var skillOptions = sc.Options as NewsSkillOptionBase;
-            if (skillOptions != null && skillOptions.IsAction)
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
+            if (state.IsAction)
             {
-                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true));
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
             }
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
     }
 }
