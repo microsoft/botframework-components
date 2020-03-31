@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace WeatherSkill.Models
+namespace SkillServiceLibrary.Models.AzureMaps
 {
-    public class Maximum
+    public class WindSpeed
     {
+        [JsonProperty(PropertyName = "value")]
         public float Value { get; set; }
 
+        [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }
 
+        [JsonProperty(PropertyName = "unitType")]
         public int UnitType { get; set; }
     }
 }

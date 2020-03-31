@@ -291,7 +291,7 @@ namespace WeatherSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "WeatherForecast":
+                        case ActionNames.WeatherForecast:
                             {
                                 state.IsAction = true;
 

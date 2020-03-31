@@ -31,11 +31,13 @@ namespace WeatherSkill.Dialogs
              BotServices services,
              LocaleTemplateManager localeTemplateManager,
              ConversationState conversationState,
+             IServiceManager serviceManager,
              IBotTelemetryClient telemetryClient)
              : base(dialogId)
         {
             Services = services;
             LocaleTemplateManager = localeTemplateManager;
+            ServiceManager = serviceManager;
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
             TelemetryClient = telemetryClient;
 
@@ -55,6 +57,10 @@ namespace WeatherSkill.Dialogs
         protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
 
         protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+
+        protected IServiceManager ServiceManager { get; set; }
+
+        protected string ApiKey { get; set; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
