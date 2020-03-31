@@ -24,77 +24,68 @@ namespace ToDoSkill.Dialogs
     public class AddToDoItemDialog : ToDoSkillDialogBase
     {
         public AddToDoItemDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
-            : base(nameof(AddToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(AddToDoItemDialog), serviceProvider, httpContext)
         {
-            TelemetryClient = telemetryClient;
-
             var addTask = new WaterfallStep[]
             {
-                ClearContext,
-                GetAuthToken,
-                AfterGetAuthToken,
-                DoAddTask,
+                ClearContextAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                DoAddTaskAsync,
             };
 
             var doAddTask = new WaterfallStep[]
             {
-                CollectTaskContent,
-                CollectSwitchListTypeConfirmation,
-                CollectAddDupTaskConfirmation,
-                GetAuthToken,
-                AfterGetAuthToken,
-                AddTask,
-                ContinueAddTask,
+                CollectTaskContentAsync,
+                CollectSwitchListTypeConfirmationAsync,
+                CollectAddDupTaskConfirmationAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                AddTaskAsync,
+                ContinueAddTaskAsync,
             };
 
             var collectTaskContent = new WaterfallStep[]
             {
-                AskTaskContent,
-                AfterAskTaskContent,
+                AskTaskContentAsync,
+                AfterAskTaskContentAsync,
             };
 
             var collectSwitchListTypeConfirmation = new WaterfallStep[]
             {
-                AskSwitchListTypeConfirmation,
-                AfterAskSwitchListTypeConfirmation,
+                AskSwitchListTypeConfirmationAsync,
+                AfterAskSwitchListTypeConfirmationAsync,
             };
 
             var collectAddDupTaskConfirmation = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                AskAddDupTaskConfirmation,
-                AfterAskAddDupTaskConfirmation,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                AskAddDupTaskConfirmationAsync,
+                AfterAskAddDupTaskConfirmationAsync,
             };
 
             var continueAddTask = new WaterfallStep[]
             {
-                AskContinueAddTask,
-                AfterAskContinueAddTask,
+                AskContinueAddTaskAsync,
+                AfterAskContinueAddTaskAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.DoAddTask, doAddTask) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.AddTask, addTask) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectTaskContent, collectTaskContent) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectSwitchListTypeConfirmation, collectSwitchListTypeConfirmation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectAddDupTaskConfirmation, collectAddDupTaskConfirmation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ContinueAddTask, continueAddTask) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.DoAddTask, doAddTask) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.AddTask, addTask) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectTaskContent, collectTaskContent) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectSwitchListTypeConfirmation, collectSwitchListTypeConfirmation) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectAddDupTaskConfirmation, collectAddDupTaskConfirmation) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ContinueAddTask, continueAddTask) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.AddTask;
         }
 
-        protected async Task<DialogTurnResult> DoAddTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DoAddTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -102,21 +93,21 @@ namespace ToDoSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AddTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AddTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.AddDupTask)
                 {
                     state.ListType = state.ListType ?? ToDoStrings.ToDo;
                     state.LastListType = state.ListType;
-                    var service = await InitListTypeIds(sc);
+                    var service = await InitListTypeIdsAsync(sc, cancellationToken);
                     var currentAllTasks = await service.GetTasksAsync(state.ListType);
                     var duplicatedTaskIndex = currentAllTasks.FindIndex(t => t.Topic.Equals(state.TaskContent, StringComparison.InvariantCultureIgnoreCase));
 
@@ -130,7 +121,7 @@ namespace ToDoSkill.Dialogs
                     {
                         var todoList = new List<string>();
                         state.AllTasks.ForEach(x => todoList.Add(x.Topic));
-                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList });
+                        return await sc.EndDialogAsync(new TodoListInfo { ActionSuccess = true, ToDoList = todoList }, cancellationToken);
                     }
 
                     var toDoListCard = ToAdaptiveCardForTaskAddedFlowByLG(
@@ -139,70 +130,70 @@ namespace ToDoSkill.Dialogs
                         state.TaskContent,
                         state.AllTasks.Count,
                         state.ListType);
-                    await sc.Context.SendActivityAsync(toDoListCard);
+                    await sc.Context.SendActivityAsync(toDoListCard, cancellationToken);
 
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CollectTaskContent(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CollectTaskContentAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.CollectTaskContent);
+                return await sc.BeginDialogAsync(Actions.CollectTaskContent, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskTaskContent(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskTaskContentAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await this.ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await this.ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!string.IsNullOrEmpty(state.TaskContentPattern)
                     || !string.IsNullOrEmpty(state.TaskContentML)
                     || !string.IsNullOrEmpty(state.ShopContent))
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AskTaskContentText);
 
-                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
+                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt }, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskTaskContent(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskTaskContentAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (string.IsNullOrEmpty(state.TaskContentPattern)
                     && string.IsNullOrEmpty(state.TaskContentML)
                     && string.IsNullOrEmpty(state.ShopContent))
@@ -211,53 +202,53 @@ namespace ToDoSkill.Dialogs
                     {
                         sc.Context.Activity.Properties.TryGetValue("OriginText", out var toDoContent);
                         state.TaskContent = toDoContent != null ? toDoContent.ToString() : sc.Context.Activity.Text;
-                        return await sc.EndDialogAsync(true);
+                        return await sc.EndDialogAsync(true, cancellationToken);
                     }
                     else
                     {
-                        return await sc.ReplaceDialogAsync(Actions.CollectTaskContent);
+                        return await sc.ReplaceDialogAsync(Actions.CollectTaskContent, cancellationToken: cancellationToken);
                     }
                 }
                 else
                 {
                     this.ExtractListTypeAndTaskContent(state);
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CollectSwitchListTypeConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CollectSwitchListTypeConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.SwitchListType)
                 {
                     state.SwitchListType = false;
-                    return await sc.BeginDialogAsync(Actions.CollectSwitchListTypeConfirmation);
+                    return await sc.BeginDialogAsync(Actions.CollectSwitchListTypeConfirmation, cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskSwitchListTypeConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskSwitchListTypeConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.SwitchListType, new
                 {
@@ -269,72 +260,72 @@ namespace ToDoSkill.Dialogs
                     ListType = state.ListType
                 });
 
-                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
+                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskSwitchListTypeConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskSwitchListTypeConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
                 else
                 {
                     state.ListType = state.LastListType;
                     state.LastListType = null;
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CollectAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CollectAddDupTaskConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.CollectAddDupTaskConfirmation);
+                return await sc.BeginDialogAsync(Actions.CollectAddDupTaskConfirmation, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskAddDupTaskConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             if (state.IsAction)
             {
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             try
             {
                 state.ListType = state.ListType ?? ToDoStrings.ToDo;
                 state.LastListType = state.ListType;
-                var service = await InitListTypeIds(sc);
+                var service = await InitListTypeIdsAsync(sc, cancellationToken);
                 var currentAllTasks = await service.GetTasksAsync(state.ListType);
                 state.AddDupTask = false;
                 var duplicatedTaskIndex = currentAllTasks.FindIndex(t => t.Topic.Equals(state.TaskContent, StringComparison.InvariantCultureIgnoreCase));
                 if (duplicatedTaskIndex < 0)
                 {
                     state.AddDupTask = true;
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -348,21 +339,21 @@ namespace ToDoSkill.Dialogs
                         TaskContent = state.TaskContent
                     });
 
-                    return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
+                    return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt }, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskAddDupTaskConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskAddDupTaskConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!state.AddDupTask)
                 {
                     var confirmResult = (bool)sc.Result;
@@ -372,33 +363,33 @@ namespace ToDoSkill.Dialogs
                     }
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ContinueAddTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ContinueAddTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.ContinueAddTask);
+                return await sc.BeginDialogAsync(Actions.ContinueAddTask, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskContinueAddTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskContinueAddTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 var prompt = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AddMoreTask, new
                 {
@@ -410,20 +401,20 @@ namespace ToDoSkill.Dialogs
                     ListType = state.ListType
                 });
 
-                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
+                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskContinueAddTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskContinueAddTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
@@ -437,16 +428,16 @@ namespace ToDoSkill.Dialogs
                     state.HasShopVerb = false;
 
                     // replace current dialog to continue add more tasks
-                    return await sc.ReplaceDialogAsync(Actions.DoAddTask);
+                    return await sc.ReplaceDialogAsync(Actions.DoAddTask, cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

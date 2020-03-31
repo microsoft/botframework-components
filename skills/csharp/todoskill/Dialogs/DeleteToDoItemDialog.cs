@@ -25,102 +25,93 @@ namespace ToDoSkill.Dialogs
     public class DeleteToDoItemDialog : ToDoSkillDialogBase
     {
         public DeleteToDoItemDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
-            : base(nameof(DeleteToDoItemDialog), settings, services, conversationState, userState, templateManager, serviceManager, telemetryClient, appCredentials, httpContext)
+            : base(nameof(DeleteToDoItemDialog), serviceProvider, httpContext)
         {
-            TelemetryClient = telemetryClient;
-
             var deleteTask = new WaterfallStep[]
             {
-                ClearContext,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CollectListTypeForDelete,
-                GetAuthToken,
-                AfterGetAuthToken,
-                InitAllTasks,
-                DoDeleteTask,
+                ClearContextAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CollectListTypeForDeleteAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                InitAllTasksAsync,
+                DoDeleteTaskAsync,
             };
 
             var doDeleteTask = new WaterfallStep[]
             {
                 CollectTaskIndexForDelete,
-                CollectAskDeletionConfirmation,
-                GetAuthToken,
-                AfterGetAuthToken,
-                DeleteTask,
-                ContinueDeleteTask,
+                CollectAskDeletionConfirmationAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                DeleteTaskAsync,
+                ContinueDeleteTaskAsync,
             };
 
             var collectListTypeForDelete = new WaterfallStep[]
             {
-                AskListType,
-                AfterAskListType,
+                AskListTypeAsync,
+                AfterAskListTypeAsync,
             };
 
             var collectTaskIndexForDelete = new WaterfallStep[]
             {
-                AskTaskIndex,
-                AfterAskTaskIndex,
+                AskTaskIndexAsync,
+                AfterAskTaskIndexAsync,
             };
 
             var collectDeleteTaskConfirmation = new WaterfallStep[]
             {
-                AskDeletionConfirmation,
-                AfterAskDeletionConfirmation,
+                AskDeletionConfirmationAsync,
+                AfterAskDeletionConfirmationAsync,
             };
 
             var continueDeleteTask = new WaterfallStep[]
             {
-                AskContinueDeleteTask,
-                AfterAskContinueDeleteTask,
+                AskContinueDeleteTaskAsync,
+                AfterAskContinueDeleteTaskAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.DoDeleteTask, doDeleteTask) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.DeleteTask, deleteTask) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectListTypeForDelete, collectListTypeForDelete) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectTaskIndexForDelete, collectTaskIndexForDelete) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.CollectDeleteTaskConfirmation, collectDeleteTaskConfirmation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.ContinueDeleteTask, continueDeleteTask) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.DoDeleteTask, doDeleteTask) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.DeleteTask, deleteTask) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectListTypeForDelete, collectListTypeForDelete) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectTaskIndexForDelete, collectTaskIndexForDelete) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.CollectDeleteTaskConfirmation, collectDeleteTaskConfirmation) { TelemetryClient = TelemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ContinueDeleteTask, continueDeleteTask) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.DeleteTask;
         }
 
-        protected async Task<DialogTurnResult> DoDeleteTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DoDeleteTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.DoDeleteTask);
+                return await sc.BeginDialogAsync(Actions.DoDeleteTask, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> DeleteTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DeleteTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 state.LastListType = state.ListType;
 
                 bool canDeleteAnotherTask = false;
                 var cardReply = sc.Context.Activity.CreateReply();
                 if (!state.MarkOrDeleteAllTasksFlag)
                 {
-                    var service = await InitListTypeIds(sc);
+                    var service = await InitListTypeIdsAsync(sc, cancellationToken);
                     var taskTopicToBeDeleted = state.AllTasks[state.TaskIndexes[0]].Topic;
                     var tasksToBeDeleted = new List<TaskItem>();
                     state.TaskIndexes.ForEach(i => tasksToBeDeleted.Add(state.AllTasks[i]));
@@ -161,7 +152,7 @@ namespace ToDoSkill.Dialogs
                 {
                     if (state.DeleteTaskConfirmation)
                     {
-                        var service = await InitListTypeIds(sc);
+                        var service = await InitListTypeIdsAsync(sc, cancellationToken);
                         await service.DeleteTasksAsync(state.ListType, state.AllTasks);
                         state.AllTasks = new List<TaskItem>();
                         state.Tasks = new List<TaskItem>();
@@ -179,7 +170,7 @@ namespace ToDoSkill.Dialogs
                         if (state.IsAction)
                         {
                             var actionResult = new TodoListInfo() { ActionSuccess = true };
-                            return await sc.EndDialogAsync(actionResult);
+                            return await sc.EndDialogAsync(actionResult, cancellationToken);
                         }
                     }
                     else
@@ -195,81 +186,81 @@ namespace ToDoSkill.Dialogs
                 if (canDeleteAnotherTask)
                 {
                     cardReply.InputHint = InputHints.IgnoringInput;
-                    await sc.Context.SendActivityAsync(cardReply);
+                    await sc.Context.SendActivityAsync(cardReply, cancellationToken);
                     return await sc.NextAsync();
                 }
                 else
                 {
                     cardReply.InputHint = InputHints.AcceptingInput;
-                    await sc.Context.SendActivityAsync(cardReply);
-                    return await sc.EndDialogAsync(true);
+                    await sc.Context.SendActivityAsync(cardReply, cancellationToken);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CollectListTypeForDelete(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CollectListTypeForDeleteAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.CollectListTypeForDelete);
+                return await sc.BeginDialogAsync(Actions.CollectListTypeForDelete, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskListType(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskListTypeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (string.IsNullOrEmpty(state.ListType))
                 {
                     var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.ListTypePromptForDelete);
 
-                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
+                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt }, cancellationToken);
                 }
                 else
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskListType(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskListTypeAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (string.IsNullOrEmpty(state.ListType))
                 {
-                    return await sc.ReplaceDialogAsync(Actions.CollectListTypeForDelete);
+                    return await sc.ReplaceDialogAsync(Actions.CollectListTypeForDelete, cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -278,20 +269,20 @@ namespace ToDoSkill.Dialogs
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.CollectTaskIndexForDelete);
+                return await sc.BeginDialogAsync(Actions.CollectTaskIndexForDelete, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskTaskIndex(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskTaskIndexAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (!string.IsNullOrEmpty(state.TaskContentPattern)
                     || !string.IsNullOrEmpty(state.TaskContentML)
                     || state.MarkOrDeleteAllTasksFlag
@@ -299,7 +290,7 @@ namespace ToDoSkill.Dialogs
                         && state.TaskIndexes[0] >= 0
                         && state.TaskIndexes[0] < state.Tasks.Count))
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -313,21 +304,21 @@ namespace ToDoSkill.Dialogs
                         prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.AskTaskIndexForDelete);
                     }
 
-                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt });
+                    return await sc.PromptAsync(Actions.Prompt, new PromptOptions() { Prompt = prompt }, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskTaskIndex(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskTaskIndexAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 state.CollectIndexRetry = false;
 
                 var matchedIndexes = Enumerable.Range(0, state.AllTasks.Count)
@@ -338,7 +329,7 @@ namespace ToDoSkill.Dialogs
                 if (matchedIndexes?.Count > 0)
                 {
                     state.TaskIndexes = matchedIndexes;
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
                 else
                 {
@@ -350,13 +341,13 @@ namespace ToDoSkill.Dialogs
                     if (matchedIndexes?.Count > 0)
                     {
                         state.TaskIndexes = matchedIndexes;
-                        return await sc.EndDialogAsync(true);
+                        return await sc.EndDialogAsync(true, cancellationToken);
                     }
                 }
 
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
 
                 if (state.TaskIndexes.Count == 1
@@ -364,7 +355,7 @@ namespace ToDoSkill.Dialogs
                     && state.TaskIndexes[0] < state.Tasks.Count)
                 {
                     state.TaskIndexes[0] = (state.PageSize * state.ShowTaskPageIndex) + state.TaskIndexes[0];
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
                 else
                 {
@@ -376,30 +367,30 @@ namespace ToDoSkill.Dialogs
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> CollectAskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CollectAskDeletionConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.CollectDeleteTaskConfirmation);
+                return await sc.BeginDialogAsync(Actions.CollectDeleteTaskConfirmation, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskDeletionConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             if (state.IsAction)
             {
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             try
@@ -416,25 +407,25 @@ namespace ToDoSkill.Dialogs
                         ListType = state.ListType
                     });
 
-                    return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
+                    return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt }, cancellationToken);
                 }
                 else
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskDeletionConfirmation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskDeletionConfirmationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.MarkOrDeleteAllTasksFlag)
                 {
                     var confirmResult = (bool)sc.Result;
@@ -448,49 +439,49 @@ namespace ToDoSkill.Dialogs
                     }
                 }
 
-                return await sc.EndDialogAsync(true);
+                return await sc.EndDialogAsync(true, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ContinueDeleteTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ContinueDeleteTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                return await sc.BeginDialogAsync(Actions.ContinueDeleteTask);
+                return await sc.BeginDialogAsync(Actions.ContinueDeleteTask, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AskContinueDeleteTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AskContinueDeleteTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var prompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskPrompt);
                 var retryPrompt = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.DeleteAnotherTaskConfirmFailed);
 
-                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt });
+                return await sc.PromptAsync(Actions.ConfirmPrompt, new PromptOptions() { Prompt = prompt, RetryPrompt = retryPrompt }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterAskContinueDeleteTask(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterAskContinueDeleteTaskAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var confirmResult = (bool)sc.Result;
                 if (confirmResult)
                 {
@@ -502,16 +493,16 @@ namespace ToDoSkill.Dialogs
                     state.TaskContent = null;
 
                     // replace current dialog to continue deleting more tasks
-                    return await sc.ReplaceDialogAsync(Actions.DoDeleteTask);
+                    return await sc.ReplaceDialogAsync(Actions.DoDeleteTask, cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    return await sc.EndDialogAsync(true);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

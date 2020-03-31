@@ -21,6 +21,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 using ToDoSkill.Adapters;
 using ToDoSkill.Bots;
 using ToDoSkill.Dialogs;
@@ -48,7 +49,13 @@ namespace ToDoSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>

@@ -183,7 +183,7 @@ namespace RestaurantBookingSkill.Dialogs
                                 await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken);
                                 }
                                 else
                                 {
