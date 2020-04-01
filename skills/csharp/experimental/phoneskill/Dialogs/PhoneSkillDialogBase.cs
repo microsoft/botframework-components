@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Authentication;
@@ -44,7 +45,15 @@ namespace PhoneSkill.Dialogs
                 throw new Exception("You must configure an authentication connection in your bot file before using this component.");
             }
 
-            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new EventPrompt(DialogIds.SkillModeAuth, "tokens/response", TokenResponseValidator));
         }
 
