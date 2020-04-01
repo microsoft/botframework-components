@@ -5,7 +5,6 @@
 [Activity
     Text = ${PointOfInterestWelcomeMessage.Text(Data)}
     Speak = ${PointOfInterestWelcomeMessage.Text(Data)}
-    SuggestedActions = ${PointOfInterestWelcomeMessage.S1(Data)} | ${PointOfInterestWelcomeMessage.S2(Data)} | ${PointOfInterestWelcomeMessage.S3(Data)} | ${PointOfInterestWelcomeMessage.S4(Data)} | ${PointOfInterestWelcomeMessage.S5(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput
@@ -70,6 +69,7 @@
 [Activity
     Text = ${FirstPromptMessage.Text(Data)}
     Speak = ${FirstPromptMessage.Text(Data)}
+    SuggestedActions = ${PointOfInterestWelcomeMessage.S1(Data)} | ${PointOfInterestWelcomeMessage.S2(Data)} | ${PointOfInterestWelcomeMessage.S3(Data)} | ${PointOfInterestWelcomeMessage.S4(Data)} | ${PointOfInterestWelcomeMessage.S5(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = acceptingInput

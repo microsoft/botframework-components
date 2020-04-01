@@ -3,7 +3,7 @@
 
 namespace PointOfInterestSkill.Utilities
 {
-    public class Actions
+    public static class Actions
     {
         public const string ConfirmPrompt = "ConfirmPrompt";
 

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -14,18 +13,17 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MusicSkill.Bots;
 using MusicSkill.Dialogs;
-using MusicSkill.Responses.Main;
-using MusicSkill.Responses.Shared;
 using MusicSkill.Services;
+using SkillServiceLibrary.Utilities;
 
 namespace MusicSkill
 {
@@ -50,7 +48,7 @@ namespace MusicSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -62,6 +60,9 @@ namespace MusicSkill
             {
                 options.AllowSynchronousIO = true;
             });
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
 
             // Load settings
             var settings = new BotSettings();
@@ -118,6 +119,12 @@ namespace MusicSkill
 
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
+            // Configure service manager
+            services.AddSingleton<IServiceManager>(new ServiceManager(settings));
+
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
+
             // Register dialogs
             services.AddTransient<PlayMusicDialog>();
             services.AddTransient<MainDialog>();
@@ -142,6 +149,9 @@ namespace MusicSkill
                 .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
+            // Uncomment this to support HTTPS.
+            // app.UseHttpsRedirection();
         }
     }
 }

@@ -24,31 +24,29 @@ namespace CalendarSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<CalendarSkillState> _stateAccessor;
-        private Dialog _createEventDialog;
-        private Dialog _changeEventStatusDialog;
-        private Dialog _timeRemainingDialog;
-        private Dialog _showEventsDialog;
-        private Dialog _updateEventDialog;
-        private Dialog _joinEventDialog;
-        private Dialog _upcomingEventDialog;
-        private Dialog _checkPersonAvailableDialog;
-        private Dialog _findMeetingRoomDialog;
-        private Dialog _updateMeetingRoomDialog;
-        private Dialog _bookMeetingRoomDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<CalendarSkillState> _stateAccessor;
+        private readonly Dialog _createEventDialog;
+        private readonly Dialog _changeEventStatusDialog;
+        private readonly Dialog _timeRemainingDialog;
+        private readonly Dialog _showEventsDialog;
+        private readonly Dialog _updateEventDialog;
+        private readonly Dialog _joinEventDialog;
+        private readonly Dialog _upcomingEventDialog;
+        private readonly Dialog _checkPersonAvailableDialog;
+        private readonly Dialog _findMeetingRoomDialog;
+        private readonly Dialog _updateMeetingRoomDialog;
+        private readonly Dialog _bookMeetingRoomDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -209,8 +207,8 @@ namespace CalendarSkill.Dialogs
                         case General.Intent.Cancel:
                             {
                                 state.Clear();
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
@@ -226,8 +224,8 @@ namespace CalendarSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -235,10 +233,10 @@ namespace CalendarSkill.Dialogs
                         case General.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(CalendarMainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
@@ -264,7 +262,7 @@ namespace CalendarSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
@@ -287,7 +285,7 @@ namespace CalendarSkill.Dialogs
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var a = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new CalendarSkillState(), cancellationToken);
             state.IsAction = false;
             var options = new CalendarSkillDialogOptions()
             {
@@ -312,12 +310,12 @@ namespace CalendarSkill.Dialogs
                             // check whether the meeting room feature supported.
                             if (!string.IsNullOrEmpty(_settings.AzureSearch?.SearchServiceName))
                             {
-                                return await stepContext.BeginDialogAsync(_bookMeetingRoomDialog.Id, options);
+                                return await stepContext.BeginDialogAsync(_bookMeetingRoomDialog.Id, options, cancellationToken);
                             }
                             else
                             {
                                 var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                await stepContext.Context.SendActivityAsync(activity);
+                                await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                             }
 
                             break;
@@ -330,18 +328,18 @@ namespace CalendarSkill.Dialogs
                             {
                                 if (!string.IsNullOrEmpty(_settings.AzureSearch?.SearchServiceName))
                                 {
-                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options);
+                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options, cancellationToken);
                                 }
                                 else
                                 {
                                     var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                    await stepContext.Context.SendActivityAsync(activity);
+                                    await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                                 }
                             }
                             else
                             {
                                 var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                await stepContext.Context.SendActivityAsync(activity);
+                                await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                             }
 
                             break;
@@ -349,12 +347,12 @@ namespace CalendarSkill.Dialogs
 
                     case CalendarLuis.Intent.CreateCalendarEntry:
                         {
-                            return await stepContext.BeginDialogAsync(_createEventDialog.Id, options);
+                            return await stepContext.BeginDialogAsync(_createEventDialog.Id, options, cancellationToken);
                         }
 
                     case CalendarLuis.Intent.AcceptEventEntry:
                         {
-                            return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted));
+                            return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted), cancellationToken);
                         }
 
                     case CalendarLuis.Intent.DeleteCalendarEntry:
@@ -363,17 +361,17 @@ namespace CalendarSkill.Dialogs
                             {
                                 if (!string.IsNullOrEmpty(_settings.AzureSearch?.SearchServiceName))
                                 {
-                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options);
+                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options, cancellationToken);
                                 }
                                 else
                                 {
                                     var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                    await stepContext.Context.SendActivityAsync(activity);
+                                    await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                                 }
                             }
                             else
                             {
-                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled));
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled), cancellationToken);
                             }
 
                             break;
@@ -385,17 +383,17 @@ namespace CalendarSkill.Dialogs
                             {
                                 if (!string.IsNullOrEmpty(_settings.AzureSearch?.SearchServiceName))
                                 {
-                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options);
+                                    return await stepContext.BeginDialogAsync(_updateMeetingRoomDialog.Id, options, cancellationToken);
                                 }
                                 else
                                 {
                                     var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                    await stepContext.Context.SendActivityAsync(activity);
+                                    await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                                 }
                             }
                             else
                             {
-                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options);
+                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options, cancellationToken);
                             }
 
                             break;
@@ -403,7 +401,7 @@ namespace CalendarSkill.Dialogs
 
                     case CalendarLuis.Intent.ConnectToMeeting:
                         {
-                            return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options);
+                            return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options, cancellationToken);
                         }
 
                     case CalendarLuis.Intent.FindCalendarEntry:
@@ -413,12 +411,12 @@ namespace CalendarSkill.Dialogs
                     case CalendarLuis.Intent.FindCalendarWho:
                     case CalendarLuis.Intent.FindDuration:
                         {
-                            return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                            return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options), cancellationToken);
                         }
 
                     case CalendarLuis.Intent.TimeRemaining:
                         {
-                            return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id);
+                            return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id, cancellationToken: cancellationToken);
                         }
 
                     case CalendarLuis.Intent.CheckAvailability:
@@ -428,17 +426,17 @@ namespace CalendarSkill.Dialogs
                                 if (!string.IsNullOrEmpty(_settings.AzureSearch?.SearchServiceName))
                                 {
                                     state.InitialIntent = CalendarLuis.Intent.FindMeetingRoom;
-                                    return await stepContext.BeginDialogAsync(_bookMeetingRoomDialog.Id, options);
+                                    return await stepContext.BeginDialogAsync(_bookMeetingRoomDialog.Id, options, cancellationToken);
                                 }
                                 else
                                 {
                                     var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                                    await stepContext.Context.SendActivityAsync(activity);
+                                    await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                                 }
                             }
                             else
                             {
-                                return await stepContext.BeginDialogAsync(_checkPersonAvailableDialog.Id);
+                                return await stepContext.BeginDialogAsync(_checkPersonAvailableDialog.Id, options, cancellationToken);
                             }
 
                             break;
@@ -447,19 +445,19 @@ namespace CalendarSkill.Dialogs
                     case CalendarLuis.Intent.ShowNextCalendar:
                     case CalendarLuis.Intent.ShowPreviousCalendar:
                         {
-                            return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                            return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options), cancellationToken);
                         }
 
                     case CalendarLuis.Intent.None:
                         {
                             if (generalIntent == General.Intent.ShowNext || generalIntent == General.Intent.ShowPrevious)
                             {
-                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options), cancellationToken);
                             }
                             else
                             {
                                 var activity = _templateManager.GenerateActivityForLocale(CalendarSharedResponses.DidntUnderstandMessage);
-                                await stepContext.Context.SendActivityAsync(activity);
+                                await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                             }
 
                             break;
@@ -468,7 +466,7 @@ namespace CalendarSkill.Dialogs
                     default:
                         {
                             var activity = _templateManager.GenerateActivityForLocale(CalendarMainResponses.FeatureNotAvailable);
-                            await stepContext.Context.SendActivityAsync(activity);
+                            await stepContext.Context.SendActivityAsync(activity, cancellationToken);
                             break;
                         }
                 }
@@ -482,7 +480,7 @@ namespace CalendarSkill.Dialogs
                     {
                         case Events.DeviceStart:
                             {
-                                return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id);
+                                return await stepContext.BeginDialogAsync(_upcomingEventDialog.Id, cancellationToken: cancellationToken);
                             }
 
                         case Events.CreateEvent:
@@ -495,7 +493,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_createEventDialog.Id, options);
+                                return await stepContext.BeginDialogAsync(_createEventDialog.Id, options, cancellationToken);
                             }
 
                         case Events.UpdateEvent:
@@ -508,7 +506,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options);
+                                return await stepContext.BeginDialogAsync(_updateEventDialog.Id, options, cancellationToken);
                             }
 
                         case Events.ShowEvent:
@@ -521,7 +519,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options));
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.FirstShowOverview, options), cancellationToken);
                             }
 
                         case Events.AcceptEvent:
@@ -534,7 +532,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted));
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Accepted), cancellationToken);
                             }
 
                         case Events.DeleteEvent:
@@ -547,7 +545,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled));
+                                return await stepContext.BeginDialogAsync(_changeEventStatusDialog.Id, new ChangeEventStatusDialogOptions(options, EventStatus.Cancelled), cancellationToken);
                             }
 
                         case Events.JoinEvent:
@@ -560,7 +558,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options);
+                                return await stepContext.BeginDialogAsync(_joinEventDialog.Id, options, cancellationToken);
                             }
 
                         case Events.TimeRemaining:
@@ -573,7 +571,7 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id);
+                                return await stepContext.BeginDialogAsync(_timeRemainingDialog.Id, options, cancellationToken);
                             }
 
                         case Events.Summary:
@@ -586,12 +584,12 @@ namespace CalendarSkill.Dialogs
                                     actionData.DigestState(state);
                                 }
 
-                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.Summary, options));
+                                return await stepContext.BeginDialogAsync(_showEventsDialog.Id, new ShowMeetingsDialogOptions(ShowMeetingsDialogOptions.ShowMeetingReason.Summary, options), cancellationToken);
                             }
 
                         default:
                             {
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
@@ -599,7 +597,7 @@ namespace CalendarSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -625,23 +623,22 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
-            IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
             if (supported)
             {
-                tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
+                var tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -659,7 +656,7 @@ namespace CalendarSkill.Dialogs
             }
         }
 
-        private class Events
+        private static class Events
         {
             public const string DeviceStart = "DeviceStart";
             public const string CreateEvent = "CreateEvent";

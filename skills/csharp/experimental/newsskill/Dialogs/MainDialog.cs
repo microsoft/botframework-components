@@ -23,25 +23,22 @@ namespace NewsSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private IStatePropertyAccessor<NewsSkillState> _stateAccessor;
-        private IStatePropertyAccessor<NewsSkillUserState> _userStateAccessor;
-        private Dialog _findArticlesDialog;
-        private Dialog _trendingArticlesDialog;
-        private Dialog _favoriteTopicsDialog;
-        private LocaleTemplateManager _templateManager;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly IStatePropertyAccessor<NewsSkillState> _stateAccessor;
+        private readonly IStatePropertyAccessor<NewsSkillUserState> _userStateAccessor;
+        private readonly Dialog _findArticlesDialog;
+        private readonly Dialog _trendingArticlesDialog;
+        private readonly Dialog _favoriteTopicsDialog;
+        private readonly LocaleTemplateManager _templateManager;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient,
-            LocaleTemplateManager templateManager)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
-            _templateManager = templateManager;
-            TelemetryClient = telemetryClient;
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -149,11 +146,11 @@ namespace NewsSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CANCELLED));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CANCELLED), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new NewsSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult(false) : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -166,8 +163,8 @@ namespace NewsSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _templateManager));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(HeroCardResponses.SendHelpCard(innerDc.Context, _templateManager), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -184,13 +181,13 @@ namespace NewsSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
                 // If bot is in local mode, prompt with intro or continuation message
                 var prompt = stepContext.Options as Activity ?? HeroCardResponses.SendIntroCard(stepContext.Context, _templateManager);
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
                 var activity = stepContext.Context.Activity;
                 if (activity.Type == ActivityTypes.ConversationUpdate)
                 {
@@ -210,7 +207,7 @@ namespace NewsSkill.Dialogs
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var a = stepContext.Context.Activity;
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
             state.IsAction = false;
 
             if (a.Type == ActivityTypes.Message && !string.IsNullOrEmpty(a.Text))
@@ -226,33 +223,33 @@ namespace NewsSkill.Dialogs
                     case NewsLuis.Intent.TrendingArticles:
                         {
                             // send articles in response
-                            return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
+                            return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog), cancellationToken: cancellationToken);
                         }
 
                     case NewsLuis.Intent.SetFavoriteTopics:
                     case NewsLuis.Intent.ShowFavoriteTopics:
                         {
                             // send favorite news categories
-                            return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
+                            return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog), cancellationToken: cancellationToken);
                         }
 
                     case NewsLuis.Intent.FindArticles:
                         {
                             // send greeting response
-                            return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog));
+                            return await stepContext.BeginDialogAsync(nameof(FindArticlesDialog), cancellationToken: cancellationToken);
                         }
 
                     case NewsLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CONFUSED));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.CONFUSED), cancellationToken);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync("This feature is not yet implemented in this skill.");
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(MainStrings.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -267,7 +264,7 @@ namespace NewsSkill.Dialogs
                     switch (eventActivity.Name)
                     {
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
-                        case "GetTrendingArticles":
+                        case Events.GetTrendingArticlesEvent:
                             {
                                 TrendingArticlesInput actionData = null;
 
@@ -282,7 +279,7 @@ namespace NewsSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(TrendingArticlesDialog));
                             }
 
-                        case "GetFavoriteTopics":
+                        case Events.GetFavoriteTopicsEvent:
                             {
                                 FavoriteTopicsInput actionData = null;
 
@@ -297,7 +294,7 @@ namespace NewsSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(FavoriteTopicsDialog));
                             }
 
-                        case "FindArticles":
+                        case Events.FindArticlesEvent:
                             {
                                 FindArticlesInput actionData = null;
 
@@ -369,6 +366,13 @@ namespace NewsSkill.Dialogs
             }
 
             convState.LuisResult = newsLuis;
+        }
+
+        private static class Events
+        {
+            public const string GetTrendingArticlesEvent = "GetTrendingArticles";
+            public const string GetFavoriteTopicsEvent = "GetFavoriteTopics";
+            public const string FindArticlesEvent = "FindArticles";
         }
     }
 }

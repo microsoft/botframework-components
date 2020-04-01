@@ -26,35 +26,27 @@ namespace PointOfInterestSkill.Dialogs
     public class RouteDialog : PointOfInterestDialogBase
     {
         public RouteDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
-            : base(nameof(RouteDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient, httpContext)
+            IServiceProvider serviceProvider)
+            : base(nameof(RouteDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var checkCurrentLocation = new WaterfallStep[]
             {
-                CheckForCurrentCoordinatesBeforeRoute,
-                ConfirmCurrentLocation,
-                ProcessCurrentLocationSelection,
-                RouteToFindPointOfInterestDialog,
+                CheckForCurrentCoordinatesBeforeRouteAsync,
+                ConfirmCurrentLocationAsync,
+                ProcessCurrentLocationSelectionAsync,
+                RouteToFindPointOfInterestDialogAsync,
             };
 
             var findRouteToActiveLocation = new WaterfallStep[]
             {
-                GetRoutesToDestination,
-                ResponseToStartRoutePrompt,
+                GetRoutesToDestinationAsync,
+                ResponseToStartRoutePromptAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new WaterfallDialog(Actions.FindRouteToActiveLocation, findRouteToActiveLocation) { TelemetryClient = telemetryClient });
-            AddDialog(new ConfirmPrompt(Actions.StartNavigationPrompt, ValidateStartNavigationPrompt) { Style = ListStyle.None });
+            AddDialog(new WaterfallDialog(Actions.CheckForCurrentLocation, checkCurrentLocation));
+            AddDialog(new WaterfallDialog(Actions.FindRouteToActiveLocation, findRouteToActiveLocation));
+            AddDialog(new ConfirmPrompt(Actions.StartNavigationPrompt, ValidateStartNavigationPromptAsync) { Style = ListStyle.None });
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;
@@ -66,17 +58,17 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        public async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeRoute(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> CheckForCurrentCoordinatesBeforeRouteAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var hasCurrentCoordinates = state.CheckForValidCurrentCoordinates();
 
             if (hasCurrentCoordinates)
             {
-                return await sc.ReplaceDialogAsync(Actions.FindRouteToActiveLocation);
+                return await sc.ReplaceDialogAsync(Actions.FindRouteToActiveLocation, cancellationToken: cancellationToken);
             }
 
-            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) });
+            return await sc.PromptAsync(Actions.CurrentLocationPrompt, new PromptOptions { Prompt = TemplateManager.GenerateActivity(POISharedResponses.PromptForCurrentLocation) }, cancellationToken);
         }
 
         /// <summary>
@@ -85,27 +77,27 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">WaterfallStepContext.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>DialogTurnResult.</returns>
-        public async Task<DialogTurnResult> RouteToFindPointOfInterestDialog(WaterfallStepContext sc, CancellationToken cancellationToken)
+        public async Task<DialogTurnResult> RouteToFindPointOfInterestDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            return await sc.ReplaceDialogAsync(Actions.FindRouteToActiveLocation);
+            return await sc.ReplaceDialogAsync(Actions.FindRouteToActiveLocation, cancellationToken: cancellationToken);
         }
 
         public async Task<DialogTurnResult> CheckIfActiveRouteExists(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 if (state.ActiveRoute != null)
                 {
-                    await sc.EndDialogAsync(true);
-                    return await sc.BeginDialogAsync(Actions.FindAlongRoute);
+                    await sc.EndDialogAsync(true, cancellationToken);
+                    return await sc.BeginDialogAsync(Actions.FindAlongRoute, cancellationToken: cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -114,10 +106,10 @@ namespace PointOfInterestSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 if (state.LastFoundPointOfInterests == null)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 if (!string.IsNullOrEmpty(state.Keyword))
@@ -153,11 +145,11 @@ namespace PointOfInterestSkill.Dialogs
                     }
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -166,27 +158,27 @@ namespace PointOfInterestSkill.Dialogs
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 if (state.Destination == null)
                 {
-                    await sc.EndDialogAsync(true);
-                    return await sc.BeginDialogAsync(Actions.CheckForCurrentLocation);
+                    await sc.EndDialogAsync(true, cancellationToken);
+                    return await sc.BeginDialogAsync(Actions.CheckForCurrentLocation, cancellationToken: cancellationToken);
                 }
 
-                return await sc.BeginDialogAsync(Actions.FindRouteToActiveLocation);
+                return await sc.BeginDialogAsync(Actions.FindRouteToActiveLocation, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> GetRoutesToDestination(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<DialogTurnResult> GetRoutesToDestinationAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 var service = ServiceManager.InitRoutingMapsService(Settings);
                 var routeDirections = new RouteDirections();
                 var cards = new List<Card>();
@@ -194,29 +186,29 @@ namespace PointOfInterestSkill.Dialogs
                 if (state.Destination == null || !state.CheckForValidCurrentCoordinates())
                 {
                     // should not happen
-                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RouteResponses.MissingActiveLocationErrorMessage));
-                    return await sc.EndDialogAsync();
+                    await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RouteResponses.MissingActiveLocationErrorMessage), cancellationToken);
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
 
                 if (!string.IsNullOrEmpty(state.RouteType))
                 {
                     routeDirections = await service.GetRouteDirectionsToDestinationAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Destination.Geolocation.Latitude, state.Destination.Geolocation.Longitude, state.RouteType);
 
-                    cards = await GetRouteDirectionsViewCards(sc, routeDirections, service);
+                    cards = await GetRouteDirectionsViewCardsAsync(sc, routeDirections, service, cancellationToken);
                 }
                 else
                 {
                     routeDirections = await service.GetRouteDirectionsToDestinationAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Destination.Geolocation.Latitude, state.Destination.Geolocation.Longitude);
 
-                    cards = await GetRouteDirectionsViewCards(sc, routeDirections, service);
+                    cards = await GetRouteDirectionsViewCardsAsync(sc, routeDirections, service, cancellationToken);
                 }
 
                 if (cards.Count() == 0)
                 {
                     var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoRouteFound);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (cards.Count() == 1)
                 {
@@ -224,11 +216,11 @@ namespace PointOfInterestSkill.Dialogs
 
                     if (state.DestinationActionType == DestinationActionType.ShowDirectionsThenStartNavigation)
                     {
-                        await sc.Context.SendActivityAsync(options.Prompt);
-                        return await sc.NextAsync(true);
+                        await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
+                        return await sc.NextAsync(true, cancellationToken);
                     }
 
-                    return await sc.PromptAsync(Actions.StartNavigationPrompt, options);
+                    return await sc.PromptAsync(Actions.StartNavigationPrompt, options, cancellationToken);
                 }
                 else
                 {
@@ -236,25 +228,25 @@ namespace PointOfInterestSkill.Dialogs
 
                     if (state.DestinationActionType == DestinationActionType.ShowDirectionsThenStartNavigation)
                     {
-                        await sc.Context.SendActivityAsync(options.Prompt);
-                        return await sc.NextAsync(true);
+                        await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
+                        return await sc.NextAsync(true, cancellationToken);
                     }
 
-                    return await sc.PromptAsync(Actions.StartNavigationPrompt, options);
+                    return await sc.PromptAsync(Actions.StartNavigationPrompt, options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        public async Task<DialogTurnResult> ResponseToStartRoutePrompt(WaterfallStepContext sc, CancellationToken cancellationToken)
+        public async Task<DialogTurnResult> ResponseToStartRoutePromptAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
 
                 SingleDestinationResponse response = null;
 
@@ -271,7 +263,7 @@ namespace PointOfInterestSkill.Dialogs
 
                     if (SupportOpenDefaultAppReply(sc.Context))
                     {
-                        await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
+                        await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map), cancellationToken);
                     }
 
                     response = state.IsAction ? ConvertToResponse(state.Destination) : null;
@@ -279,19 +271,19 @@ namespace PointOfInterestSkill.Dialogs
                 else
                 {
                     var replyMessage = TemplateManager.GenerateActivity(RouteResponses.AskAboutRouteLater);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync(response);
+                return await sc.EndDialogAsync(response, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        private Task<bool> ValidateStartNavigationPrompt(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
+        private Task<bool> ValidateStartNavigationPromptAsync(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
             if (promptContext.Recognized.Succeeded && promptContext.Recognized.Value == false)
             {

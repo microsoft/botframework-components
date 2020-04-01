@@ -22,13 +22,14 @@ namespace EmailSkill.Bots
         private readonly Dialog _dialog;
         private readonly BotState _conversationState;
         private readonly BotState _userState;
-        private BotSettings _settings;
-        private IStatePropertyAccessor<DialogState> _dialogStateAccessor;
-        private IStatePropertyAccessor<EmailSkillState> _stateAccessor;
+        private readonly BotSettings _settings;
+        private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
+        private readonly IStatePropertyAccessor<EmailSkillState> _stateAccessor;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
             _dialog = dialog;
+            _dialog.TelemetryClient = serviceProvider.GetService<IBotTelemetryClient>();
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _settings = serviceProvider.GetService<BotSettings>();

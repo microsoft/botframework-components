@@ -1,4 +1,4 @@
-// https://docs.microsoft.com/en-us/visualstudio/modeling/t4-include-directive?view=vs-2017
+﻿// https://docs.microsoft.com/en-us/visualstudio/modeling/t4-include-directive?view=vs-2017
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -24,5 +24,6 @@ namespace NewsSkill.Responses.Main
         public const string LearnMore = "LearnMore";
         public const string MarketPrompt = "MarketPrompt";
         public const string MarketRetryPrompt = "MarketRetryPrompt";
+        public const string FeatureNotAvailable = "FeatureNotAvailable";
     }
 }
