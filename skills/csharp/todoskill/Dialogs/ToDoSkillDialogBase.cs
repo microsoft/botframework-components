@@ -217,7 +217,7 @@ namespace ToDoSkill.Dialogs
                     await DigestToDoLuisResultAsync(sc, cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {

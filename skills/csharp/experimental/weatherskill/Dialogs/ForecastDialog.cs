@@ -333,7 +333,7 @@ namespace WeatherSkill.Dialogs
             return stepContext.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string GeographyPrompt = "geographyPrompt";
             public const string GetForecastResponseDialog = "getForecastResponseDialog";

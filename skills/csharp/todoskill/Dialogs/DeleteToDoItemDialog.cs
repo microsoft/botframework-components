@@ -187,7 +187,7 @@ namespace ToDoSkill.Dialogs
                 {
                     cardReply.InputHint = InputHints.IgnoringInput;
                     await sc.Context.SendActivityAsync(cardReply, cancellationToken);
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
@@ -362,7 +362,7 @@ namespace ToDoSkill.Dialogs
                     state.TaskContentPattern = null;
                     state.TaskContentML = null;
                     state.CollectIndexRetry = true;
-                    return await sc.ReplaceDialogAsync(Actions.CollectTaskIndexForDelete);
+                    return await sc.ReplaceDialogAsync(Actions.CollectTaskIndexForDelete, cancellationToken: cancellationToken);
                 }
             }
             catch (Exception ex)

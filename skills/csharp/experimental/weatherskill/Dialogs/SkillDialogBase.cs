@@ -213,7 +213,7 @@ namespace WeatherSkill.Dialogs
             }
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string SkillModeAuth = "SkillAuth";
         }
