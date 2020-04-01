@@ -23,6 +23,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Resources;
@@ -59,7 +60,15 @@ namespace CalendarSkill.Dialogs
             Accessor = _conversationState.CreateProperty<CalendarSkillState>(nameof(CalendarSkillState));
             ServiceManager = serviceProvider.GetService<IServiceManager>();
 
-            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.TakeFurtherAction, null, Culture.English) { Style = ListStyle.SuggestedAction });
             AddDialog(new ChoicePrompt(Actions.Choice, ChoiceValidatorAsync, Culture.English) { Style = ListStyle.None, });

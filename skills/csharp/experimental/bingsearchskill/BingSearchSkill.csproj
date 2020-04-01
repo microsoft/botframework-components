@@ -48,7 +48,7 @@
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.EntitySearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.WebSearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="0.9.0-daily252" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
