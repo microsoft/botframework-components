@@ -15,7 +15,7 @@ namespace ITSMSkill.Controllers.ServiceNow
     /// <summary>
     /// Controller to Process ServiceNow Incident Events
     /// </summary>
-    [Route("api/servicenow/processIncidents")]
+    [Route("api/servicenow/incidents")]
     [ApiController]
     public class ServiceNowController : ServiceNowControllerBase
     {

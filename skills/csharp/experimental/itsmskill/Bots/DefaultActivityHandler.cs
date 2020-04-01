@@ -81,13 +81,6 @@ namespace ITSMSkill.Bots
 
             switch (ev.Name)
             {
-                case TokenEvents.TokenResponseEventName:
-                    {
-                        // Forward the token response activity to the dialog waiting on the stack.
-                        await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
-                        break;
-                    }
-
                 case ServiceNowEvents.Proactive:
                     {
                         var eventData = JsonConvert.DeserializeObject<ServiceNowNotification>(turnContext.Activity.Value.ToString());

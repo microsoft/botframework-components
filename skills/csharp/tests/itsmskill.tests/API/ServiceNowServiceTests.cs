@@ -175,8 +175,11 @@ namespace ITSMSkill.Tests.API
             mockMessageReceiver.Setup(x => x.Receive(It.IsAny<ServiceNowNotification>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(serviceResp));
             var controller = new ServiceNowController(mockMessageReceiver.Object, It.IsAny<IBotTelemetryClient>());
 
+            // Test Notification
+            var notificiation = "{'Title':'Test', 'Description':'Description'}";
+
             // Act
-            var actionResult = await controller.Post(It.IsAny<string>(), It.IsAny<CancellationToken>());
+            var actionResult = await controller.Post(notificiation, It.IsAny<CancellationToken>());
 
             // Assert
             Assert.IsNotNull(actionResult);
