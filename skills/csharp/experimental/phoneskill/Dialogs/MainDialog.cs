@@ -274,7 +274,7 @@ namespace PhoneSkill.Dialogs
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(PhoneMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -436,7 +436,7 @@ namespace PhoneSkill.Dialogs
             await outgoingCallDialog.OnLogoutAsync(dc, cancellationToken);
         }
 
-        private class Events
+        private static class Events
         {
             public const string TokenResponseEvent = "tokens/response";
             public const string SkillBeginEvent = "skillBegin";

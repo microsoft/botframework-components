@@ -21,6 +21,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SkillServiceLibrary.Utilities;
 
 namespace EventSkill
 {
@@ -45,7 +46,7 @@ namespace EventSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>
@@ -64,9 +65,15 @@ namespace EventSkill
             services.AddSingleton(settings);
             services.AddSingleton<BotSettingsBase>(settings);
 
+            // Register AuthConfiguration to enable custom claim validation.
+            services.AddSingleton(sp => new AuthenticationConfiguration { ClaimsValidator = new AllowedCallersClaimsValidator(sp.GetService<IConfiguration>()) });
+
             // Configure credentials
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
+
+            // Configure channel provider
+            services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
 
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();
@@ -123,6 +130,9 @@ namespace EventSkill
                 .UseWebSockets()
                 .UseRouting()
                 .UseEndpoints(endpoints => endpoints.MapControllers());
+
+            // Uncomment this to support HTTPS.
+            // app.UseHttpsRedirection();
         }
     }
 }

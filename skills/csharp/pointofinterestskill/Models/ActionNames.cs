@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PointOfInterestSkill.Models
 {
-    public class ActionNames
+    public static class ActionNames
     {
         public const string GetDirectionAction = "GetDirectionAction";
 

@@ -44,7 +44,7 @@ namespace CalendarSkill.Test.API
         public async Task CreateEventTest()
         {
             var newEvent = new EventModel(EventSource.Microsoft);
-            await calendarService.CreateEventAysnc(newEvent);
+            await calendarService.CreateEventAsync(newEvent);
         }
 
         [TestMethod]

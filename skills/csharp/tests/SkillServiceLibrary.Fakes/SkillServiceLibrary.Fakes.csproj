@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AzureMapsAPI\Fakes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\shared\SkillServiceLibrary\SkillServiceLibrary.csproj" />
   </ItemGroup>
 

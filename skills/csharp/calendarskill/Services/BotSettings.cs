@@ -12,8 +12,6 @@ namespace CalendarSkill.Services
 
         public AzureSearchConfiguration AzureSearch { get; set; }
 
-        public string BingSpellCheckSubscriptionKey { get; set; }
-
         public string GoogleAppName { get; set; }
 
         public string GoogleClientId { get; set; }

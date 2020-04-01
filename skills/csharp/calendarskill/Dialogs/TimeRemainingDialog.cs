@@ -10,13 +10,9 @@ using CalendarSkill.Models;
 using CalendarSkill.Models.ActionInfos;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Responses.TimeRemaining;
-using CalendarSkill.Services;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions.Extensions;
 using Microsoft.Bot.Solutions.Resources;
-using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 
@@ -25,36 +21,28 @@ namespace CalendarSkill.Dialogs
     public class TimeRemainingDialog : CalendarSkillDialogBase
     {
         public TimeRemainingDialog(
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials)
-            : base(nameof(TimeRemainingDialog), settings, services, conversationState, templateManager, serviceManager, telemetryClient, appCredentials)
+            IServiceProvider serviceProvider)
+            : base(nameof(TimeRemainingDialog), serviceProvider)
         {
-            TelemetryClient = telemetryClient;
-
             var timeRemain = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                CheckTimeRemain,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CheckTimeRemainAsync,
             };
 
             // Define the conversation flow using a waterfall model.
-            AddDialog(new WaterfallDialog(Actions.ShowTimeRemaining, timeRemain) { TelemetryClient = telemetryClient });
+            AddDialog(new WaterfallDialog(Actions.ShowTimeRemaining, timeRemain) { TelemetryClient = TelemetryClient });
 
             // Set starting dialog for component
             InitialDialogId = Actions.ShowTimeRemaining;
         }
 
-        private async Task<DialogTurnResult> CheckTimeRemain(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> CheckTimeRemainAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
 
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
@@ -90,7 +78,7 @@ namespace CalendarSkill.Dialogs
                 if (nextEventList.Count == 0)
                 {
                     var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNoMeetingMessage);
-                    await sc.Context.SendActivityAsync(prompt);
+                    await sc.Context.SendActivityAsync(prompt, cancellationToken);
                 }
                 else
                 {
@@ -151,7 +139,7 @@ namespace CalendarSkill.Dialogs
                             RemainingTime = remainingTime
                         };
                         var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowNextMeetingTimeRemainingMessage, tokens);
-                        await sc.Context.SendActivityAsync(prompt);
+                        await sc.Context.SendActivityAsync(prompt, cancellationToken);
                     }
                     else
                     {
@@ -179,25 +167,25 @@ namespace CalendarSkill.Dialogs
                         };
 
                         var prompt = TemplateManager.GenerateActivityForLocale(TimeRemainingResponses.ShowTimeRemainingMessage, tokens);
-                        await sc.Context.SendActivityAsync(prompt);
+                        await sc.Context.SendActivityAsync(prompt, cancellationToken);
                     }
                 }
 
                 if (state.IsAction)
                 {
-                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status });
+                    return await sc.EndDialogAsync(new TimeRemainingOutput() { RemainingTime = totalRemainingMinutes, ActionSuccess = status }, cancellationToken);
                 }
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }

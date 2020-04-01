@@ -37,4 +37,5 @@
 # MarketRetryPrompt.Text(Data)
 - No se pudo encontrar ese país o región. ¿En qué país o región desea buscar?
 
-
+# FeatureNotAvailable.Text(Data)
+- La función que estás preguntando no está disponible. Por favor, intenta preguntar por otra cosa.

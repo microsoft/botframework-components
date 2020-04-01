@@ -96,6 +96,9 @@ namespace WeatherSkill
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<QueuedHostedService>();
 
+            // Configure service manager
+            services.AddTransient<IServiceManager, ServiceManager>();
+
             // Configure responses
             services.AddSingleton(LocaleTemplateManagerWrapper.CreateLocaleTemplateManager("en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn"));
 

@@ -8,40 +8,39 @@ using System.Threading.Tasks;
 using AutomotiveSkill.Models;
 using AutomotiveSkill.Responses.Shared;
 using AutomotiveSkill.Services;
-using AutomotiveSkill.Utilities;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AutomotiveSkill.Dialogs
 {
     public class AutomotiveSkillDialogBase : ComponentDialog
     {
         public AutomotiveSkillDialogBase(
-            string dialogId,
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IBotTelemetryClient telemetryClient)
+             string dialogId,
+             IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Services = services;
-            LocaleTemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+
+            // Initialize skill state
+            var conversationState = serviceProvider.GetService<ConversationState>();
             Accessor = conversationState.CreateProperty<AutomotiveSkillState>(nameof(AutomotiveSkillState));
-            TelemetryClient = telemetryClient;
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<AutomotiveSkillState> Accessor { get; }
 
-        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         // Shared steps
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
@@ -55,23 +54,23 @@ namespace AutomotiveSkill.Dialogs
         }
 
         // Helpers
-        protected Task DigestLuisResult(DialogContext dc)
+        protected Task DigestLuisResultAsync(DialogContext dc)
         {
             return Task.CompletedTask;
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivityForLocale(AutomotiveSkillSharedResponses.ErrorMessage), cancellationToken);
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2
