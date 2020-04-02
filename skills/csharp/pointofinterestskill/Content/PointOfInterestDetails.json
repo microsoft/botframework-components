@@ -1,6 +1,7 @@
 {
   "type": "AdaptiveCard",
   "id": "PointOfInterestDetailsCard",
+  "backgroundImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAASCAIAAADOjonJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAVSURBVDhPYxgFo2AUjIJRgBUwMAAABSIAAYb8Bp0AAAAASUVORK5CYII=",
   "body": [
     {
       "type": "Container",
@@ -32,21 +33,14 @@
                   "spacing": "None",
                   "size": "Medium",
                   "weight": "Bolder",
-                  "color": "default",
+                  "color": "light",
                   "text": "${if(Data.Name == null, '', Data.Name)}"
-                },
-                {
-                  "type": "TextBlock",
-                  "id": "Category",
-                  "spacing": "None",
-                  "color": "default",
-                  "text": "${if(Data.Category == null, '', Data.Category)}"
                 },
                 {
                   "type": "TextBlock",
                   "id": "Address",
                   "spacing": "None",
-                  "color": "default",
+                  "color": "light",
                   "text": "${if(Data.Address == null, '', Data.Address)}",
                   "wrap": true,
                   "maxLines": 2
@@ -62,7 +56,7 @@
                           "type": "TextBlock",
                           "id": "Phone",
                           "spacing": "None",
-                          "color": "default",
+                          "color": "light",
                           "text": "${if(Data.Phone == null, '', Data.Phone)}",
                           "wrap": true
                         }
@@ -76,21 +70,13 @@
                           "type": "TextBlock",
                           "id": "Hours",
                           "spacing": "None",
-                          "color": "default",
+                          "color": "light",
                           "text": "${if(Data.Hours == null, '', Data.Hours)}",
                           "wrap": true
                         }
                       ]
                     }
                   ]
-                },
-                {
-                  "type": "TextBlock",
-                  "id": "Website",
-                  "spacing": "None",
-                  "color": "default",
-                  "text": "${if(Data.Website == null, '', Data.Website)}",
-                  "wrap": true
                 }
               ]
             }
@@ -107,7 +93,7 @@
           "type": "TextBlock",
           "horizontalAlignment": "Right",
           "size": "Small",
-          "color": "default",
+          "color": "light",
           "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
         }
       ]
