@@ -77,6 +77,61 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    {
+                      "type": "Column",
+                      "width": "auto",
+                      "backgroundImage": {
+                        "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABhSURBVEhLY2RgYPgPxDQFKJYobfSBsigH9/y3QFkMDExQmqoWgACyeWBLqG0BDMDMhfuElmDUEpLAqCUkgVFLSAKjlpAERi0hCQwzS5ArfWoCmLlwn1DbImTz6NDuYmAAACX+Ei2M4OxDAAAAAElFTkSuQmCC",
+                        "horizontalAlignment": "Center",
+                        "verticalAlignment": "Center"
+                      },
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "id": "Rating",
+                          "spacing": "None",
+                          "color": "Light",
+                          "text": "${if(Data.Rating == null, '', Data.Rating)}",
+                          "wrap": true
+                        }
+                      ],
+                      "isVisible": ${if(Data.Rating == null, 'false', 'true')}
+                    },
+                    {
+                      "type": "Column",
+                      "width": "auto",
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "id": "RatingProvider",
+                          "spacing": "None",
+                          "color": "light",
+                          "text": "${if(Data.Rating == null, '', 'Foursquare')}",
+                          "wrap": true
+                        }
+                      ],
+                      "verticalContentAlignment": "Center"
+                    },
+                    {
+                      "type": "Column",
+                      "width": "auto",
+                      "items": [
+                        {
+                          "type": "TextBlock",
+                          "id": "RatingCount",
+                          "spacing": "None",
+                          "color": "light",
+                          "text": "${if(Data.RatingCount == null, '', concat(Data.RatingCount, ' reviews'))}",
+                          "wrap": true
+                        }
+                      ],
+                      "verticalContentAlignment": "Center"
+                    }
+                  ]
                 }
               ]
             }
@@ -87,7 +142,6 @@
     {
       "type": "Container",
       "bleed": true,
-      "separator": true,
       "items": [
         {
           "type": "TextBlock",
