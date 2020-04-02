@@ -590,3 +590,26 @@
 - i want a {Keyword=york minster} at {Address=1827} {Address=hutchinson court} {Address=boone county} {Address=md}
 - i want a {Keyword=zion national park} at {Address=47th street} and {Address=columbus place} plz
 - i want a {Keyword=zoup!} at {Address=1497} {Address=fort hill place} {Address=harlem city} {Address=rhode island} in {Address=papua new guinea}
+
+> near
+
+- {Keyword=Restaurants} near me
+- {Keyword=Food} near me
+- {Keyword=Chinese food} near me
+- {Keyword=Pizza restaurants} near me
+- Find {Keyword=Hotels} near me
+- {Keyword=Pet stores} near me
+- {Keyword=UPS store} near me
+- {Keyword=Parks} near me
+- {Keyword=Beaches} near me
+
+- {Keyword} near me
+- Find {Keyword} near me
+
+> others
+
+- Best {Keyword=restaurants} in {Address=New York City}
+- Is {Keyword=Walgreens} still open
+
+- Best {Keyword} in {Address}
+- Is {Keyword} still open
