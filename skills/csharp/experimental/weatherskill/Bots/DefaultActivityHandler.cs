@@ -11,10 +11,10 @@ using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RestaurantBookingSkill.Bots
+namespace WeatherSkill.Bots
 {
     public class DefaultActivityHandler<T> : TeamsActivityHandler
-        where T : Dialog
+       where T : Dialog
     {
         private readonly Dialog _dialog;
         private readonly BotState _conversationState;

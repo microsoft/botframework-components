@@ -22,20 +22,21 @@ namespace RestaurantBookingSkill.Dialogs
 
             var cancel = new WaterfallStep[]
             {
-                AskToCancel,
-                FinishCancelDialog,
+                AskToCancelAsync,
+                FinishCancelDialogAsync,
             };
 
             AddDialog(new WaterfallDialog(InitialDialogId, cancel));
             AddDialog(new ConfirmPrompt(CancelPrompt));
         }
 
-        public static async Task<DialogTurnResult> AskToCancel(WaterfallStepContext sc, CancellationToken cancellationToken) => await sc.PromptAsync(CancelPrompt, new PromptOptions()
+        public static async Task<DialogTurnResult> AskToCancelAsync(WaterfallStepContext sc, CancellationToken cancellationToken) => await sc.PromptAsync(CancelPrompt, new PromptOptions()
         {
             Prompt = await _responder.RenderTemplate(sc.Context, "en", CancelResponses._confirmPrompt),
-        });
+        },
+            cancellationToken);
 
-        public static async Task<DialogTurnResult> FinishCancelDialog(WaterfallStepContext sc, CancellationToken cancellationToken) => await sc.EndDialogAsync((bool)sc.Result);
+        public static async Task<DialogTurnResult> FinishCancelDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken) => await sc.EndDialogAsync((bool)sc.Result, cancellationToken: cancellationToken);
 
         protected override async Task<DialogTurnResult> EndComponentAsync(DialogContext outerDc, object result, CancellationToken cancellationToken)
         {
@@ -47,7 +48,7 @@ namespace RestaurantBookingSkill.Dialogs
                 await _responder.ReplyWith(outerDc.Context, CancelResponses._cancelConfirmed);
 
                 // Cancel all in outer stack of component i.e. the stack the component belongs to
-                return await outerDc.CancelAllDialogsAsync();
+                return await outerDc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -55,7 +56,7 @@ namespace RestaurantBookingSkill.Dialogs
                 await _responder.ReplyWith(outerDc.Context, CancelResponses._cancelDenied);
 
                 // End this component. Will trigger reprompt/resume on outer stack
-                return await outerDc.EndDialogAsync();
+                return await outerDc.EndDialogAsync(cancellationToken: cancellationToken);
             }
         }
     }
