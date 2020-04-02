@@ -23,19 +23,19 @@ namespace EmailSkill.Tests.Flow.Fakes
         private BaseTestUtterances emailUtterancesManager;
 
         public MockEmailLuisRecognizer()
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.emailUtterancesManager = new BaseTestUtterances();
         }
 
         public MockEmailLuisRecognizer(BaseTestUtterances utterancesManager)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.emailUtterancesManager = utterancesManager;
         }
 
         public MockEmailLuisRecognizer(params BaseTestUtterances[] utterancesManagers)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.emailUtterancesManager = new BaseTestUtterances();
 

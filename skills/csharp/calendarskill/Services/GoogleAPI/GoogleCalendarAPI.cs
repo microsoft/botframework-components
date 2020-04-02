@@ -68,7 +68,7 @@ namespace CalendarSkill.Services.GoogleAPI
         }
 
         /// <inheritdoc/>
-        public async Task<EventModel> CreateEventAysnc(EventModel newEvent)
+        public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
             await Task.CompletedTask;
             return new EventModel(CreateEvent(newEvent.Value));
@@ -170,7 +170,7 @@ namespace CalendarSkill.Services.GoogleAPI
         }
 
         // Check Available
-        public async Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval)
+        public async Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval)
         {
             List<bool> availability = new List<bool>();
             foreach (var user in users)

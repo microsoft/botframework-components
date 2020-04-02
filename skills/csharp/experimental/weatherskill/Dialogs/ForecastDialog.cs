@@ -24,36 +24,27 @@ namespace WeatherSkill.Dialogs
 {
     public class ForecastDialog : SkillDialogBase
     {
-        private BotServices _services;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
         private IHttpContextAccessor _httpContext;
 
         public ForecastDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager localeTemplateManager,
-            ConversationState conversationState,
-            IBotTelemetryClient telemetryClient,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
-            : base(nameof(ForecastDialog), settings, services, localeTemplateManager, conversationState, telemetryClient)
+            : base(nameof(ForecastDialog), serviceProvider)
         {
-            _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            _services = services;
             _httpContext = httpContext;
-            Settings = settings;
 
             var fullForecastDialogWithPrompt = new WaterfallStep[]
             {
-                RouteToGeographyPromptOrForecastResponse,
-                GeographyPrompt,
-                GetWeatherResponse,
-                End,
+                RouteToGeographyPromptOrForecastResponseAsync,
+                GeographyPromptAsync,
+                GetWeatherResponseAsync,
+                EndAsync,
             };
 
             var getForecastResponseDialog = new WaterfallStep[]
             {
-                GetWeatherResponse,
-                End,
+                GetWeatherResponseAsync,
+                EndAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(ForecastDialog), fullForecastDialogWithPrompt));
@@ -66,28 +57,28 @@ namespace WeatherSkill.Dialogs
         /// <summary>
         /// Check if geography is stored in state and route to prompt or go to API call.
         /// </summary>
-        private async Task<DialogTurnResult> RouteToGeographyPromptOrForecastResponse(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> RouteToGeographyPromptOrForecastResponseAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
             var geography = state.Geography;
 
             if (string.IsNullOrEmpty(geography) && double.IsNaN(state.Latitude))
             {
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(DialogIds.GetForecastResponseDialog);
+                return await stepContext.ReplaceDialogAsync(DialogIds.GetForecastResponseDialog, cancellationToken: cancellationToken);
             }
         }
 
         /// <summary>
         /// Ask user for current location.
         /// </summary>
-        private async Task<DialogTurnResult> GeographyPrompt(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GeographyPromptAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
-            return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt });
+            var prompt = TemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
+            return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
         }
 
         /// <summary>
@@ -97,12 +88,12 @@ namespace WeatherSkill.Dialogs
         {
             if (!promptContext.Recognized.Succeeded)
             {
-                var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
+                var prompt = TemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
                 await promptContext.Context.SendActivityAsync(prompt, cancellationToken: cancellationToken);
                 return false;
             }
 
-            var state = await _stateAccessor.GetAsync(promptContext.Context);
+            var state = await StateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // check if geography is in state from processed LUIS result
             if (string.IsNullOrEmpty(state.Geography))
@@ -117,71 +108,63 @@ namespace WeatherSkill.Dialogs
         /// <summary>
         /// Look up the six hour forecast using Accuweather.
         /// </summary>
-        private async Task<DialogTurnResult> GetWeatherResponse(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GetWeatherResponseAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
-            var service = new AccuweatherService(Settings);
+            var service = ServiceManager.InitService(Settings);
 
             if (!string.IsNullOrEmpty(state.Geography))
             {
-                state.GeographyLocation = await service.GetLocationByQueryAsync(state.Geography);
+                (state.Latitude, state.Longitude) = await service.GetCoordinatesByQueryAsync(state.Geography);
             }
-            else if (!double.IsNaN(state.Latitude))
+
+            // The applicable query is specified as a comma separated string composed by latitude followed by longitude.
+            // e.g. "47.641268,-122.125679".
+            var qureyString = string.Format("{0},{1}", state.Latitude.ToString(), state.Longitude.ToString());
+
+            string location = string.Empty;
+            if (!double.IsNaN(state.Latitude) && !double.IsNaN(state.Longitude))
             {
-                state.GeographyLocation = await service.GetLocationByGeoAsync(state.Latitude, state.Longitude);
+                location = await service.GetLocationByQueryAsync(qureyString);
             }
             else
             {
                 throw new Exception("Must have Geography or Latitude & Longitude!");
             }
 
-            var oneDayForecast = await service.GetOneDayForecastAsync(state.GeographyLocation.Key);
-
-            var twelveHourForecast = await service.GetTwelveHourForecastAsync(state.GeographyLocation.Key);
-
-            var hourlyForecasts = new List<HourDetails>();
-
+            var oneDayForecast = await service.GetOneDayForecastAsync(qureyString);
+            var twelveHourForecast = await service.GetTwelveHourForecastAsync(qureyString);
             bool useFile = Channel.GetChannelId(stepContext.Context) == Channels.Msteams;
-
-            for (int i = 0; i < 6; i++)
-            {
-                hourlyForecasts.Add(new HourDetails()
-                {
-                    Hour = twelveHourForecast[i].DateTime.ToString("hh tt", CultureInfo.InvariantCulture),
-                    Icon = GetWeatherIcon(twelveHourForecast[i].WeatherIcon, useFile),
-                    Temperature = Convert.ToInt32(twelveHourForecast[i].Temperature.Value)
-                });
-            }
 
             var forecastModel = new SixHourForecastCard()
             {
-                Speak = oneDayForecast.DailyForecasts[0].Day.ShortPhrase,
-                Location = state.GeographyLocation.LocalizedName,
-                DayIcon = GetWeatherIcon(oneDayForecast.DailyForecasts[0].Day.Icon, useFile),
-                Date = $"{oneDayForecast.DailyForecasts[0].Date.DayOfWeek} {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(oneDayForecast.DailyForecasts[0].Date.Month)} {oneDayForecast.DailyForecasts[0].Date.Day}",
-                MinimumTemperature = Convert.ToInt32(oneDayForecast.DailyForecasts[0].Temperature.Minimum.Value),
-                MaximumTemperature = Convert.ToInt32(oneDayForecast.DailyForecasts[0].Temperature.Maximum.Value),
-                ShortPhrase = oneDayForecast.DailyForecasts[0].Day.ShortPhrase,
-                WindDescription = $"Winds {oneDayForecast.DailyForecasts[0].Day.Wind.Speed.Value} {oneDayForecast.DailyForecasts[0].Day.Wind.Speed.Unit} {oneDayForecast.DailyForecasts[0].Day.Wind.Direction.Localized}",
-                Hour1 = twelveHourForecast[0].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon1 = GetWeatherIcon(twelveHourForecast[0].WeatherIcon, useFile),
-                Temperature1 = Convert.ToInt32(twelveHourForecast[0].Temperature.Value),
-                Hour2 = twelveHourForecast[1].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon2 = GetWeatherIcon(twelveHourForecast[1].WeatherIcon, useFile),
-                Temperature2 = Convert.ToInt32(twelveHourForecast[1].Temperature.Value),
-                Hour3 = twelveHourForecast[2].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon3 = GetWeatherIcon(twelveHourForecast[2].WeatherIcon, useFile),
-                Temperature3 = Convert.ToInt32(twelveHourForecast[2].Temperature.Value),
-                Hour4 = twelveHourForecast[3].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon4 = GetWeatherIcon(twelveHourForecast[3].WeatherIcon, useFile),
-                Temperature4 = Convert.ToInt32(twelveHourForecast[3].Temperature.Value),
-                Hour5 = twelveHourForecast[4].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon5 = GetWeatherIcon(twelveHourForecast[4].WeatherIcon, useFile),
-                Temperature5 = Convert.ToInt32(twelveHourForecast[4].Temperature.Value),
-                Hour6 = twelveHourForecast[5].DateTime.ToString("h tt", CultureInfo.InvariantCulture),
-                Icon6 = GetWeatherIcon(twelveHourForecast[5].WeatherIcon, useFile),
-                Temperature6 = Convert.ToInt32(twelveHourForecast[5].Temperature.Value)
+                Speak = oneDayForecast.Forecasts[0].Day.ShortPhrase,
+                Location = location,
+                DayIcon = GetWeatherIcon(oneDayForecast.Forecasts[0].Day.IconCode, useFile),
+                Date = $"{DateTime.Parse(oneDayForecast.Forecasts[0].Date).DayOfWeek} {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Parse(oneDayForecast.Forecasts[0].Date).Month)} {DateTime.Parse(oneDayForecast.Forecasts[0].Date).Day}",
+                MinimumTemperature = Convert.ToInt32(oneDayForecast.Forecasts[0].Temperature.Minimum.Value),
+                MaximumTemperature = Convert.ToInt32(oneDayForecast.Forecasts[0].Temperature.Maximum.Value),
+                ShortPhrase = oneDayForecast.Forecasts[0].Day.ShortPhrase,
+                WindDescription = $"Winds {oneDayForecast.Forecasts[0].Day.Wind.Speed.Value} {oneDayForecast.Forecasts[0].Day.Wind.Speed.Unit} {oneDayForecast.Forecasts[0].Day.Wind.Direction.LocalizedDescription}",
+                Hour1 = DateTime.Parse(twelveHourForecast.Forecasts[0].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon1 = GetWeatherIcon(twelveHourForecast.Forecasts[0].IconCode, useFile),
+                Temperature1 = Convert.ToInt32(twelveHourForecast.Forecasts[0].Temperature.Value),
+                Hour2 = DateTime.Parse(twelveHourForecast.Forecasts[1].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon2 = GetWeatherIcon(twelveHourForecast.Forecasts[1].IconCode, useFile),
+                Temperature2 = Convert.ToInt32(twelveHourForecast.Forecasts[1].Temperature.Value),
+                Hour3 = DateTime.Parse(twelveHourForecast.Forecasts[2].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon3 = GetWeatherIcon(twelveHourForecast.Forecasts[2].IconCode, useFile),
+                Temperature3 = Convert.ToInt32(twelveHourForecast.Forecasts[2].Temperature.Value),
+                Hour4 = DateTime.Parse(twelveHourForecast.Forecasts[3].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon4 = GetWeatherIcon(twelveHourForecast.Forecasts[3].IconCode, useFile),
+                Temperature4 = Convert.ToInt32(twelveHourForecast.Forecasts[3].Temperature.Value),
+                Hour5 = DateTime.Parse(twelveHourForecast.Forecasts[4].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon5 = GetWeatherIcon(twelveHourForecast.Forecasts[4].IconCode, useFile),
+                Temperature5 = Convert.ToInt32(twelveHourForecast.Forecasts[4].Temperature.Value),
+                Hour6 = DateTime.Parse(twelveHourForecast.Forecasts[5].Date).ToString("h tt", CultureInfo.InvariantCulture),
+                Icon6 = GetWeatherIcon(twelveHourForecast.Forecasts[5].IconCode, useFile),
+                Temperature6 = Convert.ToInt32(twelveHourForecast.Forecasts[5].Temperature.Value)
             };
 
             if (state.IsAction)
@@ -192,16 +175,16 @@ namespace WeatherSkill.Dialogs
                     Summary = summary,
                     ActionSuccess = true
                 };
-                return await stepContext.EndDialogAsync(actionResult);
+                return await stepContext.EndDialogAsync(actionResult, cancellationToken: cancellationToken);
             }
 
             var templateId = SharedResponses.SixHourForecast;
             var card = new Card(GetDivergedCardName(stepContext.Context, "SixHourForecast"), forecastModel);
-            var response = LocaleTemplateManager.GenerateActivity(templateId, card, tokens: null);
+            var response = TemplateManager.GenerateActivity(templateId, card, tokens: null);
 
-            await stepContext.Context.SendActivityAsync(response);
+            await stepContext.Context.SendActivityAsync(response, cancellationToken);
 
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -345,12 +328,12 @@ namespace WeatherSkill.Dialogs
             return $"{serverUrl}/images/{imagePath}";
         }
 
-        private Task<DialogTurnResult> End(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            return stepContext.EndDialogAsync();
+            return stepContext.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string GeographyPrompt = "geographyPrompt";
             public const string GetForecastResponseDialog = "getForecastResponseDialog";

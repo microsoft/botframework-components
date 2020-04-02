@@ -28,37 +28,32 @@ namespace ITSMSkill.Dialogs
     public class CreateTicketDialog : SkillDialogBase
     {
         public CreateTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(CreateTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(CreateTicketDialog), serviceProvider)
         {
             var createTicket = new WaterfallStep[]
             {
-                CheckTitle,
-                InputTitle,
-                SetTitle,
-                DisplayExistingLoop,
-                CheckDescription,
-                InputDescription,
-                SetDescription,
-                CheckUrgency,
-                InputUrgency,
-                SetUrgency,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CreateTicket
+                CheckTitleAsync,
+                InputTitleAsync,
+                SetTitleAsync,
+                DisplayExistingLoopAsync,
+                CheckDescriptionAsync,
+                InputDescriptionAsync,
+                SetDescriptionAsync,
+                CheckUrgencyAsync,
+                InputUrgencyAsync,
+                SetUrgencyAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CreateTicketAsync
             };
 
             var displayExisting = new WaterfallStep[]
             {
-                GetAuthToken,
-                AfterGetAuthToken,
-                ShowKnowledge,
-                IfKnowledgeHelp
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                ShowKnowledgeAsync,
+                IfKnowledgeHelpAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.CreateTicket, createTicket));
@@ -75,36 +70,36 @@ namespace ITSMSkill.Dialogs
             KnowledgeHelpLoop = Actions.DisplayExisting;
         }
 
-        protected async Task<DialogTurnResult> DisplayExistingLoop(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             if (state.DisplayExisting)
             {
                 state.PageIndex = -1;
-                return await sc.BeginDialogAsync(Actions.DisplayExisting);
+                return await sc.BeginDialogAsync(Actions.DisplayExisting, cancellationToken: cancellationToken);
             }
             else
             {
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
         }
 
-        protected async Task<DialogTurnResult> CreateTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CreateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             var management = ServiceManager.CreateManagement(Settings, sc.Result as TokenResponse, state.ServiceCache);
             var result = await management.CreateTicket(state.TicketTitle, state.TicketDescription, state.UrgencyLevel);
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketCreated, card, null));
-            return await sc.EndDialogAsync(await CreateActionResult(sc.Context, true, cancellationToken));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketCreated, card, null), cancellationToken);
+            return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
         }
     }
 }

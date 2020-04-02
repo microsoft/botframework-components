@@ -48,7 +48,10 @@ namespace SkillServiceLibrary.Services.FoursquareAPI
         /// </summary>
         private int limit;
 
-        public string Provider { get { return ProviderName; } }
+        public string Provider
+        {
+            get { return ProviderName; }
+        }
 
         public Task<IGeoSpatialService> InitClientAsync(string id, string secret, int radiusConfiguration, int limitConfiguration, int routeLimitConfiguration, string locale = "en-us", HttpClient client = null)
         {

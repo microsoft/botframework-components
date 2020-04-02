@@ -264,7 +264,7 @@ namespace HospitalitySkill.Dialogs
 
             if (confirm)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RoomServiceResponses.FinalOrderConfirmation));
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RoomServiceResponses.FinalOrderConfirmation), cancellationToken);
 
                 return await sc.EndDialogAsync(await CreateSuccessActionResultAsync(sc.Context, cancellationToken), cancellationToken);
             }

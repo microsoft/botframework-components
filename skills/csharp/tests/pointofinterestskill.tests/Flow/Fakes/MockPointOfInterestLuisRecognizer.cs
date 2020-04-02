@@ -25,19 +25,19 @@ namespace PointOfInterestSkill.Tests.Flow.Fakes
         private BaseTestUtterances poiUtterancesManager;
 
         public MockPointOfInterestLuisRecognizer()
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.poiUtterancesManager = new BaseTestUtterances();
         }
 
         public MockPointOfInterestLuisRecognizer(BaseTestUtterances utterancesManager)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.poiUtterancesManager = utterancesManager;
         }
 
         public MockPointOfInterestLuisRecognizer(params BaseTestUtterances[] utterancesManagers)
-            : base(application: mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.poiUtterancesManager = new BaseTestUtterances();
 

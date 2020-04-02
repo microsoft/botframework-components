@@ -26,27 +26,25 @@ namespace PointOfInterestSkill.Dialogs
     // Dialog providing activity routing and message/event processing.
     public class MainDialog : ComponentDialog
     {
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
-        private Dialog _routeDialog;
-        private Dialog _cancelRouteDialog;
-        private Dialog _findPointOfInterestDialog;
-        private Dialog _findParkingDialog;
-        private Dialog _getDirectionsDialog;
-        private IServiceManager _serviceManager;
-        private BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
+        private readonly Dialog _routeDialog;
+        private readonly Dialog _cancelRouteDialog;
+        private readonly Dialog _findPointOfInterestDialog;
+        private readonly Dialog _findParkingDialog;
+        private readonly Dialog _getDirectionsDialog;
+        private readonly IServiceManager _serviceManager;
+        private readonly BotSettings _settings;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             _serviceManager = serviceProvider.GetService<IServiceManager>();
             _settings = serviceProvider.GetService<BotSettings>();
-            TelemetryClient = telemetryClient;
 
             // Initialize state accessor
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -184,11 +182,11 @@ namespace PointOfInterestSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.CancellingMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.CancellingMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new SingleDestinationResponse { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -201,8 +199,8 @@ namespace PointOfInterestSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -210,13 +208,13 @@ namespace PointOfInterestSkill.Dialogs
                         case General.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new SingleDestinationResponse { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -236,7 +234,7 @@ namespace PointOfInterestSkill.Dialogs
         // Handles introduction/continuation prompt logic.
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState(), cancellationToken);
             bool shouldInterrupt = stepContext.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
             if (stepContext.Context.IsSkill() || shouldInterrupt)
@@ -245,26 +243,22 @@ namespace PointOfInterestSkill.Dialogs
                 stepContext.Context.TurnState.Remove(StateProperties.InterruptKey);
 
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
-            {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(
-                        stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate ?
-                        POIMainResponses.PointOfInterestWelcomeMessage : POIMainResponses.FirstPromptMessage)
-                };
 
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
-            }
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
+            {
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivity(POIMainResponses.FirstPromptMessage)
+            };
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState(), cancellationToken);
             state.IsAction = false;
 
             var activity = stepContext.Context.Activity;
@@ -276,7 +270,7 @@ namespace PointOfInterestSkill.Dialogs
 
                 if (intent != PointOfInterestLuis.Intent.None)
                 {
-                    await DigestLuisResult(stepContext, result);
+                    await DigestLuisResultAsync(stepContext, result, cancellationToken);
                 }
 
                 // switch on General intents
@@ -284,28 +278,28 @@ namespace PointOfInterestSkill.Dialogs
                 {
                     case PointOfInterestLuis.Intent.GetDirections:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(GetDirectionsDialog));
+                            return await stepContext.BeginDialogAsync(nameof(GetDirectionsDialog), cancellationToken: cancellationToken);
                         }
 
                     case PointOfInterestLuis.Intent.FindPointOfInterest:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog));
+                            return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog), cancellationToken: cancellationToken);
                         }
 
                     case PointOfInterestLuis.Intent.FindParking:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(FindParkingDialog));
+                            return await stepContext.BeginDialogAsync(nameof(FindParkingDialog), cancellationToken: cancellationToken);
                         }
 
                     case PointOfInterestLuis.Intent.None:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POISharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
-                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(POIMainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -321,13 +315,13 @@ namespace PointOfInterestSkill.Dialogs
                     {
                         case ActionNames.GetDirectionAction:
                             {
-                                await DigestActionInput<GetDirectionInput>(stepContext, ev);
-                                return await stepContext.BeginDialogAsync(nameof(GetDirectionsDialog));
+                                await DigestActionInputAsync<GetDirectionInput>(stepContext, ev, cancellationToken);
+                                return await stepContext.BeginDialogAsync(nameof(GetDirectionsDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.FindPointOfInterestAction:
                             {
-                                var input = await DigestActionInput<FindPointOfInterestInput>(stepContext, ev);
+                                var input = await DigestActionInputAsync<FindPointOfInterestInput>(stepContext, ev, cancellationToken);
                                 if (input != null && !string.IsNullOrEmpty(input.Zipcode))
                                 {
                                     var service = _serviceManager.InitAddressMapsService(_settings);
@@ -344,36 +338,36 @@ namespace PointOfInterestSkill.Dialogs
                                     state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog));
+                                return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.FindParkingAction:
                             {
-                                await DigestActionInput<FindParkingInput>(stepContext, ev);
-                                return await stepContext.BeginDialogAsync(nameof(FindParkingDialog));
+                                await DigestActionInputAsync<FindParkingInput>(stepContext, ev, cancellationToken);
+                                return await stepContext.BeginDialogAsync(nameof(FindParkingDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{ev.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
                 }
                 else
                 {
-                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"An event with no name was received but not processed."));
+                    await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: "An event with no name was received but not processed."), cancellationToken);
                 }
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new PointOfInterestSkillState(), cancellationToken);
             bool shouldInterrupt = stepContext.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
             if (stepContext.Context.IsSkill() && !shouldInterrupt)
@@ -395,7 +389,7 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
@@ -404,14 +398,14 @@ namespace PointOfInterestSkill.Dialogs
                 tokenProvider = (IUserTokenProvider)dc.Context.Adapter;
 
                 // Sign out user
-                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
+                var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id, cancellationToken: cancellationToken);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -419,11 +413,11 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task DigestLuisResult(DialogContext dc, PointOfInterestLuis luisResult)
+        private async Task DigestLuisResultAsync(DialogContext dc, PointOfInterestLuis luisResult, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState());
+                var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState(), cancellationToken);
 
                 if (luisResult != null)
                 {
@@ -434,6 +428,7 @@ namespace PointOfInterestSkill.Dialogs
                     // TODO since we can only search one per search, only the 1st one is considered
                     if (entities.Keyword != null)
                     {
+                        // instance is needed for real category content
                         if (entities._instance.KeywordCategory == null || !entities._instance.KeywordCategory.Any(c => c.Text.Equals(entities.Keyword[0], StringComparison.InvariantCultureIgnoreCase)))
                         {
                             state.Keyword = entities.Keyword[0];
@@ -501,10 +496,10 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task<T> DigestActionInput<T>(DialogContext dc, IEventActivity ev)
+        private async Task<T> DigestActionInputAsync<T>(DialogContext dc, IEventActivity ev, CancellationToken cancellationToken)
             where T : ActionBaseInput
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             state.IsAction = true;
 
             if (ev.Value is JObject eventValue)

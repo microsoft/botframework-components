@@ -24,24 +24,19 @@ namespace ITSMSkill.Dialogs
     public class CloseTicketDialog : SkillDialogBase
     {
         public CloseTicketDialog(
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
-            : base(nameof(CloseTicketDialog), settings, services, templateManager, conversationState, serviceManager, telemetryClient)
+             IServiceProvider serviceProvider)
+            : base(nameof(CloseTicketDialog), serviceProvider)
         {
             var closeTicket = new WaterfallStep[]
             {
-                BeginSetNumberThenId,
-                CheckClosed,
-                CheckReason,
-                InputReason,
-                SetReason,
-                GetAuthToken,
-                AfterGetAuthToken,
-                CloseTicket
+                BeginSetNumberThenIdAsync,
+                CheckClosedAsync,
+                CheckReasonAsync,
+                InputReasonAsync,
+                SetReasonAsync,
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CloseTicketAsync
             };
 
             AddDialog(new WaterfallDialog(Actions.CloseTicket, closeTicket));
@@ -49,34 +44,34 @@ namespace ITSMSkill.Dialogs
             InitialDialogId = Actions.CloseTicket;
         }
 
-        protected async Task<DialogTurnResult> CheckClosed(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CheckClosedAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
             if (state.TicketTarget.State == TicketState.Closed)
             {
-                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketAlreadyClosed));
-                return await sc.EndDialogAsync();
+                await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketAlreadyClosed), cancellationToken);
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> CloseTicket(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CloseTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState());
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
             var management = ServiceManager.CreateManagement(Settings, sc.Result as TokenResponse, state.ServiceCache);
             var result = await management.CloseTicket(id: state.Id, reason: state.CloseReason);
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancel(sc, result);
+                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
             var card = GetTicketCard(sc.Context, result.Tickets[0]);
 
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketClosed, card, null));
-            return await sc.NextAsync(await CreateActionResult(sc.Context, true, cancellationToken));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketClosed, card, null), cancellationToken);
+            return await sc.NextAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
         }
     }
 }

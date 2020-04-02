@@ -21,6 +21,7 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Models;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.FindPointOfInterest;
 using PointOfInterestSkill.Responses.Shared;
@@ -51,31 +52,25 @@ namespace PointOfInterestSkill.Dialogs
             { Chinese, "是的" },
         };
 
-        private IHttpContextAccessor _httpContext;
+        private readonly IHttpContextAccessor _httpContext;
 
         public PointOfInterestDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            IHttpContextAccessor httpContext)
+            IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            var conversationState = serviceProvider.GetService<ConversationState>();
             Accessor = conversationState.CreateProperty<PointOfInterestSkillState>(nameof(PointOfInterestSkillState));
-            ServiceManager = serviceManager;
-            TelemetryClient = telemetryClient;
-            _httpContext = httpContext;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
+            _httpContext = serviceProvider.GetService<IHttpContextAccessor>();
 
             AddDialog(new TextPrompt(Actions.CurrentLocationPrompt));
             AddDialog(new ConfirmPrompt(Actions.ConfirmPrompt) { Style = ListStyle.Auto, });
-            AddDialog(new ChoicePrompt(Actions.SelectPointOfInterestPrompt, CanNoInterruptablePromptValidator) { Style = ListStyle.None });
-            AddDialog(new ChoicePrompt(Actions.SelectActionPrompt, InterruptablePromptValidator) { Style = ListStyle.None });
+            AddDialog(new ChoicePrompt(Actions.SelectPointOfInterestPrompt, CanNoInterruptablePromptValidatorAsync) { Style = ListStyle.None });
+            AddDialog(new ChoicePrompt(Actions.SelectActionPrompt, InterruptablePromptValidatorAsync) { Style = ListStyle.None });
             AddDialog(new ChoicePrompt(Actions.SelectRoutePrompt) { ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
         }
 
@@ -92,15 +87,15 @@ namespace PointOfInterestSkill.Dialogs
             Map,
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<PointOfInterestSkillState> Accessor { get; set; }
+        protected IStatePropertyAccessor<PointOfInterestSkillState> Accessor { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IServiceManager ServiceManager { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         public static Activity CreateOpenDefaultAppReply(Activity activity, PointOfInterestModel destination, OpenDefaultAppType type)
         {
@@ -125,26 +120,26 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> ConfirmCurrentLocation(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> ConfirmCurrentLocationAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 var service = ServiceManager.InitAddressMapsService(Settings);
 
                 var pointOfInterestList = await service.GetPointOfInterestListByAddressAsync(double.NaN, double.NaN, sc.Result.ToString());
-                var cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                var cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
 
                 if (cards.Count() == 0)
                 {
                     var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoLocationsFound);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, service);
+                    var containerCard = await GetContainerCardAsync(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, service, cancellationToken);
 
                     var options = GetPointOfInterestPrompt(cards.Count == 1 ? POISharedResponses.CurrentLocationSingleSelection : POISharedResponses.CurrentLocationMultipleSelection, containerCard, "Container", cards);
 
@@ -153,17 +148,17 @@ namespace PointOfInterestSkill.Dialogs
                         // Workaround. In teams, HeroCard will be used for prompt and adaptive card could not be shown. So send them separately
                         if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
                         {
-                            await sc.Context.SendActivityAsync(options.Prompt);
+                            await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
                             options.Prompt = null;
                         }
                     }
 
-                    return await sc.PromptAsync(cards.Count == 1 ? Actions.ConfirmPrompt : Actions.SelectPointOfInterestPrompt, options);
+                    return await sc.PromptAsync(cards.Count == 1 ? Actions.ConfirmPrompt : Actions.SelectPointOfInterestPrompt, options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -174,16 +169,16 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> ProcessCurrentLocationSelection(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> ProcessCurrentLocationSelectionAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
                 if (shouldInterrupt)
                 {
-                    return await sc.CancelAllDialogsAsync();
+                    return await sc.CancelAllDialogsAsync(cancellationToken);
                 }
 
                 var cancelMessage = TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage);
@@ -202,7 +197,7 @@ namespace PointOfInterestSkill.Dialogs
                         }
                         else
                         {
-                            return await sc.ReplaceDialogAsync(Actions.CheckForCurrentLocation);
+                            return await sc.ReplaceDialogAsync(Actions.CheckForCurrentLocation, cancellationToken: cancellationToken);
                         }
                     }
                     else if (sc.Result is FoundChoice)
@@ -212,23 +207,23 @@ namespace PointOfInterestSkill.Dialogs
 
                         if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                         {
-                            return await sc.ReplaceDialogAsync(Actions.CheckForCurrentLocation);
+                            return await sc.ReplaceDialogAsync(Actions.CheckForCurrentLocation, cancellationToken: cancellationToken);
                         }
 
                         state.CurrentCoordinates = state.LastFoundPointOfInterests[userSelectIndex].Geolocation;
                         state.LastFoundPointOfInterests = null;
                     }
 
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
-                await sc.Context.SendActivityAsync(cancelMessage);
+                await sc.Context.SendActivityAsync(cancelMessage, cancellationToken);
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -239,11 +234,11 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> GetPointOfInterestLocations(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> GetPointOfInterestLocationsAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
 
                 var service = ServiceManager.InitMapsService(Settings, sc.Context.Activity.Locale);
                 var addressMapsService = ServiceManager.InitAddressMapsService(Settings, sc.Context.Activity.Locale);
@@ -262,7 +257,7 @@ namespace PointOfInterestSkill.Dialogs
                     {
                         // Fuzzy query search with keyword
                         pointOfInterestList = await service.GetPointOfInterestListByCategoryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Category, state.PoiType, true);
-                        cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                        cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                     }
                     else
                     {
@@ -275,13 +270,13 @@ namespace PointOfInterestSkill.Dialogs
 
                             // TODO nearest here is not for current
                             pointOfInterestList = await service.GetPointOfInterestListByCategoryAsync(pointOfInterest.Geolocation.Latitude, pointOfInterest.Geolocation.Longitude, state.Category, state.PoiType, true);
-                            cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                            cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                         }
                         else
                         {
                             // No POIs found from address - search near current coordinates
                             pointOfInterestList = await service.GetPointOfInterestListByCategoryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Category, state.PoiType, true);
-                            cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                            cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                         }
                     }
                 }
@@ -289,7 +284,7 @@ namespace PointOfInterestSkill.Dialogs
                 {
                     // No entities identified, find nearby locations
                     pointOfInterestList = await service.GetNearbyPointOfInterestListAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.PoiType);
-                    cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                    cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                 }
                 else if (!string.IsNullOrEmpty(state.Keyword) && !string.IsNullOrEmpty(state.Address))
                 {
@@ -302,52 +297,52 @@ namespace PointOfInterestSkill.Dialogs
 
                         // TODO nearest here is not for current
                         pointOfInterestList = await service.GetPointOfInterestListByQueryAsync(pointOfInterest.Geolocation.Latitude, pointOfInterest.Geolocation.Longitude, state.Keyword, state.PoiType);
-                        cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                        cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                     }
                     else
                     {
                         // No POIs found from address - search near current coordinates
                         pointOfInterestList = await service.GetPointOfInterestListByQueryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Keyword, state.PoiType);
-                        cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                        cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                     }
                 }
                 else if (!string.IsNullOrEmpty(state.Keyword))
                 {
                     // Fuzzy query search with keyword
                     pointOfInterestList = await service.GetPointOfInterestListByQueryAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Keyword, state.PoiType);
-                    cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, service);
+                    cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, service, cancellationToken);
                 }
                 else if (!string.IsNullOrEmpty(state.Address))
                 {
                     // Fuzzy query search with address
                     pointOfInterestList = await addressMapsService.GetPointOfInterestListByAddressAsync(state.CurrentCoordinates.Latitude, state.CurrentCoordinates.Longitude, state.Address, state.PoiType);
-                    cards = await GetPointOfInterestLocationCards(sc, pointOfInterestList, addressMapsService);
+                    cards = await GetPointOfInterestLocationCardsAsync(sc, pointOfInterestList, addressMapsService, cancellationToken);
                 }
 
                 if (cards.Count() == 0)
                 {
                     var replyMessage = TemplateManager.GenerateActivity(POISharedResponses.NoLocationsFound);
-                    await sc.Context.SendActivityAsync(replyMessage);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
 
-                    return await sc.EndDialogAsync();
+                    return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                 }
                 else if (cards.Count == 1)
                 {
                     // only to indicate it is only one result
-                    return await sc.NextAsync(true);
+                    return await sc.NextAsync(true, cancellationToken);
                 }
                 else
                 {
-                    var containerCard = await GetContainerCard(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, addressMapsService);
+                    var containerCard = await GetContainerCardAsync(sc.Context, CardNames.PointOfInterestOverviewContainer, state.CurrentCoordinates, pointOfInterestList, addressMapsService, cancellationToken);
 
                     var options = GetPointOfInterestPrompt(POISharedResponses.MultipleLocationsFound, containerCard, "Container", cards);
 
-                    return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options);
+                    return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options, cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -358,16 +353,16 @@ namespace PointOfInterestSkill.Dialogs
         /// <param name="sc">Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        protected async Task<DialogTurnResult> ProcessPointOfInterestSelection(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> ProcessPointOfInterestSelectionAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await Accessor.GetAsync(sc.Context);
+                var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
                 if (shouldInterrupt)
                 {
-                    return await sc.CancelAllDialogsAsync();
+                    return await sc.CancelAllDialogsAsync(cancellationToken);
                 }
 
                 var defaultReplyMessage = TemplateManager.GenerateActivity(POISharedResponses.GetRouteToActiveLocationLater);
@@ -388,8 +383,8 @@ namespace PointOfInterestSkill.Dialogs
 
                         if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                         {
-                            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage));
-                            return await sc.EndDialogAsync();
+                            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage), cancellationToken);
+                            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
                         }
 
                         state.Destination = state.LastFoundPointOfInterests[userSelectIndex];
@@ -461,33 +456,33 @@ namespace PointOfInterestSkill.Dialogs
 
                         if (choiceIndex >= 0)
                         {
-                            await sc.Context.SendActivityAsync(options.Prompt);
-                            return await sc.NextAsync(new FoundChoice() { Index = choiceIndex });
+                            await sc.Context.SendActivityAsync(options.Prompt, cancellationToken);
+                            return await sc.NextAsync(new FoundChoice() { Index = choiceIndex }, cancellationToken);
                         }
                     }
 
-                    return await sc.PromptAsync(Actions.SelectActionPrompt, options);
+                    return await sc.PromptAsync(Actions.SelectActionPrompt, options, cancellationToken);
                 }
 
-                await sc.Context.SendActivityAsync(defaultReplyMessage);
+                await sc.Context.SendActivityAsync(defaultReplyMessage, cancellationToken);
 
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ProcessPointOfInterestAction(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> ProcessPointOfInterestActionAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             bool shouldInterrupt = sc.Context.TurnState.ContainsKey(StateProperties.InterruptKey);
 
             if (shouldInterrupt)
             {
-                return await sc.CancelAllDialogsAsync();
+                return await sc.CancelAllDialogsAsync(cancellationToken);
             }
 
             var choice = sc.Result as FoundChoice;
@@ -505,29 +500,29 @@ namespace PointOfInterestSkill.Dialogs
             {
                 if (SupportOpenDefaultAppReply(sc.Context))
                 {
-                    await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Telephone));
+                    await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Telephone), cancellationToken);
                 }
 
                 response = state.IsAction ? ConvertToResponse(state.Destination) : null;
             }
             else if (choiceIndex == 1)
             {
-                return await sc.ReplaceDialogAsync(nameof(RouteDialog));
+                return await sc.ReplaceDialogAsync(nameof(RouteDialog), cancellationToken: cancellationToken);
             }
             else if (choiceIndex == 2)
             {
                 if (SupportOpenDefaultAppReply(sc.Context))
                 {
-                    await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map));
+                    await sc.Context.SendActivityAsync(CreateOpenDefaultAppReply(sc.Context.Activity, state.Destination, OpenDefaultAppType.Map), cancellationToken);
                 }
 
                 response = state.IsAction ? ConvertToResponse(state.Destination) : null;
             }
 
-            return await sc.NextAsync(response);
+            return await sc.NextAsync(response, cancellationToken);
         }
 
-        protected async Task<Card> GetContainerCard(ITurnContext context, string name, LatLng currentCoordinates, List<PointOfInterestModel> pointOfInterestList, IGeoSpatialService service)
+        protected async Task<Card> GetContainerCardAsync(ITurnContext context, string name, LatLng currentCoordinates, List<PointOfInterestModel> pointOfInterestList, IGeoSpatialService service, CancellationToken cancellationToken)
         {
             var model = new PointOfInterestModel
             {
@@ -613,9 +608,9 @@ namespace PointOfInterestSkill.Dialogs
         }
 
         // service: for details. the one generates pointOfInterestList
-        protected async Task<List<Card>> GetPointOfInterestLocationCards(DialogContext sc, List<PointOfInterestModel> pointOfInterestList, IGeoSpatialService service)
+        protected async Task<List<Card>> GetPointOfInterestLocationCardsAsync(DialogContext sc, List<PointOfInterestModel> pointOfInterestList, IGeoSpatialService service, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var cards = new List<Card>();
 
             if (pointOfInterestList != null && pointOfInterestList.Count > 0)
@@ -782,10 +777,10 @@ namespace PointOfInterestSkill.Dialogs
             return timeString.ToString();
         }
 
-        protected async Task<List<Card>> GetRouteDirectionsViewCards(DialogContext sc, RouteDirections routeDirections, IGeoSpatialService service)
+        protected async Task<List<Card>> GetRouteDirectionsViewCardsAsync(DialogContext sc, RouteDirections routeDirections, IGeoSpatialService service, CancellationToken cancellationToken)
         {
             var routes = routeDirections.Routes;
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             var cardData = new List<RouteDirectionsModel>();
             var cards = new List<Card>();
             var routeId = 0;
@@ -836,32 +831,32 @@ namespace PointOfInterestSkill.Dialogs
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.PointOfInterestErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.PointOfInterestErrorMessage), cancellationToken);
 
             // clear state
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             state.Clear();
-            await sc.CancelAllDialogsAsync();
+            await sc.CancelAllDialogsAsync(cancellationToken);
 
             return;
         }
 
-        protected async Task HandleDialogException(WaterfallStepContext sc)
+        protected async Task HandleDialogExceptionAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await Accessor.GetAsync(sc.Context);
+            var state = await Accessor.GetAsync(sc.Context, () => new PointOfInterestSkillState(), cancellationToken);
             state.Clear();
             await Accessor.SetAsync(sc.Context, state);
-            await sc.CancelAllDialogsAsync();
+            await sc.CancelAllDialogsAsync(cancellationToken);
         }
 
         // Workaround until adaptive card renderer in teams is upgraded to v1.2
@@ -912,7 +907,7 @@ namespace PointOfInterestSkill.Dialogs
             return $"{serverUrl}/images/{imagePath}";
         }
 
-        private async Task<bool> InterruptablePromptValidator<T>(PromptValidatorContext<T> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> InterruptablePromptValidatorAsync<T>(PromptValidatorContext<T> promptContext, CancellationToken cancellationToken)
         {
             if (promptContext.Recognized.Succeeded)
             {
@@ -920,7 +915,7 @@ namespace PointOfInterestSkill.Dialogs
             }
             else
             {
-                var state = await Accessor.GetAsync(promptContext.Context);
+                var state = await Accessor.GetAsync(promptContext.Context, () => new PointOfInterestSkillState(), cancellationToken);
                 if (state.IsAction)
                 {
                     return false;
@@ -946,7 +941,7 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task<bool> CanNoInterruptablePromptValidator(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> CanNoInterruptablePromptValidatorAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
             if (promptContext.Recognized.Succeeded)
             {
@@ -968,12 +963,12 @@ namespace PointOfInterestSkill.Dialogs
                 }
                 else
                 {
-                    return await InterruptablePromptValidator(promptContext, cancellationToken);
+                    return await InterruptablePromptValidatorAsync(promptContext, cancellationToken);
                 }
             }
         }
 
-        private class ImageSize
+        private static class ImageSize
         {
             public const int RouteWidth = 440;
             public const int RouteHeight = 240;

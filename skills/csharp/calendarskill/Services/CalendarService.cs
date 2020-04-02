@@ -24,9 +24,9 @@ namespace CalendarSkill.Services
         }
 
         /// <inheritdoc/>
-        public async Task<EventModel> CreateEventAysnc(EventModel newEvent)
+        public async Task<EventModel> CreateEventAsync(EventModel newEvent)
         {
-            return await calendarAPI.CreateEventAysnc(newEvent);
+            return await calendarAPI.CreateEventAsync(newEvent);
         }
 
         /// <inheritdoc/>
@@ -96,9 +96,9 @@ namespace CalendarSkill.Services
             return await calendarAPI.GetUserAvailabilityAsync(userEmail, users, startTime, availabilityViewInterval);
         }
 
-        public async Task<List<bool>> CheckAvailable(List<string> users, DateTime startTime, int availabilityViewInterval)
+        public async Task<List<bool>> CheckAvailableAsync(List<string> users, DateTime startTime, int availabilityViewInterval)
         {
-            return await calendarAPI.CheckAvailable(users, startTime, availabilityViewInterval);
+            return await calendarAPI.CheckAvailableAsync(users, startTime, availabilityViewInterval);
         }
     }
 }

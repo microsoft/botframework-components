@@ -62,7 +62,10 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
 
         private int routeLimit;
 
-        public string Provider { get { return ProviderName; } }
+        public string Provider
+        {
+            get { return ProviderName; }
+        }
 
         public Task<IGeoSpatialService> InitClientAsync(string clientId, string clientSecret, int radiusConfiguration, int limitConfiguration, int routeLimitConfiguration, string locale = "en-us", HttpClient client = null)
         {

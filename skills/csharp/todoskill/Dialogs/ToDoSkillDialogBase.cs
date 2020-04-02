@@ -21,6 +21,7 @@ using Microsoft.Bot.Solutions.Resources;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Recognizers.Text;
 using ToDoSkill.Dialogs.Shared.Resources;
 using ToDoSkill.Models;
@@ -34,58 +35,62 @@ namespace ToDoSkill.Dialogs
     {
         private const string Synonym = "Synonym";
         private IHttpContextAccessor _httpContext;
-        private BotSettings _settings;
 
         public ToDoSkillDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            ConversationState conversationState,
-            UserState userState,
-            LocaleTemplateManager templateManager,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
-            MicrosoftAppCredentials appCredentials,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
             : base(dialogId)
         {
             _httpContext = httpContext;
-            _settings = settings;
-            Services = services;
+
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
 
             // Initialize state accessor
+            var conversationState = serviceProvider.GetService<ConversationState>();
             ToDoStateAccessor = conversationState.CreateProperty<ToDoSkillState>(nameof(ToDoSkillState));
+
+            var userState = serviceProvider.GetService<UserState>();
             UserStateAccessor = userState.CreateProperty<ToDoSkillUserState>(nameof(ToDoSkillUserState));
 
-            TemplateManager = templateManager;
+            ServiceManager = serviceProvider.GetService<IServiceManager>();
 
-            ServiceManager = serviceManager;
-            TelemetryClient = telemetryClient;
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
 
-            AddDialog(new MultiProviderAuthDialog(settings.OAuthConnections));
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections, null, oauthCredentials));
             AddDialog(new TextPrompt(Actions.Prompt));
             AddDialog(new ConfirmPrompt(Actions.ConfirmPrompt, null, Culture.English) { Style = ListStyle.SuggestedAction });
         }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
-        protected IStatePropertyAccessor<ToDoSkillState> ToDoStateAccessor { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<ToDoSkillUserState> UserStateAccessor { get; set; }
+        protected IStatePropertyAccessor<ToDoSkillState> ToDoStateAccessor { get; }
 
-        protected IServiceManager ServiceManager { get; set; }
+        protected IStatePropertyAccessor<ToDoSkillUserState> UserStateAccessor { get; }
+
+        protected IServiceManager ServiceManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DigestToDoLuisResult(dc);
+            await DigestToDoLuisResultAsync(dc, cancellationToken);
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DigestToDoLuisResult(dc);
+            await DigestToDoLuisResultAsync(dc, cancellationToken);
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
@@ -94,7 +99,7 @@ namespace ToDoSkill.Dialogs
             var resultString = result?.ToString();
             if (!string.IsNullOrWhiteSpace(resultString) && resultString.Equals(CommonUtil.DialogTurnResultCancelAllDialogs, StringComparison.InvariantCultureIgnoreCase) && outerDc.Parent.ActiveDialog.Id != nameof(MainDialog))
             {
-                return outerDc.CancelAllDialogsAsync();
+                return outerDc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -103,21 +108,21 @@ namespace ToDoSkill.Dialogs
         }
 
         // Shared steps
-        protected async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 var retryPrompt = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.NoAuth);
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retryPrompt });
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions() { RetryPrompt = retryPrompt }, cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -133,23 +138,23 @@ namespace ToDoSkill.Dialogs
                     }
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> ClearContext(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> ClearContextAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 if (state.IsAction)
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
 
                 var luisResult = sc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
@@ -164,7 +169,7 @@ namespace ToDoSkill.Dialogs
                     state.AllTasks = new List<TaskItem>();
                     state.ListType = null;
                     state.GoBackToStart = false;
-                    await DigestToDoLuisResult(sc);
+                    await DigestToDoLuisResultAsync(sc, cancellationToken);
                 }
                 else if (topIntent == ToDoLuis.Intent.ShowNextPage || generalTopIntent == General.Intent.ShowNext)
                 {
@@ -199,7 +204,7 @@ namespace ToDoSkill.Dialogs
                     state.ShopContent = null;
                     state.HasShopVerb = false;
                     state.ListType = null;
-                    await DigestToDoLuisResult(sc);
+                    await DigestToDoLuisResultAsync(sc, cancellationToken);
                 }
                 else if (topIntent == ToDoLuis.Intent.MarkToDo || topIntent == ToDoLuis.Intent.DeleteToDo)
                 {
@@ -209,29 +214,29 @@ namespace ToDoSkill.Dialogs
                     state.TaskContentML = null;
                     state.TaskContent = null;
                     state.CollectIndexRetry = false;
-                    await DigestToDoLuisResult(sc);
+                    await DigestToDoLuisResultAsync(sc, cancellationToken);
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> InitAllTasks(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> InitAllTasksAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(sc.Context);
+                var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
                 // LastListType is used to switch between list types in DeleteToDoItemDialog and MarkToDoItemDialog.
                 if (!state.ListTypeIds.ContainsKey(state.ListType)
                     || state.ListType != state.LastListType)
                 {
-                    var service = await InitListTypeIds(sc);
+                    var service = await InitListTypeIdsAsync(sc, cancellationToken);
                     state.AllTasks = await service.GetTasksAsync(state.ListType);
                     state.ShowTaskPageIndex = 0;
                     var rangeCount = Math.Min(state.PageSize, state.AllTasks.Count);
@@ -241,22 +246,22 @@ namespace ToDoSkill.Dialogs
                 if (state.AllTasks.Count <= 0)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.NoTasksInList);
-                    await sc.Context.SendActivityAsync(activity);
-                    return await sc.EndDialogAsync(true);
+                    await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    return await sc.EndDialogAsync(true, cancellationToken);
                 }
                 else
                 {
-                    return await sc.NextAsync();
+                    return await sc.NextAsync(cancellationToken: cancellationToken);
                 }
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -289,11 +294,11 @@ namespace ToDoSkill.Dialogs
         }
 
         // Helpers
-        protected async Task DigestToDoLuisResult(DialogContext dc)
+        protected async Task DigestToDoLuisResultAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await ToDoStateAccessor.GetAsync(dc.Context);
+                var state = await ToDoStateAccessor.GetAsync(dc.Context, cancellationToken: cancellationToken);
                 var luisResult = dc.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
                 var generalLuisResult = dc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
 
@@ -544,30 +549,30 @@ namespace ToDoSkill.Dialogs
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
             var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.ToDoErrorMessage);
-            await sc.Context.SendActivityAsync(activity);
+            await sc.Context.SendActivityAsync(activity, cancellationToken);
 
             // clear state
-            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             state.Clear();
         }
 
         // This method is called by any waterfall step that throws a SkillException to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, SkillException ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, SkillException ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
@@ -576,27 +581,27 @@ namespace ToDoSkill.Dialogs
             if (ex.ExceptionType == SkillExceptionType.APIAccessDenied)
             {
                 var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.ToDoErrorMessageBotProblem);
-                await sc.Context.SendActivityAsync(activity);
+                await sc.Context.SendActivityAsync(activity, cancellationToken);
             }
             else if (ex.ExceptionType == SkillExceptionType.AccountNotActivated)
             {
                 var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.ToDoErrorMessageAccountProblem);
-                await sc.Context.SendActivityAsync(activity);
+                await sc.Context.SendActivityAsync(activity, cancellationToken);
             }
             else
             {
                 var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.ToDoErrorMessage);
-                await sc.Context.SendActivityAsync(activity);
+                await sc.Context.SendActivityAsync(activity, cancellationToken);
             }
 
             // clear state
-            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             state.Clear();
         }
 
-        protected async Task<ITaskService> InitListTypeIds(WaterfallStepContext sc)
+        protected async Task<ITaskService> InitListTypeIdsAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ToDoStateAccessor.GetAsync(sc.Context);
+            var state = await ToDoStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             sc.Context.TurnState.TryGetValue(StateProperties.APIToken, out var token);
 
             if (!state.ListTypeIds.ContainsKey(state.ListType))
@@ -604,7 +609,7 @@ namespace ToDoSkill.Dialogs
                 var emailService = ServiceManager.InitMailService(token as string);
                 var senderMailAddress = await emailService.GetSenderMailAddressAsync();
                 state.UserStateId = senderMailAddress;
-                var recovered = await RecoverListTypeIdsAsync(sc);
+                var recovered = await RecoverListTypeIdsAsync(sc, cancellationToken);
                 if (!recovered)
                 {
                     var taskServiceInit = ServiceManager.InitTaskService(token as string, state.ListTypeIds, state.TaskServiceType);
@@ -613,18 +618,18 @@ namespace ToDoSkill.Dialogs
                         if (state.TaskServiceType == ServiceProviderType.OneNote)
                         {
                             var settingActivity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.SettingUpOneNoteMessage);
-                            await sc.Context.SendActivityAsync(settingActivity);
+                            await sc.Context.SendActivityAsync(settingActivity, cancellationToken);
 
                             var afterSettingActivity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.AfterOneNoteSetupMessage);
-                            await sc.Context.SendActivityAsync(afterSettingActivity);
+                            await sc.Context.SendActivityAsync(afterSettingActivity, cancellationToken);
                         }
                         else
                         {
                             var settingActivity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.SettingUpOutlookMessage);
-                            await sc.Context.SendActivityAsync(settingActivity);
+                            await sc.Context.SendActivityAsync(settingActivity, cancellationToken);
 
                             var afterSettingActivity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.AfterOutlookSetupMessage);
-                            await sc.Context.SendActivityAsync(afterSettingActivity);
+                            await sc.Context.SendActivityAsync(afterSettingActivity, cancellationToken);
                         }
 
                         var taskWebLink = await taskServiceInit.GetTaskWebLink();
@@ -632,13 +637,13 @@ namespace ToDoSkill.Dialogs
                         await emailService.SendMessageAsync(emailContent, ToDoStrings.EmailSubject);
                     }
 
-                    await StoreListTypeIdsAsync(sc);
+                    await StoreListTypeIdsAsync(sc, cancellationToken);
                     return taskServiceInit;
                 }
             }
 
             var taskService = ServiceManager.InitTaskService(token as string, state.ListTypeIds, state.TaskServiceType);
-            await StoreListTypeIdsAsync(sc);
+            await StoreListTypeIdsAsync(sc, cancellationToken);
             return taskService;
         }
 
@@ -655,10 +660,10 @@ namespace ToDoSkill.Dialogs
             }
         }
 
-        private async Task<bool> RecoverListTypeIdsAsync(DialogContext dc)
+        private async Task<bool> RecoverListTypeIdsAsync(DialogContext dc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(dc.Context, () => new ToDoSkillUserState());
-            var state = await ToDoStateAccessor.GetAsync(dc.Context, () => new ToDoSkillState());
+            var userState = await UserStateAccessor.GetAsync(dc.Context, () => new ToDoSkillUserState(), cancellationToken);
+            var state = await ToDoStateAccessor.GetAsync(dc.Context, () => new ToDoSkillState(), cancellationToken);
             var senderMailAddress = state.UserStateId;
             if (userState.ListTypeIds.ContainsKey(senderMailAddress)
                 && state.ListTypeIds.Count <= 0
@@ -675,10 +680,10 @@ namespace ToDoSkill.Dialogs
             return false;
         }
 
-        private async Task StoreListTypeIdsAsync(DialogContext dc)
+        private async Task StoreListTypeIdsAsync(DialogContext dc, CancellationToken cancellationToken)
         {
-            var userState = await UserStateAccessor.GetAsync(dc.Context, () => new ToDoSkillUserState());
-            var state = await ToDoStateAccessor.GetAsync(dc.Context, () => new ToDoSkillState());
+            var userState = await UserStateAccessor.GetAsync(dc.Context, () => new ToDoSkillUserState(), cancellationToken);
+            var state = await ToDoStateAccessor.GetAsync(dc.Context, () => new ToDoSkillState(), cancellationToken);
             var senderMailAddress = state.UserStateId;
             if (!userState.ListTypeIds.ContainsKey(senderMailAddress))
             {

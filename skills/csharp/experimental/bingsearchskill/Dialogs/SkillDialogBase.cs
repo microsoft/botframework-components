@@ -25,6 +25,7 @@ using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BingSearchSkill.Dialogs
 {
@@ -32,17 +33,15 @@ namespace BingSearchSkill.Dialogs
     {
         public SkillDialogBase(
              string dialogId,
-             BotSettings settings,
-             BotServices services,
-             LocaleTemplateManager templateManager,
-             ConversationState conversationState,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
              : base(dialogId)
         {
-            Services = services;
-            TemplateManager = templateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+
+            var conversationState = serviceProvider.GetService<ConversationState>();
             StateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            TelemetryClient = telemetryClient;
 
             // NOTE: Uncomment the following if your skill requires authentication
             // if (!Settings.OAuthConnections.Any())
@@ -53,45 +52,45 @@ namespace BingSearchSkill.Dialogs
             // AddDialog(new MultiProviderAuthDialog(services));
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<SkillState> StateAccessor { get; set; }
+        protected IStatePropertyAccessor<SkillState> StateAccessor { get; }
 
-        protected LocaleTemplateManager TemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
-        protected async Task<DialogTurnResult> GetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> GetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             try
             {
-                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions());
+                return await sc.PromptAsync(nameof(MultiProviderAuthDialog), new PromptOptions(), cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
 
-        protected async Task<DialogTurnResult> AfterGetAuthToken(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> AfterGetAuthTokenAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -101,20 +100,20 @@ namespace BingSearchSkill.Dialogs
 
                 if (providerTokenResponse != null)
                 {
-                    var state = await StateAccessor.GetAsync(sc.Context);
+                    var state = await StateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                     state.Token = providerTokenResponse.TokenResponse.Token;
                 }
 
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
             catch (SkillException ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
             catch (Exception ex)
             {
-                await HandleDialogExceptions(sc, ex);
+                await HandleDialogExceptionsAsync(sc, ex, cancellationToken);
                 return new DialogTurnResult(DialogTurnStatus.Cancelled, CommonUtil.DialogTurnResultCancelAllDialogs);
             }
         }
@@ -147,37 +146,37 @@ namespace BingSearchSkill.Dialogs
         }
 
         // Helpers
-        protected async Task GetLuisResult(DialogContext dc)
+        protected async Task GetLuisResultAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
-                var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState());
+                var state = await StateAccessor.GetAsync(dc.Context, () => new SkillState(), cancellationToken: cancellationToken);
 
                 // Get luis service for current locale
                 var localeConfig = Services.GetCognitiveModels();
                 var luisService = localeConfig.LuisServices["BingSearchSkill"];
 
                 // Get intent and entities for activity
-                var result = await luisService.RecognizeAsync<BingSearchSkillLuis>(dc.Context, CancellationToken.None);
+                var result = await luisService.RecognizeAsync<BingSearchSkillLuis>(dc.Context, cancellationToken);
                 state.LuisResult = result;
             }
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ErrorMessage), cancellationToken);
 
             // clear state
-            var state = await StateAccessor.GetAsync(sc.Context);
+            var state = await StateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             state.Clear();
         }
 
@@ -238,7 +237,7 @@ namespace BingSearchSkill.Dialogs
             return string.Empty;
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string SkillModeAuth = "SkillAuth";
         }

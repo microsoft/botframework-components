@@ -18,33 +18,28 @@ namespace EventSkill.Dialogs
 {
     public class FindEventsDialog : EventDialogBase
     {
-        private EventbriteService _eventbriteService;
+        private readonly EventbriteService _eventbriteService;
 
         public FindEventsDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager templateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IBotTelemetryClient telemetryClient)
-            : base(nameof(FindEventsDialog), settings, services, templateManager, conversationState, userState, telemetryClient)
+            IServiceProvider serviceProvider)
+            : base(nameof(FindEventsDialog), serviceProvider)
         {
             var findEvents = new WaterfallStep[]
             {
-                GetLocation,
-                FindEvents
+                GetLocationAsync,
+                FindEventsAsync
             };
 
-            _eventbriteService = new EventbriteService(settings);
+            _eventbriteService = new EventbriteService(Settings);
 
             AddDialog(new WaterfallDialog(nameof(FindEventsDialog), findEvents));
-            AddDialog(new TextPrompt(DialogIds.LocationPrompt, ValidateLocationPrompt));
+            AddDialog(new TextPrompt(DialogIds.LocationPrompt, ValidateLocationPromptAsync));
         }
 
-        private async Task<DialogTurnResult> GetLocation(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GetLocationAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var convState = await StateAccessor.GetAsync(sc.Context, () => new EventSkillState());
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new EventSkillUserState());
+            var convState = await StateAccessor.GetAsync(sc.Context, () => new EventSkillState(), cancellationToken: cancellationToken);
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new EventSkillUserState(), cancellationToken: cancellationToken);
 
             if (string.IsNullOrWhiteSpace(userState.Location))
             {
@@ -58,16 +53,16 @@ namespace EventSkill.Dialogs
                     {
                         Prompt = TemplateManager.GenerateActivity(FindEventsResponses.LocationPrompt),
                         RetryPrompt = TemplateManager.GenerateActivity(FindEventsResponses.RetryLocationPrompt)
-                    });
+                    }, cancellationToken);
                 }
             }
 
-            return await sc.NextAsync();
+            return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<bool> ValidateLocationPrompt(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
+        private async Task<bool> ValidateLocationPromptAsync(PromptValidatorContext<string> promptContext, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(promptContext.Context, () => new EventSkillUserState());
+            var userState = await UserAccessor.GetAsync(promptContext.Context, () => new EventSkillUserState(), cancellationToken: cancellationToken);
             if (promptContext.Recognized.Succeeded && !string.IsNullOrWhiteSpace(promptContext.Recognized.Value))
             {
                 userState.Location = promptContext.Recognized.Value;
@@ -77,9 +72,9 @@ namespace EventSkill.Dialogs
             return false;
         }
 
-        private async Task<DialogTurnResult> FindEvents(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> FindEventsAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var userState = await UserAccessor.GetAsync(sc.Context, () => new EventSkillUserState());
+            var userState = await UserAccessor.GetAsync(sc.Context, () => new EventSkillUserState(), cancellationToken: cancellationToken);
 
             var location = userState.Location;
             List<Event> events = await _eventbriteService.GetEventsAsync(location);
@@ -102,9 +97,9 @@ namespace EventSkill.Dialogs
                 cards.Add(new Card(GetCardName(sc.Context, "EventCard"), eventCardData));
             }
 
-            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(FindEventsResponses.FoundEvents, cards, null));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(FindEventsResponses.FoundEvents, cards, null), cancellationToken);
 
-            return await sc.EndDialogAsync();
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
         // Get formatted location string based on data event has
@@ -127,7 +122,7 @@ namespace EventSkill.Dialogs
             return venueLocation;
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string LocationPrompt = "locationPrompt";
         }
