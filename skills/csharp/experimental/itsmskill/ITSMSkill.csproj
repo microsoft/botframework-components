@@ -101,7 +101,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialogs\Teams\CreateTicketTaskModule\" />
-  </ItemGroup>
 </Project>

@@ -44,6 +44,7 @@ namespace ITSMSkill.Bots
         private readonly BotServices _botServices;
         private readonly IServiceManager _serviceManager;
         private readonly BotTelemetryClient _botTelemetryClient;
+        private readonly IServiceProvider _serviceProvider;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -56,10 +57,7 @@ namespace ITSMSkill.Bots
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
             _appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            _botSettings = serviceProvider.GetService<BotSettings>();
-            _botServices = serviceProvider.GetService<BotServices>();
-            _serviceManager = serviceProvider.GetService<ServiceManager>();
-            _botTelemetryClient = serviceProvider.GetService<BotTelemetryClient>();
+            _serviceProvider = serviceProvider;
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -117,7 +115,7 @@ namespace ITSMSkill.Bots
 
         protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
         {
-            var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_botSettings, _botServices, (ConversationState)_conversationState, _serviceManager, _botTelemetryClient);
+            var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_serviceProvider);
             ITeamsInvokeEnvelope teamsInvokeEnvelope = await itsmTeamsActivityHandler.GetInvokeEnvelope(turnContext, cancellationToken);
 
             return new InvokeResponse()

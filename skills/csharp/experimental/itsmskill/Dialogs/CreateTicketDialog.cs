@@ -68,6 +68,7 @@ namespace ITSMSkill.Dialogs
 
             AddDialog(new WaterfallDialog(Actions.CreateTicket, createTicket));
             AddDialog(new WaterfallDialog(Actions.DisplayExisting, displayExisting));
+            AddDialog(new WaterfallDialog(Actions.CreateTicketTeamsTaskModule, createTicketTaskModule));
 
             InitialDialogId = Actions.CreateTicket;
 
@@ -84,7 +85,7 @@ namespace ITSMSkill.Dialogs
         {
             if (dc.Context.Activity.ChannelId.Contains("msteams"))
             {
-                return await dc.BeginDialogAsync(Actions.CreateTickTeamsTaskModule, options, cancellationToken);
+                return await dc.BeginDialogAsync(Actions.CreateTicketTeamsTaskModule, options, cancellationToken);
             }
 
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);

@@ -1,11 +1,11 @@
-﻿namespace ITSMSkill.Dialogs.Teams
+﻿namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using ITSMSkill.Dialogs.Teams.View;
+    using ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView;
     using ITSMSkill.Extensions;
     using ITSMSkill.Extensions.Teams;
     using ITSMSkill.Extensions.Teams.TaskModule;
@@ -15,6 +15,8 @@
     using ITSMSkill.TeamsChannels.Invoke;
     using Microsoft.Bot.Builder;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Graph;
     using Newtonsoft.Json.Linq;
 
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.CreateTicket_Form))]
@@ -27,17 +29,13 @@
         private readonly IServiceManager _serviceManager;
 
         public CreateTicketTeamsImplementation(
-             BotSettings settings,
-             BotServices services,
-             ConversationState conversationState,
-             IServiceManager serviceManager,
-             IBotTelemetryClient telemetryClient)
+             IServiceProvider serviceProvider)
         {
-            _conversationState = conversationState;
-            _settings = settings;
-            _services = services;
-            _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            _serviceManager = new ServiceManager();
+            _conversationState = serviceProvider.GetService<ConversationState>();
+            _settings = serviceProvider.GetService<BotSettings>();
+            _services = serviceProvider.GetService<BotServices>();
+            _stateAccessor = _conversationState.CreateProperty<SkillState>(nameof(SkillState));
+            _serviceManager = serviceProvider.GetService<IServiceManager>();
         }
 
         public async Task<TaskEnvelope> Handle(ITurnContext context, CancellationToken cancellationToken)

@@ -1,4 +1,4 @@
-﻿namespace ITSMSkill.Dialogs.Teams.View
+﻿namespace ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView
 {
     using System.Collections.Generic;
     using AdaptiveCards;
