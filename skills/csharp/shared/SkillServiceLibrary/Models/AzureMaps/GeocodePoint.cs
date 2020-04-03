@@ -18,7 +18,7 @@ namespace SkillServiceLibrary.Models.AzureMaps
         /// List of the coordinates.
         /// </value>
         [JsonProperty(PropertyName = "coordinates")]
-        public List<double> Coordinates { get; set; }
+        public double[] Coordinates { get; set; }
 
         /// <summary>
         /// Gets or sets  the method that was used to compute the geocode point.
@@ -36,7 +36,7 @@ namespace SkillServiceLibrary.Models.AzureMaps
         /// The best use for the geocode point.
         /// </value>
         [JsonProperty(PropertyName = "usageTypes")]
-        public List<string> UsageTypes { get; set; }
+        public string[] UsageTypes { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether point has geo coordinates or not.
@@ -45,6 +45,6 @@ namespace SkillServiceLibrary.Models.AzureMaps
         /// Returns whether point has geo coordinates or not.
         /// </value>
         [JsonIgnore]
-        public bool HasCoordinates => Coordinates != null && Coordinates.Count == 2;
+        public bool HasCoordinates => Coordinates != null && Coordinates.Length == 2;
     }
 }
