@@ -28,13 +28,14 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
         private static readonly int ImageWidth = 440;
         private static readonly int ImageHeight = 240;
         private static readonly int DefaultZoom = 14;
-        private static readonly string FindByFuzzyQueryApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&lat={{0}}&lon={{1}}&query={{2}}&radius={{3}}&limit={{4}}";
-        private static readonly string FindByFuzzyQueryNoCoordinatesApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&query={{0}}&limit={{1}}";
+        private static readonly string FindByFuzzyQueryApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&lat={{0}}&lon={{1}}&query={{2}}&radius={{3}}&limit={{4}}&openingHours=nextSevenDays";
+        private static readonly string FindByFuzzyQueryNoCoordinatesApiUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&query={{0}}&limit={{1}}&openingHours=nextSevenDays";
+        private static readonly string FindByZipcodeUrl = $"https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0&query={{0}}&countrySet={{1}}&idxSet=Geo";
         private static readonly string FindByAddressQueryUrl = $"https://atlas.microsoft.com/search/address/json?api-version=1.0&lat={{0}}&lon={{1}}&query={{2}}&radius={{3}}&limit={{4}}";
         private static readonly string FindByAddressNoCoordinatesQueryUrl = $"https://atlas.microsoft.com/search/address/json?api-version=1.0&query={{0}}&limit={{1}}";
         private static readonly string FindAddressByCoordinateUrl = $"https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0&query={{0}},{{1}}";
         private static readonly string FindNearbyUrl = $"https://atlas.microsoft.com/search/nearby/json?api-version=1.0&lat={{0}}&lon={{1}}&radius={{2}}&limit={{3}}";
-        private static readonly string FindByCategoryUrl = $"https://atlas.microsoft.com/search/poi/category/json?api-version=1.0&query={{2}}&lat={{0}}&lon={{1}}&radius={{3}}&limit={{4}}";
+        private static readonly string FindByCategoryUrl = $"https://atlas.microsoft.com/search/poi/category/json?api-version=1.0&query={{2}}&lat={{0}}&lon={{1}}&radius={{3}}&limit={{4}}&openingHours=nextSevenDays";
         private static readonly string PinStyle = "default|la15+50|al0.75|cod83b01";
         private static readonly string ImageUrlForPoints = $"https://atlas.microsoft.com/map/static/png?api-version=1.0&layer=basic&style=main&zoom={{2}}&center={{0}},{{1}}&width={{4}}&height={{5}}&pins={PinStyle}|{{3}}";
         private static readonly string ImageUrlForRoute = $"https://atlas.microsoft.com/map/static/png?api-version=1.0&layer=basic&style=main&zoom={{0}}&center={{1}},{{2}}&width={{5}}&height={{6}}&pins={{3}}&path=lw2|lc0078d4|{{4}}";
@@ -261,6 +262,13 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
             pointOfInterest.PointOfInterestImageUrl = imageUrl;
 
             return pointOfInterest;
+        }
+
+        public async Task<PointOfInterestModel> GetZipcodeAsync(string zipcode, string countrySet)
+        {
+            var results = await GetPointsOfInterestAsync(
+                string.Format(CultureInfo.InvariantCulture, FindByZipcodeUrl, zipcode, countrySet));
+            return results.FirstOrDefault();
         }
 
         /// <summary>

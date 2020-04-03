@@ -7,6 +7,9 @@ namespace SkillServiceLibrary.Models.AzureMaps
 {
     public class PoiInfo
     {
+        [JsonProperty(PropertyName = "brands")]
+        public PoiBrand[] Brands { get; set; }
+
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
@@ -18,5 +21,8 @@ namespace SkillServiceLibrary.Models.AzureMaps
 
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
+
+        [JsonProperty(PropertyName = "openingHours")]
+        public OpeningHours OpeningHours { get; set; }
     }
 }

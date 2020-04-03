@@ -40,6 +40,7 @@ namespace SkillServiceLibrary.Models
             : Category;
             Phone = azureMapsPoi.Poi?.Phone;
             Provider = new SortedSet<string> { AzureMapsGeoSpatialService.ProviderName };
+            Website = azureMapsPoi.Poi?.Url;
 
             // TODO for better display. English style now.
             if (string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Address))
