@@ -40,7 +40,7 @@ namespace SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes
         private static bool ShouldReturnZipcode(HttpRequestMessage httpRequestMessage)
         {
             var uri = httpRequestMessage.RequestUri.ToString();
-            return uri.StartsWith("hhttps://atlas.microsoft.com/search/fuzzy/json") && uri.Contains("idxSet=Geo");
+            return uri.StartsWith("https://atlas.microsoft.com/search/fuzzy/json") && uri.Contains("idxSet=Geo");
         }
 
         private HttpClientHandler GenerateMockHttpClientHandler()

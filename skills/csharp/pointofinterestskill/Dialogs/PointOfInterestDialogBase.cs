@@ -70,7 +70,7 @@ namespace PointOfInterestSkill.Dialogs
             AddDialog(new TextPrompt(Actions.CurrentLocationPrompt));
             AddDialog(new ConfirmPrompt(Actions.ConfirmPrompt) { Style = ListStyle.Auto, });
             AddDialog(new ChoicePrompt(Actions.SelectPointOfInterestPrompt, CanNoInterruptablePromptValidatorAsync) { Style = ListStyle.None });
-            AddDialog(new ChoicePrompt(Actions.SelectActionPrompt, InterruptablePromptValidatorAsync) { Style = ListStyle.None });
+            AddDialog(new ChoicePrompt(Actions.SelectActionPrompt, CanBackInterruptablePromptValidatorAsync) { Style = ListStyle.None });
             AddDialog(new ChoicePrompt(Actions.SelectRoutePrompt) { ChoiceOptions = new ChoiceFactoryOptions { InlineSeparator = string.Empty, InlineOr = string.Empty, InlineOrMore = string.Empty, IncludeNumbers = true } });
         }
 
@@ -96,6 +96,8 @@ namespace PointOfInterestSkill.Dialogs
         protected IServiceManager ServiceManager { get; }
 
         protected LocaleTemplateManager TemplateManager { get; }
+
+        protected string GoBackDialogId { get; set; }
 
         public static Activity CreateOpenDefaultAppReply(Activity activity, PointOfInterestModel destination, OpenDefaultAppType type)
         {
@@ -205,7 +207,7 @@ namespace PointOfInterestSkill.Dialogs
                         // Update the current coordinates state with user choice.
                         userSelectIndex = (sc.Result as FoundChoice).Index;
 
-                        if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
+                        if (userSelectIndex == SpecialChoices.Cancel || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                         {
                             return await sc.ReplaceDialogAsync(Actions.CheckForCurrentLocation, cancellationToken: cancellationToken);
                         }
@@ -381,7 +383,7 @@ namespace PointOfInterestSkill.Dialogs
                         // Update the destination state with user choice.
                         userSelectIndex = (sc.Result as FoundChoice).Index;
 
-                        if (userSelectIndex < 0 || userSelectIndex >= state.LastFoundPointOfInterests.Count)
+                        if (userSelectIndex == SpecialChoices.Cancel || userSelectIndex >= state.LastFoundPointOfInterests.Count)
                         {
                             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(POISharedResponses.CancellingMessage), cancellationToken);
                             return await sc.EndDialogAsync(cancellationToken: cancellationToken);
@@ -487,6 +489,11 @@ namespace PointOfInterestSkill.Dialogs
 
             var choice = sc.Result as FoundChoice;
             int choiceIndex = choice.Index;
+
+            if (choiceIndex == SpecialChoices.GoBack)
+            {
+                return await sc.ReplaceDialogAsync(GoBackDialogId, null, cancellationToken);
+            }
 
             SingleDestinationResponse response = null;
 
@@ -958,7 +965,7 @@ namespace PointOfInterestSkill.Dialogs
                 var intent = generalLuisResult.TopIntent().intent;
                 if (intent == General.Intent.Reject || intent == General.Intent.SelectNone)
                 {
-                    promptContext.Recognized.Value = new FoundChoice { Index = -1 };
+                    promptContext.Recognized.Value = new FoundChoice { Index = SpecialChoices.Cancel };
                     return true;
                 }
                 else
@@ -966,6 +973,39 @@ namespace PointOfInterestSkill.Dialogs
                     return await InterruptablePromptValidatorAsync(promptContext, cancellationToken);
                 }
             }
+        }
+
+        private async Task<bool> CanBackInterruptablePromptValidatorAsync(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
+        {
+            if (promptContext.Recognized.Succeeded)
+            {
+                return true;
+            }
+            else
+            {
+                var generalLuisResult = promptContext.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
+                if (generalLuisResult == null)
+                {
+                    return false;
+                }
+
+                var intent = generalLuisResult.TopIntent().intent;
+                if (intent == General.Intent.GoBack)
+                {
+                    promptContext.Recognized.Value = new FoundChoice { Index = SpecialChoices.GoBack };
+                    return true;
+                }
+                else
+                {
+                    return await InterruptablePromptValidatorAsync(promptContext, cancellationToken);
+                }
+            }
+        }
+
+        protected static class SpecialChoices
+        {
+            public const int Cancel = -1;
+            public const int GoBack = -2;
         }
 
         private static class ImageSize

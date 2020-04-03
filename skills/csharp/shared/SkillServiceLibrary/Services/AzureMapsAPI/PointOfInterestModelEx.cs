@@ -41,6 +41,7 @@ namespace SkillServiceLibrary.Models
             Phone = azureMapsPoi.Poi?.Phone;
             Provider = new SortedSet<string> { AzureMapsGeoSpatialService.ProviderName };
             Website = azureMapsPoi.Poi?.Url;
+
             var hours = azureMapsPoi.Poi?.OpeningHours?.TimeRanges;
             if (hours != null)
             {
