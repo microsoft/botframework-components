@@ -61,7 +61,7 @@ namespace Luis
                 public string[] afterMusic;
                 public string[] music;
                 public string[] inBetweenMusic;
-                public string[] genre;
+                public string[][] genre;
                 [JsonProperty("$instance")]
                 public _InstanceMusicParent _instance;
             }

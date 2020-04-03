@@ -3,7 +3,7 @@
 
 namespace MusicSkill.Models
 {
-    public class ControlActions
+    public static class ControlActions
     {
         public const string Exclude = "Exclude";
         public const string Pause = "Pause";
