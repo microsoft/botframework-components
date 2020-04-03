@@ -135,7 +135,7 @@ namespace MusicSkill.Tests.Utilities
             string[] music = null,
             string[] inBetweenMusic = null,
             string[] afterMusic = null,
-            string[] genre = null)
+            string[][] genre = null)
         {
             return new MusicSkillLuis._Entities.MusicParentClass()
             {
@@ -150,7 +150,7 @@ namespace MusicSkill.Tests.Utilities
                     music = GetInstanceDatas(userInput, music),
                     inBetweenMusic = GetInstanceDatas(userInput, inBetweenMusic),
                     afterMusic = GetInstanceDatas(userInput, afterMusic),
-                    genre = GetInstanceDatas(userInput, genre),
+                    genre = GetInstanceDatas(userInput, genre?[0] ?? null),
                 }
             };
         }
