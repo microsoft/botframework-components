@@ -45,6 +45,29 @@ namespace PointOfInterestSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task ParkingNearbyThenGoBackTest()
+        {
+            await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(FindParkingUtterances.FindParkingNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(GeneralTestUtterances.GoBack)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .StartTestAsync();
+        }
+
         /// <summary>
         /// Find nearest parking.
         /// </summary>

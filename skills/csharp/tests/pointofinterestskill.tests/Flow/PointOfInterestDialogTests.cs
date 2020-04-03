@@ -230,6 +230,27 @@ namespace PointOfInterestSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task RouteToPointOfInterestThenGoBackTest()
+        {
+            await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(FindPointOfInterestUtterances.WhatsNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(GeneralTestUtterances.GoBack)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .StartTestAsync();
+        }
+
         /// <summary>
         /// Find points of interest nearby with interruptions.
         /// </summary>

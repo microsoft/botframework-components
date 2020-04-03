@@ -18,6 +18,7 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
             AddIntent(SelectNone, Intent.SelectNone);
             AddIntent(Help, Intent.Help);
             AddIntent(Cancel, Intent.Cancel);
+            AddIntent(GoBack, Intent.GoBack);
         }
 
         public static string UnknownIntent { get; } = "what's the weather?";
@@ -27,6 +28,8 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
         public static string Help { get; } = "help";
 
         public static string Cancel { get; } = "cancel";
+
+        public static string GoBack { get; } = "go back";
 
         public static double TopIntentScore { get; } = 0.9;
 
