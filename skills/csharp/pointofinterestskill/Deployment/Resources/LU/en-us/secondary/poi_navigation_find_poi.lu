@@ -602,6 +602,11 @@
 - {Keyword=UPS store} near me
 - {Keyword=Parks} near me
 - {Keyword=Beaches} near me
+- {Keyword=fast food} near me
+- {Keyword=houses for sale} near me
+- {Keyword=apartments for rent} near me
+- search for local {Keyword=pizza hut}
+- your local {Keyword=pizza hut}
 
 - {Keyword} near me
 - Find {Keyword} near me
