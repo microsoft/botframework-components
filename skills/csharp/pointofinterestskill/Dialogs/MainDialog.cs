@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,6 +13,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Responses.Main;
@@ -26,6 +28,8 @@ namespace PointOfInterestSkill.Dialogs
     // Dialog providing activity routing and message/event processing.
     public class MainDialog : ComponentDialog
     {
+        private const string Zipcode = "zipcode";
+
         private readonly BotServices _services;
         private readonly LocaleTemplateManager _templateManager;
         private readonly IStatePropertyAccessor<PointOfInterestSkillState> _stateAccessor;
@@ -458,6 +462,19 @@ namespace PointOfInterestSkill.Dialogs
                         if (sb.Length > 0)
                         {
                             state.Address = sb.ToString();
+                        }
+                    }
+
+                    if (string.IsNullOrWhiteSpace(state.Address))
+                    {
+                        var channelData = JsonConvert.DeserializeObject<Dictionary<string, string>>(dc.Context.Activity.ChannelData.ToString());
+                        if (channelData != null && channelData.ContainsKey(Zipcode) && !string.IsNullOrWhiteSpace(channelData[Zipcode]))
+                        {
+                            var zipcode = channelData[Zipcode];
+                            var service = _serviceManager.InitAddressMapsService(_settings);
+                            var model = await service.GetZipcodeAsync(zipcode);
+
+                            state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
                         }
                     }
 
