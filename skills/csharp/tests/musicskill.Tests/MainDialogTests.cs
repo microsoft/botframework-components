@@ -3,10 +3,15 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MusicSkill.Responses.Main;
 using MusicSkill.Responses.Shared;
+using MusicSkill.Services;
+using MusicSkill.Tests.Utilities;
 using MusicSkill.Tests.Utterances;
 
 namespace MusicSkill.Tests
@@ -15,6 +20,20 @@ namespace MusicSkill.Tests
     [TestCategory("UnitTests")]
     public class MainDialogTests : SkillTestBase
     {
+        [TestInitialize]
+        public void SetupLuisService()
+        {
+            var botServices = Services.BuildServiceProvider().GetService<BotServices>();
+            botServices.CognitiveModelSets.Add("en-us", new CognitiveModelSet()
+            {
+                LuisServices = new Dictionary<string, LuisRecognizer>()
+                {
+                    { "General", GeneralTestUtil.CreateRecognizer() },
+                    { "MusicSkill", PlayMusicTestUtil.CreateRecognizer() }
+                }
+            });
+        }
+
         [TestMethod]
         public async Task Test_Intro_Message()
         {

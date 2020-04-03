@@ -1,2 +1,3 @@
 ﻿﻿[import](../Main/MainResponsesActivities.lg)
 [import](../Shared/SharedResponsesActivities.lg)
+[import](../ControlSettings/ControlSettingsActivities.lg)
