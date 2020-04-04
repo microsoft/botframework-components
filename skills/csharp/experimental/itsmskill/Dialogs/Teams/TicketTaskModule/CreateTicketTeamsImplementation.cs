@@ -10,6 +10,7 @@
     using ITSMSkill.Extensions.Teams;
     using ITSMSkill.Extensions.Teams.TaskModule;
     using ITSMSkill.Models;
+    using ITSMSkill.Models.UpdateActivity;
     using ITSMSkill.Services;
     using ITSMSkill.TeamsChannels;
     using ITSMSkill.TeamsChannels.Invoke;
@@ -23,6 +24,7 @@
     public class CreateTicketTeamsImplementation : ITeamsInvokeActivityHandler<TaskEnvelope>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
+        private static IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly ConversationState _conversationState;
         private readonly BotSettings _settings;
         private readonly BotServices _services;
@@ -36,6 +38,7 @@
             _services = serviceProvider.GetService<BotServices>();
             _stateAccessor = _conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _serviceManager = serviceProvider.GetService<IServiceManager>();
+            _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
         }
 
         public async Task<TaskEnvelope> Handle(ITurnContext context, CancellationToken cancellationToken)
