@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 {
     using System;
     using System.Collections.Generic;
@@ -20,11 +23,15 @@
     using Microsoft.Graph;
     using Newtonsoft.Json.Linq;
 
+    /// <summary>
+    /// Class for Creating Ticket using TeamsTaskModule
+    /// </summary>
+    /// <returns>Task Envelopes</returns>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.CreateTicket_Form))]
     public class CreateTicketTeamsImplementation : ITeamsInvokeActivityHandler<TaskEnvelope>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
-        private static IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
+        private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly ConversationState _conversationState;
         private readonly BotSettings _settings;
         private readonly BotServices _services;
@@ -47,6 +54,13 @@
             if (taskModuleMetadata.Submit)
             {
                 var state = await _stateAccessor.GetAsync(context, () => new SkillState());
+
+                // Get Activity Reference to update later
+                ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                    context,
+                    () => new ActivityReferenceMap(),
+                    cancellationToken);
+
                 var accessToken = state.AccessTokenResponse.Token;
                 var activityValueObject = JObject.FromObject(context.Activity.Value);
 
@@ -72,6 +86,19 @@
                     var result = await management.CreateTicket(title.Value<string>(), description.Value<string>(), (UrgencyLevel)Enum.Parse(typeof(UrgencyLevel), urgency.Value<string>(), true));
                     if (result.Success)
                     {
+                        // Get the TicketResposne
+                        var ticketResponse = result.Tickets.FirstOrDefault();
+
+                        // Get saved Activity Reference mapping to conversation Id
+                        activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
+
+                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                        await UpdateActivityHelper.UpdateTaskModuleActivityAsync(
+                            context,
+                            activityReference,
+                            ticketResponse,
+                            cancellationToken);
+
                         // Return Added Incident Envelope
                         return RenderCreateIncidentHelper.ImpactAddEnvelope();
                     }

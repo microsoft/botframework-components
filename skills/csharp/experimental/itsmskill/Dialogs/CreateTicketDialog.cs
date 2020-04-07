@@ -11,6 +11,7 @@ using AdaptiveCards;
 using ITSMSkill.Dialogs.Teams;
 using ITSMSkill.Models;
 using ITSMSkill.Models.Actions;
+using ITSMSkill.Models.UpdateActivity;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Shared;
@@ -24,15 +25,22 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ITSMSkill.Dialogs
 {
     public class CreateTicketDialog : SkillDialogBase
     {
+        private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
+        private readonly ConversationState _conversationState;
+
         public CreateTicketDialog(
              IServiceProvider serviceProvider)
             : base(nameof(CreateTicketDialog), serviceProvider)
         {
+            _conversationState = serviceProvider.GetService<ConversationState>();
+            _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+
             var createTicket = new WaterfallStep[]
             {
                 CheckTitleAsync,
@@ -102,7 +110,26 @@ namespace ITSMSkill.Dialogs
                 new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = adaptiveCard }
             };
 
-            await sc.Context.SendActivityAsync(reply, cancellationToken);
+            ResourceResponse resourceResponse = await sc.Context.SendActivityAsync(reply, cancellationToken);
+
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                sc.Context,
+                () => new ActivityReferenceMap(),
+                cancellationToken)
+            .ConfigureAwait(false);
+
+            // Store Activity and Thread Id
+            activityReferenceMap[sc.Context.Activity.Conversation.Id] = new ActivityReference
+            {
+                ActivityId = resourceResponse.Id,
+                ThreadId = sc.Context.Activity.Conversation.Id,
+            };
+            await _activityReferenceMapAccessor.SetAsync(sc.Context, activityReferenceMap).ConfigureAwait(false);
+
+            // Save Conversation State
+            await _conversationState
+                .SaveChangesAsync(sc.Context);
+
             return await sc.EndDialogAsync();
         }
 
