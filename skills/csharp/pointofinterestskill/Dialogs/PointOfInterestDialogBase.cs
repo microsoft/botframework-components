@@ -339,6 +339,10 @@ namespace PointOfInterestSkill.Dialogs
 
                     var options = GetPointOfInterestPrompt(POISharedResponses.MultipleLocationsFound, containerCard, "Container", cards);
 
+                    List<PointOfInterestModelSlim> slimPointOfInterestList = pointOfInterestList.Select(x => new PointOfInterestModelSlim(x)).ToList();
+
+                    options.Prompt.ChannelData = slimPointOfInterestList;
+
                     return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options, cancellationToken);
                 }
             }
