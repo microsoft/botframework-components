@@ -6,9 +6,8 @@ namespace SkillServiceLibrary.Models
 {
     public class PointOfInterestModelSlim
     {
-
         public PointOfInterestModelSlim (PointOfInterestModel largerModel) {
-            PointOfInterestImageUrl = largerModel.PointOfInterestImageUrl;
+            PointOfInterestImage = largerModel.PointOfInterestImageUrl;
             Name = largerModel.Name;
             Address = largerModel.Address;
             Price = largerModel.Price;
@@ -26,7 +25,7 @@ namespace SkillServiceLibrary.Models
         /// <value>
         /// The image URL of this point of interest.
         /// </value>
-        public string PointOfInterestImageUrl { get; set; }
+        public string PointOfInterestImage { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the point of interest.
