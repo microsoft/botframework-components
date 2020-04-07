@@ -55,6 +55,7 @@
                 },
                 {
                   "type": "ColumnSet",
+                  "isVisible": ${if(Data.Rating == null, 'false', 'true')},
                   "columns": [
                     {
                       "type": "Column",
@@ -73,8 +74,7 @@
                           "text": "${if(Data.Rating == null, '', Data.Rating)}",
                           "wrap": true
                         }
-                      ],
-                      "isVisible": ${if(Data.Rating == null, 'false', 'true')}
+                      ]
                     },
                     {
                       "type": "Column",
@@ -119,11 +119,46 @@
       "bleed": true,
       "items": [
         {
-          "type": "TextBlock",
-          "horizontalAlignment": "Right",
-          "size": "Small",
-          "color": "light",
-          "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "backgroundImage": {
+                "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAzSURBVEhL7c2hEQAgEMTAg8avdDA0EPGGyZrIrLYnw/brKCeIE8QJ4gRxgjhBnCC/TJILe/8CrvtpnI0AAAAASUVORK5CYII=",
+                "horizontalAlignment": "Center",
+                "verticalAlignment": "Center"
+              },
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "id": "Back",
+                  "spacing": "None",
+                  "color": "Light",
+                  "text": "Back to Results"
+                }
+              ],
+              "selectAction": {
+                "title": "Back to Results",
+                "type": "Action.Submit",
+                "data": "Back to Results"
+              }
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "horizontalAlignment": "Right",
+                  "size": "Small",
+                  "color": "Light",
+                  "text": "${if(Data.ProviderDisplayText == null, '', Data.ProviderDisplayText)}"
+                }
+              ],
+              "verticalContentAlignment": "Center"
+            }
+          ]
         }
       ]
     }
