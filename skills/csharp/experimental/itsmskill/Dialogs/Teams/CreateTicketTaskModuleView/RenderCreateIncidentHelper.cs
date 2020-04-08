@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using AdaptiveCards;
     using ITSMSkill.Dialogs.Teams;
+    using ITSMSkill.Extensions.Teams;
     using ITSMSkill.Extensions.Teams.TaskModule;
+    using ITSMSkill.Models;
     using Microsoft.Bot.Schema;
 
     public class RenderCreateIncidentHelper
@@ -17,7 +19,7 @@
                     Type = "continue",
                     TaskInfo = new TaskInfo()
                     {
-                        Title = "ImpactTracker",
+                        Title = "GetUserInput",
                         Height = "medium",
                         Width = 500,
                         Card = new Attachment
@@ -42,7 +44,7 @@
                     TaskInfo = new TaskInfo()
                     {
                         Title = "Incident Create Failed",
-                        Height = "medium",
+                        Height = "small",
                         Width = 500,
                         Card = new Attachment
                         {
@@ -65,8 +67,8 @@
                     Type = "continue",
                     TaskInfo = new TaskInfo()
                     {
-                        Title = "Incident Added",
-                        Height = "medium",
+                        Title = "IncidentAdded",
+                        Height = "small",
                         Width = 500,
                         Card = new Attachment
                         {
@@ -80,10 +82,94 @@
             return response;
         }
 
+        public static AdaptiveCard BuildTicketCard(Ticket ticketResponse)
+        {
+            var card = new AdaptiveCard("1.0")
+            {
+                Id = "IncidentResponseCard",
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveContainer
+                    {
+                        Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveColumnSet
+                            {
+                                Columns = new List<AdaptiveColumn>
+                                {
+                                    new AdaptiveColumn
+                                    {
+                                        Width = AdaptiveColumnWidth.Stretch,
+                                        Items = new List<AdaptiveElement>
+                                        {
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"Title: {ticketResponse.Title}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"Urgency: {ticketResponse.Urgency}",
+                                                Color = AdaptiveTextColor.Good,
+                                                MaxLines = 1,
+                                                Weight = AdaptiveTextWeight.Bolder,
+                                                Size = AdaptiveTextSize.Large
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"Description: {ticketResponse.Description}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            card.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "Update Incident",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
+                        FlowData = new Dictionary<string, object>
+                        {
+                            { "IncidentDetails", ticketResponse }
+                        },
+                    }
+                }
+            });
+
+            card.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "Delete Incident",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
+                        Submit = true
+                    }
+                }
+            });
+
+            return card;
+        }
+
         /// <returns>Adaptive Card.</returns>
         private static AdaptiveCard ImpactTrackerResponseCard(string trackerResponse)
         {
             var card = new AdaptiveCard("1.0");
+            card.Id = "ResponseCard";
 
             var columns = new List<AdaptiveColumn>
             {

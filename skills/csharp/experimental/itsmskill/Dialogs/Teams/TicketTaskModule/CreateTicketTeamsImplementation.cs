@@ -18,6 +18,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     using ITSMSkill.TeamsChannels;
     using ITSMSkill.TeamsChannels.Invoke;
     using Microsoft.Bot.Builder;
+    using Microsoft.Bot.Connector;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Graph;
@@ -36,6 +37,8 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly BotSettings _settings;
         private readonly BotServices _services;
         private readonly IServiceManager _serviceManager;
+        private readonly IConnectorClient _connectorClient;
+        private readonly ITeamsActivity<Ticket> _teamsTicketUpdateActivity;
 
         public CreateTicketTeamsImplementation(
              IServiceProvider serviceProvider)
@@ -46,6 +49,8 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _stateAccessor = _conversationState.CreateProperty<SkillState>(nameof(SkillState));
             _serviceManager = serviceProvider.GetService<IServiceManager>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+            _connectorClient = serviceProvider.GetService<IConnectorClient>();
+            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<Ticket>>();
         }
 
         public async Task<TaskEnvelope> Handle(ITurnContext context, CancellationToken cancellationToken)
@@ -93,7 +98,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
 
                         // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
-                        await UpdateActivityHelper.UpdateTaskModuleActivityAsync(
+                        await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
                             ticketResponse,

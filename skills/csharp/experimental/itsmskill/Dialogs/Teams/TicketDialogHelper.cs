@@ -18,7 +18,7 @@
             {
                 // Json Card for creating incident
                 AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
-
+                adaptiveCard.Id = "GetUserInput";
                 adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
                 {
                     Title = "SubmitIncident",

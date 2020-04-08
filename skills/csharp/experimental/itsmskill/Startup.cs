@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using ITSMSkill.Adapters;
 using ITSMSkill.Bots;
 using ITSMSkill.Controllers.ServiceNow;
 using ITSMSkill.Dialogs;
+using ITSMSkill.Dialogs.Teams;
+using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
@@ -23,6 +26,7 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Proactive;
@@ -119,6 +123,12 @@ namespace ITSMSkill
 
             // Configure service
             services.AddSingleton<IServiceManager>(new ServiceManager());
+
+            // Configure TeamsConnectorClient
+            services.AddSingleton<IConnectorClient>(new ConnectorClient(new Uri(Configuration["TeamsTrustedUrl"]), new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword)));
+
+            // Configure TeamsUpdateActivity
+            services.AddSingleton<ITeamsActivity<Ticket>, TeamsUpdateTicketActivity>();
 
             // Register dialogs
             services.AddTransient<CreateTicketDialog>();

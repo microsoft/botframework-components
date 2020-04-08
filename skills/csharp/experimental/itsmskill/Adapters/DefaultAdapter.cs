@@ -57,7 +57,9 @@ namespace ITSMSkill.Adapters
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
             Use(new SetSpeakMiddleware());
-            Use(new SetConnectorClientMiddleware(credentialProvider));
+
+            // TODO: Check If Middleware is a better way to update acitivities
+            // Use(new SetConnectorClientMiddleware(credentialProvider));
         }
 
         private async Task HandleTurnError(ITurnContext turnContext, Exception exception)

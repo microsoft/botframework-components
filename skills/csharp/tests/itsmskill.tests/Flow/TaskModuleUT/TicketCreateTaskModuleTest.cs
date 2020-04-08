@@ -1,4 +1,5 @@
-﻿using ITSMSkill.Dialogs.Teams.TicketTaskModule;
+﻿using AdaptiveCards;
+using ITSMSkill.Dialogs.Teams.TicketTaskModule;
 using ITSMSkill.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
@@ -40,12 +41,18 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
+            Assert.AreEqual("GetUserInput", response.Task.TaskInfo.Title);
+            var attachment = response.Task.TaskInfo.Card;
+            Assert.IsNotNull(attachment);
+            var adaptiveCard = (AdaptiveCard)attachment.Content;
+            Assert.IsNotNull(adaptiveCard);
+            Assert.AreEqual(adaptiveCard.Id, "GetUserInput");
 
-            // TODO: Validate Response contains GetUserInput AdaptiveCard
+            // TODO: Add more validation steps on AdaptiveCard
         }
 
         [TestMethod]
-        public async Task CreateTestTaskModuleSubmitUserResposne()
+        public async Task CreateTestTaskModuleSubmitUserResponse()
         {
             var sp = Services.BuildServiceProvider();
             var adapter = sp.GetService<TestAdapter>();
@@ -72,8 +79,14 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
+            Assert.AreEqual("IncidentAdded", response.Task.TaskInfo.Title);
+            var attachment = response.Task.TaskInfo.Card;
+            Assert.IsNotNull(attachment);
+            var adaptiveCard = (AdaptiveCard)attachment.Content;
+            Assert.IsNotNull(adaptiveCard);
+            Assert.AreEqual(adaptiveCard.Id, "ResponseCard");
 
-            //TODO: Validate TaskModule Response is a Successfully added incident
+            // TODO: Add more validation steps on AdaptiveCard
         }
     }
 }
