@@ -41,6 +41,15 @@ namespace SkillServiceLibrary.Models
         public string PointOfInterestImageUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the thumbnail image of the point of interest as a base64 image string.
+        /// Availability: Azure Maps, Foursquare.
+        /// </summary>
+        /// <value>
+        /// The base 64 image string for this point of interest.
+        /// </value>
+        public string PointOfInterestImage { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the point of interest.
         /// Availability: Azure Maps, Foursquare.
         /// </summary>

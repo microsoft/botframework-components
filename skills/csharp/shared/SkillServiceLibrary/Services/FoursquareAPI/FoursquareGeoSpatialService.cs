@@ -326,7 +326,7 @@ namespace SkillServiceLibrary.Services.FoursquareAPI
                     var encoderParameters = new EncoderParameters(1);
                     encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, useDataUriJpegQuality);
                     image.Save(ms, encoder, encoderParameters);
-                    model.PointOfInterestImageUrl = $"data:image/jpeg;base64,{Convert.ToBase64String(ms.ToArray())}";
+                    model.PointOfInterestImage = $"data:image/jpeg;base64,{Convert.ToBase64String(ms.ToArray())}";
                 }
             }
         }

@@ -254,12 +254,8 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
                 width <= 0 ? ImageWidth : width,
                 height <= 0 ? ImageHeight : height) + "&subscription-key=" + apiKey;
 
-            if (useDataUriQuality > 0)
-            {
-                imageUrl = await ConvertToDataUri(imageUrl);
-            }
-
             pointOfInterest.PointOfInterestImageUrl = imageUrl;
+            pointOfInterest.PointOfInterestImage = await ConvertToDataUri(imageUrl);
 
             return pointOfInterest;
         }
