@@ -9,6 +9,7 @@ namespace SkillServiceLibrary.Models
 
         public PointOfInterestModelSlim (PointOfInterestModel largerModel) {
             PointOfInterestImageUrl = largerModel.PointOfInterestImageUrl;
+            PointOfInterestImage = largerModel.PointOfInterestImage;
             Name = largerModel.Name;
             Address = largerModel.Address;
             Price = largerModel.Price;
@@ -27,6 +28,15 @@ namespace SkillServiceLibrary.Models
         /// The image URL of this point of interest.
         /// </value>
         public string PointOfInterestImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail image of the point of interest as a base64 image string.
+        /// Availability: Azure Maps, Foursquare.
+        /// </summary>
+        /// <value>
+        /// The base64 image string of this point of interest.
+        /// </value>
+        public string PointOfInterestImage { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the point of interest.
