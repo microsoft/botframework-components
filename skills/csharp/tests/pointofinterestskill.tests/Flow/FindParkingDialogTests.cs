@@ -204,6 +204,22 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task ParkingNearbyZipcodeActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindParkingUtterances.FindParkingNearbyZipcodeAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task ParkingNearestAndCancelActionTest()
         {
             await GetSkillTestFlow()
