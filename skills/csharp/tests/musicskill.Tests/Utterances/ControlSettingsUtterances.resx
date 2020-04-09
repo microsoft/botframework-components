@@ -117,58 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultAfterMusic" xml:space="preserve">
-    <value>for me</value>
+  <data name="ActionHeader" xml:space="preserve">
+    <value>MusicSkill</value>
   </data>
-  <data name="DefaultAlbum" xml:space="preserve">
-    <value>1989</value>
+  <data name="AdjustVolumn" xml:space="preserve">
+    <value>i want to adjust the volume</value>
   </data>
-  <data name="DefaultAlbumUri" xml:space="preserve">
-    <value>spotify:album:37i9dQZF1DXcCnTAt8Cf</value>
+  <data name="AdjustVolumnUp" xml:space="preserve">
+    <value>can you turn the volume up please?</value>
   </data>
-  <data name="DefaultArtist" xml:space="preserve">
-    <value>taylor swift</value>
+  <data name="DefaultVolumnDirection" xml:space="preserve">
+    <value>up</value>
   </data>
-  <data name="DefaultArtistAndTrackUri" xml:space="preserve">
-    <value>spotify:track:defaultArtistAndTrack</value>
+  <data name="Exclude" xml:space="preserve">
+    <value>can you stop playing this song?</value>
   </data>
-  <data name="DefaultArtistUri" xml:space="preserve">
-    <value>spotify:artist:37i9dQZF1DXcCnTAt8Cf</value>
+  <data name="Pause" xml:space="preserve">
+    <value>can you pause please?</value>
   </data>
-  <data name="DefaultBeforeMusic" xml:space="preserve">
-    <value>could you please play</value>
-  </data>
-  <data name="DefaultGenre" xml:space="preserve">
-    <value>r&amp;b</value>
-  </data>
-  <data name="DefaultGenreAndArtistUri" xml:space="preserve">
-    <value>spotify:track:defaultGenreAndArtist</value>
-  </data>
-  <data name="DefaultGenreUri" xml:space="preserve">
-    <value>spotify:track:defaultGenre</value>
-  </data>
-  <data name="DefaultInBetweenMusic" xml:space="preserve">
-    <value>by</value>
-  </data>
-  <data name="DefaultPlayList" xml:space="preserve">
-    <value>rock classic</value>
-  </data>
-  <data name="DefaultPlayListUri" xml:space="preserve">
-    <value>spotify:playlist:37i9dQZF1DXcCnTAt8Cf</value>
-  </data>
-  <data name="DefaultTrack" xml:space="preserve">
-    <value>shake it off</value>
-  </data>
-  <data name="DefaultTrackUri" xml:space="preserve">
-    <value>spotify:track:37i9dQZF1DXcCnTAt8Cf</value>
-  </data>
-  <data name="DefaultUri" xml:space="preserve">
-    <value>spotify:track:default</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>none</value>
-  </data>
-  <data name="PlayMusic" xml:space="preserve">
-    <value>play music</value>
+  <data name="Shuffle" xml:space="preserve">
+    <value>can you please shuffle this playlist?</value>
   </data>
 </root>
