@@ -32,12 +32,12 @@ namespace RestaurantBookingSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _localeTemplateManager;
-        private UserState _userState;
-        private ConversationState _conversationState;
-        private IStatePropertyAccessor<RestaurantBookingState> _conversationStateAccessor;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _localeTemplateManager;
+        private readonly UserState _userState;
+        private readonly ConversationState _conversationState;
+        private readonly IStatePropertyAccessor<RestaurantBookingState> _conversationStateAccessor;
 
         public MainDialog(
             IServiceProvider serviceProvider,
@@ -176,14 +176,14 @@ namespace RestaurantBookingSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                var state = await _conversationStateAccessor.GetAsync(innerDc.Context, () => new RestaurantBookingState());
+                                var state = await _conversationStateAccessor.GetAsync(innerDc.Context, () => new RestaurantBookingState(), cancellationToken);
                                 state.Clear();
 
-                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.CancellingMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.CancellingMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
+                                    interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken);
                                 }
                                 else
                                 {
@@ -195,8 +195,8 @@ namespace RestaurantBookingSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -213,29 +213,27 @@ namespace RestaurantBookingSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
+
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
             {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.FirstPromptMessage)
-                };
+                Prompt = stepContext.Options as Activity ?? _localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.FirstPromptMessage)
+            };
 
-                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-                {
-                    promptOptions.Prompt = _localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.WelcomeMessage);
-                }
-
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
+            {
+                promptOptions.Prompt = _localeTemplateManager.GenerateActivity(RestaurantBookingMainResponses.WelcomeMessage);
             }
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
+            var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState(), cancellationToken);
             state.IsAction = false;
 
             var activity = stepContext.Context.Activity;
@@ -248,20 +246,20 @@ namespace RestaurantBookingSkill.Dialogs
                 {
                     case ReservationLuis.Intent.Reservation:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(BookingDialog));
+                            return await stepContext.BeginDialogAsync(nameof(BookingDialog), cancellationToken: cancellationToken);
                         }
 
                     case ReservationLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
                 }
@@ -284,16 +282,16 @@ namespace RestaurantBookingSkill.Dialogs
                                 if (eventValue != null)
                                 {
                                     actionData = eventValue.ToObject<ReservationInfo>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    await DigestActionInput(stepContext, actionData, cancellationToken);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(BookingDialog));
+                                return await stepContext.BeginDialogAsync(nameof(BookingDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
                                 // todo: move the response to lg
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
 
                                 break;
                             }
@@ -302,13 +300,13 @@ namespace RestaurantBookingSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState());
+            var state = await _conversationStateAccessor.GetAsync(stepContext.Context, () => new RestaurantBookingState(), cancellationToken);
 
             if (stepContext.Context.IsSkill())
             {
@@ -329,9 +327,9 @@ namespace RestaurantBookingSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, ReservationInfo reservationInfo)
+        private async Task DigestActionInput(DialogContext dc, ReservationInfo reservationInfo, CancellationToken cancellationToken)
         {
-            var state = await _conversationStateAccessor.GetAsync(dc.Context, () => new RestaurantBookingState());
+            var state = await _conversationStateAccessor.GetAsync(dc.Context, () => new RestaurantBookingState(), cancellationToken);
             state.Booking.Category = reservationInfo.FoodType;
             state.Booking.ReservationDate = DateTime.Parse(reservationInfo.Date);
             state.Booking.ReservationTime = DateTime.Parse(reservationInfo.Time);

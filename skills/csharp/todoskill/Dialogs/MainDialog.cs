@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Luis;
@@ -19,24 +22,22 @@ namespace ToDoSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _templateManager;
-        private IStatePropertyAccessor<ToDoSkillState> _stateAccessor;
-        private Dialog _addToDoItemDialog;
-        private Dialog _markToDoItemDialog;
-        private Dialog _deleteToDoItemDialog;
-        private Dialog _showToDoItemDialog;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _templateManager;
+        private readonly IStatePropertyAccessor<ToDoSkillState> _stateAccessor;
+        private readonly Dialog _addToDoItemDialog;
+        private readonly Dialog _markToDoItemDialog;
+        private readonly Dialog _deleteToDoItemDialog;
+        private readonly Dialog _showToDoItemDialog;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -172,11 +173,11 @@ namespace ToDoSkill.Dialogs
                     {
                         case General.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.CancelMessage));
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.CancelMessage), cancellationToken);
                                 await innerDc.CancelAllDialogsAsync();
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new ToDoSkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new ToDoSkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new TodoListInfo { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -189,8 +190,8 @@ namespace ToDoSkill.Dialogs
 
                         case General.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
@@ -198,10 +199,10 @@ namespace ToDoSkill.Dialogs
                         case General.Intent.Logout:
                             {
                                 // Log user out of all accounts.
-                                await LogUserOut(innerDc);
+                                await LogUserOutAsync(innerDc, cancellationToken);
 
-                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(cancellationToken: cancellationToken);
@@ -226,23 +227,21 @@ namespace ToDoSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
+
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
             {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(ToDoMainResponses.FirstPromptMessage)
-                };
+                Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(ToDoMainResponses.FirstPromptMessage)
+            };
 
-                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-                {
-                    promptOptions.Prompt = _templateManager.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage);
-                }
-
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
+            {
+                promptOptions.Prompt = _templateManager.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage);
             }
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
@@ -253,7 +252,7 @@ namespace ToDoSkill.Dialogs
             if (activity.Type == ActivityTypes.Message && !string.IsNullOrEmpty(activity.Text))
             {
                 // Initialize the PageSize and ReadSize parameters in state from configuration
-                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
                 InitializeConfig(state);
 
                 var luisResult = stepContext.Context.TurnState.Get<ToDoLuis>(StateProperties.ToDoLuisResultKey);
@@ -265,24 +264,24 @@ namespace ToDoSkill.Dialogs
                 {
                     case ToDoLuis.Intent.AddToDo:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
+                            return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog), cancellationToken: cancellationToken);
                         }
 
                     case ToDoLuis.Intent.MarkToDo:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
+                            return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog), cancellationToken: cancellationToken);
                         }
 
                     case ToDoLuis.Intent.DeleteToDo:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
+                            return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), cancellationToken: cancellationToken);
                         }
 
                     case ToDoLuis.Intent.ShowNextPage:
                     case ToDoLuis.Intent.ShowPreviousPage:
                     case ToDoLuis.Intent.ShowToDo:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
+                            return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog), cancellationToken: cancellationToken);
                         }
 
                     case ToDoLuis.Intent.None:
@@ -290,13 +289,13 @@ namespace ToDoSkill.Dialogs
                             if (generalTopIntent == General.Intent.ShowNext
                                 || generalTopIntent == General.Intent.ShowPrevious)
                             {
-                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog), cancellationToken: cancellationToken);
                             }
                             else
                             {
                                 // No intent was identified, send confused message
                                 var response = _templateManager.GenerateActivityForLocale(ToDoMainResponses.DidntUnderstandMessage);
-                                await stepContext.Context.SendActivityAsync(response);
+                                await stepContext.Context.SendActivityAsync(response, cancellationToken);
                             }
 
                             break;
@@ -306,7 +305,7 @@ namespace ToDoSkill.Dialogs
                         {
                             // intent was identified but not yet implemented
                             var response = _templateManager.GenerateActivityForLocale(ToDoMainResponses.FeatureNotAvailable);
-                            await stepContext.Context.SendActivityAsync(response);
+                            await stepContext.Context.SendActivityAsync(response, cancellationToken);
                             break;
                         }
                 }
@@ -317,7 +316,7 @@ namespace ToDoSkill.Dialogs
                 var eventActivity = activity.AsEventActivity();
                 if (!string.IsNullOrEmpty(eventActivity.Name))
                 {
-                    var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState());
+                    var state = await _stateAccessor.GetAsync(stepContext.Context, () => new ToDoSkillState(), cancellationToken);
                     InitializeConfig(state);
 
                     switch (eventActivity.Name)
@@ -325,54 +324,54 @@ namespace ToDoSkill.Dialogs
                         // Each Action in the Manifest will have an associated Name which will be on incoming Event activities
                         case ActionNames.AddToDo:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.IsAction = true;
                                 state.AddDupTask = true;
-                                return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(AddToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.DeleteToDo:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.DeleteAll:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.MarkOrDeleteAllTasksFlag = true;
                                 state.DeleteTaskConfirmation = true;
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(DeleteToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.MarkToDo:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.MarkAll:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.MarkOrDeleteAllTasksFlag = true;
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(MarkToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         case ActionNames.ShowToDo:
                             {
-                                await DigestActionInput(stepContext, activity.Value);
+                                await DigestActionInput(stepContext, activity.Value, cancellationToken);
                                 state.IsAction = true;
-                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ShowToDoItemDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
 
                             // todo: move the response to lg
-                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                            await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
 
                             break;
                     }
@@ -380,7 +379,7 @@ namespace ToDoSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -407,7 +406,7 @@ namespace ToDoSkill.Dialogs
             }
         }
 
-        private async Task LogUserOut(DialogContext dc)
+        private async Task LogUserOutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             IUserTokenProvider tokenProvider;
             var supported = dc.Context.Adapter is IUserTokenProvider;
@@ -419,11 +418,11 @@ namespace ToDoSkill.Dialogs
                 var tokens = await tokenProvider.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
                 foreach (var token in tokens)
                 {
-                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName);
+                    await tokenProvider.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
                 }
 
                 // Cancel all active dialogs
-                await dc.CancelAllDialogsAsync();
+                await dc.CancelAllDialogsAsync(cancellationToken);
             }
             else
             {
@@ -453,9 +452,9 @@ namespace ToDoSkill.Dialogs
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, object actionInput)
+        private async Task DigestActionInput(DialogContext dc, object actionInput, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new ToDoSkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new ToDoSkillState(), cancellationToken);
             var value = actionInput as JObject;
 
             try

@@ -105,7 +105,7 @@ namespace WeatherSkill.Tests.Flow
             Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             Services.AddTransient<MainDialog>();
             Services.AddTransient<ForecastDialog>();
-            Services.AddTransient<IBot, DialogBot<MainDialog>>();
+            Services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
 
             // Configure localized responses
             var localizedTemplates = new Dictionary<string, string>();

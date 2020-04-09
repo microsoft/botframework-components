@@ -14,6 +14,7 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using Microsoft.Recognizers.Text.DateTime;
 using RestaurantBookingSkill.Models;
@@ -28,53 +29,52 @@ namespace RestaurantBookingSkill.Dialogs
     {
         public SkillDialogBase(
             string dialogId,
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager localeTemplateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(dialogId)
         {
-            Settings = settings;
-            Services = services;
-            LocaleTemplateManager = localeTemplateManager;
+            Settings = serviceProvider.GetService<BotSettings>();
+            Services = serviceProvider.GetService<BotServices>();
+            TemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
+
+            // Initialize skill state
+            var conversationState = serviceProvider.GetService<ConversationState>();
             ConversationStateAccessor = conversationState.CreateProperty<RestaurantBookingState>(nameof(BookingDialog));
+
+            var userState = serviceProvider.GetService<UserState>();
             UserStateAccessor = userState.CreateProperty<SkillUserState>(nameof(SkillUserState));
-            TelemetryClient = telemetryClient;
         }
 
-        protected BotSettings Settings { get; set; }
+        protected BotSettings Settings { get; }
 
-        protected BotServices Services { get; set; }
+        protected BotServices Services { get; }
 
-        protected IStatePropertyAccessor<RestaurantBookingState> ConversationStateAccessor { get; set; }
+        protected IStatePropertyAccessor<RestaurantBookingState> ConversationStateAccessor { get; }
 
-        protected IStatePropertyAccessor<SkillUserState> UserStateAccessor { get; set; }
+        protected IStatePropertyAccessor<SkillUserState> UserStateAccessor { get; }
 
-        protected LocaleTemplateManager LocaleTemplateManager { get; set; }
+        protected LocaleTemplateManager TemplateManager { get; }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnBeginDialogAsync(dc, options, cancellationToken);
         }
 
         protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetLuisResult(dc);
+            await GetLuisResultAsync(dc, cancellationToken);
             return await base.OnContinueDialogAsync(dc, cancellationToken);
         }
 
         // Helpers
-        protected async Task GetLuisResult(DialogContext dc)
+        protected async Task GetLuisResultAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             if (dc.Context.Activity.Type == ActivityTypes.Message)
             {
                 // Adaptive card responses come through with empty text properties
                 if (!string.IsNullOrEmpty(dc.Context.Activity.Text))
                 {
-                    var state = await ConversationStateAccessor.GetAsync(dc.Context);
+                    var state = await ConversationStateAccessor.GetAsync(dc.Context, cancellationToken: cancellationToken);
 
                     // Get luis service for current locale
                     var localeConfig = Services.GetCognitiveModels();
@@ -85,34 +85,34 @@ namespace RestaurantBookingSkill.Dialogs
                     state.LuisResult = result;
 
                     // Extract key data out into state ready for use
-                    await DigestLuisResult(dc, result);
+                    await DigestLuisResultAsync(dc, result, cancellationToken);
                 }
             }
         }
 
         // This method is called by any waterfall step that throws an exception to ensure consistency
-        protected async Task HandleDialogExceptions(WaterfallStepContext sc, Exception ex)
+        protected async Task HandleDialogExceptionsAsync(WaterfallStepContext sc, Exception ex, CancellationToken cancellationToken)
         {
             // send trace back to emulator
             var trace = new Activity(type: ActivityTypes.Trace, text: $"DialogException: {ex.Message}, StackTrace: {ex.StackTrace}");
-            await sc.Context.SendActivityAsync(trace);
+            await sc.Context.SendActivityAsync(trace, cancellationToken);
 
             // log exception
             TelemetryClient.TrackException(ex, new Dictionary<string, string> { { nameof(sc.ActiveDialog), sc.ActiveDialog?.Id } });
 
             // send error message to bot user
-            await sc.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.ErrorMessage));
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.ErrorMessage), cancellationToken);
 
             // clear state
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             state.Clear();
         }
 
-        protected async Task DigestLuisResult(DialogContext dc, ReservationLuis luisResult)
+        protected async Task DigestLuisResultAsync(DialogContext dc, ReservationLuis luisResult, CancellationToken cancellationToken)
         {
             try
             {
-                var state = await ConversationStateAccessor.GetAsync(dc.Context);
+                var state = await ConversationStateAccessor.GetAsync(dc.Context, cancellationToken: cancellationToken);
 
                 // Extract entities and store in state here.
                 if (luisResult != null)

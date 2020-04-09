@@ -33,27 +33,22 @@ namespace RestaurantBookingSkill.Dialogs
         private IHttpContextAccessor _httpContext;
 
         public BookingDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager localeTemplateManager,
-            ConversationState conversationState,
-            UserState userState,
-            IBotTelemetryClient telemetryClient,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
-           : base(nameof(BookingDialog), settings, services, localeTemplateManager, conversationState, userState, telemetryClient)
+           : base(nameof(BookingDialog), serviceProvider)
         {
             _httpContext = httpContext;
 
             // Restaurant Booking waterfall
             var bookingWaterfall = new WaterfallStep[]
             {
-                Init,
-                AskForFoodType,
-                AskForDate,
-                AskForTime,
-                AskForAttendeeCount,
-                ConfirmSelectionBeforeBooking,
-                AskForRestaurant,
+                InitAsync,
+                AskForFoodTypeAsync,
+                AskForDateAsync,
+                AskForTimeAsync,
+                AskForAttendeeCountAsync,
+                ConfirmSelectionBeforeBookingAsync,
+                AskForRestaurantAsync,
                 ProcessReservationAsync
             };
 
@@ -74,7 +69,7 @@ namespace RestaurantBookingSkill.Dialogs
             InitialDialogId = Actions.BookRestaurant;
 
             // Used to help resolve image locations in both local deployment and remote
-            _urlResolver = new UrlResolver(httpContext, settings);
+            _urlResolver = new UrlResolver(httpContext, Settings);
         }
 
         /// <summary>
@@ -83,9 +78,9 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> Init(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> InitAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
 
             if (state.Booking == null)
             {
@@ -100,8 +95,8 @@ namespace RestaurantBookingSkill.Dialogs
             };
 
             // Start the flow
-            var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantFlowStartMessage, tokens);
-            await sc.Context.SendActivityAsync(reply);
+            var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantFlowStartMessage, tokens);
+            await sc.Context.SendActivityAsync(reply, cancellationToken);
 
             return await sc.NextAsync(sc.Values, cancellationToken);
         }
@@ -112,9 +107,9 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> AskForFoodType(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskForFoodTypeAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             // If we already have a Cuisine provided we skip to next step
@@ -135,7 +130,7 @@ namespace RestaurantBookingSkill.Dialogs
 
             var tokens = new Dictionary<string, object>
             {
-                { "FoodTypeList", foodTypes.ToSpeechString(LocaleTemplateManager.GetString(BotStrings.Or), f => f.TypeName) }
+                { "FoodTypeList", foodTypes.ToSpeechString(TemplateManager.GetString(BotStrings.Or), f => f.TypeName) }
             };
 
             state.Cuisine = foodTypes;
@@ -161,7 +156,7 @@ namespace RestaurantBookingSkill.Dialogs
                 options.Choices.Add(new Choice(foodType.TypeName));
             }
 
-            var replyMessage = LocaleTemplateManager.GenerateActivity(
+            var replyMessage = TemplateManager.GenerateActivity(
                RestaurantBookingSharedResponses.BookRestaurantFoodSelectionPrompt,
                cards,
                tokens);
@@ -178,7 +173,7 @@ namespace RestaurantBookingSkill.Dialogs
         /// <returns>Dialog Turn Result.</returns>
         private async Task<bool> ValidateFoodType(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // This is a workaround to a known issue with Adaptive Card button responses and prompts whereby the "Text" of the adaptive card button response
             // is put into a Value object not the Text as expected causing prompt validation to fail.
@@ -204,7 +199,7 @@ namespace RestaurantBookingSkill.Dialogs
             {
                 state.Booking.Category = promptContext.Recognized.Value.Value;
 
-                var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantFoodSelectionEcho, new Dictionary<string, object> { { "FoodType", state.Booking.Category } });
+                var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantFoodSelectionEcho, new Dictionary<string, object> { { "FoodType", state.Booking.Category } });
                 await promptContext.Context.SendActivityAsync(reply, cancellationToken);
 
                 return true;
@@ -223,9 +218,9 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> AskForDate(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskForDateAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             // If we have the ReservationTime already provided (slot filling) then we skip
@@ -234,13 +229,13 @@ namespace RestaurantBookingSkill.Dialogs
                 return await sc.NextAsync(sc.Values, cancellationToken);
             }
 
-            var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantDatePrompt);
+            var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantDatePrompt);
             return await sc.PromptAsync(Actions.AskReservationDateStep, new PromptOptions { Prompt = reply }, cancellationToken);
         }
 
         private async Task<bool> ValidateReservationDate(PromptValidatorContext<IList<DateTimeResolution>> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (promptContext.Recognized.Succeeded)
@@ -258,9 +253,9 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> AskForTime(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskForTimeAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             // Do we have a time from the previous date prompt (e.g. user said today at 6pm rather than just today)
@@ -271,7 +266,7 @@ namespace RestaurantBookingSkill.Dialogs
             else if (state.AmbiguousTimexExpressions.Count > 0)
             {
                 // We think the user did provide a time but it was ambiguous so we should clarify
-                var ambiguousReply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.AmbiguousTimePrompt);
+                var ambiguousReply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.AmbiguousTimePrompt);
 
                 var choices = new List<Choice>();
 
@@ -297,13 +292,13 @@ namespace RestaurantBookingSkill.Dialogs
             }
 
             // We don't have the time component so prompt for time
-            var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantTimePrompt);
+            var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantTimePrompt);
             return await sc.PromptAsync(Actions.AskReservationTimeStep, new PromptOptions { Prompt = reply }, cancellationToken);
         }
 
         private async Task<bool> ValidateReservationTime(PromptValidatorContext<IList<DateTimeResolution>> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (promptContext.Recognized.Succeeded)
@@ -327,7 +322,7 @@ namespace RestaurantBookingSkill.Dialogs
         /// <returns>Dialog Turn Result.</returns>
         private async Task<bool> ValidateAmbiguousTimePrompt(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             if (promptContext.Recognized.Succeeded)
             {
@@ -344,16 +339,16 @@ namespace RestaurantBookingSkill.Dialogs
             return false;
         }
 
-        private async Task RenderSelectedDateTimeMessage(ITurnContext context, ReservationBooking reservation)
+        private async Task RenderSelectedDateTimeMessageAsync(ITurnContext context, ReservationBooking reservation, CancellationToken cancellationToken)
         {
-            var reply = LocaleTemplateManager.GenerateActivity(
+            var reply = TemplateManager.GenerateActivity(
                 RestaurantBookingSharedResponses.BookRestaurantDateTimeEcho,
                 new Dictionary<string, object>
             {
-                { "Date", reservation.ReservationTime?.ToSpeakString(LocaleTemplateManager, true) },
+                { "Date", reservation.ReservationTime?.ToSpeakString(TemplateManager, true) },
                 { "Time", reservation.ReservationTime?.ToShortTimeString() }
             });
-            await context.SendActivityAsync(reply);
+            await context.SendActivityAsync(reply, cancellationToken);
         }
 
         /// <summary>
@@ -362,9 +357,9 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> AskForAttendeeCount(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskForAttendeeCountAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (reservation.AttendeeCount != null)
@@ -372,13 +367,13 @@ namespace RestaurantBookingSkill.Dialogs
                 return await sc.NextAsync(sc.Values, cancellationToken);
             }
 
-            var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantAttendeePrompt);
+            var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantAttendeePrompt);
             return await sc.PromptAsync(Actions.AskAttendeeCountStep, new PromptOptions { Prompt = reply }, cancellationToken);
         }
 
         private async Task<bool> ValidateAttendeeCount(PromptValidatorContext<int> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             if (promptContext.Recognized.Succeeded == true)
             {
@@ -395,21 +390,21 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> ConfirmSelectionBeforeBooking(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ConfirmSelectionBeforeBookingAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (state.IsAction)
             {
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
 
             var tokens = new Dictionary<string, object>
             {
                 { "FoodType", reservation.Category },
                 { "ReservationDate", reservation.ReservationDate?.ToShortDateString() },
-                { "ReservationDateSpeak", reservation.ReservationDate?.ToSpeakString(LocaleTemplateManager, true) },
+                { "ReservationDateSpeak", reservation.ReservationDate?.ToSpeakString(TemplateManager, true) },
                 { "ReservationTime", reservation.ReservationTime?.ToShortTimeString() },
                 { "AttendeeCount", reservation.AttendeeCount.ToString() }
             };
@@ -423,7 +418,7 @@ namespace RestaurantBookingSkill.Dialogs
                 AttendeeCount = reservation.AttendeeCount.ToString()
             };
 
-            var replyMessage = LocaleTemplateManager.GetCardResponse(
+            var replyMessage = TemplateManager.GetCardResponse(
                 RestaurantBookingSharedResponses.BookRestaurantConfirmationPrompt,
                 new Card("ReservationConfirmCard", cardData),
                 tokens);
@@ -431,7 +426,7 @@ namespace RestaurantBookingSkill.Dialogs
             // Workaround. In teams, HeroCard will be used for prompt and adaptive card could not be shown. So send them separatly
             if (Channel.GetChannelId(sc.Context) == Channels.Msteams)
             {
-                await sc.Context.SendActivityAsync(replyMessage);
+                await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 replyMessage = null;
             }
 
@@ -440,14 +435,14 @@ namespace RestaurantBookingSkill.Dialogs
 
         private async Task<bool> ValidateBookingSelectionConfirmation(PromptValidatorContext<bool> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (promptContext.Recognized.Succeeded == true)
             {
                 reservation.Confirmed = promptContext.Recognized.Value;
 
-                var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantRestaurantSearching);
+                var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantRestaurantSearching);
                 await promptContext.Context.SendActivityAsync(reply, cancellationToken);
 
                 return true;
@@ -462,21 +457,21 @@ namespace RestaurantBookingSkill.Dialogs
         /// <param name="sc">Waterfall Step Context.</param>
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Dialog Turn Result.</returns>
-        private async Task<DialogTurnResult> AskForRestaurant(WaterfallStepContext sc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> AskForRestaurantAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             if (state.IsAction)
             {
-                return await sc.NextAsync();
+                return await sc.NextAsync(cancellationToken: cancellationToken);
             }
 
             // Reset the dialog if the user hasn't confirmed the reservation.
             if (!reservation.Confirmed)
             {
                 state.Booking = CreateNewReservationInfo();
-                return await sc.EndDialogAsync();
+                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
             }
 
             // Prompt for restaurant
@@ -487,7 +482,7 @@ namespace RestaurantBookingSkill.Dialogs
             for (var i = 0; i < restaurants.Count; i++)
             {
                 restaurantOptionsForSpeak.Append(restaurants[i].Name);
-                restaurantOptionsForSpeak.Append(i == restaurants.Count - 2 ? $" {LocaleTemplateManager.GetString(BotStrings.Or)} " : ", ");
+                restaurantOptionsForSpeak.Append(i == restaurants.Count - 2 ? $" {TemplateManager.GetString(BotStrings.Or)} " : ", ");
             }
 
             var tokens = new Dictionary<string, object>
@@ -521,14 +516,14 @@ namespace RestaurantBookingSkill.Dialogs
                 options.Choices.Add(new Choice(restaurant.Name));
             }
 
-            var replyMessage = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantRestaurantSelectionPrompt, cards, tokens);
+            var replyMessage = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantRestaurantSelectionPrompt, cards, tokens);
 
             return await sc.PromptAsync(Actions.RestaurantPrompt, new PromptOptions { Prompt = replyMessage, Choices = options.Choices }, cancellationToken);
         }
 
         private async Task<bool> ValidateRestaurantSelection(PromptValidatorContext<FoundChoice> promptContext, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(promptContext.Context);
+            var state = await ConversationStateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // This is a workaround to a known issue with Adaptive Card button responses and prompts whereby the "Text" of the adaptive card button response
             // is put into a Value object not the Text as expected causing prompt validation to fail.
@@ -558,7 +553,7 @@ namespace RestaurantBookingSkill.Dialogs
                 {
                     state.Booking.BookingPlace = restaurant;
 
-                    var reply = LocaleTemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantBookingPlaceSelectionEcho, new Dictionary<string, object> { { "BookingPlaceName", restaurant.Name } });
+                    var reply = TemplateManager.GenerateActivity(RestaurantBookingSharedResponses.BookRestaurantBookingPlaceSelectionEcho, new Dictionary<string, object> { { "BookingPlaceName", restaurant.Name } });
                     await promptContext.Context.SendActivityAsync(reply, cancellationToken);
 
                     return true;
@@ -576,7 +571,7 @@ namespace RestaurantBookingSkill.Dialogs
         /// <returns>Dialog Turn Result.</returns>
         private async Task<DialogTurnResult> ProcessReservationAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
-            var state = await ConversationStateAccessor.GetAsync(sc.Context);
+            var state = await ConversationStateAccessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
             var reservation = state.Booking;
 
             // TODO Process reservation request here.
@@ -589,7 +584,7 @@ namespace RestaurantBookingSkill.Dialogs
                     { "Restaurant", reservation.BookingPlace.Name },
                     { "Location", reservation.BookingPlace.Location },
                     { "ReservationDate", reservation.ReservationDate?.ToShortDateString() },
-                    { "ReservationDateSpeak", reservation.ReservationDate?.ToSpeakString(LocaleTemplateManager, true) },
+                    { "ReservationDateSpeak", reservation.ReservationDate?.ToSpeakString(TemplateManager, true) },
                     { "ReservationTime", reservation.ReservationTime?.ToShortTimeString() },
                     { "AttendeeCount", reservation.AttendeeCount.ToString() },
                 };
@@ -606,17 +601,17 @@ namespace RestaurantBookingSkill.Dialogs
                 AttendeeCount = reservation.AttendeeCount.ToString()
             };
 
-            var replyMessage = LocaleTemplateManager.GetCardResponse(
+            var replyMessage = TemplateManager.GetCardResponse(
                        RestaurantBookingSharedResponses.BookRestaurantAcceptedMessage,
                        new Card("ReservationConfirmationCard", cardData),
                        tokens);
 
-            await sc.Context.SendActivityAsync(replyMessage);
+            await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
 
             if (state.IsAction)
             {
                 var actionResult = new ActionResult() { ActionSuccess = true };
-                return await sc.EndDialogAsync(actionResult);
+                return await sc.EndDialogAsync(actionResult, cancellationToken);
             }
 
             state.Clear();

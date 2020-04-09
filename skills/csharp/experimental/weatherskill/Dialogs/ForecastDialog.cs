@@ -24,37 +24,27 @@ namespace WeatherSkill.Dialogs
 {
     public class ForecastDialog : SkillDialogBase
     {
-        private BotServices _services;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
         private IHttpContextAccessor _httpContext;
 
         public ForecastDialog(
-            BotSettings settings,
-            BotServices services,
-            LocaleTemplateManager localeTemplateManager,
-            ConversationState conversationState,
-            IServiceManager serviceManager,
-            IBotTelemetryClient telemetryClient,
+            IServiceProvider serviceProvider,
             IHttpContextAccessor httpContext)
-            : base(nameof(ForecastDialog), settings, services, localeTemplateManager, conversationState, serviceManager, telemetryClient)
+            : base(nameof(ForecastDialog), serviceProvider)
         {
-            _stateAccessor = conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            _services = services;
             _httpContext = httpContext;
-            Settings = settings;
 
             var fullForecastDialogWithPrompt = new WaterfallStep[]
             {
-                RouteToGeographyPromptOrForecastResponse,
-                GeographyPrompt,
-                GetWeatherResponse,
-                End,
+                RouteToGeographyPromptOrForecastResponseAsync,
+                GeographyPromptAsync,
+                GetWeatherResponseAsync,
+                EndAsync,
             };
 
             var getForecastResponseDialog = new WaterfallStep[]
             {
-                GetWeatherResponse,
-                End,
+                GetWeatherResponseAsync,
+                EndAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(ForecastDialog), fullForecastDialogWithPrompt));
@@ -67,28 +57,28 @@ namespace WeatherSkill.Dialogs
         /// <summary>
         /// Check if geography is stored in state and route to prompt or go to API call.
         /// </summary>
-        private async Task<DialogTurnResult> RouteToGeographyPromptOrForecastResponse(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> RouteToGeographyPromptOrForecastResponseAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
             var geography = state.Geography;
 
             if (string.IsNullOrEmpty(geography) && double.IsNaN(state.Latitude))
             {
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
             else
             {
-                return await stepContext.ReplaceDialogAsync(DialogIds.GetForecastResponseDialog);
+                return await stepContext.ReplaceDialogAsync(DialogIds.GetForecastResponseDialog, cancellationToken: cancellationToken);
             }
         }
 
         /// <summary>
         /// Ask user for current location.
         /// </summary>
-        private async Task<DialogTurnResult> GeographyPrompt(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GeographyPromptAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
-            return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt });
+            var prompt = TemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
+            return await stepContext.PromptAsync(DialogIds.GeographyPrompt, new PromptOptions { Prompt = prompt }, cancellationToken);
         }
 
         /// <summary>
@@ -98,12 +88,12 @@ namespace WeatherSkill.Dialogs
         {
             if (!promptContext.Recognized.Succeeded)
             {
-                var prompt = LocaleTemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
+                var prompt = TemplateManager.GenerateActivity(SharedResponses.LocationPrompt);
                 await promptContext.Context.SendActivityAsync(prompt, cancellationToken: cancellationToken);
                 return false;
             }
 
-            var state = await _stateAccessor.GetAsync(promptContext.Context);
+            var state = await StateAccessor.GetAsync(promptContext.Context, cancellationToken: cancellationToken);
 
             // check if geography is in state from processed LUIS result
             if (string.IsNullOrEmpty(state.Geography))
@@ -118,9 +108,9 @@ namespace WeatherSkill.Dialogs
         /// <summary>
         /// Look up the six hour forecast using Accuweather.
         /// </summary>
-        private async Task<DialogTurnResult> GetWeatherResponse(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> GetWeatherResponseAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(stepContext.Context);
+            var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
             var service = ServiceManager.InitService(Settings);
 
@@ -185,16 +175,16 @@ namespace WeatherSkill.Dialogs
                     Summary = summary,
                     ActionSuccess = true
                 };
-                return await stepContext.EndDialogAsync(actionResult);
+                return await stepContext.EndDialogAsync(actionResult, cancellationToken: cancellationToken);
             }
 
             var templateId = SharedResponses.SixHourForecast;
             var card = new Card(GetDivergedCardName(stepContext.Context, "SixHourForecast"), forecastModel);
-            var response = LocaleTemplateManager.GenerateActivity(templateId, card, tokens: null);
+            var response = TemplateManager.GenerateActivity(templateId, card, tokens: null);
 
-            await stepContext.Context.SendActivityAsync(response);
+            await stepContext.Context.SendActivityAsync(response, cancellationToken);
 
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -338,12 +328,12 @@ namespace WeatherSkill.Dialogs
             return $"{serverUrl}/images/{imagePath}";
         }
 
-        private Task<DialogTurnResult> End(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            return stepContext.EndDialogAsync();
+            return stepContext.EndDialogAsync(cancellationToken: cancellationToken);
         }
 
-        private class DialogIds
+        private static class DialogIds
         {
             public const string GeographyPrompt = "geographyPrompt";
             public const string GetForecastResponseDialog = "getForecastResponseDialog";

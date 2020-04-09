@@ -1,0 +1,11 @@
+﻿# VolumeDirectionSelection.Text
+- 这里是调节声音的可选项, 选哪一个?
+
+# VolumeUpSelection.Text
+- 向上
+
+# VolumeDownSelection.Text
+- 向下
+
+# VolumeMuteSelection.Text
+- 静音

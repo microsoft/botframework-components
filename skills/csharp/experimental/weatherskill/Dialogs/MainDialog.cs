@@ -32,20 +32,18 @@ namespace WeatherSkill.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private BotSettings _settings;
-        private BotServices _services;
-        private LocaleTemplateManager _localeTemplateManager;
-        private IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly BotSettings _settings;
+        private readonly BotServices _services;
+        private readonly LocaleTemplateManager _localeTemplateManager;
+        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public MainDialog(
-            IServiceProvider serviceProvider,
-            IBotTelemetryClient telemetryClient)
+            IServiceProvider serviceProvider)
             : base(nameof(MainDialog))
         {
             _settings = serviceProvider.GetService<BotSettings>();
             _services = serviceProvider.GetService<BotServices>();
             _localeTemplateManager = serviceProvider.GetService<LocaleTemplateManager>();
-            TelemetryClient = telemetryClient;
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -177,11 +175,11 @@ namespace WeatherSkill.Dialogs
                     {
                         case GeneralLuis.Intent.Cancel:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.CancelMessage));
-                                await innerDc.CancelAllDialogsAsync();
+                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.CancelMessage), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
-                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState());
+                                    var state = await _stateAccessor.GetAsync(innerDc.Context, () => new SkillState(), cancellationToken);
                                     interrupted = await innerDc.EndDialogAsync(state.IsAction ? new ActionResult { ActionSuccess = false } : null, cancellationToken: cancellationToken);
                                 }
                                 else
@@ -194,17 +192,17 @@ namespace WeatherSkill.Dialogs
 
                         case GeneralLuis.Intent.Help:
                             {
-                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.HelpMessage));
-                                await innerDc.RepromptDialogAsync();
+                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.HelpMessage), cancellationToken);
+                                await innerDc.RepromptDialogAsync(cancellationToken);
                                 interrupted = EndOfTurn;
                                 break;
                             }
 
                         case GeneralLuis.Intent.Logout:
                             {
-                                await OnLogout(innerDc);
-                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.LogOut));
-                                await innerDc.CancelAllDialogsAsync();
+                                await OnLogoutAsync(innerDc, cancellationToken);
+                                await innerDc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.LogOut), cancellationToken);
+                                await innerDc.CancelAllDialogsAsync(cancellationToken);
                                 if (innerDc.Context.IsSkill())
                                 {
                                     interrupted = await innerDc.EndDialogAsync(cancellationToken: cancellationToken);
@@ -229,30 +227,28 @@ namespace WeatherSkill.Dialogs
             if (stepContext.Context.IsSkill())
             {
                 // If the bot is in skill mode, skip directly to route and do not prompt
-                return await stepContext.NextAsync();
+                return await stepContext.NextAsync(cancellationToken: cancellationToken);
             }
-            else
+
+            // If bot is in local mode, prompt with intro or continuation message
+            var promptOptions = new PromptOptions
             {
-                // If bot is in local mode, prompt with intro or continuation message
-                var promptOptions = new PromptOptions
-                {
-                    Prompt = stepContext.Options as Activity ?? _localeTemplateManager.GenerateActivity(MainResponses.FirstPromptMessage)
-                };
+                Prompt = stepContext.Options as Activity ?? _localeTemplateManager.GenerateActivity(MainResponses.FirstPromptMessage)
+            };
 
-                if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-                {
-                    promptOptions.Prompt = _localeTemplateManager.GenerateActivity(MainResponses.WelcomeMessage);
-                }
-
-                return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
+            if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
+            {
+                promptOptions.Prompt = _localeTemplateManager.GenerateActivity(MainResponses.WelcomeMessage);
             }
+
+            return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
         // Handles routing to additional dialogs logic.
         private async Task<DialogTurnResult> RouteStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             // Clear IsAction before dialog
-            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState());
+            var state = await _stateAccessor.GetAsync(stepContext.Context, () => new SkillState(), cancellationToken);
             state.IsAction = false;
 
             var activity = stepContext.Context.Activity;
@@ -264,20 +260,20 @@ namespace WeatherSkill.Dialogs
                 {
                     case WeatherSkillLuis.Intent.CheckWeatherValue:
                         {
-                            return await stepContext.BeginDialogAsync(nameof(ForecastDialog));
+                            return await stepContext.BeginDialogAsync(nameof(ForecastDialog), cancellationToken: cancellationToken);
                         }
 
                     case WeatherSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
-                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(SharedResponses.DidntUnderstandMessage), cancellationToken);
                             break;
                         }
 
                     default:
                         {
                             // intent was identified but not yet implemented
-                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.FeatureNotAvailable));
+                            await stepContext.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
                             break;
                         }
                 }
@@ -300,16 +296,16 @@ namespace WeatherSkill.Dialogs
                                 if (eventValue != null)
                                 {
                                     actionData = eventValue.ToObject<LocationInfo>();
-                                    await DigestActionInput(stepContext, actionData);
+                                    await DigestActionInputAsync(stepContext, actionData, cancellationToken);
                                 }
 
-                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog));
+                                return await stepContext.BeginDialogAsync(nameof(ForecastDialog), cancellationToken: cancellationToken);
                             }
 
                         default:
                             {
                                 // todo: move the response to lg
-                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."));
+                                await stepContext.Context.SendActivityAsync(new Activity(type: ActivityTypes.Trace, text: $"Unknown Event '{eventActivity.Name ?? "undefined"}' was received but not processed."), cancellationToken);
                                 break;
                             }
                     }
@@ -317,7 +313,7 @@ namespace WeatherSkill.Dialogs
             }
 
             // If activity was unhandled, flow should continue to next step
-            return await stepContext.NextAsync();
+            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         // Handles conversation cleanup.
@@ -335,7 +331,7 @@ namespace WeatherSkill.Dialogs
                 }
 
                 state.Clear();
-                return await stepContext.EndDialogAsync(result, cancellationToken);
+                return await stepContext.EndDialogAsync(result, cancellationToken: cancellationToken);
             }
             else
             {
@@ -344,7 +340,7 @@ namespace WeatherSkill.Dialogs
             }
         }
 
-        private async Task<InterruptionAction> OnLogout(DialogContext dc)
+        private async Task<InterruptionAction> OnLogoutAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             BotFrameworkAdapter adapter;
             var supported = dc.Context.Adapter is BotFrameworkAdapter;
@@ -357,21 +353,21 @@ namespace WeatherSkill.Dialogs
                 adapter = (BotFrameworkAdapter)dc.Context.Adapter;
             }
 
-            await dc.CancelAllDialogsAsync();
+            await dc.CancelAllDialogsAsync(cancellationToken);
 
             // Sign out user
             var tokens = await adapter.GetTokenStatusAsync(dc.Context, dc.Context.Activity.From.Id);
             foreach (var token in tokens)
             {
-                await adapter.SignOutUserAsync(dc.Context, token.ConnectionName);
+                await adapter.SignOutUserAsync(dc.Context, token.ConnectionName, cancellationToken: cancellationToken);
             }
 
-            await dc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.LogOut));
+            await dc.Context.SendActivityAsync(_localeTemplateManager.GenerateActivity(MainResponses.LogOut), cancellationToken);
 
             return InterruptionAction.End;
         }
 
-        private async Task PopulateStateFromSkillContext(ITurnContext context)
+        private async Task PopulateStateFromSkillContext(ITurnContext context, CancellationToken cancellationToken)
         {
             // Populating local state with data passed through semanticAction out of Activity
             var activity = context.Activity;
@@ -384,22 +380,22 @@ namespace WeatherSkill.Dialogs
                 var coords = locationObj.Split(',');
                 if (coords.Length == 2 && double.TryParse(coords[0], out var lat) && double.TryParse(coords[1], out var lng))
                 {
-                    var state = await _stateAccessor.GetAsync(context, () => new SkillState());
+                    var state = await _stateAccessor.GetAsync(context, () => new SkillState(), cancellationToken);
                     state.Latitude = lat;
                     state.Longitude = lng;
                 }
                 else
                 {
                     // In case name has ','
-                    var state = await _stateAccessor.GetAsync(context, () => new SkillState());
+                    var state = await _stateAccessor.GetAsync(context, () => new SkillState(), cancellationToken);
                     state.Geography = locationObj;
                 }
             }
         }
 
-        private async Task DigestActionInput(DialogContext dc, LocationInfo locationInfo)
+        private async Task DigestActionInputAsync(DialogContext dc, LocationInfo locationInfo, CancellationToken cancellationToken)
         {
-            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState());
+            var state = await _stateAccessor.GetAsync(dc.Context, () => new SkillState(), cancellationToken);
             var location = locationInfo.Location;
             var coords = location.Split(',');
             if (coords.Length == 2 && double.TryParse(coords[0], out var lat) && double.TryParse(coords[1], out var lng))

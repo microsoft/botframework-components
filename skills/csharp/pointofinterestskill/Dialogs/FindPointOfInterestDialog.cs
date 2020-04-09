@@ -43,6 +43,7 @@ namespace PointOfInterestSkill.Dialogs
 
             // Set starting dialog for component
             InitialDialogId = Actions.CheckForCurrentLocation;
+            GoBackDialogId = Actions.FindPointOfInterest;
         }
 
         /// <summary>

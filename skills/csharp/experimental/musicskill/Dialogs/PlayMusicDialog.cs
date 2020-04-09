@@ -19,12 +19,12 @@ namespace MusicSkill.Dialogs
             IServiceProvider serviceProvider)
             : base(nameof(PlayMusicDialog), serviceProvider)
         {
-            var sample = new WaterfallStep[]
+            var playMusic = new WaterfallStep[]
             {
                 GetAndSendMusicResultAsync,
             };
 
-            AddDialog(new WaterfallDialog(nameof(PlayMusicDialog), sample));
+            AddDialog(new WaterfallDialog(nameof(PlayMusicDialog), playMusic));
 
             InitialDialogId = nameof(PlayMusicDialog);
         }
@@ -34,29 +34,33 @@ namespace MusicSkill.Dialogs
             var state = await StateAccessor.GetAsync(stepContext.Context, cancellationToken: cancellationToken);
 
             var status = false;
-            if (string.IsNullOrEmpty(state.Query))
+
+            // Get music api client
+            IMusicService musicService = ServiceManager.InitMusicService();
+
+            // Extract query entity to search against Spotify for
+            var searchQuery = state.Query;
+            var genres = state.Genres;
+            string searchItems = null;
+
+            // Search music if given music info like artist/track/album/playlist or genres. Without info, we just get a recommendation album.
+            if (!string.IsNullOrEmpty(searchQuery) || genres?.Count != 0)
             {
-                await stepContext.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(MainResponses.NoResultstMessage), cancellationToken);
+                searchItems = await musicService.SearchMusicAsync(searchQuery, genres);
             }
             else
             {
-                // Extract query entity to search against Spotify for
-                var searchQuery = state.Query;
+                searchItems = await musicService.GetNewAlbumReleasesAsync();
+            }
 
-                // Get music api client
-                IMusicService musicService = ServiceManager.InitMusicService();
-
-                // Search library
-                var searchItems = await musicService.SearchMusicAsync(searchQuery);
-                if (!string.IsNullOrEmpty(searchItems))
-                {
-                    status = true;
-                    await SendOpenDefaultAppEventActivityAsync(stepContext, searchItems, cancellationToken);
-                }
-                else
-                {
-                    await stepContext.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(MainResponses.NoResultstMessage), cancellationToken);
-                }
+            if (!string.IsNullOrEmpty(searchItems))
+            {
+                status = true;
+                await SendOpenDefaultAppEventActivityAsync(stepContext, searchItems, cancellationToken);
+            }
+            else
+            {
+                await stepContext.Context.SendActivityAsync(LocaleTemplateManager.GenerateActivityForLocale(MainResponses.NoResultstMessage), cancellationToken);
             }
 
             // End dialog
