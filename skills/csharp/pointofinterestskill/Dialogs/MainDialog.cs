@@ -325,23 +325,7 @@ namespace PointOfInterestSkill.Dialogs
 
                         case ActionNames.FindPointOfInterestAction:
                             {
-                                var input = await DigestActionInputAsync<FindPointOfInterestInput>(stepContext, ev, cancellationToken);
-                                if (input != null && !string.IsNullOrEmpty(input.Zipcode))
-                                {
-                                    var service = _serviceManager.InitAddressMapsService(_settings);
-                                    PointOfInterestModel model;
-                                    if (string.IsNullOrEmpty(input.CountrySet))
-                                    {
-                                        model = await service.GetZipcodeAsync(input.Zipcode);
-                                    }
-                                    else
-                                    {
-                                        model = await service.GetZipcodeAsync(input.Zipcode, input.CountrySet);
-                                    }
-
-                                    state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
-                                }
-
+                                await DigestActionInputAsync<FindPointOfInterestInput>(stepContext, ev, cancellationToken);
                                 return await stepContext.BeginDialogAsync(nameof(FindPointOfInterestDialog), cancellationToken: cancellationToken);
                             }
 
@@ -513,7 +497,7 @@ namespace PointOfInterestSkill.Dialogs
             }
         }
 
-        private async Task<T> DigestActionInputAsync<T>(DialogContext dc, IEventActivity ev, CancellationToken cancellationToken)
+        private async Task DigestActionInputAsync<T>(DialogContext dc, IEventActivity ev, CancellationToken cancellationToken)
             where T : ActionBaseInput
         {
             var state = await _stateAccessor.GetAsync(dc.Context, () => new PointOfInterestSkillState(), cancellationToken);
@@ -523,10 +507,23 @@ namespace PointOfInterestSkill.Dialogs
             {
                 T actionData = eventValue.ToObject<T>();
                 actionData.DigestActionInput(state);
-                return actionData;
-            }
 
-            return null;
+                if (!string.IsNullOrEmpty(actionData.Zipcode))
+                {
+                    var service = _serviceManager.InitAddressMapsService(_settings);
+                    PointOfInterestModel model;
+                    if (string.IsNullOrEmpty(actionData.CountrySet))
+                    {
+                        model = await service.GetZipcodeAsync(actionData.Zipcode);
+                    }
+                    else
+                    {
+                        model = await service.GetZipcodeAsync(actionData.Zipcode, actionData.CountrySet);
+                    }
+
+                    state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
+                }
+            }
         }
     }
 }

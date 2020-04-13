@@ -7,7 +7,13 @@ namespace SkillServiceLibrary.Models
     public class PointOfInterestModelSlim
     {
 
-        public PointOfInterestModelSlim (PointOfInterestModel largerModel) {
+        public PointOfInterestModelSlim(PointOfInterestModel largerModel)
+        {
+            if (largerModel == null)
+            {
+                return;
+            }
+
             PointOfInterestImageUrl = largerModel.PointOfInterestImageUrl;
             PointOfInterestImage = largerModel.PointOfInterestImage;
             Name = largerModel.Name;

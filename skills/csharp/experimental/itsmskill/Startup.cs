@@ -4,7 +4,9 @@
 using System.Linq;
 using ITSMSkill.Adapters;
 using ITSMSkill.Bots;
+using ITSMSkill.Controllers.ServiceNow;
 using ITSMSkill.Dialogs;
+using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
@@ -23,6 +25,7 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
+using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Extensions.Configuration;
@@ -106,6 +109,8 @@ namespace ITSMSkill
             });
 
             // Configure proactive
+            services.AddSingleton<ProactiveState>();
+            services.AddSingleton<IMessageReceiver<ServiceNowNotification>, ServiceNowMessageReceiver>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
             services.AddHostedService<QueuedHostedService>();
 

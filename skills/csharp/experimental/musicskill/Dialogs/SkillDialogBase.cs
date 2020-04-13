@@ -158,9 +158,30 @@ namespace MusicSkill.Dialogs
                 var entities = luisResult.Entities;
 
                 // Extract query entity to search against Spotify for
-                if (entities.Artist_Any != null && entities.Artist_Any.Any())
+                if (entities.MusicParent != null && entities.MusicParent.Any())
                 {
-                    state.Query = entities.Artist_Any[0];
+                    var musicParent = entities.MusicParent.First();
+                    if (musicParent.music != null && musicParent.music.Any())
+                    {
+                        state.Query = string.Join(" ", entities.MusicParent.First().music);
+                    }
+                }
+
+                if (entities._instance?.GenreList != null)
+                {
+                    foreach (var genre in entities._instance.GenreList)
+                    {
+                        // This is a workaround for the overlap of query and genre entities
+                        if (string.IsNullOrEmpty(state.Query) || !state.Query.Contains(genre.Text))
+                        {
+                            state.Genres.Add(genre.Text);
+                        }
+                    }
+                }
+
+                if (entities.VolumeDirection != null && entities.VolumeDirection.Any())
+                {
+                    state.VolumeDirection = entities.VolumeDirection[0][0];
                 }
             }
         }
