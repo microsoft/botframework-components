@@ -1,0 +1,102 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "0bGhKY",
+    "name": "FindSingleContactDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Azbt3O"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "k5xQKX"
+          },
+          "connectionName": "msgraph",
+          "text": "Please log in to your calendar account",
+          "title": "Sign in",
+          "timeout": 900000,
+          "property": "dialog.token",
+          "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
+          "alwaysPrompt": true
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "n0DiKh"
+          }
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "VhT4PJ"
+          },
+          "responseType": "Json",
+          "method": "GET",
+          "url": "https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName, '${dialog.CurrentAttendee}') or startswith(givenName,'${dialog.CurrentAttendee}') or startswith(surname,'${dialog.CurrentAttendee}') or startswith(mail,'${dialog.CurrentAttendee}') or startswith(userPrincipalName,'${dialog.CurrentAttendee}')",
+          "resultProperty": "dialog.AttendeeResults",
+          "headers": {
+            "Authorization": "Bearer ${dialog.token.Token}"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "SPWVAY"
+          },
+          "condition": "dialog.AttendeeResults.content.value !=null && count(dialog.AttendeeResults.content.value) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "d1fnSD"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${bfdprompt-d1fnSD()}",
+              "property": "dialog.NewAttendee"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Fy6y8k"
+              },
+              "property": "dialog.options['dialog.CurrentAttendee']",
+              "value": "dialog.NewAttendee"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "kiQTMV"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "FRMDtx"
+          },
+          "property": "turn.ResolvedAttendee",
+          "value": "=dialog.AttendeeResults.content.value[0].mail"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "JCNE2_"
+          },
+          "value": "=turn.ResolvedAttendee"
+        }
+      ]
+    }
+  ],
+  "generator": "FindSingleContactDialog.lg"
+}

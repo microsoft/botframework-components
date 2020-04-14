@@ -1,0 +1,526 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "heDl9L",
+    "name": "CreateMeetingDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "FoSwSk"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HhZyiH"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "cpXEm5"
+          },
+          "property": "dialog.CreateCalendarEntry_FromDate",
+          "value": "=@FromDate"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "-sCAwx"
+          },
+          "property": "dialog.CreateCalendarEntry_FromTime",
+          "value": "=@FromTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "X7kyxx"
+          },
+          "property": "dialog.CreateCalendarEntry_ToDate",
+          "value": "=@ToDate"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Mc8LaX"
+          },
+          "property": "dialog.CreateCalendarEntry_ToTime",
+          "value": "=@ToTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "NuPcL-"
+          },
+          "property": "dialog.CreateCalendarEntry_Location",
+          "value": "=@Location"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "OFnyNs"
+          },
+          "property": "dialog.CreateCalendarEntry_Subject",
+          "value": "=@Subject"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hLo1Xg"
+          },
+          "property": "dialog.CreateCalendarEntry_Content",
+          "value": "=@Message"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "WrLiYP"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${bfdprompt-WrLiYP()}",
+          "unrecognizedPrompt": "${bfdunrecognizedPrompt-WrLiYP()}",
+          "property": "dialog.attendees",
+          "value": "=@personName"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "CpehVo"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.AttendeeList",
+          "value": "=dialog.attendees"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HO2t2n"
+          },
+          "condition": "dialog.ResolvedAttendees==null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "vcs_zt"
+              },
+              "dialog": "FindContactDialog",
+              "options": {
+                "AttendeeList": "${dialog.AttendeeList}"
+              },
+              "resultProperty": "dialog.ResolvedAttendees"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "ZYFVIR"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${bfdprompt-ZYFVIR()}",
+          "value": "=@Subject",
+          "property": "dialog.CreateCalendarEntry_Subject"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "L5B1Du"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${bfdprompt-L5B1Du()}",
+          "property": "dialog.CreateCalendarEntry_Content",
+          "value": "=@Message"
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "65qUN5"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "defaultLocale": "en-us",
+          "prompt": "${bfdprompt-65qUN5()}",
+          "unrecognizedPrompt": "${bfdunrecognizedPrompt-65qUN5()}",
+          "property": "dialog.CreateCalendarEntry_FromDate",
+          "value": "=@FromDate"
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "8HwH5I"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "defaultLocale": "en-us",
+          "prompt": "${bfdprompt-8HwH5I()}",
+          "unrecognizedPrompt": "${bfdunrecognizedPrompt-8HwH5I()}",
+          "invalidPrompt": "${bfdinvalidPrompt-8HwH5I()}",
+          "value": "=@FromTime",
+          "property": "dialog.CreateCalendarEntry_FromTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "2UwwHK"
+          },
+          "property": "dialog.CreateCalendarEntry_StartDateTime",
+          "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.CreateCalendarEntry_FromDate[0].value)))+(ticks(formatDateTime(dialog.CreateCalendarEntry_FromTime[0].value))-ticks(startOfDay(formatDateTime(dialog.CreateCalendarEntry_FromTime[0].value))))-621355968000000000)/10000000)"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "f3RzXz"
+          }
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "oSDCde"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "defaultLocale": "en-us",
+          "prompt": "${bfdprompt-oSDCde()}",
+          "unrecognizedPrompt": "${bfdunrecognizedPrompt-oSDCde()}",
+          "invalidPrompt": "${bfdinvalidPrompt-oSDCde()}",
+          "property": "dialog.CreateCalendarEntry_Duration",
+          "value": "=@Duration"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "GfCgXd"
+          },
+          "property": "dialog.CreateCalendarEntry_EndDateTime",
+          "value": "=dialog.CreateCalendarEntry_StartDateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "sXfPZh"
+          },
+          "property": "dialog.CreateCalendarEntry_EndDateTime",
+          "value": "=addSeconds(formatDateTime(dialog.CreateCalendarEntry_StartDateTime), int(dialog.CreateCalendarEntry_Duration[0].value))"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "mY3noY"
+          }
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "ZMhE8Z"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${bfdprompt-ZMhE8Z()}",
+          "property": "dialog.CreateCalendarEntry_Location",
+          "value": "=@Location"
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "k-PxIK"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${bfdprompt-k-PxIK()}",
+          "property": "dialog.CreateCalendarEntry_Confirm"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "fVEwl_"
+          },
+          "condition": "dialog.CreateCalendarEntry_Confirm",
+          "actions": [
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "zAMDCr"
+              },
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "7QU3xC"
+                  },
+                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                  "value": "=dialog.foreach.value"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "QaiSXB"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.CreateHttpRequestEmailList",
+                  "value": "=dialog.CreateHttpRequestEmailItem"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "a0oOKA"
+                  },
+                  "name": "email loop"
+                }
+              ],
+              "itemsProperty": "dialog.ResolvedAttendees"
+            },
+            {
+              "$kind": "Microsoft.OAuthInput",
+              "$designer": {
+                "id": "cobsY1"
+              },
+              "connectionName": "msgraph",
+              "text": "Please log in to your calendar account",
+              "title": "Sign in",
+              "timeout": 900000,
+              "property": "dialog.token",
+              "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
+              "alwaysPrompt": true
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "IcRVCA"
+              },
+              "responseType": "Json",
+              "method": "POST",
+              "url": "https://graph.microsoft.com/v1.0/me/events",
+              "resultProperty": "dialog.CreateMeetingHttpResult",
+              "headers": {
+                "Authorization": "Bearer ${dialog.token.Token}"
+              },
+              "body": {
+                "subject": "${if(empty(dialog.CreateCalendarEntry_subject) != true && toLower(dialog.createcalendarentry_subject) != 'skip', dialog.createcalendarentry_subject,'')}",
+                "body": {
+                  "contentType": "HTML",
+                  "content": "${if(empty(dialog.CreateCalendarEntry_Content) != true && toLower(dialog.CreateCalendarEntry_Content) != 'skip', dialog.CreateCalendarEntry_Content,'')}"
+                },
+                "start": {
+                  "dateTime": "${formatDateTime(dialog.CreateCalendarEntry_StartDateTime, 'yyyy-MM-ddTHH:mm:ss')}",
+                  "timeZone": "UTC"
+                },
+                "end": {
+                  "dateTime": "${formatDateTime(dialog.CreateCalendarEntry_EndDateTime, 'yyyy-MM-ddTHH:mm:ss')}",
+                  "timeZone": "UTC"
+                },
+                "location": {
+                  "displayName": "${if(empty(dialog.CreateCalendarEntry_Location) != true && toLower(dialog.CreateCalendarEntry_Location) != 'skip', dialog.CreateCalendarEntry_Location,'')}"
+                },
+                "attendees": "=dialog.CreateHttpRequestEmailList"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "ez2R4w"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "outputFormat": "value",
+              "appendChoices": "true",
+              "defaultLocale": "en-us",
+              "style": "Auto",
+              "choiceOptions": {
+                "inlineSeparator": ", ",
+                "inlineOr": " or ",
+                "inlineOrMore": ", or ",
+                "includeNumbers": true
+              },
+              "recognizerOptions": {
+                "noValue": false,
+                "noAction": false
+              },
+              "prompt": "${bfdprompt-ez2R4w()}",
+              "choices": [
+                "Time",
+                "Subject",
+                "Location",
+                "Attendee",
+                "Content"
+              ],
+              "property": "turn.AdjustResult",
+              "unrecognizedPrompt": "${bfdunrecognizedPrompt-ez2R4w()}"
+            },
+            {
+              "$kind": "Microsoft.SwitchCondition",
+              "$designer": {
+                "id": "-5q10k"
+              },
+              "condition": "turn.AdjustResult",
+              "cases": [
+                {
+                  "value": "Time",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperties",
+                      "$designer": {
+                        "id": "Gii7wC"
+                      },
+                      "properties": [
+                        "dialog.CreateCalendarEntry_FromDate",
+                        "dialog.CreateCalendarEntry_FromTime",
+                        "dialog.CreateCalendarEntry_ToTime",
+                        "dialog.CreateCalendarEntry_StartDateTime",
+                        "dialog.CreateCalendarEntry_EndDateTime"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "Subject",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "OLyl9c"
+                      },
+                      "property": "dialog.CreateCalendarEntry_Subject"
+                    }
+                  ]
+                },
+                {
+                  "value": "Location",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "1LxP2A"
+                      },
+                      "property": "dialog.CreateCalendarEntry_Location"
+                    }
+                  ]
+                },
+                {
+                  "value": "Attendee",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "f9or-n"
+                      },
+                      "property": "dialog.AttendeeList"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "-5qCyv"
+                      },
+                      "property": "dialog.ResolvedAttendees"
+                    }
+                  ]
+                },
+                {
+                  "value": "Content",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "qvb9Xt"
+                      },
+                      "property": "dialog.CreateCalendarEntry_Content"
+                    },
+                    {
+                      "$kind": "Microsoft.DeleteProperties",
+                      "$designer": {
+                        "id": "hT2wlc"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "default": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "FFafKB"
+                  },
+                  "activity": "${bfdactivity-FFafKB()}"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "-y-caS"
+              },
+              "name": "before repeat dialog"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "K3pVgs"
+              },
+              "options": {
+                "ResolvedAttendees": "${dialog.ResolvedAttendees}",
+                "CreateCalendarEntry_Subject": "${dialog.CreateCalendarEntry_Subject}",
+                "CreateCalendarEntry_Content": "${dialog.CreateCalendarEntry_Content}",
+                "CreateCalendarEntry_StartDateTime": "${dialog.CreateCalendarEntry_StartDateTime}",
+                "CreateCalendarEntry_EndDateTime": "${dialog.CreateCalendarEntry_EndDateTime}",
+                "CreateCalendarEntry_Location": "${dialog.CreateCalendarEntry_Location}"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "psg9jG"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "M7hIKa"
+          },
+          "condition": "dialog.CreateMeetingHttpResult.statusCode == 201",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "P9QJGP"
+              },
+              "activity": "${bfdactivity-P9QJGP()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "PaAyTQ"
+              },
+              "activity": "${bfdactivity-PaAyTQ()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "CreateMeetingDialog.lg",
+  "recognizer": "CreateMeetingDialog.lu"
+}
