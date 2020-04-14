@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Extensions
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Extensions
 {
     using System;
     using ITSMSkill.Extensions.Teams.TaskModule;
@@ -6,6 +9,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
+    /// <summary>
+    /// ActivityEx for purpose of TeamsTaskModule
+    /// </summary>
     public static class ActivityEx
     {
         public const string FetchType = "task/fetch";
@@ -17,6 +23,18 @@
         {
             return activity.IsTeamsActivity()
                 && activity.IsTaskModuleActivity();
+        }
+
+        public static bool IsTaskModuleFetchActivity(this Activity activity)
+        {
+            return StringComparer.OrdinalIgnoreCase.Equals(activity.Type, ActivityTypes.Invoke)
+                && StringComparer.OrdinalIgnoreCase.Equals(activity.Name, FetchType);
+        }
+
+        public static bool IsTaskModuleSubmitActivity(this Activity activity)
+        {
+            return StringComparer.OrdinalIgnoreCase.Equals(activity.Type, ActivityTypes.Invoke)
+                && StringComparer.OrdinalIgnoreCase.Equals(activity.Name, SubmitType);
         }
 
         public static bool IsTaskModuleActivity(this Activity activity)

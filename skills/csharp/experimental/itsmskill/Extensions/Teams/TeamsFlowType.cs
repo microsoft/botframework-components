@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ITSMSkill.Extensions.Teams
 {
+    /// <summary>
+    /// Enum for different Handler of TaskModule.
+    /// </summary>
     public enum TeamsFlowType
     {
         /// <summary>
@@ -25,5 +28,11 @@ namespace ITSMSkill.Extensions.Teams
         /// </summary>
         [EnumMember(Value = "updateticket_form")]
         UpdateTicket_Form,
+
+        /// <summary>
+        /// Task Module will display create subscription
+        /// </summary>
+        [EnumMember(Value = "delete_form")]
+        DeleteTicket_Form,
     }
 }

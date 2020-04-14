@@ -38,7 +38,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var teamsImplementation = new CreateTicketTeamsImplementation(sp);
 
-            var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
+            var response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
 
             // TODO: Validate Response contains GetUserInput AdaptiveCard
@@ -70,7 +70,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var teamsImplementation = new CreateTicketTeamsImplementation(sp);
 
-            var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
+            var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
 
             //TODO: Validate TaskModule Response is a Successfully added incident

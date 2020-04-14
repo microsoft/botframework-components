@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Dialogs.Teams
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Dialogs.Teams
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,6 +13,9 @@
     using Microsoft.Bot.Schema;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Helper class to create adaptive cards
+    /// </summary>
     public class TicketDialogHelper
     {
         public static AdaptiveCard CreateIncidentAdaptiveCard()
