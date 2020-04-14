@@ -1,0 +1,94 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "6y3vmT",
+    "name": "GetPeers"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "iDsoAe"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "uryvyD",
+            "name": "Set a property"
+          },
+          "property": "dialog.url",
+          "value": " https://graph.microsoft.com/v1.0/users/${conversation.chosenPerson.id}/manager?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "3iMMSp",
+            "name": "Send an HTTP request"
+          },
+          "method": "GET",
+          "url": "${dialog.url}",
+          "resultProperty": "dialog.manager",
+          "headers": {
+            "Authorization": "${user.token.Token}"
+          },
+          "responseType": "Json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "x2lEp9",
+            "name": "Branch: if/else"
+          },
+          "condition": "dialog.manager.content.id != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Kxqm0s",
+                "name": "Set a property"
+              },
+              "property": "dialog.url",
+              "value": " https://graph.microsoft.com/v1.0/users/${dialog.manager.content.id}/directReports?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department"
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "gvomeA",
+                "name": "Send an HTTP request"
+              },
+              "method": "GET",
+              "url": "${dialog.url}",
+              "resultProperty": "dialog.contosodata",
+              "headers": {
+                "Authorization": "${user.token.Token}"
+              },
+              "responseType": "Json"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Pd7sBr",
+                "name": "Set a property"
+              },
+              "property": "conversation.allPersons",
+              "value": "=dialog.contosodata.content.value"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "IDaad-"
+              },
+              "property": "conversation.allPersons",
+              "value": "=where(conversation.allPersons, x, x.id != conversation.chosenPerson.id)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetPeers.lg"
+}
