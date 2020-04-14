@@ -1,0 +1,7 @@
+[import](common.lg)
+
+# bfdinvalidPrompt-k5xQKX()
+- Input invalid. Retry login please.
+
+# bfdprompt-d1fnSD()
+- No such attendee named ${dialog.CurrentAttendee}! Please retry input an attendee.
