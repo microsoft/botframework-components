@@ -156,7 +156,7 @@
               "$designer": {
                 "id": "nU5RDb"
               },
-              "connectionName": "msgraph",
+              "connectionName": "=settings.ConnectionName",
               "text": "Please log in to your calendar account",
               "title": "Sign in",
               "timeout": 900000,
