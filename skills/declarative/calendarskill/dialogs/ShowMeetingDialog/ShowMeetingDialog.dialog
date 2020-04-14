@@ -1,0 +1,369 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "3qackC",
+    "name": "ShowMeetingDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "tw_o8J"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DUBRRc"
+          },
+          "condition": "dialog.MeetingsList == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Oyxyj9"
+              },
+              "property": "dialog.ShowMeeting_FromDate",
+              "value": "=@FromDate"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "4nPfyK"
+              },
+              "property": "dialog.ShowMeeting_FromTime",
+              "value": "=@FromTime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "YhmPd_"
+              },
+              "property": "dialog.ShowMeeting_ToDate",
+              "value": "=@ToDate"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "FZFhjP"
+              },
+              "property": "dialog.ShowMeeting_ToTime",
+              "value": "=@ToTime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "gc2Rpn"
+              },
+              "property": "dialog.ShowMeeting_Subject",
+              "value": "=@Subject"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ezSgtj"
+              },
+              "condition": "dialog.ShowMeeting_FromDate == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WJfTxT"
+                  },
+                  "property": "dialog.ShowMeeting_FromDate",
+                  "value": "=utcNow()"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Plon6f"
+              },
+              "condition": "dialog.ShowMeeting_ToTime == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Oa6oDZ"
+                  },
+                  "property": "dialog.ShowMeeting_FromTime",
+                  "value": "=dialog.ShowMeeting_FromDate"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "U1v_VF"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "R11s6N"
+              },
+              "property": "dialog.ShowMeeting_StartDateTime",
+              "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.ShowMeeting_FromDate)))+(ticks(formatDateTime(dialog.ShowMeeting_FromTime))-ticks(startOfDay(formatDateTime(dialog.ShowMeeting_FromTime))))-621355968000000000)/10000000)"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "pkxlyy"
+              },
+              "condition": "dialog.ShowMeeting_ToDate == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VMbx5N"
+                  },
+                  "property": "dialog.ShowMeeting_ToDate",
+                  "value": "=dialog.ShowMeeting_FromDate"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "CsFlKg"
+              },
+              "condition": "dialog.ShowMeeting_ToTime == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Jlf29u"
+                  },
+                  "property": "dialog.ShowMeeting_ToTime",
+                  "value": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "RxOzsu"
+              },
+              "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.ShowMeeting_ToDate)))+(ticks(formatDateTime(dialog.ShowMeeting_ToTime))-ticks(startOfDay(formatDateTime(dialog.ShowMeeting_ToTime))))-621355968000000000)/10000000)",
+              "property": "dialog.ShowMeeting_EndDateTime"
+            },
+            {
+              "$kind": "Microsoft.OAuthInput",
+              "$designer": {
+                "id": "nU5RDb"
+              },
+              "connectionName": "=settings.ConnectionName",
+              "text": "Please log in to your calendar account",
+              "title": "Sign in",
+              "timeout": 900000,
+              "property": "dialog.token",
+              "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
+              "alwaysPrompt": true
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "oKh15F"
+              },
+              "responseType": "Json",
+              "method": "GET",
+              "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.ShowMeeting_StartDateTime}&enddatetime=${dialog.ShowMeeting_EndDateTime}",
+              "resultProperty": "dialog.ShowAllMeetingDialog_GraphAll",
+              "headers": {
+                "Authorization": "Bearer ${dialog.token.Token}"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "fIQURt"
+              },
+              "property": "dialog.MeetingsList",
+              "value": "=dialog.ShowAllMeetingDialog_GraphAll.content.value"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "QN-ObT"
+              },
+              "value": "=0",
+              "property": "dialog.ShowMeeting_CurrentPage"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Fgo9LT"
+          },
+          "condition": "dialog.MeetingsList == null || count(dialog.MeetingsList) == 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "jsbYb5"
+              },
+              "condition": "count(dialog.MeetingsList) > 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "RxBh_e"
+                  },
+                  "property": "dialog.DisplayMeetingsList",
+                  "value": "=subArray(dialog.MeetingsList, dialog.ShowMeeting_CurrentPage * 3, min(dialog.ShowMeeting_CurrentPage * 3 + 3, count(dialog.MeetingsList)))"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "9l8vFx"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "Iy1aRj"
+                  },
+                  "itemsProperty": "dialog.DisplayMeetingsList",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "2Ddf6w"
+                      },
+                      "property": "dialog.ItemDate",
+                      "value": "=startOfDay(formatDateTime(dialog.foreach.value.start.datetime))"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "APmUgz"
+                      },
+                      "condition": "dialog.CurrentAddedDate == null || dialog.CurrentAddedDate  != dialog.ItemDate",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "dpkTA1"
+                          },
+                          "property": "dialog.CurrentAddedDate",
+                          "value": "=dialog.ItemDate"
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "ohk9kr"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.CurrentDateData.Name",
+                              "value": "CalendarDate"
+                            },
+                            {
+                              "property": "dialog.CurrentDateData.Date",
+                              "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.EditArray",
+                          "$designer": {
+                            "id": "Tj8UJQ"
+                          },
+                          "changeType": "push",
+                          "itemsProperty": "dialog.DisplayMeetingData",
+                          "value": "=dialog.CurrentDateData"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "yV1RRI"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.CurrentMeetingData.Name",
+                          "value": "CalendarItem"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.IsConflict",
+                          "value": "false"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.StartTime",
+                          "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.EndTime",
+                          "value": "=formatDateTime(dialog.foreach.value.end.datetime)"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.IsAccepted",
+                          "value": "=dialog.foreach.value.isOrganizer || (dialog.foreach.value.responseStatus.response == 'accepted')"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.Title",
+                          "value": "=dialog.foreach.value.subject"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.Location",
+                          "value": "=dialog.foreach.value.location.displayName"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "WdjRKV"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.DisplayMeetingData",
+                      "value": "=dialog.CurrentMeetingData"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "PIdoic"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "n_iPbD"
+                  },
+                  "activity": "${bfdactivity-n_iPbD()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "6aPtgV"
+                  },
+                  "activity": "${bfdactivity-6aPtgV()}"
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Q6rGL1"
+              },
+              "activity": "${bfdactivity-Q6rGL1()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ShowMeetingDialog.lg"
+}
