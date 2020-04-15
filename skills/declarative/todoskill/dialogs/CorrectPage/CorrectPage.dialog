@@ -1,0 +1,100 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "pKmhiH",
+    "name": "CorrectPage"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Cup9ZQ"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "SG7iPJ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=conversation.page*int(settings.displaySize)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "efJ6XX"
+          },
+          "condition": "=dialog.start < 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "Po3KLC"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.page",
+                  "value": "=0"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Csusu8"
+              },
+              "value": "=-1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "kdhxN1"
+              },
+              "condition": "=dialog.start >= dialog.count",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "vA-Tkg"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.page",
+                      "value": "=(dialog.count-1)/int(settings.displaySize)"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "_CDkkA"
+                  },
+                  "value": "=1"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "TG2ze0"
+                  },
+                  "value": "=0"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "CorrectPage.lg"
+}

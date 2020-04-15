@@ -1,0 +1,280 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "950825",
+    "name": "AddToDoNewName"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "recognizer": "AddToDo.lu",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "692581"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Jk-nXo"
+          },
+          "dialog": "SetListTypePage"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "055724",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "conversation.taskContent",
+              "value": "=coalesce(conversation.taskContent, @TaskContent)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "662396",
+            "name": "Text input"
+          },
+          "prompt": "${bfdprompt-662396()}",
+          "maxTurnCount": 3,
+          "property": "conversation.taskContent",
+          "value": "=@TaskContent",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeListType.score > float(settings.intentScore)"
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "456695",
+            "name": "Multiple choice"
+          },
+          "prompt": "${bfdprompt-456695()}",
+          "maxTurnCount": 3,
+          "property": "conversation.listType",
+          "value": "=coalesce(@ListType, @roleListType)",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeTaskContent.score > float(settings.intentScore)",
+          "outputFormat": "value",
+          "choices": [
+            {
+              "value": "Shopping"
+            },
+            {
+              "value": "Grocery"
+            },
+            {
+              "value": "To Do",
+              "synonyms": [
+                "todo"
+              ]
+            }
+          ],
+          "appendChoices": "true",
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "choiceOptions": {
+            "inlineSeparator": ", ",
+            "inlineOr": " or ",
+            "inlineOrMore": ", or ",
+            "includeNumbers": true
+          },
+          "recognizerOptions": {
+            "noValue": false
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "NgVkiJ"
+          },
+          "dialog": "GetToDosOutlook",
+          "resultProperty": "dialog.tasks"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lRsuXt"
+          },
+          "dialog": "MatchInList",
+          "resultProperty": "dialog.items",
+          "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",conversation.taskContent)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LJyu77"
+          },
+          "condition": "=count(dialog.items) != 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "RCO61b"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeTaskContent.score > float(settings.intentScore) || #ChangeListType.score > float(settings.intentScore)",
+              "defaultLocale": "en-us",
+              "style": "Auto",
+              "prompt": "${bfdprompt-RCO61b()}",
+              "property": "dialog.add"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "C3hoUq"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.add",
+                  "value": "=true"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LqhLN9"
+          },
+          "condition": "=dialog.add",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "QRekYt"
+              },
+              "activity": "${bfdactivity-QRekYt()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "-fYnxb"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Iwe07c"
+              },
+              "dialog": "AddToListOutlook",
+              "options": {
+                "taskContent": "${conversation.taskContent}"
+              }
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "8nNkT-"
+              },
+              "dialog": "ShowToDo",
+              "options": {
+                "fromType": "add",
+                "taskContent": "${conversation.taskContent}"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AluUnW"
+      },
+      "intent": "ChangeTaskContent",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "3mKloK"
+          },
+          "condition": "=@taskContent != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "CIxR1t"
+              },
+              "activity": "${bfdactivity-CIxR1t()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "2ZZcmS"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.taskContent",
+                  "value": "=@taskContent"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "YKac3g"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "S3kGux"
+      },
+      "intent": "ChangeListType",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "oj95Tt",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "dialog.listType",
+              "value": "=coalesce(@ListType, @roleListType)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "4yjSI0"
+          },
+          "condition": "=dialog.listType != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "uvH7W6"
+              },
+              "activity": "${bfdactivity-uvH7W6()}"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "IxkPAQ"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "AddToDo.lg"
+}

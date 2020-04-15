@@ -1,0 +1,65 @@
+[import](common.lg)
+[import](ShowToDo.lg)
+
+# bfdactivity-012019()
+- ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
+
+# bfdprompt-841583()
+[Activity
+    Text = Ok, give me the exact title of the todo you would like to delete..
+    SuggestedActions = Help | Cancel
+]
+
+# bfdprompt-098282()
+- ${ListTypePromptForDelete()}
+
+# bfdactivity-689712()
+- ${NoTasksInList()}
+
+# bfdactivity-809470()
+- ${TaskDeleted(False,conversation.listType,dialog.items[0].Topic, dialog.count, dialog.todos)}
+
+> From DeleteToDo
+
+# ListTypePromptForDelete.Text
+- Do you want to delete something from your To Do, Shopping, or Grocery list?
+
+# ListTypePromptForDelete
+[Activity
+    Text = ${ListTypePromptForDelete.Text()}
+    Speak = ${ListTypePromptForDelete.Text()}
+    InputHint = expectingInput
+]
+
+# AskTaskIndexRetryForDelete.Text
+- Sorry, I couldn't find the item. Let's try again, what do you want to delete?
+
+# AskTaskIndexRetryForDelete
+[Activity
+    Text = ${AskTaskIndexRetryForDelete.Text()}
+    Speak = ${AskTaskIndexRetryForDelete.Text()}
+    InputHint = expectingInput
+]
+
+# TaskDeleted(IsDeleteAll, ListType, TaskContent, TotalNumber, ToDos)
+[Activity
+    Text = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
+    Speak = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
+    Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
+    InputHint = ignoringInput
+]
+
+# TaskDeletedText(IsDeleteAll, ListType, TaskContent)
+- IF: ${IsDeleteAll == true}
+  - ${AfterAllTasksDeleted.Text(ListType)}
+- ELSE:
+  - ${AfterTaskDeleted.Text(TaskContent, ListType)}
+
+# AfterAllTasksDeleted.Text(ListType)
+- I cleared your ${ListType} list.
+
+# AfterTaskDeleted.Text(TaskContent, ListType)
+- I deleted ${TaskContent} from your ${ListType} list.
+
+# bfdactivity-CZBp8F()
+- Sorry, I couldn't find the item
