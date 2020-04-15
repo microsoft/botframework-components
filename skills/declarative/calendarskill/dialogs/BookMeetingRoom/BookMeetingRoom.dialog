@@ -179,7 +179,7 @@
           },
           "responseType": "Json",
           "method": "POST",
-          "url": "https://graph.microsoft.com/beta/me/events/${dialog.meeting.id}/accept",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meeting.id}/accept",
           "headers": {
             "authorization": "${dialog.token.token}"
           },
@@ -295,7 +295,7 @@
             ],
             "allowNewTimeProposals": true
           },
-          "url": "https://graph.microsoft.com/beta/me/events",
+          "url": "https://graph.microsoft.com/v1.0/me/events",
           "headers": {
             "authorization": "${dialog.token.token}"
           },

@@ -110,7 +110,7 @@
           },
           "responseType": "Json",
           "method": "POST",
-          "url": "https://graph.microsoft.com/beta/me/events/${dialog.meeting.id}/cancel",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meeting.id}/cancel",
           "headers": {
             "authorization": "${dialog.token.token}"
           },

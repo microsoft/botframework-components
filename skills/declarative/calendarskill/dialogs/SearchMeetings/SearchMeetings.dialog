@@ -281,7 +281,7 @@
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/beta/me/calendar/calendarView?startDateTime=${dialog.utcStart}&endDateTime=${dialog.utcStart}",
+          "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=${dialog.utcStart}&endDateTime=${dialog.utcStart}",
           "headers": {
             "authorization": "${dialog.token.token}"
           },

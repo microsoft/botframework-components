@@ -194,7 +194,7 @@
           },
           "responseType": "Json",
           "method": "PATCH",
-          "url": "https://graph.microsoft.com/beta/me/events/${dialog.meeting.id}",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meeting.id}",
           "headers": {
             "authorization": "${dialog.token.token}"
           },

@@ -449,7 +449,7 @@
             },
             "availabilityViewInterval": "=dialog.duration"
           },
-          "url": "https://graph.microsoft.com/beta/me/calendar/getSchedule",
+          "url": "https://graph.microsoft.com/v1.0/me/calendar/getSchedule",
           "contentType": "application/json",
           "resultProperty": "dialog.api_result",
           "disabled": false,
