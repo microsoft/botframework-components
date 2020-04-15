@@ -1,0 +1,38 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "HvGuY4",
+    "name": "DeleteInListOutlook"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "RWfnVE"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "jLrdsY"
+          },
+          "dialog": "OAuth"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "U9GTxX"
+          },
+          "dialog": "DeleteAsync",
+          "options": {
+            "url": "${settings.graphBaseUrl + 'tasks/' + dialog.task.id}"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "DeleteInListOutlook.lg"
+}

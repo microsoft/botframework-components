@@ -1,0 +1,49 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "AoxkfO",
+    "name": "GetAsync"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "fYfYJJ"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "lPY_rj"
+          },
+          "responseType": "Json",
+          "method": "GET",
+          "url": "=dialog.url",
+          "headers": {
+            "Accept": "application/json",
+            "Authorization": "='Bearer ' + turn.token"
+          },
+          "contentType": "application/json",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YVGo4k"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "ANRYCS"
+          },
+          "value": "=dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "GetAsync.lg"
+}
