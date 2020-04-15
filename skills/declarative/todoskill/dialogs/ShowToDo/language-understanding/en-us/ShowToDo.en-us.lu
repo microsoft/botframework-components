@@ -1,0 +1,136 @@
+> To learn more about the LU file format, read the documentation at
+> https://aka.ms/lu-file-format
+
+> Entity definitions 
+@ ml ContainsAll
+
+> Add a list entity to detect list tye
+@ list ListType roleListType =
+    - todo:
+        - to do
+        - todo
+        - to-do
+        - to dos
+        - todos
+        - to-dos
+        - to - do
+    - shopping:
+        - shopping 
+        - shop
+        - shoppers
+    - grocery:
+        - grocery
+        - groceries
+        - grocer
+
+# AskForListType
+- todo
+- shopping
+- grocery
+
+# ShowToDo
+- access my {ListType: roleListType=shopping} list
+- access my {ListType: roleListType=to do} list
+- access the {ListType: roleListType=groceries} list
+- {ContainsAll=all} {ListType: roleListType=shopping} list
+- bring up {ContainsAll=everything} on my {ListType: roleListType=shopping} list
+- bring up {ListType: roleListType=grocery} notes
+- bring up {ListType: roleListType=shopping} note
+- browse my {ListType: roleListType=groceries}
+- can you show my {ListType: roleListType=to do} list
+- check my task list
+- check my {ListType: roleListType=to do} list
+- display {ContainsAll=all} notes from last month
+- display {ListType: roleListType=groceries} list
+- display notes with {ListType: roleListType=groceries}
+- display {ListType: roleListType=shopping} list
+- display tasks note
+- display {ListType: roleListType=todo} list
+- do i have a list called {ListType: roleListType=grocery} list
+- do i have any lists
+- find list about {ListType: roleListType=shopping}
+- find my {ListType: roleListType=grocery} items i saved on saturday
+- find my {ListType: roleListType=shopping} list
+- find note labeled {ListType: roleListType=grocery}
+- find notes called {ListType: roleListType=grocery}
+- find notes for {ListType: roleListType=grocery} {ListType: roleListType=shopping}
+- find notes with {ListType: roleListType=groceries}
+- find {ListType: roleListType=shopping}
+- find task list on {ListType: roleListType=shopping}
+- find the list i create for {ListType: roleListType=shopping}
+- find the {ListType: roleListType=to do list} for me
+- get work items on my {ListType: roleListType=todo} list
+- help access my personal list
+- help show my {ListType: roleListType=to do} list
+- i have to see my tasks
+- i have to see the {ListType: roleListType=grocery} list i created today
+- i want to check my {ListType: roleListType=shopping} list
+- i want to see {ListType: roleListType=grocery} list
+- is there anything on my {ListType: roleListType=to do} list
+- list {ListType: roleListType=grocery} notes
+- look at my {ListType: roleListType=grocery} list
+- pull {ListType: roleListType=grocery} list
+- pull up {ListType: roleListType=grocery} list
+- pull up my {ListType: roleListType=grocery} list
+- pull up my notes
+- pull up {ListType: roleListType=to do} list
+- read aloud my {ListType: roleListType=grocery} list
+- read out my tasks
+- review {ListType: roleListType=grocery} list
+- {ListType: roleListType=shopping} list
+- show {ContainsAll=all} my {ListType: roleListType=shopping} list
+- show me {ContainsAll=all} tasks
+- show my {ListType: roleListType=to do} list
+- show my {ListType: roleListType=to dos}
+- show my {ListType: roleListType=todos}
+- take me to my {ListType: roleListType=shopping} list
+- view my {ListType: roleListType=grocery} list
+- view {ListType: roleListType=shopping} list
+- what about {ListType: roleListType=grocery} list
+- what am i going to do next
+- what are my notes for the {ListType: roleListType=grocery} store
+- what are my tasks for {ListType: roleListType=todo}
+- what do i have to buy on the {ListType: roleListType=shopping} list
+- what do i need to buy in the {ListType: roleListType=shopping} list
+- what is on my {ListType: roleListType=shopping} list
+- what is the last task on my {ListType: roleListType=to do} list for tomorow
+- where is the {ListType: roleListType=grocery} {ListType: roleListType=shopping} notes i worked on last night
+- would you bring up my new {ListType: roleListType=grocery} notes
+
+# ShowNextPage
+- are there any other tasks
+- can you show next page
+- display the next page
+- displays more
+- displays the next
+- next
+- next task
+- reveal more
+- show greater
+- show more
+- show more tasks
+- show more work
+- show next
+- show next page
+- show next sheet
+- show next website
+- tell more
+- tell more tasks
+- what's more
+- what's next
+- what's on the next
+
+# ShowPreviousPage
+- can you get previous for me
+- can you show previous for me
+- display the previous
+- display the previous page
+- displays previously
+- i need to check previous tasks
+- show back
+- show earlier
+- show last time
+- show me everthing on the previous page
+- show previous
+- show previous page
+- shows the prior

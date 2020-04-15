@@ -1,0 +1,207 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "380079",
+    "name": "DeleteToDo"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "138705"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "--RowA"
+          },
+          "dialog": "SetListTypePage"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "749630",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "dialog.taskContent",
+              "value": "=coalesce(@TaskContent, $taskContent)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "098282",
+            "name": "Multiple choice"
+          },
+          "prompt": "${bfdprompt-098282()}",
+          "maxTurnCount": 3,
+          "property": "conversation.listType",
+          "value": "=coalesce(@ListType, @roleListType)",
+          "alwaysPrompt": false,
+          "allowInterruptions": "!@listType",
+          "outputFormat": "value",
+          "choices": [
+            {
+              "value": "Shopping"
+            },
+            {
+              "value": "Grocery"
+            },
+            {
+              "value": "To Do",
+              "synonyms": [
+                "todo"
+              ]
+            }
+          ],
+          "appendChoices": "true",
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "choiceOptions": {
+            "inlineSeparator": ", ",
+            "inlineOr": " or ",
+            "inlineOrMore": ", or ",
+            "includeNumbers": true
+          },
+          "recognizerOptions": {
+            "noValue": false
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WUBz7T"
+          },
+          "dialog": "GetToDosOutlook",
+          "resultProperty": "dialog.tasks"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "K-bSF9"
+          },
+          "assignments": [
+            {
+              "property": "dialog.count",
+              "value": "=count(dialog.tasks)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "713992",
+            "name": "Branch: If/Else"
+          },
+          "condition": "dialog.count > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "1KbyfW"
+              },
+              "dialog": "GetToDos",
+              "resultProperty": "dialog.todos",
+              "options": "=setProperty({},\"tasks\",dialog.tasks)"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "012019",
+                "name": "Send a response"
+              },
+              "activity": "${bfdactivity-012019()}"
+            },
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "841583",
+                "name": "Text input"
+              },
+              "prompt": "${bfdprompt-841583()}",
+              "maxTurnCount": 3,
+              "property": "dialog.taskContent",
+              "value": "=@TaskContent",
+              "alwaysPrompt": false,
+              "allowInterruptions": "!@taskContent && #_Interruption.Score >= float(settings.interruptScore)"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "2N-yGS"
+              },
+              "dialog": "MatchInList",
+              "resultProperty": "dialog.items",
+              "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",dialog.taskContent)"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "HSECRw"
+              },
+              "condition": "count(dialog.items) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "CZBp8F"
+                  },
+                  "activity": "${bfdactivity-CZBp8F()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "uOFVmi"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "9DeyhL"
+              },
+              "dialog": "DeleteInListOutlook",
+              "options": "=setProperty({},\"task\",dialog.items[0])"
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "mFf8Hl"
+              },
+              "dialog": "ShowToDo"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "809470",
+                "name": "Send a response"
+              },
+              "activity": "${bfdactivity-809470()}",
+              "disabled": true
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "689712",
+                "name": "Send a response"
+              },
+              "activity": "${bfdactivity-689712()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "DeleteToDo.lg",
+  "recognizer": "DeleteToDo.lu"
+}
