@@ -1,0 +1,90 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "m3BK8n",
+    "name": "SetDateTime",
+    "description": "input: utterance\noutput: {startDateTime, endDateTime}"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "ShNWgP"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "bFzpVl"
+          },
+          "assignments": [
+            {
+              "property": "dialog._startTime",
+              "value": "=coalesce(@FromTime, $startTime)"
+            },
+            {
+              "property": "dialog._startDate",
+              "value": "=coalesce(@FromDate, $startDate, if(dialog._startTime !=null, 'today', null))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "Aao23I"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "prompt": "${bfdprompt-Aao23I()}",
+          "property": "dialog.startDate",
+          "invalidPrompt": "${bfdinvalidPrompt-Aao23I()}",
+          "outputFormat": "= this.value[0].Value",
+          "value": "= dialog._startDate"
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "l3ZgcG"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "prompt": "${bfdprompt-l3ZgcG()}",
+          "property": "dialog.startTime",
+          "value": "= dialog._startTime",
+          "outputFormat": "= this.value[0].Value"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "vk1yn8"
+          },
+          "property": "dialog.startDateTime",
+          "value": "= split(dialog.startDate, \" \")[0] + \"T\" + last(split(dialog.startTime, \" \"))"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "PUuDU4"
+          },
+          "activity": "${bfdactivity-PUuDU4()}",
+          "disabled": true
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Mnq4HF"
+          },
+          "value": "= dialog.startDateTime"
+        }
+      ]
+    }
+  ],
+  "generator": "SetDateTime.lg"
+}

@@ -1,0 +1,21 @@
+[import](common.lg)
+
+# bfdactivity-cEf99H()
+- send ${dialog.startTime}
+# bfdactivity-i8zWG3()
+- title is ${dialog.title}
+
+
+# bfdprompt-T0effT()
+- What is the datetime?
+
+
+
+# bfdprompt-Fm38sQ()
+- Are you confirmed to cancel the meeting \"${dialog.meeting.subject}\"
+
+# bfdactivity-qFefqJ()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+
+# bfdactivity-sedwtz()
+- removed meeting ${dialog.meeting.subject}

@@ -1,0 +1,25 @@
+[import](common.lg)
+
+
+
+# bfdprompt-HSMvMH()
+- What is the time or subject of the meeting?
+
+# bfdactivity-ZMYyeo()
+- title is ${dialog.title}, but feature is not available
+# bfdactivity-h0RtOF()
+- date time is ${dialog.startDateTime}
+
+# bfdactivity-AVaVzg()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+# bfdactivity-ClhdAt()
+- Can not find meetings at time ${dialog.startDateTime}
+# bfdprompt-PCaq-E()
+- Which meeting?
+
+# bfdactivity-RysIv4()
+- dialog meeting ${dialog.meetings}
+
+
+# bfdactivity-OZoAsa()
+- dialog.utcStart is ${dialog.utcStart}
