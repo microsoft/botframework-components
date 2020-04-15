@@ -1,0 +1,155 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "0T0Ron",
+    "name": "DeleteMeetingDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "R_DhL6"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "qh5Xqw",
+            "name": "search a meeting"
+          },
+          "dialog": "SearchMeetings",
+          "resultProperty": "dialog.meeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "a0grs9"
+          },
+          "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Z4JNXo"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "Fm38sQ"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${bfdprompt-Fm38sQ()}",
+          "confirmChoices": [
+            {
+              "value": "Yes",
+              "synonyms": [
+                "sure"
+              ]
+            },
+            {
+              "value": "No",
+              "synonyms": [
+                "nope"
+              ]
+            }
+          ],
+          "property": "dialog.confirm",
+          "outputFormat": "= this.value"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "6wNQGA"
+          },
+          "eventName": "DeleteMeeting",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "fuFvDL"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "jN2d_u"
+      },
+      "event": "DeleteMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "SkETgX"
+          },
+          "property": "dialog.token",
+          "text": "please sign in",
+          "title": "login",
+          "connectionName": "=settings.ConnectionName",
+          "timeout": 900000,
+          "allowInterruptions": false,
+          "alwaysPrompt": false,
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "12Mc_n"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "url": "https://graph.microsoft.com/beta/me/events/${dialog.meeting.id}/cancel",
+          "headers": {
+            "authorization": "${dialog.token.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LncZ5p"
+          },
+          "condition": "dialog.api_result.statusCode == 202",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "qFefqJ"
+              },
+              "activity": "${bfdactivity-qFefqJ()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "sedwtz"
+              },
+              "activity": "${bfdactivity-sedwtz()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "_jsT-l"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "DeleteMeetingDialog.lg"
+}

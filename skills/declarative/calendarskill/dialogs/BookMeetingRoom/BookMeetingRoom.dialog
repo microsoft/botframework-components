@@ -1,0 +1,334 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "2QL2hz",
+    "name": "BookMeetingRoom"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "fu9w3A"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "B7x0Y0"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots",
+              "value": "={}"
+            },
+            {
+              "property": "dialog.slots.Subject",
+              "value": "=coalesce(@Subject, $Subject)"
+            },
+            {
+              "property": "dialog.slots.FromDate",
+              "value": "=coalesce(@FromDate, $FromDate)"
+            },
+            {
+              "property": "dialog.slots.FromTime",
+              "value": "=coalesce(@FromTime, $FromTime)"
+            },
+            {
+              "property": "dialog.startDateTime",
+              "value": "= null"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= null"
+            },
+            {
+              "property": "dialog.slots.ToDate",
+              "value": "=coalesce(@ToDate, $ToDate)"
+            },
+            {
+              "property": "dialog.slots.ToTime",
+              "value": "=coalesce(@ToTime, $ToTime)"
+            },
+            {
+              "property": "dialog.slots.Duration",
+              "value": "=coalesce(@Duration, $Duration)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "CjiOXm"
+          },
+          "condition": "dialog.slots.FromDate==null && dialog.slots.FromTime == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "FVaHll"
+              },
+              "property": "dialog.slots.FromTime",
+              "value": "= 'now'"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lnQ5Pp"
+          },
+          "dialog": "SetDateTime",
+          "options": {
+            "startDate": "=dialog.slots.FromDate",
+            "startTime": "=dialog.slots.FromTime"
+          },
+          "resultProperty": "dialog.startDateTime",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "-fv8_I"
+          },
+          "dialog": "SetDuration",
+          "options": {
+            "duration": "=dialog.slots.Duration"
+          },
+          "resultProperty": "dialog.duration",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jfUEIY"
+          },
+          "assignments": [
+            {
+              "property": "dialog.endDateTime",
+              "value": "=addMinutes(formatDateTime(dialog.startDateTime), int(dialog.duration))"
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZIJgns"
+          },
+          "dialog": "FindMeetingRoom",
+          "resultProperty": "dialog.meetingRoom",
+          "options": {
+            "duration": "=dialog.duration",
+            "startDateTime": "=dialog.startDateTime"
+          },
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ze0zs2"
+          },
+          "dialog": "SetTitle",
+          "options": {
+            "title": "=dialog.slots.Subject"
+          },
+          "resultProperty": "dialog.title"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Nv4uDE"
+          },
+          "eventName": "CreateMeeting"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "e6jYF6"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "n-JcQg"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "Q0YJsj"
+          },
+          "property": "dialog.token",
+          "text": "please sign in",
+          "title": "login",
+          "connectionName": "=settings.ConnectionName",
+          "timeout": 900000,
+          "allowInterruptions": false,
+          "alwaysPrompt": false,
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "plDTl5"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "url": "https://graph.microsoft.com/beta/me/events/${dialog.meeting.id}/accept",
+          "headers": {
+            "authorization": "${dialog.token.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "iTO22J"
+          },
+          "condition": "dialog.api_result.statusCode == 202",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "pT8N7m"
+              },
+              "activity": "${bfdactivity-pT8N7m()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "6UyAxu"
+              },
+              "activity": "${bfdactivity-6UyAxu()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "UGSedo"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "giOPyt"
+      },
+      "event": "CreateMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "9oAzud"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "ng-odP",
+            "name": "Set utc start"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcEnd",
+              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "bIaueS"
+          },
+          "property": "dialog.token",
+          "text": "please sign in",
+          "title": "login",
+          "connectionName": "=settings.ConnectionName",
+          "timeout": 900000,
+          "allowInterruptions": false,
+          "alwaysPrompt": false,
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "Jpd579"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "body": {
+            "subject": "${dialog.title}",
+            "body": {
+              "contentType": "HTML",
+              "content": "Does noon work for you?"
+            },
+            "start": {
+              "dateTime": "${dialog.utcStart}",
+              "timeZone": "UTC"
+            },
+            "end": {
+              "dateTime": "${dialog.utcEnd}",
+              "timeZone": "UTC"
+            },
+            "attendees": [
+              {
+                "emailAddress": {
+                  "address": "${dialog.meetingRoom}",
+                  "name": "${dialog.meetingRoom}"
+                },
+                "type": "resource"
+              }
+            ],
+            "allowNewTimeProposals": true
+          },
+          "url": "https://graph.microsoft.com/beta/me/events",
+          "headers": {
+            "authorization": "${dialog.token.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "WbTPkl"
+          },
+          "condition": "dialog.api_result.statusCode == 201",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "5IVmDB"
+              },
+              "activity": "${bfdactivity-5IVmDB()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "45A0cq"
+              },
+              "activity": "${bfdactivity-45A0cq()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "BookMeetingRoom.lg"
+}

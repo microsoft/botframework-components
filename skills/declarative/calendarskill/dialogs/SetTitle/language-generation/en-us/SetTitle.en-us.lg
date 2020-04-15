@@ -1,0 +1,13 @@
+[import](common.lg)
+
+
+
+
+
+# bfdprompt-_ACAJO()
+- what is the title?
+# bfdinvalidPrompt-_ACAJO()
+- sorry, the length should be 10
+
+# bfdunrecognizedPrompt-_ACAJO()
+-unrecognized title

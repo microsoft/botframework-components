@@ -1,0 +1,13 @@
+[import](common.lg)
+
+# bfdprompt-Aao23I()
+- What is the start date
+# bfdactivity-PUuDU4()
+- start date is ${dialog.startDate}, start time is ${dialog.startTime}, start datetime is ${dialog.startDateTime}
+# bfdinvalidPrompt-Aao23I()
+- sorry, I don't understand ${this.value}
+
+
+
+# bfdprompt-l3ZgcG()
+- What is the start time
