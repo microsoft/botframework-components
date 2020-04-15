@@ -10,8 +10,15 @@
     Text = here are meetings
     Attachments = ${json(MeetingListCard('Meetings', count(dialog.MeetingsList), 0, 'today', '1-3', null, 'Microsoft', 'UTC', dialog.DisplayMeetingData, true))}
 ]
-# bfdactivity-6aPtgV()
+
+# bfdprompt-4u0r-m()
+- Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
+# bfdactivity-meJEs5()
+- The event titled ${dialog.FocusedMeeting.Title} is on ${formatDateTime(dialog.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(dialog.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(dialog.FocusedMeeting.Attendees)}. 
+# bfdactivity-Tb6enx()
+- You have one meeting ${dialog.ShowingMeetingCondition}: ${dialog.FocusedMeeting.Title}. It's with ${GetAttendeeString(dialog.FocusedMeeting.Attendees)} ${formatDateTime(dialog.FocusedMeeting.StartTime, 'HH:mm:ss')}.
+
+# bfdactivity-EckUyy()
 [Activity
-    Text = you have 1 meeting:
-    Attachments = ${json(MeetingDetailCard(formatDateTime(dialog.MeetingsList[0].start.datetime), formatDateTime(dialog.MeetingsList[0].end.datetime), 'UTC', null, dialog.MeetingsList[0].subject, dialog.MeetingsList[0].location.displayName, dialog.MeetingsList[0].location.body.bodyPreview, dialog.MeetingsList[0].onlineMeetingUrl))}
+    Attachments = ${json(MeetingDetailCard(formatDateTime(dialog.FocusedMeeting.StartTime), formatDateTime(dialog.FocusedMeeting.EndTime), 'UTC', [], dialog.FocusedMeeting.Subject, dialog.MeetingsList[0].Location, dialog.MeetingsList[0].Content, dialog.MeetingsList[0].OnlineMeetingUrl))}
 ]

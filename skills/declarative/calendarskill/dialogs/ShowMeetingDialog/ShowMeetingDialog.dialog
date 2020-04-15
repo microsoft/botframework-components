@@ -178,12 +178,72 @@
               }
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.TraceActivity",
               "$designer": {
-                "id": "fIQURt"
+                "id": "eQ3iK4"
+              }
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "fBzNKm"
               },
-              "property": "dialog.MeetingsList",
-              "value": "=dialog.ShowAllMeetingDialog_GraphAll.content.value"
+              "itemsProperty": "dialog.ShowAllMeetingDialog_GraphAll.content.value",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "dBwZF3"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.CurrentMeetingData.IsConflict",
+                      "value": "false"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.StartTime",
+                      "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.EndTime",
+                      "value": "=formatDateTime(dialog.foreach.value.end.datetime)"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.IsAccepted",
+                      "value": "=dialog.foreach.value.isOrganizer || (dialog.foreach.value.responseStatus.response == 'accepted')"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.Title",
+                      "value": "=dialog.foreach.value.subject"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.Location",
+                      "value": "=dialog.foreach.value.location.displayName"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.Content",
+                      "value": "=dialog.foreach.value.body.bodyPreview"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.OnlineMeetingUrl",
+                      "value": "=dialog.foreach.value.body.onlineMeetingUrl"
+                    },
+                    {
+                      "property": "dialog.CurrentMeetingData.Attendees",
+                      "value": "=dialog.foreach.value.attendees"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "MjKbvB"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.MeetingsList",
+                  "value": "=dialog.CurrentMeetingData"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -236,7 +296,7 @@
                         "id": "2Ddf6w"
                       },
                       "property": "dialog.ItemDate",
-                      "value": "=startOfDay(formatDateTime(dialog.foreach.value.start.datetime))"
+                      "value": "=startOfDay(formatDateTime(dialog.foreach.value.StartTime))"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
@@ -265,7 +325,7 @@
                             },
                             {
                               "property": "dialog.CurrentDateData.Date",
-                              "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
+                              "value": "=formatDateTime(dialog.foreach.value.StartTime)"
                             }
                           ]
                         },
@@ -291,28 +351,8 @@
                           "value": "CalendarItem"
                         },
                         {
-                          "property": "dialog.CurrentMeetingData.Event.IsConflict",
-                          "value": "false"
-                        },
-                        {
-                          "property": "dialog.CurrentMeetingData.Event.StartTime",
-                          "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
-                        },
-                        {
-                          "property": "dialog.CurrentMeetingData.Event.EndTime",
-                          "value": "=formatDateTime(dialog.foreach.value.end.datetime)"
-                        },
-                        {
-                          "property": "dialog.CurrentMeetingData.Event.IsAccepted",
-                          "value": "=dialog.foreach.value.isOrganizer || (dialog.foreach.value.responseStatus.response == 'accepted')"
-                        },
-                        {
-                          "property": "dialog.CurrentMeetingData.Event.Title",
-                          "value": "=dialog.foreach.value.subject"
-                        },
-                        {
-                          "property": "dialog.CurrentMeetingData.Event.Location",
-                          "value": "=dialog.foreach.value.location.displayName"
+                          "property": "dialog.CurrentMeetingData.Event",
+                          "value": "=dialog.foreach.value"
                         }
                       ]
                     },
@@ -339,15 +379,52 @@
                     "id": "n_iPbD"
                   },
                   "activity": "${bfdactivity-n_iPbD()}"
+                },
+                {
+                  "$kind": "Microsoft.ConfirmInput",
+                  "$designer": {
+                    "id": "4u0r-m"
+                  },
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "defaultLocale": "en-us",
+                  "style": "Auto",
+                  "prompt": "${bfdprompt-4u0r-m()}",
+                  "property": "dialog.ConfirmRead"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "I6DDru"
+                  },
+                  "condition": "dialog.ConfirmRead",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "khfZ-a"
+                      },
+                      "property": "dialog.FocusedMeeting",
+                      "value": "=dialog.MeetingsList[0]"
+                    },
+                    {
+                      "$kind": "Microsoft.EmitEvent",
+                      "$designer": {
+                        "id": "DJJLuk"
+                      },
+                      "eventName": "ShowMeetingDetailInfo"
+                    }
+                  ]
                 }
               ],
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "6aPtgV"
+                    "id": "zbRBQh"
                   },
-                  "activity": "${bfdactivity-6aPtgV()}"
+                  "eventName": "ShowMeetingDetailInfo"
                 }
               ]
             }
@@ -361,6 +438,76 @@
               "activity": "${bfdactivity-Q6rGL1()}"
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "HXJean"
+      },
+      "event": "ShowMeetingDetailInfo",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CYB5mS"
+          },
+          "name": "Read meeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "7MPE3G"
+          },
+          "condition": "dialog.FocusedMeeting != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "meJEs5"
+              },
+              "activity": "${bfdactivity-meJEs5()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ABOTeC"
+              },
+              "property": "dialog.FocusedMeeting",
+              "value": "=dialog.MeetingsList[0]"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ifCTQr"
+              },
+              "property": "dialog.ShowingMeetingCondition",
+              "value": "today"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "9bXyFM"
+              }
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Tb6enx"
+              },
+              "activity": "${bfdactivity-Tb6enx()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "EckUyy"
+          },
+          "activity": "${bfdactivity-EckUyy()}"
         }
       ]
     }
