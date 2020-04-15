@@ -1,0 +1,59 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "077611",
+    "name": "SendPage"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "125395"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "028012",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "turn.head",
+              "value": "=conversation.pageIndex * conversation.pageSize"
+            },
+            {
+              "property": "turn.tail",
+              "value": "=min((conversation.pageIndex + 1) * conversation.pageSize, count(conversation.allPersons))"
+            },
+            {
+              "property": "conversation.persons",
+              "value": "=subArray(conversation.allPersons, turn.head, turn.tail)"
+            },
+            {
+              "property": "conversation.isFirstPage",
+              "value": "=turn.head == 0"
+            },
+            {
+              "property": "conversation.isLastPage",
+              "value": "=turn.tail == count(conversation.allPersons)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "093677",
+            "name": "Begin a new dialog"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowList"
+        }
+      ]
+    }
+  ],
+  "generator": "SendPage.lg"
+}

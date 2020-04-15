@@ -1,0 +1,7 @@
+[import](common.lg)
+
+# bfdactivity-037586()
+-${WhoWelcomeMessage()}
+
+# bfdactivity-886052()
+- ${HelpMessage()}

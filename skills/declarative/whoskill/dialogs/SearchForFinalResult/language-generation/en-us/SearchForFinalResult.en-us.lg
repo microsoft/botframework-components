@@ -1,0 +1,64 @@
+[import](common.lg)
+
+# bfdactivity-991018()
+- ${WhoIs(conversation.chosenPerson)}
+
+# bfdactivity-168348()
+-${JobTitle(conversation.chosenPerson)}
+
+# bfdactivity-812058()
+-${EmailAddress(conversation.chosenPerson)}
+
+# bfdactivity-666158()
+-${Location(conversation.chosenPerson)}
+
+# bfdactivity-093525()
+-${Department(conversation.chosenPerson)}
+
+# bfdactivity-484201()
+-${PhoneNumber(conversation.chosenPerson)}
+
+# bfdactivity-823586()
+- ${NoManager(conversation.chosenPerson)}
+
+# bfdactivity-836453()
+- ${Manager(conversation.chosenPerson)}
+
+# bfdactivity-674472()
+- ${NoDirectReports(conversation.chosenPerson)}
+
+
+# bfdactivity-lGY4se()
+- ${NoPeopleEmailsRencently()}
+
+# bfdactivity-uj1_vp()
+- ${NoPeopleEmailsAboutKeywordRencently(conversation.keyword)}
+
+# bfdactivity-Yav0ak()
+- ${PeopleEmailsRencently(count(conversation.allPersons))}
+
+# bfdactivity-O2hOQ7()
+- ${PeopleEmailsAboutKeywordRencently(count(conversation.allPersons), conversation.keyword)}
+
+# bfdactivity-Tx2gWs()
+- ${PeopleMeetsRencently(count(conversation.allPersons))}
+
+# bfdactivity-u2ylya()
+- ${PeopleMeetsAboutKeywordRencently(count(conversation.allPersons), conversation.keyword)}
+
+# bfdactivity-clJALA()
+- ${NoPeopleMeetsRencently()}
+
+# bfdactivity-yNKAwb()
+- ${NoPeopleMeetsAboutKeywordRencently(conversation.keyword)}
+
+
+# bfdactivity-_PozQU()
+- ${NoPeers(conversation.chosenPerson)}
+
+# bfdactivity-wqTjD7()
+- ${Peers(count(conversation.allPersons), conversation.chosenPerson)}
+
+# bfdactivity-yDA1Nx()
+- ${DirectReports(count(conversation.allPersons), conversation.chosenPerson)}
+
