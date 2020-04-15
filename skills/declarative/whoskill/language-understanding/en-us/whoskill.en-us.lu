@@ -1,0 +1,723 @@
+$ pron : me = 
+- Me
+
+$ pron : my = 
+- My
+
+$ pron : mine = 
+- Mine
+
+$ pron : i = 
+- I
+
+
+@ ml Keyword
+    - @ ml PersonName
+    - @ ml Topic
+    - @ ml EmailAddress
+
+
+## None
+- decrease my thermostat by 4 degrees
+- decrease my thermostat by 5 degrees
+- decrease my thermostat temperature by 10 degrees
+- decrease my thermostat temperature by 5 degrees
+- decrease the home temperature by 88 degrees
+- decrease the temperature of the heat by 5 degrees
+- i want to make study 2 fahrenheit warmer
+- increase my thermostat by 12 degrees
+- increase my thermostat temperature by 20 degrees
+- increase temperature by 5 degrees
+- increase the temperature by 10 percent
+- increase the temperature by 5 degrees
+- increase the temperature of the heater by 3 degrees please
+- increase the temperature of the heater by 4 degrees please
+- increase thermostat by 3 degrees
+- increase thermostat temperature by 5 degrees
+- increase thermostat temperature by two degrees
+- increase thermostat to 68 degrees
+- increase thermostat to 73 degrees
+- is the temperature 68 degrees
+- is the temperature set to 75 degrees
+- lower air conditioning by one degree
+- lower my thermostat by 10 degrees
+- lower my thermostat temperature by 10 degrees
+- lower the ac by five degrees
+- lower the temperature of the ac by 4 degrees
+- lower the temperature of the refrigerator by 5 degrees
+- make it 2 degrees warmer
+- make it 3 degrees warmer
+- make it colder by 10 degrees
+- make the air conditioner set to 29 degrees.
+- make the oven set to 100 centigrade
+- make the oven set to 100 degrees
+- make the temperature at 77 degrees
+- please make it five degrees warmer in here
+- raise fridge by 10 fahrenheit
+- raise fridge by 2 degrees
+- raise temperature to 73 degrees
+- raise the temperature by 3 degrees
+- raise the temperature of the refrigerator by 5 degrees
+- set bedroom to 20 kelvin
+- set dining temperature at 73 degrees
+- set living room to 18 centigrade
+- set living room to 25 degrees
+- set my temperature to 68 degrees
+- set my temperature to 72 degrees
+- set my thermostat to 72 degrees
+- set my thermostat to 74 degrees celsius
+- set office lamp brightness to 21 percent
+- set temperature to 72 degrees for 30 minutes
+- set the bedroom light to 79 degrees
+- set the temperature of my home living room thermostat to 55 degrees
+- set the temperature to 30 degrees
+- set the thermostat at 77 degrees
+- set the thermostat to 62 degrees
+- start the dryer over at three hundred fifty degrees
+- turn down 10 percent
+- turn down my bathroom light by 50 percent
+- turn down my thermostat by 2 degrees
+- turn down the ac by 5 degrees
+- turn down the first ac by 5 degrees
+- turn down the second thermostat by 6 degrees
+- turn down the temperature 10 degrees
+
+
+# Whois
+- can you find {Keyword={EmailAddress=tommicrosoft.com}} for me
+- can you the mell life about {Keyword={PersonName=maria}}?
+- could you please tell me about who's EmailAddress this {Keyword={EmailAddress=jimgmail.com}}?
+- do you know who is {Keyword={PersonName=paige}}?
+- get me {Keyword={EmailAddress=lebrontest.com}}
+- hey, can you tell me who this guy {Keyword={PersonName=john}} is
+- hey, who's email {Keyword={EmailAddress=jenny20gmail.com}} belong to
+- i want to know who is {Keyword={PersonName=john paul}} really?
+- is there a guy called {Keyword={PersonName=cliff}}?
+- let me see {Keyword={EmailAddress=samcollege.com}}
+- {Keyword={EmailAddress=paul.ffmail.com}} is your email?
+- please show me {Keyword={EmailAddress=hariryhappy.com}}
+- please tell me about the lawyer {Keyword={PersonName=alexander}}
+- please tell me about who {Keyword={PersonName=sam}} is and what does he do for a living?
+- present {Keyword={PersonName=katherine}} to me
+- show {Keyword={PersonName=ben}}'s profile page
+- show {Keyword={PersonName=cesar felipe}}.
+- show {Keyword={PersonName=eremias}} profile
+- show {Keyword={EmailAddress=hdj.recordgmail.com}}
+- show me {Keyword={EmailAddress=danieloutlook.edu}}
+- show me {Keyword={EmailAddress=johnapple.com}}
+- show me {Keyword={EmailAddress=marcusemail.com}}
+- show me {Keyword={EmailAddress=mariacompany.co.uk}}
+- show me {Keyword={PersonName=pedro navaja}}
+- show me the {Keyword={EmailAddress=foxgmail.com}} profile
+- tell me about {Keyword={EmailAddress=henry_millercontoso.co.uk}}
+- tell me {Keyword={EmailAddress=aliriodomain.com}}
+- tell me anything about {Keyword={EmailAddress=marcusgmail.com}}
+- tell me everything about {Keyword={EmailAddress=petermicrosoft.co.za}}
+- tell me more about {Keyword={PersonName=paulina}}
+- tell me more about {Keyword={PersonName=rathna}}
+- what about {Keyword={PersonName=brad pitt}}?
+- what do you know about {Keyword={PersonName=lisa}}?
+- what do you know about {Keyword={PersonName=tom}}?
+- what is the name of {Keyword={EmailAddress=pandareoracle.com}}?
+- when did you last seen {Keyword={PersonName=sam}}?
+- who exactly is {Keyword={PersonName=ross geller}}?
+- who has the email {Keyword={EmailAddress=qweyahioo.com}}
+- who is {Keyword={EmailAddress=alexa.woodcontoso.net}}?
+- who is {Keyword={EmailAddress=alexanderenjoy.com}}?
+- who is {Keyword={PersonName=angel john}} of the mirage company?
+- who is {Keyword={PersonName=angelica}} in the company?
+- who is {Keyword={PersonName=antonio}} lebroski
+- who is {Keyword={EmailAddress=atif.tomahotmail.com}}
+- who is {Keyword={EmailAddress=bengmail.com}}
+- who is {Keyword={EmailAddress=bryan15gmail.com}}
+- who is {Keyword={PersonName=candice swanepoel}}?
+- who is {Keyword={EmailAddress=cesar250360hotmail.com}}, please.
+- who is {Keyword={PersonName=donatella}}
+- who is {Keyword={PersonName=erik cornel}}
+- who is {Keyword={EmailAddress=e-steysimicrosoft.com}}
+- who is {Keyword={PersonName=gisela sanchez}}
+- who is {Keyword={PersonName=gorge}} please?
+- who is {Keyword={EmailAddress=harigmail.com}} ?
+- who is {Keyword={PersonName=iria madden}}?
+- who is {Keyword={PersonName=jackson}}?
+- who is {Keyword={PersonName=jenifer lopez}}?
+- who is {Keyword={PersonName=jhon galt}}
+- who is {Keyword={PersonName=john grisham}}
+- who is {Keyword={PersonName=karl}} at this company
+- who is {Keyword={EmailAddress=katehudsongmail.com}}
+- who is {Keyword={EmailAddress=kimthanhgmail.com}}?
+- who is {Keyword={PersonName=leo}} from microsoft?
+- who is {Keyword={EmailAddress=luisadominguezhotmail.com}} ?
+- who is {Keyword={EmailAddress=marco-mircrosoftgmail.com}}
+- who is {Keyword={PersonName=maria gonzalez}}?
+- who is {Keyword={PersonName=minhtu loren}}
+- who is {Keyword={PersonName=morissette}}?
+- who is mr. {Keyword={PersonName=andy}}
+- who is {Keyword={PersonName=nikola gruevski}}?
+- who is {Keyword={PersonName=paul pierce}}?
+- who is {Keyword={PersonName=peter slack}}?
+- who is {Keyword={EmailAddress=robert.stevensongmail.com}}?
+- who is {Keyword={PersonName=sara lewis}}?
+- who is {Keyword={PersonName=simon rodriguez}}?
+- who is {Keyword={EmailAddress=teotistehotmail.com}}?
+- who is the person with the email {Keyword={EmailAddress=frank03gmail.com}}?
+- who is the {Keyword={EmailAddress=presidentemail.edu}}
+- who is {Keyword={EmailAddress=vita.dpgmail.com}}?
+- who is {Keyword={PersonName=wonyoung}}?
+- who knows about {Keyword={EmailAddress=luismmic.com}}
+- who owns this email {Keyword={EmailAddress=abo_09187gmail.com}}?
+- who was {Keyword={EmailAddress=michaels}}?
+- whois {Keyword={EmailAddress=albertoemail.co.uk}}
+- who's {Keyword={EmailAddress=angelicaemail.com}}
+- who's {Keyword={PersonName=anthony lopez}}?
+- who's {Keyword={PersonName=donald trump}}?
+- who's EmailAddress is {Keyword={EmailAddress=john1234gmail.com}} ?
+- whos is {Keyword={PersonName=michael bren}}?
+- who's {Keyword={EmailAddress=jeremy_lionemail.com}}
+- who's {Keyword={EmailAddress=lisagmail.com}}
+- who's {Keyword={PersonName=narendra modi}}?
+- whose {Keyword={EmailAddress=angelina.joliemico.com}}
+- why do i receive emails about {Keyword={EmailAddress=rob23tmail.com}}?
+
+
+# ShowNext
+- next page
+- show more
+- show more persons
+- show next page
+- show next sheet
+- tell more
+- what's next
+- what's on the next
+- who's on the next
+
+
+# JobTitle
+- find me the role of {Keyword={PersonName=tom}}
+- is {Keyword={PersonName=april}} a chairman?
+- is {Keyword={PersonName=francisco}} a civil engineer
+- is {Keyword={PersonName=kelly}} a ceo?
+- is {Keyword={PersonName=tim}}'s role?
+- {Keyword={PersonName=ricardo}}, what is your job?
+- show me {Keyword={PersonName=hugo}}'s job title
+- tell me {Keyword={PersonName=karen}}'s title
+- tell me more about {Keyword={PersonName=oscar}}'s job role.
+- what does {Keyword={PersonName=angel}} do
+- what does {Keyword={PersonName=carol}} do here?
+- what does {Keyword={PersonName=cesar lopez}} do?
+- what does {Keyword={PersonName=lg}} do?
+- what is {Keyword={PersonName=alex}}'s role?
+- what is {Keyword={PersonName=bill gates}} role.
+- what is {Keyword={PersonName=carlo}}'s role at this moment?
+- what is {Keyword={PersonName=david}}'s job title at the company?
+- what is {Keyword={PersonName=jerson miguel}}'s job title
+- what is {Keyword={PersonName=jj abram}}'s job title
+- what is {Keyword={PersonName=jose}} role in the company
+- what is {Keyword={PersonName=karen}}'s position?
+- what is {Keyword={PersonName=luis}} job title?
+- what is {Keyword={PersonName=michael tan}} responsibility and role in the company ?
+- what is {Keyword={PersonName=miki}}'s position at work?
+- what is {Keyword={PersonName=pearl}}'s role?
+- what is {Keyword={PersonName=peter}}'s position?
+- what is {Keyword={PersonName=ruth walter}}'s current job?
+- what is {Keyword={PersonName=sami}}'s role in the company?
+- what is {Keyword={PersonName=shane}}'s job in this company?
+- what is {Keyword={PersonName=tevin}}'s job title?
+- what is the {Keyword={PersonName=andrew ng}} title?
+- what is the current position of {Keyword={PersonName=mark}}?
+- what is the designation of mr. {Keyword={PersonName=ram}}.
+- what is the {Keyword={PersonName=dung}}'s title
+- what is the function of {Keyword={PersonName=karen}}?
+- what is the job title for {Keyword={PersonName=tan boon keong}} in the company ?
+- what is the job title of {Keyword={PersonName=jackson}}?
+- what is the job title of {Keyword={PersonName=john}}
+- what is the job title of {Keyword={PersonName=peter johnson}}
+- what is the role of {Keyword={PersonName=angelica}}?
+- what is the role of {Keyword={PersonName=ellen}} in the company?
+- what is the title of {Keyword={PersonName=wero}} in this company
+- what is the tittle of {Keyword={PersonName=polo}} in this company
+- what is your job {Keyword={PersonName=pauline}}?
+- what job has {Keyword={PersonName=julia}}?
+- what role does {Keyword={PersonName=jhon}} have?
+- what's {Keyword={PersonName=deril}}'s job?
+- what's {Keyword={PersonName=frank}} do
+- what's {Keyword={PersonName=jimmy}}'s role in the company?
+- what's {Keyword={PersonName=royston}}'s title?
+- you know what was the previous title job for {Keyword={EmailAddress=chris}}
+
+
+# Department
+- can you tell me the work area of {Keyword={PersonName=valderrama}}?
+- do you know {Keyword={PersonName=robert}}´s department?
+- does {Keyword={PersonName=wendy}} work at the human resources department?
+- i would like to know which department {Keyword={PersonName=philip}} is working?
+- in which deparmtment is {Keyword={PersonName=ronald}} located?
+- in which department does {Keyword={PersonName=mike}} live?
+- in which department is {Keyword={PersonName=bob}} located?
+- in which department is {Keyword={PersonName=lisa}}?
+- is {Keyword={PersonName=marcos}} working in the legal departament
+- is {Keyword={PersonName=yunior}} working in the legal departament
+- please tell me from which department {Keyword={PersonName=shawn}} came from
+- please, tell me which department does {Keyword={PersonName=john}} work in?
+- show me {Keyword={PersonName=carolina}}'s work department
+- tell me about {Keyword={PersonName=richard}}'s department
+- what area does {Keyword={PersonName=trang}} work in?
+- what department does {Keyword={PersonName=belinda}} work in?
+- what department does {Keyword={PersonName=cesar lopez}} belong to.
+- what department does {Keyword={PersonName=david}} belong to?
+- what department does {Keyword={PersonName=jon}} belong to
+- what department does {Keyword={PersonName=lisa}} work for in this company?
+- what department does {Keyword={PersonName=michael}} belong to
+- what department does {Keyword={PersonName=sam}} works in?
+- what department does {Keyword={PersonName=sheryl sandberg}} belong to?
+- what department is {Keyword={PersonName=andy}} working for
+- what floor is {Keyword={PersonName=alex}}'s department on?
+- what is {Keyword={PersonName=fabio}}'s department at the moment?
+- what is {Keyword={PersonName=lisa}}'s organization
+- what is {Keyword={PersonName=luisa}} work area?
+- what is the department of {Keyword={PersonName=abigail}}
+- what is the new department of {Keyword={PersonName=crystal}}?
+- what is {Keyword={PersonName=will}} department?
+- what is {Keyword={PersonName=william chang}} position in sales department?
+- what's {Keyword={PersonName=jennifer}}'s department?
+- what's {Keyword={PersonName=josue}}'s department?
+- what's {Keyword={PersonName=natya satea}}'s department
+- what's the name of {Keyword={PersonName=pero}}'s department?
+- where does {Keyword={PersonName=caroline matt}} work in?
+- where is {Keyword={PersonName=antonie}}'s department?
+- where's {Keyword={PersonName=nithesh}}'s department?
+- which area does {Keyword={PersonName=adele}} belong to?
+- which area does {Keyword={PersonName=linda}} work in?
+- which department does {Keyword={PersonName=bella rickel}} work for?
+- which department does {Keyword={PersonName=lily green}} work for?
+- which department does {Keyword={PersonName=meanne}} work with?
+- which department does {Keyword={PersonName=sarah}} belong to?
+- which department does {Keyword={PersonName=sebastian smith}} work in?
+- which department is {Keyword={PersonName=anjelica}} in at the moment?
+- which department is {Keyword={PersonName=kim}} in?
+
+
+# EmailFind
+- {Keyword={PersonName=antonio}}'s email please
+- can you find {Keyword={PersonName=julian}}'s EmailAddress?
+- can you get me {Keyword={PersonName=benny}}'s email?
+- can you give me the {Keyword={PersonName=alberto}} email addreess
+- can you give me the {Keyword={PersonName=luis}} EmailAddress
+- can you tell me email {Keyword={PersonName=valderrama}}?
+- could you give me {Keyword={PersonName=daniella}}'s EmailAddress?
+- could you tell me {Keyword={PersonName=paola}}'s EmailAddress?
+- find {Keyword={PersonName=donald}}'s email
+- find {Keyword={PersonName=luong}} email
+- find {Keyword={PersonName=nancy benavides}} email.
+- find {Keyword={PersonName=ted}} email.
+- hey, find me an email of that lady {Keyword={PersonName=paola}}
+- i want {Keyword={PersonName=lisa}} gmail EmailAddress.
+- is the EmailAddress of {Keyword={PersonName=charles}} correct?
+- may i know {Keyword={PersonName=nancy}}'s new EmailAddress ?
+- please provide me with {Keyword={PersonName=jim}}'s EmailAddress
+- please provide the EmailAddress of {Keyword={PersonName=brandon sim}}.
+- please tell me the new EmailAddress of {Keyword={PersonName=darrel}}
+- please, find {Keyword={PersonName=phineas}} personal email.
+- search the {Keyword={PersonName=roger}} email
+- what is {Keyword={PersonName=angelica}}'s secret EmailAddress?
+- what is {Keyword={PersonName=clark}}'s email?
+- what is {Keyword={PersonName=helen}}'s EmailAddress?
+- what is {Keyword={PersonName=johns}} email?
+- what is {Keyword={PersonName=lebron james}}' EmailAddress?
+- what is {Keyword={PersonName=mario}} email?
+- what is {Keyword={PersonName=neobux}} email?
+- what is new EmailAddress of my friend {Keyword={PersonName=sam}}?
+- what is {Keyword={PersonName=pamela}}'s EmailAddress?
+- what is {Keyword={PersonName=stan}}'s personal email?
+- what is the EmailAddress of {Keyword={PersonName=hang dam}}?
+- what is the EmailAddress of {Keyword={PersonName=john}}?
+- what is the EmailAddress of {Keyword={PersonName=molly}}?
+- what is the email for {Keyword={PersonName=neyer}}
+- what is the email of {Keyword={PersonName=jimmy hong}}?
+- what is the email of {Keyword={PersonName=melania}}?
+- what is the {Keyword={PersonName=mary}}'s email
+- what is {Keyword={PersonName=walter madden}}'s email?
+- what is your email {Keyword={PersonName=anne}}?
+- what is your email {Keyword={PersonName=tiana}}?
+- what's {Keyword={PersonName=alex}} EmailAddress?
+- what's {Keyword={PersonName=chris}} email
+- what's {Keyword={PersonName=jefferson}}'s email?
+- what's {Keyword={PersonName=jon}}'s EmailAddress?
+- whats {Keyword={PersonName=mike}}'s email?
+- who knows {Keyword={PersonName=john}}'s EmailAddress?
+
+
+# Location
+- can you please show me {Keyword={PersonName=peter}}'s office?
+- can you tell me where does {Keyword={PersonName=johnny}} work?
+- could you find {Keyword={PersonName=ana}}'s office?
+- find {Keyword={PersonName=alice}}'s work
+- find {Keyword={PersonName=andrew}}'s office
+- find {Keyword={PersonName=delilah walker}}'s work place
+- find {Keyword={PersonName=jessie}}'s office
+- find {Keyword={PersonName=samatha collins}}
+- hey {Keyword={PersonName=ana}}, i was in your city yesterday, nice town really
+- how far i am from {Keyword={PersonName=jack}}'s house?
+- i wanna see {Keyword={PersonName=maria}}'s office
+- is {Keyword={PersonName=moe}} in the building?
+- is {Keyword={PersonName=robert}} in birmingham?
+- show me {Keyword={PersonName=adam}}'s office location
+- show me {Keyword={PersonName=fernando}}'s space
+- show me {Keyword={PersonName=pablo's}} office please
+- show me {Keyword={PersonName=peter stanford}}'s office
+- what city is the office of {Keyword={PersonName=kate huntington}}?
+- where can i find {Keyword={PersonName=ruben}}
+- where does {Keyword={PersonName=darren}} work?
+- where does {Keyword={PersonName=estela}} work
+- where does {Keyword={PersonName=frank}} work
+- where does {Keyword={PersonName=minh anh}} work?
+- where does {Keyword={PersonName=nyla rodriguez}} live.
+- where does {Keyword={PersonName=rosie sia}} work?
+- where does {Keyword={PersonName=seinfeld}} work?
+- where does {Keyword={PersonName=yumo}} works
+- where is {Keyword={PersonName=alexander}}'s home?
+- where is {Keyword={PersonName=andy}} location
+- where is {Keyword={PersonName=angelica}}'s house located?
+- where is {Keyword={PersonName=carlos}} located?
+- where is {Keyword={PersonName=jack}}'s office located?
+- where is {Keyword={PersonName=kat}} in san diego?
+- where is {Keyword={PersonName=marcos}} office located ?
+- where is {Keyword={PersonName=mark}}'s office?
+- where is {Keyword={PersonName=mona saad}}'s place of work now?
+- where is {Keyword={PersonName=monic}}'s work space?
+- where is {Keyword={PersonName=peter}} currently located?
+- where is {Keyword={PersonName=sam}}'s new office located?
+- where is {Keyword={PersonName=sony adia}}'s office located?
+- where is the departament of {Keyword={PersonName=william jones}}?
+- where is {Keyword={PersonName=walmar}}?
+- where is working {Keyword={PersonName=maria}} at this moment?
+- where was {Keyword={PersonName=janice fox}} located?
+- where's {Keyword={PersonName=joseph}}'s office?
+- where's the {Keyword={PersonName=peter}}'s jobs?
+- who knows where {Keyword={PersonName=pamela}} is?
+- you know the specifications about {Keyword={PersonName=orlando}}'s office
+
+
+# PhoneNumber
+- can you find me {Keyword={PersonName=noe}}'s phone number?
+- can you give me the {Keyword={PersonName=carla}} phone number
+- can you give me the {Keyword={PersonName=jerry}} phone number
+- can you give me {Keyword={PersonName=will}}'s phone number?
+- could you tell me the phone number of {Keyword={PersonName=julian}}?
+- find phone number for {Keyword={PersonName=cesar lopez}}.
+- find phone number for {Keyword={PersonName=rafael}}
+- find phone number of {Keyword={PersonName=tina}}
+- find phonenumber for {Keyword={PersonName=lucci}}
+- give me {Keyword={PersonName=seva}}'s contact number
+- i asked for {Keyword={PersonName=lisa}}'s office phone number.
+- i want {Keyword={PersonName=rick}}'s current phone number
+- may i know {Keyword={PersonName=peter}}'s phone number ?
+- please, find phone number for {Keyword={PersonName=michael}}'s office.
+- should i ask {Keyword={PersonName=angelica}} about her phone number?
+- tell me {Keyword={PersonName=monica}}'s number
+- tell me the number of {Keyword={PersonName=james}}
+- tell me the phone number of {Keyword={PersonName=ismael}}?
+- tell me what is {Keyword={PersonName=lisbeth}}'s telefo number
+- what is {Keyword={PersonName=bruce wayne}}'s phone number?
+- what is {Keyword={PersonName=deborah}}'s phone number?
+- what is {Keyword={PersonName=dejan}}'s phone number?
+- what is {Keyword={PersonName=maria}}'s phone number
+- what is {Keyword={PersonName=max}}'s phone number?
+- what is {Keyword={PersonName=michael jordan}}'s phone number?
+- what is {Keyword={PersonName=miki}}'s phone number?
+- what is number phone of {Keyword={PersonName=maria}}?
+- what is {Keyword={PersonName=ryans}} phone number?
+- what is {Keyword={PersonName=sam}}'s personal mobile number?
+- what is {Keyword={PersonName=terrence}}'s phone number?
+- what is the contact number of {Keyword={PersonName=rachel lee}} ?
+- what is the {Keyword={PersonName=jhon sigmund}} contact number
+- what is the number for {Keyword={PersonName=jon}}
+- what is the number for {Keyword={PersonName=mary}}
+- what is the phone number from {Keyword={PersonName=stafke}}?
+- what is the phone number of {Keyword={PersonName=daniel pence}}?
+- what is the phone number of {Keyword={PersonName=iria gold}}?
+- what is the phone number of {Keyword={PersonName=larry}}?
+- what is the phone number of {Keyword={PersonName=meg}}?
+- what is your telephone number for {Keyword={PersonName=cesar}}?
+- what this telephone the {Keyword={PersonName=marta sanches}}?
+- what's {Keyword={PersonName=alex}} phone number?
+- what's number phone for {Keyword={PersonName=lea}}
+- whats {Keyword={PersonName=pablo}}'s phone number
+- which {Keyword={PersonName=john}}´s new phone number?
+- who can tell me {Keyword={PersonName=alfonso}}'s phone number?
+- who remembers {Keyword={PersonName=albert}}´s phone number?
+
+
+# ShowPrevious
+- i want to see persons before
+- previous
+- previous page
+- see previous page again
+- see previous sheet again
+- show persons before
+- show previous
+- show previous sheet
+- who's on the previous
+
+
+# Manager
+- find {Keyword={PersonName=celine}}'s manager
+- find {Keyword={PersonName=godfrey}}'s manager?
+- is {Keyword={PersonName=fredy}} a manager
+- {Keyword={PersonName=michael}}'s manager
+- show me {Keyword={PersonName=carlos}} boss
+- show me {Keyword={PersonName=pablo}}'s direct manager
+- tell me who {Keyword={PersonName=bill gates}} reports to.
+- tell me who is {Keyword={PersonName=liv}}'s manager
+- tell me who is {Keyword={PersonName=tatiana}}'s boss .
+- tell me who {Keyword={PersonName=juan guaido}} reports to.
+- tell me who {Keyword={PersonName=linh}} reports to.
+- the manager of {Keyword={PersonName=carol hanna}}
+- what is the name of {Keyword={PersonName=andrey}}'s manager?
+- what is the name of {Keyword={PersonName=regina}}'s manager?
+- what is the name of the manager of {Keyword={PersonName=pete}}?
+- what is the name of the {Keyword={PersonName=sam}}'s manager?
+- which manager does {Keyword={PersonName=andrew ng}} report to?
+- who does {Keyword={PersonName=oscar}} report to
+- who does {Keyword={PersonName=theodore}} work for?
+- who is {Keyword={PersonName=alexander}}'s manager?
+- who is {Keyword={PersonName=cindy}}'s manager
+- who is {Keyword={PersonName=eilish}} manager
+- who is {Keyword={PersonName=filip}}'s manager
+- who is {Keyword={PersonName=john}}'s manager
+- who is {Keyword={PersonName=mike love}}'s manager?
+- who is my {Keyword={PersonName=angelica}}'s manager?
+- who is {Keyword={PersonName=nafidov}}'s manager?
+- who is {Keyword={PersonName=paul}}'s manager at this moment?
+- who is {Keyword={PersonName=pedro}}'s manager?
+- who is {Keyword={PersonName=phylipp}} manager?
+- who is {Keyword={PersonName=rogers}}'s manager?
+- who is {Keyword={PersonName=romeo}}'s manager?
+- who is the boss of {Keyword={PersonName=jessie}}
+- who is the boss of {Keyword={PersonName=mohamed}} at work?
+- who is the current manager of {Keyword={PersonName=amy adams}}?
+- who is the head of {Keyword={PersonName=fabio}}?
+- who is the {Keyword={PersonName=jessika}}'s manager?
+- who is the manager of {Keyword={PersonName=alex}} ?
+- who is the manager of {Keyword={PersonName=jhon}}?
+- who is the manager of {Keyword={PersonName=joey}}?
+- who is the manager of {Keyword={PersonName=laura}}
+- who is the manager of {Keyword={PersonName=lim bee bee}} ?
+- who is the manager of {Keyword={PersonName=ortencia}}?
+- who is the manager of {Keyword={PersonName=rachel}} in this company
+- who is the manger of my friend {Keyword={PersonName=rita}}?
+- who manages {Keyword={PersonName=judd}}?
+- who manages {Keyword={PersonName=mark}}
+- who's {Keyword={PersonName=clement}}'s manager?
+- who's {Keyword={PersonName=peter}}'s manager?
+- you know who was the manager teacher for {Keyword={PersonName=john}}
+
+
+@ intent Manager usesFeature ManagerHelper
+
+
+@ phraselist ManagerHelper(interchangeable) = 
+	- manages,report to,manager,reports to
+
+
+# DirectReports
+- {Keyword={PersonName=amanda}}'s direct reports
+- can you find {Keyword={PersonName=octavio}}'s direct reports?
+- can you give me the direct report of {Keyword={PersonName=marcos}}
+- can you search {Keyword={PersonName=elio}}'s direct reports?
+- direct reports {Keyword={PersonName=kimberlin}}
+- do you know about who {Keyword={PersonName=alex}} manages?
+- is direct report of {Keyword={PersonName=tom}} available ?
+- is {Keyword={PersonName=rivera}} a good man
+- {Keyword={PersonName=paco}}, who are his direct reports?
+- please show me who {Keyword={PersonName=john}} manages
+- please, tell me who are the people that report to {Keyword={PersonName=anastasia}}.
+- show me {Keyword={PersonName=bart}}'s reports
+- show me {Keyword={PersonName=lisa}}'s direct report
+- show me {Keyword={PersonName=patrick}} reports
+- tell me the reports of {Keyword={PersonName=marianne}}?
+- what are direct reports for {Keyword={PersonName=bryant}}
+- what are the direct reports for {Keyword={PersonName=anne}}
+- what are the direct reports for {Keyword={PersonName=maria}}?
+- where are {Keyword={PersonName=pam}}'s direct reports?
+- where are the reports submitted by {Keyword={PersonName=sam}}?
+- where is {Keyword={PersonName=andy}} topic
+- where is {Keyword={PersonName=phil}}'s direct report?
+- where is the direct reports of {Keyword={PersonName=katy}}?
+- who are {Keyword={PersonName=alex}} reports ?
+- who are the direct reports for {Keyword={PersonName=rick}}
+- who directly reports to {Keyword={PersonName=kim}}?
+- who directly reports to {Keyword={PersonName=mable lim}}
+- who does {Keyword={PersonName=angelica}} manage?
+- who does {Keyword={PersonName=brenda}} manage
+- who does {Keyword={PersonName=nick}} manage
+- who does {Keyword={PersonName=nicola mendelsohn}} report to directly?
+- who is {Keyword={PersonName=edom}}'s reports?
+- who reports to {Keyword={PersonName=anna harvinger}}?
+- who reports to {Keyword={PersonName=cabrera andres}}?
+- who reports to {Keyword={PersonName=cesar felipe.}}
+- who reports to {Keyword={PersonName=john}}?
+- who reports to {Keyword={PersonName=julia stewart}}?
+- who reports to {Keyword={PersonName=kevin}} at this moment?
+- who reports to {Keyword={PersonName=kore walker}}?
+- who reports to {Keyword={PersonName=liks}}?
+- who reports to {Keyword={PersonName=linda}}?
+- who reports to {Keyword={PersonName=maria brith}}
+- who reports to {Keyword={PersonName=mike}}?
+- who reports to {Keyword={PersonName=nora lee}}
+- who reports to {Keyword={PersonName=trump}}?
+- who repots to {Keyword={PersonName=perica}}?
+- who works for {Keyword={PersonName=megan}}
+
+
+# Peers
+- hey, do you know anything about {Keyword={PersonName=mike}}'s team
+- how many peers does {Keyword={PersonName=harry}} have?
+- i want to see {Keyword={PersonName=claudia}}'s team please
+- show {Keyword={PersonName=cecil}}'s team
+- show me {Keyword={PersonName=chris dalia}}'s team
+- show me {Keyword={PersonName=pedro}}'s team
+- show me {Keyword={PersonName=ronald}}'s colleagues
+- show me {Keyword={PersonName=wilson's}} colleagues
+- what is {Keyword={PersonName=erick}}'s team?
+- what is the name of {Keyword={PersonName=rose}}'s partner
+- where are some of the {Keyword={PersonName=sam}}'s peers now?
+- which ones are {Keyword={PersonName=john}}'s colleagues?
+- who are {Keyword={PersonName=alexander}}'s peers?
+- who are {Keyword={PersonName=angelica}}'s peers?
+- who are {Keyword={PersonName=chris}}' peers at work
+- who are {Keyword={PersonName=elizabeth}}'s peers?
+- who are in {Keyword={PersonName=jean}}'s team?
+- who are {Keyword={PersonName=jane}}'s peers at the moment?
+- who are {Keyword={PersonName=jane}}'s peers in work
+- who are {Keyword={PersonName=jim shaw}}'s peers?
+- who are {Keyword={PersonName=julia}}'s peers?
+- who are {Keyword={PersonName=monica}}'s peers?
+- who are {Keyword={PersonName=pedro sequera}}'s work mates?
+- who are peers of {Keyword={PersonName=george stevens}}?
+- who are peers of {Keyword={PersonName=narayan}}?
+- who are {Keyword={PersonName=robert garcia}}'s peers?
+- who are the peers of {Keyword={PersonName=abidal}}
+- who are the peers of {Keyword={PersonName=bob}}?
+- who are the peers of {Keyword={PersonName=erik}}
+- who are the peers of {Keyword={PersonName=esteban lopez}}
+- who are the peers of {Keyword={PersonName=geeta}}?
+- who are the peers of {Keyword={PersonName=james colb}}
+- who are the peers of {Keyword={PersonName=nancy benavides}}.
+- who are the peers of {Keyword={PersonName=paul}}?
+- who are the peers of {Keyword={PersonName=suhail}} ?
+- who are {Keyword={PersonName=vladimir}}'s colleagues on the advertisement project?
+- who does {Keyword={PersonName=andy}} work with
+- who does {Keyword={PersonName=lisa}} work with
+- who is in {Keyword={PersonName=piter}} team?
+- who is the peer of {Keyword={PersonName=homero}}
+- who is the peer of {Keyword={PersonName=sandra}}
+- who partners {Keyword={PersonName=victor}} in his project
+- who works in {Keyword={PersonName=george}}'s team
+- who works in the team with {Keyword={PersonName=tom cruise}}?
+- who works with {Keyword={PersonName=chris}}
+- who works with {Keyword={PersonName=jason lim}}
+- who works with {Keyword={PersonName=ratif}}?
+- who works with {Keyword={PersonName=sasha}}
+
+
+# Help
+- any help
+- can you help
+- can you help me
+- do me a favor
+- give me a favor
+- give me some help
+- help
+- how can i get it
+- how to do it
+- i don't understand
+- i need help
+- i need some assistance
+- i need some help
+- is there any help
+- open help
+- please help
+- some help
+- what should i do
+- who can help me
+
+
+# EmailAbout
+- can you find emails about {Keyword={Topic=purchases}}?
+- can you find who emailed me on {Keyword={Topic=sales}}
+- find out who emailed me about {Keyword={Topic=facebook team}}
+- find out who emailed me about {Keyword={Topic=ucla}}
+- find who sent the email on {Keyword={Topic=dettol soap}}
+- i wanna know who emailed me on {Keyword={Topic=neobux}}
+- i want to know who emailed me about {Keyword={Topic=av maintenance}}
+- i want to see the people that emailed me about {Keyword={Topic=laptop maintenance}}
+- please show me all the emails from {Keyword={Topic=supply chain}}'s department
+- show me emails on {Keyword={Topic=tropic thunder}}
+- show me the people who emailed me about {Keyword={Topic=office 365}}
+- show me who emailed me about the {Keyword={Topic=q and a session}}
+- show me who emailed me on {Keyword={Topic=microsoft policies}}
+- show me who emailed me on {Keyword={Topic=mobile data}}
+- show me who was asking me by email for the last {Keyword={Topic=javascript specification}}
+- tell me who emailed me about {Keyword={Topic=apple teams}}
+- where are the email records about the latest {Keyword={Topic=tax audits}}?
+- who emailed me about {Keyword={Topic=cognitive services}}
+- who emailed me about {Keyword={Topic=outlook}}
+- who emailed me about {Keyword={Topic=restaurants and services}}
+- who emailed me about the {Keyword={Topic=retrospective teams meeting}}
+- who emailed me at {Keyword={Topic=rto}}?
+- who emailed me on the {Keyword={Topic=whiteboard problem}}
+- who emailed me regarding {Keyword={Topic=year end report}}?
+- who sent me about {Keyword={Topic=twitter}}
+- who sent me about {Keyword={Topic=window program}}
+- who sent me an email about {Keyword={Topic=copper complexes}}?
+- who sent me an email about the {Keyword={Topic=coronavirus}} topic?
+- who sent me email about {Keyword={Topic=fire program}}
+- who sent me emails about {Keyword={Topic=amazon products}}?
+- who sent me emails about {Keyword={Topic=dell company}}
+- who sent me the email on {Keyword={Topic=kusto explorer}}
+- who sent the {Keyword={Topic=admission}} email?
+- who sent the email about {Keyword={Topic=microsoft programs.}}
+- who sent the email about our meeting on the {Keyword={Topic=environment}}?
+- who sent the email about the {Keyword={Topic=consequences of global warming}}?
+- who sent the emails about the new {Keyword={Topic=defence policy}}?
+- who sent the emails regarding {Keyword={Topic=corona}}?
+- who sent the {Keyword={Topic=microsoft}} related emails
+- who was sending the {Keyword={Topic=news}} emails?
+
+
+# MeetAbout
+- do i meet someone in {Keyword={Topic=marketing}}?
+- do you prepares {Keyword={Topic=cocktails}} whit mango?
+- how tall is {Keyword={Topic=hilza}}
+- please, tell me who persons was in the reunion for {Keyword={Topic=microsoft}}
+- what is the name of the presenter of the {Keyword={Topic=budget}} meeting?
+- what was the name of the doctor i had an appointment with last month about my {Keyword={Topic=depression}}?
+- who are the participants to the {Keyword={Topic=students meeting}}?
+- who did i meet about {Keyword={Topic=music}}?
+- who did i meet about {Keyword={Topic=software programs.}}
+- who did i meet at {Keyword={Topic=tommorrowland}}?
+- who did i meet in the {Keyword={Topic=coronavirus}} meeting?
+- who did i meet regarding the {Keyword={Topic=company loan}}?
+- who did i meet to {Keyword={Topic=open a bank account}}?
+- who did i met about the {Keyword={Topic=conference room}}?
+- who do i meet about {Keyword={Topic=corona virus}} report?
+- who do i meet about my {Keyword={Topic=phone billing}}
+- who do you know in {Topic={Keyword=accounting}}
+- who is the speaker for the talk entitled {Keyword={Topic=war trade}}?
+- who met with me regarding {Keyword={Topic=medical congress}}?
+- who was in the call about {Keyword={Topic=gate's}}
+- who was in the call about {Keyword={Topic=jon}}
+- who was in the call about {Keyword={Topic=microsoft}} the last week
+- who was in the call about {Keyword={Topic=secutech}}?
+- who was in the meeting about {Keyword={Topic=coordination complexes}}?
+- who was in the meeting about uhc
+- who was it that was on {Keyword={Topic=yane}}'s platform?
+- who went to the talk on {Keyword={Topic=food}}
+- who were in the video call about {Keyword={Topic=apple}} yesterday?
+- who you met about a {Keyword={Topic=linda}}?
+- who'd i meet on {Keyword={Topic=android}}
+- whom i met at the {Keyword={Topic=merida meeting}} ?
+- whos was in the conference about {Keyword={Topic=css}}?
+- you know i was talking about rock music when {Keyword={Topic=kristen}} show up and meet her
+

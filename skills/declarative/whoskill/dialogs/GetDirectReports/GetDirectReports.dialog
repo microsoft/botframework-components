@@ -1,0 +1,53 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "PWAl7l",
+    "name": "GetDirectReports"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "ee6yed"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "b90489",
+            "name": "Set a property"
+          },
+          "property": "dialog.url",
+          "value": " https://graph.microsoft.com/v1.0/users/${conversation.chosenPerson.id}/directReports?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "oO-qQI",
+            "name": "Send an HTTP request"
+          },
+          "method": "GET",
+          "url": "${dialog.url}",
+          "resultProperty": "dialog.contosodata",
+          "responseType": "Json",
+          "headers": {
+            "Authorization": "${user.token.Token}"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "MpPupE",
+            "name": "Set a property"
+          },
+          "property": "conversation.allPersons",
+          "value": "=dialog.contosodata.content.value"
+        }
+      ]
+    }
+  ],
+  "generator": "GetDirectReports.lg"
+}

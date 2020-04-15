@@ -1,0 +1,76 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "POlK7d",
+    "name": "ExtractKeyword"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "lUdXd1"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "71EKIt"
+          },
+          "condition": "conversation.keyword.EmailAddress != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "va6IlK"
+              },
+              "property": "conversation.keyword",
+              "value": "=conversation.keyword.EmailAddress[0]"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "dgMgLQ"
+              },
+              "condition": "conversation.keyword.PersonName != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "w6r5_D"
+                  },
+                  "property": "conversation.keyword",
+                  "value": "=conversation.keyword.PersonName[0]"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "MEIpXs"
+                  },
+                  "condition": "conversation.keyword.Topic != null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "mfx9ET"
+                      },
+                      "property": "conversation.keyword",
+                      "value": "=conversation.keyword.Topic[0]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ExtractKeyword.lg"
+}
