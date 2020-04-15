@@ -1,4 +1,14 @@
 [import](common.lg)
 
-# bfdactivity-wMdI4-()
-- Welcome, this is a calendar bot. You can say something like "create a meeting", "show my meetings".
+# bfdactivity-WuRqfy()
+[Activity
+    Text = Hi, what can I do for you?
+    SuggestedActions = cancel meeting | accept meeting | show meeting | find a meeting room
+]
+
+# bfdactivity-n7Yuf9()
+- your name is ${user.name}, and your age is ${user.age}
+
+# bfdactivity-nLzDaf()
+- This is a Demo meeting.
+

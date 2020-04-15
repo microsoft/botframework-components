@@ -1,0 +1,26 @@
+[import](common.lg)
+
+
+
+# bfdprompt-f3QClo()
+- OK, which building?
+
+# bfdprompt-BVqWhA()
+- Alright, do you have a floor preference?
+
+
+
+# bfdprompt-f7_pEc()
+- Which room you want to choose
+
+# bfdactivity-X6dFf0()
+- Ok, the room is ${dialog.meetingRoom}
+
+
+
+# bfdactivity-FMIZux()
+- Can not find meeting rooms 
+# bfdactivity-pYw0rC()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+# bfdactivity-5I8bFP()
+- dialog meeting rooms ${dialog.meetingRooms}

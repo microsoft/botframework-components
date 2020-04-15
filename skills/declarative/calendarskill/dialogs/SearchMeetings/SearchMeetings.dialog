@@ -1,0 +1,348 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "7JK9Uj",
+    "name": "SearchMeetings"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "EvwQtG"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "sJInyi"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots",
+              "value": "={}"
+            },
+            {
+              "property": "dialog.slots.Subject",
+              "value": "=coalesce(@Subject, $Subject)"
+            },
+            {
+              "property": "dialog.slots.FromDate",
+              "value": "=coalesce(@FromDate, $FromDate)"
+            },
+            {
+              "property": "dialog.slots.FromTime",
+              "value": "=coalesce(@FromTime, $FromTime)"
+            },
+            {
+              "property": "dialog.startDateTime",
+              "value": "= null"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cTHmKE"
+          },
+          "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.title == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "HSMvMH"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${bfdprompt-HSMvMH()}",
+              "allowInterruptions": false
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "S7QUUt"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.slots",
+                  "value": "={}"
+                },
+                {
+                  "property": "dialog.slots.Subject",
+                  "value": "=coalesce(@Subject, $Subject, turn.dialogEvent.Value.text)"
+                },
+                {
+                  "property": "dialog.slots.FromDate",
+                  "value": "=coalesce(@FromDate, $FromDate)"
+                },
+                {
+                  "property": "dialog.slots.FromTime",
+                  "value": "=coalesce(@FromTime, $FromTime)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5PNI4E"
+          },
+          "condition": "dialog.slots.FromDate != null || dialog.slots.FromTime != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "r3acXv"
+              },
+              "dialog": "SetDateTime",
+              "options": {
+                "startDate": "=dialog.slots.FromDate",
+                "startTime": "=dialog.slots.FromTime"
+              },
+              "resultProperty": "dialog.startDateTime"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "h0RtOF"
+              },
+              "activity": "${bfdactivity-h0RtOF()}",
+              "disabled": true
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "S7QlQI"
+              },
+              "eventName": "SearchMeetings"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Io2-1c"
+              },
+              "dialog": "SetTitle",
+              "options": {
+                "title": "=dialog.slots.Subject"
+              },
+              "resultProperty": "dialog.title"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ZMYyeo"
+              },
+              "activity": "${bfdactivity-ZMYyeo()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "UxLizE"
+          },
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "wfs6BY"
+              }
+            }
+          ],
+          "condition": "count(dialog.meetings) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "PtFAMN"
+              },
+              "condition": "count(dialog.meetings) > 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "PCaq-E"
+                  },
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "outputFormat": "value",
+                  "appendChoices": "true",
+                  "defaultLocale": "en-us",
+                  "style": "Auto",
+                  "choiceOptions": {
+                    "inlineSeparator": ", ",
+                    "inlineOr": " or ",
+                    "inlineOrMore": ", or ",
+                    "includeNumbers": true
+                  },
+                  "recognizerOptions": {
+                    "noValue": false,
+                    "noAction": false
+                  },
+                  "prompt": "${bfdprompt-PCaq-E()}",
+                  "choices": "= dialog.meetings",
+                  "property": "dialog.choosenMeeting"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "YzDWAA"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.choosenMeeting",
+                      "value": "= dialog.meetings[0]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "uTMrPt"
+          },
+          "value": "= dialog.choosenMeeting"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "vjwcbY"
+      },
+      "event": "SearchMeetings",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "uLgr1F"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "OZoAsa"
+          },
+          "activity": "${bfdactivity-OZoAsa()}",
+          "disabled": true
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JD1NuZ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.meetings",
+              "value": "= []"
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "mOU0G8"
+          },
+          "property": "dialog.token",
+          "text": "please sign in",
+          "title": "login",
+          "connectionName": "=settings.ConnectionName",
+          "timeout": 900000,
+          "allowInterruptions": false,
+          "alwaysPrompt": false,
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "FouBoV"
+          },
+          "responseType": "Json",
+          "method": "GET",
+          "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=${dialog.utcStart}&endDateTime=${dialog.utcStart}",
+          "headers": {
+            "authorization": "${dialog.token.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "wQOAE8"
+          },
+          "condition": "dialog.api_result.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AVaVzg"
+              },
+              "activity": "${bfdactivity-AVaVzg()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "OUEm0z"
+              },
+              "condition": "count(dialog.api_result.content.value) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "SoXklI"
+                  },
+                  "property": "dialog.meetings",
+                  "value": "= foreach(dialog.api_result.content.value, x, x)"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ClhdAt"
+                  },
+                  "activity": "${bfdactivity-ClhdAt()}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "RysIv4"
+          },
+          "activity": "${bfdactivity-RysIv4()}",
+          "disabled": true
+        }
+      ]
+    }
+  ],
+  "generator": "SearchMeetings.lg",
+  "recognizer": "SearchMeetings.lu"
+}

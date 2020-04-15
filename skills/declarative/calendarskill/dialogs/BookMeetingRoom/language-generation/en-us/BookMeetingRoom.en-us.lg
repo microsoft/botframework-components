@@ -1,0 +1,14 @@
+[import](common.lg)
+
+
+
+
+# bfdactivity-6UyAxu()
+- accepted meeting ${dialog.meeting.subject}
+# bfdactivity-pT8N7m()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+# bfdactivity-5IVmDB()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+
+# bfdactivity-45A0cq()
+- Alright, meeting created.
