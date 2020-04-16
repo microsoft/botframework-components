@@ -21,8 +21,16 @@
           },
           "assignments": [
             {
+              "property": "dialog.durtaion",
+              "value": "= $duration"
+            },
+            {
+              "property": "dialog.startDateTime",
+              "value": "= $startDateTime"
+            },
+            {
               "property": "dialog.endDateTime",
-              "value": "=addMinutes(formatDateTime(dialog.startDateTime), int(dialog.duration))"
+              "value": "=addMinutes(formatDateTime($startDateTime), int(dialog.duration))"
             }
           ]
         },
@@ -42,7 +50,8 @@
               "alwaysPrompt": false,
               "allowInterruptions": false,
               "prompt": "${bfdprompt-f3QClo()}",
-              "property": "dialog.building"
+              "property": "dialog.building",
+              "value": "1"
             },
             {
               "$kind": "Microsoft.NumberInput",
@@ -54,7 +63,8 @@
               "allowInterruptions": false,
               "defaultLocale": "en-us",
               "prompt": "${bfdprompt-BVqWhA()}",
-              "property": "dialog.floorNumber"
+              "property": "dialog.floorNumber",
+              "value": "1"
             }
           ]
         },
@@ -191,11 +201,21 @@
           "condition": "dialog.floorNumber != null "
         },
         {
-          "$kind": "Microsoft.EmitEvent",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "FYUPoY"
+            "id": "957-HY"
           },
-          "eventName": "SearchRooms"
+          "dialog": "SearchMeetingRoomReqeust",
+          "options": {
+            "searchQuery": "=dialog.searchQuery"
+          },
+          "resultProperty": "dialog.meetingRooms"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "smTrMO"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -224,11 +244,18 @@
           ]
         },
         {
-          "$kind": "Microsoft.EmitEvent",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "5CWdCN"
+            "id": "VYYI_W"
           },
-          "eventName": "CheckRoomAvailable"
+          "dialog": "GetScheduleRequest",
+          "resultProperty": "dialog.availability",
+          "options": {
+            "startDateTime": "=dialog.startDateTime",
+            "endDateTime": "=dialog.endDateTime",
+            "meetingRooms": "=dialog.meetingRooms",
+            "duration": "=dialog.duration"
+          }
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -272,13 +299,6 @@
               "property": "dialog.meetingRoom"
             },
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "X6dFf0"
-              },
-              "activity": "${bfdactivity-X6dFf0()}"
-            },
-            {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
                 "id": "WEbk3u"
@@ -294,177 +314,6 @@
               }
             }
           ]
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnCustomEvent",
-      "$designer": {
-        "id": "rs5g0g"
-      },
-      "event": "SearchRooms",
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "xqqiJg"
-          },
-          "assignments": [
-            {
-              "property": "dialog.meetingRooms",
-              "value": "= []"
-            }
-          ],
-          "disabled": false
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "6OwSiP"
-          },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://${settings.azureSearch.searchServiceName}.search.windows.net/indexes/${settings.azureSearch.searchIndexName}/docs?api-version=2019-05-06&${dialog.searchQuery}",
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json",
-          "headers": {
-            "api-key": "${settings.azureSearch.searchServiceAdminApiKey}"
-          }
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "cybohh"
-          },
-          "condition": "dialog.api_result.statusCode == 200",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "pYw0rC"
-              },
-              "activity": "${bfdactivity-pYw0rC()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "JTj3Tm"
-              },
-              "condition": "count(dialog.api_result.content.value) > 0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "kHC3GJ"
-                  },
-                  "property": "dialog.meetingRooms",
-                  "value": "= foreach(dialog.api_result.content.value, x, x)"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "FMIZux"
-                  },
-                  "activity": "${bfdactivity-FMIZux()}"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "5I8bFP"
-          },
-          "activity": "${bfdactivity-5I8bFP()}",
-          "disabled": true
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnCustomEvent",
-      "$designer": {
-        "id": "gM9HcK"
-      },
-      "event": "CheckRoomAvailable",
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "S8cz6Z"
-          },
-          "property": "dialog.meetingRoomEmails",
-          "value": "= foreach(dialog.meetingRooms, x, x.emailAddress)"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "hHR9t3"
-          },
-          "assignments": [
-            {
-              "property": "dialog.utcStart",
-              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
-            },
-            {
-              "property": "dialog.utcEnd",
-              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.OAuthInput",
-          "$designer": {
-            "id": "XiBKO5"
-          },
-          "property": "dialog.token",
-          "text": "please sign in",
-          "title": "login",
-          "connectionName": "=settings.ConnectionName",
-          "timeout": 900000,
-          "allowInterruptions": false,
-          "alwaysPrompt": false,
-          "disabled": false
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "mWh-g7"
-          },
-          "responseType": "Json",
-          "method": "POST",
-          "body": {
-            "schedules": "=dialog.meetingRoomEmails",
-            "startTime": {
-              "dateTime": "${dialog.utcStart}",
-              "timeZone": "UTC"
-            },
-            "endTime": {
-              "dateTime": "${dialog.utcEnd}",
-              "timeZone": "UTC"
-            },
-            "availabilityViewInterval": "=dialog.duration"
-          },
-          "url": "https://graph.microsoft.com/v1.0/me/calendar/getSchedule",
-          "contentType": "application/json",
-          "resultProperty": "dialog.api_result",
-          "disabled": false,
-          "headers": {
-            "authorization": "${dialog.token.token}"
-          }
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "o9bKl5"
-          },
-          "property": "dialog.availability",
-          "value": "= dialog.api_result.content.value",
-          "disabled": false
         }
       ]
     }

@@ -1,0 +1,79 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "jhrSvA",
+    "name": "AcceptMeetingRequest"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Bxo20j"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "U2Iap6"
+          },
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "BdVEMc"
+          }
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "XRHv2_"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}/accept",
+          "headers": {
+            "authorization": "${turn.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "B-IutG"
+          },
+          "condition": "dialog.api_result.statusCode == 202",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "OgkZX6"
+              },
+              "activity": "${bfdactivity-OgkZX6()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Qm_Dtt"
+              },
+              "activity": "${bfdactivity-Qm_Dtt()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "_akeEL"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "AcceptMeetingRequest.lg"
+}

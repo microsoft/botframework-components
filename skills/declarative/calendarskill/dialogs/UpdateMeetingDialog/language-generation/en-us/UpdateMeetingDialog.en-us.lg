@@ -2,11 +2,7 @@
 
 # bfdprompt-34JbXw()
 - Are you confirmed to update the meeting \"${dialog.meeting.subject}\"
-# bfdactivity-bZcwYG()
-- result is ${dialog.confirm}
 
-# bfdactivity-o8EUXW()
-- duration ${dialog.duration}, new date time ${dialog.newStartDateTime}, end date time ${dialog.newEndDateTime}
 # bfdactivity-kb65IK()
 - updated meeting ${dialog.meeting.subject}
 # bfdactivity-G6Asj4()

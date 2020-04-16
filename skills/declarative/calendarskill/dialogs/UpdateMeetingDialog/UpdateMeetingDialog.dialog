@@ -90,14 +90,6 @@
           "outputFormat": "= this.value"
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "bZcwYG"
-          },
-          "activity": "${bfdactivity-bZcwYG()}",
-          "disabled": true
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "FVnGEG"
@@ -127,14 +119,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "o8EUXW"
-          },
-          "activity": "${bfdactivity-o8EUXW()}",
-          "disabled": true
-        },
-        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "F0oNRf"
@@ -143,103 +127,22 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "dKRCRP"
+            "id": "H7PwTe"
+          },
+          "dialog": "UpdateMeetingRequest",
+          "options": {
+            "newStartDateTime": "=dialog.newStartDateTime",
+            "newEndDateTime": "=dialog.newEndDateTime",
+            "meetingSubject": "=dialog.meeting.subject",
+            "meetingId": "=dialog.meeting.id"
           }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnCustomEvent",
-      "$designer": {
-        "id": "Ny73NN"
-      },
-      "event": "UpdateMeeting",
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "NSv3OB"
-          },
-          "assignments": [
-            {
-              "property": "dialog.utcStart",
-              "value": "= addHours(formatDateTime(dialog.newStartDateTime), int(user.timeOffset))"
-            },
-            {
-              "property": "dialog.utcEnd",
-              "value": "= addHours(formatDateTime(dialog.newEndDateTime), int(user.timeOffset))"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.OAuthInput",
-          "$designer": {
-            "id": "TzqPXU"
-          },
-          "property": "dialog.token",
-          "text": "please sign in",
-          "title": "login",
-          "connectionName": "=settings.ConnectionName",
-          "timeout": 900000,
-          "allowInterruptions": false,
-          "alwaysPrompt": false,
-          "disabled": false
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "48-hsl"
-          },
-          "responseType": "Json",
-          "method": "PATCH",
-          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meeting.id}",
-          "headers": {
-            "authorization": "${dialog.token.token}"
-          },
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json",
-          "body": {
-            "start": {
-              "dateTime": "${dialog.utcStart}",
-              "timeZone": "UTC"
-            },
-            "end": {
-              "dateTime": "${dialog.utcEnd}",
-              "timeZone": "UTC"
-            }
-          }
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "0gHkzu"
-          },
-          "condition": "dialog.api_result.statusCode == 200",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "G6Asj4"
-              },
-              "activity": "${bfdactivity-G6Asj4()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "kb65IK"
-              },
-              "activity": "${bfdactivity-kb65IK()}"
-            }
-          ]
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "5mGmoQ"
+            "id": "dKRCRP"
           }
         }
       ]
