@@ -241,7 +241,7 @@ namespace ITSMSkill.Dialogs
                 var cards = new List<Card>();
                 foreach (var ticket in result.Tickets)
                 {
-                    cards.Add(GetTicketCard(sc.Context, ticket));
+                    cards.Add(GetTicketCard(sc.Context, state, ticket));
                 }
 
                 await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards), cancellationToken);
