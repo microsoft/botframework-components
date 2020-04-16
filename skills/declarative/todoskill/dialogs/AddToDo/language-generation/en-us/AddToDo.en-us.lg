@@ -1,0 +1,40 @@
+[import](common.lg)
+
+# bfdprompt-662396()
+- ${AskTaskContentText()}
+
+# bfdprompt-456695()
+- Which list should I add **${conversation.taskContent}** to?
+
+# bfdprompt-RCO61b()
+- ${AskAddDupTaskPrompt(conversation.taskContent)}
+
+# bfdactivity-QRekYt()
+- ${CompletedMessage()}
+
+> From AddToDo
+
+# AskTaskContentText.Text
+- OK, what do you want to add?
+
+# AskTaskContentText
+[Activity
+    Text = ${AskTaskContentText.Text()}
+    Speak = ${AskTaskContentText.Text()}
+    InputHint = expectingInput
+]
+
+# AskAddDupTaskPrompt.Text(TaskContent)
+- You already have ${TaskContent} on your list. Do you still want to add it?
+
+# AskAddDupTaskPrompt(TaskContent)
+[Activity
+    Text = ${AskAddDupTaskPrompt.Text(TaskContent)}
+    Speak = ${AskAddDupTaskPrompt.Text(TaskContent)}
+    InputHint = expectingInput
+]
+
+# bfdactivity-CIxR1t()
+- OK, I've updated the task content to ${@taskContent}
+# bfdactivity-uvH7W6()
+- OK, I've updated the list type to ${dialog.listType}

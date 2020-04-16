@@ -1,0 +1,61 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "3iLTOt",
+    "name": "AddToListOutlook"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "baEbL1"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3tl4CI"
+          },
+          "dialog": "OAuth"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3gc_Py"
+          },
+          "dialog": "OutlookGetOrCreateTaskFolderAsync",
+          "resultProperty": "dialog.id"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "bT-rCD"
+          },
+          "assignments": [
+            {
+              "property": "dialog.body",
+              "value": "=setProperty({} , \"subject\" ,dialog.taskContent)"
+            },
+            {
+              "property": "dialog.url",
+              "value": "=settings.graphBaseUrl  + \"taskFolders/\" + dialog.id + \"/tasks\""
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7sCD8b"
+          },
+          "dialog": "PostAsync",
+          "resultProperty": "dialog.result",
+          "options": "=setProperty(setProperty({},\"url\",dialog.url),\"body\",dialog.body)"
+        }
+      ]
+    }
+  ],
+  "generator": "AddToListOutlook.lg"
+}
