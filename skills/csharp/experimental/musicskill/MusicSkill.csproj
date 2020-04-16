@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="4.2.0" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="4.2.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
