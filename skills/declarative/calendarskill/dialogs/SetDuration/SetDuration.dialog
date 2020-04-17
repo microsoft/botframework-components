@@ -58,13 +58,6 @@
           "value": "= int(dialog.duration)/60"
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "_--lNp"
-          },
-          "activity": "${bfdactivity-_--lNp()}"
-        },
-        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "0GvNto"
