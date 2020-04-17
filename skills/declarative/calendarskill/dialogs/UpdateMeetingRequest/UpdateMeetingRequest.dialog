@@ -68,35 +68,27 @@
           }
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "rGj3uq"
+            "id": "MKV1ns"
           },
-          "condition": "dialog.api_result.statusCode == 200",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "nHvBgz"
-              },
-              "activity": "${bfdactivity-nHvBgz()}"
-            }
-          ],
-          "actions": [
+              "property": "dialog.result",
+              "value": "= {}"
+            },
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "IG1xM5"
-              },
-              "activity": "${bfdactivity-IG1xM5()}"
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 200"
             }
           ]
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "0__irh"
-          }
+            "id": "rP4mI-"
+          },
+          "value": "= dialog.result"
         }
       ]
     }

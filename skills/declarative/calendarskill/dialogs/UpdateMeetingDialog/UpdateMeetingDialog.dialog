@@ -119,14 +119,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "F0oNRf"
-          },
-          "eventName": "UpdateMeeting",
-          "disabled": false
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "H7PwTe"
@@ -135,9 +127,34 @@
           "options": {
             "newStartDateTime": "=dialog.newStartDateTime",
             "newEndDateTime": "=dialog.newEndDateTime",
-            "meetingSubject": "=dialog.meeting.subject",
             "meetingId": "=dialog.meeting.id"
-          }
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "rwFUJD"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DzKf6N"
+              },
+              "activity": "${bfdactivity-DzKf6N()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "-nHbKA"
+              },
+              "activity": "${bfdactivity--nHbKA()}"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

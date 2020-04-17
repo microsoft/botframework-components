@@ -1,6 +1,2 @@
 [import](common.lg)
 
-# bfdactivity-Qm_Dtt()
-- Accepted meeting ${dialog.meetingSubject}
-# bfdactivity-OgkZX6()
-- Sorry, the request got an error ${dialog.api_result.statusCode}
