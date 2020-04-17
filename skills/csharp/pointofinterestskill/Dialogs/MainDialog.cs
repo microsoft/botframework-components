@@ -18,6 +18,7 @@ using PointOfInterestSkill.Responses.Main;
 using PointOfInterestSkill.Responses.Shared;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Utilities;
+using SkillServiceLibrary.Models;
 using SkillServiceLibrary.Utilities;
 
 namespace PointOfInterestSkill.Dialogs
@@ -33,6 +34,8 @@ namespace PointOfInterestSkill.Dialogs
         private readonly Dialog _findPointOfInterestDialog;
         private readonly Dialog _findParkingDialog;
         private readonly Dialog _getDirectionsDialog;
+        private readonly IServiceManager _serviceManager;
+        private readonly BotSettings _settings;
 
         public MainDialog(
             IServiceProvider serviceProvider)
@@ -40,6 +43,8 @@ namespace PointOfInterestSkill.Dialogs
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _serviceManager = serviceProvider.GetService<IServiceManager>();
+            _settings = serviceProvider.GetService<BotSettings>();
 
             // Initialize state accessor
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -485,6 +490,22 @@ namespace PointOfInterestSkill.Dialogs
             {
                 T actionData = eventValue.ToObject<T>();
                 actionData.DigestActionInput(state);
+
+                if (!string.IsNullOrEmpty(actionData.Zipcode))
+                {
+                    var service = _serviceManager.InitAddressMapsService(_settings);
+                    PointOfInterestModel model;
+                    if (string.IsNullOrEmpty(actionData.CountrySet))
+                    {
+                        model = await service.GetZipcodeAsync(actionData.Zipcode);
+                    }
+                    else
+                    {
+                        model = await service.GetZipcodeAsync(actionData.Zipcode, actionData.CountrySet);
+                    }
+
+                    state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
+                }
             }
         }
     }

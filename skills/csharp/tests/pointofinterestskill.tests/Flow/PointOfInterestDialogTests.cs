@@ -339,6 +339,22 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task RouteToPointOfInterestZipcodeActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindPointOfInterestUtterances.WhatsNearbyZipcodeAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.DetailsNoCall }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task RouteToPointOfInterestAndSelectNoneActionTest()
         {
             await GetSkillTestFlow()

@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using PointOfInterestSkill.Models;
 using PointOfInterestSkill.Services;
 using PointOfInterestSkill.Tests.Flow.Strings;
+using SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes;
 using SkillServiceLibrary.Models;
 
 namespace PointOfInterestSkill.Tests.Flow.Utterances
@@ -25,6 +26,11 @@ namespace PointOfInterestSkill.Tests.Flow.Utterances
         {
             currentLatitude = LocationLatitude,
             currentLongitude = LocationLongitude,
+        }));
+
+        public static readonly Activity WhatsNearbyZipcodeAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new
+        {
+            zipcode = MockData.Zipcode,
         }));
 
         public static readonly Activity FindNearestPoiNoCurrentAction = new Activity(type: ActivityTypes.Event, name: ActionNames.FindPointOfInterestAction, value: JObject.FromObject(new

@@ -141,6 +141,18 @@ namespace PointOfInterestSkill.Tests.Flow
         }
 
         [TestMethod]
+        public async Task GetDirectionsZipcodeActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(RouteFromXToYUtterances.FindRouteZipcodeAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
         public async Task GetDirectionsAndInterruptActionTest()
         {
             await GetSkillTestFlow()
