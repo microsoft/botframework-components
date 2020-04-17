@@ -20,3 +20,13 @@
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 # bfdactivity-5I8bFP()
 - dialog meeting rooms ${dialog.meetingRooms}
+
+
+
+# bfdactivity-Ln36ri()
+- Can not find meeting rooms 
+# bfdactivity-_uBP-t()
+- ${CalendarErrorMessage()}
+
+# bfdactivity-l6_rBj()
+- ${CalendarErrorMessage()}

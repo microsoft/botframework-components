@@ -1,7 +1,3 @@
 [import](common.lg)
 
-# bfdactivity-c0qLxG()
-- Deleted meeting ${dialog.meetingSubject}
 
-# bfdactivity-rImXwr()
-- Sorry, the request got an error ${dialog.api_result.statusCode}

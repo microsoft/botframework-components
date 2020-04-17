@@ -83,41 +83,33 @@
           "contentType": "application/json"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "-yPMZE"
-          }
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "jmI6jc"
+            "id": "oDCVId"
           },
-          "condition": "dialog.api_result.statusCode == 201",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "WEzESc"
-              },
-              "activity": "${bfdactivity-WEzESc()}"
-            }
-          ],
-          "actions": [
+              "property": "dialog.result",
+              "value": "= {}"
+            },
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "rX8wFj"
-              },
-              "activity": "${bfdactivity-rX8wFj()}"
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 201"
             }
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "u-cwv7"
+          }
+        },
+        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "usulmu"
-          }
+            "id": "QhUoyz"
+          },
+          "value": "= dialog.result"
         }
       ]
     }

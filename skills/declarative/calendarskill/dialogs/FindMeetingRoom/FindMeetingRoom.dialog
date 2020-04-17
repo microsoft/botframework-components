@@ -50,8 +50,13 @@
               "alwaysPrompt": false,
               "allowInterruptions": false,
               "prompt": "${bfdprompt-f3QClo()}",
-              "property": "dialog.building",
-              "value": "1"
+              "property": "dialog.building"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "mp_cGd"
+              }
             },
             {
               "$kind": "Microsoft.NumberInput",
@@ -209,7 +214,78 @@
           "options": {
             "searchQuery": "=dialog.searchQuery"
           },
-          "resultProperty": "dialog.meetingRooms"
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "myerIv"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "_uBP-t"
+              },
+              "activity": "${bfdactivity-_uBP-t()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "SHzFmp"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "kca6ib"
+              },
+              "condition": "empty(dialog.requestResult.meetingRooms)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "Ln36ri"
+                  },
+                  "activity": "${bfdactivity-Ln36ri()}"
+                },
+                {
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "6NOjBZ"
+                  },
+                  "properties": [
+                    "dialog.meetingRoomName",
+                    "dialog.building",
+                    "dialog.floorNumber"
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "nP4kSX"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "VW8OMb"
+                  },
+                  "assignments": [
+                    {
+                      "value": "= dialog.requestResult.meetingRooms",
+                      "property": "dialog.meetingRooms"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -218,38 +294,12 @@
           }
         },
         {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "SGpSWD"
-          },
-          "condition": "empty(dialog.meetingRooms)",
-          "actions": [
-            {
-              "$kind": "Microsoft.DeleteProperties",
-              "$designer": {
-                "id": "bwENak"
-              },
-              "properties": [
-                "dialog.meetingRoomName",
-                "dialog.building",
-                "dialog.floorNumber"
-              ]
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "KXYZmt"
-              }
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "VYYI_W"
           },
           "dialog": "GetScheduleRequest",
-          "resultProperty": "dialog.availability",
+          "resultProperty": "dialog.requestResult",
           "options": {
             "startDateTime": "=dialog.startDateTime",
             "endDateTime": "=dialog.endDateTime",
@@ -258,12 +308,40 @@
           }
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "tc6Xtv"
+            "id": "FkPd6Z"
           },
-          "property": "dialog.availableRoom",
-          "value": "= foreach(where(dialog.availability, x, x.availabilityView == '0'), y, y.scheduleId)"
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "l6_rBj"
+              },
+              "activity": "${bfdactivity-l6_rBj()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "VJO7mj"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "AzT0s_"
+              },
+              "assignments": [
+                {
+                  "value": "= foreach(where(dialog.requestResult.availability, x, x.availabilityView == '0'), y, y.scheduleId)",
+                  "property": "dialog.availableRoom"
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",

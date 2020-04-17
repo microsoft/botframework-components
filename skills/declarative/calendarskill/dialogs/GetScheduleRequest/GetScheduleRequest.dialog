@@ -48,18 +48,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "NgIUKV"
-          },
-          "assignments": [
-            {
-              "property": "dialog.availability",
-              "value": "= []"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.HttpRequest",
           "$designer": {
             "id": "mJau_h"
@@ -87,38 +75,37 @@
           }
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "HFe5Bs"
+            "id": "18pGbO"
           },
-          "condition": "dialog.api_result.statusCode == 200",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "ZLlOzo"
-              },
-              "activity": "${bfdactivity-ZLlOzo()}"
-            }
-          ],
-          "actions": [
+              "property": "dialog.result",
+              "value": "= {}"
+            },
             {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "M8kvD6"
-              },
-              "property": "dialog.availability",
-              "value": "= dialog.api_result.content.value",
-              "disabled": false
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 200"
+            },
+            {
+              "property": "dialog.result.availability",
+              "value": "= if(dialog.result.requestStatus, dialog.api_result.content.value, null)"
             }
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HW2mUh"
+          }
+        },
+        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "sODuy8"
+            "id": "zobXXa"
           },
-          "value": "= dialog.availability"
+          "value": "= dialog.result"
         }
       ]
     }

@@ -8,3 +8,8 @@
 
 # bfdactivity-6dAik5()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
+
+# bfdactivity-umV9Wd()
+- Accepted meeting \"${dialog.meeting.subject}\"
+# bfdactivity-niKUww()
+- ${CalendarErrorMessage()}
