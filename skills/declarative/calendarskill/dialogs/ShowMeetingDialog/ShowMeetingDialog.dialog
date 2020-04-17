@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5Ynfqq"
+          },
+          "name": "begin of show"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "DUBRRc"
@@ -275,7 +282,7 @@
                     "id": "RxBh_e"
                   },
                   "property": "dialog.DisplayMeetingsList",
-                  "value": "=subArray(dialog.MeetingsList, dialog.ShowMeeting_CurrentPage * 3, min(dialog.ShowMeeting_CurrentPage * 3 + 3, count(dialog.MeetingsList)))"
+                  "value": "=subArray(dialog.MeetingsList, dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize), min(dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize) + int(settings.DisplaySize), count(dialog.MeetingsList)))"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",
@@ -387,11 +394,11 @@
                   },
                   "maxTurnCount": 3,
                   "alwaysPrompt": false,
-                  "allowInterruptions": false,
                   "defaultLocale": "en-us",
                   "style": "Auto",
                   "prompt": "${bfdprompt-4u0r-m()}",
-                  "property": "dialog.ConfirmRead"
+                  "property": "dialog.ConfirmRead",
+                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9"
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -405,7 +412,7 @@
                       "$designer": {
                         "id": "khfZ-a"
                       },
-                      "property": "dialog.FocusedMeeting",
+                      "property": "conversation.FocusedMeeting",
                       "value": "=dialog.MeetingsList[0]"
                     },
                     {
@@ -444,7 +451,8 @@
     {
       "$kind": "Microsoft.OnCustomEvent",
       "$designer": {
-        "id": "HXJean"
+        "id": "HXJean",
+        "name": "ReadMeeting"
       },
       "event": "ShowMeetingDetailInfo",
       "actions": [
@@ -460,7 +468,7 @@
           "$designer": {
             "id": "7MPE3G"
           },
-          "condition": "dialog.FocusedMeeting != null",
+          "condition": "conversation.FocusedMeeting != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -476,7 +484,7 @@
               "$designer": {
                 "id": "ABOTeC"
               },
-              "property": "dialog.FocusedMeeting",
+              "property": "conversation.FocusedMeeting",
               "value": "=dialog.MeetingsList[0]"
             },
             {
@@ -508,9 +516,129 @@
             "id": "EckUyy"
           },
           "activity": "${bfdactivity-EckUyy()}"
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "HDFe4y"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${bfdprompt-HDFe4y()}",
+          "property": "turn.RepeatOverviewConfirm",
+          "allowInterruptions": "#_Interruption.Score >= 0.9"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Q2l2im"
+          },
+          "condition": "turn.RepeatOverviewConfirm",
+          "actions": [
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "BbBm67"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "n2vGsk"
+      },
+      "intent": "NextPage",
+      "condition": true,
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Wh_hYC"
+          },
+          "condition": "=(dialog.ShowMeeting_CurrentPage + 1) * int(settings.DisplaySize) < count(dialog.MeetingsList)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "zCz1I7"
+              },
+              "property": "dialog.ShowMeeting_CurrentPage",
+              "value": "=dialog.ShowMeeting_CurrentPage + 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "GHfVi1"
+              },
+              "activity": "${bfdactivity-GHfVi1()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "MWll21"
+          },
+          "options": {
+            "ShowMeeting_CurrentPage": "=dialog.ShowMeeting_CurrentPage",
+            "MeetingsList": "=dialog.MeetingsList"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "bWQnSr"
+      },
+      "intent": "PreviousPage",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "4rzSyB"
+          },
+          "condition": "=dialog.ShowMeeting_CurrentPage > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "kqAcxS"
+              },
+              "property": "dialog.ShowMeeting_CurrentPage",
+              "value": "=dialog.ShowMeeting_CurrentPage - 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "vk2DNJ"
+              },
+              "activity": "${bfdactivity-vk2DNJ()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "2l22hK"
+          },
+          "options": {
+            "ShowMeeting_CurrentPage": "=dialog.ShowMeeting_CurrentPage",
+            "MeetingsList": "=dialog.MeetingsList"
+          }
         }
       ]
     }
   ],
-  "generator": "ShowMeetingDialog.lg"
+  "generator": "ShowMeetingDialog.lg",
+  "recognizer": "ShowMeetingDialog.lu"
 }

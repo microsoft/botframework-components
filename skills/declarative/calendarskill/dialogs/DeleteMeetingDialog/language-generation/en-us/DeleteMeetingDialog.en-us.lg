@@ -12,7 +12,7 @@
 
 
 # bfdprompt-Fm38sQ()
-- Are you confirmed to cancel the meeting \"${dialog.meeting.subject}\"
+- Are you confirmed to cancel the meeting \"${dialog.meeting.Title}\"
 
 # bfdactivity-qFefqJ()
 - Sorry, the request got an error ${dialog.api_result.statusCode}

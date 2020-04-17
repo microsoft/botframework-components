@@ -14,11 +14,18 @@
 # bfdprompt-4u0r-m()
 - Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
 # bfdactivity-meJEs5()
-- The event titled ${dialog.FocusedMeeting.Title} is on ${formatDateTime(dialog.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(dialog.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(dialog.FocusedMeeting.Attendees)}. 
+- The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
 # bfdactivity-Tb6enx()
-- You have one meeting ${dialog.ShowingMeetingCondition}: ${dialog.FocusedMeeting.Title}. It's with ${GetAttendeeString(dialog.FocusedMeeting.Attendees)} ${formatDateTime(dialog.FocusedMeeting.StartTime, 'HH:mm:ss')}.
+- You have one meeting ${dialog.ShowingMeetingCondition}: ${conversation.FocusedMeeting.Title}. It's with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)} ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')}.
 
 # bfdactivity-EckUyy()
 [Activity
-    Attachments = ${json(MeetingDetailCard(formatDateTime(dialog.FocusedMeeting.StartTime), formatDateTime(dialog.FocusedMeeting.EndTime), 'UTC', [], dialog.FocusedMeeting.Subject, dialog.MeetingsList[0].Location, dialog.MeetingsList[0].Content, dialog.MeetingsList[0].OnlineMeetingUrl))}
+    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', [], conversation.FocusedMeeting.Subject, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
 ]
+
+# bfdactivity-GHfVi1()
+- You have no more events scheduled.
+# bfdactivity-vk2DNJ()
+- This is the first page.
+# bfdprompt-HDFe4y()
+- Do you want to review your calendar overview again for ${formatDateTime(dialog.ShowMeeting_StartDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.

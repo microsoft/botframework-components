@@ -1,7 +1,7 @@
 [import](common.lg)
 
 # bfdprompt-34JbXw()
-- Are you confirmed to update the meeting \"${dialog.meeting.subject}\"
+- Are you confirmed to update the meeting \"${dialog.meeting.Title}\"
 # bfdactivity-bZcwYG()
 - result is ${dialog.confirm}
 
