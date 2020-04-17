@@ -129,7 +129,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Ze0zs2"
+            "id": "9txx6d"
           },
           "dialog": "SetTitle",
           "options": {
@@ -150,7 +150,33 @@
             "description": "demo description",
             "location": "demo location",
             "meetingRoom": "=dialog.meetingRoom"
-          }
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DuQQm7"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "OqVPIR"
+              },
+              "activity": "${bfdactivity-OqVPIR()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "aN26Uv"
+              },
+              "activity": "${bfdactivity-aN26Uv()}"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

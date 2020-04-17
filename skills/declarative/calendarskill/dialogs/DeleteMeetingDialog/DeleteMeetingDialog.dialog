@@ -73,9 +73,34 @@
           },
           "dialog": "DeleteMeetingRequest",
           "options": {
-            "meetingSubject": "=dialog.meeting.subject",
             "meetingId": "=dialog.meeting.id"
-          }
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MeUzZf"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "zvacDp"
+              },
+              "activity": "${bfdactivity-zvacDp()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Nqbvyc"
+              },
+              "activity": "${bfdactivity-Nqbvyc()}"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

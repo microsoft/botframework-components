@@ -73,9 +73,34 @@
           },
           "dialog": "AcceptMeetingRequest",
           "options": {
-            "meetingSubject": "=dialog.meeting.subject",
             "meetingId": "=dialog.meeting.id"
-          }
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "F4cCb3"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "niKUww"
+              },
+              "activity": "${bfdactivity-niKUww()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "umV9Wd"
+              },
+              "activity": "${bfdactivity-umV9Wd()}"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

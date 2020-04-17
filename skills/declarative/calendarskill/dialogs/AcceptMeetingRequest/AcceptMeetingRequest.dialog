@@ -42,35 +42,33 @@
           "contentType": "application/json"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "B-IutG"
+            "id": "po4zV0"
           },
-          "condition": "dialog.api_result.statusCode == 202",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "OgkZX6"
-              },
-              "activity": "${bfdactivity-OgkZX6()}"
-            }
-          ],
-          "actions": [
+              "property": "dialog.result",
+              "value": "= {}"
+            },
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "Qm_Dtt"
-              },
-              "activity": "${bfdactivity-Qm_Dtt()}"
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 202"
             }
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "u9T0zv"
+          }
+        },
+        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "_akeEL"
-          }
+            "id": "3q3DH4"
+          },
+          "value": "= dialog.result"
         }
       ]
     }

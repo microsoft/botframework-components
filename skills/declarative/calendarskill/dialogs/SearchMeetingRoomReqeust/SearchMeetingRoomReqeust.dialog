@@ -48,55 +48,37 @@
           }
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "Y1U5R8"
+            "id": "QrIZvp"
           },
-          "condition": "dialog.api_result.statusCode == 200",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "fgFOKD"
-              },
-              "activity": "${bfdactivity-fgFOKD()}"
-            }
-          ],
-          "actions": [
+              "property": "dialog.result",
+              "value": "= {}"
+            },
             {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "SI445q"
-              },
-              "condition": "count(dialog.api_result.content.value) > 0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "wy_Oow"
-                  },
-                  "property": "dialog.meetingRooms",
-                  "value": "= foreach(dialog.api_result.content.value, x, x)"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "cN6wZy"
-                  },
-                  "activity": "${bfdactivity-cN6wZy()}"
-                }
-              ]
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 200"
+            },
+            {
+              "property": "dialog.result.meetingRooms",
+              "value": "= if(dialog.result.requestStatus, foreach(dialog.api_result.content.value, x, x), null)"
             }
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "t8PP1S"
+          }
+        },
+        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "YPATJF"
+            "id": "LbLpuH"
           },
-          "value": "= dialog.meetingRooms"
+          "value": "= dialog.result"
         }
       ]
     }
