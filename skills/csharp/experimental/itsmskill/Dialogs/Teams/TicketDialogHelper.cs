@@ -23,6 +23,7 @@ namespace ITSMSkill.Dialogs.Teams
             try
             {
                 // Json Card for creating incident
+                // TODO: Replace with Cards.Lg and responses
                 AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
 
                 adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
