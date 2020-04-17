@@ -203,12 +203,12 @@
 - reject it
 
 # ChangeTaskContent
-- update topic to {TaskContent}
-- change topic to {TaskContent}
-- update content to {TaskContent}
-- change content to {TaskContent}
-- update task to {TaskContent}
-- change task to {TaskContent}
+- update topic to {TaskContent=buy trousers}
+- change topic to {TaskContent=buy apples}
+- update content to {TaskContent=buy bananas}
+- change content to {TaskContent=buy oranges}
+- update task to {TaskContent=buy skirts}
+- change task to {TaskContent=buy caps}
 
 # ChangeListType
 - add to {ListType: roleListType=todo} list

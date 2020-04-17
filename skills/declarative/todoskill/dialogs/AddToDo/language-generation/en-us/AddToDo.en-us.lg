@@ -1,10 +1,6 @@
 [import](common.lg)
 
-# bfdprompt-662396()
-- ${AskTaskContentText()}
 
-# bfdprompt-456695()
-- Which list should I add **${conversation.taskContent}** to?
 
 # bfdprompt-RCO61b()
 - ${AskAddDupTaskPrompt(conversation.taskContent)}
@@ -38,3 +34,10 @@
 - OK, I've updated the task content to ${@taskContent}
 # bfdactivity-uvH7W6()
 - OK, I've updated the list type to ${dialog.listType}
+
+
+# bfdprompt-kuxcSi()
+- ${AskTaskContentText()}
+
+# bfdprompt-m9c06z()
+- Which list should I add ${if(conversation.taskContent == null, 'new task', concat('**', conversation.taskContent, '**'))} to?

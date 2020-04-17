@@ -128,6 +128,19 @@
                       "activity": "${bfdactivity-rYj5mA()}"
                     }
                   ]
+                },
+                {
+                  "value": "delete",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "IS3e0H",
+                        "name": "Send a response"
+                      },
+                      "activity": "${bfdactivity-IS3e0H()}"
+                    }
+                  ]
                 }
               ],
               "condition": "dialog.fromType",

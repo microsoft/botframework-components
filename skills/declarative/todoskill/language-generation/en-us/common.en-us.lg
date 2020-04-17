@@ -1,7 +1,7 @@
 > Language generation templates.
 # Welcome-Actions
 [Activity
-    SuggestedActions = Add a task | View my tasks | Mark a task | Cancel | Help
+    SuggestedActions = Add a task | View my tasks | Mark a task | Delete a task | Help
 ]
 
 # Welcome-Suffix
