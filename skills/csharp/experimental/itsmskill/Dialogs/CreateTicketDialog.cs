@@ -96,7 +96,7 @@ namespace ITSMSkill.Dialogs
                 return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
-            var card = GetTicketCard(sc.Context, result.Tickets[0]);
+            var card = GetTicketCard(sc.Context, state, result.Tickets[0]);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketCreated, card, null), cancellationToken);
             return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
