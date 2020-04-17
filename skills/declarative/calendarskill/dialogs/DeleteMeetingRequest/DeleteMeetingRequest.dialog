@@ -1,0 +1,79 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "2Chhr4",
+    "name": "DeleteMeetingRequest"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Rt5ZPJ"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "G-zvB4"
+          },
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "VHS5N8"
+          }
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "OmJMp9"
+          },
+          "responseType": "Json",
+          "method": "DELETE",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}",
+          "headers": {
+            "authorization": "${turn.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6ZBDO0"
+          },
+          "condition": "dialog.api_result.statusCode == 204",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "rImXwr"
+              },
+              "activity": "${bfdactivity-rImXwr()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "c0qLxG"
+              },
+              "activity": "${bfdactivity-c0qLxG()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "JysPMp"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "DeleteMeetingRequest.lg"
+}
