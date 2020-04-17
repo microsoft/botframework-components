@@ -143,11 +143,14 @@
       "condition": "#AddToDo.Score > float(settings.intentScore)",
       "actions": [
         {
-          "$kind": "Microsoft.DeleteProperty",
+          "$kind": "Microsoft.DeleteProperties",
           "$designer": {
-            "id": "MANJ-s"
+            "id": "ThxnhG"
           },
-          "property": "conversation.taskContent"
+          "properties": [
+            "conversation.taskContent",
+            "conversation.orders"
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",

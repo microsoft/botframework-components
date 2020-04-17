@@ -50,7 +50,8 @@
               "alwaysPrompt": false,
               "allowInterruptions": false,
               "prompt": "${bfdprompt-f3QClo()}",
-              "property": "dialog.building"
+              "property": "dialog.building",
+              "value": "1"
             },
             {
               "$kind": "Microsoft.TraceActivity",
