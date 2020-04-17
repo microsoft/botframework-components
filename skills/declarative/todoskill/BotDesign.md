@@ -66,13 +66,15 @@ items
 
 # Flow
 
+When repeat, previous dialog state are cleared
+
 ## All
 
 all is handled wrongly when repeat like 'do nothing at all'
 
 support all in first show in mark
 
-# Interruption Test
+# Tests
 
 **if prompt in show, interrupt will not go back**
 

@@ -247,12 +247,6 @@
                       ]
                     },
                     {
-                      "$kind": "Microsoft.TraceActivity",
-                      "$designer": {
-                        "id": "eFavDQ"
-                      }
-                    },
-                    {
                       "$kind": "Microsoft.RepeatDialog",
                       "$designer": {
                         "id": "PYdswx"
