@@ -1,0 +1,25 @@
+{
+    "Method": "GET",
+    "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders",
+    "Responses": [
+      {
+        "Content": {
+            "value": [
+                {
+                    "id": "ToDoId",
+                    "name": "To Do"
+                },
+                {
+                    "id": "ShoppingId",
+                    "name": "Shopping"
+                },
+                {
+                    "id": "GroceryId",
+                    "name": "Grocery"
+                }
+            ]
+        }
+      }
+    ]
+  }
+  

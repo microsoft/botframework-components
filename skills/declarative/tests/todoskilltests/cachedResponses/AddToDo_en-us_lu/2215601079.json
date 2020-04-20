@@ -1,0 +1,1 @@
+{"query":"buy milk","prediction":{"topIntent":"Confirm","intents":{"Confirm":{"score":0.152357385}},"entities":{}}}

@@ -1,0 +1,1 @@
+{"query":"todo","prediction":{"topIntent":"AskForListType","intents":{"AskForListType":{"score":0.9134515}},"entities":{"ListType":[["todo"]]}}}
