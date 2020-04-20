@@ -48,20 +48,10 @@
                   "value": "=-int(dialog.timezone)"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.TraceActivity",
                   "$designer": {
-                    "id": "mECzmR"
-                  },
-                  "activity": "${bfdactivity-mECzmR()}",
-                  "disabled": true
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "0mj6yx"
-                  },
-                  "activity": "${bfdactivity-0mj6yx()}",
-                  "disabled": true
+                    "id": "-6WxFN"
+                  }
                 },
                 {
                   "$kind": "Microsoft.SendActivity",

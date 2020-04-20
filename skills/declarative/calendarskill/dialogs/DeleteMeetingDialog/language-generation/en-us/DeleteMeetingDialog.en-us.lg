@@ -19,3 +19,12 @@
 
 # bfdactivity-sedwtz()
 - removed meeting ${dialog.meeting.subject}
+
+# bfdactivity-QaipH3()
+- Accepted meeting ${dialog.meetingSubject}
+# bfdactivity-86KqPI()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+# bfdactivity-Nqbvyc()
+- Deleted meeting \"${dialog.meeting.subject}\"
+# bfdactivity-zvacDp()
+- ${CalendarErrorMessage()}

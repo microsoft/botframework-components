@@ -1,0 +1,52 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "SAEgmO",
+    "name": "GetAuthToken"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "XfutrI"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6XMaym"
+          },
+          "condition": "turn.token == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.OAuthInput",
+              "$designer": {
+                "id": "D_cwts"
+              },
+              "property": "dialog.token",
+              "text": "please sign in",
+              "title": "login",
+              "connectionName": "=settings.ConnectionName",
+              "timeout": 900000,
+              "allowInterruptions": false,
+              "alwaysPrompt": false,
+              "disabled": false
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "_46wWj"
+              },
+              "property": "turn.token",
+              "value": "= dialog.token.token"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetAuthToken.lg"
+}
