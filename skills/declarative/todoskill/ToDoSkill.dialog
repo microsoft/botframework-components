@@ -46,7 +46,7 @@
                     "id": "037171",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-037171()}"
+                  "activity": "${bfdactivity_037171()}"
                 }
               ]
             }
@@ -67,7 +67,7 @@
             "id": "113335",
             "name": "Send a response"
           },
-          "activity": "${bfdactivity-113335()}"
+          "activity": "${bfdactivity_113335()}"
         }
       ],
       "intent": "Help"
@@ -85,7 +85,7 @@
             "id": "183920",
             "name": "Confirmation"
           },
-          "prompt": "${bfdprompt-183920()}",
+          "prompt": "${bfdprompt_183920()}",
           "maxTurnCount": 3,
           "property": "turn.cancelConfirmation",
           "defaultValue": "false",
@@ -114,7 +114,7 @@
                 "id": "304360",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-304360()}"
+              "activity": "${bfdactivity_304360()}"
             },
             {
               "$kind": "Microsoft.BeginDialog",

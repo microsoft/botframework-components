@@ -62,7 +62,7 @@
                         "id": "kuxcSi",
                         "name": "Text input"
                       },
-                      "prompt": "${bfdprompt-kuxcSi()}",
+                      "prompt": "${bfdprompt_kuxcSi()}",
                       "maxTurnCount": 3,
                       "property": "conversation.taskContent",
                       "value": "=@TaskContent",
@@ -80,7 +80,7 @@
                         "id": "m9c06z",
                         "name": "Multiple choice"
                       },
-                      "prompt": "${bfdprompt-m9c06z()}",
+                      "prompt": "${bfdprompt_m9c06z()}",
                       "maxTurnCount": 3,
                       "property": "conversation.listType",
                       "value": "=coalesce(@ListType, @roleListType)",
@@ -154,7 +154,7 @@
               "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeTaskContent.score > float(settings.intentScore) || #ChangeListType.score > float(settings.intentScore)",
               "defaultLocale": "en-us",
               "style": "Auto",
-              "prompt": "${bfdprompt-RCO61b()}",
+              "prompt": "${bfdprompt_RCO61b()}",
               "property": "dialog.add"
             }
           ],
@@ -185,7 +185,7 @@
               "$designer": {
                 "id": "QRekYt"
               },
-              "activity": "${bfdactivity-QRekYt()}"
+              "activity": "${bfdactivity_QRekYt()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -239,7 +239,7 @@
               "$designer": {
                 "id": "CIxR1t"
               },
-              "activity": "${bfdactivity-CIxR1t()}"
+              "activity": "${bfdactivity_CIxR1t()}"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -324,7 +324,7 @@
               "$designer": {
                 "id": "uvH7W6"
               },
-              "activity": "${bfdactivity-uvH7W6()}"
+              "activity": "${bfdactivity_uvH7W6()}"
             },
             {
               "$kind": "Microsoft.RepeatDialog",

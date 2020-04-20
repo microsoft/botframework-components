@@ -48,7 +48,7 @@
             "id": "098282",
             "name": "Multiple choice"
           },
-          "prompt": "${bfdprompt-098282()}",
+          "prompt": "${bfdprompt_098282()}",
           "maxTurnCount": 3,
           "property": "conversation.listType",
           "value": "=coalesce(@ListType, @roleListType)",
@@ -160,7 +160,7 @@
                             "id": "jHahka",
                             "name": "Send a response"
                           },
-                          "activity": "${bfdactivity-jHahka()}"
+                          "activity": "${bfdactivity_jHahka()}"
                         },
                         {
                           "$kind": "Microsoft.TextInput",
@@ -168,7 +168,7 @@
                             "id": "5KzfvN",
                             "name": "Text input"
                           },
-                          "prompt": "${bfdprompt-5KzfvN()}",
+                          "prompt": "${bfdprompt_5KzfvN()}",
                           "maxTurnCount": 3,
                           "property": "dialog.taskContent",
                           "value": "=@TaskContent",
@@ -314,7 +314,7 @@
                 "id": "689712",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-689712()}"
+              "activity": "${bfdactivity_689712()}"
             }
           ]
         }
@@ -339,7 +339,7 @@
               "$designer": {
                 "id": "As8-Wf"
               },
-              "activity": "${bfdactivity-As8-Wf()}"
+              "activity": "${bfdactivity_As8-Wf()}"
             }
           ]
         },
@@ -368,7 +368,7 @@
               "$designer": {
                 "id": "YSmvaQ"
               },
-              "activity": "${bfdactivity-YSmvaQ()}"
+              "activity": "${bfdactivity_YSmvaQ()}"
             }
           ]
         },

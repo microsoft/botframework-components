@@ -2,42 +2,42 @@
 
 
 
-# bfdprompt-RCO61b()
+# bfdprompt_RCO61b()
 - ${AskAddDupTaskPrompt(conversation.taskContent)}
 
-# bfdactivity-QRekYt()
+# bfdactivity_QRekYt()
 - ${CompletedMessage()}
 
 > From AddToDo
 
-# AskTaskContentText.Text
+# AskTaskContentTextText
 - OK, what do you want to add?
 
 # AskTaskContentText
 [Activity
-    Text = ${AskTaskContentText.Text()}
-    Speak = ${AskTaskContentText.Text()}
+    Text = ${AskTaskContentTextText()}
+    Speak = ${AskTaskContentTextText()}
     InputHint = expectingInput
 ]
 
-# AskAddDupTaskPrompt.Text(TaskContent)
+# AskAddDupTaskPromptText(TaskContent)
 - You already have ${TaskContent} on your list. Do you still want to add it?
 
 # AskAddDupTaskPrompt(TaskContent)
 [Activity
-    Text = ${AskAddDupTaskPrompt.Text(TaskContent)}
-    Speak = ${AskAddDupTaskPrompt.Text(TaskContent)}
+    Text = ${AskAddDupTaskPromptText(TaskContent)}
+    Speak = ${AskAddDupTaskPromptText(TaskContent)}
     InputHint = expectingInput
 ]
 
-# bfdactivity-CIxR1t()
+# bfdactivity_CIxR1t()
 - OK, I've updated the task content to ${@taskContent}
-# bfdactivity-uvH7W6()
+# bfdactivity_uvH7W6()
 - OK, I've updated the list type to ${dialog.listType}
 
 
-# bfdprompt-kuxcSi()
+# bfdprompt_kuxcSi()
 - ${AskTaskContentText()}
 
-# bfdprompt-m9c06z()
+# bfdprompt_m9c06z()
 - Which list should I add ${if(conversation.taskContent == null, 'new task', concat('**', conversation.taskContent, '**'))} to?
