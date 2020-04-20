@@ -30,10 +30,6 @@
     InputHint = expectingInput
 ]
 
-# bfdactivity_CIxR1t()
-- OK, I've updated the task content to ${@taskContent}
-# bfdactivity_uvH7W6()
-- OK, I've updated the list type to ${dialog.listType}
 
 
 # bfdprompt_kuxcSi()
@@ -41,3 +37,11 @@
 
 # bfdprompt_m9c06z()
 - Which list should I add ${if(conversation.taskContent == null, 'new task', concat('**', conversation.taskContent, '**'))} to?
+
+# bfdactivity_hZvWIq()
+- OK, I've updated the task content to ${@TaskContent}
+# bfdactivity_fbEEtG()
+- OK, I've updated the list type to ${dialog.listType}
+
+
+

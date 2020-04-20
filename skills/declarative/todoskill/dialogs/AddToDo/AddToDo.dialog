@@ -67,7 +67,7 @@
                       "property": "conversation.taskContent",
                       "value": "=@TaskContent",
                       "alwaysPrompt": false,
-                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeListType.score > float(settings.intentScore)"
+                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
                     }
                   ]
                 },
@@ -85,7 +85,7 @@
                       "property": "conversation.listType",
                       "value": "=coalesce(@ListType, @roleListType)",
                       "alwaysPrompt": false,
-                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ChangeTaskContent.score > float(settings.intentScore)",
+                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
                       "outputFormat": "value",
                       "choices": [
                         {
@@ -223,86 +223,74 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "AluUnW"
+        "id": "xc3jy9"
       },
-      "intent": "ChangeTaskContent",
+      "intent": "GetInput",
       "actions": [
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "3mKloK"
+            "id": "DdpMzx"
           },
-          "condition": "=@taskContent != null",
+          "condition": "=@TaskContent != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "CIxR1t"
+                "id": "hZvWIq"
               },
-              "activity": "${bfdactivity_CIxR1t()}"
+              "activity": "${bfdactivity_hZvWIq()}"
             },
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "2ZZcmS"
+                "id": "qMF-_W"
               },
               "assignments": [
                 {
                   "property": "conversation.taskContent",
-                  "value": "=@taskContent"
+                  "value": "=@TaskContent"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "YKac3g"
-              }
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.DeleteProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "sqvQZ9"
+                "id": "ynY36y"
               },
-              "properties": [
-                "conversation.taskContent"
-              ]
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "RVdFsx"
-              },
-              "assignments": [
+              "condition": "=count(where(@@SlotType,iter,iter[0]=='taskContent'))>0",
+              "actions": [
                 {
-                  "property": "conversation.orders",
-                  "value": "=createArray(1,2)"
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "2TCwpe"
+                  },
+                  "properties": [
+                    "conversation.taskContent"
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "T6nlRM"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.orders",
+                      "value": "=createArray(1,2)"
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "Asa_5k"
-              }
             }
           ]
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "S3kGux"
-      },
-      "intent": "ChangeListType",
-      "actions": [
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "oj95Tt",
+            "id": "KtzVgW",
             "name": "Set properties"
           },
           "assignments": [
@@ -315,44 +303,56 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "4yjSI0"
+            "id": "cUcJan"
           },
           "condition": "=dialog.listType != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "uvH7W6"
+                "id": "fbEEtG"
               },
-              "activity": "${bfdactivity_uvH7W6()}"
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "IxkPAQ"
-              }
+              "activity": "${bfdactivity_fbEEtG()}"
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "lv2rVG"
+                "id": "ltvPdP"
               },
-              "assignments": [
+              "condition": "=count(where(@@SlotType,iter,iter[0]=='listType'))>0",
+              "actions": [
                 {
-                  "property": "conversation.orders",
-                  "value": "=createArray(2,1)"
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "1pHdqj"
+                  },
+                  "properties": [
+                    "conversation.listType"
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "6kNZ6O"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.orders",
+                      "value": "=createArray(2,1)"
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "B2y2-2"
-              }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "T3Z8xG"
+          }
         }
       ]
     }
