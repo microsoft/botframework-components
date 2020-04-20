@@ -869,3 +869,6 @@
   - ${Attendee[0].emailAddress.name}
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
+
+# CalendarErrorMessage()
+- Something went wrong

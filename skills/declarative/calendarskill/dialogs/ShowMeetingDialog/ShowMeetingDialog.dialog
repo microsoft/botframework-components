@@ -159,30 +159,24 @@
               "property": "dialog.ShowMeeting_EndDateTime"
             },
             {
-              "$kind": "Microsoft.OAuthInput",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "nU5RDb"
+                "id": "HavJhe"
               },
-              "connectionName": "=settings.ConnectionName",
-              "text": "Please log in to your calendar account",
-              "title": "Sign in",
-              "timeout": 900000,
-              "property": "dialog.token",
-              "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
-              "alwaysPrompt": true
+              "resultProperty": "dialog.requestResult",
+              "dialog": "GetMeetingRequest",
+              "options": {
+                "StartDateTime": "=dialog.ShowMeeting_StartDateTime",
+                "EndDateTime": "=dialog.ShowMeeting_EndDateTime"
+              }
             },
             {
-              "$kind": "Microsoft.HttpRequest",
+              "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "oKh15F"
+                "id": "R-QkHp"
               },
-              "responseType": "Json",
-              "method": "GET",
-              "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.ShowMeeting_StartDateTime}&enddatetime=${dialog.ShowMeeting_EndDateTime}",
-              "resultProperty": "dialog.ShowAllMeetingDialog_GraphAll",
-              "headers": {
-                "Authorization": "Bearer ${dialog.token.Token}"
-              }
+              "value": "=dialog.requestResult.meetingsList",
+              "property": "dialog.MeetingsList"
             },
             {
               "$kind": "Microsoft.TraceActivity",
@@ -191,64 +185,24 @@
               }
             },
             {
-              "$kind": "Microsoft.Foreach",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "fBzNKm"
+                "id": "qrrQ3k"
               },
-              "itemsProperty": "dialog.ShowAllMeetingDialog_GraphAll.content.value",
-              "actions": [
+              "condition": "dialog.requestResult.requestStatus",
+              "elseActions": [
                 {
-                  "$kind": "Microsoft.SetProperties",
+                  "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "dBwZF3"
+                    "id": "j8oUwP"
                   },
-                  "assignments": [
-                    {
-                      "property": "dialog.CurrentMeetingData.IsConflict",
-                      "value": "false"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.StartTime",
-                      "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.EndTime",
-                      "value": "=formatDateTime(dialog.foreach.value.end.datetime)"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.IsAccepted",
-                      "value": "=dialog.foreach.value.isOrganizer || (dialog.foreach.value.responseStatus.response == 'accepted')"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.Title",
-                      "value": "=dialog.foreach.value.subject"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.Location",
-                      "value": "=dialog.foreach.value.location.displayName"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.Content",
-                      "value": "=dialog.foreach.value.body.bodyPreview"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.OnlineMeetingUrl",
-                      "value": "=dialog.foreach.value.body.onlineMeetingUrl"
-                    },
-                    {
-                      "property": "dialog.CurrentMeetingData.Attendees",
-                      "value": "=dialog.foreach.value.attendees"
-                    }
-                  ]
+                  "activity": "${bfdactivity-j8oUwP()}"
                 },
                 {
-                  "$kind": "Microsoft.EditArray",
+                  "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "MjKbvB"
-                  },
-                  "changeType": "push",
-                  "itemsProperty": "dialog.MeetingsList",
-                  "value": "=dialog.CurrentMeetingData"
+                    "id": "cOOB8x"
+                  }
                 }
               ]
             },

@@ -29,3 +29,5 @@
 - This is the first page.
 # bfdprompt-HDFe4y()
 - Do you want to review your calendar overview again for ${formatDateTime(dialog.ShowMeeting_StartDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
+# bfdactivity-j8oUwP()
+- ${CalendarErrorMessage()}
