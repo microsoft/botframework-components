@@ -1,47 +1,44 @@
 > Language generation templates.
-# Welcome-Actions
+# Welcome_Actions
 [Activity
     SuggestedActions = Add a task | View my tasks | Mark a task | Delete a task | Help
 ]
 
-# Welcome-Suffix
-- How can I be of help today?
+# Welcome_Suffix
 - What can I do for you today?
 
-# Welcome-Prefix
-- Hi
+# Welcome_Prefix
 - Hello
-- Hiya
 
-# Welcome-Message
+# Welcome_Message
 [Activity
-    Text = ${Welcome-Prefix()}, I'm the Todo sample bot. ${Welcome-Suffix()}
-    ${Welcome-Actions()}
+    Text = ${Welcome_Prefix()}, I'm the Todo sample bot. ${Welcome_Suffix()}
+    ${Welcome_Actions()}
 ]
 
 > From ToDoMain
 
-# CancelMessage.Text
+# CancelMessageText
 - OK, let's start over.
 
 # CancelMessage
 [Activity
-    Text = ${CancelMessage.Text()}
-    Speak = ${CancelMessage.Text()}
+    Text = ${CancelMessageText()}
+    Speak = ${CancelMessageText()}
     InputHint = acceptingInput
 ]
 
-# HelpMessage.Text
+# HelpMessageText
 - I can create a To Do, Shopping, or Grocery list for you, add or delete items to lists, or mark items as complete.
 
 # HelpMessage
 [Activity
-    Text = ${HelpMessage.Text()}
-    Speak = ${HelpMessage.Text()}
+    Text = ${HelpMessageText()}
+    Speak = ${HelpMessageText()}
     InputHint = acceptingInput
 ]
 
-# CompletedMessage.Text
+# CompletedMessageText
 - I'm here if you need anything else.
 - Let me know if there's anything else you need.
 - Let me know if I can help you with anything else.
@@ -49,8 +46,8 @@
 
 # CompletedMessage
 [Activity
-    Text = ${CompletedMessage.Text()}
-    Speak = ${CompletedMessage.Text()}
+    Text = ${CompletedMessageText()}
+    Speak = ${CompletedMessageText()}
     InputHint = acceptingInput
 ]
 
@@ -67,13 +64,13 @@
 
 > From ToDoShared
 
-# NoTasksInList.Text
+# NoTasksInListText
 - Your list is empty.
 
 # NoTasksInList
 [Activity
-    Text = ${NoTasksInList.Text()}
-    Speak = ${NoTasksInList.Text()}
+    Text = ${NoTasksInListText()}
+    Speak = ${NoTasksInListText()}
     InputHint = acceptingInput
 ]
 

@@ -128,22 +128,22 @@
 - update content to {TaskContent=buy wine}
 - change content to {TaskContent=buy fish}
 - update task to {TaskContent=buy yogurt}
-- change task to {TaskContent=buy wine}}
-- mark to {ListType: roleListType=todo} list
-- mark to my {ListType: roleListType=shopping} list
+- change task to {TaskContent=buy wine}
+- mark in {ListType: roleListType=todo} list
+- mark in my {ListType: roleListType=shopping} list
 - change to {ListType: roleListType=to do} list
 - change to my {ListType: roleListType=grocery} list
 - update to {ListType: roleListType=to do} list
 - update to my {ListType: roleListType=todo} list
-- update topic to {TaskContent=buy fish} and mark to {ListType: roleListType=todo} list
+- update topic to {TaskContent=buy fish} and mark in {ListType: roleListType=todo} list
 - change topic to {TaskContent=buy juice} and change to {ListType: roleListType=to do} list
-- update content to {TaskContent=buy wine}} and mark to {ListType: roleListType=todo} list
+- update content to {TaskContent=buy wine} and mark in {ListType: roleListType=todo} list
 - change content to {TaskContent=buy fish} and change to {ListType: roleListType=to do} list
-- update task to {TaskContent=buy juice} and mark to {ListType: roleListType=todo} list
-- change task to {TaskContent=buy wine}} and change to {ListType: roleListType=to do} list
-- mark to {ListType: roleListType=todo} list and update topic to {TaskContent=buy fish}
-- mark to my {ListType: roleListType=shopping} list and change task to {TaskContent=buy juice}
-- change to {ListType: roleListType=to do} list and update topic to {TaskContent=buy wine}}
+- update task to {TaskContent=buy juice} and mark in {ListType: roleListType=todo} list
+- change task to {TaskContent=buy wine} and change to {ListType: roleListType=to do} list
+- mark in {ListType: roleListType=todo} list and update topic to {TaskContent=buy fish}
+- mark in my {ListType: roleListType=shopping} list and change task to {TaskContent=buy juice}
+- change to {ListType: roleListType=to do} list and update topic to {TaskContent=buy wine}
 - change to my {ListType: roleListType=grocery} list and change task to {TaskContent=buy fish}
 - update to {ListType: roleListType=to do} list and update topic to {TaskContent=buy juice}
-- update to my {ListType: roleListType=todo} list and change task to {TaskContent=buy wine}}
+- update to my {ListType: roleListType=todo} list and change task to {TaskContent=buy wine}

@@ -48,7 +48,7 @@
             "id": "5iE8DA",
             "name": "Multiple choice"
           },
-          "prompt": "${bfdprompt-5iE8DA()}",
+          "prompt": "${bfdprompt_5iE8DA()}",
           "maxTurnCount": 3,
           "property": "conversation.listType",
           "value": "=coalesce(@ListType, @roleListType)",
@@ -146,7 +146,7 @@
                             "id": "1-SAfh",
                             "name": "Send a response"
                           },
-                          "activity": "${bfdactivity-1-SAfh()}"
+                          "activity": "${bfdactivity_1-SAfh()}"
                         },
                         {
                           "$kind": "Microsoft.TextInput",
@@ -154,12 +154,12 @@
                             "id": "Bc5uwg",
                             "name": "Text input"
                           },
-                          "prompt": "${bfdprompt-Bc5uwg()}",
+                          "prompt": "${bfdprompt_Bc5uwg()}",
                           "maxTurnCount": 3,
                           "property": "dialog.taskContent",
                           "value": "=@TaskContent",
                           "alwaysPrompt": true,
-                          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore)"
+                          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
                         },
                         {
                           "$kind": "Microsoft.BeginDialog",
@@ -314,7 +314,7 @@
                 "id": "UTh7g6",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-UTh7g6()}"
+              "activity": "${bfdactivity_UTh7g6()}"
             }
           ]
         }
@@ -339,7 +339,7 @@
               "$designer": {
                 "id": "LHnB4C"
               },
-              "activity": "${bfdactivity-LHnB4C()}"
+              "activity": "${bfdactivity_LHnB4C()}"
             }
           ]
         },
@@ -368,7 +368,7 @@
               "$designer": {
                 "id": "oA8xdG"
               },
-              "activity": "${bfdactivity-oA8xdG()}"
+              "activity": "${bfdactivity_oA8xdG()}"
             }
           ]
         },
