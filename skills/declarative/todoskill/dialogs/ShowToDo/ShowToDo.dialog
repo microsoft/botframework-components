@@ -27,7 +27,7 @@
             "id": "807838",
             "name": "Multiple choice"
           },
-          "prompt": "${bfdprompt-807838()}",
+          "prompt": "${bfdprompt_807838()}",
           "maxTurnCount": 3,
           "property": "conversation.listType",
           "value": "=coalesce(@ListType, @roleListType)",
@@ -112,7 +112,7 @@
                         "id": "Wjt18C",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-Wjt18C()}"
+                      "activity": "${bfdactivity_Wjt18C()}"
                     }
                   ]
                 },
@@ -125,7 +125,7 @@
                         "id": "rYj5mA",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-rYj5mA()}"
+                      "activity": "${bfdactivity_rYj5mA()}"
                     }
                   ]
                 },
@@ -138,7 +138,7 @@
                         "id": "IS3e0H",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-IS3e0H()}"
+                      "activity": "${bfdactivity_IS3e0H()}"
                     }
                   ]
                 }
@@ -150,7 +150,7 @@
                   "$designer": {
                     "id": "6Dx7BT"
                   },
-                  "activity": "${bfdactivity-6Dx7BT()}"
+                  "activity": "${bfdactivity_6Dx7BT()}"
                 }
               ]
             },
@@ -162,7 +162,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": true,
               "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #ShowToDo.score > float(settings.intentScore)",
-              "prompt": "${bfdprompt-k63lez()}",
+              "prompt": "${bfdprompt_k63lez()}",
               "value": "= select(turn.recognized.intents,x,x.key)[0]",
               "property": "dialog.showPage",
               "validations": [
@@ -189,7 +189,7 @@
               "$designer": {
                 "id": "yD5ABI"
               },
-              "activity": "${bfdactivity-yD5ABI()}"
+              "activity": "${bfdactivity_yD5ABI()}"
             }
           ]
         }
