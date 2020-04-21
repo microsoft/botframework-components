@@ -1,6 +1,6 @@
 {
     "Method": "POST",
-    "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
+    "Url": "https://graph.microsoft.com/beta/me/outlook/tasks/*/complete",
     "Responses": [
         {
             "Content": ""

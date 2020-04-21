@@ -2,22 +2,21 @@
     "Method": "GET",
     "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/ToDoId/tasks",
     "Responses": [
-      {
-          "Content": {
-              "value": []
-          }
-      },
-      {
-        "Content": {
-            "value": [
-                {
-                    "id": "MilkId",
-                    "status": "notStarted",
-                    "subject": "milk"
-                }
-            ]
+        {
+            "Content": {
+                "value": []
+            }
+        },
+        {
+            "Content": {
+                "value": [
+                    {
+                        "id": "MilkId",
+                        "status": "notStarted",
+                        "subject": "milk"
+                    }
+                ]
+            }
         }
-      }
     ]
-  }
-  
+}

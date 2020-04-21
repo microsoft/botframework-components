@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "MarkToDo.en-us.lu",
+        "": "MarkToDo.en-us.lu"
+    }
+}
