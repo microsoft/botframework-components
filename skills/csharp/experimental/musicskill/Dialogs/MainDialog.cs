@@ -28,6 +28,7 @@ namespace MusicSkill.Dialogs
         private readonly LocaleTemplateManager _templateManager;
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly Dialog _playMusicDialog;
+        private readonly Dialog _controlSettingsDialog;
 
         public MainDialog(
             IServiceProvider serviceProvider)
@@ -54,7 +55,9 @@ namespace MusicSkill.Dialogs
 
             // Register dialogs
             _playMusicDialog = serviceProvider.GetService<PlayMusicDialog>() ?? throw new ArgumentNullException(nameof(PlayMusicDialog));
+            _controlSettingsDialog = serviceProvider.GetService<ControlSettingsDialog>() ?? throw new ArgumentNullException(nameof(ControlSettingsDialog));
             AddDialog(_playMusicDialog);
+            AddDialog(_controlSettingsDialog);
         }
 
         // Runs when the dialog is started.
@@ -65,7 +68,7 @@ namespace MusicSkill.Dialogs
                 // Get cognitive models for the current locale.
                 var localizedServices = _services.GetCognitiveModels();
 
-                // Run LUIS recognition on Skill model and store result in turn state.
+                    // Run LUIS recognition on Skill model and store result in turn state.
                 localizedServices.LuisServices.TryGetValue("MusicSkill", out var skillLuisService);
                 if (skillLuisService != null)
                 {
@@ -256,6 +259,30 @@ namespace MusicSkill.Dialogs
                             return await stepContext.BeginDialogAsync(_playMusicDialog.Id, cancellationToken: cancellationToken);
                         }
 
+                    case MusicSkillLuis.Intent.Exclude:
+                        {
+                            state.ControlActionName = ControlActions.Exclude;
+                            return await stepContext.BeginDialogAsync(_controlSettingsDialog.Id, cancellationToken: cancellationToken);
+                        }
+
+                    case MusicSkillLuis.Intent.Pause:
+                        {
+                            state.ControlActionName = ControlActions.Pause;
+                            return await stepContext.BeginDialogAsync(_controlSettingsDialog.Id, cancellationToken: cancellationToken);
+                        }
+
+                    case MusicSkillLuis.Intent.Shuffle:
+                        {
+                            state.ControlActionName = ControlActions.Shuffle;
+                            return await stepContext.BeginDialogAsync(_controlSettingsDialog.Id, cancellationToken: cancellationToken);
+                        }
+
+                    case MusicSkillLuis.Intent.AdjustVolume:
+                        {
+                            state.ControlActionName = ControlActions.AdjustVolume;
+                            return await stepContext.BeginDialogAsync(_controlSettingsDialog.Id, cancellationToken: cancellationToken);
+                        }
+
                     case MusicSkillLuis.Intent.None:
                         {
                             // No intent was identified, send confused message
@@ -263,6 +290,7 @@ namespace MusicSkill.Dialogs
                             break;
                         }
 
+                    case MusicSkillLuis.Intent.AnswerMusicQuestion:
                     default:
                         {
                             // intent was identified but not yet implemented

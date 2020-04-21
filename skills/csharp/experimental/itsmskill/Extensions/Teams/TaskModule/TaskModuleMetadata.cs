@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Extensions.Teams.TaskModule
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Extensions.Teams.TaskModule
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +9,9 @@
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Data Contract for TaskModuleMetaData.
+    /// </summary>
     [DataContract]
     public class TaskModuleMetadata
     {

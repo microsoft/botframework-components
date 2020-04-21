@@ -127,6 +127,7 @@ namespace MusicSkill
 
             // Register dialogs
             services.AddTransient<PlayMusicDialog>();
+            services.AddTransient<ControlSettingsDialog>();
             services.AddTransient<MainDialog>();
 
             // Configure adapters

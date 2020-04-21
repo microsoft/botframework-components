@@ -15,7 +15,6 @@
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,9 +28,14 @@
       <DependentUpon>GeneralUtterances.resx</DependentUpon>
     </Compile>
     <Compile Update="Utterances\PlayMusicDialogUtterances.Designer.cs">
+      <DependentUpon>PlayMusicDialogUtterances.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>PlayMusicDialogUtterances.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Utterances\ControlSettingsUtterances.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ControlSettingsUtterances.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -39,6 +43,10 @@
     <EmbeddedResource Update="Utterances\GeneralUtterances.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralUtterances.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Utterances\ControlSettingsUtterances.resx">
+      <LastGenOutput>ControlSettingsUtterances.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Utterances\PlayMusicDialogUtterances.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

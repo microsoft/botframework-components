@@ -40,22 +40,7 @@ namespace MusicSkill.Tests
             ServiceManager = MockServiceManager.GetServiceManager();
             Services = new ServiceCollection();
             Services.AddSingleton(new BotSettings());
-            Services.AddSingleton(new BotServices()
-            {
-                CognitiveModelSets = new Dictionary<string, CognitiveModelSet>
-                {
-                    {
-                        "en-us", new CognitiveModelSet
-                        {
-                            LuisServices = new Dictionary<string, LuisRecognizer>
-                            {
-                                { "General", GeneralTestUtil.CreateRecognizer() },
-                                { "MusicSkill", SkillTestUtil.CreateRecognizer() }
-                            }
-                        }
-                    }
-                }
-            });
+            Services.AddSingleton(new BotServices());
 
             Services.AddSingleton<IBotTelemetryClient, NullBotTelemetryClient>();
             Services.AddSingleton(new MicrosoftAppCredentials("appId", "password"));
@@ -89,6 +74,7 @@ namespace MusicSkill.Tests
             Services.AddSingleton(ServiceManager);
             Services.AddTransient<MainDialog>();
             Services.AddTransient<PlayMusicDialog>();
+            Services.AddTransient<ControlSettingsDialog>();
             Services.AddSingleton<TestAdapter, DefaultTestAdapter>();
             Services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
         }

@@ -28,5 +28,9 @@ namespace SkillServiceLibrary.Fakes.AzureMapsAPI.Fakes
         public const double Latitude = 47.639620;
 
         public const double Longitude = -122.130610;
+
+        public const string Zipcode = "98027";
+
+        public const string CountrySet = "US";
     }
 }

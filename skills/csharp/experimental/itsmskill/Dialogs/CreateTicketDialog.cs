@@ -91,7 +91,7 @@ namespace ITSMSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
         {
-            if (dc.Context.Activity.ChannelId.Contains("msteams"))
+            if (dc.Context.Activity.ChannelId.Contains(Channels.Msteams))
             {
                 return await dc.BeginDialogAsync(Actions.CreateTicketTeamsTaskModule, options, cancellationToken);
             }
@@ -159,7 +159,7 @@ namespace ITSMSkill.Dialogs
                 return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
             }
 
-            var card = GetTicketCard(sc.Context, result.Tickets[0]);
+            var card = GetTicketCard(sc.Context, state, result.Tickets[0]);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketCreated, card, null), cancellationToken);
             return await sc.EndDialogAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);

@@ -21,6 +21,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Authentication;
 using Microsoft.Bot.Solutions.Responses;
@@ -51,7 +52,15 @@ namespace ITSMSkill.Dialogs
                 throw new Exception("You must configure an authentication connection before using this component.");
             }
 
-            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections));
+            AppCredentials oauthCredentials = null;
+            if (Settings.OAuthCredentials != null &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppId) &&
+                !string.IsNullOrWhiteSpace(Settings.OAuthCredentials.MicrosoftAppPassword))
+            {
+                oauthCredentials = new MicrosoftAppCredentials(Settings.OAuthCredentials.MicrosoftAppId, Settings.OAuthCredentials.MicrosoftAppPassword);
+            }
+
+            AddDialog(new MultiProviderAuthDialog(Settings.OAuthConnections, null, oauthCredentials));
 
             var setSearch = new WaterfallStep[]
             {
@@ -638,7 +647,7 @@ namespace ITSMSkill.Dialogs
             state.TicketTarget = result.Tickets[0];
             state.Id = state.TicketTarget.Id;
 
-            var card = GetTicketCard(sc.Context, state.TicketTarget, false);
+            var card = GetTicketCard(sc.Context, state, state.TicketTarget, false);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null), cancellationToken);
             return await sc.NextAsync(cancellationToken: cancellationToken);
@@ -873,7 +882,7 @@ namespace ITSMSkill.Dialogs
                 {
                     cards.Add(new Card()
                     {
-                        Name = GetDivergedCardName(sc.Context, "Knowledge"),
+                        Name = GetDivergedCardName(sc.Context, state, "Knowledge"),
                         Data = ConvertKnowledge(knowledge)
                     });
                 }
@@ -1053,13 +1062,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected Card GetTicketCard(ITurnContext turnContext, Ticket ticket, bool showButton = true)
+        protected Card GetTicketCard(ITurnContext turnContext, SkillState state, Ticket ticket, bool showButton = true)
         {
             var name = showButton ? (ticket.State != TicketState.Closed ? "TicketUpdateClose" : "TicketUpdate") : "Ticket";
 
             return new Card
             {
-                Name = GetDivergedCardName(turnContext, name),
+                Name = GetDivergedCardName(turnContext, state, name),
                 Data = ConvertTicket(ticket)
             };
         }
@@ -1121,8 +1130,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected string GetDivergedCardName(ITurnContext turnContext, string card)
+        protected string GetDivergedCardName(ITurnContext turnContext, SkillState state, string card)
         {
+            if (state.IsAction)
+            {
+                return card + ".pva";
+            }
+
             if (Channel.GetChannelId(turnContext) == Channels.Msteams)
             {
                 return card + ".1.0";

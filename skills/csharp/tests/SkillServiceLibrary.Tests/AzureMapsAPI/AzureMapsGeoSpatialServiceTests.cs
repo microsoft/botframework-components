@@ -117,5 +117,16 @@ namespace SkillServiceLibrary.Tests.AzureMapsAPI
             Assert.AreEqual(pointOfInterestList[1].Name, "1108 Elliott Ave W");
             Assert.AreEqual(pointOfInterestList[2].Name, "660 Elliott Avenue West");
         }
+
+        [TestMethod]
+        public async Task GetZipcodeTest()
+        {
+            var service = new AzureMapsGeoSpatialService();
+
+            await service.InitKeyAsync(MockData.Key, MockData.Radius, MockData.Limit, MockData.RouteLimit, MockData.Locale, mockClient);
+
+            var pointOfInterestList = await service.GetZipcodeAsync(MockData.Zipcode, MockData.CountrySet);
+            Assert.AreEqual(pointOfInterestList.Address, "1635 11th Avenue Northwest, Issaquah, WA 98027");
+        }
     }
 }

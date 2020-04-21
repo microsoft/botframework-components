@@ -39,7 +39,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var teamsImplementation = new CreateTicketTeamsImplementation(sp);
 
-            var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
+            var response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual("GetUserInput", response.Task.TaskInfo.Title);
             var attachment = response.Task.TaskInfo.Card;
@@ -77,7 +77,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var teamsImplementation = new CreateTicketTeamsImplementation(sp);
 
-            var response = await teamsImplementation.Handle(turnContext, CancellationToken.None);
+            var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual("IncidentAdded", response.Task.TaskInfo.Title);
             var attachment = response.Task.TaskInfo.Card;

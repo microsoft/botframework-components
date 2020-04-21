@@ -5,6 +5,9 @@ namespace ITSMSkill.Models.ServiceNow
 {
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// ServiceNow Notification class.
+    /// </summary>
     public class ServiceNowNotification
     {
         [JsonProperty]

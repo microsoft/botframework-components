@@ -113,6 +113,8 @@ namespace SkillServiceLibrary.Services
         /// <returns>The found locations.</returns>
         Task<List<PointOfInterestModel>> GetNearbyPointOfInterestListAsync(double latitude, double longitude, string poiType = null);
 
+        Task<PointOfInterestModel> GetZipcodeAsync(string zipcode, string countrySet = "US");
+
         /// <summary>
         /// Init task service.
         /// </summary>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ITSMSkill.Extensions.Teams
 {
+    /// <summary>
+    /// Enum for different Handler of TaskModule.
+    /// </summary>
     public enum TeamsFlowType
     {
         /// <summary>

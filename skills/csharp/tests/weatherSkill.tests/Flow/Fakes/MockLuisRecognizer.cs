@@ -26,13 +26,13 @@ namespace WeatherSkill.Tests.Flow.Fakes
         private GeneralTestUtterances generalUtterancesManager;
 
         public MockLuisRecognizer(BaseTestUtterances utterancesManager)
-            : base(mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.utterancesManager = utterancesManager;
         }
 
         public MockLuisRecognizer(params BaseTestUtterances[] utterancesManagers)
-            : base(mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.utterancesManager = new BaseTestUtterances();
 
@@ -46,7 +46,7 @@ namespace WeatherSkill.Tests.Flow.Fakes
         }
 
         public MockLuisRecognizer(GeneralTestUtterances generalUtterancesMananger)
-            : base(mockApplication)
+            : base(new LuisRecognizerOptionsV3(mockApplication))
         {
             this.generalUtterancesManager = generalUtterancesMananger;
         }

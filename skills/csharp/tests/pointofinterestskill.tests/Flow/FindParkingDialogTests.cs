@@ -30,10 +30,34 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task ParkingNearbyTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(BaseTestUtterances.LocationEvent)
                 .Send(FindParkingUtterances.FindParkingNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ParkingNearbyThenGoBackTest()
+        {
+            await GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
+                .Send(BaseTestUtterances.LocationEvent)
+                .Send(FindParkingUtterances.FindParkingNearby)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(GeneralTestUtterances.GoBack)
                 .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
                 .Send(BaseTestUtterances.OptionOne)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
@@ -52,8 +76,9 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task ParkingNearestTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(BaseTestUtterances.LocationEvent)
                 .Send(FindParkingUtterances.FindParkingNearest)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
@@ -72,8 +97,9 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task ParkingNearestAndCancelTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(BaseTestUtterances.LocationEvent)
                 .Send(FindParkingUtterances.FindParkingNearest)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
@@ -91,8 +117,9 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task ParkingNearestAndHelpTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(BaseTestUtterances.LocationEvent)
                 .Send(FindParkingUtterances.FindParkingNearest)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
@@ -114,8 +141,9 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task RepromptForCurrentAndParkingNearestTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(FindParkingUtterances.FindParkingNearest)
                 .AssertReply(AssertContains(POISharedResponses.PromptForCurrentLocation, null))
                 .Send(ContextStrings.Ave)
@@ -141,8 +169,9 @@ namespace PointOfInterestSkill.Tests.Flow
         public async Task ParkingNearAddressAndPromptForCurrentTest()
         {
             await GetTestFlow()
-                .Send(string.Empty)
-                .AssertReplyOneOf(this.ParseReplies(POIMainResponses.FirstPromptMessage))
+                .SendConversationUpdate()
+                .AssertReply(AssertContains(POIMainResponses.PointOfInterestWelcomeMessage, null))
+                .AssertReply(AssertContains(POIMainResponses.FirstPromptMessage, null))
                 .Send(FindParkingUtterances.FindParkingNearAddress)
                 .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
                 .Send(BaseTestUtterances.OptionOne)
@@ -163,6 +192,22 @@ namespace PointOfInterestSkill.Tests.Flow
         {
             await GetSkillTestFlow()
                 .Send(FindParkingUtterances.FindParkingNearbyAction)
+                .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
+                .Send(BaseTestUtterances.OptionOne)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))
+                .Send(BaseTestUtterances.ShowDirections)
+                .AssertReply(AssertContains(null, new string[] { CardStrings.Route }))
+                .Send(BaseTestUtterances.StartNavigation)
+                .AssertReply(CheckForEvent())
+                .AssertReply(CheckForEoC(true))
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ParkingNearbyZipcodeActionTest()
+        {
+            await GetSkillTestFlow()
+                .Send(FindParkingUtterances.FindParkingNearbyZipcodeAction)
                 .AssertReply(AssertContains(POISharedResponses.MultipleLocationsFound, new string[] { CardStrings.Overview }))
                 .Send(BaseTestUtterances.OptionOne)
                 .AssertReply(AssertContains(null, new string[] { CardStrings.Details }))

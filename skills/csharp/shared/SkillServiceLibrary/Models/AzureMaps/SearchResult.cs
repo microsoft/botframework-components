@@ -10,6 +10,9 @@ namespace SkillServiceLibrary.Models.AzureMaps
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
+        [JsonProperty(PropertyName = "info")]
+        public string Info { get; set; }
+
         /// <summary>
         /// Gets or sets ResultType string: POI, Street, Geography, Point Address, Address Range, and Cross Street.
         /// </summary>
@@ -29,6 +32,9 @@ namespace SkillServiceLibrary.Models.AzureMaps
         [JsonProperty(PropertyName = "entityType")]
         public string EntityType { get; set; }
 
+        [JsonProperty(PropertyName = "entryPoints")]
+        public EntryPoint[] EntryPoints { get; set; }
+
         [JsonProperty(PropertyName = "address")]
         public SearchAddress Address { get; set; }
 
@@ -37,6 +43,9 @@ namespace SkillServiceLibrary.Models.AzureMaps
 
         [JsonProperty(PropertyName = "poi")]
         public PoiInfo Poi { get; set; }
+
+        [JsonProperty(PropertyName = "score")]
+        public double Score { get; set; }
 
         [JsonProperty(PropertyName = "viewport")]
         public Viewport Viewport { get; set; }

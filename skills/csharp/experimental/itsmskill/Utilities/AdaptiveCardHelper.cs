@@ -6,6 +6,7 @@
 
     public class AdaptiveCardHelper
     {
+        // TODO: Replace with Cards.Lg
         public static AdaptiveCard GetCardFromJson(string jsonFile)
         {
             string jsonCard = GetJson(jsonFile);

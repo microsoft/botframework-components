@@ -1,0 +1,29 @@
+﻿[import](ControlSettingsTexts.lg)
+
+# VolumeDirectionSelection
+[Activity
+    Text = ${VolumeDirectionSelection.Text()}
+    Speak = ${VolumeDirectionSelection.Text()}
+    InputHint = expectingInput
+]
+
+# VolumeUpSelection
+[Activity
+    Text = ${VolumeUpSelection.Text()}
+    Speak = ${VolumeUpSelection.Text()}
+    InputHint = ignoreInput
+]
+
+# VolumeDownSelection
+[Activity
+    Text = ${VolumeDownSelection.Text()}
+    Speak = ${VolumeDownSelection.Text()}
+    InputHint = ignoreInput
+]
+
+# VolumeMuteSelection
+[Activity
+    Text = ${VolumeMuteSelection.Text()}
+    Speak = ${VolumeMuteSelection.Text()}
+    InputHint = ignoreInput
+]
