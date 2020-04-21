@@ -176,6 +176,7 @@
               "property": "dialog.meetings",
               "value": "= dialog.requestResult.meetings"
             }
+<<<<<<< HEAD
           ]
         },
         {
@@ -188,12 +189,77 @@
             "meetings": "=dialog.meetings"
           },
           "resultProperty": "dialog.choosenMeeting"
+=======
+          ],
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4tnFi3"
+          },
+          "dialog": "GetMeetingRequest",
+          "options": {
+            "StartDateTime": "=dialog.utcStart",
+            "EndDateTime": "=dialog.utcStart"
+          },
+          "resultProperty": "dialog.getMeetingResult"
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
+            "id": "eu-go7"
+          }
+>>>>>>> next
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+<<<<<<< HEAD
             "id": "cS74lb"
           }
+=======
+            "id": "wQOAE8"
+          },
+          "condition": "dialog.getMeetingResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AVaVzg"
+              },
+              "activity": "${bfdactivity-AVaVzg()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "OUEm0z"
+              },
+              "condition": "count(dialog.getMeetingResult.meetingsList) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "SoXklI"
+                  },
+                  "property": "dialog.meetings",
+                  "value": "= foreach(dialog.getMeetingResult.meetingsList, x, x)"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ClhdAt"
+                  },
+                  "activity": "${bfdactivity-ClhdAt()}"
+                }
+              ]
+            }
+          ]
+>>>>>>> next
         },
         {
           "$kind": "Microsoft.EndDialog",

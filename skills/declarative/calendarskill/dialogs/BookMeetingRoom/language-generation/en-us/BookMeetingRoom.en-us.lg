@@ -18,6 +18,7 @@
 # bfdactivity-aN26Uv()
 - Created meeting \"${dialog.title}\"
 # bfdactivity-OqVPIR()
+<<<<<<< HEAD
 - ${CalendarErrorMessage()}
 
 # bfdactivity-WOzNjH()
@@ -65,3 +66,6 @@
     - The description for the event is ${Content}. 
 - ELSE:
     -
+=======
+- ${CalendarErrorMessage()}
+>>>>>>> next

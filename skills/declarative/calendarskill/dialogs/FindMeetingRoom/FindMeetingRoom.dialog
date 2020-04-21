@@ -50,6 +50,12 @@
               "value": "1"
             },
             {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "mp_cGd"
+              }
+            },
+            {
               "$kind": "Microsoft.NumberInput",
               "$designer": {
                 "id": "BVqWhA"
@@ -213,6 +219,7 @@
             "searchQuery": "=dialog.searchQuery"
           },
           "resultProperty": "dialog.requestResult"
+<<<<<<< HEAD
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -220,6 +227,8 @@
             "id": "ZWekVd"
           },
           "name": "after search meeting room"
+=======
+>>>>>>> next
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -296,8 +305,12 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "smTrMO"
+<<<<<<< HEAD
           },
           "name": "before get schedule"
+=======
+          }
+>>>>>>> next
         },
         {
           "$kind": "Microsoft.BeginDialog",

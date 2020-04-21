@@ -8,7 +8,7 @@
 
 
 # bfdactivity-AVaVzg()
-- Sorry, the request got an error ${dialog.api_result.statusCode}
+- ${CalendarErrorMessage()}
 # bfdactivity-ClhdAt()
 - Can not find meetings at time ${dialog.startDateTime}
 

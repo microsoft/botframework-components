@@ -21,6 +21,16 @@
         - groceries
         - grocer
 
+@ list SlotType =
+    - listType:
+        - list type
+        - list
+    - taskContent
+        - task content
+        - task
+        - content
+        - topic
+
 # AskForListType
 - todo
 - shopping
@@ -202,18 +212,28 @@
 - reject
 - reject it
 
-# ChangeTaskContent
+# GetInput
 - update topic to {TaskContent=buy trousers}
 - change topic to {TaskContent=buy apples}
 - update content to {TaskContent=buy bananas}
 - change content to {TaskContent=buy oranges}
 - update task to {TaskContent=buy skirts}
 - change task to {TaskContent=buy caps}
-
-# ChangeListType
 - add to {ListType: roleListType=todo} list
 - add to my {ListType: roleListType=shopping} list
 - change to {ListType: roleListType=to do} list
 - change to my {ListType: roleListType=grocery} list
 - update to {ListType: roleListType=to do} list
 - update to my {ListType: roleListType=todo} list
+- update topic to {TaskContent=buy fish} and add to {ListType: roleListType=todo} list
+- change topic to {TaskContent=buy juice} and change to {ListType: roleListType=to do} list
+- update content to {TaskContent=buy wine} and add to {ListType: roleListType=todo} list
+- change content to {TaskContent=buy fish} and change to {ListType: roleListType=to do} list
+- update task to {TaskContent=buy juice} and add to {ListType: roleListType=todo} list
+- change task to {TaskContent=buy wine} and change to {ListType: roleListType=to do} list
+- add to {ListType: roleListType=todo} list and update topic to {TaskContent=buy fish}
+- add to my {ListType: roleListType=shopping} list and change task to {TaskContent=buy juice}
+- change to {ListType: roleListType=to do} list and update topic to {TaskContent=buy wine}
+- change to my {ListType: roleListType=grocery} list and change task to {TaskContent=buy fish}
+- update to {ListType: roleListType=to do} list and update topic to {TaskContent=buy juice}
+- update to my {ListType: roleListType=todo} list and change task to {TaskContent=buy wine}

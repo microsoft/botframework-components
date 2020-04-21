@@ -1,21 +1,21 @@
 [import](common.lg)
 
-# bfdprompt-807838()
+# bfdprompt_807838()
 - What list would you like to see?
 
 
-# bfdactivity-yD5ABI()
+# bfdactivity_yD5ABI()
 - ${NoTasksMessage(conversation.listType)}
 
 > From ShowToDo
 
-# NoTasksMessage.Text(ListType)
+# NoTasksMessageText(ListType)
 - You don't have anything in your ${ListType} list. Let me know if you want to add an item.
 
 # NoTasksMessage(ListType)
 [Activity
-    Text = ${NoTasksMessage.Text(ListType)}
-    Speak = ${NoTasksMessage.Text(ListType)}
+    Text = ${NoTasksMessageText(ListType)}
+    Speak = ${NoTasksMessageText(ListType)}
     InputHint = acceptingInput
 ]
 
@@ -35,14 +35,14 @@
 
   # ShowToDoTextForSinglePage(ToDos)
 - IF: ${count(ToDos) == 1}
-  - ${LatestTask.Text()}
+  - ${LatestTaskText()}
 - ELSE:
-  - ${LatestTasks.Text()}
+  - ${LatestTasksText()}
 
-# LatestTask.Text
+# LatestTaskText
 - The most recent item is:
 
-# LatestTasks.Text
+# LatestTasksText
 - The most recent items are:
 
 # ShowToDoTextForMultiPage(AllTasksCount, ListType, ToDos)
@@ -50,35 +50,35 @@
 
 # CardSummary(AllTasksCount, ListType, ToDos)
 - IF: ${AllTasksCount == 1}
-  - ${CardSummaryMessageForSingleTask.Text(ListType)}
+  - ${CardSummaryMessageForSingleTaskText(ListType)}
 - ELSE:
-  - ${CardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType, ToDos)}
+  - ${CardSummaryMessageForMultipleTasksText(AllTasksCount, ListType, ToDos)}
 
-  # CardSummaryMessageForSingleTask.Text(ListType)
+  # CardSummaryMessageForSingleTaskText(ListType)
 - You have 1 item on your ${ListType} list:  
 
-# CardSummaryMessageForMultipleTasks.Text(AllTasksCount, ListType, ToDos)
+# CardSummaryMessageForMultipleTasksText(AllTasksCount, ListType, ToDos)
 - You have ${AllTasksCount} items on your ${ListType} list. Here are the ones in page ${conversation.page + 1}:
 
-# AskAddOrCompleteTaskMessage.Text
+# AskAddOrCompleteTaskMessageText
 - Let me know if you want to add an item or mark one as complete.
 
 # AskAddOrCompleteTaskMessage()
 [Activity
-    Text = ${AskAddOrCompleteTaskMessage.Text()}
-    Speak = ${AskAddOrCompleteTaskMessage.Text()}
+    Text = ${AskAddOrCompleteTaskMessageText()}
+    Speak = ${AskAddOrCompleteTaskMessageText()}
     InputHint = ignoringInput
 ]
 
 > From AddToDo
 
-# AfterTaskAdded.Text(TaskContent, ListType)
+# AfterTaskAddedText(TaskContent, ListType)
 - I added ${TaskContent} to your ${ListType} list.
 
 # AfterTaskAdded(TaskContent, ListType, TotalNumber, ToDos)
 [Activity
-    Text = ${AfterTaskAdded.Text(TaskContent, ListType)}
-    Speak = ${AfterTaskAdded.Text(TaskContent, ListType)}
+    Text = ${AfterTaskAddedText(TaskContent, ListType)}
+    Speak = ${AfterTaskAddedText(TaskContent, ListType)}
     Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
     InputHint = ignoringInput
 ]
@@ -95,14 +95,14 @@
 
 # TaskCompletedSpeak(IsCompleteAll, ListType, TaskContent)
 - IF: ${IsCompleteAll != null}
-  - ${AfterAllTasksCompleted.Text(ListType)}
+  - ${AfterAllTasksCompletedText(ListType)}
 - ELSE:
-  - ${AfterTaskCompleted.Text(TaskContent, ListType)}
+  - ${AfterTaskCompletedText(TaskContent, ListType)}
 
-  # AfterAllTasksCompleted.Text(ListType)
+  # AfterAllTasksCompletedText(ListType)
 - I marked all items on your ${ListType} list as complete.
 
-# AfterTaskCompleted.Text(TaskContent, ListType)
+# AfterTaskCompletedText(TaskContent, ListType)
 - OK, I marked ${TaskContent} on your ${ListType} list as complete.
 
 > From DeleteToDo
@@ -117,27 +117,27 @@
 
 # TaskDeletedText(IsDeleteAll, ListType, TaskContent)
 - IF: ${IsDeleteAll != null}
-  - ${AfterAllTasksDeleted.Text(ListType)}
+  - ${AfterAllTasksDeletedText(ListType)}
 - ELSE:
-  - ${AfterTaskDeleted.Text(TaskContent, ListType)}
+  - ${AfterTaskDeletedText(TaskContent, ListType)}
 
-# AfterAllTasksDeleted.Text(ListType)
+# AfterAllTasksDeletedText(ListType)
 - I cleared your ${ListType} list.
 
-# AfterTaskDeleted.Text(TaskContent, ListType)
+# AfterTaskDeletedText(TaskContent, ListType)
 - I deleted ${TaskContent} from your ${ListType} list.
 
-# bfdprompt-k63lez()
+# bfdprompt_k63lez()
 - ${AskAddOrCompleteTaskMessage()}
 
-# bfdactivity-Wjt18C()
+# bfdactivity_Wjt18C()
 - ${AfterTaskAdded(dialog.taskContent, conversation.listType, dialog.count, dialog.todos)}
 
-# bfdactivity-rYj5mA()
+# bfdactivity_rYj5mA()
 - ${TaskCompleted(dialog.containsAll,conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}
 
-# bfdactivity-6Dx7BT()
+# bfdactivity_6Dx7BT()
 - ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
 
-# bfdactivity-IS3e0H()
+# bfdactivity_IS3e0H()
 - ${TaskDeleted(dialog.containsAll,conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}

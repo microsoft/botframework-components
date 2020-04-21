@@ -173,6 +173,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+<<<<<<< HEAD
             "id": "5Poqvb"
           },
           "dialog": "FindContactDialog",
@@ -194,6 +195,9 @@
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "U-sdI1"
+=======
+            "id": "9txx6d"
+>>>>>>> next
           },
           "dialog": "SetTitle",
           "options": {
@@ -232,6 +236,15 @@
           "property": "dialog.confirm"
         },
         {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "LIvZ7R"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.roomList",
+          "value": "=dialog.meetingRoom"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "Eh-kJ7"
@@ -243,7 +256,11 @@
             "title": "=dialog.title",
             "description": "demo description",
             "location": "demo location",
+<<<<<<< HEAD
             "meetingRoom": "=dialog.meetingRoom"
+=======
+            "attendee": "=dialog.roomList"
+>>>>>>> next
           },
           "resultProperty": "dialog.requestResult"
         },
