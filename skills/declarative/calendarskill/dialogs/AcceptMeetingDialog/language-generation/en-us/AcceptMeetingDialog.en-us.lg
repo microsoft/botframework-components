@@ -1,7 +1,7 @@
 [import](common.lg)
 
 # bfdprompt-w8sm4A()
-- Are you confirmed to accept the meeting \"${dialog.meeting.subject}\"
+- Are you confirmed to accept the meeting \"${dialog.meeting.Title}\"
 
 # bfdactivity-9hcM19()
 - accept meeting ${dialog.meeting.subject}
