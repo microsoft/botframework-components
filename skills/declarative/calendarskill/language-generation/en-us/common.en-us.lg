@@ -856,9 +856,19 @@
 - ELSE:
   -
 
-
 # GetDateTime(date, time)
 - IF: ${time == null}
   - ${startOfDay(date)}
 - ELSE:
   - ${formatDateTime((ticks(startOfDay(formatDateTime(date)))+(ticks(formatDateTime(time))-ticks(startOfDay(formatDateTime(time))))-621355968000000000)/10000000)}
+
+# GetAttendeeString(Attendee)
+- IF: ${Attendee == null || count(Attendee) == 0}
+  - no attendees
+- ELSEIF: ${count(Attendee) == 1}
+  - ${Attendee[0].emailAddress.name}
+- ELSE:
+  - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
+
+# CalendarErrorMessage()
+- Something went wrong

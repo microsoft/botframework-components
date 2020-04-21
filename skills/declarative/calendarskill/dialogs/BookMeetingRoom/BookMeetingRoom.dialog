@@ -138,6 +138,15 @@
           "resultProperty": "dialog.title"
         },
         {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "LIvZ7R"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.roomList",
+          "value": "=dialog.meetingRoom"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "Eh-kJ7"
@@ -149,7 +158,7 @@
             "title": "=dialog.title",
             "description": "demo description",
             "location": "demo location",
-            "meetingRoom": "=dialog.meetingRoom"
+            "attendee": "=dialog.roomList"
           },
           "resultProperty": "dialog.requestResult"
         },
