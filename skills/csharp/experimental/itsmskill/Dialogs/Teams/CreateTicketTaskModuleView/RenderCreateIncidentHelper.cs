@@ -165,6 +165,45 @@
             return card;
         }
 
+        public static AdaptiveCard CloseTicketCard(Ticket ticketResponse)
+        {
+            var card = new AdaptiveCard("1.0")
+            {
+                Id = "IncidentResponseCard",
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveContainer
+                    {
+                        Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveColumnSet
+                            {
+                                Columns = new List<AdaptiveColumn>
+                                {
+                                    new AdaptiveColumn
+                                    {
+                                        Width = AdaptiveColumnWidth.Stretch,
+                                        Items = new List<AdaptiveElement>
+                                        {
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"Ticket With TicketId: {ticketResponse.Id} is closed with Reason:  {ticketResponse.ResolvedReason}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            return card;
+        }
+
         /// <returns>Adaptive Card.</returns>
         public static AdaptiveCard ImpactTrackerResponseCard(string trackerResponse)
         {

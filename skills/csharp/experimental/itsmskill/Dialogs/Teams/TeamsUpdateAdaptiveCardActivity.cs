@@ -23,11 +23,11 @@ namespace ITSMSkill.Dialogs.Teams
     /// <summary>
     /// Class to update activities using activity reference object.
     /// </summary>
-    public class TeamsUpdateTicketActivity : ITeamsActivity<Ticket>
+    public class TeamsUpdateAdaptiveCardActivity : ITeamsActivity<AdaptiveCard>
     {
         private readonly IConnectorClient _connectorClient;
 
-        public TeamsUpdateTicketActivity(IConnectorClient connectorClient)
+        public TeamsUpdateAdaptiveCardActivity(IConnectorClient connectorClient)
         {
             _connectorClient = connectorClient;
         }
@@ -35,7 +35,7 @@ namespace ITSMSkill.Dialogs.Teams
         public async Task<ResourceResponse> UpdateTaskModuleActivityAsync(
             ITurnContext context,
             ActivityReference activityReference,
-            Ticket updateWithValue,
+            AdaptiveCard updateAdaptiveCard,
             CancellationToken cancellationToken)
         {
             Activity reply = context.Activity.CreateReply();
@@ -44,7 +44,8 @@ namespace ITSMSkill.Dialogs.Teams
                 new Microsoft.Bot.Schema.Attachment
                 {
                     ContentType = AdaptiveCard.ContentType,
-                    Content = RenderCreateIncidentHelper.BuildTicketCard(updateWithValue),
+                    Content = updateAdaptiveCard
+                    //RenderCreateIncidentHelper.BuildTicketCard(updateWithValue),
                 },
             };
 

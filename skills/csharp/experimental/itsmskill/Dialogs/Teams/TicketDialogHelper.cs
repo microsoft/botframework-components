@@ -10,8 +10,10 @@ namespace ITSMSkill.Dialogs.Teams
     using ITSMSkill.Extensions.Teams;
     using ITSMSkill.Extensions.Teams.TaskModule;
     using ITSMSkill.Models;
+    using ITSMSkill.Responses.Shared;
     using ITSMSkill.Utilities;
     using Microsoft.Bot.Schema;
+    using Microsoft.Bot.Solutions.Responses;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -161,6 +163,79 @@ namespace ITSMSkill.Dialogs.Teams
                     Data = new TaskModuleMetadata()
                     {
                         TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString()
+                    }
+                }
+            });
+
+            return card;
+        }
+
+        /// <summary>
+        /// Returns Card to GetIncident Id from User.
+        /// </summary>
+        /// <returns> Adaptive Card.</returns>
+        public static AdaptiveCard GetDeleteConfirmationCard(Ticket ticket)
+        {
+            var card = new AdaptiveCard("1.0");
+            var columns = new List<AdaptiveColumn>
+            {
+                new AdaptiveColumn
+                {
+                    VerticalContentAlignment = AdaptiveVerticalContentAlignment.Center,
+                    Items = new List<AdaptiveElement>
+                    {
+                        new AdaptiveTextBlock
+                        {
+                            Text = $"Deleting Ticket with id: {ticket.Id}",
+                            Size = AdaptiveTextSize.Small,
+                            Weight = AdaptiveTextWeight.Bolder,
+                            Color = AdaptiveTextColor.Accent,
+                            Wrap = true
+                        },
+                        new AdaptiveTextBlock
+                        {
+                            Text = $"Close Reason:",
+                            Size = AdaptiveTextSize.Small,
+                            Weight = AdaptiveTextWeight.Bolder,
+                            Color = AdaptiveTextColor.Accent,
+                            Wrap = true
+                        },
+                        new AdaptiveTextInput
+                        {
+                            Placeholder = "Enter Your Reason",
+                            Id = "IncidentCloseReason",
+                            Spacing = AdaptiveSpacing.Small,
+                            IsMultiline = true
+                        },
+                    }
+                }
+            };
+
+            var columnSet = new AdaptiveColumnSet
+            {
+                Columns = columns,
+                Separator = true
+            };
+
+            var list = new List<AdaptiveElement>
+            {
+                columnSet
+            };
+
+            card.Body.AddRange(list);
+            card?.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "Confirm",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
+                        FlowData = new Dictionary<string, object>
+                        {
+                            { "IncidentDetails", ticket }
+                        },
+                        Submit = true
                     }
                 }
             });

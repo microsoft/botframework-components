@@ -39,7 +39,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly IServiceManager _serviceManager;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly IConnectorClient _connectorClient;
-        private readonly ITeamsActivity<Ticket> _teamsTicketUpdateActivity;
+        private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
 
         public UpdateTicketTeamsImplementation(IServiceProvider serviceProvider)
         {
@@ -50,7 +50,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _serviceManager = serviceProvider.GetService<IServiceManager>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _connectorClient = serviceProvider.GetService<IConnectorClient>();
-            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<Ticket>>();
+            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
         }
 
         public async Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
@@ -131,7 +131,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            result.Tickets.FirstOrDefault(),
+                            RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
                             cancellationToken);
 
                         // Return Added Incident Envelope

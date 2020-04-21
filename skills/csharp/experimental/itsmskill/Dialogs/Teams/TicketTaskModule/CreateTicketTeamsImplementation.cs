@@ -36,7 +36,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly BotServices _services;
         private readonly IServiceManager _serviceManager;
         private readonly IConnectorClient _connectorClient;
-        private readonly ITeamsActivity<Ticket> _teamsTicketUpdateActivity;
+        private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
 
         public CreateTicketTeamsImplementation(
              IServiceProvider serviceProvider)
@@ -48,7 +48,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _serviceManager = serviceProvider.GetService<IServiceManager>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _connectorClient = serviceProvider.GetService<IConnectorClient>();
-            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<Ticket>>();
+            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
         }
 
         // Handle Fetch
@@ -110,9 +110,6 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                 if (result.Success)
                 {
                     // Return Added Incident Envelope
-                    // Get the TicketResposne
-                    var ticketResponse = result.Tickets.FirstOrDefault();
-
                     // Get saved Activity Reference mapping to conversation Id
                     activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
 
@@ -120,7 +117,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                         context,
                         activityReference,
-                        ticketResponse,
+                        RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
                         cancellationToken);
 
                     return new TaskModuleResponse()

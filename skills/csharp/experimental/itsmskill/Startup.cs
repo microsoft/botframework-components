@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using AdaptiveCards;
 using ITSMSkill.Adapters;
 using ITSMSkill.Bots;
 using ITSMSkill.Controllers.ServiceNow;
@@ -128,7 +129,7 @@ namespace ITSMSkill
             services.AddSingleton<IConnectorClient>(new ConnectorClient(new Uri(Configuration["TeamsTrustedUrl"]), new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword)));
 
             // Configure TeamsUpdateActivity
-            services.AddSingleton<ITeamsActivity<Ticket>, TeamsUpdateTicketActivity>();
+            services.AddSingleton<ITeamsActivity<AdaptiveCard>, TeamsUpdateAdaptiveCardActivity>();
 
             // Register dialogs
             services.AddTransient<CreateTicketDialog>();
