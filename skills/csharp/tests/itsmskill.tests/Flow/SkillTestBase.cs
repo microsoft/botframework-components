@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveCards;
 using ITSMSkill.Bots;
 using ITSMSkill.Dialogs;
 using ITSMSkill.Dialogs.Teams;
@@ -82,13 +83,13 @@ namespace ITSMSkill.Tests.Flow
             Services.AddSingleton<BotSettingsBase>(settings);
 
             // Configure TeamsUpdateActivity
-            var mockTeamsUpdateActivity = new Mock<ITeamsActivity<Ticket>>();
+            var mockTeamsUpdateActivity = new Mock<ITeamsActivity<AdaptiveCard>>();
             mockTeamsUpdateActivity.Setup(x => x.UpdateTaskModuleActivityAsync(
                 It.IsAny<ITurnContext>(),
                 It.IsAny<ActivityReference>(),
-                It.IsAny<Ticket>(),
+                It.IsAny<AdaptiveCard>(),
                 It.IsAny<CancellationToken>())).Returns(Task.FromResult(new ResourceResponse { Id = "1" }));
-            Services.AddSingleton<ITeamsActivity<Ticket>>(mockTeamsUpdateActivity.Object);
+            Services.AddSingleton<ITeamsActivity<AdaptiveCard>>(mockTeamsUpdateActivity.Object);
 
             // Configure telemetry
             Services.AddSingleton<IBotTelemetryClient, NullBotTelemetryClient>();

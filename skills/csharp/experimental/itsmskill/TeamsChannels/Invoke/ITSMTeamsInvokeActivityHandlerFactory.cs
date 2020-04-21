@@ -16,20 +16,20 @@ namespace ITSMSkill.TeamsChannels.Invoke
     {
         public ITSMTeamsInvokeActivityHandlerFactory(IServiceProvider serviceProvider)
         {
-            this.TaskModuleFetchSubmitMap = new Dictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleResponse>>>
+            this.TaskModuleFetchSubmitMap = new Dictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>>>
             {
                 {
                     $"{TeamsFlowType.CreateTicket_Form}",
                     () => new CreateTicketTeamsImplementation(serviceProvider)
                 },
-                {
-                    $"{TeamsFlowType.CreateTicket_Form}",
-                    () => new UpdateTicketTeamsImplementation(serviceProvider)
-                },
-                {
-                    $"{TeamsFlowType.CreateTicket_Form}",
-                    () => new DeleteTicketTeamsImplementation(serviceProvider)
-                }
+                //{
+                //    $"{TeamsFlowType.CreateTicket_Form}",
+                //    () => new UpdateTicketTeamsImplementation(serviceProvider)
+                //},
+                //{
+                //    $"{TeamsFlowType.CreateTicket_Form}",
+                //    () => new DeleteTicketTeamsImplementation(serviceProvider)
+                //}
             };
         }
     }

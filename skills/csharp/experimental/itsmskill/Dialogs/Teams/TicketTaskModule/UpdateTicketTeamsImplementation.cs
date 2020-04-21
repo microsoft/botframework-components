@@ -30,7 +30,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// UpdateTicket Handler for Updating Ticket OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.UpdateTicket_Form))]
-    public class UpdateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleResponse>
+    public class UpdateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly ConversationState _conversationState;
@@ -53,7 +53,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
         }
 
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
 
@@ -62,26 +62,23 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
                     : null;
 
-            return new TaskModuleResponse()
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Value = new TaskModuleTaskInfo()
                 {
-                    Value = new TaskModuleTaskInfo()
+                    Title = "Please Update The Card Below",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "Please Update The Card Below",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = TicketDialogHelper.UpdateIncidentCard(ticketDetails)
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = TicketDialogHelper.UpdateIncidentCard(ticketDetails)
                     }
                 }
             };
         }
 
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
 
@@ -135,21 +132,18 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                             cancellationToken);
 
                         // Return Added Incident Envelope
-                        return new TaskModuleResponse()
+                        return new TaskModuleContinueResponse()
                         {
-                            Task = new TaskModuleContinueResponse()
+                            Type = "continue",
+                            Value = new TaskModuleTaskInfo()
                             {
-                                Type = "continue",
-                                Value = new TaskModuleTaskInfo()
+                                Title = "Incident Updated",
+                                Height = "small",
+                                Width = 300,
+                                Card = new Attachment
                                 {
-                                    Title = "Incident Updated",
-                                    Height = "small",
-                                    Width = 300,
-                                    Card = new Attachment
-                                    {
-                                        ContentType = AdaptiveCard.ContentType,
-                                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Updated")
-                                    }
+                                    ContentType = AdaptiveCard.ContentType,
+                                    Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Updated")
                                 }
                             }
                         };
@@ -158,21 +152,18 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             }
 
             // Failed to update incident
-            return new TaskModuleResponse
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Type = "continue",
+                Value = new TaskModuleTaskInfo()
                 {
-                    Type = "continue",
-                    Value = new TaskModuleTaskInfo()
+                    Title = "Incident Update Failed",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "Incident Update Failed",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Update Failed")
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Update Failed")
                     }
                 }
             };

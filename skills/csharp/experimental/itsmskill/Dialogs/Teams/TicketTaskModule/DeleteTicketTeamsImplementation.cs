@@ -29,7 +29,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// DeleteTicketTeamsImplementation for Deleting a Ticket Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.DeleteTicket_Form))]
-    public class DeleteTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleResponse>
+    public class DeleteTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly ConversationState _conversationState;
@@ -52,7 +52,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
         }
 
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
 
@@ -61,26 +61,23 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
                     : null;
 
-            return new TaskModuleResponse()
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Value = new TaskModuleTaskInfo()
                 {
-                    Value = new TaskModuleTaskInfo()
+                    Title = "DeleteTicket",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "DeleteTicket",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = TicketDialogHelper.GetDeleteConfirmationCard(ticketDetails)
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = TicketDialogHelper.GetDeleteConfirmationCard(ticketDetails)
                     }
                 }
             };
         }
 
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
             var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
@@ -125,42 +122,36 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     cancellationToken);
 
                 // Return Closed Incident Envelope
-                return new TaskModuleResponse()
+                return new TaskModuleContinueResponse()
                 {
-                    Task = new TaskModuleContinueResponse()
+                    Type = "continue",
+                    Value = new TaskModuleTaskInfo()
                     {
-                        Type = "continue",
-                        Value = new TaskModuleTaskInfo()
+                        Title = "Incident Deleted",
+                        Height = "small",
+                        Width = 300,
+                        Card = new Attachment
                         {
-                            Title = "Incident Deleted",
-                            Height = "small",
-                            Width = 300,
-                            Card = new Attachment
-                            {
-                                ContentType = AdaptiveCard.ContentType,
-                                Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Deleted")
-                            }
+                            ContentType = AdaptiveCard.ContentType,
+                            Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Deleted")
                         }
                     }
                 };
             }
 
             // Failed to Delete Incident
-            return new TaskModuleResponse
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Type = "continue",
+                Value = new TaskModuleTaskInfo()
                 {
-                    Type = "continue",
-                    Value = new TaskModuleTaskInfo()
+                    Title = "Incident Delete Failed",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "Incident Delete Failed",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Delete Failed")
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Delete Failed")
                     }
                 }
             };

@@ -15,14 +15,14 @@ namespace ITSMSkill.TeamsChannels.Invoke
 
     public abstract class TeamsInvokeActivityHandlerFactory
     {
-        protected IDictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleResponse>>> TaskModuleFetchSubmitMap { get; set; }
-            = new Dictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleResponse>>>();
+        protected IDictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>>> TaskModuleFetchSubmitMap { get; set; }
+            = new Dictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>>>();
 
         /// <summary>
         /// Router for getting Invoke Handler.
         /// </summary>
         /// <returns>TaskResponse</returns>
-        public async Task<TaskModuleResponse> HandleTaskModuleActivity(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> HandleTaskModuleActivity(ITurnContext context, CancellationToken cancellationToken)
         {
             if (context.Activity.IsTaskModuleFetchActivity() || context.Activity.IsExtensionActionActivity())
             {
@@ -37,19 +37,19 @@ namespace ITSMSkill.TeamsChannels.Invoke
             return null;
         }
 
-        protected virtual async Task<TaskModuleResponse> GetTaskModuleFetch(ITurnContext context, CancellationToken cancellationToken)
+        protected virtual async Task<TaskModuleContinueResponse> GetTaskModuleFetch(ITurnContext context, CancellationToken cancellationToken)
         {
-            ITeamsTaskModuleHandler<TaskModuleResponse> taskModuleHandler = this.GetTaskModuleFetchSubmitHandler(context.Activity);
+            ITeamsTaskModuleHandler<TaskModuleContinueResponse> taskModuleHandler = this.GetTaskModuleFetchSubmitHandler(context.Activity);
             return await taskModuleHandler.OnTeamsTaskModuleFetchAsync(context, cancellationToken);
         }
 
-        protected virtual async Task<TaskModuleResponse> GetTaskModuleSubmit(ITurnContext context, CancellationToken cancellationToken)
+        protected virtual async Task<TaskModuleContinueResponse> GetTaskModuleSubmit(ITurnContext context, CancellationToken cancellationToken)
         {
-            ITeamsTaskModuleHandler<TaskModuleResponse> taskModuleHandler = this.GetTaskModuleFetchSubmitHandler(context.Activity);
+            ITeamsTaskModuleHandler<TaskModuleContinueResponse> taskModuleHandler = this.GetTaskModuleFetchSubmitHandler(context.Activity);
             return await taskModuleHandler.OnTeamsTaskModuleSubmitAsync(context, cancellationToken);
         }
 
-        protected ITeamsTaskModuleHandler<TaskModuleResponse> GetTaskModuleFetchSubmitHandler(Activity activity) =>
+        protected ITeamsTaskModuleHandler<TaskModuleContinueResponse> GetTaskModuleFetchSubmitHandler(Activity activity) =>
             this.GetTaskModuleFetchSubmitHandlerMap(activity.GetTaskModuleMetadata<TaskModuleMetadata>().TaskModuleFlowType);
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace ITSMSkill.TeamsChannels.Invoke
         /// <param name="handlerName">Handler name.</param>
         /// <returns>Message extension handler.</returns>
         /// <exception cref="NotImplementedException">Message Extension flow type undefined for handler.</exception>
-        protected ITeamsTaskModuleHandler<TaskModuleResponse> GetTaskModuleFetchSubmitHandlerMap(string handlerName) =>
-                this.TaskModuleFetchSubmitMap.TryGetValue(handlerName, out Func<ITeamsTaskModuleHandler<TaskModuleResponse>> handlerFactory)
+        protected ITeamsTaskModuleHandler<TaskModuleContinueResponse> GetTaskModuleFetchSubmitHandlerMap(string handlerName) =>
+                this.TaskModuleFetchSubmitMap.TryGetValue(handlerName, out Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>> handlerFactory)
                     ? handlerFactory()
                     : throw new NotImplementedException($"TaskModule flow type undefined for handler {handlerName}");
     }

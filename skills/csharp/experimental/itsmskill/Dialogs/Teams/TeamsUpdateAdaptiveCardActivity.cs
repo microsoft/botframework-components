@@ -45,7 +45,6 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     ContentType = AdaptiveCard.ContentType,
                     Content = updateAdaptiveCard
-                    //RenderCreateIncidentHelper.BuildTicketCard(updateWithValue),
                 },
             };
 

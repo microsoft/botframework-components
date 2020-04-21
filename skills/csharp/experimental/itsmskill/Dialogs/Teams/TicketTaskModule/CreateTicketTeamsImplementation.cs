@@ -27,7 +27,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// CreateTicketTeamsImplementation Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.CreateTicket_Form))]
-    public class CreateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleResponse>
+    public class CreateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
@@ -52,29 +52,26 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         }
 
         // Handle Fetch
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
         {
-            return new TaskModuleResponse()
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Value = new TaskModuleTaskInfo()
                 {
-                    Value = new TaskModuleTaskInfo()
+                    Title = "ImpactTracker",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "ImpactTracker",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = TicketDialogHelper.CreateIncidentAdaptiveCard()
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = TicketDialogHelper.CreateIncidentAdaptiveCard()
                     }
                 }
             };
         }
 
         // Handle Submit True
-        public async Task<TaskModuleResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
             var accessToken = state.AccessTokenResponse.Token;
@@ -120,21 +117,18 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
                         cancellationToken);
 
-                    return new TaskModuleResponse()
+                    return new TaskModuleContinueResponse()
                     {
-                        Task = new TaskModuleContinueResponse()
+                        Type = "continue",
+                        Value = new TaskModuleTaskInfo()
                         {
-                            Type = "continue",
-                            Value = new TaskModuleTaskInfo()
+                            Title = "Incident Added",
+                            Height = "medium",
+                            Width = 500,
+                            Card = new Attachment
                             {
-                                Title = "Incident Added",
-                                Height = "medium",
-                                Width = 500,
-                                Card = new Attachment
-                                {
-                                    ContentType = AdaptiveCard.ContentType,
-                                    Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been created")
-                                }
+                                ContentType = AdaptiveCard.ContentType,
+                                Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been created")
                             }
                         }
                     };
@@ -142,21 +136,18 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             }
 
             // Failed to create incident
-            return new TaskModuleResponse
+            return new TaskModuleContinueResponse()
             {
-                Task = new TaskModuleContinueResponse()
+                Type = "continue",
+                Value = new TaskModuleTaskInfo()
                 {
-                    Type = "continue",
-                    Value = new TaskModuleTaskInfo()
+                    Title = "Incident Create Failed",
+                    Height = "medium",
+                    Width = 500,
+                    Card = new Attachment
                     {
-                        Title = "Incident Create Failed",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Create Failed")
-                        }
+                        ContentType = AdaptiveCard.ContentType,
+                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Create Failed")
                     }
                 }
             };

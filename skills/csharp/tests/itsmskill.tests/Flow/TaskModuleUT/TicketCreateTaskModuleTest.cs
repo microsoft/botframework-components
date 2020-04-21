@@ -4,6 +4,7 @@ using ITSMSkill.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Schema.Teams;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -39,10 +40,11 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var teamsImplementation = new CreateTicketTeamsImplementation(sp);
 
-            var response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
+            TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual("GetUserInput", response.Task.TaskInfo.Title);
-            var attachment = response.Task.TaskInfo.Card;
+
+            Assert.AreEqual("ImpactTracker", response.Value.Title);
+            var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
             Assert.IsNotNull(adaptiveCard);
@@ -79,8 +81,8 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual("IncidentAdded", response.Task.TaskInfo.Title);
-            var attachment = response.Task.TaskInfo.Card;
+            Assert.AreEqual("Incident Added", response.Value.Title);
+            var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
             Assert.IsNotNull(adaptiveCard);
