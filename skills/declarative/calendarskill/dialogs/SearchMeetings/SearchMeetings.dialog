@@ -176,20 +176,6 @@
               "property": "dialog.meetings",
               "value": "= dialog.requestResult.meetings"
             }
-<<<<<<< HEAD
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "xaDRlS"
-          },
-          "dialog": "ChooseMeeting",
-          "options": {
-            "meetings": "=dialog.meetings"
-          },
-          "resultProperty": "dialog.choosenMeeting"
-=======
           ],
           "disabled": false
         },
@@ -210,15 +196,10 @@
           "$designer": {
             "id": "eu-go7"
           }
->>>>>>> next
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-<<<<<<< HEAD
-            "id": "cS74lb"
-          }
-=======
             "id": "wQOAE8"
           },
           "condition": "dialog.getMeetingResult.requestStatus",
@@ -259,7 +240,6 @@
               ]
             }
           ]
->>>>>>> next
         },
         {
           "$kind": "Microsoft.EndDialog",

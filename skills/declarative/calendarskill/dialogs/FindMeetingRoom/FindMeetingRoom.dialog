@@ -219,7 +219,6 @@
             "searchQuery": "=dialog.searchQuery"
           },
           "resultProperty": "dialog.requestResult"
-<<<<<<< HEAD
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -227,8 +226,6 @@
             "id": "ZWekVd"
           },
           "name": "after search meeting room"
-=======
->>>>>>> next
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -305,12 +302,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "smTrMO"
-<<<<<<< HEAD
           },
           "name": "before get schedule"
-=======
-          }
->>>>>>> next
         },
         {
           "$kind": "Microsoft.BeginDialog",
