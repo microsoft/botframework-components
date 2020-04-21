@@ -17,20 +17,16 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "YLcrcp"
+            "id": "aIgLq-"
           },
           "assignments": [
             {
-              "property": "dialog.durtaion",
-              "value": "= $duration"
+              "property": "dialog.slots",
+              "value": "= coalesce($slots, conversation.slots)"
             },
             {
-              "property": "dialog.startDateTime",
-              "value": "= $startDateTime"
-            },
-            {
-              "property": "dialog.endDateTime",
-              "value": "=addMinutes(formatDateTime($startDateTime), int(dialog.duration))"
+              "property": "dialog.content",
+              "value": "= coalesce($content, conversation.content)"
             }
           ]
         },
@@ -54,12 +50,6 @@
               "value": "1"
             },
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "mp_cGd"
-              }
-            },
-            {
               "$kind": "Microsoft.NumberInput",
               "$designer": {
                 "id": "BVqWhA"
@@ -73,6 +63,13 @@
               "value": "1"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "OIRLCx"
+          },
+          "name": "collected building/floornumber"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -218,6 +215,13 @@
           "resultProperty": "dialog.requestResult"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ZWekVd"
+          },
+          "name": "after search meeting room"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "myerIv"
@@ -292,7 +296,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "smTrMO"
-          }
+          },
+          "name": "before get schedule"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -302,10 +307,10 @@
           "dialog": "GetScheduleRequest",
           "resultProperty": "dialog.requestResult",
           "options": {
-            "startDateTime": "=dialog.startDateTime",
-            "endDateTime": "=dialog.endDateTime",
+            "startDateTime": "=dialog.content.startDateTime",
+            "endDateTime": "=dialog.content.endDateTime",
             "meetingRooms": "=dialog.meetingRooms",
-            "duration": "=dialog.duration"
+            "duration": "=dialog.content.duration"
           }
         },
         {

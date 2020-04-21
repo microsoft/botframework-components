@@ -1,0 +1,131 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "P8gN2O",
+    "name": "SearchMeetingsByConditions"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "3KrPvM"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "-3ftvY"
+          },
+          "assignments": [
+            {
+              "property": "dialog.startDateTime",
+              "value": "= $startDateTime"
+            },
+            {
+              "property": "dialog.query",
+              "value": "= $query"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "-4YSys"
+          },
+          "condition": "dialog.startDateTime == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ZgXw6q"
+              },
+              "options": {
+                "startTime": "now"
+              },
+              "dialog": "SetDateTime",
+              "resultProperty": "dialog.startDateTime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "J6Odtx"
+              },
+              "property": "dialog.endDateTime",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), 24 * 7)"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "xZ1kFN"
+              },
+              "property": "dialog.endDateTime",
+              "value": "= dialog.startDateTime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "OXB8x2"
+          },
+          "dialog": "SearchMeetingRequest",
+          "options": {
+            "startDateTime": "=dialog.startDateTime",
+            "endDateTime": "=dialog.endDateTime"
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "mPkXUf"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "bVLB8V"
+          },
+          "property": "dialog.result",
+          "value": "= dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "xXruOY"
+          },
+          "condition": "dialog.requestResult.requestStatus && dialog.query != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "cHR2pt"
+              },
+              "property": "dialog.result.meetings",
+              "value": "= where(dialog.requestResult.meetings, x, contains(toLower(x.subject), toLower(dialog.query)))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "X5OKpF"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "4wYsQK"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "SearchMeetingsByConditions.lg"
+}

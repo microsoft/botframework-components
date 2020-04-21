@@ -1,0 +1,23 @@
+
+# TextInput.response-_ACAJO
+- set the title to dinner
+- sync up meeting
+
+# _Interruption
+- can you change it to {ToTime=5 pm}
+- can you move this appointment to {ToTime=5pm}
+- change {FromTime=10 am} meeting to start {MoveLaterTimeSpan=20 minutes} later
+- change {FromTime=12am} meeting to start {MoveEarlierTimeSpan=10 minutes} earlier
+- change {FromTime=4pm} {Subject=lunch appointment}
+- change {FromTime=5pm} appointment {MoveEarlierTimeSpan=1 hour} earlier
+- change an appointment
+- change appointment
+- change {Subject=big event} to {ToDate=tomorrow}
+- change calendar
+- change {Subject=dentist appointment}
+- change {Subject=dentist appt} to {MoveLaterTimeSpan=an hour} later
+- change {Subject=developmental agenda for lunch} {FromDate=tomorrow}
+- change it to {ToTime=5pm}
+- change {SlotAttribute=location}
+- change {Subject=lunch appt} to {ToTime=2}
+- change {Subject=lunch date} from {FromTime=11} - {FromTime=12} to {ToTime=12} - {ToTime=1 30}

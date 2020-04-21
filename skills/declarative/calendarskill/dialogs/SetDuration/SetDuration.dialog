@@ -47,7 +47,7 @@
           "property": "dialog.duration",
           "invalidPrompt": "${bfdinvalidPrompt-pgJEOp()}",
           "outputFormat": "= this.value[0].Value",
-          "value": "= dialog._duration"
+          "value": "= coalesce(dialog._duration, \"30 min\")"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -67,5 +67,6 @@
       ]
     }
   ],
-  "generator": "SetDuration.lg"
+  "generator": "SetDuration.lg",
+  "recognizer": "SetDuration.lu"
 }

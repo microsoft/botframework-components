@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "t-UqFx",
-    "name": "SetTitle"
+    "id": "gN87kL",
+    "name": "SetContent"
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
@@ -11,47 +11,42 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "_LfazK"
+        "id": "a1oobS"
       },
       "actions": [
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "L-FgO3"
+            "id": "yNC-sz"
           },
           "assignments": [
             {
-              "value": "=coalesce(@Subject, $title)",
-              "property": "dialog.title"
+              "value": "= $content",
+              "property": "dialog.description"
             }
           ]
         },
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "_ACAJO"
+            "id": "BTMO0q"
           },
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": "#_Interruption.Score >= 0.9",
-          "prompt": "${bfdprompt-_ACAJO()}",
-          "property": "dialog.title",
-          "validations": [
-            "length(this.value) < 100"
-          ],
-          "invalidPrompt": "${bfdinvalidPrompt-_ACAJO()}",
-          "unrecognizedPrompt": "${bfdunrecognizedPrompt-_ACAJO()}"
+          "allowInterruptions": false,
+          "prompt": "${bfdprompt-BTMO0q()}",
+          "property": "dialog.description",
+          "outputFormat": "= this.value"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "YlrLry"
+            "id": "Yifdd8"
           },
-          "value": "= dialog.title"
+          "value": "= dialog.description"
         }
       ]
     }
   ],
-  "generator": "SetTitle.lg",
-  "recognizer": "SetTitle.lu"
+  "generator": "SetContent.lg"
 }

@@ -48,6 +48,22 @@
                   "value": "=-int(dialog.timezone)"
                 },
                 {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "rLivzf"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.content",
+                      "value": "= {}"
+                    },
+                    {
+                      "property": "conversation.slots",
+                      "value": "= {}"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "-6WxFN"

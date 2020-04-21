@@ -19,3 +19,49 @@
 - Created meeting \"${dialog.title}\"
 # bfdactivity-OqVPIR()
 - ${CalendarErrorMessage()}
+
+# bfdactivity-WOzNjH()
+- slot attribute is ${dialog.slotOperation}
+
+
+
+
+
+# bfdactivity-ghbjiO()
+- Slot delete
+# bfdactivity-0HxHK5()
+- Slot add
+# bfdactivity-Tl6Vkj()
+- Slot default ${dialog.foreach.value.Operation[0][0]}
+# bfdactivity-vJ2x2a()
+- Slot change
+
+# bfdprompt-OigRoD()
+[Activity
+	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.conten.location)}${ConfirmCreateContent(dialog.content.content)}
+    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.conten.location, dialog.content.content, null))}
+]
+
+# ConfirmCreateAttendees(Attendees)
+- IF: ${Attendees == null || count(Attendees) == 0}
+	- , with ${Attendees} 
+- ELSE:
+	-
+
+# ConfirmCreateSubject(Subject)
+- IF: ${Subject  !=  null}
+    - The subject for the event is ${Subject}. 
+- ELSE:
+    -
+
+# ConfirmCreateLocation(Location)
+- IF: ${Location  !=  null}
+    - The event will take place at ${Location}. 
+- ELSE:
+    -
+
+# ConfirmCreateContent(Content)
+- IF: ${Content  !=  null}
+    - The description for the event is ${Content}. 
+- ELSE:
+    -
