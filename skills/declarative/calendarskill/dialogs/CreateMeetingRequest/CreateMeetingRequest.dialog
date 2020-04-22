@@ -58,7 +58,8 @@
               "name": "email loop"
             }
           ],
-          "itemsProperty": "dialog.attendees"
+          "itemsProperty": "dialog.attendees",
+          "disabled": false
         },
         {
           "$kind": "Microsoft.SetProperties",

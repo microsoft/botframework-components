@@ -91,7 +91,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-w8sm4A()}",
+          "prompt": "${TextInput_Prompt_w8sm4A()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -132,7 +132,7 @@
               "$designer": {
                 "id": "niKUww"
               },
-              "activity": "${bfdactivity-niKUww()}"
+              "activity": "${SendActivity_niKUww()}"
             }
           ],
           "actions": [
@@ -141,7 +141,7 @@
               "$designer": {
                 "id": "umV9Wd"
               },
-              "activity": "${bfdactivity-umV9Wd()}"
+              "activity": "${SendActivity_umV9Wd()}"
             }
           ]
         },

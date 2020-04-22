@@ -1,89 +1,98 @@
 
-# TextInput.response-WrLiYP
-- add qiong as attendees.
-- add qiong, lu and yue
-- add tom and remove mary.
-- add alex
-- oh, add darren too.
-- add megan
+
+
+# GetInput
+- {@SlotOperation={@Operation=add} an {@Slot=attendee}}
+- {@SlotOperation={@Operation=change} it to {@Value={@ToTime=6pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=location}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject} to {@Value={@Subject=lunch}}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}} and {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- {@SlotOperation={@Operation=change} the {@Slot=title}}
+- {@SlotOperation={@Operation=change} {@Slot=time}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@ToTime={@Value=7 pm}} and {@Slot=title} to {@Subject={@Value=lunch}}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@Value={@ToTime=7pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=title} to {@Value={@Subject=dinner}}}
+- {@SlotOperation={@Operation=change} to {@Value={@ToTime=5 pm}}}
+- {@SlotOperation={@Operation=change} to {@ToDate={@Value=tomorrow}}}
+- {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- i'd like to {@SlotOperation={@Operation=change} the {@Slot=date}}
+- please {@SlotOperation={@Operation=change} the {@Slot=date} to {@Value=tomorrow}} and {@SlotOperation={@Operation=add} {@Value=graham}}
+- {@SlotOperation={@Operation=set} {@Slot=time} as {@ToTime={@Value=11 am}}}
+- {@SlotOperation={@Operation=update} {@Slot=location} to {@Value=bjw2}}
+- {@SlotOperation={@Operation=update} {@Slot=title}}
+> # Entity definitions
+
+@ ml FromDate
+
+@ ml FromTime
+
+@ ml MoveEarlierTimeSpan
+
+@ ml MoveLaterTimeSpan
+
+@ ml SlotAttribute
+
+@ ml SlotOperation
+    - @ OperationName Operation
+    - @ SlotAttributeName Slot
+    - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
+
+
+@ ml SlotOperations
 
 @ ml Subject
-@ prebuilt personName
 
-# TextInput.response-ZYFVIR
-- change meeting subject
-- change title
-- meeting subject is {Subject=hello world}
-- modify subject
-- no, please update the subject to {Subject=hello}
-- reset subject
-- please update the subject
-- reset subject
-- update meeting title
-- reset title
-- set meeting subject as {Subject=hello world}
-- subject: {Subject=hello}
+@ ml ToDate
+
+@ ml ToTime
 
 
-@ ml Subject
-
-# TextInput.response-L5B1Du
-- content: {Message=hello}
-- change meeting content
-- the meeting content is {Message=test meeting}
-- no, i need to change the content
-- no, i'd like to modify content to "{Message=i will be late}"
-- please change content
-- update content
-
-# DateTimeInput.response-65qUN5
-- change date
-- change meeting date from today to tomorrow
-- i need a new meeting date.
-- please change date
-- update meeting date
-
-# DateTimeInput.response-8HwH5I
-- change meeting time
-- change meeting time from 9:00 pm to 11:00 pm
-- change start time to 11:00 pm
-- change the meeting end time
-- could you help me change end time to 5:00
-- delay meeting for one day
-- delay meeting to half an hour later
-- modify meeting end time
-- modify meeting start time
-- move end time to one hour later
-- no, please change meeting end time to {ToTime=11:00 pm}
-- set start time to one hour later
-- reset end time
-- set end time
-- start time: 10:00 pm
-- reset start time
-- the meeting will start at {FromDate=tomorrow} {FromTime=10am}
-- the start time is 10:00 pm and the end time is 11:00 pm
-- update meeting start time
-
-# DateTimeInput.response-oSDCde
-- change meeting duration
-- change meeting time from half an hour to one hour
-- duration: 2 hours
-- extend meeting time to one hour
-- please change meeting duration
-- reset meeting duration
-- extend to {Duration=one hour}
-- extend to {Duration=two hour}
-- Extend my meeting to {Duration=one hour}
-- update duration
-- update meeting duration
+> # PREBUILT Entity definitions
 
 
-# TextInput.response-ZMhE8Z
-- change location to room {Location=302}
-- location: summer palace
-- modify meeting location
-- new location: summer palace
-- no, please change to another room.
-- the location is room {Location=308}
-- update location
-- update a new location
+> # Phrase list definitions
+
+> # List entities
+
+@ list OperationName = 
+	- add  :
+		- create
+	- delete  :
+	- change  :
+		- update
+		- set
+
+
+@ list SlotAttributeName = 
+@ list OperationName = 
+	- add :
+		- create
+	- delete :
+	- change :
+		- update
+		- set
+
+
+@ list SlotAttributeName = 
+	- room :
+		- meeting room
+		- conference room
+		- confroom
+	- time :
+		- date
+	- building :
+	- floor :
+	- person :
+		- people
+		- attendee
+		- attendees
+	- title :
+		- subject
+	- content :
+		- description
+	- location :
+
+
+> # RegEx entities
