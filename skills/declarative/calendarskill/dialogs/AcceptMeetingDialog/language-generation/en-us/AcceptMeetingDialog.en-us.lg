@@ -1,0 +1,15 @@
+[import](common.lg)
+
+# bfdprompt-w8sm4A()
+- Are you confirmed to accept the meeting \"${dialog.meeting.Title}\"
+
+# bfdactivity-9hcM19()
+- accept meeting ${dialog.meeting.subject}
+
+# bfdactivity-6dAik5()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+
+# bfdactivity-umV9Wd()
+- Accepted meeting \"${dialog.meeting.subject}\"
+# bfdactivity-niKUww()
+- ${CalendarErrorMessage()}

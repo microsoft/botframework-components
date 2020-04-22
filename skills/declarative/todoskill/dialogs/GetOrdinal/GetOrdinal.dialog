@@ -1,0 +1,76 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "mB0jTs",
+    "name": "GetOrdinal"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "EbCKVN"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "j5gyd5"
+          },
+          "condition": "=dialog.ordinal != null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "PJEJhh"
+              },
+              "value": "=null"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "q8CVMh"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.ordinal",
+                  "value": "=int(dialog.ordinal) - 1"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "xedNqB"
+              },
+              "condition": "=dialog.ordinal >= 0 && dialog.ordinal < count(dialog.todos)",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "5JAgt0"
+                  },
+                  "value": "={}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "uhbRon"
+                  },
+                  "value": "=subArray(dialog.todos,dialog.ordinal,dialog.ordinal + 1)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetOrdinal.lg"
+}

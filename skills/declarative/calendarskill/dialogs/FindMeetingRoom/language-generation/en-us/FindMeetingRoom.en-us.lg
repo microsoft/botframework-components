@@ -1,0 +1,32 @@
+[import](common.lg)
+
+
+
+# bfdprompt-f3QClo()
+- OK, which building?
+
+# bfdprompt-BVqWhA()
+- Alright, do you have a floor preference?
+
+
+
+# bfdprompt-f7_pEc()
+- Which room you want to choose
+
+
+# bfdactivity-FMIZux()
+- Can not find meeting rooms 
+# bfdactivity-pYw0rC()
+- Sorry, the request got an error ${dialog.api_result.statusCode}
+# bfdactivity-5I8bFP()
+- dialog meeting rooms ${dialog.meetingRooms}
+
+
+
+# bfdactivity-Ln36ri()
+- Can not find meeting rooms 
+# bfdactivity-_uBP-t()
+- ${CalendarErrorMessage()}
+
+# bfdactivity-l6_rBj()
+- ${CalendarErrorMessage()}

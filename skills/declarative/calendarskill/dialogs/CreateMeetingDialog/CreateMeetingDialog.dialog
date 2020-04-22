@@ -255,82 +255,20 @@
           "condition": "dialog.CreateCalendarEntry_Confirm",
           "actions": [
             {
-              "$kind": "Microsoft.Foreach",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "zAMDCr"
+                "id": "w4l6yu"
               },
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "7QU3xC"
-                  },
-                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
-                  "value": "=dialog.foreach.value"
-                },
-                {
-                  "$kind": "Microsoft.EditArray",
-                  "$designer": {
-                    "id": "QaiSXB"
-                  },
-                  "changeType": "push",
-                  "itemsProperty": "dialog.CreateHttpRequestEmailList",
-                  "value": "=dialog.CreateHttpRequestEmailItem"
-                },
-                {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "a0oOKA"
-                  },
-                  "name": "email loop"
-                }
-              ],
-              "itemsProperty": "dialog.ResolvedAttendees"
-            },
-            {
-              "$kind": "Microsoft.OAuthInput",
-              "$designer": {
-                "id": "cobsY1"
+              "dialog": "CreateMeetingRequest",
+              "options": {
+                "startDateTime": "=dialog.CreateCalendarEntry_StartDateTime",
+                "endDateTime": "=dialog.CreateCalendarEntry_EndDateTime",
+                "title": "=dialog.CreateCalendarEntry_Subject",
+                "desciption": "=dialog.CreateCalendarEntry_Content",
+                "location": "=dialog.CreateCalendarEntry_Location",
+                "attendees": "=dialog.ResolvedAttendees"
               },
-              "connectionName": "=settings.ConnectionName",
-              "text": "Please log in to your calendar account",
-              "title": "Sign in",
-              "timeout": 900000,
-              "property": "dialog.token",
-              "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
-              "alwaysPrompt": true
-            },
-            {
-              "$kind": "Microsoft.HttpRequest",
-              "$designer": {
-                "id": "IcRVCA"
-              },
-              "responseType": "Json",
-              "method": "POST",
-              "url": "https://graph.microsoft.com/v1.0/me/events",
-              "resultProperty": "dialog.CreateMeetingHttpResult",
-              "headers": {
-                "Authorization": "Bearer ${dialog.token.Token}"
-              },
-              "body": {
-                "subject": "${if(empty(dialog.CreateCalendarEntry_subject) != true && toLower(dialog.createcalendarentry_subject) != 'skip', dialog.createcalendarentry_subject,'')}",
-                "body": {
-                  "contentType": "HTML",
-                  "content": "${if(empty(dialog.CreateCalendarEntry_Content) != true && toLower(dialog.CreateCalendarEntry_Content) != 'skip', dialog.CreateCalendarEntry_Content,'')}"
-                },
-                "start": {
-                  "dateTime": "${formatDateTime(dialog.CreateCalendarEntry_StartDateTime, 'yyyy-MM-ddTHH:mm:ss')}",
-                  "timeZone": "UTC"
-                },
-                "end": {
-                  "dateTime": "${formatDateTime(dialog.CreateCalendarEntry_EndDateTime, 'yyyy-MM-ddTHH:mm:ss')}",
-                  "timeZone": "UTC"
-                },
-                "location": {
-                  "displayName": "${if(empty(dialog.CreateCalendarEntry_Location) != true && toLower(dialog.CreateCalendarEntry_Location) != 'skip', dialog.CreateCalendarEntry_Location,'')}"
-                },
-                "attendees": "=dialog.CreateHttpRequestEmailList"
-              }
+              "resultProperty": "dialog.CreateMeetingHttpResult"
             }
           ],
           "elseActions": [
@@ -498,7 +436,7 @@
           "$designer": {
             "id": "M7hIKa"
           },
-          "condition": "dialog.CreateMeetingHttpResult.statusCode == 201",
+          "condition": "dialog.CreateMeetingHttpResult.requestStatus",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",

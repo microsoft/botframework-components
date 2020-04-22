@@ -16,11 +16,53 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "wMdI4-"
+            "id": "518944",
+            "name": "Loop: for each item"
           },
-          "activity": "${bfdactivity-wMdI4-()}"
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "KU3nTb"
+                  },
+                  "value": "= formatDateTime(turn.dialogEvent.Value.timestamp,'zz')",
+                  "property": "dialog.timezone"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "glSj2W"
+                  },
+                  "property": "user.timeOffset",
+                  "value": "=-int(dialog.timezone)"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "-6WxFN"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "WuRqfy"
+                  },
+                  "activity": "${bfdactivity-WuRqfy()}"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -54,6 +96,70 @@
             "id": "Jnb65S"
           },
           "dialog": "ShowMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9MOa5p"
+      },
+      "intent": "DeleteMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xgbv3v"
+          },
+          "dialog": "DeleteMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "4HgSXF"
+      },
+      "intent": "AcceptMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6artiV"
+          },
+          "dialog": "AcceptMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "wbcg68"
+      },
+      "intent": "UpdateMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZbUv9x"
+          },
+          "dialog": "UpdateMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ymHGh3"
+      },
+      "intent": "BookMeetingRoom",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9uFd2q"
+          },
+          "dialog": "BookMeetingRoom"
         }
       ]
     }

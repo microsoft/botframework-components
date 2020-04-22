@@ -1,0 +1,12 @@
+[import](common.lg)
+
+
+# bfdactivity-IsH5UN()
+- duration is ${dialog._duration}
+# bfdprompt-pgJEOp()
+- For how long?
+# bfdinvalidPrompt-pgJEOp()
+- sorry, I don't understand ${this.value}
+
+
+

@@ -1,0 +1,56 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "t-UqFx",
+    "name": "SetTitle"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "_LfazK"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "L-FgO3"
+          },
+          "assignments": [
+            {
+              "value": "=coalesce(@Subject, $title)",
+              "property": "dialog.title"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "_ACAJO"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${bfdprompt-_ACAJO()}",
+          "property": "dialog.title",
+          "validations": [
+            "length(this.value) < 100"
+          ],
+          "invalidPrompt": "${bfdinvalidPrompt-_ACAJO()}",
+          "unrecognizedPrompt": "${bfdunrecognizedPrompt-_ACAJO()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YlrLry"
+          },
+          "value": "= dialog.title"
+        }
+      ]
+    }
+  ],
+  "generator": "SetTitle.lg"
+}

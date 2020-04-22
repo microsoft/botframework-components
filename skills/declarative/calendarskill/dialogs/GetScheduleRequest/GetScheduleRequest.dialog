@@ -1,0 +1,114 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "u5fhP3",
+    "name": "GetScheduleRequest"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "032QwX"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2jvdFY"
+          },
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Ze2SaE"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "TThtCr"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcEnd",
+              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.meetingRoomEmails",
+              "value": "= foreach(dialog.meetingRooms, x, x.emailAddress)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "mJau_h"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "body": {
+            "schedules": "=dialog.meetingRoomEmails",
+            "startTime": {
+              "dateTime": "${dialog.utcStart}",
+              "timeZone": "UTC"
+            },
+            "endTime": {
+              "dateTime": "${dialog.utcEnd}",
+              "timeZone": "UTC"
+            },
+            "availabilityViewInterval": "=dialog.duration"
+          },
+          "url": "https://graph.microsoft.com/v1.0/me/calendar/getSchedule",
+          "contentType": "application/json",
+          "resultProperty": "dialog.api_result",
+          "disabled": false,
+          "headers": {
+            "authorization": "${turn.token}"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "18pGbO"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result",
+              "value": "= {}"
+            },
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 200"
+            },
+            {
+              "property": "dialog.result.availability",
+              "value": "= if(dialog.result.requestStatus, dialog.api_result.content.value, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HW2mUh"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "zobXXa"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "GetScheduleRequest.lg"
+}

@@ -1,0 +1,200 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "2QL2hz",
+    "name": "BookMeetingRoom"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "fu9w3A"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "B7x0Y0"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots",
+              "value": "={}"
+            },
+            {
+              "property": "dialog.slots.Subject",
+              "value": "=coalesce(@Subject, $Subject)"
+            },
+            {
+              "property": "dialog.slots.FromDate",
+              "value": "=coalesce(@FromDate, $FromDate)"
+            },
+            {
+              "property": "dialog.slots.FromTime",
+              "value": "=coalesce(@FromTime, $FromTime)"
+            },
+            {
+              "property": "dialog.startDateTime",
+              "value": "= null"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= null"
+            },
+            {
+              "property": "dialog.slots.ToDate",
+              "value": "=coalesce(@ToDate, $ToDate)"
+            },
+            {
+              "property": "dialog.slots.ToTime",
+              "value": "=coalesce(@ToTime, $ToTime)"
+            },
+            {
+              "property": "dialog.slots.Duration",
+              "value": "=coalesce(@Duration, $Duration)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "CjiOXm"
+          },
+          "condition": "dialog.slots.FromDate==null && dialog.slots.FromTime == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "FVaHll"
+              },
+              "property": "dialog.slots.FromTime",
+              "value": "= 'now'"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lnQ5Pp"
+          },
+          "dialog": "SetDateTime",
+          "options": {
+            "startDate": "=dialog.slots.FromDate",
+            "startTime": "=dialog.slots.FromTime"
+          },
+          "resultProperty": "dialog.startDateTime",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "-fv8_I"
+          },
+          "dialog": "SetDuration",
+          "options": {
+            "duration": "=dialog.slots.Duration"
+          },
+          "resultProperty": "dialog.duration",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jfUEIY"
+          },
+          "assignments": [
+            {
+              "property": "dialog.endDateTime",
+              "value": "=addMinutes(formatDateTime(dialog.startDateTime), int(dialog.duration))"
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZIJgns"
+          },
+          "dialog": "FindMeetingRoom",
+          "resultProperty": "dialog.meetingRoom",
+          "options": {
+            "duration": "=dialog.duration",
+            "startDateTime": "=dialog.startDateTime"
+          },
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9txx6d"
+          },
+          "dialog": "SetTitle",
+          "options": {
+            "title": "=dialog.slots.Subject"
+          },
+          "resultProperty": "dialog.title"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "LIvZ7R"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.roomList",
+          "value": "=dialog.meetingRoom"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Eh-kJ7"
+          },
+          "dialog": "CreateMeetingRequest",
+          "options": {
+            "startDateTime": "=dialog.startDateTime",
+            "endDateTime": "=dialog.endDateTime",
+            "title": "=dialog.title",
+            "description": "demo description",
+            "location": "demo location",
+            "attendee": "=dialog.roomList"
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DuQQm7"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "OqVPIR"
+              },
+              "activity": "${bfdactivity-OqVPIR()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "aN26Uv"
+              },
+              "activity": "${bfdactivity-aN26Uv()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "e6jYF6"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "BookMeetingRoom.lg"
+}

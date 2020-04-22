@@ -10,8 +10,24 @@
     Text = here are meetings
     Attachments = ${json(MeetingListCard('Meetings', count(dialog.MeetingsList), 0, 'today', '1-3', null, 'Microsoft', 'UTC', dialog.DisplayMeetingData, true))}
 ]
-# bfdactivity-6aPtgV()
+
+# bfdprompt-4u0r-m()
+- Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
+# bfdactivity-meJEs5()
+- The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
+# bfdactivity-Tb6enx()
+- You have one meeting ${dialog.ShowingMeetingCondition}: ${conversation.FocusedMeeting.Title}. It's with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)} ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')}.
+
+# bfdactivity-EckUyy()
 [Activity
-    Text = you have 1 meeting:
-    Attachments = ${json(MeetingDetailCard(formatDateTime(dialog.MeetingsList[0].start.datetime), formatDateTime(dialog.MeetingsList[0].end.datetime), 'UTC', null, dialog.MeetingsList[0].subject, dialog.MeetingsList[0].location.displayName, dialog.MeetingsList[0].location.body.bodyPreview, dialog.MeetingsList[0].onlineMeetingUrl))}
+    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', [], conversation.FocusedMeeting.Subject, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
 ]
+
+# bfdactivity-GHfVi1()
+- You have no more events scheduled.
+# bfdactivity-vk2DNJ()
+- This is the first page.
+# bfdprompt-HDFe4y()
+- Do you want to review your calendar overview again for ${formatDateTime(dialog.ShowMeeting_StartDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
+# bfdactivity-j8oUwP()
+- ${CalendarErrorMessage()}
