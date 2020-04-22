@@ -1,0 +1,8 @@
+[import](common.lg)
+
+# TextInput_Prompt_ylVlC7()
+- What is the location?
+# TextInput_UnrecognizedPrompt_ylVlC7()
+-unrecognized title
+# TextInput_InvalidPrompt_ylVlC7()
+- sorry, the length should be 10
