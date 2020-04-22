@@ -63,6 +63,33 @@ namespace ITSMSkill.Tests.API.Fakes
             }
         };
 
+        private static readonly MultiTicketsResponse SearchActiveTicketResponse = new MultiTicketsResponse
+        {
+            result = new List<TicketResponse>
+            {
+                new TicketResponse
+                {
+                    state = MockData.CreateTicketState,
+                    opened_at = MockData.CreateTicketOpenedTime,
+                    short_description = MockData.CreateTicketTitle,
+                    description = MockData.CreateTicketDescription,
+                    sys_id = MockData.CreateTicketId,
+                    urgency = MockData.CreateTicketUrgency,
+                    number = MockData.CreateTicketNumber
+                },
+                new TicketResponse
+                {
+                    state = MockData.CreateTicketState,
+                    opened_at = MockData.CreateTicketOpenedTime,
+                    short_description = MockData.CreateTicketTitle,
+                    description = MockData.CreateTicketDescription,
+                    sys_id = MockData.CreateTicketId,
+                    urgency = MockData.CreateTicketUrgency,
+                    number = MockData.CreateTicketNumber
+                }
+            }
+        };
+
         private static readonly MultiTicketsResponse SearchTicketToCloseResponse = new MultiTicketsResponse
         {
             result = new List<TicketResponse>
@@ -147,6 +174,10 @@ namespace ITSMSkill.Tests.API.Fakes
                .Setup(c => c.ExecuteGetTaskAsync<MultiTicketsResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident") && IsTicketToClose(r))))
                .ReturnsAsync(CreateIRestResponse(SearchTicketToCloseResponse));
 
+            mockClient
+               .Setup(c => c.ExecuteGetTaskAsync<MultiTicketsResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident") && IsActiveTicket(r))))
+               .ReturnsAsync(CreateIRestResponse(SearchActiveTicketResponse));
+
             // TODO use id is not an ideal way to distinguish
             mockClient
                .Setup(c => c.ExecuteTaskAsync<SingleTicketResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith($"now/v1/table/incident/{MockData.CreateTicketId}")), It.IsIn(Method.PATCH)))
@@ -173,7 +204,31 @@ namespace ITSMSkill.Tests.API.Fakes
 
         private static bool IsTicketToClose(IRestRequest restRequest)
         {
-            return restRequest.Parameters.Any(p => p.Name == "sysparm_query" && p.Value is string && ((string)p.Value).Contains(MockData.CloseTicketNumber));
+            return IsQueryContains(restRequest, $"number={MockData.CloseTicketNumber}");
+        }
+
+        private static bool IsActiveTicket(IRestRequest restRequest)
+        {
+            return IsQueryContains(restRequest, "stateIN1,2,3,6");
+        }
+
+        private static bool IsQueryContains(IRestRequest restRequest, params string[] parameters)
+        {
+            var query = restRequest.Parameters.First(p => p.Name == "sysparm_query" && p.Value is string)?.Value as string;
+            if (query == null)
+            {
+                return false;
+            }
+
+            foreach (var parameter in parameters)
+            {
+                if (!query.Contains(parameter))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private IRestResponse<GetUserIdResponse> CreateGetUserIdResponseAndCount()
