@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "gN87kL",
-    "name": "SetContent"
+    "id": "lUwGgi",
+    "name": "SetLocation"
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
@@ -11,51 +11,55 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "a1oobS"
+        "id": "UTovuj"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "dLfetO"
+            "id": "xjmF1t"
           },
-          "name": "SetContent"
+          "name": "SetLocation"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "yNC-sz"
+            "id": "yVNTN_"
           },
           "assignments": [
             {
-              "value": "= $description",
-              "property": "dialog.description"
+              "value": "=coalesce(@Location, $location)",
+              "property": "dialog.location"
             }
           ]
         },
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "BTMO0q"
+            "id": "ylVlC7"
           },
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": "#_Interruption.Score >= 0.9",
-          "prompt": "${TextInput_Prompt_BTMO0q()}",
-          "property": "dialog.description",
-          "outputFormat": "= this.value",
-          "value": "=@Desciption"
+          "prompt": "${TextInput_Prompt_ylVlC7()}",
+          "property": "dialog.location",
+          "validations": [
+            "length(this.value) < 100"
+          ],
+          "invalidPrompt": "${TextInput_InvalidPrompt_ylVlC7()}",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_ylVlC7()}",
+          "value": "=@Location"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "Yifdd8"
+            "id": "fiotMJ"
           },
-          "value": "= dialog.description"
+          "value": "= dialog.location"
         }
       ]
     }
   ],
-  "generator": "SetContent.lg",
-  "recognizer": "SetContent.lu"
+  "generator": "SetLocation.lg",
+  "recognizer": "SetLocation.lu"
 }

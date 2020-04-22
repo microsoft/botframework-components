@@ -1,7 +1,19 @@
 
+# TextInput_Response_ylVlC7
+- at {Location=shanghai}
+- at {Location=dennys}
+- at {Location=dennys}
+- at the {Location=1st clinic}
+- at the {Location=original health clinic}
+- at {Location=hope middle school}
+- {Location=shanghai}
+- {Location=dennys}
+- {Location=room 32}
+- {Location=bjw 2/64}
+- {Location=original health clinic}
+- {Location=hope middle school}
 
-
-# GetInput
+#_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
 - {@SlotOperation={@Operation=change} it to {@Value={@ToTime=6pm}}}
 - {@SlotOperation={@Operation=change} {@Slot=location}}
@@ -47,52 +59,3 @@
 @ ml ToDate
 
 @ ml ToTime
-
-
-> # PREBUILT Entity definitions
-
-
-> # Phrase list definitions
-
-> # List entities
-
-@ list OperationName = 
-	- add  :
-		- create
-	- delete  :
-	- change  :
-		- update
-		- set
-
-
-@ list SlotAttributeName = 
-@ list OperationName = 
-	- add :
-		- create
-	- delete :
-	- change :
-		- update
-		- set
-
-
-@ list SlotAttributeName = 
-	- room :
-		- meeting room
-		- conference room
-		- confroom
-	- time :
-		- date
-	- building :
-	- floor :
-	- person :
-		- people
-		- attendee
-		- attendees
-	- title :
-		- subject
-	- content :
-		- description
-	- location :
-
-
-> # RegEx entities

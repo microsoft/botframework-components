@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2s051c"
+          },
+          "name": "SetDuration"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "CoFrew"
@@ -31,7 +38,7 @@
           "$designer": {
             "id": "IsH5UN"
           },
-          "activity": "${bfdactivity-IsH5UN()}",
+          "activity": "${SendActivity_IsH5UN()}",
           "disabled": true
         },
         {
@@ -43,11 +50,11 @@
           "alwaysPrompt": false,
           "allowInterruptions": false,
           "defaultLocale": "en-us",
-          "prompt": "${bfdprompt-pgJEOp()}",
+          "prompt": "${TextInput_Prompt_pgJEOp()}",
           "property": "dialog.duration",
-          "invalidPrompt": "${bfdinvalidPrompt-pgJEOp()}",
+          "invalidPrompt": "${TextInput_InvalidPrompt_pgJEOp()}",
           "outputFormat": "= this.value[0].Value",
-          "value": "= coalesce(dialog._duration, \"30 min\")"
+          "value": "= coalesce(dialog._duration, @Duration)"
         },
         {
           "$kind": "Microsoft.SetProperty",

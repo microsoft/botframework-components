@@ -3,40 +3,40 @@
 
 
 
-# bfdactivity-6UyAxu()
+# SendActivity_6UyAxu()
 - accepted meeting ${dialog.meeting.subject}
-# bfdactivity-pT8N7m()
+# SendActivity_pT8N7m()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
-# bfdactivity-5IVmDB()
+# SendActivity_5IVmDB()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 
-# bfdactivity-45A0cq()
+# SendActivity_45A0cq()
 - Alright, meeting created.
 
-# bfdactivity-zEtG2m()
+# SendActivity_zEtG2m()
 - title is here
-# bfdactivity-aN26Uv()
+# SendActivity_aN26Uv()
 - Created meeting \"${dialog.title}\"
-# bfdactivity-OqVPIR()
+# SendActivity_OqVPIR()
 - ${CalendarErrorMessage()}
 
-# bfdactivity-WOzNjH()
+# SendActivity_WOzNjH()
 - slot attribute is ${dialog.slotOperation}
 
 
 
 
 
-# bfdactivity-ghbjiO()
+# SendActivity_ghbjiO()
 - Slot delete
-# bfdactivity-0HxHK5()
+# SendActivity_0HxHK5()
 - Slot add
-# bfdactivity-Tl6Vkj()
+# SendActivity_Tl6Vkj()
 - Slot default ${dialog.foreach.value.Operation[0][0]}
-# bfdactivity-vJ2x2a()
+# SendActivity_vJ2x2a()
 - Slot change
 
-# bfdprompt-OigRoD()
+# TextInput_Prompt_OigRoD()
 [Activity
 	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.conten.location)}${ConfirmCreateContent(dialog.content.content)}
     Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.conten.location, dialog.content.content, null))}

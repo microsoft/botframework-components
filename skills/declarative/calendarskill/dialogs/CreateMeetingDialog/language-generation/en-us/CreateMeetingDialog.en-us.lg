@@ -1,63 +1,5 @@
 [import](common.lg)
 
-# bfdprompt-WrLiYP()
-- Sure, who will join?
-
-# bfdunrecognizedPrompt-WrLiYP()
-- Please input a valid email address.
-
-# bfdprompt-ZYFVIR()
-- What is the subject of the event?  You can also say "skip" to skip.
-
-# bfdprompt-L5B1Du()
-- OK, please enter the content of your event.
-
-# bfdprompt-65qUN5()
-- For what date?
-
-# bfdunrecognizedPrompt-65qUN5()
-- Let's try again. For what date?
-
-# bfdprompt-8HwH5I()
-- What time does it start? You can help me by naming out AM or PM for the event.
-
-# bfdunrecognizedPrompt-8HwH5I()
-- Let's try again, What time does it start?
-
-# bfdinvalidPrompt-8HwH5I()
-- Please input something like 11:00pm.
-
-# bfdprompt-oSDCde()
-- For how long?
-
-# bfdunrecognizedPrompt-oSDCde()
-- Let's try again For how long?
-
-# bfdinvalidPrompt-oSDCde()
-- Please input something like one hour.
-
-# bfdprompt-ZMhE8Z()
-- Where will the event take place?
-
-# bfdprompt-k-PxIK()
-[Activity
-	Text =  I'm ready to create the event for ${formatDateTime(dialog.CreateCalendarEntry_StartDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.CreateCalendarEntry_StartDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.CreateCalendarEntry_EndDateTime, 'HH:mm:ss')}, with ${join(dialog.ResolvedAttendees, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.CreateCalendarEntry_Subject)}${ConfirmCreateLocation(dialog.CreateCalendarEntry_Location)}${ConfirmCreateContent(dialog.CreateCalendarEntry_Content)}
-    Attachments = ${json(MeetingDetailCard(dialog.CreateCalendarEntry_StartDateTime, dialog.CreateCalendarEntry_EndDateTime, 'UTC', [], dialog.CreateCalendarEntry_Subject, dialog.CreateCalendarEntry_Location, dialog.CreateCalendarEntry_Content, null))}
-]
-
-# bfdactivity-P9QJGP()
-[Activity
-    Text = OK, I added ${dialog.CreateCalendarEntry_Subject} to your calendar.
-    Attachments = ${json(MeetingDetailCard(dialog.CreateCalendarEntry_StartDateTime, dialog.CreateCalendarEntry_EndDateTime, 'UTC', [], dialog.CreateCalendarEntry_Subject, dialog.CreateCalendarEntry_Location, dialog.CreateCalendarEntry_Content, null))}
-]
-# bfdprompt-ez2R4w()
--What would you like to change?
-# bfdactivity-PaAyTQ()
-- I wasn't able to create this event. Please try again later.
-- Something happened and the event wasn't created. Please try again later.
-- The event couldn't be created, please try again later.
-# bfdactivity-FFafKB()
-- Sorry, I didn't understand. Some things you can change are the time, duration, location, participants, subject, and description of your event.
 
 # ConfirmCreateAttendees(Attendees)
 - IF: ${Attendees == null || count(Attendees) == 0}
@@ -82,3 +24,29 @@
     - The description for the event is ${Content}. 
 - ELSE:
     -
+
+# TextInput_Prompt_OqiDH_()
+- Do you want to create an event using this info?
+
+
+# SendActivity_YZ7nd7()
+- Created meeting \"${dialog.content.title}\"
+
+# SendActivity_Sac_7l()
+- ${CalendarErrorMessage()}
+
+# SendActivity_IqaYUz()
+[Activity
+	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.content.location)}${ConfirmCreateContent(dialog.content.description)}
+    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.content.location, dialog.content.description, null))}
+]
+# TextInput_Prompt__EJ_Mg()
+- What would you like to change?
+# SendActivity_atwIdB()
+- slot attribute is ${dialog.slotOperation}
+
+
+
+
+# TextInput_InvalidPrompt__EJ_Mg()
+- Sorry, I didn't understand

@@ -228,7 +228,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-OigRoD()}",
+          "prompt": "${TextInput_Prompt_OigRoD()}",
           "property": "dialog.confirm"
         },
         {
@@ -268,7 +268,7 @@
               "$designer": {
                 "id": "OqVPIR"
               },
-              "activity": "${bfdactivity-OqVPIR()}"
+              "activity": "${SendActivity_OqVPIR()}"
             }
           ],
           "actions": [
@@ -277,7 +277,7 @@
               "$designer": {
                 "id": "aN26Uv"
               },
-              "activity": "${bfdactivity-aN26Uv()}"
+              "activity": "${SendActivity_aN26Uv()}"
             }
           ]
         },
@@ -343,7 +343,7 @@
           "$designer": {
             "id": "WOzNjH"
           },
-          "activity": "${bfdactivity-WOzNjH()}",
+          "activity": "${SendActivity_WOzNjH()}",
           "disabled": true
         },
         {
@@ -373,7 +373,7 @@
                       "$designer": {
                         "id": "vJ2x2a"
                       },
-                      "activity": "${bfdactivity-vJ2x2a()}"
+                      "activity": "${SendActivity_vJ2x2a()}"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
@@ -422,7 +422,7 @@
                       "$designer": {
                         "id": "ghbjiO"
                       },
-                      "activity": "${bfdactivity-ghbjiO()}"
+                      "activity": "${SendActivity_ghbjiO()}"
                     }
                   ]
                 },
@@ -434,7 +434,7 @@
                       "$designer": {
                         "id": "0HxHK5"
                       },
-                      "activity": "${bfdactivity-0HxHK5()}"
+                      "activity": "${SendActivity_0HxHK5()}"
                     }
                   ]
                 }
@@ -445,7 +445,7 @@
                   "$designer": {
                     "id": "Tl6Vkj"
                   },
-                  "activity": "${bfdactivity-Tl6Vkj()}"
+                  "activity": "${SendActivity_Tl6Vkj()}"
                 }
               ]
             },

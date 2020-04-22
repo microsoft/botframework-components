@@ -873,7 +873,3 @@
   - ${Attendee[0].emailAddress.name}
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
-
-# CalendarErrorMessage()
-- Sorry, it looks like something happened and I can't complete that right now. Please try again later.
-- Sorry, I'm unable to complete the task right now. Please try again later.

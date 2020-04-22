@@ -106,7 +106,7 @@
               "$designer": {
                 "id": "Xpp4m9"
               },
-              "activity": "${bfdactivity-Xpp4m9()}"
+              "activity": "${SendActivity_Xpp4m9()}"
             }
           ],
           "actions": [
@@ -132,7 +132,7 @@
                   "$designer": {
                     "id": "x47OV4"
                   },
-                  "activity": "${bfdactivity-x47OV4()}"
+                  "activity": "${SendActivity_x47OV4()}"
                 }
               ]
             }
@@ -143,7 +143,7 @@
           "$designer": {
             "id": "F7gsc6"
           },
-          "activity": "${bfdactivity-F7gsc6()}",
+          "activity": "${SendActivity_F7gsc6()}",
           "disabled": true
         }
       ]

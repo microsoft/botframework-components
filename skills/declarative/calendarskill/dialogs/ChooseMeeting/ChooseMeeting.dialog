@@ -210,7 +210,7 @@
                     "noValue": false,
                     "noAction": false
                   },
-                  "prompt": "${bfdprompt-jnDMmQ()}",
+                  "prompt": "${TextInput_Prompt_jnDMmQ()}",
                   "property": "dialog.choosenMeetingName",
                   "choices": "= foreach(dialog.meetings, x, x.subject)"
                 },

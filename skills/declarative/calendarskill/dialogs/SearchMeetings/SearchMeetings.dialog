@@ -60,7 +60,7 @@
               },
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "prompt": "${bfdprompt-HSMvMH()}",
+              "prompt": "${TextInput_Prompt_HSMvMH()}",
               "allowInterruptions": false
             },
             {
@@ -158,7 +158,7 @@
               "$designer": {
                 "id": "ln_HBS"
               },
-              "activity": "${bfdactivity-ln_HBS()}"
+              "activity": "${SendActivity_ln_HBS()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -209,7 +209,7 @@
               "$designer": {
                 "id": "AVaVzg"
               },
-              "activity": "${bfdactivity-AVaVzg()}"
+              "activity": "${SendActivity_AVaVzg()}"
             }
           ],
           "actions": [
@@ -235,7 +235,7 @@
                   "$designer": {
                     "id": "ClhdAt"
                   },
-                  "activity": "${bfdactivity-ClhdAt()}"
+                  "activity": "${SendActivity_ClhdAt()}"
                 }
               ]
             }

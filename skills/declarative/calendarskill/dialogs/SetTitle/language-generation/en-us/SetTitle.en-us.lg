@@ -4,10 +4,10 @@
 
 
 
-# bfdprompt-_ACAJO()
-- What is the title?
-# bfdinvalidPrompt-_ACAJO()
+# TextInput_Prompt__ACAJO()
+- What is the subject?
+# TextInput_InvalidPrompt__ACAJO()
 - sorry, the length should be 10
 
-# bfdunrecognizedPrompt-_ACAJO()
+# TextInput_UnrecognizedPrompt__ACAJO()
 -unrecognized title

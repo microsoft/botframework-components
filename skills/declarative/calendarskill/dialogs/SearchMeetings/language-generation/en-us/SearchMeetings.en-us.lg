@@ -2,25 +2,25 @@
 
 
 
-# bfdprompt-HSMvMH()
+# TextInput_Prompt_HSMvMH()
 - What is the time or subject of the meeting?
 
 
 
-# bfdactivity-AVaVzg()
+# SendActivity_AVaVzg()
 - ${CalendarErrorMessage()}
-# bfdactivity-ClhdAt()
+# SendActivity_ClhdAt()
 - Can not find meetings at time ${dialog.startDateTime}
 
-# bfdactivity-RysIv4()
+# SendActivity_RysIv4()
 - dialog meeting ${dialog.meetings}
 
 
-# bfdactivity-OZoAsa()
+# SendActivity_OZoAsa()
 - dialog.utcStart is ${dialog.utcStart}
 
 
 
 
-# bfdactivity-ln_HBS()
+# SendActivity_ln_HBS()
 - ${CalendarErrorMessage()}

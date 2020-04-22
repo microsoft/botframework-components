@@ -45,7 +45,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": false,
-              "prompt": "${bfdprompt-f3QClo()}",
+              "prompt": "${TextInput_Prompt_f3QClo()}",
               "property": "dialog.building",
               "value": "1"
             },
@@ -64,7 +64,7 @@
               "alwaysPrompt": false,
               "allowInterruptions": false,
               "defaultLocale": "en-us",
-              "prompt": "${bfdprompt-BVqWhA()}",
+              "prompt": "${TextInput_Prompt_BVqWhA()}",
               "property": "dialog.floorNumber",
               "value": "1"
             }
@@ -239,7 +239,7 @@
               "$designer": {
                 "id": "_uBP-t"
               },
-              "activity": "${bfdactivity-_uBP-t()}"
+              "activity": "${SendActivity__uBP_t()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -261,7 +261,7 @@
                   "$designer": {
                     "id": "Ln36ri"
                   },
-                  "activity": "${bfdactivity-Ln36ri()}"
+                  "activity": "${SendActivity_Ln36ri()}"
                 },
                 {
                   "$kind": "Microsoft.DeleteProperties",
@@ -331,7 +331,7 @@
               "$designer": {
                 "id": "l6_rBj"
               },
-              "activity": "${bfdactivity-l6_rBj()}"
+              "activity": "${SendActivity_l6_rBj()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -384,7 +384,7 @@
                 "noValue": false,
                 "noAction": false
               },
-              "prompt": "${bfdprompt-f7_pEc()}",
+              "prompt": "${TextInput_Prompt_f7_pEc()}",
               "choices": "dialog.availableRoom",
               "property": "dialog.meetingRoom"
             },
