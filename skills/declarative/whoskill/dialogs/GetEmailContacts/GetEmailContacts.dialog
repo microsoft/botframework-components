@@ -241,7 +241,7 @@
                     "name": "Set a property"
                   },
                   "property": "dialog.url",
-                  "value": " https://graph.microsoft.com/v1.0/users?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department&$filter=(startswith(displayName,'${dialog.foreach.value}') or startswith(givenName,'${dialog.foreach.value}') or startswith(surname,'${dialog.foreach.value}') or startswith(mail,'${dialog.foreach.value}') or startswith(userPrincipalName,'${dialog.foreach.value}'))&$top=50  "
+                  "value": " https://graph.microsoft.com/v1.0/users?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department&$filter=(startswith(displayName,'${dialog.foreach.value}') or startswith(givenName,'${dialog.foreach.value}') or startswith(surname,'${dialog.foreach.value}') or startswith(mail,'${dialog.foreach.value}') or startswith(userPrincipalName,'${dialog.foreach.value}'))&$top=15  "
                 },
                 {
                   "$kind": "Microsoft.HttpRequest",

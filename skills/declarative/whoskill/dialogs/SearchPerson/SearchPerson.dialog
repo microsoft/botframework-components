@@ -39,7 +39,8 @@
           "connectionName": "msGraph",
           "timeout": "900000",
           "property": "user.token",
-          "alwaysPrompt": true
+          "alwaysPrompt": true,
+          "allowInterruptions": false
         },
         {
           "$kind": "Microsoft.IfCondition",

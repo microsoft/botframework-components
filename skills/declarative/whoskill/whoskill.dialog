@@ -3,7 +3,6 @@
   "$designer": {
     "$designer": {
       "name": "whoskill",
-      "description": "",
       "id": "XUynXB"
     }
   },
@@ -16,15 +15,6 @@
         "id": "376720"
       },
       "actions": [
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "171592",
-            "name": "Set a property"
-          },
-          "property": "conversation.pageSize",
-          "value": 2
-        },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
@@ -64,6 +54,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "15wbJI"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "gNFiZW"
           },
           "assignments": [
@@ -91,10 +97,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -145,6 +147,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "TKi9FJ"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "UDnrQR"
           },
           "assignments": [
@@ -172,10 +190,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -207,6 +221,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "JSPIk6"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "75gzPg"
           },
           "assignments": [
@@ -234,10 +264,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -269,6 +295,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "PMRsvq"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "iV8YdJ"
           },
           "assignments": [
@@ -296,10 +338,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -331,6 +369,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "FcD-b0"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "U5Q3CV"
           },
           "assignments": [
@@ -358,10 +412,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -411,6 +461,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "MWMC2D"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "E26_kd"
           },
           "assignments": [
@@ -438,10 +504,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -490,6 +552,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "fxJi-G"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "7G8WtQ"
           },
           "assignments": [
@@ -517,10 +595,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -552,6 +626,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "j0jj6E"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "su65_z"
           },
           "assignments": [
@@ -579,10 +669,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -612,6 +698,22 @@
       "intent": "EmailAbout",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "WLkdLx"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "OqZBNG"
@@ -633,10 +735,6 @@
             {
               "property": "conversation.pron",
               "value": "@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -666,6 +764,22 @@
       "intent": "MeetAbout",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "n2Ew_g"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "KF4L4v"
@@ -687,10 +801,6 @@
             {
               "property": "conversation.pron",
               "value": "@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
@@ -722,6 +832,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "xRwlHa"
+          },
+          "assignments": [
+            {
+              "property": "conversation.pageSize",
+              "value": "=2"
+            },
+            {
+              "property": "conversation.pageIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "OBO9E4"
           },
           "assignments": [
@@ -749,10 +875,6 @@
             {
               "property": "conversation.pron",
               "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
             }
           ]
         },
