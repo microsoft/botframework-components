@@ -787,6 +787,14 @@ namespace ITSMSkill.Dialogs
                         new Choice()
                         {
                             Value = TicketState.Canceled.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Active.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Inactive.ToLocalizedString()
                         }
                     }
                 };
