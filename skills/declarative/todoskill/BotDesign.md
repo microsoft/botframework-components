@@ -72,7 +72,11 @@ When repeat, previous dialog state are cleared
 
 all is handled wrongly when repeat like 'do nothing at all'
 
-support all in first show in mark
+support all in GetInput in mark/delete
+
+all is tricky for show after delete
+
+find better api for deleting all
 
 # Tests
 

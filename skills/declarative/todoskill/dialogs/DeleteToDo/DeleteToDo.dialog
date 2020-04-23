@@ -118,14 +118,58 @@
               "condition": "=dialog.containsAll == null",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SetProperties",
+                  "$kind": "Microsoft.ConfirmInput",
                   "$designer": {
-                    "id": "WoQuET"
+                    "id": "VY_bxo"
                   },
-                  "assignments": [
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
+                  "defaultLocale": "en-us",
+                  "style": "Auto",
+                  "prompt": "${bfdprompt_VY_bxo()}",
+                  "property": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "KTnZSa"
+                  },
+                  "condition": "=dialog.result",
+                  "elseActions": [
                     {
-                      "property": "dialog.items",
-                      "value": "=dialog.tasks"
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "p1_2H5"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.result",
+                          "value": "=setProperty({} , \"fromType\" ,\"deleteallno\")"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.ReplaceDialog",
+                      "$designer": {
+                        "id": "epKzn4"
+                      },
+                      "dialog": "ShowToDo",
+                      "options": "=dialog.result"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "GYVaMs"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.items",
+                          "value": "=dialog.tasks"
+                        }
+                      ]
                     }
                   ]
                 }

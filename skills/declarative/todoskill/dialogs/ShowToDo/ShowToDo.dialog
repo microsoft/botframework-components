@@ -141,6 +141,18 @@
                       "activity": "${bfdactivity_IS3e0H()}"
                     }
                   ]
+                },
+                {
+                  "value": "deleteallno",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "koMtTm"
+                      },
+                      "activity": "${bfdactivity_koMtTm()}"
+                    }
+                  ]
                 }
               ],
               "condition": "dialog.fromType",
@@ -185,11 +197,30 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "yD5ABI"
+                "id": "07dIYD"
               },
-              "activity": "${bfdactivity_yD5ABI()}"
+              "condition": "=dialog.fromType == 'delete'",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "QOaqmn"
+                  },
+                  "activity": "${bfdactivity_QOaqmn()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "fdB82Y",
+                    "name": "Send a response"
+                  },
+                  "activity": "${bfdactivity_fdB82Y()}"
+                }
+              ]
             }
           ]
         }
