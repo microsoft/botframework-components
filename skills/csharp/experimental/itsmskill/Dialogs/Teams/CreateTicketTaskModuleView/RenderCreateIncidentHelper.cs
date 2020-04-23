@@ -157,6 +157,10 @@
                     Data = new TaskModuleMetadata()
                     {
                         TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
+                        FlowData = new Dictionary<string, object>
+                        {
+                            { "IncidentId", ticketResponse.Id }
+                        },
                         Submit = true
                     }
                 }

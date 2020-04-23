@@ -22,14 +22,14 @@ namespace ITSMSkill.TeamsChannels.Invoke
                     $"{TeamsFlowType.CreateTicket_Form}",
                     () => new CreateTicketTeamsImplementation(serviceProvider)
                 },
-                //{
-                //    $"{TeamsFlowType.CreateTicket_Form}",
-                //    () => new UpdateTicketTeamsImplementation(serviceProvider)
-                //},
-                //{
-                //    $"{TeamsFlowType.CreateTicket_Form}",
-                //    () => new DeleteTicketTeamsImplementation(serviceProvider)
-                //}
+                {
+                    $"{TeamsFlowType.UpdateTicket_Form}",
+                    () => new UpdateTicketTeamsImplementation(serviceProvider)
+                },
+                {
+                    $"{TeamsFlowType.DeleteTicket_Form}",
+                    () => new DeleteTicketTeamsImplementation(serviceProvider)
+                }
             };
         }
     }

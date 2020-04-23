@@ -46,7 +46,6 @@ namespace ITSMSkill.Dialogs
                 CheckTitleAsync,
                 InputTitleAsync,
                 SetTitleAsync,
-                DisplayExistingLoopAsync,
                 CheckDescriptionAsync,
                 InputDescriptionAsync,
                 SetDescriptionAsync,
@@ -91,7 +90,8 @@ namespace ITSMSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
         {
-            if (dc.Context.Activity.ChannelId.Contains(Channels.Msteams))
+            // If Channel is MsTeams use Teams TaskModule
+            if (dc.Context.Activity.ChannelId == Channels.Msteams)
             {
                 return await dc.BeginDialogAsync(Actions.CreateTicketTeamsTaskModule, options, cancellationToken);
             }
@@ -101,15 +101,14 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> CreateTicketTeamsTaskModuleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send Create Ticket TaskModule Card
             var reply = sc.Context.Activity.CreateReply();
-
-            var adaptiveCard = TicketDialogHelper.ServiceNowTickHubAdaptiveCard();
-            reply = sc.Context.Activity.CreateReply();
             reply.Attachments = new List<Attachment>()
             {
-                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = adaptiveCard }
+                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = TicketDialogHelper.GetUserInputIncidentCard() }
             };
 
+            // Get ActivityId for purpose of mapping
             ResourceResponse resourceResponse = await sc.Context.SendActivityAsync(reply, cancellationToken);
 
             ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
@@ -133,20 +132,20 @@ namespace ITSMSkill.Dialogs
             return await sc.EndDialogAsync();
         }
 
-        protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
+        //protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        //{
+        //    var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
-            if (state.DisplayExisting)
-            {
-                state.PageIndex = -1;
-                return await sc.BeginDialogAsync(Actions.DisplayExisting, cancellationToken: cancellationToken);
-            }
-            else
-            {
-                return await sc.NextAsync(cancellationToken: cancellationToken);
-            }
-        }
+        //    if (state.DisplayExisting)
+        //    {
+        //        state.PageIndex = -1;
+        //        return await sc.BeginDialogAsync(Actions.DisplayExisting, cancellationToken: cancellationToken);
+        //    }
+        //    else
+        //    {
+        //        return await sc.NextAsync(cancellationToken: cancellationToken);
+        //    }
+        //}
 
         protected async Task<DialogTurnResult> CreateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {

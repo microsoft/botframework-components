@@ -27,6 +27,7 @@ using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Bots
 {
@@ -81,11 +82,6 @@ namespace ITSMSkill.Bots
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
-        protected override Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
-        {
-            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
-        }
-
         protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
         {
             var ev = turnContext.Activity.AsEventActivity();
@@ -114,16 +110,37 @@ namespace ITSMSkill.Bots
             }
         }
 
-        protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        protected virtual Task<InvokeResponse> OnSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
         {
-            var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_serviceProvider);
-            var taskModuleResponse = await itsmTeamsActivityHandler.HandleTaskModuleActivity(turnContext, cancellationToken);
-
-            return new InvokeResponse()
+            return Task.FromResult<InvokeResponse>(new InvokeResponse
             {
                 Status = (int)HttpStatusCode.OK,
-                Body = taskModuleResponse
-            };
+                Body = null
+            });
+        }
+
+        protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        {
+            switch (turnContext.Activity.Name)
+            {
+                case "signin/verifyState":
+                    await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+                    return await OnSigninVerifyStateAsync(turnContext, cancellationToken);
+
+                default:
+
+                    var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_serviceProvider);
+                    var taskModuleContinueResponse = await itsmTeamsActivityHandler.HandleTaskModuleActivity(turnContext, cancellationToken);
+
+                    return new InvokeResponse()
+                    {
+                        Status = (int)HttpStatusCode.OK,
+                        Body = new TaskModuleResponse()
+                        {
+                            Task = taskModuleContinueResponse
+                        }
+                    };
+            }
         }
 
         protected override Task OnEndOfConversationActivityAsync(ITurnContext<IEndOfConversationActivity> turnContext, CancellationToken cancellationToken)

@@ -23,33 +23,24 @@ namespace ITSMSkill.Dialogs.Teams
     {
         public static AdaptiveCard CreateIncidentAdaptiveCard()
         {
-            try
+            // Json Card for creating incident
+            // TODO: Replace with Cards.Lg and responses
+            AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
+            adaptiveCard.Id = "GetUserInput";
+            adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
             {
-                // Json Card for creating incident
-                // TODO: Replace with Cards.Lg and responses
-                AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
-                adaptiveCard.Id = "GetUserInput";
-                adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
+                Title = "SubmitIncident",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
                 {
-                    Title = "SubmitIncident",
-                    Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                    Data = new TaskModuleMetadata()
                     {
-                        Data = new TaskModuleMetadata()
-                        {
-                            TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
-                            Submit = true
-                        }
+                        TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
+                        Submit = true
                     }
-                });
+                }
+            });
 
-                return adaptiveCard;
-            }
-            catch (AdaptiveSerializationException e)
-            {
-                // handle JSON parsing error
-                // or, re-throw
-                throw;
-            }
+            return adaptiveCard;
         }
 
         public static AdaptiveCard UpdateIncidentCard(Ticket details)
@@ -120,7 +111,7 @@ namespace ITSMSkill.Dialogs.Teams
         }
 
         // <returns> Adaptive Card.</returns>
-        public static AdaptiveCard ServiceNowTickHubAdaptiveCard()
+        public static AdaptiveCard GetUserInputIncidentCard()
         {
             var card = new AdaptiveCard("1.0");
 
@@ -162,7 +153,7 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     Data = new TaskModuleMetadata()
                     {
-                        TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString()
+                        TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
                     }
                 }
             });

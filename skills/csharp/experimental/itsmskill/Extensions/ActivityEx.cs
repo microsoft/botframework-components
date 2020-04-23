@@ -31,6 +31,7 @@ namespace ITSMSkill.Extensions
                 && StringComparer.OrdinalIgnoreCase.Equals(activity.Name, FetchType);
         }
 
+        // TODO: Switch over to SDK Enum for below when it supports it
         public static bool IsTaskModuleSubmitActivity(this Activity activity)
         {
             return StringComparer.OrdinalIgnoreCase.Equals(activity.Type, ActivityTypes.Invoke)

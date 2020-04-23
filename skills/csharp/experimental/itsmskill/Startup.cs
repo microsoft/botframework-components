@@ -126,6 +126,7 @@ namespace ITSMSkill
             services.AddSingleton<IServiceManager>(new ServiceManager());
 
             // Configure TeamsConnectorClient
+            ///// TODO: Check the ConnectorClient from TurnState
             services.AddSingleton<IConnectorClient>(new ConnectorClient(new Uri(Configuration["TeamsTrustedUrl"]), new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword)));
 
             // Configure TeamsUpdateActivity
