@@ -4,6 +4,7 @@
     using AdaptiveCards;
     using ITSMSkill.Dialogs.Teams;
     using ITSMSkill.Extensions.Teams.TaskModule;
+    using ITSMSkill.TeamsChannels;
     using Microsoft.Bot.Schema;
 
     public class RenderCreateIncidentHelper
@@ -18,7 +19,7 @@
                     TaskInfo = new TaskInfo()
                     {
                         Title = "ImpactTracker",
-                        Height = "medium",
+                        Height = TaskModuleConstants.Medium,
                         Width = 500,
                         Card = new Attachment
                         {
@@ -38,11 +39,11 @@
             {
                 Task = new TaskProperty()
                 {
-                    Type = "continue",
+                    Type = TaskModuleConstants.Continue,
                     TaskInfo = new TaskInfo()
                     {
                         Title = "Incident Create Failed",
-                        Height = "medium",
+                        Height = TaskModuleConstants.Medium,
                         Width = 500,
                         Card = new Attachment
                         {
@@ -62,11 +63,11 @@
             {
                 Task = new TaskProperty()
                 {
-                    Type = "continue",
+                    Type = TaskModuleConstants.Continue,
                     TaskInfo = new TaskInfo()
                     {
                         Title = "Incident Added",
-                        Height = "medium",
+                        Height = TaskModuleConstants.Medium,
                         Width = 500,
                         Card = new Attachment
                         {
@@ -80,7 +81,6 @@
             return response;
         }
 
-        /// <returns>Adaptive Card.</returns>
         public static AdaptiveCard ImpactTrackerResponseCard(string trackerResponse)
         {
             var card = new AdaptiveCard("1.0");

@@ -53,8 +53,8 @@ namespace ITSMSkill.Dialogs
             // TaskModule Based WaterFallStep
             var createTicketTaskModule = new WaterfallStep[]
             {
-                GetAuthTokenAsync,
-                AfterGetAuthTokenAsync,
+                //GetAuthTokenAsync,
+                //AfterGetAuthTokenAsync,
                 CreateTicketTeamsTaskModuleAsync
             };
 
@@ -83,7 +83,7 @@ namespace ITSMSkill.Dialogs
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
         {
-            if (dc.Context.Activity.ChannelId.Contains(Channels.Msteams))
+            if (dc.Context.Activity.ChannelId == Channels.Msteams)
             {
                 return await dc.BeginDialogAsync(Actions.CreateTicketTeamsTaskModule, options, cancellationToken);
             }

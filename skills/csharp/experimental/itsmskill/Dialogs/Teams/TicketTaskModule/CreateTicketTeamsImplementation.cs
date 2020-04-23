@@ -41,7 +41,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             _serviceManager = serviceProvider.GetService<IServiceManager>();
         }
 
-        // Handle Fetch
+        // Handle For Fetch to get user input when user clicks "Create Ticket" Button in adaptive card
         public async Task<TaskModuleResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             return new TaskModuleResponse()
@@ -51,7 +51,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Value = new TaskModuleTaskInfo()
                     {
                         Title = "ImpactTracker",
-                        Height = "medium",
+                        Height = TaskModuleConstants.Medium,
                         Width = 500,
                         Card = new Attachment
                         {
@@ -63,7 +63,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             };
         }
 
-        // Handle Submit True
+        // Handler For Creating Incident When user clicks "Submit Incident" Button in adaptive card
         public async Task<TaskModuleResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
@@ -97,11 +97,11 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     {
                         Task = new TaskModuleContinueResponse()
                         {
-                            Type = "continue",
+                            Type = TaskModuleConstants.Continue,
                             Value = new TaskModuleTaskInfo()
                             {
                                 Title = "Incident Added",
-                                Height = "medium",
+                                Height = TaskModuleConstants.Medium,
                                 Width = 500,
                                 Card = new Attachment
                                 {
@@ -119,11 +119,11 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             {
                 Task = new TaskModuleContinueResponse()
                 {
-                    Type = "continue",
+                    Type = TaskModuleConstants.Continue,
                     Value = new TaskModuleTaskInfo()
                     {
                         Title = "Incident Create Failed",
-                        Height = "medium",
+                        Height = TaskModuleConstants.Medium,
                         Width = 500,
                         Card = new Attachment
                         {

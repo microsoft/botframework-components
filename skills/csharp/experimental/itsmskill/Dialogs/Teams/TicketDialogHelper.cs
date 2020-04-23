@@ -24,7 +24,7 @@ namespace ITSMSkill.Dialogs.Teams
             {
                 // Json Card for creating incident
                 // TODO: Replace with Cards.Lg and responses
-                AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
+                var adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
 
                 adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
                 {
@@ -49,7 +49,6 @@ namespace ITSMSkill.Dialogs.Teams
             }
         }
 
-        // <returns> Adaptive Card.</returns>
         public static AdaptiveCard ServiceNowTickHubAdaptiveCard()
         {
             var card = new AdaptiveCard("1.0");

@@ -45,6 +45,7 @@ namespace ITSMSkill.Bots
         private readonly BotServices _botServices;
         private readonly IServiceManager _serviceManager;
         private readonly BotTelemetryClient _botTelemetryClient;
+        private readonly TeamsInvokeActivityHandlerFactory _teamsInvokeActivityHandlerFactory;
         private readonly IServiceProvider _serviceProvider;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
@@ -58,6 +59,7 @@ namespace ITSMSkill.Bots
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
             _appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _teamsInvokeActivityHandlerFactory = serviceProvider.GetService<ITSMTeamsInvokeActivityHandlerFactory>();
             _serviceProvider = serviceProvider;
         }
 
@@ -116,8 +118,7 @@ namespace ITSMSkill.Bots
 
         protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
         {
-            var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_serviceProvider);
-            TaskModuleResponse taskModuleResponse = await itsmTeamsActivityHandler.HandleTaskModuleActivity(turnContext, cancellationToken);
+            var taskModuleResponse = await _teamsInvokeActivityHandlerFactory.HandleTaskModuleActivity(turnContext, cancellationToken);
 
             return new InvokeResponse()
             {

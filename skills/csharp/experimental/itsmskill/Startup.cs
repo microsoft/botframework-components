@@ -12,6 +12,7 @@ using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
 using ITSMSkill.Services;
+using ITSMSkill.TeamsChannels.Invoke;
 using ITSMSkill.Utilities;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
@@ -127,6 +128,7 @@ namespace ITSMSkill
             services.AddTransient<CloseTicketDialog>();
             services.AddTransient<ShowKnowledgeDialog>();
             services.AddTransient<MainDialog>();
+            services.AddTransient<ITSMTeamsInvokeActivityHandlerFactory>();
 
             // Configure adapters
             services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();

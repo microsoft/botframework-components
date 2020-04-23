@@ -12,12 +12,11 @@ namespace ITSMSkill.Extensions
     /// <summary>
     /// ActivityEx for purpose of TeamsTaskModule
     /// </summary>
+    /// TODO: remove this class if https://github.com/microsoft/botframework-sdk/issues/5816 is implemented
     public static class ActivityEx
     {
-        public const string FetchType = "task/fetch";
-        public const string SubmitType = "task/submit";
-        public const string ExtensionActionType = "composeExtension/submitAction";
-        public const string ExtensionFetchType = "composeExtension/fetchTask";
+        private const string FetchType = "task/fetch";
+        private const string SubmitType = "task/submit";
 
         public static bool IsTeamsInvokeActivity(this Activity activity)
         {
@@ -47,12 +46,6 @@ namespace ITSMSkill.Extensions
         public static bool IsTeamsActivity(this Activity activity)
         {
             return StringComparer.OrdinalIgnoreCase.Equals(activity.ChannelId, Microsoft.Bot.Connector.Channels.Msteams);
-        }
-
-        public static bool IsExtensionActionActivity(this Activity activity)
-        {
-            return StringComparer.OrdinalIgnoreCase.Equals(activity.Type, ActivityTypes.Invoke)
-                && StringComparer.OrdinalIgnoreCase.Equals(activity.Name, ExtensionActionType);
         }
 
         public static T GetTaskModuleMetadata<T>(this IInvokeActivity activity)

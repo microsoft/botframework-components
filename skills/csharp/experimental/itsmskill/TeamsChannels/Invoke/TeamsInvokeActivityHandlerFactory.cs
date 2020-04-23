@@ -24,12 +24,12 @@ namespace ITSMSkill.TeamsChannels.Invoke
         /// <returns>TaskResponse</returns>
         public async Task<TaskModuleResponse> HandleTaskModuleActivity(ITurnContext context, CancellationToken cancellationToken)
         {
-            if (context.Activity.IsTaskModuleFetchActivity() || context.Activity.IsExtensionActionActivity())
+            if (context.Activity.IsTaskModuleFetchActivity())
             {
                 return await this.GetTaskModuleFetch(context, cancellationToken);
             }
 
-            if (context.Activity.IsTaskModuleSubmitActivity() || context.Activity.IsExtensionActionActivity())
+            if (context.Activity.IsTaskModuleSubmitActivity())
             {
                 return await this.GetTaskModuleSubmit(context, cancellationToken);
             }

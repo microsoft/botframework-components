@@ -22,14 +22,8 @@ namespace ITSMSkill.TeamsChannels.Invoke
                     $"{TeamsFlowType.CreateTicket_Form}",
                     () => new CreateTicketTeamsImplementation(serviceProvider)
                 },
-                {
-                    $"{TeamsFlowType.CreateTicket_Form}",
-                    () => new UpdateTicketTeamsImplementation(serviceProvider)
-                },
-                {
-                    $"{TeamsFlowType.CreateTicket_Form}",
-                    () => new DeleteTicketTeamsImplementation(serviceProvider)
-                }
+
+                // TODO Already Added: Update/Delete Teams TaskModule in another PR
             };
         }
     }
