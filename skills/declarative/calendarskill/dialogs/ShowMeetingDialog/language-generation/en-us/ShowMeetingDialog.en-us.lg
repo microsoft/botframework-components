@@ -7,8 +7,8 @@
 
 # bfdactivity-n_iPbD()
 [Activity
-    Text = here are meetings
-    Attachments = ${json(MeetingListCard('Meetings', count(dialog.MeetingsList), 0, 'today', '1-3', null, 'Microsoft', 'UTC', dialog.DisplayMeetingData, true))}
+    Text = You have ${count(dialog.MeetingsList)} events planned for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}. The first one is ${dialog.MeetingsList[0].Title} with ${GetAttendeeString(dialog.MeetingsList[0].Attendees)} at ${formatDateTime(dialog.MeetingsList[0].StartTime, 'HH:mm:ss')}. The last one for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')} is ${turn.lastMeeting.Title} at ${formatDateTime(turn.lastMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(turn.lastMeeting.Attendees)}.
+    Attachments = ${json(MeetingListCard('Meetings', count(dialog.MeetingsList), int(dialog.overlapCount), formatDateTime(dialog.startDateTime, 'yyyy-MM-dd'), GetIndicator(dialog.ShowMeeting_CurrentPage, int(settings.DisplaySize), count(dialog.MeetingsList)), null, 'Powered by **Microsoft**', 'UTC', dialog.DisplayMeetingData, true))}
 ]
 
 # bfdprompt-4u0r-m()
@@ -20,7 +20,7 @@
 
 # bfdactivity-EckUyy()
 [Activity
-    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', [], conversation.FocusedMeeting.Subject, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
+    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', [], conversation.FocusedMeeting.Title, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
 ]
 
 # bfdactivity-GHfVi1()
@@ -28,6 +28,6 @@
 # bfdactivity-vk2DNJ()
 - This is the first page.
 # bfdprompt-HDFe4y()
-- Do you want to review your calendar overview again for ${formatDateTime(dialog.ShowMeeting_StartDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
+- Do you want to review your calendar overview again for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
 # bfdactivity-j8oUwP()
 - ${CalendarErrorMessage()}

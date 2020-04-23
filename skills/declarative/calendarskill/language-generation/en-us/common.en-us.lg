@@ -872,3 +872,6 @@
 
 # CalendarErrorMessage()
 - Something went wrong
+
+# GetIndicator(currentPage, pageSize, meetingCount)
+- ${pageSize * currentPage + 1}-${min(meetingCount, pageSize * (currentPage + 1))}

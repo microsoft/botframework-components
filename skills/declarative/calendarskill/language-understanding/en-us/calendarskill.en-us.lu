@@ -234,44 +234,8 @@
 - set up the appointment
 - should you schedule to {FromTime=after lunch}
 - we make an appointment for me
-- (create|book|schedule) (a|an) (meeting|appointment|event) [with {personName}] (at|for|on) [{FromDate}] [{FromTime}]
-- (create|book|schedule) (a|an) (meeting|appointment|event) [with {personName}] from [{FromDate}] {FromTime} to [{ToDate}] {ToTime}
-- (create|book|schedule) (a|an) (meeting|appointment|event) [with {personName}] between {FromTime} and {ToTime}
 - Go back to create meeting
 - create meeting
-
-
-@ prebuilt personName
-@ ml DestinationCalendar
-
-@ ml Duration
-
-@ ml FromDate
-
-@ ml FromTime
-
-@ ml Location
-
-@ ml MeetingRoom
-
-@ ml Message
-
-@ ml MoveEarlierTimeSpan
-
-@ ml MoveLaterTimeSpan
-
-@ ml OrderReference
-
-@ ml PositionReference
-
-@ ml SlotAttribute
-
-@ ml Subject
-
-@ ml ToDate
-
-@ ml ToTime
-
 
 
 # FindCalendarEntry
@@ -389,38 +353,6 @@
 - which is my {OrderReference=next} event
 - which will be my {OrderReference=next} {Subject=flight}
 
-@ prebuilt personName
-@ ml DestinationCalendar
-
-@ ml Duration
-
-@ ml FromDate
-
-@ ml FromTime
-
-@ ml Location
-
-@ ml MeetingRoom
-
-@ ml Message
-
-@ ml MoveEarlierTimeSpan
-
-@ ml MoveLaterTimeSpan
-
-@ ml OrderReference
-
-@ ml PositionReference
-
-@ ml SlotAttribute
-
-@ ml Subject
-
-@ ml ToDate
-
-@ ml ToTime
-
-
 # AcceptMeeting
 - accept all meetings for {Subject=christmas party} {FromDate=next week}.
 - accept an appointment
@@ -529,7 +461,6 @@
 - delete the {SlotAttribute=meeting room} of my {FromTime=6pm} meeting
 - please cancel the {SlotAttribute=room} of my {FromTime=7pm} meeting
 - ^(clear|delete|remove) (my|the) calendar from {FromTime} to {ToTime}^
-- ^(remove|cancel|delete) (the|my) {Subject} [at {FromTime}] [{FromDate}]^
 
 # UpdateMeeting
 - bring forward my {FromTime=4 o'clock} appointment {MoveEarlierTimeSpan=2 hours}
