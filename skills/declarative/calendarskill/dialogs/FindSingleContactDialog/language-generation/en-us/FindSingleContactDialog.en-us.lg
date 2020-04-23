@@ -5,3 +5,9 @@
 
 # bfdprompt-d1fnSD()
 - No such attendee named ${dialog.CurrentAttendee}! Please retry input an attendee.
+
+
+# bfdprompt-GG_dh5()
+- Which ${dialog.CurrentAttendee} do you want to invite?
+# bfdactivity-DvmU48()
+- Alright, I've added ${turn.ResolvedAttendee}.
