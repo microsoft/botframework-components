@@ -62,7 +62,33 @@
     - @ OperationName Operation
     - @ SlotAttributeName Slot
     - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
+    
+@ list OperationName = 
+	- add :
+		- create
+	- delete :
+	- change :
+		- update
+		- set
 
+@ list SlotAttributeName = 
+	- room :
+		- meeting room
+		- conference room
+		- confroom
+	- time :
+		- date
+	- building :
+	- floor :
+	- person :
+		- people
+		- attendee
+		- attendees
+	- title :
+		- subject
+	- content :
+		- description
+	- location :
 
 @ ml SlotOperations
 
