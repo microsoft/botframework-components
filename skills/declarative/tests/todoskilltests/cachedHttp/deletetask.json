@@ -1,0 +1,9 @@
+{
+    "Method": "DELETE",
+    "Url": "https://graph.microsoft.com/beta/me/outlook/tasks/*",
+    "Responses": [
+        {
+            "Content": ""
+        }
+    ]
+}

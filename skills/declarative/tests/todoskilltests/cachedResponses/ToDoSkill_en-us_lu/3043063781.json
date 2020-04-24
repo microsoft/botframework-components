@@ -1,0 +1,1 @@
+{"query":"delete a task","prediction":{"topIntent":"DeleteToDo","intents":{"DeleteToDo":{"score":0.955918431}},"entities":{}}}

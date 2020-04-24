@@ -1,0 +1,1 @@
+{"query":"Add buy milk in todo list","prediction":{"topIntent":"AddToDo","intents":{"AddToDo":{"score":0.95996815}},"entities":{"TaskContent":["buy milk"],"roleListType":[["todo"]]}}}

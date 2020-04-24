@@ -1,0 +1,1 @@
+{"query":"mark milk in todo list","prediction":{"topIntent":"MarkToDo","intents":{"MarkToDo":{"score":0.7672777}},"entities":{"TaskContent":["milk"],"roleListType":[["todo"]]}}}
