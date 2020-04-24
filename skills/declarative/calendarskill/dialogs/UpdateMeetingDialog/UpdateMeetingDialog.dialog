@@ -39,25 +39,45 @@
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "Dw7fAH"
-          },
-          "dialog": "SearchMeetings",
-          "resultProperty": "dialog.meeting"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "9IYuF8"
+            "id": "NxsMQN"
           },
-          "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+          "condition": "conversation.FocusedMeeting == null",
           "actions": [
             {
-              "$kind": "Microsoft.EndDialog",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "FhmwL6"
-              }
+                "id": "kudHoc",
+                "name": "search a meeting"
+              },
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.meeting"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "zOhE-E"
+              },
+              "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "9ahTM6"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Sg_-LD"
+              },
+              "property": "dialog.meeting",
+              "value": "=conversation.FocusedMeeting"
             }
           ]
         },
@@ -71,7 +91,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-34JbXw()}",
+          "prompt": "${TextInput_Prompt_34JbXw()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -87,7 +107,12 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          }
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -143,7 +168,7 @@
               "$designer": {
                 "id": "DzKf6N"
               },
-              "activity": "${bfdactivity-DzKf6N()}"
+              "activity": "${SendActivity_DzKf6N()}"
             }
           ],
           "actions": [
@@ -152,7 +177,7 @@
               "$designer": {
                 "id": "-nHbKA"
               },
-              "activity": "${bfdactivity--nHbKA()}"
+              "activity": "${SendActivity__nHbKA()}"
             }
           ]
         },

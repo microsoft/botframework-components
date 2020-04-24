@@ -60,7 +60,7 @@
               },
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "prompt": "${bfdprompt-HSMvMH()}",
+              "prompt": "${TextInput_Prompt_HSMvMH()}",
               "allowInterruptions": false
             },
             {
@@ -75,7 +75,7 @@
                 },
                 {
                   "property": "dialog.slots.Subject",
-                  "value": "=coalesce(@Subject, $Subject, turn.dialogEvent.Value.text)"
+                  "value": "=coalesce(@Subject, $Subject)"
                 },
                 {
                   "property": "dialog.slots.FromDate",
@@ -84,6 +84,10 @@
                 {
                   "property": "dialog.slots.FromTime",
                   "value": "=coalesce(@FromTime, $FromTime)"
+                },
+                {
+                  "property": "dialog.fullText",
+                  "value": "= turn.dialogEvent.Value.text"
                 }
               ]
             }
@@ -107,200 +111,105 @@
                 "startTime": "=dialog.slots.FromTime"
               },
               "resultProperty": "dialog.startDateTime"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "h0RtOF"
-              },
-              "activity": "${bfdactivity-h0RtOF()}",
-              "disabled": true
-            },
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "S7QlQI"
-              },
-              "eventName": "SearchMeetings"
             }
-          ],
-          "elseActions": [
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MLvs3P"
+          },
+          "condition": "dialog.startDateTime == null || dialog.slots.Subject != null",
+          "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Io2-1c"
+                "id": "Na-j8-"
               },
               "dialog": "SetTitle",
               "options": {
-                "title": "=dialog.slots.Subject"
+                "title": "=coalesce(dialog.slots.Subject, dialog.fullText)"
               },
               "resultProperty": "dialog.title"
-            },
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ey6QXL"
+          },
+          "dialog": "SearchMeetingsByConditions",
+          "options": {
+            "startDateTime": "=dialog.startDateTime",
+            "query": "=dialog.title"
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1vdB7a"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "ZMYyeo"
+                "id": "ln_HBS"
               },
-              "activity": "${bfdactivity-ZMYyeo()}"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "UxLizE"
-          },
-          "elseActions": [
+              "activity": "${SendActivity_ln_HBS()}"
+            },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "wfs6BY"
+                "id": "8Cfs3O"
               }
             }
           ],
-          "condition": "count(dialog.meetings) > 0",
           "actions": [
             {
-              "$kind": "Microsoft.IfCondition",
+              "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "PtFAMN"
+                "id": "58eW2h"
               },
-              "condition": "count(dialog.meetings) > 1",
-              "actions": [
-                {
-                  "$kind": "Microsoft.ChoiceInput",
-                  "$designer": {
-                    "id": "PCaq-E"
-                  },
-                  "maxTurnCount": 3,
-                  "alwaysPrompt": false,
-                  "allowInterruptions": false,
-                  "outputFormat": "value",
-                  "appendChoices": "true",
-                  "defaultLocale": "en-us",
-                  "style": "Auto",
-                  "choiceOptions": {
-                    "inlineSeparator": ", ",
-                    "inlineOr": " or ",
-                    "inlineOrMore": ", or ",
-                    "includeNumbers": true
-                  },
-                  "recognizerOptions": {
-                    "noValue": false,
-                    "noAction": false
-                  },
-                  "prompt": "${bfdprompt-PCaq-E()}",
-                  "choices": "= dialog.meetings",
-                  "property": "dialog.choosenMeeting"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "YzDWAA"
-                  },
-                  "assignments": [
-                    {
-                      "property": "dialog.choosenMeeting",
-                      "value": "= dialog.meetings[0]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "uTMrPt"
-          },
-          "value": "= dialog.choosenMeeting"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnCustomEvent",
-      "$designer": {
-        "id": "vjwcbY"
-      },
-      "event": "SearchMeetings",
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "uLgr1F"
-          },
-          "assignments": [
-            {
-              "property": "dialog.utcStart",
-              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "OZoAsa"
-          },
-          "activity": "${bfdactivity-OZoAsa()}",
-          "disabled": true
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "JD1NuZ"
-          },
-          "assignments": [
-            {
               "property": "dialog.meetings",
-              "value": "= []"
+              "value": "= dialog.requestResult.meetings"
             }
           ],
           "disabled": false
         },
         {
-          "$kind": "Microsoft.OAuthInput",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "mOU0G8"
+            "id": "4tnFi3"
           },
-          "property": "dialog.token",
-          "text": "please sign in",
-          "title": "login",
-          "connectionName": "=settings.ConnectionName",
-          "timeout": 900000,
-          "allowInterruptions": false,
-          "alwaysPrompt": false,
-          "disabled": false
+          "dialog": "GetMeetingRequest",
+          "options": {
+            "StartDateTime": "=dialog.utcStart",
+            "EndDateTime": "=dialog.utcStart"
+          },
+          "resultProperty": "dialog.getMeetingResult"
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "FouBoV"
-          },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=${dialog.utcStart}&endDateTime=${dialog.utcStart}",
-          "headers": {
-            "authorization": "${dialog.token.token}"
-          },
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json"
+            "id": "eu-go7"
+          }
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "wQOAE8"
           },
-          "condition": "dialog.api_result.statusCode == 200",
+          "condition": "dialog.getMeetingResult.requestStatus",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "AVaVzg"
               },
-              "activity": "${bfdactivity-AVaVzg()}"
+              "activity": "${SendActivity_AVaVzg()}"
             }
           ],
           "actions": [
@@ -309,7 +218,7 @@
               "$designer": {
                 "id": "OUEm0z"
               },
-              "condition": "count(dialog.api_result.content.value) > 0",
+              "condition": "count(dialog.getMeetingResult.meetingsList) > 0",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -317,7 +226,7 @@
                     "id": "SoXklI"
                   },
                   "property": "dialog.meetings",
-                  "value": "= foreach(dialog.api_result.content.value, x, x)"
+                  "value": "= foreach(dialog.getMeetingResult.meetingsList, x, x)"
                 }
               ],
               "elseActions": [
@@ -326,19 +235,18 @@
                   "$designer": {
                     "id": "ClhdAt"
                   },
-                  "activity": "${bfdactivity-ClhdAt()}"
+                  "activity": "${SendActivity_ClhdAt()}"
                 }
               ]
             }
           ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "RysIv4"
+            "id": "ktuGCJ"
           },
-          "activity": "${bfdactivity-RysIv4()}",
-          "disabled": true
+          "value": "= dialog.choosenMeeting"
         }
       ]
     }

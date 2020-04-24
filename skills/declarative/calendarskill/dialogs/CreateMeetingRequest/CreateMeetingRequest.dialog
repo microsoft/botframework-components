@@ -28,6 +28,40 @@
           }
         },
         {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ZbmhCk"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "CMYF2-"
+              },
+              "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+              "value": "=dialog.foreach.value"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "kvohG3"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.CreateHttpRequestEmailList",
+              "value": "=dialog.CreateHttpRequestEmailItem"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "LndVPy"
+              },
+              "name": "email loop"
+            }
+          ],
+          "itemsProperty": "dialog.attendees",
+          "disabled": false
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "uPjuXk",
@@ -65,15 +99,10 @@
               "dateTime": "${dialog.utcEnd}",
               "timeZone": "UTC"
             },
-            "attendees": [
-              {
-                "emailAddress": {
-                  "address": "${dialog.meetingRoom}",
-                  "name": "${dialog.meetingRoom}"
-                },
-                "type": "resource"
-              }
-            ]
+            "location": {
+              "displayName": "${dialog.location}"
+            },
+            "attendees": "=dialog.CreateHttpRequestEmailList"
           },
           "url": "https://graph.microsoft.com/v1.0/me/events",
           "headers": {

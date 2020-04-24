@@ -15,26 +15,45 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "qh5Xqw",
-            "name": "search a meeting"
-          },
-          "dialog": "SearchMeetings",
-          "resultProperty": "dialog.meeting"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "a0grs9"
+            "id": "s2Ler9"
           },
-          "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+          "condition": "conversation.FocusedMeeting == null",
           "actions": [
             {
-              "$kind": "Microsoft.EndDialog",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Z4JNXo"
-              }
+                "id": "Zmg2w7",
+                "name": "search a meeting"
+              },
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.meeting"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "J70qO_"
+              },
+              "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "NpF_js"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "nubLxx"
+              },
+              "property": "dialog.meeting",
+              "value": "=conversation.FocusedMeeting"
             }
           ]
         },
@@ -48,7 +67,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-Fm38sQ()}",
+          "prompt": "${TextInput_Prompt_Fm38sQ()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -65,6 +84,27 @@
           ],
           "property": "dialog.confirm",
           "outputFormat": "= this.value"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "B1h_e5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "-MGRh-"
+          },
+          "condition": "dialog.confirm == \"No\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "6Pao4R"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -89,7 +129,7 @@
               "$designer": {
                 "id": "zvacDp"
               },
-              "activity": "${bfdactivity-zvacDp()}"
+              "activity": "${SendActivity_zvacDp()}"
             }
           ],
           "actions": [
@@ -98,7 +138,7 @@
               "$designer": {
                 "id": "Nqbvyc"
               },
-              "activity": "${bfdactivity-Nqbvyc()}"
+              "activity": "${SendActivity_Nqbvyc()}"
             }
           ]
         },

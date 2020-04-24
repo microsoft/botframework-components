@@ -69,7 +69,7 @@
                   "assignments": [
                     {
                       "property": "conversation.page",
-                      "value": "=(dialog.count-1)/int(settings.displaySize)"
+                      "value": "=(int(dialog.count)-1)/int(settings.displaySize)"
                     }
                   ]
                 },

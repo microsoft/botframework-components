@@ -1,15 +1,6 @@
 [import](common.lg)
 [import](ShowToDo.lg)
 
-
-
-# bfdprompt_098282()
-- ${ListTypePromptForDelete()}
-
-# bfdactivity_689712()
-- ${NoTasksInList()}
-
-
 # ListTypePromptForDeleteText
 - Do you want to delete something from your To Do, Shopping, or Grocery list?
 
@@ -30,6 +21,21 @@
     InputHint = expectingInput
 ]
 
+# AskDeletionAllConfirmationText(ListType)
+- Are you sure you want to delete everything from your ${ListType} list?
+
+# AskDeletionAllConfirmation(ListType)
+[Activity
+    Text = ${AskDeletionAllConfirmationText(ListType)}
+    Speak = ${AskDeletionAllConfirmationText(ListType)}
+    InputHint = expectingInput
+]
+
+# bfdprompt_098282()
+- ${ListTypePromptForDelete()}
+
+# bfdactivity_689712()
+- ${NoTasksInList()}
 
 # bfdactivity_jHahka()
 - ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
@@ -42,5 +48,9 @@
 
 # bfdactivity_As8-Wf()
 - OK, I've updated the task content to ${@taskContent}
+
 # bfdactivity_YSmvaQ()
 - OK, I've updated the list type to ${dialog.listType}
+
+# bfdprompt_VY_bxo()
+- ${AskDeletionAllConfirmation(conversation.listType)}

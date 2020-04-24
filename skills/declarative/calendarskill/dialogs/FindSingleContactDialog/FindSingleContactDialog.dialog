@@ -15,35 +15,33 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.OAuthInput",
+          "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "k5xQKX"
+            "id": "BkEx7U"
           },
-          "connectionName": "=settings.ConnectionName",
-          "text": "Please log in to your calendar account",
-          "title": "Sign in",
-          "timeout": 900000,
-          "property": "dialog.token",
-          "invalidPrompt": "${bfdinvalidPrompt-k5xQKX()}",
-          "alwaysPrompt": true
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${TextInput_Prompt_BkEx7U()}",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_BkEx7U()}",
+          "property": "dialog.attendee",
+          "value": "=@personName"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "RoIRsm"
+          },
+          "dialog": "GetContactRequest",
+          "resultProperty": "dialog.attendeeResult",
+          "options": {
+            "attendee": "=dialog.attendee"
+          }
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "n0DiKh"
-          }
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "VhT4PJ"
-          },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName, '${dialog.CurrentAttendee}') or startswith(givenName,'${dialog.CurrentAttendee}') or startswith(surname,'${dialog.CurrentAttendee}') or startswith(mail,'${dialog.CurrentAttendee}') or startswith(userPrincipalName,'${dialog.CurrentAttendee}')",
-          "resultProperty": "dialog.AttendeeResults",
-          "headers": {
-            "Authorization": "Bearer ${dialog.token.Token}"
+            "id": "e38q0j"
           }
         },
         {
@@ -51,7 +49,7 @@
           "$designer": {
             "id": "SPWVAY"
           },
-          "condition": "dialog.AttendeeResults.content.value !=null && count(dialog.AttendeeResults.content.value) > 0",
+          "condition": "dialog.attendeeResult.contactsList !=null && count(dialog.attendeeResult.contactsList) > 0",
           "elseActions": [
             {
               "$kind": "Microsoft.TextInput",
@@ -61,7 +59,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": false,
-              "prompt": "${bfdprompt-d1fnSD()}",
+              "prompt": "${TextInput_Prompt_d1fnSD()}",
               "property": "dialog.NewAttendee"
             },
             {
@@ -86,7 +84,7 @@
             "id": "FRMDtx"
           },
           "property": "turn.ResolvedAttendee",
-          "value": "=dialog.AttendeeResults.content.value[0].mail"
+          "value": "=dialog.attendeeResult.contactsList[0].mail"
         },
         {
           "$kind": "Microsoft.EndDialog",

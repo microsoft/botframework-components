@@ -15,6 +15,49 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "eut_7K"
+          },
+          "condition": "conversation.FocusedMeeting == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "W-IBti",
+                "name": "search a meeting"
+              },
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.meeting"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "6eRYA-"
+              },
+              "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "sPezW6"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "gShsJP"
+              },
+              "property": "dialog.meeting",
+              "value": "=conversation.FocusedMeeting"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "U8m0n_",
@@ -48,7 +91,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-w8sm4A()}",
+          "prompt": "${TextInput_Prompt_w8sm4A()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -89,7 +132,7 @@
               "$designer": {
                 "id": "niKUww"
               },
-              "activity": "${bfdactivity-niKUww()}"
+              "activity": "${SendActivity_niKUww()}"
             }
           ],
           "actions": [
@@ -98,7 +141,7 @@
               "$designer": {
                 "id": "umV9Wd"
               },
-              "activity": "${bfdactivity-umV9Wd()}"
+              "activity": "${SendActivity_umV9Wd()}"
             }
           ]
         },
