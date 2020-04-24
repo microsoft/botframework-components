@@ -57,16 +57,6 @@
 > # List entities
 
 @ list OperationName = 
-	- add  :
-		- create
-	- delete  :
-	- change  :
-		- update
-		- set
-
-
-@ list SlotAttributeName = 
-@ list OperationName = 
 	- add :
 		- create
 	- delete :

@@ -238,7 +238,6 @@
 - create meeting
 
 
-
 # FindCalendarEntry
 - at {FromTime=10 am} do i have a {Duration=30 minutes} meeting
 - calendar for {FromDate=today}
@@ -354,38 +353,6 @@
 - which is my {OrderReference=next} event
 - which will be my {OrderReference=next} {Subject=flight}
 
-@ prebuilt personName
-@ ml DestinationCalendar
-
-@ ml Duration
-
-@ ml FromDate
-
-@ ml FromTime
-
-@ ml Location
-
-@ ml MeetingRoom
-
-@ ml Message
-
-@ ml MoveEarlierTimeSpan
-
-@ ml MoveLaterTimeSpan
-
-@ ml OrderReference
-
-@ ml PositionReference
-
-@ ml SlotAttribute
-
-@ ml Subject
-
-@ ml ToDate
-
-@ ml ToTime
-
-
 # AcceptMeeting
 - accept all meetings for {Subject=christmas party} {FromDate=next week}.
 - accept an appointment
@@ -493,6 +460,7 @@
 - delete the {SlotAttribute=room} for my {FromTime=4pm} meeting
 - delete the {SlotAttribute=meeting room} of my {FromTime=6pm} meeting
 - please cancel the {SlotAttribute=room} of my {FromTime=7pm} meeting
+- ^(clear|delete|remove) (my|the) calendar from {FromTime} to {ToTime}^
 
 # UpdateMeeting
 - bring forward my {FromTime=4 o'clock} appointment {MoveEarlierTimeSpan=2 hours}

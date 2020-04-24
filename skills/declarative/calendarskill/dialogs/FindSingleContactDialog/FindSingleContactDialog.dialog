@@ -79,12 +79,86 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "FRMDtx"
+            "id": "QAFLPP"
           },
-          "property": "turn.ResolvedAttendee",
-          "value": "=dialog.attendeeResult.contactsList[0].mail"
+          "condition": "count(dialog.attendeeResult.contactsList) > 1",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "C6a-20"
+              },
+              "property": "turn.ResolvedAttendee",
+              "value": "=dialog.attendeeResult.contactsList[0].mail"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "NNWtGi"
+              },
+              "itemsProperty": "dialog.attendeeResult.contactsList",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "4Qha53"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.unconfirmedAttendeeList",
+                  "value": "${dialog.foreach.value.displayName} : ${dialog.foreach.value.mail}"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "LrCvQQ"
+              }
+            },
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "GG_dh5"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "outputFormat": "split(this.value, \": \")[1]",
+              "appendChoices": "true",
+              "defaultLocale": "en-us",
+              "style": "Auto",
+              "choiceOptions": {
+                "inlineSeparator": ", ",
+                "inlineOr": " or ",
+                "inlineOrMore": ", or ",
+                "includeNumbers": true
+              },
+              "recognizerOptions": {
+                "noValue": false,
+                "noAction": false
+              },
+              "prompt": "${bfdprompt-GG_dh5()}",
+              "choices": "dialog.unconfirmedAttendeeList",
+              "property": "turn.ResolvedAttendee"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "gXBD6q"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "DvmU48"
+          },
+          "activity": "${bfdactivity-DvmU48()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
