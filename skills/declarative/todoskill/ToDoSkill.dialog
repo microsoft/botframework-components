@@ -148,8 +148,7 @@
             "id": "ThxnhG"
           },
           "properties": [
-            "conversation.taskContent",
-            "conversation.orders"
+            "conversation.taskContent"
           ]
         },
         {

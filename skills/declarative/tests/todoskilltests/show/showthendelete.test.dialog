@@ -47,6 +47,18 @@
         {
             "$kind": "Microsoft.Test.AssertReply",
             "text": "Let me know if you want to add an item or mark one as complete."
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "delete the first one"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "I deleted milk from your To Do list."
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Let me know if you want to add an item or mark one as complete."
         }
     ]
 }

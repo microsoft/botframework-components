@@ -1,6 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
     "$kind": "Microsoft.Test.Script",
+    "description": "update, clear, multi",
     "settings": {
         "connectionName": "outlook"
     },
@@ -28,7 +29,43 @@
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "view my todo list"
+            "text": "Add a task"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "OK, what do you want to add?"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "buy milk"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Which list should I add **buy milk** to? (1) Shopping, (2) Grocery, or (3) To Do"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "update task to buy skirts"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "OK, I've updated the task content to buy skirts"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Which list should I add **buy skirts** to? (1) Shopping, (2) Grocery, or (3) To Do"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "update task content"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "OK, what do you want to add?"
+        },        
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "update topic to buy milk and add to todo list"
         },
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -42,7 +79,7 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item is:"
+            "text": "I added buy milk to your To Do list."
         },
         {
             "$kind": "Microsoft.Test.AssertReply",

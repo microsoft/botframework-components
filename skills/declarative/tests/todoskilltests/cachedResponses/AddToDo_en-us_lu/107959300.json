@@ -1,0 +1,1 @@
+{"query":"update topic to buy milk and add to todo list","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.96448195}},"entities":{"SlotType":[["taskContent"],["listType"]],"TaskContent":["buy milk"],"roleListType":[["todo"]]}}}

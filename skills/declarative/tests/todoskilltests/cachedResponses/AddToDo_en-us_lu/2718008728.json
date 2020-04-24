@@ -1,0 +1,1 @@
+{"query":"update task to buy skirts","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.896008849}},"entities":{"SlotType":[["taskContent"]],"TaskContent":["buy skirts"]}}}

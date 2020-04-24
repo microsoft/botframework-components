@@ -1,0 +1,1 @@
+{"query":"update task content","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.7690303}},"entities":{"SlotType":[["taskContent"],["taskContent"]]}}}

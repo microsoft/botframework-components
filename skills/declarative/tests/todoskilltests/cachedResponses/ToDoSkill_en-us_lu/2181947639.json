@@ -1,0 +1,1 @@
+{"query":"delete the first one","prediction":{"topIntent":"DeleteToDo","intents":{"DeleteToDo":{"score":0.9589429}},"entities":{"ordinal":[1]}}}

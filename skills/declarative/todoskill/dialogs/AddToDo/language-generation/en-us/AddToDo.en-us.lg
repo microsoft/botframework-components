@@ -1,13 +1,5 @@
 [import](common.lg)
 
-
-
-# bfdprompt_RCO61b()
-- ${AskAddDupTaskPrompt(conversation.taskContent)}
-
-# bfdactivity_QRekYt()
-- ${CompletedMessage()}
-
 > From AddToDo
 
 # AskTaskContentTextText
@@ -32,16 +24,19 @@
 
 
 
-# bfdprompt_kuxcSi()
+# bfdprompt_DQSZLC()
 - ${AskTaskContentText()}
 
-# bfdprompt_m9c06z()
+# bfdprompt_7dmPV5()
 - Which list should I add ${if(conversation.taskContent == null, 'new task', concat('**', conversation.taskContent, '**'))} to?
 
-# bfdactivity_hZvWIq()
+# bfdprompt_RCO61b()
+- ${AskAddDupTaskPrompt(conversation.taskContent)}
+
+# bfdactivity_QRekYt()
+- ${CompletedMessage()}
+# bfdactivity_Pvo3US()
 - OK, I've updated the task content to ${@TaskContent}
-# bfdactivity_fbEEtG()
+
+# bfdactivity_gT5f0b()
 - OK, I've updated the list type to ${dialog.listType}
-
-
-

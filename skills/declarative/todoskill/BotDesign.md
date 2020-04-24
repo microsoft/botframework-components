@@ -32,10 +32,14 @@ conversation.page
 conversation.taskContent
 - for interruption in change task content
 - move to dialog? it is not persist between dialogs
+    - wait for patch
 - for local interruption, should always repeat to verify logic
 
 containsAll
 ordinal
+
+currentInput
+- indicate current input for GetInput
 
 settings.displaySize
 settings.interruptScore
