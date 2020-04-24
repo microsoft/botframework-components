@@ -873,3 +873,6 @@
   - ${Attendee[0].emailAddress.name}
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
+
+# GetIndicator(currentPage, pageSize, meetingCount)
+- ${pageSize * currentPage + 1}-${min(meetingCount, pageSize * (currentPage + 1))}

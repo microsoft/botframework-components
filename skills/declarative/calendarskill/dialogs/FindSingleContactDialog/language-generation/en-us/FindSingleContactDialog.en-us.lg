@@ -11,3 +11,9 @@
 
 # TextInput_UnrecognizedPrompt_BkEx7U()
 - Please input a valid email address.
+
+
+# bfdprompt-GG_dh5()
+- Which ${dialog.CurrentAttendee} do you want to invite?
+# bfdactivity-DvmU48()
+- Alright, I've added ${turn.ResolvedAttendee}.

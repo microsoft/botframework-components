@@ -55,7 +55,7 @@
               "assignments": [
                 {
                   "property": "dialog.CurrentMeetingData.IsConflict",
-                  "value": "false"
+                  "value": false
                 },
                 {
                   "property": "dialog.CurrentMeetingData.StartTime",
@@ -101,6 +101,14 @@
               "value": "=dialog.CurrentMeetingData"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "JCvCxX"
+          },
+          "property": "dialog.meetingsList",
+          "value": "=sortBy(dialog.meetingsList, 'StartTime')"
         },
         {
           "$kind": "Microsoft.SetProperties",
