@@ -874,8 +874,5 @@
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
 
-# CalendarErrorMessage()
-- Something went wrong
-
 # GetIndicator(currentPage, pageSize, meetingCount)
 - ${pageSize * currentPage + 1}-${min(meetingCount, pageSize * (currentPage + 1))}
