@@ -198,7 +198,7 @@
                   "$designer": {
                     "id": "j8oUwP"
                   },
-                  "activity": "${bfdactivity-j8oUwP()}"
+                  "activity": "${SendActivity_j8oUwP()}"
                 },
                 {
                   "$kind": "Microsoft.EndDialog",
@@ -357,7 +357,7 @@
                   "$designer": {
                     "id": "n_iPbD"
                   },
-                  "activity": "${bfdactivity-n_iPbD()}"
+                  "activity": "${SendActivity_n_iPbD()}"
                 },
                 {
                   "$kind": "Microsoft.ConfirmInput",
@@ -368,7 +368,7 @@
                   "alwaysPrompt": false,
                   "defaultLocale": "en-us",
                   "style": "Auto",
-                  "prompt": "${bfdprompt-4u0r-m()}",
+                  "prompt": "${TextInput_Prompt_4u0r_m()}",
                   "property": "dialog.ConfirmRead",
                   "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9"
                 },
@@ -467,7 +467,7 @@
               "$designer": {
                 "id": "Q6rGL1"
               },
-              "activity": "${bfdactivity-Q6rGL1()}"
+              "activity": "${SendActivity_Q6rGL1()}"
             }
           ]
         }
@@ -500,7 +500,7 @@
               "$designer": {
                 "id": "meJEs5"
               },
-              "activity": "${bfdactivity-meJEs5()}"
+              "activity": "${SendActivity_meJEs5()}"
             }
           ],
           "elseActions": [
@@ -531,7 +531,7 @@
               "$designer": {
                 "id": "Tb6enx"
               },
-              "activity": "${bfdactivity-Tb6enx()}"
+              "activity": "${SendActivity_Tb6enx()}"
             }
           ]
         },
@@ -540,7 +540,7 @@
           "$designer": {
             "id": "EckUyy"
           },
-          "activity": "${bfdactivity-EckUyy()}"
+          "activity": "${SendActivity_EckUyy()}"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -551,7 +551,7 @@
           "alwaysPrompt": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-HDFe4y()}",
+          "prompt": "${TextInput_Prompt_HDFe4y()}",
           "property": "turn.RepeatOverviewConfirm",
           "allowInterruptions": "#_Interruption.Score >= 0.9"
         },
@@ -602,7 +602,7 @@
               "$designer": {
                 "id": "GHfVi1"
               },
-              "activity": "${bfdactivity-GHfVi1()}"
+              "activity": "${SendActivity_GHfVi1()}"
             }
           ]
         },
@@ -647,7 +647,7 @@
               "$designer": {
                 "id": "vk2DNJ"
               },
-              "activity": "${bfdactivity-vk2DNJ()}"
+              "activity": "${SendActivity_vk2DNJ()}"
             }
           ]
         },

@@ -17,20 +17,16 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "YLcrcp"
+            "id": "aIgLq-"
           },
           "assignments": [
             {
-              "property": "dialog.durtaion",
-              "value": "= $duration"
+              "property": "dialog.slots",
+              "value": "= coalesce($slots, conversation.slots)"
             },
             {
-              "property": "dialog.startDateTime",
-              "value": "= $startDateTime"
-            },
-            {
-              "property": "dialog.endDateTime",
-              "value": "=addMinutes(formatDateTime($startDateTime), int(dialog.duration))"
+              "property": "dialog.content",
+              "value": "= coalesce($content, conversation.content)"
             }
           ]
         },
@@ -49,7 +45,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": false,
-              "prompt": "${bfdprompt-f3QClo()}",
+              "prompt": "${TextInput_Prompt_f3QClo()}",
               "property": "dialog.building",
               "value": "1"
             },
@@ -68,11 +64,18 @@
               "alwaysPrompt": false,
               "allowInterruptions": false,
               "defaultLocale": "en-us",
-              "prompt": "${bfdprompt-BVqWhA()}",
+              "prompt": "${TextInput_Prompt_BVqWhA()}",
               "property": "dialog.floorNumber",
               "value": "1"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "OIRLCx"
+          },
+          "name": "collected building/floornumber"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -218,6 +221,13 @@
           "resultProperty": "dialog.requestResult"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ZWekVd"
+          },
+          "name": "after search meeting room"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "myerIv"
@@ -229,7 +239,7 @@
               "$designer": {
                 "id": "_uBP-t"
               },
-              "activity": "${bfdactivity-_uBP-t()}"
+              "activity": "${SendActivity__uBP_t()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -251,7 +261,7 @@
                   "$designer": {
                     "id": "Ln36ri"
                   },
-                  "activity": "${bfdactivity-Ln36ri()}"
+                  "activity": "${SendActivity_Ln36ri()}"
                 },
                 {
                   "$kind": "Microsoft.DeleteProperties",
@@ -292,7 +302,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "smTrMO"
-          }
+          },
+          "name": "before get schedule"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -302,10 +313,10 @@
           "dialog": "GetScheduleRequest",
           "resultProperty": "dialog.requestResult",
           "options": {
-            "startDateTime": "=dialog.startDateTime",
-            "endDateTime": "=dialog.endDateTime",
+            "startDateTime": "=dialog.content.startDateTime",
+            "endDateTime": "=dialog.content.endDateTime",
             "meetingRooms": "=dialog.meetingRooms",
-            "duration": "=dialog.duration"
+            "duration": "=dialog.content.duration"
           }
         },
         {
@@ -320,7 +331,7 @@
               "$designer": {
                 "id": "l6_rBj"
               },
-              "activity": "${bfdactivity-l6_rBj()}"
+              "activity": "${SendActivity_l6_rBj()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -373,7 +384,7 @@
                 "noValue": false,
                 "noAction": false
               },
-              "prompt": "${bfdprompt-f7_pEc()}",
+              "prompt": "${TextInput_Prompt_f7_pEc()}",
               "choices": "dialog.availableRoom",
               "property": "dialog.meetingRoom"
             },

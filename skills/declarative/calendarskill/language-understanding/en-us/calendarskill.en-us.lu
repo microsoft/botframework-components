@@ -382,7 +382,7 @@
 - i'll attend the meeting at {FromTime=2pm} {FromDate=tomorrow} in {MeetingRoom=room 304}
 - i'll attend the meeting {FromTime=this afternoon}.
 - i'll attend this upcoming event in {Location=redmond}.
-- ^i (want to|would like to|'d like to) (join|attend) the {Subject}^
+
 # DeleteMeeting
 - can you cancel the {PositionReference=1st} one
 - cancel {FromTime=1 pm} {Subject=staff meeting}

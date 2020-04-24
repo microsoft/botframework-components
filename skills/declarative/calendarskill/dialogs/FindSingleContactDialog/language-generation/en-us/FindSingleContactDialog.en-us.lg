@@ -1,10 +1,16 @@
 [import](common.lg)
 
-# bfdinvalidPrompt-k5xQKX()
+# TextInput_InvalidPrompt_k5xQKX()
 - Input invalid. Retry login please.
 
-# bfdprompt-d1fnSD()
+# TextInput_Prompt_d1fnSD()
 - No such attendee named ${dialog.CurrentAttendee}! Please retry input an attendee.
+
+# TextInput_Prompt_BkEx7U()
+- Sure, who will join?
+
+# TextInput_UnrecognizedPrompt_BkEx7U()
+- Please input a valid email address.
 
 
 # bfdprompt-GG_dh5()

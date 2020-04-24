@@ -1,11 +1,11 @@
 [import](common.lg)
 
 
-# bfdactivity-IsH5UN()
+# SendActivity_IsH5UN()
 - duration is ${dialog._duration}
-# bfdprompt-pgJEOp()
+# TextInput_Prompt_pgJEOp()
 - For how long?
-# bfdinvalidPrompt-pgJEOp()
+# TextInput_InvalidPrompt_pgJEOp()
 - sorry, I don't understand ${this.value}
 
 

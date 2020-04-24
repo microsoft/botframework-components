@@ -15,6 +15,19 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "BkEx7U"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${TextInput_Prompt_BkEx7U()}",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_BkEx7U()}",
+          "property": "dialog.attendee",
+          "value": "=@personName"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "RoIRsm"
@@ -22,7 +35,7 @@
           "dialog": "GetContactRequest",
           "resultProperty": "dialog.attendeeResult",
           "options": {
-            "attendee": "=dialog.CurrentAttendee"
+            "attendee": "=dialog.attendee"
           }
         },
         {
@@ -46,7 +59,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": false,
-              "prompt": "${bfdprompt-d1fnSD()}",
+              "prompt": "${TextInput_Prompt_d1fnSD()}",
               "property": "dialog.NewAttendee"
             },
             {
