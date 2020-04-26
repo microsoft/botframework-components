@@ -3,7 +3,6 @@
   "$designer": {
     "$designer": {
       "name": "whoskill",
-      "description": "",
       "id": "XUynXB"
     }
   },
@@ -47,7 +46,7 @@
                     "id": "037586",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-037586()}"
+                  "activity": "${SendActivity_037586()}"
                 }
               ]
             }
@@ -476,7 +475,7 @@
             "id": "886052",
             "name": "Send a response"
           },
-          "activity": "${bfdactivity-886052()}"
+          "activity": "${SendActivity_886052()}"
         }
       ]
     },
