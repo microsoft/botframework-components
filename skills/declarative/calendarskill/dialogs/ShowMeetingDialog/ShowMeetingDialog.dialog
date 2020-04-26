@@ -15,13 +15,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "5Ynfqq"
-          },
-          "name": "begin of show"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "DUBRRc"
@@ -33,7 +26,7 @@
               "$designer": {
                 "id": "Oyxyj9"
               },
-              "property": "dialog.ShowMeeting_FromDate",
+              "property": "dialog.fromDate",
               "value": "=@FromDate"
             },
             {
@@ -41,7 +34,7 @@
               "$designer": {
                 "id": "4nPfyK"
               },
-              "property": "dialog.ShowMeeting_FromTime",
+              "property": "dialog.fromTime",
               "value": "=@FromTime"
             },
             {
@@ -49,7 +42,7 @@
               "$designer": {
                 "id": "YhmPd_"
               },
-              "property": "dialog.ShowMeeting_ToDate",
+              "property": "dialog.toDate",
               "value": "=@ToDate"
             },
             {
@@ -57,7 +50,7 @@
               "$designer": {
                 "id": "FZFhjP"
               },
-              "property": "dialog.ShowMeeting_ToTime",
+              "property": "dialog.toTime",
               "value": "=@ToTime"
             },
             {
@@ -69,18 +62,26 @@
               "value": "=@Subject"
             },
             {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "bcJpwG"
+              },
+              "property": "dialog.ShowNext",
+              "value": "=@OrderReference == 'next'"
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "ezSgtj"
               },
-              "condition": "dialog.ShowMeeting_FromDate == null",
+              "condition": "dialog.fromDate == null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "WJfTxT"
+                    "id": "pjfcOS"
                   },
-                  "property": "dialog.ShowMeeting_FromDate",
+                  "property": "dialog.fromDate",
                   "value": "=utcNow()"
                 }
               ]
@@ -90,46 +91,63 @@
               "$designer": {
                 "id": "Plon6f"
               },
-              "condition": "dialog.ShowMeeting_ToTime == null",
+              "condition": "dialog.fromTime == null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "Oa6oDZ"
+                    "id": "PhoMYW"
                   },
-                  "property": "dialog.ShowMeeting_FromTime",
-                  "value": "=dialog.ShowMeeting_FromDate"
+                  "property": "dialog.fromTime",
+                  "value": "=dialog.fromDate"
                 }
               ]
             },
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "U1v_VF"
-              }
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "R11s6N"
+                "id": "TDMoft"
               },
-              "property": "dialog.ShowMeeting_StartDateTime",
-              "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.ShowMeeting_FromDate)))+(ticks(formatDateTime(dialog.ShowMeeting_FromTime))-ticks(startOfDay(formatDateTime(dialog.ShowMeeting_FromTime))))-621355968000000000)/10000000)"
+              "dialog": "SetDateTime",
+              "options": {
+                "startDate": "=dialog.fromDate",
+                "startTime": "=dialog.fromTime"
+              },
+              "resultProperty": "dialog.startDateTime"
             },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "pkxlyy"
               },
-              "condition": "dialog.ShowMeeting_ToDate == null",
+              "condition": "dialog.toDate == null",
               "actions": [
                 {
-                  "$kind": "Microsoft.SetProperty",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "VMbx5N"
+                    "id": "XIuV6k"
                   },
-                  "property": "dialog.ShowMeeting_ToDate",
-                  "value": "=dialog.ShowMeeting_FromDate"
+                  "condition": "dialog.ShowNext",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "SS40f5"
+                      },
+                      "property": "dialog.toDate",
+                      "value": "=dialog.fromDate"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "oGJ5cu"
+                      },
+                      "property": "dialog.toDate",
+                      "value": "=addDays(string(dialog.fromDate), 7)"
+                    }
+                  ]
                 }
               ]
             },
@@ -138,25 +156,35 @@
               "$designer": {
                 "id": "CsFlKg"
               },
-              "condition": "dialog.ShowMeeting_ToTime == null",
+              "condition": "dialog.toTime == null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "Jlf29u"
                   },
-                  "property": "dialog.ShowMeeting_ToTime",
+                  "property": "dialog.toTime",
                   "value": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')"
                 }
               ]
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "RxOzsu"
+                "id": "sgVks6"
               },
-              "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.ShowMeeting_ToDate)))+(ticks(formatDateTime(dialog.ShowMeeting_ToTime))-ticks(startOfDay(formatDateTime(dialog.ShowMeeting_ToTime))))-621355968000000000)/10000000)",
-              "property": "dialog.ShowMeeting_EndDateTime"
+              "dialog": "SetDateTime",
+              "options": {
+                "startDate": "=dialog.toDate",
+                "startTime": "=dialog.toTime"
+              },
+              "resultProperty": "dialog.endDateTime"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "GO_lUs"
+              }
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -166,23 +194,44 @@
               "resultProperty": "dialog.requestResult",
               "dialog": "GetMeetingRequest",
               "options": {
-                "StartDateTime": "=dialog.ShowMeeting_StartDateTime",
-                "EndDateTime": "=dialog.ShowMeeting_EndDateTime"
+                "StartDateTime": "=dialog.startDateTime",
+                "EndDateTime": "=dialog.endDateTime"
               }
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "R-QkHp"
+                "id": "kAUcwM"
               },
-              "value": "=dialog.requestResult.meetingsList",
-              "property": "dialog.MeetingsList"
+              "condition": "count(dialog.requestResult.meetingsList) > 0 && dialog.ShowNext",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Bew26m"
+                  },
+                  "value": "=dialog.requestResult.meetingsList",
+                  "property": "dialog.MeetingsList"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "ISBWjh"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.MeetingsList",
+                  "value": "=dialog.requestResult.meetingsList[0]"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
                 "id": "eQ3iK4"
-              }
+              },
+              "name": "after request"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -235,7 +284,7 @@
                   "$designer": {
                     "id": "RxBh_e"
                   },
-                  "property": "dialog.DisplayMeetingsList",
+                  "property": "conversation.DisplayMeetingsList",
                   "value": "=subArray(dialog.MeetingsList, dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize), min(dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize) + int(settings.DisplaySize), count(dialog.MeetingsList)))"
                 },
                 {
@@ -249,7 +298,7 @@
                   "$designer": {
                     "id": "Iy1aRj"
                   },
-                  "itemsProperty": "dialog.DisplayMeetingsList",
+                  "itemsProperty": "conversation.DisplayMeetingsList",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperty",
@@ -335,6 +384,22 @@
                   }
                 },
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VJVL3f"
+                  },
+                  "property": "turn.lastMeeting",
+                  "value": "=dialog.MeetingsList[count(dialog.MeetingsList) - 1]"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "UEVwzr"
+                  },
+                  "property": "dialog.overlapCount",
+                  "value": "0"
+                },
+                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
                     "id": "n_iPbD"
@@ -346,13 +411,19 @@
                   "$designer": {
                     "id": "4u0r-m"
                   },
-                  "maxTurnCount": 3,
+                  "maxTurnCount": 1,
                   "alwaysPrompt": false,
                   "defaultLocale": "en-us",
                   "style": "Auto",
                   "prompt": "${TextInput_Prompt_4u0r_m()}",
                   "property": "dialog.ConfirmRead",
                   "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "hbDPB6"
+                  }
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -375,6 +446,53 @@
                         "id": "DJJLuk"
                       },
                       "eventName": "ShowMeetingDetailInfo"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "0KZPcM"
+                      },
+                      "property": "turn.number",
+                      "value": "=coalesce(@ordinal, @number)"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "MOZiwh"
+                      },
+                      "condition": "turn.number > 0 && turn.number <= count(conversation.DisplayMeetingsList)",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.TraceActivity",
+                          "$designer": {
+                            "id": "udoIL2"
+                          },
+                          "value": "=turn.number - 1"
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "xrxUrq"
+                          },
+                          "property": "conversation.FocusedMeeting",
+                          "value": "=conversation.DisplayMeetingsList[int(turn.number - 1)]"
+                        },
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "a-xoGz"
+                          },
+                          "eventName": "ShowMeetingDetailInfo"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.TraceActivity",
+                      "$designer": {
+                        "id": "-FzBUM"
+                      }
                     }
                   ]
                 }
@@ -406,7 +524,7 @@
       "$kind": "Microsoft.OnCustomEvent",
       "$designer": {
         "id": "HXJean",
-        "name": "ReadMeeting"
+        "name": "ShowMeetingDetailInfo"
       },
       "event": "ShowMeetingDetailInfo",
       "actions": [
@@ -442,25 +560,50 @@
               "value": "=dialog.MeetingsList[0]"
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "ifCTQr"
+                "id": "Dkfhnv"
               },
-              "property": "dialog.ShowingMeetingCondition",
-              "value": "today"
+              "eventName": "ShowAskParameter"
             },
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "9bXyFM"
-              }
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "Tb6enx"
+                "id": "uo7nVZ"
               },
-              "activity": "${SendActivity_Tb6enx()}"
+              "condition": "dialog.ShowNext",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "yCls4e"
+                  },
+                  "activity": "${activity_yCls4e()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "0KJ9W5"
+                  },
+                  "property": "dialog.ShowingMeetingCondition",
+                  "value": "=formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "ALDbvD"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "GxpiC0"
+                  },
+                  "activity": "${activity_GxpiC0()}"
+                }
+              ]
             }
           ]
         },
@@ -472,30 +615,39 @@
           "activity": "${SendActivity_EckUyy()}"
         },
         {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "HDFe4y"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_HDFe4y()}",
-          "property": "turn.RepeatOverviewConfirm",
-          "allowInterruptions": "#_Interruption.Score >= 0.9"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "Q2l2im"
+            "id": "8HZoQ6"
           },
-          "condition": "turn.RepeatOverviewConfirm",
-          "actions": [
+          "condition": "dialog.ShowNext",
+          "elseActions": [
             {
-              "$kind": "Microsoft.RepeatDialog",
+              "$kind": "Microsoft.ConfirmInput",
               "$designer": {
-                "id": "BbBm67"
-              }
+                "id": "bqUDX2"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "defaultLocale": "en-us",
+              "style": "Auto",
+              "prompt": "${prompt_bqUDX2()}",
+              "property": "turn.RepeatOverviewConfirm",
+              "allowInterruptions": "#_Interruption.Score >= 0.9"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "te8bn8"
+              },
+              "condition": "turn.RepeatOverviewConfirm",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "0eD7Kz"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -589,6 +741,80 @@
             "ShowMeeting_CurrentPage": "=dialog.ShowMeeting_CurrentPage",
             "MeetingsList": "=dialog.MeetingsList"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnCustomEvent",
+      "$designer": {
+        "id": "vUY1wL",
+        "name": "ShowAskParameter"
+      },
+      "event": "ShowAskParameter",
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "uG5nGO"
+          },
+          "cases": [
+            {
+              "value": "when",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "XbyJiQ"
+                  },
+                  "activity": "${SendActivity_Activity_XbyJiQ()}"
+                }
+              ]
+            },
+            {
+              "value": "who",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "g6qzeJ"
+                  },
+                  "activity": "${SendActivity_Activity_g6qzeJ()}"
+                }
+              ]
+            },
+            {
+              "value": "where",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "FayrF4"
+                  },
+                  "activity": "${SendActivity_Activity_FayrF4()}"
+                }
+              ]
+            },
+            {
+              "value": "duration",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "gbaOFZ"
+                  },
+                  "value": "=ticks(formatDateTime(conversation.FocusedMeeting.EndTime)) - ticks(formatDateTime(conversation.FocusedMeeting.StartTime))"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "VFdPeh"
+                  },
+                  "activity": "${SendActivity_Activity_VFdPeh()}"
+                }
+              ]
+            }
+          ],
+          "condition": "dialog.askParameter"
         }
       ]
     }
