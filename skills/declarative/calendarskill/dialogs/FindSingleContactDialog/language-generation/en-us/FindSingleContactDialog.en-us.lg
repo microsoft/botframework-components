@@ -13,7 +13,7 @@
 - Please input a valid email address.
 
 
-# bfdprompt-GG_dh5()
+# TextInput_Prompt_GG_dh5()
 - Which ${dialog.CurrentAttendee} do you want to invite?
-# bfdactivity-DvmU48()
+# SendActivity_DvmU48()
 - Alright, I've added ${turn.ResolvedAttendee}.

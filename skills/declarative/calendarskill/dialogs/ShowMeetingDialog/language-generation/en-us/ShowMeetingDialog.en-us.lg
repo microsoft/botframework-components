@@ -15,8 +15,6 @@
 - Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
 # SendActivity_meJEs5()
 - The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
-# SendActivity_Tb6enx()
-- You have one meeting ${dialog.ShowingMeetingCondition}: ${conversation.FocusedMeeting.Title}. It's with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)} ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')}.
 
 # SendActivity_EckUyy()
 [Activity
@@ -27,7 +25,25 @@
 - You have no more events scheduled.
 # SendActivity_vk2DNJ()
 - This is the first page.
-# TextInput_Prompt_HDFe4y()
-- Do you want to review your calendar overview again for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
+
 # SendActivity_j8oUwP()
 - ${CalendarErrorMessage()}
+# SendActivity_Activity_XbyJiQ()
+- It starts at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} and ends at ${formatDateTime(conversation.FocusedMeeting.EndTime, 'HH:mm:ss')}.
+# SendActivity_Activity_g6qzeJ()
+- It holds with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}
+# SendActivity_Activity_VFdPeh()
+- It lasts for ${GetMeetingDuration((ticks(formatDateTime(conversation.FocusedMeeting.EndTime)) - ticks(formatDateTime(conversation.FocusedMeeting.StartTime))) / 600000000)}.
+# SendActivity_Activity_FayrF4()
+- The location is ${conversation.FocusedMeeting.Location}.
+
+# activity_yCls4e()
+- You have the following event on your calendar:
+# activity_GxpiC0()
+- You have one meeting ${dialog.ShowingMeetingCondition}: ${conversation.FocusedMeeting.Title}. It's with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)} ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')}.
+
+# activity_wGb0eY()
+- You have the following event on your calendar:
+
+# prompt_bqUDX2()
+- Do you want to review your calendar overview again for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
