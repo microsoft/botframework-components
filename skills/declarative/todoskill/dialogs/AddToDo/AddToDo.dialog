@@ -30,95 +30,79 @@
           },
           "assignments": [
             {
-              "property": "conversation.taskContent",
-              "value": "=coalesce(conversation.taskContent, @TaskContent)"
+              "property": "dialog.taskContent",
+              "value": "=coalesce(@TaskContent, $taskContent)"
             },
             {
-              "property": "conversation.orders",
-              "value": "=coalesce(conversation.orders, createArray(1,2))"
+              "property": "dialog.currentInput",
+              "value": "='taskContent'"
             }
           ]
         },
         {
-          "$kind": "Microsoft.Foreach",
+          "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "i0JBWY"
+            "id": "DQSZLC",
+            "name": "Text input"
           },
-          "itemsProperty": "conversation.orders",
-          "actions": [
+          "prompt": "${bfdprompt_DQSZLC()}",
+          "maxTurnCount": 3,
+          "property": "dialog.taskContent",
+          "value": "=@TaskContent",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "VE_QSo"
+          },
+          "assignments": [
             {
-              "$kind": "Microsoft.SwitchCondition",
-              "$designer": {
-                "id": "OdW3Lu"
-              },
-              "condition": "dialog.foreach.value",
-              "cases": [
-                {
-                  "value": 1,
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.TextInput",
-                      "$designer": {
-                        "id": "kuxcSi",
-                        "name": "Text input"
-                      },
-                      "prompt": "${bfdprompt_kuxcSi()}",
-                      "maxTurnCount": 3,
-                      "property": "conversation.taskContent",
-                      "value": "=@TaskContent",
-                      "alwaysPrompt": false,
-                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
-                    }
-                  ]
-                },
-                {
-                  "value": 2,
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.ChoiceInput",
-                      "$designer": {
-                        "id": "m9c06z",
-                        "name": "Multiple choice"
-                      },
-                      "prompt": "${bfdprompt_m9c06z()}",
-                      "maxTurnCount": 3,
-                      "property": "conversation.listType",
-                      "value": "=coalesce(@ListType, @roleListType)",
-                      "alwaysPrompt": false,
-                      "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
-                      "outputFormat": "value",
-                      "choices": [
-                        {
-                          "value": "Shopping"
-                        },
-                        {
-                          "value": "Grocery"
-                        },
-                        {
-                          "value": "To Do",
-                          "synonyms": [
-                            "todo"
-                          ]
-                        }
-                      ],
-                      "appendChoices": "true",
-                      "defaultLocale": "en-us",
-                      "style": "Auto",
-                      "choiceOptions": {
-                        "inlineSeparator": ", ",
-                        "inlineOr": " or ",
-                        "inlineOrMore": ", or ",
-                        "includeNumbers": true
-                      },
-                      "recognizerOptions": {
-                        "noValue": false
-                      }
-                    }
-                  ]
-                }
-              ]
+              "property": "dialog.currentInput",
+              "value": "='listType'"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "7dmPV5",
+            "name": "Multiple choice"
+          },
+          "prompt": "${bfdprompt_7dmPV5()}",
+          "maxTurnCount": 3,
+          "property": "conversation.listType",
+          "value": "=coalesce(@ListType, @roleListType)",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
+          "outputFormat": "value",
+          "choices": [
+            {
+              "value": "Shopping"
+            },
+            {
+              "value": "Grocery"
+            },
+            {
+              "value": "To Do",
+              "synonyms": [
+                "todo"
+              ]
+            }
+          ],
+          "appendChoices": "true",
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "choiceOptions": {
+            "inlineSeparator": ", ",
+            "inlineOr": " or ",
+            "inlineOrMore": ", or ",
+            "includeNumbers": true
+          },
+          "recognizerOptions": {
+            "noValue": false
+          }
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -135,7 +119,7 @@
           },
           "dialog": "MatchInList",
           "resultProperty": "dialog.items",
-          "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",conversation.taskContent)"
+          "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",dialog.taskContent)"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -144,6 +128,18 @@
           },
           "condition": "=count(dialog.items) != 0",
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "EghAcn"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.currentInput",
+                  "value": "='duplicate'"
+                }
+              ]
+            },
             {
               "$kind": "Microsoft.ConfirmInput",
               "$designer": {
@@ -202,7 +198,7 @@
               },
               "dialog": "AddToListOutlook",
               "options": {
-                "taskContent": "${conversation.taskContent}"
+                "taskContent": "${dialog.taskContent}"
               }
             },
             {
@@ -213,7 +209,7 @@
               "dialog": "ShowToDo",
               "options": {
                 "fromType": "add",
-                "taskContent": "${conversation.taskContent}"
+                "taskContent": "${dialog.taskContent}"
               }
             }
           ]
@@ -228,131 +224,27 @@
       "intent": "GetInput",
       "actions": [
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "DdpMzx"
+            "id": "r8RZNb"
           },
-          "condition": "=@TaskContent != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "hZvWIq"
-              },
-              "activity": "${bfdactivity_hZvWIq()}"
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "qMF-_W"
-              },
-              "assignments": [
-                {
-                  "property": "conversation.taskContent",
-                  "value": "=@TaskContent"
-                }
-              ]
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "ynY36y"
-              },
-              "condition": "=count(where(@@SlotType,iter,iter[0]=='taskContent'))>0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.DeleteProperties",
-                  "$designer": {
-                    "id": "2TCwpe"
-                  },
-                  "properties": [
-                    "conversation.taskContent"
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "T6nlRM"
-                  },
-                  "assignments": [
-                    {
-                      "property": "conversation.orders",
-                      "value": "=createArray(1,2)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "dialog": "GetInputTaskContent",
+          "resultProperty": "dialog.taskContent",
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "KtzVgW",
-            "name": "Set properties"
+            "id": "RlxdA4"
           },
-          "assignments": [
-            {
-              "property": "dialog.listType",
-              "value": "=coalesce(@ListType, @roleListType)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "cUcJan"
-          },
-          "condition": "=dialog.listType != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "fbEEtG"
-              },
-              "activity": "${bfdactivity_fbEEtG()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "ltvPdP"
-              },
-              "condition": "=count(where(@@SlotType,iter,iter[0]=='listType'))>0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.DeleteProperties",
-                  "$designer": {
-                    "id": "1pHdqj"
-                  },
-                  "properties": [
-                    "conversation.listType"
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "6kNZ6O"
-                  },
-                  "assignments": [
-                    {
-                      "property": "conversation.orders",
-                      "value": "=createArray(2,1)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "dialog": "GetInputListType"
         },
         {
           "$kind": "Microsoft.RepeatDialog",
           "$designer": {
             "id": "T3Z8xG"
-          }
+          },
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         }
       ]
     }
