@@ -251,7 +251,7 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> BeginInitialDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+            return await sc.ReplaceDialogAsync(InitialDialogId, sc.Options, cancellationToken: cancellationToken);
         }
 
         protected async Task<DialogTurnResult> CheckIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
@@ -411,6 +411,12 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
+                var option = sc.Options as BaseOption;
+                if (option != null && !option.ConfirmSearch)
+                {
+                    return await sc.NextAsync(true, cancellationToken);
+                }
+
                 var replacements = new Dictionary<string, object>
                 {
                     { "Search", state.TicketTitle }
@@ -781,6 +787,14 @@ namespace ITSMSkill.Dialogs
                         new Choice()
                         {
                             Value = TicketState.Canceled.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Active.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Inactive.ToLocalizedString()
                         }
                     }
                 };
