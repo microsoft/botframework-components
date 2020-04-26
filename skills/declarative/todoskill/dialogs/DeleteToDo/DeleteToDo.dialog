@@ -118,14 +118,58 @@
               "condition": "=dialog.containsAll == null",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SetProperties",
+                  "$kind": "Microsoft.ConfirmInput",
                   "$designer": {
-                    "id": "WoQuET"
+                    "id": "VY_bxo"
                   },
-                  "assignments": [
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
+                  "defaultLocale": "en-us",
+                  "style": "Auto",
+                  "prompt": "${bfdprompt_VY_bxo()}",
+                  "property": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "KTnZSa"
+                  },
+                  "condition": "=dialog.result",
+                  "elseActions": [
                     {
-                      "property": "dialog.items",
-                      "value": "=dialog.tasks"
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "p1_2H5"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.result",
+                          "value": "=setProperty({} , \"fromType\" ,\"deleteallno\")"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.ReplaceDialog",
+                      "$designer": {
+                        "id": "epKzn4"
+                      },
+                      "dialog": "ShowToDo",
+                      "options": "=dialog.result"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "GYVaMs"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.items",
+                          "value": "=dialog.tasks"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -328,55 +372,27 @@
       "intent": "GetInput",
       "actions": [
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "HgnbJA"
+            "id": "nYOFPF"
           },
-          "condition": "=@taskContent != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "As8-Wf"
-              },
-              "activity": "${bfdactivity_As8_Wf()}"
-            }
-          ]
+          "dialog": "GetInputTaskContent",
+          "resultProperty": "dialog.taskContent",
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "6VvYJV",
-            "name": "Set properties"
+            "id": "cXQOcO"
           },
-          "assignments": [
-            {
-              "property": "dialog.listType",
-              "value": "=coalesce(@ListType, @roleListType)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "43XELw"
-          },
-          "condition": "=dialog.listType != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "YSmvaQ"
-              },
-              "activity": "${bfdactivity_YSmvaQ()}"
-            }
-          ]
+          "dialog": "GetInputListType"
         },
         {
           "$kind": "Microsoft.RepeatDialog",
           "$designer": {
-            "id": "FNOCrR"
-          }
+            "id": "yYtz4v"
+          },
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         }
       ]
     }
