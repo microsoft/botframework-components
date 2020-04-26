@@ -83,7 +83,10 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "inlineSeparator": ", "
+          }
         },
         {
           "$kind": "Microsoft.TraceActivity",
