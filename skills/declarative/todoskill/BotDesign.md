@@ -24,6 +24,7 @@
 conversation.listType
 - for interruption from show to del
 - remember to clear
+    - ask for list in add -> delete in an empty list -> add in that list without prompt
 - pay attention to order
 
 conversation.page
@@ -70,10 +71,6 @@ items
 When repeat, previous dialog state are cleared
 
 ## All
-
-all is handled wrongly when repeat like 'do nothing at all'
-
-support all in GetInput in mark/delete
 
 all is tricky for show after delete
 
@@ -139,3 +136,9 @@ help, cancel always included
 - show
     - V
 - mark in another list?
+
+# ToDo
+
+all is handled wrongly when repeat like 'do nothing at all'
+
+support all in GetInput in mark/delete

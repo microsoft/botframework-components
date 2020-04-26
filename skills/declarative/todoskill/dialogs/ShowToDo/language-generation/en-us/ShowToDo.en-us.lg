@@ -100,11 +100,21 @@
 
 > From DeleteToDo
 
+# TaskDeletedNotAll( ListType, TaskContent, TotalNumber, ToDos)
+[Activity
+    Text = ${TaskDeletedNotAllText(ListType, TaskContent)}
+    Speak = ${TaskDeletedNotAllText(ListType, TaskContent)}
+    Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
+    InputHint = ignoringInput
+]
+
+# TaskDeletedNotAllText(ListType, TaskContent)
+- I deleted ${TaskContent} from your ${ListType} list.
+
 # TaskDeleted(IsDeleteAll, ListType, TaskContent, TotalNumber, ToDos)
 [Activity
     Text = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
     Speak = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
-    Attachments = ${if(TotalNumber==0,null,json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource())))}
     InputHint = ignoringInput
 ]
 
@@ -118,7 +128,7 @@
 - I cleared your ${ListType} list.
 
 # AfterTaskDeletedText(TaskContent, ListType)
-- I deleted ${TaskContent} from your ${ListType} list.
+- I deleted ${TaskContent} from your ${ListType} list. You don't have anything in your ${ListType} list now.
 
 # DeletionAllConfirmationRefusedText(TaskCount, ListType)
 - OK, I didn't delete anything. There are ${TaskCount} items on your ${ListType} list.
@@ -148,7 +158,7 @@
 - ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
 
 # bfdactivity_IS3e0H()
-- ${TaskDeleted(dialog.containsAll,conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}
+- ${TaskDeletedNotAll(conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}
 
 # bfdactivity_koMtTm()
 - ${DeletionAllConfirmationRefused(conversation.listType, dialog.count, dialog.todos)}

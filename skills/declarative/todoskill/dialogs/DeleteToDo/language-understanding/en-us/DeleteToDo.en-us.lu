@@ -27,6 +27,16 @@
         - groceries
         - grocer
 
+@ list SlotType =
+    - listType:
+        - list type
+        - list
+    - taskContent:
+        - task content
+        - task
+        - content
+        - topic
+
 # AskForListType
 - todo
 - shopping

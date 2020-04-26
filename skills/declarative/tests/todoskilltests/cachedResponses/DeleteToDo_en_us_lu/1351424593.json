@@ -1,0 +1,1 @@
+{"query":"change to my shopping list","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.855387032}},"entities":{"roleListType":[["shopping"]],"SlotType":[["listType"]]}}}

@@ -1,0 +1,1 @@
+{"query":"update to todo list and update topic to milk","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.8874594}},"entities":{"roleListType":[["todo"]],"SlotType":[["listType"],["taskContent"]],"TaskContent":["milk"]}}}

@@ -224,119 +224,20 @@
       "intent": "GetInput",
       "actions": [
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "DdpMzx"
+            "id": "r8RZNb"
           },
-          "condition": "=@TaskContent != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "f_fF_W"
-              },
-              "condition": "=dialog.taskContent == null",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "Pvo3US"
-                  },
-                  "activity": "${bfdactivity_Pvo3US()}"
-                }
-              ]
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "qMF-_W"
-              },
-              "assignments": [
-                {
-                  "property": "dialog.taskContent",
-                  "value": "=@TaskContent"
-                }
-              ]
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "ynY36y"
-              },
-              "condition": "=count(where(@@SlotType,iter,iter[0]=='taskContent'))>0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.DeleteProperties",
-                  "$designer": {
-                    "id": "2TCwpe"
-                  },
-                  "properties": [
-                    "dialog.taskContent"
-                  ]
-                }
-              ]
-            }
-          ]
+          "dialog": "GetInputTaskContent",
+          "resultProperty": "dialog.taskContent",
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "KtzVgW",
-            "name": "Set properties"
+            "id": "RlxdA4"
           },
-          "assignments": [
-            {
-              "property": "dialog.listType",
-              "value": "=coalesce(@ListType, @roleListType)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "cUcJan"
-          },
-          "condition": "=dialog.listType != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "Ezgz3_"
-              },
-              "condition": "=conversation.listType == null",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "gT5f0b"
-                  },
-                  "activity": "${bfdactivity_gT5f0b()}"
-                }
-              ]
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "ltvPdP"
-              },
-              "condition": "=count(where(@@SlotType,iter,iter[0]=='listType'))>0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.DeleteProperties",
-                  "$designer": {
-                    "id": "1pHdqj"
-                  },
-                  "properties": [
-                    "conversation.listType"
-                  ]
-                }
-              ]
-            }
-          ]
+          "dialog": "GetInputListType"
         },
         {
           "$kind": "Microsoft.RepeatDialog",

@@ -29,43 +29,15 @@
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "Add a task"
+            "text": "delete a task"
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "OK, what do you want to add?"
+            "text": "Do you want to delete something from your To Do, Shopping, or Grocery list? (1) Shopping, (2) Grocery, or (3) To Do"
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "buy milk"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Which list should I add **buy milk** to? (1) Shopping, (2) Grocery, or (3) To Do"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "update task to buy skirts"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "OK, I've updated the task content to **buy skirts**"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Which list should I add **buy skirts** to? (1) Shopping, (2) Grocery, or (3) To Do"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "update task content"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "OK, what do you want to add?"
-        },        
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "update topic to buy milk and add to todo list"
+            "text": "todo"
         },
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -79,7 +51,43 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "I added buy milk to your To Do list."
+            "text": "The most recent item is:"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Ok, give me the exact title of the todo you would like to delete.."
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "change to my shopping list"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "OK, I've updated the list type to shopping"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "The most recent item is:"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Ok, give me the exact title of the todo you would like to delete.."
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "change to my list"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Do you want to delete something from your To Do, Shopping, or Grocery list? (1) Shopping, (2) Grocery, or (3) To Do"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "update to todo list and update topic to milk"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "I deleted milk from your To Do list."
         },
         {
             "$kind": "Microsoft.Test.AssertReply",

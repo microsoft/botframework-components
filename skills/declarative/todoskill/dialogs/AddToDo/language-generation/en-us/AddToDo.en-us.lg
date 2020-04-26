@@ -35,9 +35,3 @@
 
 # bfdactivity_QRekYt()
 - ${CompletedMessage()}
-# bfdactivity_Pvo3US()
-- OK, I've updated the task content to ${@TaskContent}
-
-# bfdactivity_gT5f0b()
-- OK, I've updated the list type to ${dialog.listType}
-
