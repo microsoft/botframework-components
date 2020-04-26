@@ -30,8 +30,8 @@
           },
           "assignments": [
             {
-              "property": "conversation.taskContent",
-              "value": "=coalesce(conversation.taskContent, @TaskContent)"
+              "property": "dialog.taskContent",
+              "value": "=coalesce(@TaskContent, $taskContent)"
             },
             {
               "property": "dialog.currentInput",
@@ -47,7 +47,7 @@
           },
           "prompt": "${bfdprompt_DQSZLC()}",
           "maxTurnCount": 3,
-          "property": "conversation.taskContent",
+          "property": "dialog.taskContent",
           "value": "=@TaskContent",
           "alwaysPrompt": false,
           "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
@@ -119,7 +119,7 @@
           },
           "dialog": "MatchInList",
           "resultProperty": "dialog.items",
-          "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",conversation.taskContent)"
+          "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",dialog.taskContent)"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -198,7 +198,7 @@
               },
               "dialog": "AddToListOutlook",
               "options": {
-                "taskContent": "${conversation.taskContent}"
+                "taskContent": "${dialog.taskContent}"
               }
             },
             {
@@ -209,7 +209,7 @@
               "dialog": "ShowToDo",
               "options": {
                 "fromType": "add",
-                "taskContent": "${conversation.taskContent}"
+                "taskContent": "${dialog.taskContent}"
               }
             }
           ]
@@ -235,7 +235,7 @@
               "$designer": {
                 "id": "f_fF_W"
               },
-              "condition": "=conversation.taskContent == null",
+              "condition": "=dialog.taskContent == null",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -253,7 +253,7 @@
               },
               "assignments": [
                 {
-                  "property": "conversation.taskContent",
+                  "property": "dialog.taskContent",
                   "value": "=@TaskContent"
                 }
               ]
@@ -273,7 +273,7 @@
                     "id": "2TCwpe"
                   },
                   "properties": [
-                    "conversation.taskContent"
+                    "dialog.taskContent"
                   ]
                 }
               ]
@@ -342,7 +342,8 @@
           "$kind": "Microsoft.RepeatDialog",
           "$designer": {
             "id": "T3Z8xG"
-          }
+          },
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         }
       ]
     }

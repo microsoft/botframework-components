@@ -28,10 +28,10 @@
 - ${AskTaskContentText()}
 
 # bfdprompt_7dmPV5()
-- Which list should I add ${if(conversation.taskContent == null, 'new task', concat('**', conversation.taskContent, '**'))} to?
+- Which list should I add ${if(dialog.taskContent == null, 'new task', concat('**', dialog.taskContent, '**'))} to?
 
 # bfdprompt_RCO61b()
-- ${AskAddDupTaskPrompt(conversation.taskContent)}
+- ${AskAddDupTaskPrompt(dialog.taskContent)}
 
 # bfdactivity_QRekYt()
 - ${CompletedMessage()}
@@ -40,3 +40,4 @@
 
 # bfdactivity_gT5f0b()
 - OK, I've updated the list type to ${dialog.listType}
+
