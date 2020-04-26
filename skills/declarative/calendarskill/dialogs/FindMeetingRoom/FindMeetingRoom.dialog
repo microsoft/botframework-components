@@ -808,7 +808,13 @@
               "$designer": {
                 "id": "EpE2d0"
               },
+<<<<<<< HEAD
               "activity": "${activity_EpE2d0()}"
+=======
+              "prompt": "${TextInput_Prompt_f7_pEc()}",
+              "choices": "dialog.availableRoom",
+              "property": "dialog.meetingRoom"
+>>>>>>> next
             },
             {
               "$kind": "Microsoft.EmitEvent",

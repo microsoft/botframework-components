@@ -874,5 +874,34 @@
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
 
+<<<<<<< HEAD
 # MeetingBooked()
 - Alright, your meeting is confirmed.
+=======
+# GetIndicator(currentPage, pageSize, meetingCount)
+- ${pageSize * currentPage + 1}-${min(meetingCount, pageSize * (currentPage + 1))}
+
+# GetMeetingDuration(minutes)
+- IF: ${minutes < 60}
+    - ${GetMinutes(minutes)}
+- ELSEIF: ${minutes % 60 == 0}:
+    - ${GetHours(minutes / 60)}
+- ELSE:
+    - ${GetHours(minutes / 60)} ${GetMinutes(minutes % 60)}
+
+# GetMinutes(minutes)
+- IF: ${minutes < 0}
+    -
+- ELSEIF: ${minutes == 1}
+    - 1 minute
+- ELSE:
+    - ${minutes} minutes
+
+# GetHours(hours)
+- IF: ${hours < 0}
+    -
+- ELSEIF: ${hours == 1}
+    - 1 hour
+- ELSE:
+    - ${hours} hours
+>>>>>>> next

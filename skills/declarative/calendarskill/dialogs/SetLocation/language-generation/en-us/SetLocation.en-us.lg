@@ -1,6 +1,7 @@
 [import](common.lg)
 
 # TextInput_Prompt_ylVlC7()
+<<<<<<< HEAD
 - ${NoLocation()}
 # TextInput_UnrecognizedPrompt_ylVlC7()
 -unrecognized title
@@ -9,3 +10,10 @@
 
 # NoLocation()
 - Where will the event take place?
+=======
+- What is the location?
+# TextInput_UnrecognizedPrompt_ylVlC7()
+-unrecognized title
+# TextInput_InvalidPrompt_ylVlC7()
+- sorry, the length should be 10
+>>>>>>> next

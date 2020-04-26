@@ -110,6 +110,27 @@
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "B1h_e5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "-MGRh-"
+          },
+          "condition": "dialog.confirm == \"No\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "6Pao4R"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "GPQQWD"

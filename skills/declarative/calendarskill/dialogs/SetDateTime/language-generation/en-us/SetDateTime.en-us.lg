@@ -1,7 +1,15 @@
 [import](common.lg)
 
 # TextInput_Prompt_Aao23I()
+<<<<<<< HEAD
 - ${NoStartDate()}
+=======
+- What is the start date
+# SendActivity_PUuDU4()
+- start date is ${dialog.startDate}, start time is ${dialog.startTime}, start datetime is ${dialog.startDateTime}
+# TextInput_InvalidPrompt_Aao23I()
+- sorry, I don't understand ${this.value}
+>>>>>>> next
 
 # TextInput_InvalidPrompt_Aao23I()
 - ${NoStartDateRetry()}
@@ -11,6 +19,7 @@
 # DateTimeInput_InvalidPrompt_l3ZgcG()
 - ${NoStartTimeRetry()}
 
+<<<<<<< HEAD
 # NoStartDate()
 - What's the date for your event?
 
@@ -23,3 +32,7 @@
 
 # NoStartTimeRetry()
 - I didn't understand the time you provided, please try again.
+=======
+# TextInput_Prompt_l3ZgcG()
+- What is the start time
+>>>>>>> next

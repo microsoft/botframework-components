@@ -34,6 +34,17 @@
           ]
         },
         {
+<<<<<<< HEAD
+=======
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IsH5UN"
+          },
+          "activity": "${SendActivity_IsH5UN()}",
+          "disabled": true
+        },
+        {
+>>>>>>> next
           "$kind": "Microsoft.DateTimeInput",
           "$designer": {
             "id": "pgJEOp"
