@@ -25,7 +25,7 @@
     - listType:
         - list type
         - list
-    - taskContent
+    - taskContent:
         - task content
         - task
         - content

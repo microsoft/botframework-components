@@ -59,7 +59,7 @@
       "$designer": {
         "id": "722893"
       },
-      "condition": "#Help.Score > float(settings.intentScore)",
+      "condition": "#Help.Score > float(settings.interruptScore)",
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
@@ -77,7 +77,7 @@
       "$designer": {
         "id": "463265"
       },
-      "condition": "#Cancel.Score > float(settings.intentScore)",
+      "condition": "#Cancel.Score > float(settings.interruptScore)",
       "actions": [
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -142,16 +142,6 @@
       },
       "condition": "#AddToDo.Score > float(settings.intentScore)",
       "actions": [
-        {
-          "$kind": "Microsoft.DeleteProperties",
-          "$designer": {
-            "id": "ThxnhG"
-          },
-          "properties": [
-            "conversation.taskContent",
-            "conversation.orders"
-          ]
-        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
