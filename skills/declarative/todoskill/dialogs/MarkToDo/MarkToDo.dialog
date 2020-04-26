@@ -143,10 +143,10 @@
                         {
                           "$kind": "Microsoft.SendActivity",
                           "$designer": {
-                            "id": "1-SAfh",
+                            "id": "1_SAfh",
                             "name": "Send a response"
                           },
-                          "activity": "${bfdactivity_1-SAfh()}"
+                          "activity": "${bfdactivity_1_SAfh()}"
                         },
                         {
                           "$kind": "Microsoft.TextInput",
