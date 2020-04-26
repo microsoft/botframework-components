@@ -76,6 +76,10 @@ all is tricky for show after delete
 
 find better api for deleting all
 
+## Ordinal
+
+Also tricky
+
 # Tests
 
 **if prompt in show, interrupt will not go back**

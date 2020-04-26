@@ -143,6 +143,7 @@
 - mark in my {ListType: roleListType=shopping} list
 - change to {ListType: roleListType=to do} list
 - change to my {ListType: roleListType=grocery} list
+- change to my list.. what do i have?
 - update to {ListType: roleListType=to do} list
 - update to my {ListType: roleListType=todo} list
 - update topic to {TaskContent=buy fish} and mark in {ListType: roleListType=todo} list
@@ -153,7 +154,9 @@
 - change task to {TaskContent=buy wine} and change to {ListType: roleListType=to do} list
 - mark in {ListType: roleListType=todo} list and update topic to {TaskContent=buy fish}
 - mark in my {ListType: roleListType=shopping} list and change task to {TaskContent=buy juice}
+- mark {TaskContent=buy milk} in {ListType: roleListType=grocery} list
 - change to {ListType: roleListType=to do} list and update topic to {TaskContent=buy wine}
 - change to my {ListType: roleListType=grocery} list and change task to {TaskContent=buy fish}
 - update to {ListType: roleListType=to do} list and update topic to {TaskContent=buy juice}
 - update to my {ListType: roleListType=todo} list and change task to {TaskContent=buy wine}
+- update to {ListType: roleListType=to do} list and update topic to {TaskContent=milk}

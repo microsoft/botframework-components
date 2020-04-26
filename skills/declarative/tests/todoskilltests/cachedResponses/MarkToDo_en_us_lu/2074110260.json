@@ -1,0 +1,1 @@
+{"query":"change to my list","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.987371266}},"entities":{"SlotType":[["listType"]]}}}
