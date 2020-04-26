@@ -6,7 +6,7 @@
       "id": "hR_Txm"
     }
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true ,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -74,11 +74,7 @@
                   "$designer": {
                     "id": "F9ch6U"
                   },
-<<<<<<< HEAD
                   "activity": "${activity_F9ch6U()}"
-=======
-                  "activity": "${SendActivity_WuRqfy()}"
->>>>>>> next
                 }
               ]
             }

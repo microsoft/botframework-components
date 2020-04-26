@@ -24,8 +24,6 @@
 - dinner
 - lunch
 - breakfast
-<<<<<<< HEAD
-=======
 
 #_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
@@ -99,4 +97,3 @@
 @ ml ToDate
 
 @ ml ToTime
->>>>>>> next

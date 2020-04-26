@@ -238,10 +238,6 @@
 - create meeting
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> next
 # FindCalendarEntry
 - at {FromTime=10 am} do i have a {Duration=30 minutes} meeting
 - calendar for {FromDate=today}
@@ -464,10 +460,7 @@
 - delete the {SlotAttribute=room} for my {FromTime=4pm} meeting
 - delete the {SlotAttribute=meeting room} of my {FromTime=6pm} meeting
 - please cancel the {SlotAttribute=room} of my {FromTime=7pm} meeting
-<<<<<<< HEAD
-=======
 - ^(clear|delete|remove) (my|the) calendar from {FromTime} to {ToTime}^
->>>>>>> next
 
 # UpdateMeeting
 - bring forward my {FromTime=4 o'clock} appointment {MoveEarlierTimeSpan=2 hours}

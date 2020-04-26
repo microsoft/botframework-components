@@ -571,9 +571,6 @@
               "$designer": {
                 "id": "uo7nVZ"
               },
-<<<<<<< HEAD
-              "activity": "${SendActivity_Tb6enx()}"
-=======
               "condition": "dialog.ShowNext",
               "actions": [
                 {
@@ -607,7 +604,6 @@
                   "activity": "${activity_GxpiC0()}"
                 }
               ]
->>>>>>> next
             }
           ]
         },
@@ -617,7 +613,6 @@
             "id": "EckUyy"
           },
           "activity": "${SendActivity_EckUyy()}"
-<<<<<<< HEAD
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -631,8 +626,6 @@
           "prompt": "${TextInput_Prompt_HDFe4y()}",
           "property": "turn.RepeatOverviewConfirm",
           "allowInterruptions": "#_Interruption.Score >= 0.9"
-=======
->>>>>>> next
         },
         {
           "$kind": "Microsoft.IfCondition",

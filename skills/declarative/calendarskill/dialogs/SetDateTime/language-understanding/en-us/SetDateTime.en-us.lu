@@ -75,9 +75,6 @@
     - @ OperationName Operation
     - @ SlotAttributeName Slot
     - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
-<<<<<<< HEAD
-
-=======
     
 @ list OperationName = 
 	- add :
@@ -105,7 +102,6 @@
 	- content :
 		- description
 	- location :
->>>>>>> next
 
 @ ml SlotOperations
 

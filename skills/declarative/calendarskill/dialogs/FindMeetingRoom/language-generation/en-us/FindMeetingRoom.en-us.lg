@@ -59,28 +59,14 @@
 - ELSE: 
     - ${MeetingRoomNotFoundByBuildingAndFloor(Building, FloorNumber)}
 
-<<<<<<< HEAD
 # MeetingRoomNotFoundByName(MeetingRoom, Building, FloorNumber)
 - It looks like ${MeetingRoom} does not exist${InBuilding(Building)}${OnFloorNumber(FloorNumber)}.
-=======
-# TextInput_Prompt_f7_pEc()
-- Which room you want to choose
->>>>>>> next
 
 # MeetingRoomNotFoundByBuildingAndFloor(Building, FloorNumber)
 - It doesn't look like any rooms exist${InBuilding(Building)}${OnFloorNumber(FloorNumber)}.
 
-<<<<<<< HEAD
 # ConfirmMeetingRoomPrompt(MeetingRoom, DateTime)
 - ${MeetingRoom} is available ${DateTime}, do you want to reserve it?
-=======
-# SendActivity_FMIZux()
-- Can not find meeting rooms 
-# SendActivity_pYw0rC()
-- Sorry, the request got an error ${dialog.api_result.statusCode}
-# SendActivity_5I8bFP()
-- dialog meeting rooms ${dialog.meetingRooms}
->>>>>>> next
 
 # MeetingRoomUnavailable(MeetingRoom, Building, FloorNumber, DateTime)
 - IF: ${MeetingRoom}
@@ -91,7 +77,6 @@
 # MeetingRoomUnavailableByName(MeetingRoom, DateTime)
 - It looks like ${MeetingRoom} is unavailable ${DateTime}.
 
-<<<<<<< HEAD
 # MeetingRoomUnavailableByBuildingAndFloor(Building, FloorNumber, DateTime)
 - It doesn't look like any rooms are available${InBuilding(Building)}${OnFloorNumber(FloorNumber)} ${DateTime}.
 
@@ -158,12 +143,3 @@
 - ELSE: 
     - 
 
-=======
-# SendActivity_Ln36ri()
-- Can not find meeting rooms 
-# SendActivity__uBP_t()
-- ${CalendarErrorMessage()}
-
-# SendActivity_l6_rBj()
-- ${CalendarErrorMessage()}
->>>>>>> next

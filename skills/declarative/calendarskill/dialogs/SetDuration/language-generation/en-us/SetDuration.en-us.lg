@@ -1,20 +1,11 @@
 [import](common.lg)
 
 
-<<<<<<< HEAD
 
 # TextInput_Prompt_pgJEOp()
 - ${NoDuration()}
 # TextInput_InvalidPrompt_pgJEOp()
 - ${NoDurationRetry()}
-=======
-# SendActivity_IsH5UN()
-- duration is ${dialog._duration}
-# TextInput_Prompt_pgJEOp()
-- For how long?
-# TextInput_InvalidPrompt_pgJEOp()
-- sorry, I don't understand ${this.value}
->>>>>>> next
 
 
 # NoDuration()

@@ -1,13 +1,5 @@
 [import](common.lg)
 
-<<<<<<< HEAD
-=======
-# SendActivity_WuRqfy()
-[Activity
-    Text = Hi, what can I do for you?
-    SuggestedActions = cancel meeting | create meeting | show meeting | find a meeting room
-]
->>>>>>> next
 
 # SendActivity_n7Yuf9()
 - your name is ${user.name}, and your age is ${user.age}

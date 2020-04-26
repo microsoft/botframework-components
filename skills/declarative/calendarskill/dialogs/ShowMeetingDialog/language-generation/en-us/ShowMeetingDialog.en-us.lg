@@ -15,11 +15,6 @@
 - Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
 # SendActivity_meJEs5()
 - The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
-<<<<<<< HEAD
-# SendActivity_Tb6enx()
-- You have one meeting ${dialog.ShowingMeetingCondition}: ${conversation.FocusedMeeting.Title}. It's with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)} ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')}.
-=======
->>>>>>> next
 
 # SendActivity_EckUyy()
 [Activity
@@ -30,12 +25,6 @@
 - You have no more events scheduled.
 # SendActivity_vk2DNJ()
 - This is the first page.
-<<<<<<< HEAD
-# TextInput_Prompt_HDFe4y()
-- Do you want to review your calendar overview again for ${formatDateTime(dialog.ShowMeeting_StartDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
-# SendActivity_j8oUwP()
-- ${CalendarErrorMessage()}
-=======
 
 # SendActivity_j8oUwP()
 - ${CalendarErrorMessage()}
@@ -58,4 +47,3 @@
 
 # prompt_bqUDX2()
 - Do you want to review your calendar overview again for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
->>>>>>> next

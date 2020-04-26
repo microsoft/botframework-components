@@ -25,7 +25,6 @@
               "value": "=conversation.slots"
             },
             {
-<<<<<<< HEAD
               "property": "dialog.content",
               "value": "=conversation.content"
             }
@@ -52,37 +51,12 @@
             {
               "property": "dialog.slots.FromTime",
               "value": "=coalesce(@FromTime, $slots.FromTime)"
-=======
-              "property": "dialog.slots.Subject",
-              "value": "=coalesce(@Subject, $slots.Subject)"
             },
             {
               "property": "dialog.slots.FromDate",
               "value": "=coalesce(@FromDate, $slots.FromDate)"
             },
             {
-              "property": "dialog.slots.FromTime",
-              "value": "=coalesce(@FromTime, $slots.FromTime)"
-            },
-            {
-              "property": "dialog.slots.ToDate",
-              "value": "=coalesce(@ToDate, $slots.ToDate)"
-            },
-            {
-              "property": "dialog.slots.ToTime",
-              "value": "=coalesce(@ToTime, $slots.ToTime)"
-            },
-            {
-              "property": "dialog.slots.Duration",
-              "value": "=coalesce(@Duration, $slots.Duration)"
->>>>>>> next
-            },
-            {
-              "property": "dialog.slots.FromDate",
-              "value": "=coalesce(@FromDate, $slots.FromDate)"
-            },
-            {
-<<<<<<< HEAD
               "property": "dialog.slots.ToDate",
               "value": "=coalesce(@ToDate, $slots.ToDate)"
             },
@@ -173,49 +147,16 @@
             {
               "property": "conversation.slots",
               "value": "= {}"
-=======
-              "property": "conversation.slots",
-              "value": "= {}"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "hzuXsh"
-          },
-          "assignments": [
-            {
-              "property": "dialog.content",
-              "value": "=conversation.content"
-            },
-            {
-              "property": "dialog.content.startDateTime",
-              "value": "= null"
-            },
-            {
-              "property": "dialog.content.title",
-              "value": "= null"
-            },
-            {
-              "property": "conversation.content",
-              "value": "= {}"
->>>>>>> next
             }
           ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-<<<<<<< HEAD
             "id": "Vdagn_",
             "name": "BookMeetingRoom"
           },
           "name": "BookMeetingRoom"
-=======
-            "id": "Vdagn_"
-          }
->>>>>>> next
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -254,11 +195,7 @@
           },
           "dialog": "SetDuration",
           "options": {
-<<<<<<< HEAD
             "duration": "=coalesce(dialog.slots.Duration, if(dialog.content.duration != null, dialog.content.duration + 'mins', null))"
-=======
-            "duration": "=coalesce(dialog.slots.Duration, if(dialog.content.duration, dialog.content.duration + 'mins', null))"
->>>>>>> next
           },
           "resultProperty": "dialog.content.duration",
           "disabled": false
@@ -284,7 +221,6 @@
           "name": "before meeting room"
         },
         {
-<<<<<<< HEAD
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "KTn8HO"
@@ -388,23 +324,13 @@
           "name": "After find attendee"
         },
         {
-=======
->>>>>>> next
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "I6tJuo"
           },
-<<<<<<< HEAD
           "dialog": "SetTitle",
           "options": {
             "title": "=coalesce(dialog.slots.Subject, dialog.content.title)"
-=======
-          "dialog": "FindMeetingRoom",
-          "resultProperty": "dialog.content.meetingRoom",
-          "options": {
-            "slots": "=dialog.slots",
-            "content": "=dialog.content"
->>>>>>> next
           },
           "resultProperty": "dialog.content.title"
         },
@@ -444,54 +370,14 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-<<<<<<< HEAD
             "id": "8iodr9"
-=======
-            "id": "U-sdI1"
->>>>>>> next
           },
           "dialog": "SetContent",
           "options": {
-<<<<<<< HEAD
             "description": "=coalesce(dialog.slots.Desciption, dialog.content.description)"
           },
           "resultProperty": "dialog.content.description",
           "disabled": false
-=======
-            "title": "=coalesce(dialog.slots.Subject, dialog.content.title, 'test title')"
-          },
-          "resultProperty": "dialog.content.title"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "2KQAmd"
-          },
-          "dialog": "SetContent",
-          "options": {
-            "content": "=coalesce(dialog.content.content, 'test description')"
-          },
-          "resultProperty": "dialog.content.content"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "ERu4JB"
-          }
-        },
-        {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "OigRoD"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_OigRoD()}",
-          "property": "dialog.confirm"
->>>>>>> next
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -575,11 +461,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-<<<<<<< HEAD
             "id": "msd6RL"
-=======
-            "id": "FOzuuN"
->>>>>>> next
           },
           "assignments": [
             {
@@ -615,61 +497,37 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-<<<<<<< HEAD
             "id": "la5sh2"
           },
           "name": "BookMeetingRoom GetInput"
-=======
-            "id": "N-4L_V"
-          }
->>>>>>> next
         },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-<<<<<<< HEAD
             "id": "ggrdZE",
             "name": "BookMeetingRoom GetInput"
           },
           "activity": "${activity_ggrdZE()}",
-=======
-            "id": "WOzNjH"
-          },
-          "activity": "${SendActivity_WOzNjH()}",
->>>>>>> next
           "disabled": true
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-<<<<<<< HEAD
             "id": "0vvcZ0"
-=======
-            "id": "7GIXU2"
->>>>>>> next
           },
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
-<<<<<<< HEAD
                 "id": "JGICfu",
                 "name": "InOperation"
               },
               "name": "InOperation"
-=======
-                "id": "cMPjqX"
-              }
->>>>>>> next
             },
             {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-<<<<<<< HEAD
                 "id": "XJ1Ra9"
-=======
-                "id": "UpqBpL"
->>>>>>> next
               },
               "condition": "dialog.foreach.value.Operation[0][0]",
               "cases": [
@@ -677,24 +535,15 @@
                   "value": "change",
                   "actions": [
                     {
-<<<<<<< HEAD
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
                         "id": "9GYnnb"
                       },
                       "name": "Slot Change"
-=======
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "vJ2x2a"
-                      },
-                      "activity": "${SendActivity_vJ2x2a()}"
->>>>>>> next
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-<<<<<<< HEAD
                         "id": "5kVZry"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
@@ -775,25 +624,17 @@
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
                         "id": "VGXz6a"
-=======
-                        "id": "yyEe09"
->>>>>>> next
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'time') || @ToDate != null || @ToTime != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-<<<<<<< HEAD
                             "id": "IbKyGk"
-=======
-                            "id": "0d4UZX"
->>>>>>> next
                           },
                           "assignments": [
                             {
                               "property": "dialog.slots.FromDate",
-<<<<<<< HEAD
                               "value": "=@ToDate"
                             },
                             {
@@ -856,24 +697,6 @@
                             },
                             {
                               "property": "dialog.content.location ",
-=======
-                              "value": "=coalesce(@ToDate, $slots.FromDate)"
-                            },
-                            {
-                              "property": "dialog.slots.FromTime",
-                              "value": "=coalesce(@ToTime, $slots.FromTime)"
-                            },
-                            {
-                              "property": "dialog.slots.Duration",
-                              "value": "=coalesce(@Duration, $slots.Duration)"
-                            },
-                            {
-                              "property": "dialog.content.startDateTime",
-                              "value": "= null"
-                            },
-                            {
-                              "property": "dialog.content.endDateTime",
->>>>>>> next
                               "value": "= null"
                             }
                           ]
@@ -886,7 +709,6 @@
                   "value": "delete",
                   "actions": [
                     {
-<<<<<<< HEAD
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
                         "id": "2vSXp5"
@@ -948,13 +770,6 @@
                           ]
                         }
                       ]
-=======
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "ghbjiO"
-                      },
-                      "activity": "${SendActivity_ghbjiO()}"
->>>>>>> next
                     }
                   ]
                 },
@@ -962,7 +777,6 @@
                   "value": "add",
                   "actions": [
                     {
-<<<<<<< HEAD
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
                         "id": "NURp0q"
@@ -993,43 +807,24 @@
                           ]
                         }
                       ]
-=======
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "0HxHK5"
-                      },
-                      "activity": "${SendActivity_0HxHK5()}"
->>>>>>> next
                     }
                   ]
                 }
               ],
               "default": [
                 {
-<<<<<<< HEAD
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "tba3sD"
                   },
                   "name": "Default"
-=======
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "Tl6Vkj"
-                  },
-                  "activity": "${SendActivity_Tl6Vkj()}"
->>>>>>> next
                 }
               ]
             },
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-<<<<<<< HEAD
                 "id": "mZHLbB"
-=======
-                "id": "h8rzKx"
->>>>>>> next
               },
               "assignments": [
                 {
@@ -1049,20 +844,12 @@
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-<<<<<<< HEAD
                 "id": "rYufCa"
               }
             }
           ],
           "itemsProperty": "@@SlotOperation",
           "value": "dialog.foreach.value"
-=======
-                "id": "2AwWm1"
-              }
-            }
-          ],
-          "itemsProperty": "dialog.slotOperation"
->>>>>>> next
         }
       ],
       "condition": "#GetInput.Score >= 0.5 && @SlotOperation != null"

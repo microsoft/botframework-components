@@ -44,12 +44,8 @@
           "prompt": "${TextInput_Prompt_BTMO0q()}",
           "property": "dialog.description",
           "outputFormat": "= this.value",
-<<<<<<< HEAD
           "value": "=@Desciption",
           "invalidPrompt": "${TextInput_InvalidPrompt_BTMO0q()}"
-=======
-          "value": "=@Desciption"
->>>>>>> next
         },
         {
           "$kind": "Microsoft.EndDialog",
