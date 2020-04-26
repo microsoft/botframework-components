@@ -40,7 +40,7 @@
     SuggestedActions = Help | Cancel
 ]
 
-# bfdactivity_As8-Wf()
+# bfdactivity_As8_Wf()
 - OK, I've updated the task content to ${@taskContent}
 # bfdactivity_YSmvaQ()
 - OK, I've updated the list type to ${dialog.listType}
