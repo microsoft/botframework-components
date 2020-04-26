@@ -339,7 +339,7 @@
               "$designer": {
                 "id": "As8-Wf"
               },
-              "activity": "${bfdactivity_As8-Wf()}"
+              "activity": "${bfdactivity_As8_Wf()}"
             }
           ]
         },

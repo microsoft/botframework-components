@@ -41,6 +41,14 @@
           }
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "YvzpCs"
+          },
+          "property": "dialog.meetingsList",
+          "value": "=[]"
+        },
+        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "lzrTMU"
@@ -92,6 +100,14 @@
               ]
             },
             {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "SWXq3k"
+              },
+              "value": "=dialog.CurrentMeetingData",
+              "name": "dialog.CurrentMeetingData"
+            },
+            {
               "$kind": "Microsoft.EditArray",
               "$designer": {
                 "id": "okap59"
@@ -125,6 +141,12 @@
               "value": "= dialog.api_result.statusCode == 200"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NmZ3vB"
+          }
         },
         {
           "$kind": "Microsoft.EndDialog",

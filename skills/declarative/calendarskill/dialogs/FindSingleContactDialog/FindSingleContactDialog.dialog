@@ -141,7 +141,7 @@
                 "noValue": false,
                 "noAction": false
               },
-              "prompt": "${bfdprompt-GG_dh5()}",
+              "prompt": "${TextInput_Prompt_GG_dh5()}",
               "choices": "dialog.unconfirmedAttendeeList",
               "property": "turn.ResolvedAttendee"
             },
@@ -158,7 +158,7 @@
           "$designer": {
             "id": "DvmU48"
           },
-          "activity": "${bfdactivity-DvmU48()}"
+          "activity": "${SendActivity_DvmU48()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
