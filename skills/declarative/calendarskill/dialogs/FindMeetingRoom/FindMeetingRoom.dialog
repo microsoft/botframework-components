@@ -102,14 +102,6 @@
               "value": "= coalesce(dialog.slots.Building,@Building, if(@AnyList != null, '*', null))"
             },
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "mp_cGd",
-                "name": "After Building"
-              },
-              "name": "After Building"
-            },
-            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "QXmFXh"
@@ -147,14 +139,6 @@
               ]
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "OIRLCx",
-            "name": "collected building/floornumber"
-          },
-          "name": "collected building/floornumber"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -587,14 +571,6 @@
           "resultProperty": "dialog.requestResult"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "EKR4Mc",
-            "name": "after search meeting room"
-          },
-          "name": "after search meeting room"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "c0g1WY"
@@ -785,14 +761,6 @@
                   "value": "= where(dialog.availableRoom, x, !contains(dialog.content.ignoredRooms, concat(x.EmailAddress, dialog.content.startDateTime)))"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "aHfgMZ",
-                "name": "after filter ignored room"
-              },
-              "name": "after filter ignored room"
             }
           ]
         },

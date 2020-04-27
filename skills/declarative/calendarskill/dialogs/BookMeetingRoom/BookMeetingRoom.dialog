@@ -214,13 +214,6 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "X8o1I5"
-          },
-          "name": "before meeting room"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "KTn8HO"
@@ -233,7 +226,7 @@
                 "id": "TesD2R"
               },
               "dialog": "FindMeetingRoom",
-              "resultProperty": "dialog.content.meetingRoom",
+              "resultProperty": "dialog.meetingRoom",
               "options": {
                 "slots": "=dialog.slots",
                 "startDateTime": "=dialog.content.startDateTime",
@@ -265,13 +258,6 @@
               ]
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "lC-oqi"
-          },
-          "name": "after room"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -317,13 +303,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "IC6Npu"
-          },
-          "name": "After find attendee"
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "I6tJuo"
@@ -333,39 +312,6 @@
             "title": "=coalesce(dialog.slots.Subject, dialog.content.title)"
           },
           "resultProperty": "dialog.content.title"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "RYluNq"
-          }
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "lC-oqi"
-          },
-          "name": "after room"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "5Poqvb"
-          },
-          "dialog": "FindContactDialog",
-          "disabled": true
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "7Zxhms"
-          },
-          "assignments": [
-            {
-              "property": "dialog.content.attendeeList",
-              "value": "= []"
-            }
-          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -380,10 +326,20 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "ERu4JB"
-          }
+            "id": "hLNUtb"
+          },
+          "assignments": [
+            {
+              "property": "dialog.location",
+              "value": "= join(foreach(dialog.content.roomList, x, x.DisplayName), ',', ' and ')"
+            },
+            {
+              "property": "dialog.roomEmails",
+              "value": "= foreach(dialog.content.roomList, x, x.EmailAddress)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -399,7 +355,8 @@
           "property": "dialog.confirm",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           }
         },
         {
@@ -413,7 +370,7 @@
             "endDateTime": "=dialog.content.endDateTime",
             "title": "=dialog.content.title",
             "desciption": "=dialog.content.description",
-            "location": "=dialog.content.location",
+            "rooms": "=dialog.roomEmails",
             "attendees": "=dialog.content.attendeeList"
           },
           "resultProperty": "dialog.requestResult"
@@ -502,28 +459,11 @@
           "name": "BookMeetingRoom GetInput"
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "ggrdZE",
-            "name": "BookMeetingRoom GetInput"
-          },
-          "activity": "${activity_ggrdZE()}",
-          "disabled": true
-        },
-        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "0vvcZ0"
           },
           "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "JGICfu",
-                "name": "InOperation"
-              },
-              "name": "InOperation"
-            },
             {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
@@ -683,7 +623,7 @@
                       "$designer": {
                         "id": "25YzIt"
                       },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'location') || @Location != null",
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
@@ -692,12 +632,16 @@
                           },
                           "assignments": [
                             {
-                              "property": "dialog.slots.Location ",
-                              "value": "=@Location "
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
                             },
                             {
-                              "property": "dialog.content.location ",
-                              "value": "= null"
+                              "property": "dialog.content.roomList",
+                              "value": "= []"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
+                              "value": true
                             }
                           ]
                         }
@@ -770,6 +714,35 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "ox1rvU"
+                      },
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "xort0u"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
+                            },
+                            {
+                              "property": "dialog.content.roomList",
+                              "value": "= []"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
+                              "value": true
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
@@ -802,6 +775,31 @@
                             },
                             {
                               "property": "dialog.content.addAttendee",
+                              "value": true
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "HfHDHG"
+                      },
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "GHCLBU"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
                               "value": true
                             }
                           ]

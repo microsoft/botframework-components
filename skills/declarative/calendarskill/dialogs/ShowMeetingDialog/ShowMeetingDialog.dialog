@@ -417,7 +417,10 @@
                   "style": "Auto",
                   "prompt": "${TextInput_Prompt_4u0r_m()}",
                   "property": "dialog.ConfirmRead",
-                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9"
+                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9",
+                  "choiceOptions": {
+                    "includeNumbers": true
+                  }
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",

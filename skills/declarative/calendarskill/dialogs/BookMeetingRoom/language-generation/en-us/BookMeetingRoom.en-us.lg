@@ -21,8 +21,8 @@
 - ${CalendarErrorMessage()}
 # TextInput_Prompt_OigRoD()
 [Activity
-	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.content.location)}${ConfirmCreateContent(dialog.content.description)}
-    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.content.location, dialog.content.description, null))}
+	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.location)}${ConfirmCreateContent(dialog.content.description)}
+    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.location, dialog.content.description, null))}
 ]
 # ConfirmCreateAttendees(Attendees)
 - IF: ${Attendees == null || count(Attendees) == 0}
@@ -48,5 +48,3 @@
 - ELSE:
     -
 
-# activity_ggrdZE()
-- slot attribute is ${dialog.slotOperation}

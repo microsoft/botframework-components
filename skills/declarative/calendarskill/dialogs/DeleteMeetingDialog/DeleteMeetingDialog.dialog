@@ -118,28 +118,22 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "-MGRh-"
+            "id": "mhtftF"
           },
-          "condition": "dialog.confirm == \"No\"",
+          "condition": "dialog.meeting.IsOrganizer ",
           "actions": [
             {
-              "$kind": "Microsoft.EndDialog",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "6Pao4R"
-              }
+                "id": "EnWBo3"
+              },
+              "dialog": "DeleteMeetingRequest",
+              "options": {
+                "meetingId": "=dialog.meeting.id"
+              },
+              "resultProperty": "dialog.requestResult"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "GPQQWD"
-          },
-          "dialog": "DeleteMeetingRequest",
-          "options": {
-            "meetingId": "=dialog.meeting.id"
-          },
-          "resultProperty": "dialog.requestResult"
         },
         {
           "$kind": "Microsoft.IfCondition",

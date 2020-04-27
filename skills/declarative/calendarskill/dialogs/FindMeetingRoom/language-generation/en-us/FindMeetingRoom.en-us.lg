@@ -6,7 +6,6 @@
 # TextInput_Prompt_BVqWhA()
 - ${NoFloorNumber()}
 
-<<<<<<< HEAD
 # SendActivity_Activity_H27Rai()
 - ${IgnoreMeetingRoom()}
 
@@ -42,12 +41,6 @@
 - OK, which building?
 
 # NoFloorNumber()
-=======
-# TextInput_Prompt_f3QClo()
-- OK, which building?
-
-# TextInput_Prompt_BVqWhA()
->>>>>>> next
 - Alright, do you have a floor preference?
 
 # FloorNumberRetry()
