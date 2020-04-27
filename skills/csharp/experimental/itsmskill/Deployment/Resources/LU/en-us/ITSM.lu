@@ -71,6 +71,13 @@ $TicketState:closed=
 $TicketState:canceled=
 - canceled
 
+$TicketState:active=
+- active
+- open
+
+$TicketState:inactive=
+- inactive
+
 
 > # Regex entities
 

@@ -295,6 +295,15 @@ namespace ITSMSkill.Responses.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string TicketStateActive {
+            get {
+                return ResourceManager.GetString("TicketStateActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Canceled.
         /// </summary>
         public static string TicketStateCanceled {
@@ -309,6 +318,15 @@ namespace ITSMSkill.Responses.Shared {
         public static string TicketStateClosed {
             get {
                 return ResourceManager.GetString("TicketStateClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inactive.
+        /// </summary>
+        public static string TicketStateInactive {
+            get {
+                return ResourceManager.GetString("TicketStateInactive", resourceCulture);
             }
         }
         

@@ -187,7 +187,22 @@ namespace ITSMSkill.Dialogs
             var states = new List<TicketState>();
             if (state.TicketState != TicketState.None)
             {
-                states.Add(state.TicketState);
+                if (state.TicketState == TicketState.Active)
+                {
+                    states.Add(TicketState.New);
+                    states.Add(TicketState.InProgress);
+                    states.Add(TicketState.OnHold);
+                    states.Add(TicketState.Resolved);
+                }
+                else if (state.TicketState == TicketState.Inactive)
+                {
+                    states.Add(TicketState.Closed);
+                    states.Add(TicketState.Canceled);
+                }
+                else
+                {
+                    states.Add(state.TicketState);
+                }
             }
 
             var countResult = await management.CountTicket(query: state.TicketTitle, urgencies: urgencies, number: state.TicketNumber, states: states);
