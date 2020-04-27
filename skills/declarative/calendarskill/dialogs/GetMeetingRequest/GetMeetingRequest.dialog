@@ -96,16 +96,16 @@
                 {
                   "property": "dialog.CurrentMeetingData.Attendees",
                   "value": "=dialog.foreach.value.attendees"
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.IsOrganizer ",
+                  "value": "=dialog.foreach.value.isOrganizer"
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.id",
+                  "value": "=dialog.foreach.value.id"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "SWXq3k"
-              },
-              "value": "=dialog.CurrentMeetingData",
-              "name": "dialog.CurrentMeetingData"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -117,6 +117,14 @@
               "value": "=dialog.CurrentMeetingData"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hPoxJ8"
+          },
+          "value": "=dialog.CurrentMeetingData",
+          "name": "dialog.CurrentMeetingData"
         },
         {
           "$kind": "Microsoft.SetProperty",

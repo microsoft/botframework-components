@@ -881,3 +881,110 @@
 - {FromDate=today} ' s {Subject=lunch} will be how long
 - total {Subject=lunch break} time {FromDate=today} please
 - what allotted time is for {Subject=hair dresser}
+
+# CheckAvailability
+- am i available
+- am i available at {FromTime=10 am} on {FromDate=monday}
+- am i available on {FromDate=monday} at {FromTime=9 pm}
+- am i available {FromDate=tomorrow} at {FromTime=5 30 pm}
+- am i busy on the {FromDate=6th of february}
+- am i busy on {FromDate=this weekend}
+- am i busy {FromDate=this weekend}
+- am i free
+- am i free at {FromTime=5 pm} {FromDate=today}
+- am i free at {FromTime=7 p . m .}
+- am i free for {Subject=drinks} {FromDate=monday} at {FromTime=5}
+- am i free for {Subject=drinks} {FromDate=monday} at {FromTime=5 pm}
+- am i free for {Subject=hiking} on {FromDate=saturday} at {FromTime=8 am}
+- am i free from {FromTime=3 pm} - {ToTime=10 pm}
+- am i free on {FromDate=monday} at {FromTime=9 pm}
+- am i free on {FromDate=saturday}
+- am i free on the {FromDate=12th of july}
+- am i free to {Subject=drive} with kim on {FromDate=thurs} at {FromTime=3 pm}
+- am i free {FromDate=today}
+- am i free {FromDate=tomorrow} {FromTime=3 pm}
+- am i free {FromTime=tonight}
+- am i free {FromDate=tuesday} at {FromTime=7 am}
+- can you check my dad 's calendar for free time {FromDate=this week}
+- can you tell me if my husband is free on {FromDate=sunday}
+- can i reserve a room in building {Building=5} for a meeting?
+- can i reserve a room on {FloorNumber=floor 7} in {Building=building 8} for a meeting tomorrow?
+- can i reserve {MeetingRoom=alderaan} right {FromTime=now?}
+- can i reserve {MeetingRoom=excalibur} for {FromTime=2pm} or is it not available?
+- can i reserve room {MeetingRoom=gandhi} for the whole week?
+- can i reserve the {MeetingRoom=enterprise} room on {FloorNumber=floor 6} of the {Building=bob} building for a meeting?
+- can i reserve the meeting room {MeetingRoom=bespin}?
+- can i reserve the meeting room that's free on the {FloorNumber=21st floor}?
+- can i reserve the {MeetingRoom=williams} room for a meeting?
+- can you tell if if the meeting room {MeetingRoom=bespin} is now available for me?
+- can you tell me if the meeting room {MeetingRoom=no 20} is available at {FromTime=noon}?
+- hello, am i able to reserve {MeetingRoom=hoth} {FromTime=right now}?
+- i was wondering if you have a meeting room available in your {Building=atlantic} building for the {FromDate=4th of december}?
+- i would like to reserve a {FloorNumber=ground floor} {MeetingRoom=conference room} in the {Building=delta building}, is there one available?
+- is {MeetingRoom=coruscant} available at {FromTime=2 pm}
+- is {MeetingRoom=enterprise} available?
+- is {MeetingRoom=excalibur} available {FromTime=now}?
+- is {MeetingRoom=hoth} currently available for use?
+- is it at all possible to reserve a room in the {Building=redmond} building?
+- is meeting {MeetingRoom=room 201} available?
+- is meeting room {MeetingRoom=kamino} available for the whole afternoon?
+- is {MeetingRoom=room 224} available today?
+- is {MeetingRoom=tatooine} available in the {FromTime=evening}?
+- is the {MeetingRoom=alderaan} room on the {FloorNumber=lobby floor} at the {Building=city center} available?
+- is the {MeetingRoom=bespin} meeting room available at {FromTime=2:00 pm}?
+- is the {MeetingRoom=carpenter} room available for a meeting
+- is the {MeetingRoom=gandhi} room free now?
+- is the meeting room {MeetingRoom=endor} available
+- is the meeting room on the {FloorNumber=4th floor} available?
+- is the {MeetingRoom=room 1192} available for {FromTime=2:00pm tomorrow}?
+- is the room {MeetingRoom=2211} available for a meeting at {FromTime=6}
+- is there a meeting room on the {FloorNumber=5th floor} currently available to reserve?
+- is there a room available at the {FloorNumber=first floor} for {FromTime=tonight}?
+- is there a room available on {FloorNumber=floor 6} {FromTime=now}?
+- is there a room on the {FloorNumber=3rd floor} that i can reserve?
+- please can i reserve a meeting room in {Building=city center}?
+- please can i reserve {MeetingRoom=kamino}?
+- please can i reserve the meeting room on {FloorNumber=floor 6} at {Building=lime tree house}?
+- please check and see if meeting room {MeetingRoom=2} is available at {FromTime=12} tomorrow.
+- see if meeting room {MeetingRoom=3} available tuesday at 11:30 for the meeting.
+- tell me if {MeetingRoom=kamino} is open at {FromTime=11:00am}.
+- will the meeting room {MeetingRoom=2b} be available at {FromTime=2 pm}
+- will the {MeetingRoom=tatooine} room be available {FromTime=tomorrow}?
+- would you please check availability of the room on the {FloorNumber=third floor} at {FromTime=3 p.m.} tomorrow?
+- display olivia 's availability
+- do i have any free time {FromDate=this weekend}
+- i would like to know if my mother is available {FromDate=today}
+- is carolyn available {FromDate=tuesday} {FromTime=afternoon}
+- is conference {MeetingRoom=room xi} free on 10 am?
+- is debra available on {FromDate=saturday}
+- is gerald busy {FromDate=this weekend}
+- is grace available for the {Subject=daily scrum meeting} with engineering team from {FromTime=10} to {ToTime=11}
+- is madison busy
+- is meeting {MeetingRoom=room 345} open on 3pm?
+- is meeting {MeetingRoom=room cake} available now?
+- is nicholas available {FromDate=friday}
+- is raymond free on {FromDate=monday} {FromTime=evening}
+- is rebecca busy {FromDate=thursday} at {FromTime=4}
+- is {MeetingRoom=room 235} free on 3pm?
+- is {MeetingRoom=room 246} open right now?
+- is {MeetingRoom=room 63} available {FromDate=tomorrow} {FromTime=4pm}
+- is {MeetingRoom=room alpha} open on 3pm?
+- is russell free on {FromDate=friday} at {FromTime=4pm}
+- is {FromDate=saturday} free
+- is theresa free {FromDate=october 9th}
+- is virginia free on {FromDate=monday}
+- search jesse 's calendar for availability
+- what else is available
+- what is anna 's availability {FromDate=next tuesday}
+- when am i free
+- when am i free {FromDate=today}
+- when do i have time to create a {Subject=weekly meeting}
+- when does ellen have time to attend the meeting
+- when does ellen have time to attend the meeting for business review
+- when does marry have time to join the appointment
+- when is aaron free {FromDate=tomorrow}
+- when is bryan free
+- when is dylan available
+- when is samuel available {FromDate=tomorrow}
+- when will jordan be free
+- will tyler be free on {FromDate=friday}

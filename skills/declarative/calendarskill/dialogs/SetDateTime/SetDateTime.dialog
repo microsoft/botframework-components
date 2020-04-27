@@ -65,7 +65,8 @@
           "prompt": "${TextInput_Prompt_l3ZgcG()}",
           "property": "dialog.startTime",
           "value": "= coalesce(dialog._startTime, @FromTime)",
-          "outputFormat": "= this.value[0].Value"
+          "outputFormat": "= this.value[0].Value",
+          "invalidPrompt": "${DateTimeInput_InvalidPrompt_l3ZgcG()}"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -74,14 +75,6 @@
           },
           "property": "dialog.startDateTime",
           "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.startDate)))+(ticks(formatDateTime(dialog.startTime))-ticks(startOfDay(formatDateTime(dialog.startTime))))-621355968000000000)/10000000)"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "PUuDU4"
-          },
-          "activity": "${SendActivity_PUuDU4()}",
-          "disabled": true
         },
         {
           "$kind": "Microsoft.EndDialog",

@@ -83,7 +83,10 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "inlineSeparator": ", "
+          }
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -107,15 +110,30 @@
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "GPQQWD"
+            "id": "B1h_e5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mhtftF"
           },
-          "dialog": "DeleteMeetingRequest",
-          "options": {
-            "meetingId": "=dialog.meeting.id"
-          },
-          "resultProperty": "dialog.requestResult"
+          "condition": "dialog.meeting.IsOrganizer ",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "EnWBo3"
+              },
+              "dialog": "DeleteMeetingRequest",
+              "options": {
+                "meetingId": "=dialog.meeting.id"
+              },
+              "resultProperty": "dialog.requestResult"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
