@@ -25,6 +25,6 @@
 # SendActivity_86KqPI()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 # SendActivity_Nqbvyc()
-- Deleted meeting \"${dialog.meeting.subject}\"
+- Deleted meeting \"${dialog.meeting.Title}\"
 # SendActivity_zvacDp()
 - ${CalendarErrorMessage()}

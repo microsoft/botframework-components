@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "lxGvr-",
-    "name": "Search",
+    "id": "nU7YfR",
+    "name": "CheckPersonAvailableDialog",
     "description": ""
   },
   "autoEndDialog": "true",
@@ -13,17 +13,9 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "ZNpKYc"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "DDStB9"
-          }
-        }
-      ]
+        "id": "h0rcpT"
+      }
     }
   ],
-  "generator": "Search.lg"
+  "generator": "CheckPersonAvailableDialog.lg"
 }
