@@ -1,0 +1,6 @@
+{
+    "$kind": "Microsoft.Test.MockUserToken",
+    "connectionName": "outlook",
+    "token": "token",
+    "magicCode": "000000"
+}

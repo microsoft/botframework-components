@@ -1,0 +1,9 @@
+{
+    "$kind": "Microsoft.Test.MockProperties",
+    "assignments": [
+        {
+            "property": "settings.connectionName",
+            "value": "outlook"
+        }
+    ]
+}

@@ -2,16 +2,11 @@
     "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
     "$kind": "Microsoft.Test.Script",
     "description": "update, clear, multi",
-    "settings": {
-        "connectionName": "outlook"
-    },
+    "properties": [
+        "settings.mock"
+    ],
     "userTokens": [
-        {
-            "$kind": "Microsoft.Test.MockUserToken",
-            "connectionName": "outlook",
-            "token": "token",
-            "magicCode": "000000"
-        }
+        "usertoken.mock"
     ],
     "dialog": "ToDoSkill",
     "script": [
