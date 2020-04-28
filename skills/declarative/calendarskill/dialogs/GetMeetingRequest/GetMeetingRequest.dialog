@@ -108,6 +108,50 @@
               ]
             },
             {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "BalXjU"
+              },
+              "index": "dialog.foreach.index2",
+              "value": "dialog.foreach.value2",
+              "itemsProperty": "dialog.meetingsList",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "UzQr1s"
+                  },
+                  "condition": "(ticks(formatDateTime(dialog.CurrentMeetingData.StartTime)) >= ticks(formatDateTime(dialog.foreach.value2.StartTime))) && (ticks(formatDateTime(dialog.CurrentMeetingData.StartTime)) < ticks(formatDateTime(dialog.foreach.value2.EndTime)))",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "v1S149"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.CurrentMeetingData.IsConflict",
+                          "value": true
+                        },
+                        {
+                          "property": "dialog.meetingsList[dialog.foreach.index2].IsConflict",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "SWXq3k"
+              },
+              "value": "=dialog.CurrentMeetingData",
+              "name": "dialog.CurrentMeetingData"
+            },
+            {
               "$kind": "Microsoft.EditArray",
               "$designer": {
                 "id": "okap59"
@@ -116,7 +160,9 @@
               "itemsProperty": "dialog.meetingsList",
               "value": "=dialog.CurrentMeetingData"
             }
-          ]
+          ],
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
         },
         {
           "$kind": "Microsoft.TraceActivity",

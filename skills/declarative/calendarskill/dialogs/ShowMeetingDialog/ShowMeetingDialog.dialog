@@ -453,39 +453,24 @@
                   ],
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.BeginDialog",
                       "$designer": {
-                        "id": "0KZPcM"
+                        "id": "uua8PY"
                       },
-                      "property": "turn.number",
-                      "value": "=coalesce(@ordinal, @number)"
+                      "activityProcessed": true,
+                      "dialog": "GetFocusedMeeting"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "MOZiwh"
+                        "id": "JDc5RD"
                       },
-                      "condition": "turn.number > 0 && turn.number <= count(conversation.DisplayMeetingsList)",
+                      "condition": "conversation.focusedMeeting != null",
                       "actions": [
-                        {
-                          "$kind": "Microsoft.TraceActivity",
-                          "$designer": {
-                            "id": "udoIL2"
-                          },
-                          "value": "=turn.number - 1"
-                        },
-                        {
-                          "$kind": "Microsoft.SetProperty",
-                          "$designer": {
-                            "id": "xrxUrq"
-                          },
-                          "property": "conversation.FocusedMeeting",
-                          "value": "=conversation.DisplayMeetingsList[int(turn.number - 1)]"
-                        },
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "a-xoGz"
+                            "id": "WAhYYf"
                           },
                           "eventName": "ShowMeetingDetailInfo"
                         }
