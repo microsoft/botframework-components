@@ -1,0 +1,1 @@
+{"query":"delete all tasks","prediction":{"topIntent":"TextInput.response-841583","intents":{"TextInput.response-841583":{"score":0.830853462}},"entities":{"ContainsAll":["all"]}}}
