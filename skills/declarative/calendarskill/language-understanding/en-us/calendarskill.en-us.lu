@@ -988,3 +988,6 @@
 - when is samuel available {FromDate=tomorrow}
 - when will jordan be free
 - will tyler be free on {FromDate=friday}
+
+@ prebuilt ordinal
+@ prebuilt number

@@ -15,6 +15,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "gqzlNc"
+          },
+          "activityProcessed": true,
+          "dialog": "GetFocusedMeeting"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "N__c4b"
