@@ -881,3 +881,6 @@
 - {FromDate=today} ' s {Subject=lunch} will be how long
 - total {Subject=lunch break} time {FromDate=today} please
 - what allotted time is for {Subject=hair dresser}
+
+@ prebuilt ordinal
+@ prebuilt number
