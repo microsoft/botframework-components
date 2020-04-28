@@ -174,7 +174,7 @@
                 "id": "58eW2h"
               },
               "property": "dialog.meetings",
-              "value": "= dialog.requestResult.meetings"
+              "value": "= dialog.requestResult.meetingsList"
             }
           ],
           "disabled": false
@@ -182,20 +182,13 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "4tnFi3"
+            "id": "Rtls2T"
           },
-          "dialog": "GetMeetingRequest",
+          "dialog": "ChooseMeeting",
           "options": {
-            "StartDateTime": "=dialog.utcStart",
-            "EndDateTime": "=dialog.utcStart"
+            "meetings": "=dialog.meetings"
           },
-          "resultProperty": "dialog.getMeetingResult"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "eu-go7"
-          }
+          "resultProperty": "dialog.choosenMeeting"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -239,7 +232,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "name": "SearchMeetingsByConditions"
         },
         {
           "$kind": "Microsoft.EndDialog",

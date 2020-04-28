@@ -69,14 +69,30 @@
           ]
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "YiqPAY"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcEnd",
+              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "OXB8x2"
+            "id": "rJnUYP"
           },
-          "dialog": "SearchMeetingRequest",
+          "dialog": "GetMeetingRequest",
           "options": {
-            "startDateTime": "=dialog.startDateTime",
-            "endDateTime": "=dialog.endDateTime"
+            "StartDateTime": "=dialog.utcStart",
+            "EndDateTime": "=dialog.utcEnd"
           },
           "resultProperty": "dialog.requestResult"
         },
@@ -84,7 +100,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "mPkXUf"
-          }
+          },
+          "name": "GetMeetingRequest"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -106,8 +123,8 @@
               "$designer": {
                 "id": "cHR2pt"
               },
-              "property": "dialog.result.meetings",
-              "value": "= where(dialog.requestResult.meetings, x, contains(toLower(x.subject), toLower(dialog.query)))"
+              "property": "dialog.result.meetingsList",
+              "value": "= where(dialog.requestResult.meetingsList, x, contains(toLower(x.Title), toLower(dialog.query)))"
             }
           ]
         },
@@ -115,7 +132,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "X5OKpF"
-          }
+          },
+          "name": "GetMeetingRequest"
         },
         {
           "$kind": "Microsoft.EndDialog",

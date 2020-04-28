@@ -34,12 +34,20 @@
           },
           "actions": [
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "CMYF2-"
+                "id": "MQrbCJ"
               },
-              "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
-              "value": "=dialog.foreach.value"
+              "assignments": [
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                  "value": "=dialog.foreach.value"
+                },
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.type",
+                  "value": "required"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -62,9 +70,52 @@
           "disabled": false
         },
         {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "SvMfA6"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "SPMgcb"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                  "value": "=dialog.foreach.value"
+                },
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.type",
+                  "value": "Resource"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "KWmByR"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.CreateHttpRequestEmailList",
+              "value": "=dialog.CreateHttpRequestEmailItem"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "l16h0I"
+              },
+              "name": "email loop"
+            }
+          ],
+          "itemsProperty": "dialog.rooms",
+          "disabled": false,
+          "index": "dialog.foreach.index"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "uPjuXk",
+            "id": "PQX7xo",
             "name": "Set utc start"
           },
           "assignments": [
@@ -77,6 +128,12 @@
               "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "MgSytp"
+          }
         },
         {
           "$kind": "Microsoft.HttpRequest",
@@ -100,7 +157,7 @@
               "timeZone": "UTC"
             },
             "location": {
-              "displayName": "${dialog.location}"
+              "displayName": "=coalesce(dialog.location, '')"
             },
             "attendees": "=dialog.CreateHttpRequestEmailList"
           },
