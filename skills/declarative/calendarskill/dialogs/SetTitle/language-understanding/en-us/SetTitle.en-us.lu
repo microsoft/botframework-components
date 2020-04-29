@@ -24,6 +24,7 @@
 - dinner
 - lunch
 - breakfast
+<<<<<<< HEAD
 
 #_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
@@ -121,3 +122,5 @@
 	- content :
 		- description
 	- duration :
+=======
+>>>>>>> huanx/next

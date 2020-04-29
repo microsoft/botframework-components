@@ -115,7 +115,31 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WxmZTQ"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ZR1rZA"
+          },
+          "condition": "!dialog.confirm",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "SgEqk8"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -126,7 +150,8 @@
           "options": {
             "meetingId": "=dialog.meeting.id"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

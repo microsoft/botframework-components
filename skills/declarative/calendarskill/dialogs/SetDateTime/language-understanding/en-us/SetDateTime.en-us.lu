@@ -37,6 +37,7 @@
 - {FromTime=2 pm}
 - {FromTime=2pm}
 - {FromTime=2 30}
+<<<<<<< HEAD
 
 #_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
@@ -134,3 +135,5 @@
 	- content :
 		- description
 	- duration :
+=======
+>>>>>>> huanx/next

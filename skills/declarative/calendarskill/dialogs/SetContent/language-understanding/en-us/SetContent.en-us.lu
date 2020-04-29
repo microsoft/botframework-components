@@ -12,6 +12,7 @@
 - the description is {Desciption=test content}
 - it could be {Desciption=test description}
 - it is {Desciption=an interesting meeting}
+<<<<<<< HEAD
 
 #_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
@@ -109,3 +110,5 @@
 	- content :
 		- description
 	- duration :
+=======
+>>>>>>> huanx/next

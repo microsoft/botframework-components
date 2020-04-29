@@ -12,6 +12,7 @@
 - {Duration=2hour}
 - {Duration=30min}
 - {Duration=30 min} please
+<<<<<<< HEAD
 
 #_Interruption
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
@@ -109,3 +110,5 @@
 	- content :
 		- description
 	- duration :
+=======
+>>>>>>> huanx/next

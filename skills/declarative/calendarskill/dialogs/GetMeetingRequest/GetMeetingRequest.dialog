@@ -34,7 +34,7 @@
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}",
+          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}&$top=50",
           "resultProperty": "dialog.api_result",
           "headers": {
             "Authorization": "Bearer ${turn.token}"
@@ -104,6 +104,7 @@
                 {
                   "property": "dialog.CurrentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
+<<<<<<< HEAD
                 }
               ]
             },
@@ -140,16 +141,14 @@
                       ]
                     }
                   ]
+=======
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
+                  "value": "=dialog.foreach.value.onlineMeeting"
+>>>>>>> huanx/next
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "SWXq3k"
-              },
-              "value": "=dialog.CurrentMeetingData",
-              "name": "dialog.CurrentMeetingData"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -163,6 +162,14 @@
           ],
           "value": "dialog.foreach.value",
           "index": "dialog.foreach.index"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hPoxJ8"
+          },
+          "value": "=dialog.CurrentMeetingData",
+          "name": "dialog.CurrentMeetingData"
         },
         {
           "$kind": "Microsoft.TraceActivity",

@@ -81,6 +81,7 @@
 - try the {FloorNumber=3rd floor}
 - try {FloorNumber=the floor 23}
 - use {MeetingRoom=room wender}
+<<<<<<< HEAD
 - want to book room {MeetingRoom=g5}
 
 #_Interruption
@@ -179,3 +180,6 @@
 	- content :
 		- description
 	- duration :
+=======
+- want to book room {MeetingRoom=g5}
+>>>>>>> huanx/next
