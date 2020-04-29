@@ -41,7 +41,7 @@
                 "id": "804421",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-804421()}"
+              "activity": "${SendActivity_804421()}"
             }
           ],
           "elseActions": [
