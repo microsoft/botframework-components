@@ -58,7 +58,7 @@
                     "id": "991018",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-991018()}"
+                  "activity": "${SendActivity_991018()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -89,7 +89,7 @@
                     "id": "168348",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-168348()}"
+                  "activity": "${SendActivity_168348()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -120,7 +120,7 @@
                     "id": "812058",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-812058()}"
+                  "activity": "${SendActivity_812058()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -151,7 +151,7 @@
                     "id": "666158",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-666158()}"
+                  "activity": "${SendActivity_666158()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -182,7 +182,7 @@
                     "id": "093525",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-093525()}"
+                  "activity": "${SendActivity_093525()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -213,7 +213,7 @@
                     "id": "484201",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-484201()}"
+                  "activity": "${SendActivity_484201()}"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -259,7 +259,7 @@
                         "id": "836453",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-836453()}"
+                      "activity": "${SendActivity_836453()}"
                     },
                     {
                       "$kind": "Microsoft.BeginDialog",
@@ -278,7 +278,7 @@
                         "id": "823586",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-823586()}"
+                      "activity": "${SendActivity_823586()}"
                     }
                   ]
                 }
@@ -308,7 +308,7 @@
                         "id": "yDA1Nx",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-yDA1Nx()}"
+                      "activity": "${SendActivity_yDA1Nx()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperties",
@@ -344,7 +344,7 @@
                         "id": "674472",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-674472()}"
+                      "activity": "${SendActivity_674472()}"
                     }
                   ]
                 }
@@ -374,7 +374,7 @@
                         "id": "wqTjD7",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-wqTjD7()}"
+                      "activity": "${SendActivity_wqTjD7()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperties",
@@ -410,7 +410,7 @@
                         "id": "_PozQU",
                         "name": "Send a response"
                       },
-                      "activity": "${bfdactivity-_PozQU()}"
+                      "activity": "${SendActivity__PozQU()}"
                     }
                   ]
                 }
@@ -445,7 +445,7 @@
                           "$designer": {
                             "id": "lGY4se"
                           },
-                          "activity": "${bfdactivity-lGY4se()}"
+                          "activity": "${SendActivity_lGY4se()}"
                         }
                       ],
                       "elseActions": [
@@ -454,7 +454,7 @@
                           "$designer": {
                             "id": "uj1_vp"
                           },
-                          "activity": "${bfdactivity-uj1_vp()}"
+                          "activity": "${SendActivity_uj1_vp()}"
                         }
                       ]
                     }
@@ -472,7 +472,7 @@
                           "$designer": {
                             "id": "Yav0ak"
                           },
-                          "activity": "${bfdactivity-Yav0ak()}"
+                          "activity": "${SendActivity_Yav0ak()}"
                         }
                       ],
                       "elseActions": [
@@ -481,7 +481,7 @@
                           "$designer": {
                             "id": "O2hOQ7"
                           },
-                          "activity": "${bfdactivity-O2hOQ7()}"
+                          "activity": "${SendActivity_O2hOQ7()}"
                         }
                       ]
                     },
@@ -542,7 +542,7 @@
                           "$designer": {
                             "id": "clJALA"
                           },
-                          "activity": "${bfdactivity-clJALA()}"
+                          "activity": "${SendActivity_clJALA()}"
                         }
                       ],
                       "elseActions": [
@@ -551,7 +551,7 @@
                           "$designer": {
                             "id": "yNKAwb"
                           },
-                          "activity": "${bfdactivity-yNKAwb()}"
+                          "activity": "${SendActivity_yNKAwb()}"
                         }
                       ]
                     }
@@ -569,7 +569,7 @@
                           "$designer": {
                             "id": "Tx2gWs"
                           },
-                          "activity": "${bfdactivity-Tx2gWs()}"
+                          "activity": "${SendActivity_Tx2gWs()}"
                         }
                       ],
                       "elseActions": [
@@ -578,7 +578,7 @@
                           "$designer": {
                             "id": "u2ylya"
                           },
-                          "activity": "${bfdactivity-u2ylya()}"
+                          "activity": "${SendActivity_u2ylya()}"
                         }
                       ]
                     },

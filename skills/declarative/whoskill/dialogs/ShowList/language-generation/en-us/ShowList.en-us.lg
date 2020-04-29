@@ -1,29 +1,29 @@
 [import](common.lg)
 
-# bfdactivity-bDVRqx()
+# SendActivity_bDVRqx()
 - ${CardForList(conversation.persons)}
 
-# bfdactivity-6albBV()
+# SendActivity_6albBV()
 [Activity
     Attachments = ${json(CardForList(conversation.persons))}
     InputHint = acceptingInput
 ]
 
-# bfdactivity-xsFsj7()
+# SendActivity_xsFsj7()
 [Activity
     Attachments = ${json(CardForList(conversation.persons))}
     InputHint = acceptingInput
     SuggestedActions = Next
 ]
 
-# bfdactivity-OXXAR_()
+# SendActivity_OXXAR_()
 [Activity
     Attachments = ${json(CardForList(conversation.persons))}
     InputHint = acceptingInput
     SuggestedActions = Previous
 ]
 
-# bfdactivity-WMyIz1()
+# SendActivity_WMyIz1()
 [Activity
     Attachments = ${json(CardForList(conversation.persons))}
     InputHint = acceptingInput

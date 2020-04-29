@@ -1,7 +1,7 @@
 [import](common.lg)
 
-# bfdactivity-208645()
+# SendActivity_208645()
 - ${NoSearchResult(conversation.keyword)}
 
-# bfdactivity-317794()
+# SendActivity_317794()
 -${MultiSearchResult(conversation.keyword)}
