@@ -104,7 +104,10 @@
                 {
                   "property": "dialog.CurrentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
-<<<<<<< HEAD
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
+                  "value": "=dialog.foreach.value.onlineMeeting"
                 }
               ]
             },
@@ -141,12 +144,6 @@
                       ]
                     }
                   ]
-=======
-                },
-                {
-                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
-                  "value": "=dialog.foreach.value.onlineMeeting"
->>>>>>> huanx/next
                 }
               ]
             },

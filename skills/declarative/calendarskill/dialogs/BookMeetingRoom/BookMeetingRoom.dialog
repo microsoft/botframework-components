@@ -357,12 +357,8 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-<<<<<<< HEAD
-            "inlineOr": " or "
-=======
             "inlineOr": " or ",
             "inlineSeparator": ", "
->>>>>>> huanx/next
           }
         },
         {
@@ -482,12 +478,6 @@
                   "actions": [
                     {
                       "$kind": "Microsoft.TraceActivity",
-<<<<<<< HEAD
-                      "$designer": {
-                        "id": "9GYnnb"
-                      },
-                      "name": "Slot Change"
-=======
                       "$designer": {
                         "id": "9GYnnb"
                       },
@@ -571,93 +561,10 @@
                           ]
                         }
                       ]
->>>>>>> huanx/next
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-<<<<<<< HEAD
-                        "id": "5kVZry"
-                      },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SetProperties",
-                          "$designer": {
-                            "id": "FE0ONq"
-                          },
-                          "assignments": [
-                            {
-                              "property": "dialog.slots.personName ",
-                              "value": "=@personName "
-                            },
-                            {
-                              "property": "dialog.content.attendeeList",
-                              "value": "= []"
-                            },
-                            {
-                              "property": "dialog.content.addAttendee",
-                              "value": true
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "AptYVh"
-                      },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'title') || @Subject != null",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SetProperties",
-                          "$designer": {
-                            "id": "1Tn1hF"
-                          },
-                          "assignments": [
-                            {
-                              "property": "dialog.slots.Subject ",
-                              "value": "=@Subject "
-                            },
-                            {
-                              "property": "dialog.content.title",
-                              "value": "= null"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "5gomRK"
-                      },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'content') || @Description != null",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SetProperties",
-                          "$designer": {
-                            "id": "au2i6K"
-                          },
-                          "assignments": [
-                            {
-                              "property": "dialog.slots.Description",
-                              "value": "=@Description"
-                            },
-                            {
-                              "property": "dialog.content.description ",
-                              "value": "= null"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-=======
->>>>>>> huanx/next
                         "id": "VGXz6a"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'time') || @ToDate != null || @ToTime != null",
@@ -853,7 +760,6 @@
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
-<<<<<<< HEAD
                       "$designer": {
                         "id": "hT6yPU"
                       },
@@ -882,36 +788,6 @@
                       "$designer": {
                         "id": "HfHDHG"
                       },
-=======
-                      "$designer": {
-                        "id": "hT6yPU"
-                      },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SetProperties",
-                          "$designer": {
-                            "id": "qC5G0c"
-                          },
-                          "assignments": [
-                            {
-                              "property": "dialog.slots.personName ",
-                              "value": "=@personName "
-                            },
-                            {
-                              "property": "dialog.content.addAttendee",
-                              "value": true
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "HfHDHG"
-                      },
->>>>>>> huanx/next
                       "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
                       "actions": [
                         {

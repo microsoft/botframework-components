@@ -142,11 +142,7 @@
                 "AttendeeList": "=[coalesce(dialog.slots.personName)]",
                 "fromDialog": "CreateMeeting"
               },
-<<<<<<< HEAD
               "resultProperty": "dialog.attendeeList",
-=======
-              "resultProperty": "dialog.attendee",
->>>>>>> huanx/next
               "activityProcessed": true
             },
             {

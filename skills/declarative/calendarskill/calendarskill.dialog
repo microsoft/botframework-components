@@ -285,18 +285,12 @@
               "$designer": {
                 "id": "TRnoX7"
               },
-<<<<<<< HEAD
-              "dialog": "CheckPersonAvailableDialog"
-=======
               "dialog": "CheckPersonAvailableDialog",
               "activityProcessed": true
->>>>>>> huanx/next
             }
           ]
         }
       ]
-<<<<<<< HEAD
-=======
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -317,7 +311,6 @@
           }
         }
       ]
->>>>>>> huanx/next
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

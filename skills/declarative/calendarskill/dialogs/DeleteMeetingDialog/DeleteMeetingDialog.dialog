@@ -139,9 +139,6 @@
               "options": {
                 "meetingId": "=dialog.meeting.id"
               },
-<<<<<<< HEAD
-              "resultProperty": "dialog.requestResult"
-=======
               "resultProperty": "dialog.requestResult",
               "activityProcessed": true
             }
@@ -157,7 +154,6 @@
               "options": {
                 "meetingId": "=dialog.meeting.id"
               }
->>>>>>> huanx/next
             }
           ]
         },
