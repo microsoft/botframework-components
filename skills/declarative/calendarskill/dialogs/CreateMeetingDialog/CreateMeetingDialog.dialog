@@ -141,7 +141,8 @@
               "options": {
                 "attendee": "=coalesce(dialog.slots.personName)"
               },
-              "resultProperty": "dialog.attendee"
+              "resultProperty": "dialog.attendee",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.EditArray",

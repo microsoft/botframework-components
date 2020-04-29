@@ -127,7 +127,8 @@
           "$designer": {
             "id": "xgbv3v"
           },
-          "dialog": "DeleteMeetingDialog"
+          "dialog": "DeleteMeetingDialog",
+          "activityProcessed": true
         }
       ]
     },
@@ -143,7 +144,8 @@
           "$designer": {
             "id": "6artiV"
           },
-          "dialog": "AcceptMeetingDialog"
+          "dialog": "AcceptMeetingDialog",
+          "activityProcessed": true
         }
       ]
     },
@@ -283,9 +285,30 @@
               "$designer": {
                 "id": "TRnoX7"
               },
-              "dialog": "CheckPersonAvailableDialog"
+              "dialog": "CheckPersonAvailableDialog",
+              "activityProcessed": true
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "jCdGhH"
+      },
+      "intent": "ConnectToMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "nCuyGG"
+          },
+          "activityProcessed": true,
+          "dialog": "ConnectToMeeting",
+          "options": {
+            "title": "test title"
+          }
         }
       ]
     }

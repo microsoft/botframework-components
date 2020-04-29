@@ -34,7 +34,7 @@
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}",
+          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}&$top=50",
           "resultProperty": "dialog.api_result",
           "headers": {
             "Authorization": "Bearer ${turn.token}"
@@ -104,6 +104,10 @@
                 {
                   "property": "dialog.CurrentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
+                  "value": "=dialog.foreach.value.onlineMeeting"
                 }
               ]
             },

@@ -1,0 +1,203 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "iJygAO",
+    "name": "ConnectToMeeting",
+    "description": "- add me to conference call\n- add me to the conference call\n- call conference\n- call conference call\n- call genpact conference call\n- call harris conference\n- call into conference call\n- call into {Subject=marketing meeting}\n- call into meeting\n- call the {Subject=morning breifing} conference number\n- call the {Subject=weekly marketing meeting}\n- conference join\n- connect me to {FromTime=10 00} conf call with bryan\n- connect me to conference call\n- connect me to conference call with debra\n- connect me to {Subject=marketing meeting}\n- connect me to the {Subject=budget meeting} conference call\n- connect me to the conference call\n- connect me to the {Subject=marketing meeting}\n- connect me with conference call\n- connect me with my {FromTime=2 o clock} meeting\n- connect to conference call\n- connect to conference call {FromTime=now}\n- connect to {Subject=weekly marketing meeting}\n- dial into conference call\n- dial {Subject=marketing meeting}\n- get me on the conference call\n- i need to join conference call\n- i need to join the conference call\n- join {Subject=budget} conference call\n- join conference\n- join conference call\n- join {FromTime=current} {Subject=budget} conf call\n- join {FromTime=current} conference\n- join {FromTime=current} conference call\n- join lync meeting\n- join meeting\n- join meeting {FromTime=now}\n- join my meeting\n- join my {OrderReference=next} meeting\n- join {OrderReference=next} {Subject=link meeting}\n- join {OrderReference=next} meeting\n- join {OrderReference=next} meeting on link\n- join the {Subject=budget meeting} conference call\n- join the conference\n- join the meeting\n- join the {OrderReference=next} {Subject=lync meeting}\n- link join my {OrderReference=next} meeting\n- link join {OrderReference=next} meeting\n- lync join {OrderReference=next} meeting\n- {MeetingRoom=nokia conference room} join\n- start meeting\n- start my conference\n- start my meeting\n- start the meeting"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "vmptEa"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1QGYOw"
+          },
+          "condition": "conversation.FocusedMeeting == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "NfZTZC",
+                "name": "search a meeting"
+              },
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.meeting",
+              "activityProcessed": true
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "OYMuys"
+              },
+              "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "aNTmVq"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "cLwBGQ"
+              },
+              "property": "dialog.meeting",
+              "value": "=conversation.FocusedMeeting"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "exg0ME",
+            "name": "search a meeting"
+          },
+          "dialog": "SearchMeetings",
+          "resultProperty": "dialog.meeting",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HSogiC"
+          },
+          "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "lOpXaN"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mW4PkQ"
+          },
+          "condition": "dialog.meeting.OnlineMeeting == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "o3Sci5"
+              },
+              "activity": "${SendActivity_o3Sci5()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "eEN1ZI"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${ConfirmInput_Prompt_eEN1ZI()}",
+          "confirmChoices": [
+            {
+              "value": "Yes",
+              "synonyms": [
+                "sure"
+              ]
+            },
+            {
+              "value": "No",
+              "synonyms": [
+                "nope"
+              ]
+            }
+          ],
+          "property": "dialog.confirm",
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IipEer"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "XwmzuM"
+          },
+          "condition": "dialog.confirm",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "zv8hsP"
+              },
+              "activity": "${SendActivity_zv8hsP()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "MmCoKv"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.event",
+                  "value": "={}"
+                },
+                {
+                  "property": "dialog.event.MeetingUri",
+                  "value": "= dialog.meeting.OnlineMeeting.joinUrl"
+                },
+                {
+                  "property": "dialog.event.TelephoneUri",
+                  "value": "= dialog.meeting.OnlineMeeting.tollNumber"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lbyA1f"
+              },
+              "activity": "${SendActivity_lbyA1f()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "PcgWSx"
+              },
+              "activity": "${SendActivity_PcgWSx()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "lIGhtw"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "ConnectToMeeting.lg"
+}

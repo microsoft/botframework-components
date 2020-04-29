@@ -38,7 +38,8 @@
                 "CurrentAttendee": "${dialog.foreach.value}"
               },
               "dialog": "FindSingleContactDialog",
-              "resultProperty": "dialog.ResolvedAttendee"
+              "resultProperty": "dialog.ResolvedAttendee",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.EditArray",
