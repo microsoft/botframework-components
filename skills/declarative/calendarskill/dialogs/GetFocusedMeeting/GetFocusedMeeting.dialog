@@ -41,8 +41,8 @@
               "$designer": {
                 "id": "Qekge7"
               },
-              "property": "conversation.FocusedMeeting",
-              "value": "=conversation.DisplayMeetingsList[int(turn.number - 1)]"
+              "property": "conversation.focusedMeeting",
+              "value": "=conversation.displayMeetingsList[int(turn.number - 1)]"
             }
           ]
         }
