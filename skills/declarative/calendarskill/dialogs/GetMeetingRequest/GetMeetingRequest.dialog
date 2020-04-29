@@ -91,7 +91,7 @@
                 },
                 {
                   "property": "dialog.CurrentMeetingData.OnlineMeetingUrl",
-                  "value": "=dialog.foreach.value.body.onlineMeetingUrl"
+                  "value": "=dialog.foreach.value.onlineMeeting.joinUrl"
                 },
                 {
                   "property": "dialog.CurrentMeetingData.Attendees",

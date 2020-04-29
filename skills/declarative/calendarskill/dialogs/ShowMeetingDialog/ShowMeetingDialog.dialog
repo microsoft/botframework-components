@@ -381,7 +381,8 @@
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "PIdoic"
-                  }
+                  },
+                  "value": "=where(dialog.MeetingsList, x, x.IsConflict)"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -397,7 +398,7 @@
                     "id": "UEVwzr"
                   },
                   "property": "dialog.overlapCount",
-                  "value": "0"
+                  "value": "=count(where(dialog.MeetingsList, x, x.IsConflict))"
                 },
                 {
                   "$kind": "Microsoft.SendActivity",
