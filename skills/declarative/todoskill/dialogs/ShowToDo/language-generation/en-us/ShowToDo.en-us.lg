@@ -1,12 +1,5 @@
 [import](common.lg)
 
-# bfdprompt_807838()
-- What list would you like to see?
-
-
-# bfdactivity_yD5ABI()
-- ${NoTasksMessage(conversation.listType)}
-
 > From ShowToDo
 
 # NoTasksMessageText(ListType)
@@ -107,11 +100,21 @@
 
 > From DeleteToDo
 
+# TaskDeletedNotAll( ListType, TaskContent, TotalNumber, ToDos)
+[Activity
+    Text = ${TaskDeletedNotAllText(ListType, TaskContent)}
+    Speak = ${TaskDeletedNotAllText(ListType, TaskContent)}
+    Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
+    InputHint = ignoringInput
+]
+
+# TaskDeletedNotAllText(ListType, TaskContent)
+- I deleted ${TaskContent} from your ${ListType} list.
+
 # TaskDeleted(IsDeleteAll, ListType, TaskContent, TotalNumber, ToDos)
 [Activity
     Text = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
     Speak = ${TaskDeletedText(IsDeleteAll, ListType, TaskContent)}
-    Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
     InputHint = ignoringInput
 ]
 
@@ -125,7 +128,22 @@
 - I cleared your ${ListType} list.
 
 # AfterTaskDeletedText(TaskContent, ListType)
-- I deleted ${TaskContent} from your ${ListType} list.
+- I deleted ${TaskContent} from your ${ListType} list. You don't have anything in your ${ListType} list now.
+
+# DeletionAllConfirmationRefusedText(TaskCount, ListType)
+- OK, I didn't delete anything. There are ${TaskCount} items on your ${ListType} list.
+
+# DeletionAllConfirmationRefused(ListType, TotalNumber, ToDos)
+[Activity
+    Text = ${DeletionAllConfirmationRefusedText(TotalNumber, ListType)}
+    Speak = ${DeletionAllConfirmationRefusedText(TotalNumber, ListType)}
+    Attachments = ${json(ShowToDoCard(CardTitle(ListType), CardNumber(TotalNumber), ToDos, False, CheckIconSource(), UncheckIconSource()))}
+    InputHint = ignoringInput
+]
+
+# bfdprompt_807838()
+- What list would you like to see?
+
 
 # bfdprompt_k63lez()
 - ${AskAddOrCompleteTaskMessage()}
@@ -140,4 +158,13 @@
 - ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
 
 # bfdactivity_IS3e0H()
+- ${TaskDeletedNotAll(conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}
+
+# bfdactivity_koMtTm()
+- ${DeletionAllConfirmationRefused(conversation.listType, dialog.count, dialog.todos)}
+
+# bfdactivity_fdB82Y()
 - ${TaskDeleted(dialog.containsAll,conversation.listType,dialog.taskContent, dialog.count, dialog.todos)}
+
+# bfdactivity_QOaqmn()
+- ${NoTasksMessage(conversation.listType)}

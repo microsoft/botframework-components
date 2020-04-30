@@ -15,6 +15,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "DVwrrX"
+          },
+          "activityProcessed": true,
+          "dialog": "GetFocusedMeeting"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "s2Ler9"
@@ -67,7 +75,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-Fm38sQ()}",
+          "prompt": "${TextInput_Prompt_Fm38sQ()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -83,18 +91,57 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "inlineSeparator": ", "
+          }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "GPQQWD"
+            "id": "B1h_e5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "-MGRh-"
           },
-          "dialog": "DeleteMeetingRequest",
-          "options": {
-            "meetingId": "=dialog.meeting.id"
+          "condition": "dialog.confirm == \"No\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "6Pao4R"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "B1h_e5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mhtftF"
           },
-          "resultProperty": "dialog.requestResult"
+          "condition": "dialog.meeting.IsOrganizer ",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "EnWBo3"
+              },
+              "dialog": "DeleteMeetingRequest",
+              "options": {
+                "meetingId": "=dialog.meeting.id"
+              },
+              "resultProperty": "dialog.requestResult"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -108,7 +155,7 @@
               "$designer": {
                 "id": "zvacDp"
               },
-              "activity": "${bfdactivity-zvacDp()}"
+              "activity": "${SendActivity_zvacDp()}"
             }
           ],
           "actions": [
@@ -117,7 +164,7 @@
               "$designer": {
                 "id": "Nqbvyc"
               },
-              "activity": "${bfdactivity-Nqbvyc()}"
+              "activity": "${SendActivity_Nqbvyc()}"
             }
           ]
         },

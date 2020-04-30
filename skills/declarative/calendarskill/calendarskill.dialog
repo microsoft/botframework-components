@@ -6,7 +6,7 @@
       "id": "hR_Txm"
     }
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -48,6 +48,22 @@
                   "value": "=-int(dialog.timezone)"
                 },
                 {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "rLivzf"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.content",
+                      "value": "= {}"
+                    },
+                    {
+                      "property": "conversation.slots",
+                      "value": "= {}"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "-6WxFN"
@@ -56,9 +72,9 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "WuRqfy"
+                    "id": "F9ch6U"
                   },
-                  "activity": "${bfdactivity-WuRqfy()}"
+                  "activity": "${activity_F9ch6U()}"
                 }
               ]
             }
@@ -160,6 +176,116 @@
             "id": "9uFd2q"
           },
           "dialog": "BookMeetingRoom"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ltnY3O"
+      },
+      "intent": "FindCalendarWhen",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "knsh18"
+          },
+          "dialog": "ShowMeetingDialog",
+          "options": {
+            "askParameter": "when"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pAgBux"
+      },
+      "intent": "FindCalendarWhere",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4DM6PQ"
+          },
+          "options": {
+            "askParameter": "where"
+          },
+          "dialog": "ShowMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "l4qWBw"
+      },
+      "intent": "FindCalendarWho",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "kt2Uq6"
+          },
+          "options": {
+            "askParameter": "who"
+          },
+          "dialog": "ShowMeetingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Lla7lI"
+      },
+      "intent": "FindDuration",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "SLVGD3"
+          },
+          "dialog": "ShowMeetingDialog",
+          "options": {
+            "askParameter": "duration"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "uwGw89"
+      },
+      "intent": "CheckAvailability",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5C2lfJ"
+          },
+          "condition": "@MeetingRoom != null || @Building != null || @FloorNumber != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "OQaV1v"
+              },
+              "dialog": "BookMeetingRoom"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "TRnoX7"
+              },
+              "dialog": "CheckPersonAvailableDialog"
+            }
+          ]
         }
       ]
     }

@@ -50,7 +50,7 @@
               "$designer": {
                 "id": "6albBV"
               },
-              "activity": "${bfdactivity-6albBV()}"
+              "activity": "${SendActivity_6albBV()}"
             }
           ],
           "condition": "conversation.isFirstPage && conversation.isLastPage",
@@ -67,7 +67,7 @@
                   "$designer": {
                     "id": "xsFsj7"
                   },
-                  "activity": "${bfdactivity-xsFsj7()}"
+                  "activity": "${SendActivity_xsFsj7()}"
                 }
               ],
               "elseActions": [
@@ -83,7 +83,7 @@
                       "$designer": {
                         "id": "OXXAR_"
                       },
-                      "activity": "${bfdactivity-OXXAR_()}"
+                      "activity": "${SendActivity_OXXAR_()}"
                     }
                   ],
                   "elseActions": [
@@ -92,7 +92,7 @@
                       "$designer": {
                         "id": "WMyIz1"
                       },
-                      "activity": "${bfdactivity-WMyIz1()}"
+                      "activity": "${SendActivity_WMyIz1()}"
                     }
                   ]
                 }

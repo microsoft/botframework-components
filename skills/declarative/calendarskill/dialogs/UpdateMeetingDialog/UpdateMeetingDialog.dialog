@@ -15,6 +15,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "gqzlNc"
+          },
+          "activityProcessed": true,
+          "dialog": "GetFocusedMeeting"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "N__c4b"
@@ -91,7 +99,7 @@
           "allowInterruptions": false,
           "defaultLocale": "en-us",
           "style": "Auto",
-          "prompt": "${bfdprompt-34JbXw()}",
+          "prompt": "${TextInput_Prompt_34JbXw()}",
           "confirmChoices": [
             {
               "value": "Yes",
@@ -107,7 +115,12 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          }
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -163,7 +176,7 @@
               "$designer": {
                 "id": "DzKf6N"
               },
-              "activity": "${bfdactivity-DzKf6N()}"
+              "activity": "${SendActivity_DzKf6N()}"
             }
           ],
           "actions": [
@@ -172,7 +185,7 @@
               "$designer": {
                 "id": "-nHbKA"
               },
-              "activity": "${bfdactivity--nHbKA()}"
+              "activity": "${SendActivity__nHbKA()}"
             }
           ]
         },

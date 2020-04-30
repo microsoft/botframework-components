@@ -1,0 +1,62 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "gN87kL",
+    "name": "SetContent"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "a1oobS"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "dLfetO"
+          },
+          "name": "SetContent"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "yNC-sz"
+          },
+          "assignments": [
+            {
+              "value": "= $description",
+              "property": "dialog.description"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "BTMO0q"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
+          "prompt": "${TextInput_Prompt_BTMO0q()}",
+          "property": "dialog.description",
+          "outputFormat": "= this.value",
+          "value": "=@Desciption",
+          "invalidPrompt": "${TextInput_InvalidPrompt_BTMO0q()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Yifdd8"
+          },
+          "value": "= dialog.description"
+        }
+      ]
+    }
+  ],
+  "generator": "SetContent.lg",
+  "recognizer": "SetContent.lu"
+}

@@ -24,18 +24,20 @@
 conversation.listType
 - for interruption from show to del
 - remember to clear
+    - ask for list in add -> delete in an empty list -> add in that list without prompt
 - pay attention to order
 
 conversation.page
 - for interruption from show to del
 
-conversation.taskContent
-- for interruption in change task content
-- move to dialog? it is not persist between dialogs
+dialog.taskContent
 - for local interruption, should always repeat to verify logic
 
 containsAll
 ordinal
+
+currentInput
+- indicate current input for GetInput
 
 settings.displaySize
 settings.interruptScore
@@ -70,9 +72,13 @@ When repeat, previous dialog state are cleared
 
 ## All
 
-all is handled wrongly when repeat like 'do nothing at all'
+all is tricky for show after delete
 
-support all in first show in mark
+find better api for deleting all
+
+## Ordinal
+
+Also tricky
 
 # Tests
 
@@ -134,3 +140,9 @@ help, cancel always included
 - show
     - V
 - mark in another list?
+
+# ToDo
+
+all is handled wrongly when repeat like 'do nothing at all'
+
+support all in GetInput in mark/delete

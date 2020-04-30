@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2s051c"
+          },
+          "name": "SetDuration"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "CoFrew"
@@ -27,27 +34,19 @@
           ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "IsH5UN"
-          },
-          "activity": "${bfdactivity-IsH5UN()}",
-          "disabled": true
-        },
-        {
           "$kind": "Microsoft.DateTimeInput",
           "$designer": {
             "id": "pgJEOp"
           },
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.9",
           "defaultLocale": "en-us",
-          "prompt": "${bfdprompt-pgJEOp()}",
+          "prompt": "${TextInput_Prompt_pgJEOp()}",
           "property": "dialog.duration",
-          "invalidPrompt": "${bfdinvalidPrompt-pgJEOp()}",
+          "invalidPrompt": "${TextInput_InvalidPrompt_pgJEOp()}",
           "outputFormat": "= this.value[0].Value",
-          "value": "= dialog._duration"
+          "value": "= coalesce(dialog._duration, @Duration)"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -67,5 +66,6 @@
       ]
     }
   ],
-  "generator": "SetDuration.lg"
+  "generator": "SetDuration.lg",
+  "recognizer": "SetDuration.lu"
 }

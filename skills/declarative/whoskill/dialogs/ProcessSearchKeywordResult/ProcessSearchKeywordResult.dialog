@@ -31,7 +31,7 @@
                     "id": "208645",
                     "name": "Send a response"
                   },
-                  "activity": "${bfdactivity-208645()}"
+                  "activity": "${SendActivity_208645()}"
                 }
               ]
             },
@@ -66,7 +66,7 @@
                 "id": "317794",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-317794()}"
+              "activity": "${SendActivity_317794()}"
             },
             {
               "$kind": "Microsoft.BeginDialog",

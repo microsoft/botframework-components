@@ -28,7 +28,7 @@
                 "id": "080690",
                 "name": "Send a response"
               },
-              "activity": "${bfdactivity-080690()}"
+              "activity": "${SendActivity_080690()}"
             }
           ],
           "elseActions": [

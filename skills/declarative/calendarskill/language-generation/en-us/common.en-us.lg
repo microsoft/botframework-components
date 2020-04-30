@@ -862,6 +862,10 @@
 - ELSE:
   - ${formatDateTime((ticks(startOfDay(formatDateTime(date)))+(ticks(formatDateTime(time))-ticks(startOfDay(formatDateTime(time))))-621355968000000000)/10000000)}
 
+# CalendarErrorMessage()
+- Sorry, it looks like something happened and I can't complete that right now. Please try again later.
+- Sorry, I'm unable to complete the task right now. Please try again later.
+
 # GetAttendeeString(Attendee)
 - IF: ${Attendee == null || count(Attendee) == 0}
   - no attendees
@@ -870,5 +874,31 @@
 - ELSE:
   - ${Attendee[0].emailAddress.name} and ${count(Attendee) - 1} others
 
-# CalendarErrorMessage()
-- Something went wrong
+# MeetingBooked()
+- Alright, your meeting is confirmed.
+# GetIndicator(currentPage, pageSize, meetingCount)
+- ${pageSize * currentPage + 1}-${min(meetingCount, pageSize * (currentPage + 1))}
+
+# GetMeetingDuration(minutes)
+- IF: ${minutes < 60}
+    - ${GetMinutes(minutes)}
+- ELSEIF: ${minutes % 60 == 0}:
+    - ${GetHours(minutes / 60)}
+- ELSE:
+    - ${GetHours(minutes / 60)} ${GetMinutes(minutes % 60)}
+
+# GetMinutes(minutes)
+- IF: ${minutes < 0}
+    -
+- ELSEIF: ${minutes == 1}
+    - 1 minute
+- ELSE:
+    - ${minutes} minutes
+
+# GetHours(hours)
+- IF: ${hours < 0}
+    -
+- ELSEIF: ${hours == 1}
+    - 1 hour
+- ELSE:
+    - ${hours} hours

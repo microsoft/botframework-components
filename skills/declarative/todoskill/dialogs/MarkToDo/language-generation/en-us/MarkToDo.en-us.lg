@@ -4,7 +4,7 @@
 # bfdprompt_5iE8DA()
 - ${ListTypePromptForComplete()}
 
-# bfdactivity_1-SAfh()
+# bfdactivity_1_SAfh()
 - ${ShowToDo(dialog.count,conversation.listType,dialog.todos)}
 
 # bfdprompt_Bc5uwg()
@@ -30,7 +30,4 @@
 ]
 
 
-# bfdactivity_LHnB4C()
-- OK, I've updated the task content to ${@taskContent}
-# bfdactivity_oA8xdG()
-- OK, I've updated the list type to ${dialog.listType}
+

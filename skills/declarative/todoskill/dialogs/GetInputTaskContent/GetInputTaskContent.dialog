@@ -1,0 +1,88 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "lEuTG3",
+    "name": "GetInputTaskContent"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "ypOVoT"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "E9lp7U"
+          },
+          "condition": "=@TaskContent != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "IApBwy"
+              },
+              "condition": "=dialog.taskContent == null",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "QW6Jl9"
+                  },
+                  "activity": "${activity_QW6Jl9()}"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "0NiT43"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.taskContent",
+                  "value": "=@TaskContent"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QHWanj"
+              },
+              "condition": "=count(where(@@SlotType,iter,iter[0]=='taskContent'))>0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "nBepth"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.taskContent",
+                      "value": "=null"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "z7TTrV"
+          },
+          "value": "=dialog.taskContent"
+        }
+      ]
+    }
+  ],
+  "generator": "GetInputTaskContent.lg"
+}

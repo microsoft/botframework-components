@@ -143,10 +143,10 @@
                         {
                           "$kind": "Microsoft.SendActivity",
                           "$designer": {
-                            "id": "1-SAfh",
+                            "id": "1_SAfh",
                             "name": "Send a response"
                           },
-                          "activity": "${bfdactivity_1-SAfh()}"
+                          "activity": "${bfdactivity_1_SAfh()}"
                         },
                         {
                           "$kind": "Microsoft.TextInput",
@@ -328,55 +328,27 @@
       "intent": "GetInput",
       "actions": [
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "keyHU0"
+            "id": "jPkFOP"
           },
-          "condition": "=@taskContent != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "LHnB4C"
-              },
-              "activity": "${bfdactivity_LHnB4C()}"
-            }
-          ]
+          "dialog": "GetInputTaskContent",
+          "resultProperty": "dialog.taskContent",
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "JJGk6u",
-            "name": "Set properties"
+            "id": "HnWE9q"
           },
-          "assignments": [
-            {
-              "property": "dialog.listType",
-              "value": "=coalesce(@ListType, @roleListType)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "aV1g7t"
-          },
-          "condition": "=dialog.listType != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "oA8xdG"
-              },
-              "activity": "${bfdactivity_oA8xdG()}"
-            }
-          ]
+          "dialog": "GetInputListType"
         },
         {
           "$kind": "Microsoft.RepeatDialog",
           "$designer": {
-            "id": "2QFlVy"
-          }
+            "id": "l5uwY1"
+          },
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
         }
       ]
     }

@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6EiNXk"
+          },
+          "name": "SetTitle"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "L-FgO3"
@@ -33,14 +40,12 @@
           },
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${bfdprompt-_ACAJO()}",
+          "allowInterruptions": "#_Interruption.Score >= 0.95",
+          "prompt": "${TextInput_Prompt__ACAJO()}",
           "property": "dialog.title",
-          "validations": [
-            "length(this.value) < 100"
-          ],
-          "invalidPrompt": "${bfdinvalidPrompt-_ACAJO()}",
-          "unrecognizedPrompt": "${bfdunrecognizedPrompt-_ACAJO()}"
+          "invalidPrompt": "${TextInput_InvalidPrompt__ACAJO()}",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt__ACAJO()}",
+          "value": "=@Subject"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -52,5 +57,6 @@
       ]
     }
   ],
-  "generator": "SetTitle.lg"
+  "generator": "SetTitle.lg",
+  "recognizer": "SetTitle.lu"
 }

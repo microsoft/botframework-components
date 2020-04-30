@@ -105,7 +105,7 @@
                   "$designer": {
                     "id": "VeoGsX"
                   },
-                  "activity": "${bfdactivity-VeoGsX()}"
+                  "activity": "${SendActivity_VeoGsX()}"
                 }
               ],
               "actions": [
