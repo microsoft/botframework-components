@@ -326,7 +326,8 @@
             "location": "=dialog.content.location",
             "attendees": "=dialog.content.attendeeList"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

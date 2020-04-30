@@ -104,6 +104,10 @@
                 {
                   "property": "dialog.currentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
+                },
+                {
+                  "property": "dialog.currentMeetingData.OnlineMeetingNumber",
+                  "value": "=dialog.foreach.value.onlineMeeting.tollNumber"
                 }
               ]
             },
