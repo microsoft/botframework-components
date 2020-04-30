@@ -1,0 +1,160 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "ykPDJD",
+    "name": "SearchPerson"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "vme3v0"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "o_fgTx"
+          },
+          "assignments": [
+            {
+              "property": "conversation.person",
+              "value": "=null"
+            },
+            {
+              "property": "conversation.allPersons",
+              "value": "=[]"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "byGLRE",
+            "name": "OAuth login"
+          },
+          "connectionName": "msGraph",
+          "timeout": "900000",
+          "property": "user.token",
+          "alwaysPrompt": true
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mkV3qO",
+            "name": "Branch: if/else"
+          },
+          "condition": "conversation.pron != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "_ulJZN",
+                "name": "Set a property"
+              },
+              "property": "dialog.url",
+              "value": "https://graph.microsoft.com/v1.0/me?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department"
+            },
+            {
+              "$kind": "Microsoft.HttpRequest",
+              "$designer": {
+                "id": "YVVo6h",
+                "name": "Send an HTTP request"
+              },
+              "method": "GET",
+              "url": "${dialog.url}",
+              "resultProperty": "dialog.contosodata",
+              "responseType": "Json",
+              "headers": {
+                "Authorization": "${user.token.Token}"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "uInWtf",
+                "name": "Set a property"
+              },
+              "property": "conversation.chosenPerson",
+              "value": "=dialog.contosodata.content"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ff72bc",
+                "name": "Begin a new dialog"
+              },
+              "activityProcessed": true,
+              "dialog": "SearchForFinalResult"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "nz8Xxr"
+              },
+              "condition": "conversation.keyword != null",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "VeoGsX"
+                  },
+                  "activity": "${SendActivity_VeoGsX()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "wKOHTL",
+                    "name": "Set a property"
+                  },
+                  "property": "dialog.url",
+                  "value": " https://graph.microsoft.com/v1.0/users?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department&$filter=(startswith(displayName,'${conversation.keyword}') or startswith(givenName,'${conversation.keyword}') or startswith(surname,'${conversation.keyword}') or startswith(mail,'${conversation.keyword}') or startswith(userPrincipalName,'${conversation.keyword}'))&$top=15"
+                },
+                {
+                  "$kind": "Microsoft.HttpRequest",
+                  "$designer": {
+                    "id": "XceTP5",
+                    "name": "Send an HTTP request"
+                  },
+                  "method": "GET",
+                  "url": "${dialog.url}",
+                  "resultProperty": "dialog.contosodata",
+                  "responseType": "Json",
+                  "headers": {
+                    "Authorization": "${user.token.Token}"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "ZYTMqm",
+                    "name": "Set a property"
+                  },
+                  "property": "conversation.allPersons",
+                  "value": "=dialog.contosodata.content.value"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "syuXBH",
+                    "name": "Begin a new dialog"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ProcessSearchKeywordResult"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "SearchPerson.lg"
+}

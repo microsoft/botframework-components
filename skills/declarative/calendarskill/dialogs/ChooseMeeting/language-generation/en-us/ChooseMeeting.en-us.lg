@@ -1,0 +1,15 @@
+[import](common.lg)
+
+# TextInput_Prompt_jnDMmQ()
+[Activity
+    Text = I found more than one event that might match. Please select the one you want.
+    Attachments = ${json(MeetingListCard('Meetings to choose', count(dialog.meetings), 0, 'today', '1-3', null, 'Microsoft', 'UTC', dialog.displayMeetingsData, true))}
+]
+
+# TextInput_Prompt_7bImUe()
+- Which meeting?
+
+# activity_NgVvgR()
+- - You have no more events scheduled.
+# activity_9AGNVB()
+- This is the first page.

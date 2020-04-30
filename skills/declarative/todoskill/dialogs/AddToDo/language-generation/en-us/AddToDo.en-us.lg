@@ -1,0 +1,37 @@
+[import](common.lg)
+
+> From AddToDo
+
+# AskTaskContentTextText
+- OK, what do you want to add?
+
+# AskTaskContentText
+[Activity
+    Text = ${AskTaskContentTextText()}
+    Speak = ${AskTaskContentTextText()}
+    InputHint = expectingInput
+]
+
+# AskAddDupTaskPromptText(TaskContent)
+- You already have ${TaskContent} on your list. Do you still want to add it?
+
+# AskAddDupTaskPrompt(TaskContent)
+[Activity
+    Text = ${AskAddDupTaskPromptText(TaskContent)}
+    Speak = ${AskAddDupTaskPromptText(TaskContent)}
+    InputHint = expectingInput
+]
+
+
+
+# bfdprompt_DQSZLC()
+- ${AskTaskContentText()}
+
+# bfdprompt_7dmPV5()
+- Which list should I add ${if(dialog.taskContent == null, 'new task', concat('**', dialog.taskContent, '**'))} to?
+
+# bfdprompt_RCO61b()
+- ${AskAddDupTaskPrompt(dialog.taskContent)}
+
+# bfdactivity_QRekYt()
+- ${CompletedMessage()}

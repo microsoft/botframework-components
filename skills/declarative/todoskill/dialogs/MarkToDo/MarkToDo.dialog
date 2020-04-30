@@ -1,0 +1,358 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "MSnMKx",
+    "name": "MarkToDo"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Wgpk4J"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4LsXJv"
+          },
+          "dialog": "SetListTypePage"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "n_toQu",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "dialog.taskContent",
+              "value": "=coalesce(@TaskContent, $taskContent)"
+            },
+            {
+              "property": "dialog.containsAll",
+              "value": "=coalesce(@ContainsAll, $containsAll)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(@ordinal, $ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "5iE8DA",
+            "name": "Multiple choice"
+          },
+          "prompt": "${bfdprompt_5iE8DA()}",
+          "maxTurnCount": 3,
+          "property": "conversation.listType",
+          "value": "=coalesce(@ListType, @roleListType)",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)",
+          "outputFormat": "value",
+          "choices": [
+            {
+              "value": "Shopping"
+            },
+            {
+              "value": "Grocery"
+            },
+            {
+              "value": "To Do",
+              "synonyms": [
+                "todo"
+              ]
+            }
+          ],
+          "appendChoices": "true",
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "choiceOptions": {
+            "inlineSeparator": ", ",
+            "inlineOr": " or ",
+            "inlineOrMore": ", or ",
+            "includeNumbers": true
+          },
+          "recognizerOptions": {
+            "noValue": false
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2bgaHn"
+          },
+          "dialog": "GetToDosOutlook",
+          "resultProperty": "dialog.tasks"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "t3RvdZ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.count",
+              "value": "=count(dialog.tasks)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "CcIvXD",
+            "name": "Branch: If/Else"
+          },
+          "condition": "dialog.count > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "CPgTHI"
+              },
+              "condition": "=dialog.containsAll == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "x--xlA"
+                  },
+                  "condition": "=dialog.taskContent == null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.BeginDialog",
+                      "$designer": {
+                        "id": "NJ6R_E"
+                      },
+                      "dialog": "GetToDos",
+                      "resultProperty": "dialog.todos",
+                      "options": "=setProperty({},\"tasks\",dialog.tasks)"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "MFRczX"
+                      },
+                      "condition": "=dialog.ordinal == null",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "1_SAfh",
+                            "name": "Send a response"
+                          },
+                          "activity": "${bfdactivity_1_SAfh()}"
+                        },
+                        {
+                          "$kind": "Microsoft.TextInput",
+                          "$designer": {
+                            "id": "Bc5uwg",
+                            "name": "Text input"
+                          },
+                          "prompt": "${bfdprompt_Bc5uwg()}",
+                          "maxTurnCount": 3,
+                          "property": "dialog.taskContent",
+                          "value": "=@TaskContent",
+                          "alwaysPrompt": true,
+                          "allowInterruptions": "=#_Interruption.score > float(settings.interruptScore) || #GetInput.score > float(settings.intentScore)"
+                        },
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "rXYt5J"
+                          },
+                          "dialog": "ShowNextPrev",
+                          "resultProperty": "dialog.result"
+                        },
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "TPWTpF"
+                          },
+                          "condition": "=dialog.result",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.RepeatDialog",
+                              "$designer": {
+                                "id": "8XmBYC"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "UBmRG2"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.ordinal",
+                              "value": "=@ordinal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.BeginDialog",
+                      "$designer": {
+                        "id": "YoCk7e"
+                      },
+                      "dialog": "GetOrdinal",
+                      "options": "=setProperty(setProperty({},\"todos\",dialog.todos),\"ordinal\",dialog.ordinal)",
+                      "resultProperty": "dialog.items"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "xFeA_X"
+                  },
+                  "condition": "=dialog.items == null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.BeginDialog",
+                      "$designer": {
+                        "id": "DISnVs"
+                      },
+                      "dialog": "MatchInList",
+                      "resultProperty": "dialog.items",
+                      "options": "=setProperty(setProperty({},\"tasks\",dialog.tasks),\"taskContent\",dialog.taskContent)"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "iJZzwn"
+                  },
+                  "condition": "=count(dialog.items) == 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperties",
+                      "$designer": {
+                        "id": "E4E61C"
+                      },
+                      "properties": [
+                        "@@ordinal",
+                        "@@TaskContent",
+                        "dialog.ordinal",
+                        "dialog.taskContent"
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "PYdswx"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "6ZoNsS"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.items",
+                      "value": "=dialog.tasks"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "L7ZaRO"
+              },
+              "dialog": "MarkInListOutlook",
+              "options": "=setProperty({},\"tasks\",dialog.items)"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "4kVcWT"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.result",
+                  "value": "=setProperty({} , \"fromType\" ,\"mark\")"
+                },
+                {
+                  "property": "dialog.result",
+                  "value": "=setProperty(dialog.result , \"taskContent\" ,dialog.items[0].Topic)"
+                },
+                {
+                  "property": "dialog.result",
+                  "value": "=setProperty(dialog.result , \"containsAll\" ,dialog.containsAll)"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "SaTeku"
+              },
+              "dialog": "ShowToDo",
+              "options": "=dialog.result"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UTh7g6",
+                "name": "Send a response"
+              },
+              "activity": "${bfdactivity_UTh7g6()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "LzWeSQ"
+      },
+      "intent": "GetInput",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "jPkFOP"
+          },
+          "dialog": "GetInputTaskContent",
+          "resultProperty": "dialog.taskContent",
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "HnWE9q"
+          },
+          "dialog": "GetInputListType"
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "l5uwY1"
+          },
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
+        }
+      ]
+    }
+  ],
+  "generator": "MarkToDo.lg",
+  "recognizer": "MarkToDo.lu"
+}

@@ -1,0 +1,181 @@
+
+# TextInput_Response_f3QClo
+- in {Building=city center}
+- in {Building=building 34}
+- on {Building=building lack}
+- in {Building=city center}
+- {Building=building 99}
+- in the {Building=crocker hall building}.
+- {Building=bespin}
+- at the {Building=london building}
+- at the {Building=bellevue} building.
+- {Building=alfred building}
+- {Building=langham}
+- {Building=building 1}
+
+# NumberInput_Response_u6i4m4
+- at the {FloorNumber=25th floor}
+- at {FloorNumber=3rd floor}
+- on the {FloorNumber=1st floor}
+- {FloorNumber=4th floor}
+- {FloorNumber=2nd floor} 
+- at the {FloorNumber=floor 1}
+- at {FloorNumber=floor 2}
+- on the {FloorNumber=floor 7}
+- {FloorNumber=floor 9}
+- {FloorNumber=10}
+- {FloorNumber=1} 
+- {FloorNumber=4} 
+
+@ list AnyList = 
+	- any :
+		- any one
+
+@ list NoList = 
+	- no :
+		- nope
+		- skip
+		- ok
+
+
+
+# GetInput
+- book {MeetingRoom=room}
+- book {MeetingRoom=room 1}
+- change to  {MeetingRoom=room 2}
+- change to {MeetingRoom=room 210} at the southern ocean lodge
+- book room {MeetingRoom=217 on 2nd floor} in a hotel.
+- book {MeetingRoom=room 3}
+- change to {MeetingRoom=room 4}
+- book {MeetingRoom=room 5}
+- change to room {MeetingRoom=577 on 5st floor} in a hotel.
+- change to {MeetingRoom=room 6}
+- book {MeetingRoom=room 7}
+- book {MeetingRoom=room 9}
+- book a room at {FloorNumber=floor 4}
+- book a room at {MeetingRoom=taj banjara}
+- book a room close to my wife {MeetingRoom=sandra's room}.
+- book a room for {Duration=30 min}
+- book a room for all the next week in the {MeetingRoom=zeus hotel}
+- book a room for me at {MeetingRoom=city central} tonight
+- try {Building=city center}
+- change to {Building=building 34}
+- please try {Building=building lack}
+- change to  {FloorNumber=25th floor}
+- use {FloorNumber=3rd floor}
+- change to {Building=building london}
+- change to {Building=building bellevue}
+- change to {Building=building redmond}
+- change the building
+- change building
+- try {FloorNumber=1st floor}
+- try {FloorNumber=4th floor}
+- please try {FloorNumber=2nd floor} 
+- try {MeetingRoom=2312}
+- try {FloorNumber=8th floor}
+- try buillding {Building=bjw2}
+- try {MeetingRoom=excalibur}
+- try {FloorNumber=floor 2}
+- try {MeetingRoom=room jupyter}
+- try {Building=studiox}
+- try the {FloorNumber=3rd floor}
+- try {FloorNumber=the floor 23}
+- use {MeetingRoom=room wender}
+- want to book room {MeetingRoom=g5}
+
+#_Interruption
+- {@SlotOperation={@Operation=add} an {@Slot=attendee}}
+- {@SlotOperation={@Operation=change} it to {@Value={@ToTime=6pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=location}}
+- {@SlotOperation={@Operation=change} the {@Slot=building}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=london}}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=beijing}}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=bellevue}}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=1 hour}}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=30 mins}}}
+- please {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=30 mins}}}
+- {@SlotOperation={@Operation=change} the {@Slot=floor}}
+- {@SlotOperation={@Operation=change} the {@Slot=floor} to {@FloorNumber={@Value=2}}}
+- {@SlotOperation={@Operation=change} to {@FloorNumber={@Value=2}} {@Slot=floor}}
+- {@SlotOperation={@Operation=change} the {@Slot={@ToDate=room}}}
+- {@SlotOperation={@Operation=change} the {@Slot=room} to {@MeetingRoom={@Value=hoth}}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject} to {@Value={@Subject=lunch}}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}} and {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- {@SlotOperation={@Operation=change} the {@Slot=title}}
+- {@SlotOperation={@Operation=change} {@Slot=time}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@ToTime={@Value=7 pm}} and {@Slot=title} to {@Subject={@Value=lunch}}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@Value={@ToTime=7pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=title} to {@Value={@Subject=dinner}}}
+- {@SlotOperation={@Operation=change} to {@Value={@ToTime=5 pm}}}
+- {@SlotOperation={@Operation=change} to {@ToDate={@Value=tomorrow}}}
+- {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- i'd like to {@SlotOperation={@Operation=change} the {@Slot=date}}
+- please {@SlotOperation={@Operation=change} the {@Slot=date} to {@Value=tomorrow}} and {@SlotOperation={@Operation=add} {@Value=graham}}
+- {@SlotOperation={@Operation=set} {@Slot=time} as {@ToTime={@Value=11 am}}}
+- {@SlotOperation={@Operation=update} {@Slot=building} to {@Value=bjw2}}
+- {@SlotOperation={@Operation=update} {@Slot=title}}
+
+> # Entity definitions
+
+@ ml FromDate
+
+@ ml FromTime
+
+@ ml MoveEarlierTimeSpan
+
+@ ml MoveLaterTimeSpan
+
+@ ml SlotAttribute
+
+@ ml SlotOperation
+    - @ OperationName Operation
+    - @ SlotAttributeName Slot
+    - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
+
+
+@ ml SlotOperations
+
+@ ml Subject
+
+@ ml ToDate
+
+@ ml ToTime
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+> # List entities
+
+@ list OperationName = 
+	- add  :
+		- create
+	- delete  :
+	- change  :
+		- update
+		- set
+
+
+@ list SlotAttributeName = 
+	- room :
+		- meeting room
+		- conference room
+		- confroom
+	- time :
+		- date
+	- building :
+	- floor :
+	- person :
+		- people
+		- attendee
+		- attendees
+	- title :
+		- subject
+	- content :
+		- description
+	- duration :

@@ -1,0 +1,11 @@
+[import](common.lg)
+
+# TextInput_Prompt_ylVlC7()
+- ${NoLocation()}
+# TextInput_UnrecognizedPrompt_ylVlC7()
+-unrecognized title
+# TextInput_InvalidPrompt_ylVlC7()
+- loc
+
+# NoLocation()
+- Where will the event take place?

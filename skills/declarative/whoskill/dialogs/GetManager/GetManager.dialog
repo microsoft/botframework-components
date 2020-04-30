@@ -1,0 +1,53 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "1bVfWy",
+    "name": "GetManager"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "lWH6ya"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "d8pdtj",
+            "name": "Set a property"
+          },
+          "property": "dialog.url",
+          "value": " https://graph.microsoft.com/v1.0/users/${conversation.chosenPerson.id}/manager?$select=userType,displayName,mail,jobTitle,userPrincipalName,id,officeLocation,mobilePhone,department"
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "pdxnn7",
+            "name": "Send an HTTP request"
+          },
+          "method": "GET",
+          "url": "${dialog.url}",
+          "resultProperty": "dialog.contosodata",
+          "headers": {
+            "Authorization": "${user.token.Token}"
+          },
+          "responseType": "Json"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "HPwfsh",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=dialog.contosodata.content"
+        }
+      ]
+    }
+  ],
+  "generator": "GetManager.lg"
+}

@@ -1,0 +1,213 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "ToDoSkill",
+      "id": "715432"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "recognizer": "ToDoSkill.lu",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "name": "WelcomeUser"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "GfSxsA"
+          },
+          "dialog": "Reset"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "037171",
+                    "name": "Send a response"
+                  },
+                  "activity": "${bfdactivity_037171()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "722893"
+      },
+      "condition": "#Help.Score > float(settings.interruptScore)",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "113335",
+            "name": "Send a response"
+          },
+          "activity": "${bfdactivity_113335()}"
+        }
+      ],
+      "intent": "Help"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "463265"
+      },
+      "condition": "#Cancel.Score > float(settings.interruptScore)",
+      "actions": [
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "183920",
+            "name": "Confirmation"
+          },
+          "prompt": "${bfdprompt_183920()}",
+          "maxTurnCount": 3,
+          "property": "turn.cancelConfirmation",
+          "defaultValue": "false",
+          "alwaysPrompt": false,
+          "allowInterruptions": "false",
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "choiceOptions": {
+            "inlineSeparator": ", ",
+            "inlineOr": " or ",
+            "inlineOrMore": ", or ",
+            "includeNumbers": true
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "262862",
+            "name": "Branch: If/Else"
+          },
+          "condition": "turn.cancelConfirmation",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "304360",
+                "name": "Send a response"
+              },
+              "activity": "${bfdactivity_304360()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "FuBpiS"
+              },
+              "dialog": "Reset"
+            },
+            {
+              "$kind": "Microsoft.CancelAllDialogs",
+              "$designer": {
+                "id": "897773",
+                "name": "Cancel all dialogs"
+              }
+            }
+          ]
+        }
+      ],
+      "intent": "Cancel"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "723797"
+      },
+      "condition": "#AddToDo.Score > float(settings.intentScore)",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "455362",
+            "name": "Begin a new dialog"
+          },
+          "activityProcessed": true,
+          "dialog": "AddToDo"
+        }
+      ],
+      "intent": "AddToDo"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "332735"
+      },
+      "condition": "#DeleteToDo.Score > float(settings.intentScore)",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "236045"
+          },
+          "activityProcessed": true,
+          "dialog": "DeleteToDo"
+        }
+      ],
+      "intent": "DeleteToDo"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "877754"
+      },
+      "condition": "#ShowToDo.Score > float(settings.intentScore)",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "949968"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowToDo"
+        }
+      ],
+      "intent": "ShowToDo"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mhKz4p"
+      },
+      "intent": "MarkToDo",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "dYzdoQ"
+          },
+          "dialog": "MarkToDo"
+        }
+      ],
+      "condition": "#MarkToDo.Score > float(settings.intentScore)"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "ToDoSkill.lg"
+}

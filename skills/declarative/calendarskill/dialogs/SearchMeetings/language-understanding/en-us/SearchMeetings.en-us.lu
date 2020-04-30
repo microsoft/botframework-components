@@ -1,0 +1,47 @@
+
+# TextInput.response-qKgy1f
+> To learn more about the LU file format, read the documentation at
+> https://aka.ms/lu-file-format
+- the title is {Subject=staff meeting}
+- delete {Subject=birthday calendar}
+- named {Subject=lunch}
+- cancel my appointment at {FromTime=9 pm}
+- {FromTime=3 pm} {FromDate=today}
+- meeting is at {FromTime=3pm} {FromDate=today}
+
+# TextInput.response-HSMvMH
+- can you cancel the {PositionReference=1st} one
+- cancel {FromTime=1 pm} {Subject=staff meeting}
+- cancel appointment {FromDate=today}
+- the title is {Subject=dinner}
+- cancel {Subject=doctor ' s appointment} {FromDate=monday}
+- cancel event
+- cancel event {FromDate=tomorrow}
+- cancel {Subject=lunch} {FromDate=next wednesday}
+- cancel meeting
+- cancel meeting with abigail {FromTime=3 pm} {FromDate=today}
+- cancel meeting with bob marlon {FromTime=3pm} {FromDate=today}
+- cancel my {Subject=adventureworks trip} to {Location=seattle}
+- cancel my appointment
+- cancel my appointment at {FromTime=9 pm}
+- cancel my appointment for {FromDate=october 4}
+- cancel my {Subject=driving lesson} {FromDate=tomorrow}
+- cancel my meeting at {Location=shanghai} on {FromDate=monday} at {FromTime=10 am}
+- cancel my {OrderReference=next} appointment
+- cancel my {Subject=singing appointment} on {FromDate=monday}
+- cancel the {Subject=group meeting}
+- cancel the {Subject=pickup food from ted}
+- cancel the untitled event on {FromDate=may twenty eighth}
+- cancel this meeting
+- cancel {FromDate=today} ' s appointment
+- cancel {FromDate=tomorrow} ' s plan
+- clear all of my appointments {FromDate=today}
+- clear all the appointments from my calendar for {FromDate=today}
+- clear my calendar
+- clear my calendar for {FromDate=january 29th}
+- clear my schedule
+- clear my schedule for {FromDate=tomorrow}
+- clear my schedule {FromDate=today}
+- decline my meeting on {FromDate=monday}
+- delete {Subject=birthday calendar}
+- delete my schedule for {FromDate=today}

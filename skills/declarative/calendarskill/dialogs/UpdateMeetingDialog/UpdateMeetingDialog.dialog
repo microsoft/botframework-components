@@ -1,0 +1,202 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "2CIszO",
+    "name": "UpdateMeetingDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Lonscz"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "gqzlNc"
+          },
+          "activityProcessed": true,
+          "dialog": "GetFocusedMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "N__c4b"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots",
+              "value": "={}"
+            },
+            {
+              "property": "dialog.slots.ToDate",
+              "value": "=coalesce(@ToDate, $ToDate)"
+            },
+            {
+              "property": "dialog.slots.ToTime",
+              "value": "=coalesce(@ToTime, $ToTime)"
+            },
+            {
+              "property": "dialog.newStartDateTime",
+              "value": "= null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "NxsMQN"
+          },
+          "condition": "conversation.FocusedMeeting == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "kudHoc",
+                "name": "search a meeting"
+              },
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.meeting"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "zOhE-E"
+              },
+              "condition": "dialog.meeting == null || count(dialog.meeting) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "9ahTM6"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Sg_-LD"
+              },
+              "property": "dialog.meeting",
+              "value": "=conversation.FocusedMeeting"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "34JbXw"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${TextInput_Prompt_34JbXw()}",
+          "confirmChoices": [
+            {
+              "value": "Yes",
+              "synonyms": [
+                "sure"
+              ]
+            },
+            {
+              "value": "No",
+              "synonyms": [
+                "nope"
+              ]
+            }
+          ],
+          "property": "dialog.confirm",
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FVnGEG"
+          },
+          "dialog": "SetDateTime",
+          "options": {
+            "startDate": "=dialog.slots.ToDate",
+            "startTime": "=dialog.slots.ToTime"
+          },
+          "resultProperty": "dialog.newStartDateTime",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "qaI3Z2"
+          },
+          "assignments": [
+            {
+              "property": "dialog.duration",
+              "value": "= (ticks(formatDateTime(dialog.meeting.end.dateTime)) - ticks(formatDateTime(dialog.meeting.start.dateTime))) / 10000000"
+            },
+            {
+              "property": "dialog.newEndDateTime",
+              "value": "= addSeconds(formatDateTime(dialog.newStartDateTime), int(dialog.duration))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "H7PwTe"
+          },
+          "dialog": "UpdateMeetingRequest",
+          "options": {
+            "newStartDateTime": "=dialog.newStartDateTime",
+            "newEndDateTime": "=dialog.newEndDateTime",
+            "meetingId": "=dialog.meeting.id"
+          },
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "rwFUJD"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DzKf6N"
+              },
+              "activity": "${SendActivity_DzKf6N()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "-nHbKA"
+              },
+              "activity": "${SendActivity__nHbKA()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "dKRCRP"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "UpdateMeetingDialog.lg"
+}

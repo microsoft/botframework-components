@@ -1,0 +1,13 @@
+[import](common.lg)
+
+# bfdactivity_037171()
+- ${Welcome_Message()}
+
+# bfdactivity_113335()
+- ${HelpMessage()}
+
+# bfdprompt_183920
+- Are you sure you want to cancel?
+
+# bfdactivity_304360()
+- ${CancelMessage()}

@@ -1,0 +1,88 @@
+
+
+
+# GetInput
+- {@SlotOperation={@Operation=add} an {@Slot=attendee}}
+- {@SlotOperation={@Operation=change} it to {@Value={@ToTime=6pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=location}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject}}
+- {@SlotOperation={@Operation=change} the {@Slot=subject} to {@Value={@Subject=lunch}}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}}
+- {@SlotOperation={@Operation=change} the {@Slot=time}} and {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- {@SlotOperation={@Operation=change} the {@Slot=title}}
+- {@SlotOperation={@Operation=change} {@Slot=time}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@ToTime={@Value=7 pm}} and {@Slot=title} to {@Subject={@Value=lunch}}}
+- {@SlotOperation={@Operation=change} {@Slot=time} to {@Value={@ToTime=7pm}}}
+- {@SlotOperation={@Operation=change} {@Slot=title} to {@Value={@Subject=dinner}}}
+- {@SlotOperation={@Operation=change} to {@Value={@ToTime=5 pm}}}
+- {@SlotOperation={@Operation=change} to {@ToDate={@Value=tomorrow}}}
+- {@SlotOperation={@Operation=delete} {@Slot=attendees}}
+- i'd like to {@SlotOperation={@Operation=change} the {@Slot=date}}
+- please {@SlotOperation={@Operation=change} the {@Slot=date} to {@Value=tomorrow}} and {@SlotOperation={@Operation=add} {@Value=graham}}
+- {@SlotOperation={@Operation=set} {@Slot=time} as {@ToTime={@Value=11 am}}}
+- {@SlotOperation={@Operation=update} {@Slot=location} to {@Value=bjw2}}
+- {@SlotOperation={@Operation=update} {@Slot=title}}
+> # Entity definitions
+
+@ ml FromDate
+
+@ ml FromTime
+
+@ ml MoveEarlierTimeSpan
+
+@ ml MoveLaterTimeSpan
+
+@ ml SlotAttribute
+
+@ ml SlotOperation
+    - @ OperationName Operation
+    - @ SlotAttributeName Slot
+    - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
+
+
+@ ml SlotOperations
+
+@ ml Subject
+
+@ ml ToDate
+
+@ ml ToTime
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+> # List entities
+
+@ list OperationName = 
+	- add :
+		- create
+	- delete :
+	- change :
+		- update
+		- set
+
+
+@ list SlotAttributeName = 
+	- room :
+		- meeting room
+		- conference room
+		- confroom
+	- time :
+		- date
+	- building :
+	- floor :
+	- person :
+		- people
+		- attendee
+		- attendees
+	- title :
+		- subject
+	- content :
+		- description
+	- location :
+
+
+> # RegEx entities

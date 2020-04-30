@@ -1,0 +1,290 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "0bGhKY",
+    "name": "FindSingleContactDialog"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Azbt3O"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VSzNaw"
+          },
+          "condition": "dialog.attendeeResult.contactsList == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "riqyup"
+              },
+              "property": "dialog.currentPage",
+              "value": "=0"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Cxln9W"
+              },
+              "dialog": "GetContactRequest",
+              "resultProperty": "dialog.attendeeResult",
+              "options": {
+                "attendee": "=dialog.attendee"
+              },
+              "activityProcessed": true
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "5BUyOQ"
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "mJunrH"
+              },
+              "condition": "dialog.attendeeResult.contactsList !=null && count(dialog.attendeeResult.contactsList) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "EY5D1b"
+                  },
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_EY5D1b()}",
+                  "property": "dialog.NewAttendee"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "xp6pyw"
+                  },
+                  "activityProcessed": true,
+                  "options": {
+                    "dialog.attendee": "=dialog.NewAttendee"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "QAFLPP"
+          },
+          "condition": "count(dialog.attendeeResult.contactsList) > 1",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "o85Ymq"
+              },
+              "assignments": [
+                {
+                  "property": "turn.resolvedAttendee.email",
+                  "value": "=dialog.attendeeResult.contactsList[0].mail"
+                },
+                {
+                  "property": "turn.resolvedAttendee.name",
+                  "value": "=dialog.attendeeResult.contactsList[0].displayName"
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "LFaxId"
+              },
+              "property": "dialog.displayContactsList",
+              "value": "=subArray(dialog.attendeeResult.contactsList, dialog.currentPage * int(settings.DisplaySize), min(dialog.currentPage * int(settings.DisplaySize) + int(settings.DisplaySize), count(dialog.attendeeResult.contactsList)))"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "NNWtGi"
+              },
+              "itemsProperty": "dialog.displayContactsList",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "4Qha53"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.unconfirmedAttendeeList",
+                  "value": "${dialog.foreach.value.displayName} : ${dialog.foreach.value.mail}"
+                }
+              ],
+              "value": "dialog.foreach.value",
+              "index": "dialog.foreach.index"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "LrCvQQ"
+              }
+            },
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "GG_dh5"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "outputFormat": "split(this.value, \": \")[1]",
+              "appendChoices": "true",
+              "defaultLocale": "en-us",
+              "style": "Auto",
+              "choiceOptions": {
+                "inlineSeparator": ", ",
+                "inlineOr": " or ",
+                "inlineOrMore": ", or ",
+                "includeNumbers": true
+              },
+              "recognizerOptions": {
+                "noValue": false,
+                "noAction": false,
+                "recognizeOrdinals": true,
+                "recognizeNumbers": true
+              },
+              "prompt": "${TextInput_Prompt_GG_dh5()}",
+              "choices": "dialog.unconfirmedAttendeeList",
+              "property": "turn.ResolvedAttendee",
+              "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.6 || #PreviousPage.Score >= 0.6"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "gXBD6q"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "DvmU48"
+          },
+          "activity": "${SendActivity_DvmU48()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "JCNE2_"
+          },
+          "value": "=turn.ResolvedAttendee"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "HWFNDu"
+      },
+      "intent": "NextPage",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0W7jeF"
+          },
+          "condition": "=(dialog.currentPage + 1) * int(settings.displaySize) < count(dialog.attendeeResult.contactsList)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "64CyOD"
+              },
+              "property": "dialog.currentPage",
+              "value": "=dialog.currentPage + 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "BrBLls"
+              },
+              "activity": "${SendActivity_BrBLls()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "KpUkYc"
+          },
+          "activityProcessed": true,
+          "options": {
+            "currentPage": "=dialog.currentPage",
+            "attendeeResult.contactsList": "=dialog.attendeeResult.contactsList",
+            "attendee": "=dialog.attendee"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "t1c1uy"
+      },
+      "intent": "PreviousPage",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qzQ8BV"
+          },
+          "condition": "=dialog.currentPage > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "EnED52"
+              },
+              "property": "dialog.currentPage",
+              "value": "=dialog.currentPage - 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Xz9hrb"
+              },
+              "activity": "${SendActivity_Xz9hrb()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "h4c7J6"
+          },
+          "activityProcessed": true,
+          "options": {
+            "currentPage": "=dialog.currentPage",
+            "attendeeResult.contactsList": "=dialog.attendeeResult.contactsList",
+            "attendee": "=dialog.attendee"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "FindSingleContactDialog.lg",
+  "recognizer": "FindSingleContactDialog.lu"
+}

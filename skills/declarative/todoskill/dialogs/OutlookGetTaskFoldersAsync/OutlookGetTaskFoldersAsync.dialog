@@ -1,0 +1,60 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "-E55SX",
+    "name": "OutlookGetTaskFoldersAsync"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "9JBKet"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0dEqRZ"
+          },
+          "condition": "=turn.listToId==null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "DFtcve"
+              },
+              "dialog": "GetAsync",
+              "options": {
+                "url": "${dialog.url}"
+              },
+              "resultProperty": "dialog.result"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "JCMxr6"
+              },
+              "assignments": [
+                {
+                  "property": "turn.listToId",
+                  "value": "=dialog.result.content.value"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "PXVzbK"
+          },
+          "value": "=turn.listToId"
+        }
+      ]
+    }
+  ],
+  "generator": "OutlookGetTaskFoldersAsync.lg"
+}

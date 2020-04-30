@@ -1,0 +1,12 @@
+[import](common.lg)
+
+# TextInput_Prompt__ACAJO()
+- ${NoTitle()}
+# TextInput_InvalidPrompt__ACAJO()
+- sorry, the length should be 10
+
+# TextInput_UnrecognizedPrompt__ACAJO()
+-unrecognized title
+
+# NoTitle()
+- What's the subject of the meeting?

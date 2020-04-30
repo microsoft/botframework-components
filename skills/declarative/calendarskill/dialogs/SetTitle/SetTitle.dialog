@@ -1,0 +1,62 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "t-UqFx",
+    "name": "SetTitle"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "_LfazK"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6EiNXk"
+          },
+          "name": "SetTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "L-FgO3"
+          },
+          "assignments": [
+            {
+              "value": "=coalesce(@Subject, $title)",
+              "property": "dialog.title"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "_ACAJO"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": "#_Interruption.Score >= 0.95",
+          "prompt": "${TextInput_Prompt__ACAJO()}",
+          "property": "dialog.title",
+          "invalidPrompt": "${TextInput_InvalidPrompt__ACAJO()}",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt__ACAJO()}",
+          "value": "=@Subject"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YlrLry"
+          },
+          "value": "= dialog.title"
+        }
+      ]
+    }
+  ],
+  "generator": "SetTitle.lg",
+  "recognizer": "SetTitle.lu"
+}

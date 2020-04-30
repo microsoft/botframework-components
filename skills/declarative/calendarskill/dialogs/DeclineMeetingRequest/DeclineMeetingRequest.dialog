@@ -1,0 +1,77 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "am6kHc",
+    "name": "DeclineMeetingRequest"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "NJNBVB"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cUSSnc"
+          },
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "w9rbHF"
+          }
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "kdCZKJ"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}/decline",
+          "headers": {
+            "authorization": "${turn.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "lPhJKQ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result",
+              "value": "= {}"
+            },
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 202"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5L2wrx"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "qMfEpd"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "DeclineMeetingRequest.lg"
+}

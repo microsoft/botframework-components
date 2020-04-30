@@ -1,0 +1,21 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "nU7YfR",
+    "name": "CheckPersonAvailableDialog",
+    "description": ""
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "h0rcpT"
+      }
+    }
+  ],
+  "generator": "CheckPersonAvailableDialog.lg"
+}

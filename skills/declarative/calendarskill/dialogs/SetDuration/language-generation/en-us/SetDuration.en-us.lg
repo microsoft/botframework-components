@@ -1,0 +1,15 @@
+[import](common.lg)
+
+
+
+# TextInput_Prompt_pgJEOp()
+- ${NoDuration()}
+# TextInput_InvalidPrompt_pgJEOp()
+- ${NoDurationRetry()}
+
+
+# NoDuration()
+- For how long?
+
+# NoDurationRetry()
+- I didn't understand the duration you provided, can you try again?

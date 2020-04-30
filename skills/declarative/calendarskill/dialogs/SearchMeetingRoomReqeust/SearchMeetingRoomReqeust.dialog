@@ -1,0 +1,87 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "zsT810",
+    "name": "SearchMeetingRoomReqeust"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "kASH8M"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CBu4DM"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "iwjWPS"
+          },
+          "assignments": [
+            {
+              "property": "dialog.meetingRooms",
+              "value": "= []"
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "tRqOIa"
+          },
+          "responseType": "Json",
+          "method": "GET",
+          "url": "https://${settings.azureSearch.searchServiceName}.search.windows.net/indexes/${settings.azureSearch.searchIndexName}/docs?api-version=2019-05-06&${dialog.searchQuery}",
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json",
+          "headers": {
+            "api-key": "${settings.azureSearch.searchServiceAdminApiKey}"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "QrIZvp"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result",
+              "value": "= {}"
+            },
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 200"
+            },
+            {
+              "property": "dialog.result.meetingRooms",
+              "value": "= if(dialog.result.requestStatus, foreach(dialog.api_result.content.value, x, x), null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "t8PP1S"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "LbLpuH"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "SearchMeetingRoomReqeust.lg"
+}

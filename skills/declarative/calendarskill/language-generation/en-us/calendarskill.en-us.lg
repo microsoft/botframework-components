@@ -1,0 +1,15 @@
+[import](common.lg)
+
+
+# SendActivity_n7Yuf9()
+- your name is ${user.name}, and your age is ${user.age}
+
+# SendActivity_nLzDaf()
+- This is a Demo meeting.
+
+
+# activity_F9ch6U()
+[Activity
+    Text = Hi, what can I do for you?
+    SuggestedActions = cancel meeting | create meeting | show meeting | find a meeting room
+]

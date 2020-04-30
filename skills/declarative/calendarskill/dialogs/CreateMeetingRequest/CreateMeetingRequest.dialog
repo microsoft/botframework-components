@@ -1,0 +1,216 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "oyfF_m",
+    "name": "CreateMeetingRequest"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "UjhDfY"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fSeVYt"
+          },
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "phLtOE"
+          }
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ZbmhCk"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "MQrbCJ"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                  "value": "=dialog.foreach.value.email"
+                },
+                {
+                  "property": "dialog.CreateHttpRequestEmailItem.type",
+                  "value": "required"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "kvohG3"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.CreateHttpRequestEmailList",
+              "value": "=dialog.CreateHttpRequestEmailItem"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "LndVPy"
+              },
+              "name": "email loop"
+            }
+          ],
+          "itemsProperty": "dialog.attendees",
+          "disabled": false,
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "z3xRtK"
+          },
+          "condition": "dialog.rooms != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "y7dQap"
+              },
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "hudYmy"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                      "value": "=dialog.foreach.value"
+                    },
+                    {
+                      "property": "dialog.CreateHttpRequestEmailItem.type",
+                      "value": "Resource"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "3aGxGF"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.CreateHttpRequestEmailList",
+                  "value": "=dialog.CreateHttpRequestEmailItem"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "lWM2bj"
+                  },
+                  "name": "email loop"
+                }
+              ],
+              "itemsProperty": "dialog.rooms",
+              "disabled": false,
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "PQX7xo",
+            "name": "Set utc start"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcEnd",
+              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "MgSytp"
+          }
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "WjZcvO"
+          },
+          "responseType": "Json",
+          "method": "POST",
+          "body": {
+            "subject": "${dialog.title}",
+            "body": {
+              "contentType": "HTML",
+              "content": "${dialog.desciption}"
+            },
+            "start": {
+              "dateTime": "${dialog.utcStart}",
+              "timeZone": "UTC"
+            },
+            "end": {
+              "dateTime": "${dialog.utcEnd}",
+              "timeZone": "UTC"
+            },
+            "location": {
+              "displayName": "=coalesce(dialog.location, '')"
+            },
+            "attendees": "=dialog.CreateHttpRequestEmailList"
+          },
+          "url": "https://graph.microsoft.com/v1.0/me/events",
+          "headers": {
+            "authorization": "${turn.token}"
+          },
+          "resultProperty": "dialog.api_result",
+          "contentType": "application/json"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "oDCVId"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result",
+              "value": "= {}"
+            },
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= dialog.api_result.statusCode == 201"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "u-cwv7"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "QhUoyz"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "CreateMeetingRequest.lg"
+}

@@ -1,0 +1,64 @@
+[import](common.lg)
+
+# SendActivity_991018()
+- ${WhoIs(conversation.chosenPerson)}
+
+# SendActivity_168348()
+-${JobTitle(conversation.chosenPerson)}
+
+# SendActivity_812058()
+-${EmailAddress(conversation.chosenPerson)}
+
+# SendActivity_666158()
+-${Location(conversation.chosenPerson)}
+
+# SendActivity_093525()
+-${Department(conversation.chosenPerson)}
+
+# SendActivity_484201()
+-${PhoneNumber(conversation.chosenPerson)}
+
+# SendActivity_823586()
+- ${NoManager(conversation.chosenPerson)}
+
+# SendActivity_836453()
+- ${Manager(conversation.chosenPerson)}
+
+# SendActivity_674472()
+- ${NoDirectReports(conversation.chosenPerson)}
+
+
+# SendActivity_lGY4se()
+- ${NoPeopleEmailsRencently()}
+
+# SendActivity_uj1_vp()
+- ${NoPeopleEmailsAboutKeywordRencently(conversation.keyword)}
+
+# SendActivity_Yav0ak()
+- ${PeopleEmailsRencently(count(conversation.allPersons))}
+
+# SendActivity_O2hOQ7()
+- ${PeopleEmailsAboutKeywordRencently(count(conversation.allPersons), conversation.keyword)}
+
+# SendActivity_Tx2gWs()
+- ${PeopleMeetsRencently(count(conversation.allPersons))}
+
+# SendActivity_u2ylya()
+- ${PeopleMeetsAboutKeywordRencently(count(conversation.allPersons), conversation.keyword)}
+
+# SendActivity_clJALA()
+- ${NoPeopleMeetsRencently()}
+
+# SendActivity_yNKAwb()
+- ${NoPeopleMeetsAboutKeywordRencently(conversation.keyword)}
+
+
+# SendActivity__PozQU()
+- ${NoPeers(conversation.chosenPerson)}
+
+# SendActivity_wqTjD7()
+- ${Peers(count(conversation.allPersons), conversation.chosenPerson)}
+
+# SendActivity_yDA1Nx()
+- ${DirectReports(count(conversation.allPersons), conversation.chosenPerson)}
+

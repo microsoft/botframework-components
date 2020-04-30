@@ -1,0 +1,37 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "794390",
+    "name": "ShowItem"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "512678"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hMuGl9"
+          },
+          "property": "conversation.person.PhotoUrl",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "537435",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_537435()}"
+        }
+      ]
+    }
+  ],
+  "generator": "ShowItem.lg"
+}

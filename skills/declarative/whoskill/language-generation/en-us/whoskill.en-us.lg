@@ -1,0 +1,7 @@
+[import](common.lg)
+
+# SendActivity_037586()
+-${WhoWelcomeMessage()}
+
+# SendActivity_886052()
+- ${HelpMessage()}

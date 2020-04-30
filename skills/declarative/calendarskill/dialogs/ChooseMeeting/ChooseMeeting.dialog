@@ -1,0 +1,416 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "zTZ5YZ",
+    "name": "ChooseMeeting"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "f069pg"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "FLVzWs",
+            "name": "choosenMeeting"
+          },
+          "name": "choosenMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "pg9cSs"
+          },
+          "assignments": [
+            {
+              "property": "dialog.meetings",
+              "value": "= coalesce($meetings, conversation.meetings)"
+            },
+            {
+              "property": "dialog.page",
+              "value": "= coalesce($page, conversation.page, 0)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "imqz5y"
+          },
+          "properties": [
+            "conversation.meetings",
+            "conversation.page"
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6vvdSP"
+          },
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "yKed_U"
+              }
+            }
+          ],
+          "condition": "count(dialog.meetings) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "oINXMB"
+              },
+              "condition": "count(dialog.meetings) > 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "Wg_PJY"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.startIndex",
+                      "value": "= dialog.page * 3"
+                    },
+                    {
+                      "property": "dialog.endIndex",
+                      "value": "= min(dialog.startIndex + 3, count(dialog.meetings))"
+                    },
+                    {
+                      "property": "dialog.displayMeetings",
+                      "value": "=subArray(dialog.meetings, dialog.startIndex, dialog.endIndex)"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "nrEi4P",
+                    "name": "choosenMeeting"
+                  },
+                  "name": "choosenMeeting"
+                },
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "wgUCCM"
+                  },
+                  "itemsProperty": "dialog.displayMeetings",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "OGjZDX"
+                      },
+                      "property": "dialog.ItemDate",
+                      "value": "=startOfDay(formatDateTime(dialog.foreach.value.StartTime))"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "zGR0Kj"
+                      },
+                      "condition": "dialog.CurrentAddedDate == null || dialog.CurrentAddedDate  != dialog.ItemDate",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "9Hd0mV"
+                          },
+                          "property": "dialog.CurrentAddedDate",
+                          "value": "=dialog.ItemDate"
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "Kbo_PA"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.CurrentDateData.Name",
+                              "value": "CalendarDate"
+                            },
+                            {
+                              "property": "dialog.CurrentDateData.Date",
+                              "value": "=addHours(formatDateTime(dialog.foreach.value.StartTime), -int(user.timeOffset)) "
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.EditArray",
+                          "$designer": {
+                            "id": "OZQSq9"
+                          },
+                          "changeType": "push",
+                          "itemsProperty": "dialog.displayMeetingsData",
+                          "value": "=dialog.CurrentDateData"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "S7LHGn"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.CurrentMeetingData.Name",
+                          "value": "CalendarItem"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.IsConflict",
+                          "value": "=dialog.foreach.value.IsConflict"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.StartTime",
+                          "value": "=addHours(formatDateTime(dialog.foreach.value.StartTime), -int(user.timeOffset))"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.EndTime",
+                          "value": "=addHours(formatDateTime(dialog.foreach.value.EndTime), -int(user.timeOffset))"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.IsAccepted",
+                          "value": "=dialog.foreach.value.IsAccepted"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.Title",
+                          "value": "=dialog.foreach.value.Title"
+                        },
+                        {
+                          "property": "dialog.CurrentMeetingData.Event.Location",
+                          "value": "=dialog.foreach.value.Location"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "HLlXk4"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.displayMeetingsData",
+                      "value": "=dialog.CurrentMeetingData"
+                    }
+                  ],
+                  "value": "dialog.foreach.value"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "_wiQCI"
+                  },
+                  "name": "choosenMeeting"
+                },
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "jnDMmQ"
+                  },
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "outputFormat": "value",
+                  "appendChoices": "true",
+                  "defaultLocale": "en-us",
+                  "style": "Auto",
+                  "choiceOptions": {
+                    "inlineSeparator": ", ",
+                    "inlineOr": " or ",
+                    "inlineOrMore": ", or ",
+                    "includeNumbers": true
+                  },
+                  "recognizerOptions": {
+                    "noValue": false,
+                    "noAction": false
+                  },
+                  "prompt": "${TextInput_Prompt_jnDMmQ()}",
+                  "property": "dialog.choosenMeetingName",
+                  "choices": "= subArray(foreach(dialog.meetings, x, x.Title), dialog.startIndex, dialog.endIndex)",
+                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.8 || #PreviousPage.Score >= 0.8"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "3ybzqm"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.choosenMeeting",
+                      "value": "= first(where(dialog.displayMeetings, x, x.Title == dialog.choosenMeetingName))"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Ehpt09"
+                  },
+                  "name": "choosenMeeting"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "em77iU"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.choosenMeeting",
+                      "value": "= dialog.meetings[0]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "n_5A9-"
+          },
+          "value": "= dialog.choosenMeeting"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "jfppXE"
+      },
+      "intent": "NextPage",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tH8P3L"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1lrDHS"
+          },
+          "condition": "=(dialog.page+ 1) * int(settings.DisplaySize) < count(dialog.meetings)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "iwmtdR"
+              },
+              "property": "dialog.page",
+              "value": "=dialog.page + 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "NgVvgR"
+              },
+              "activity": "${activity_NgVvgR()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "nuUfbY"
+          },
+          "assignments": [
+            {
+              "property": "conversation.meetings",
+              "value": "= dialog.meetings"
+            },
+            {
+              "property": "conversation.page",
+              "value": "= dialog.page"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "LPADh6"
+          }
+        }
+      ],
+      "condition": "#NextPage.Score >= 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "hSCEfW"
+      },
+      "intent": "PreviousPage",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uHQOC5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "pHeUWq"
+          },
+          "condition": "=dialog.page > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "2mjaPl"
+              },
+              "property": "dialog.page",
+              "value": "=dialog.page - 1"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9AGNVB"
+              },
+              "activity": "${activity_9AGNVB()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "3MV93W"
+          },
+          "assignments": [
+            {
+              "property": "conversation.meetings",
+              "value": "= dialog.meetings"
+            },
+            {
+              "property": "conversation.page",
+              "value": "= dialog.page"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "Wfhp6o"
+          }
+        }
+      ],
+      "condition": "#PreviousPage.Score >= 0.8"
+    }
+  ],
+  "generator": "ChooseMeeting.lg",
+  "recognizer": "ChooseMeeting.lu"
+}

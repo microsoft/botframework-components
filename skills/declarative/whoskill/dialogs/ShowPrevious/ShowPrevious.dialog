@@ -1,0 +1,59 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "015889",
+    "name": "ShowPrevious"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "518922"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "471701",
+            "name": "Branch: if/else"
+          },
+          "condition": "conversation.pageindex == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "080690",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_080690()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "823451",
+                "name": "Set a property"
+              },
+              "property": "conversation.pageindex",
+              "value": "=int(conversation.pageindex) - 1"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "341679",
+            "name": "Begin a new dialog"
+          },
+          "activityProcessed": true,
+          "dialog": "SendPage"
+        }
+      ]
+    }
+  ],
+  "generator": "ShowPrevious.lg"
+}
