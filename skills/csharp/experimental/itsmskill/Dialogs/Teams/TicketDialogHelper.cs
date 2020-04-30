@@ -106,6 +106,7 @@ namespace ITSMSkill.Dialogs.Teams
                     }
                 }
             });
+            card.Id = "UpdateAdaptiveCard";
 
             return card;
         }
@@ -165,8 +166,9 @@ namespace ITSMSkill.Dialogs.Teams
         /// Returns Card to GetIncident Id from User.
         /// </summary>
         /// <returns> Adaptive Card.</returns>
-        public static AdaptiveCard GetDeleteConfirmationCard(Ticket ticket)
+        public static AdaptiveCard GetDeleteConfirmationCard(string ticketId)
         {
+
             var card = new AdaptiveCard("1.0");
             var columns = new List<AdaptiveColumn>
             {
@@ -177,7 +179,7 @@ namespace ITSMSkill.Dialogs.Teams
                     {
                         new AdaptiveTextBlock
                         {
-                            Text = $"Deleting Ticket with id: {ticket.Id}",
+                            Text = $"Deleting Ticket with id: {ticketId}",
                             Size = AdaptiveTextSize.Small,
                             Weight = AdaptiveTextWeight.Bolder,
                             Color = AdaptiveTextColor.Accent,
@@ -224,12 +226,13 @@ namespace ITSMSkill.Dialogs.Teams
                         TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
                         FlowData = new Dictionary<string, object>
                         {
-                            { "IncidentDetails", ticket }
+                            { "IncidentDetails", ticketId }
                         },
                         Submit = true
                     }
                 }
             });
+            card.Id = "DeleteTicketAdaptiveCard";
 
             return card;
         }

@@ -46,6 +46,7 @@ namespace ITSMSkill.Dialogs
                 CheckTitleAsync,
                 InputTitleAsync,
                 SetTitleAsync,
+                DisplayExistingLoopAsync,
                 CheckDescriptionAsync,
                 InputDescriptionAsync,
                 SetDescriptionAsync,
@@ -132,20 +133,20 @@ namespace ITSMSkill.Dialogs
             return await sc.EndDialogAsync();
         }
 
-        //protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
+        protected async Task<DialogTurnResult> DisplayExistingLoopAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var state = await StateAccessor.GetAsync(sc.Context, () => new SkillState(), cancellationToken);
 
-        //    if (state.DisplayExisting)
-        //    {
-        //        state.PageIndex = -1;
-        //        return await sc.BeginDialogAsync(Actions.DisplayExisting, cancellationToken: cancellationToken);
-        //    }
-        //    else
-        //    {
-        //        return await sc.NextAsync(cancellationToken: cancellationToken);
-        //    }
-        //}
+            if (state.DisplayExisting)
+            {
+                state.PageIndex = -1;
+                return await sc.BeginDialogAsync(Actions.DisplayExisting, cancellationToken: cancellationToken);
+            }
+            else
+            {
+                return await sc.NextAsync(cancellationToken: cancellationToken);
+            }
+        }
 
         protected async Task<DialogTurnResult> CreateTicketAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {

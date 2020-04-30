@@ -59,8 +59,10 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 
             var ticketDetails = taskModuleMetadata.FlowData != null ?
                     JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
-                    .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
-                    : null;
+                    .GetValueOrDefault("IncidentDetails") : null;
+
+            // Convert JObject to Ticket
+            Ticket incidentDetails = JsonConvert.DeserializeObject<Ticket>(ticketDetails.ToString());
 
             return new TaskModuleContinueResponse()
             {
@@ -72,7 +74,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.UpdateIncidentCard(ticketDetails)
+                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails)
                     }
                 }
             };
@@ -86,11 +88,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 
             var ticketDetails = taskModuleMetadata.FlowData != null ?
                 JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
-                .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
-                : null;
+                .GetValueOrDefault("IncidentDetails") : null;
+
+            // Convert JObject to Ticket
+            Ticket incidentDetails = JsonConvert.DeserializeObject<Ticket>(ticketDetails.ToString());
 
             // If ticket is valid go ahead and update
-            if (ticketDetails != null)
+            if (incidentDetails != null)
             {
                 ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
                     context,
@@ -121,7 +125,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 
                     // Create Managemenet object
                     var management = _serviceManager.CreateManagement(_settings, state.AccessTokenResponse, state.ServiceCache);
-                    var result = await management.UpdateTicket(ticketDetails.Id, title.Value<string>(), description.Value<string>(), (UrgencyLevel)Enum.Parse(typeof(UrgencyLevel), urgency.Value<string>()));
+                    var result = await management.UpdateTicket(incidentDetails.Id, title.Value<string>(), description.Value<string>(), (UrgencyLevel)Enum.Parse(typeof(UrgencyLevel), urgency.Value<string>()));
 
                     if (result.Success)
                     {
