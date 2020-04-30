@@ -74,12 +74,20 @@
           "condition": "count(dialog.attendeeResult.contactsList) > 1",
           "elseActions": [
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "C6a-20"
+                "id": "o85Ymq"
               },
-              "property": "turn.ResolvedAttendee",
-              "value": "=dialog.attendeeResult.contactsList[0].mail"
+              "assignments": [
+                {
+                  "property": "turn.resolvedAttendee.email",
+                  "value": "=dialog.attendeeResult.contactsList[0].mail"
+                },
+                {
+                  "property": "turn.resolvedAttendee.name",
+                  "value": "=dialog.attendeeResult.contactsList[0].displayName"
+                }
+              ]
             }
           ],
           "actions": [
