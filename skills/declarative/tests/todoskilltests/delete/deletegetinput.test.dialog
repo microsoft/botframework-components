@@ -46,7 +46,7 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item is:"
+            "text": "The most recent item on To Do list is:"
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
@@ -62,7 +62,7 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item is:"
+            "text": "The most recent item on Shopping list is:"
         },
         {
             "$kind": "Microsoft.Test.AssertReply",

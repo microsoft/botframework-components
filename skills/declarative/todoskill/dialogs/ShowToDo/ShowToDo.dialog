@@ -178,7 +178,29 @@
               "value": "= select(turn.recognized.intents,x,x.key)[0]",
               "property": "dialog.showPage",
               "validations": [
-                "#ShowNextPage.score > float(settings.intentScore) || #ShowPreviousPage.score > float(settings.intentScore)"
+                "#ShowNextPage.score > float(settings.intentScore) || #ShowPreviousPage.score > float(settings.intentScore)  || #FinishTask.score > float(settings.intentScore)"
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "fIglrD"
+              },
+              "condition": "=#FinishTask.score > float(settings.intentScore)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "AGbjS1"
+                  },
+                  "activity": "${SendActivity_Activity_AGbjS1()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "q4ZCgi"
+                  }
+                }
               ]
             },
             {

@@ -122,3 +122,7 @@ support all in GetInput in mark/delete
 support ordinal in GetInput in mark/delete
 
 task content incorrect message
+
+# SDK
+
+ChoiceInput will update property if value not null.

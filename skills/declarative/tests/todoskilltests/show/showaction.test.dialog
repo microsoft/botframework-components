@@ -7,23 +7,24 @@
     "userTokens": [
         "usertoken.mock"
     ],
+    "skillClaim": "skillclaim.mock",
     "dialog": "ToDoSkill",
     "script": [
         {
-            "$kind": "Microsoft.Test.UserConversationUpdate",
-            "membersAdded": [
-                "User"
-            ]
+            "$kind": "Microsoft.Test.UserActivity",
+            "activity": {
+                "type": "event",
+                "name": "ShowToDo",
+                "locale": "en-US"
+            }
         },
         {
-            "$kind": "Microsoft.Test.AssertReplyOneOf",
-            "text": [
-                "Hello, I'm the Todo sample bot. What can I do for you today?"
-            ]
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "What list would you like to see? (1) Shopping, (2) Grocery, or (3) To Do"
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "view my todo list"
+            "text": "todo"
         },
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -45,15 +46,17 @@
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "add buy milk in grocery list"
+            "text": "done"
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "I added buy milk to your Grocery list."
+            "text": "I'm here if you need anything else."
         },
         {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Let me know if you want to add an item or mark one as complete."
+            "$kind": "Microsoft.Test.AssertReplyActivity",
+            "assertions": [
+                "type == 'endOfConversation'"
+            ]
         }
     ]
 }
