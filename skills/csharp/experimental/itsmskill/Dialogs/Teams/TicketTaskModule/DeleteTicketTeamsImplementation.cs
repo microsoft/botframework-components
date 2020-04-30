@@ -56,10 +56,12 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         {
             var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
 
-            var ticketDetails = taskModuleMetadata.FlowData != null ?
+            var id = taskModuleMetadata.FlowData != null ?
                     JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
-                    .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
-                    : null;
+                    .GetValueOrDefault("IncidentId") : null;
+
+            // Convert JObject to Ticket
+            string incidentId = JsonConvert.DeserializeObject<string>(id.ToString());
 
             return new TaskModuleContinueResponse()
             {
@@ -71,7 +73,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.GetDeleteConfirmationCard(ticketDetails)
+                        Content = TicketDialogHelper.GetDeleteConfirmationCard(incidentId)
                     }
                 }
             };
@@ -82,11 +84,14 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
             var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
 
-            var ticketDetails = taskModuleMetadata.FlowData != null ?
+            var id = taskModuleMetadata.FlowData != null ?
                     JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
-                    .TryGetValue("IncidentDetails", out var ticket) ? (Ticket)ticket : null
-                    : null;
-            if (ticketDetails != null)
+                    .GetValueOrDefault("IncidentId") : null;
+
+            // Convert JObject to Ticket
+            string incidentId = (string)id;
+
+            if (incidentId != null)
             {
                 string ticketCloseReason = string.Empty;
 
@@ -97,46 +102,50 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                 JObject dataObject = null;
                 if (isDataObject)
                 {
+                    dataObject = dataValue as JObject;
                     // Get TicketCloseReason
                     ticketCloseReason = dataObject.GetValue("IncidentCloseReason").Value<string>();
-                }
 
-                // Create Managemenet object
-                var management = _serviceManager.CreateManagement(_settings, state.AccessTokenResponse, state.ServiceCache);
+                    // Create Managemenet object
+                    var management = _serviceManager.CreateManagement(_settings, state.AccessTokenResponse, state.ServiceCache);
 
-                // Create Ticket
-                var result = await management.CloseTicket(ticketDetails.Id, ticketCloseReason);
+                    // Create Ticket
+                    var result = await management.CloseTicket(incidentId, ticketCloseReason);
 
-                // TODO: Figure out what should we update the incident with in order
-                ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
-                    context,
-                    () => new ActivityReferenceMap(),
-                    cancellationToken)
-                .ConfigureAwait(false);
-                activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
-
-                await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
-                    context,
-                    activityReference,
-                    RenderCreateIncidentHelper.CloseTicketCard(result.Tickets[0]),
-                    cancellationToken);
-
-                // Return Closed Incident Envelope
-                return new TaskModuleContinueResponse()
-                {
-                    Type = "continue",
-                    Value = new TaskModuleTaskInfo()
+                    if (result.Success)
                     {
-                        Title = "Incident Deleted",
-                        Height = "small",
-                        Width = 300,
-                        Card = new Attachment
+                        // TODO: Figure out what should we update the incident with in order
+                        ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                            context,
+                            () => new ActivityReferenceMap(),
+                            cancellationToken)
+                        .ConfigureAwait(false);
+                        activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
+
+                        await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
+                            context,
+                            activityReference,
+                            RenderCreateIncidentHelper.CloseTicketCard(result.Tickets[0]),
+                            cancellationToken);
+
+                        // Return Closed Incident Envelope
+                        return new TaskModuleContinueResponse()
                         {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Deleted")
-                        }
+                            Type = "continue",
+                            Value = new TaskModuleTaskInfo()
+                            {
+                                Title = "Incident Deleted",
+                                Height = "small",
+                                Width = 300,
+                                Card = new Attachment
+                                {
+                                    ContentType = AdaptiveCard.ContentType,
+                                    Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Deleted")
+                                }
+                            }
+                        };
                     }
-                };
+                }
             }
 
             // Failed to Delete Incident
