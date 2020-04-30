@@ -609,19 +609,6 @@
           "activity": "${SendActivity_EckUyy()}"
         },
         {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "HDFe4y"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_HDFe4y()}",
-          "property": "turn.RepeatOverviewConfirm",
-          "allowInterruptions": "#_Interruption.Score >= 0.9"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "8HZoQ6"

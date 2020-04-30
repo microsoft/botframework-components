@@ -4,7 +4,7 @@
 - Input invalid. Retry login please.
 
 # TextInput_Prompt_d1fnSD()
-- No such attendee named ${dialog.CurrentAttendee}! Please retry input an attendee.
+- No such attendee named ${dialog.Attendee}! Please retry input an attendee.
 
 # TextInput_Prompt_BkEx7U()
 - Sure, who will join?
@@ -14,6 +14,6 @@
 
 
 # TextInput_Prompt_GG_dh5()
-- Which ${dialog.CurrentAttendee} do you want to invite?
+- Which ${dialog.Attendee} do you want to invite?
 # SendActivity_DvmU48()
 - Alright, I've added ${turn.ResolvedAttendee.name}: ${turn.ResolvedAttendee.email}.

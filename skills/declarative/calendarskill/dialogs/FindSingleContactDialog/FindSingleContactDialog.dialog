@@ -51,17 +51,19 @@
               "property": "dialog.NewAttendee"
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.TraceActivity",
               "$designer": {
-                "id": "Fy6y8k"
-              },
-              "property": "dialog.options['dialog.CurrentAttendee']",
-              "value": "dialog.NewAttendee"
+                "id": "RFFijB"
+              }
             },
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
                 "id": "kiQTMV"
+              },
+              "activityProcessed": true,
+              "options": {
+                "attendee": "${dialog.NewAttendee}"
               }
             }
           ]
