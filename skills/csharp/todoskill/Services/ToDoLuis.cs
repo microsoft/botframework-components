@@ -16,8 +16,6 @@ namespace Luis
         public string AlteredText;
         public enum Intent {
             AddToDo, 
-            Cancel, 
-            Confirm, 
             DeleteToDo, 
             MarkToDo, 
             None, 
