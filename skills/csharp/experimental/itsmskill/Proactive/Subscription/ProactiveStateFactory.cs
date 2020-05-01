@@ -26,5 +26,14 @@ namespace ITSMSkill.Proactive.Subscription
         public IStateManager SubscriptionState { get; private set; }
 
         public IStateManager ProactiveConversationState { get; }
+        public BotStateSet StateSet { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IStorage Storage => throw new NotImplementedException();
+
+        public UserState UserState => throw new NotImplementedException();
+
+        public ConversationState ConversationState => throw new NotImplementedException();
+
+        public ChannelState ChannelState { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
