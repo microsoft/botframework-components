@@ -188,7 +188,8 @@
           },
           "value": "=turn.ResolvedAttendee"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",

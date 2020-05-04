@@ -236,6 +236,15 @@
 - we make an appointment for me
 - Go back to create meeting
 - create meeting
+- New meeting with adele
+- schedule a meeting tomorrow
+- create a new meeting
+- book time with Darren this week
+- schedule a meeting with Patrick
+
+@ prebuilt datetimeV2
+@ prebuilt personName
+@ prebuilt email
 
 
 # FindCalendarEntry

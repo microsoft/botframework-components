@@ -19,7 +19,8 @@
           "$designer": {
             "id": "AutbgI"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.HttpRequest",
@@ -63,7 +64,9 @@
           },
           "value": "= dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result",
+      "activityProcessed": true
     }
   ],
   "generator": "GetContactRequest.lg"

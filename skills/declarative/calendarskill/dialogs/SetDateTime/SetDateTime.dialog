@@ -83,7 +83,8 @@
           },
           "value": "= dialog.startDateTime"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SetDateTime.lg",

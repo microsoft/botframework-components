@@ -1,0 +1,205 @@
+[import](common.lg)
+
+# TextInput_Prompt_YhjtAz()
+- What is the title of the meeting?
+# SendActivity_21ZVX5()
+- I've cancelled the meeting.
+# TextInput_Prompt_3N8FuS()
+- When should I schedule the meeting?
+# ChoiceInput_Prompt_mtAbnh()
+- I've found the following times when all attendees are available. Would you like to schedule for one of these times?
+# TextInput_Prompt_MwmRoO()
+- What location?
+# TextInput_Prompt_og2ZOc()
+- What is the description?
+# ConfirmInput_Prompt_MwF0M9()
+[Activity
+    Text = Is this correct?
+    Attachments = ${json(BuildNewMeetingDetailCard())}
+]
+# SendActivity_Z8dBXh()
+- I've created the meeting.
+# BuildNewMeetingDetailCard()
+- ```
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${dialog.title}",
+                                    "size": "Large",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "altText": "",
+                                    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAELSURBVFhH7ZbNDcIwDIWzECvAFHDlCAIEC7ABnPgR3OAKLAErsBA8W01JaU2IlZIDfdInxW5rP9VJVfNBPbABbY70UtfZgwcYcqSXt04XbMHaYQXugB68ZrF7/Vt8daivOQK6IRU8H1qcwNjhBqryoUh1bD430KfA0Q5QfsCRXlKdBSgYIFeuOmAGWhzpJdWxfcU3ULdKb4BmQutfYU8HB7RIRW7gDEZg8gOoj/cU1K0lKBh4PwWSpG97aN72DTZwAXT/nKOXQvNqA9K5Ds2rDcSS10CsWav3QKxZq/dArFk3e6DZA80ekOQ1EGvWkrwGYs1aUsnA//4THrJFKnh2U1D171Y31DeljHkCL3BVYKnypMoAAAAASUVORK5CYII=",
+                                    "horizontalAlignment": "Right"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "bleed": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": 10,
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "altText": "",
+                                    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOPSURBVFhH1ZhZyExhGMfHvu8JKRSSPSlkK1lD2RKJC+SG5IoLlHKhpITcUC5ki0i5kQvZb8i+Zydk3/f19xtzvs6YMzNn5vvmi3/9vvPN28yc5zzb+7yT+JdUJXUtRo2hBTSFBlAdvsM7eAFP4A3EVqHG1INuIVqCxtSHwJj3oDGP4SKch0vwDXIqrjHVYAAMhT7QFZrDQ3gKesOb1YSGoMdagQZpzHE4CGchq+IY49NPhEnQD7zBGbgCN+EZhI0xZBrTCTS6N9SFY7AT9oHeK1h+4Tp4BObAFpgOXaA25JKh6wVzYC9o8HVYCj5gQdKQHfAFzsEC6ADFqCcshzvwClZDbIN0s174BSdgPNSAKOmlMdA2+Sq7zKVZcBk+wkowfDllsvoU5oDJNxxyaTGchKnJV7lVFabAPXgNsyGnhoAV8hwmu5BHG0EPGsY4smh8r965Bp0hUvaR/eCXrwF7Rz6tB98/L/kqngzZbvBzfj6yqkfAZzDR2rsQQ8UYo2wTJrNR6OiCMQzLsq0Fu+CWCyWUeWYjtHlOcCFsTBMYBnpmuwsl1k/Y+uffxDj/hI0xkaz9G3DVhUqQbeMl9PBF2Bhbt4l0Cr66UAmyYu3Kdus0Y9qkru43xaiYBzDxLZakwsY0Sl3fpq6FSs+OjiBfZy6becLGOIuoOL0lrGCbcMtYFsFgyKWyHhM2xvipZqlrXDlK2Cjdc/yOMA5ZnyCXHM6SCne+abANnDni7DOBDINVaPz/lt9vTtjYoqQz7DfOPGld2PIyVJZ23t20gtQazJmMWdl9SUOsiv4uVIJmgB495ItwznwAR0IT0jeVWo6obj9qT+qaJmOnyxwzu7tQQo0CZ+EHEPS4NFnWwYS3GQxdKeTJ4TB4Hwe5rHKIdsfWaseCtCyvANWBFfADTkO+ppiYC3Ziy9IxMZxb5ZFVOh+CQ55HoLxy41oFNiybmbOqI0Z5ZBkvAnPEhrgQsg35GTKua8HB+S44zfeFQrcLw+JcvQE88GnMEnD0TJMngWwyZy6Aw5azzkhoB05mPpFec6iOkgbblTXebj4TnObcOjwUboKMDTlOchqyseDxdhBoiIc65xCn++Cs7eQWHG/1qnOtD2FB6JGj4Dh7AIJNOU2FVIq/OrgDD0z9r5fs1t5IL1odzs8ao/e8oVXpLxBHQGPKZpcoFVq2vt8nDozJiHtIVsxt8GeR+y78R0okfgN4jscEJoD0bgAAAABJRU5ErkJggg==",
+                                    "size": "Stretch",
+                                    "width": "24px"
+                                }
+                            ],
+                            "spacing": "None"
+                        },
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${formatDateTime(dialog.meetingTime.start, 'h:mmt')} - ${formatDateTime(dialog.meetingTime.end, 'h:mmt')}",
+                                    "size": "Large",
+                                    "color": "Accent"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${formatDateTime(dialog.meetingTime.start, 'dddd, MMMM dd')}",
+                                    "size": "Medium",
+                                    "spacing": "None",
+                                    "weight": "Bolder"
+                                }
+                            ],
+                            "width": 70
+                        }
+                    ],
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": 10,
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "altText": "",
+                                    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANHSURBVFhH7ddHiBNhGIfxtaNi74oFG1hAxQKKvVwUy0U9iA0RPQl60JMeBAX1oqLgwYOiIIIgiCAi9oa9NyzYe+8Fy/PAfBCWSSaZ7O7JP/xYSLKZb955v5KS/8mSStHfNGmCXuiJlviDRziPy3iHck9HLMN9/M3iJhaiNcollTEOZ+AFb2MNJmEABmIKNuIh/MxhDEeZpgpm4A58FEvQCtli9dbiDc5iLMosE3AR1zAZVsk0gnc+F3MwCPVhamIeHmMvrF7R8S634Am8oE1fG1NxCZm9opMYA6tZC4vxAavREEVlNhzIBjSHF7A5X8EmXg8HNgvb4Ot3MRMOqCu24wLGI3Wcvutgr3hBMxE+rqMY4QsZ8eI+xis4iCEwPq4XWIoavhCX8OyzpU3kOhxAY3iButiM/cjMb+yA73XDMFTHDXhDTvUWiE3SYGxQB/A60jZiM1v2uDggF71w8WawKs9hzzRAbJIG411Vw0/8gjNEHyPZ8gm+b3/Z7OH//S6/MzZJg/kS8UsdhLPiPby7rHdI7DX5v5/hgPQd3xCbpME8i9g3Pp4HcAb1Rl/ExYv2Qzs4q3w8HdAePq6XiE3SYLywy77N6MW/Yh/uwYXO5T9zdtSBS8E0nICftaJ9YP85ERxQ6ozCMeyGA6oK1xDv2t44gOVYARe8HzgH9zEzGqewE+7wRcWye7G3WAQHY0XdBvbAHgirr8eGrbASxiVgFZyJ85H0JPKK1TmOUJ0QH1EnjMRQOJVd+EKsymlYlR6+UBYJ1XEXdiuwOkmxf1bCqixAYlUy7yJXXCP8su5oilt4ilxxq/DY4cq9Cc7KnCnkGTo7PCx5FLBfclXHXvEzTukjcEVOTL6VMZnVcYnPVZ1QlavIqyqm0O4O1ekPN8G46tRDqIo7e15VMYVUxoTquAh6tomrjjNrOvLulZBCK2Osjn1gdUr3jlWxYi79fsaTYN4ptDIm18xKXRWTpjImrnecQS58qapi0lTGxM2sLkhdFZN2MMbd16OFv4k8t3jwHgz3pl1wr6rQhD3LA5eK2pnT9kyIvXMInlk8+9pHea8rpVPMYzL2jt/RGR6c/FVQcK+EFDsY4znHyrj0+zO2wnulHFJS8g/yA9AtwlEhQgAAAABJRU5ErkJggg==",
+                                    "width": "24px"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": 95,
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${if(dialog.location != null && !empty(dialog.location), dialog.location, "No location specified")}"
+                                }
+                            ]
+                        }
+                    ],
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": 10,
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "altText": "",
+                                    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMVSURBVFhH7dc3iBRhFMDxM+csZsyYIyomEARFUU5tLCzURrBWO2tbEQSxsxLFQrQQE4oiiNiYc845oCjm8P8vM8Pt3e7sN+csKPjgx95tuPnme+97b6/mf5SJJtFjNaIrBqIbfuIF7uM9SkY1FtMOEzEP4xEv5jnO4CAu4SuKoln0mFe0hYtYg4XogLfwpkdhOvrBXXoMF5lE3ovxYi7EHTmGbdiLE7iKjpiBzrgBd6sq0QUb4F1vxwTUvdmWmA3T9ARr0QZJNI0e84hBGAvTsh/n8QNxWCOncAhedxx6IYk8F9M98gCeml+oH59xB0/haVMSeS7GYnQB/s20WvQ1+f6iAs5zMc8igzEC1kj9aI/h6A2L9yWSyHMxpsY+YlHWYmb0cxyeJI/9AnyA77XYk8jzaFugXqQHPOLDYE24C6Nh31mJ/tiDXSjambyjBZbDnvIdpsJTdRGvYU2dhgtr0P2z7Ix3ORJj4DE2/56OLzBaYQoWwSPusfZkmQp3zN9Nm6Xh53xeyakLmU2VZs0BOGumYh2m4RbsJ+6KO+J1TN8kzEcf2Is24wIKUWlnQmaNjcv3LcYcnMQm7IbpeRi5Bhdn9x0Ax4J1dgXuXMWYhbh978CK6Dnb+mrswyNch4PvOOaiOcqFqVqGs5ElqJih0FljmizWV1gPa6lSmLKNMIVewx1P7TMWqfMjZNZ4RO/BtIRsuTdoej7C6xRmVNpiQmfNXdh53RmFhsffNN9E4W+nLSaeHb4nrdB9TZ8ioXEZW7ATDs7UxcSzxm10nlSaNW59lp15Bxdk8Zuu1MXUnTU2ssyzJmukbX88a3rCRvZvz5qskbYz1oizxs7aqFmTNcrdjRewXTsGfPT4HUamWZNXDMVWeJqcMRaqBVs/HJpLcQSODLtp0ZfsPw3rZBVuI8usOYfgWVMqSh3tePudF6bGlm/xlgsb3dGIJ2syQuZTgyi1GMf7EDiFbUqNnjVZo9Rpsq/YS/z+YZpCe4fpag2/u1jEb5ApSuXW/4P74hvcnUKrDohO8J96U+p3nNDP/Y1RU/MbvXvkr9LqmBEAAAAASUVORK5CYII=",
+                                    "width": "24px"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": 95,
+                            "items": [
+                                {
+                                    "type": "RichTextBlock",
+                                    "inlines": [
+                                        {
+                                            "type": "TextRun",
+                                            "text": "${join(dialog.attendees, ", ")}",
+                                            "weight": "Lighter"
+                                        },
+                                        {
+                                            "type": "TextRun",
+                                            "text": "${if(count(dialog.attendees) > 4, concat('(+', string(count(dialog.attendees) - 4), ' more)'), '')}",
+                                            "isSubtle": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "RichTextBlock",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "Powered by ",
+                            "size": "Small"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "Microsoft Graph",
+                            "size": "Small",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "horizontalAlignment": "Right",
+                    "separator": true,
+                    "spacing": "Medium"
+                }
+            ],
+            "separator": true,
+            "spacing": "Medium"
+        }
+    ]
+}
+```
+
+
+# SendActivity_FO2ZGc()
+- set title
