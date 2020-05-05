@@ -14,7 +14,7 @@
     <EmbeddedResource Include="Data\RoomServiceMenu.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AdaptiveCards" Version="1.2.3" />
+    <PackageReference Include="AdaptiveCards" Version="1.2.4" />
     <PackageReference Include="Bot.Builder.Community.Adapters.Google" Version="4.6.4-beta0056" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.ContentModerator" Version="2.0.0" />
