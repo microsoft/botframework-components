@@ -195,7 +195,8 @@
             "id": "dKRCRP"
           }
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "UpdateMeetingDialog.lg"

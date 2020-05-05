@@ -209,7 +209,8 @@
           },
           "value": "= dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "CreateMeetingRequest.lg"

@@ -1,0 +1,192 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "WL9Sao",
+    "name": "GetScheduleDialog"
+  },
+  "autoEndDialog": false,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "nX0zpo"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "gkdG2V"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "K5jynv"
+          },
+          "condition": "@datetime != null && (@datetime.type == 'date' || @datetime.type == 'datetime')",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "rzHyWB"
+              },
+              "property": "dialog.datetime",
+              "value": "=dialog.datetimeresolution[0].value"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9kmJ7s"
+          },
+          "dialog": "GetEventsByDateDialog",
+          "options": {
+            "datetime": "=dialog.datetime"
+          },
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "31JLFW"
+          },
+          "activity": "${SendActivity_31JLFW()}"
+        }
+      ],
+      "defaultResultProperty": "dialog.result"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yAPZTa"
+      },
+      "intent": "ShowNext",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "XpLMMi"
+          },
+          "condition": "dialog.datetime != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ln3JfU"
+              },
+              "value": "=addDays(formatDateTime(dialog.datetime), 1)",
+              "property": "dialog.datetime"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "1SwTI9"
+              },
+              "value": "=addDays(utcNow(), 1)",
+              "property": "dialog.datetime",
+              "activityProcessed": true
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9Zuc9i"
+          },
+          "dialog": "GetEventsByDateDialog",
+          "options": {
+            "datetime": "=dialog.datetime"
+          },
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "zcEe15"
+          },
+          "activity": "${SendActivity_zcEe15()}"
+        }
+      ],
+      "defaultResultProperty": "dialog.result",
+      "activityProcessed": true
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "HOWfwr"
+      },
+      "intent": "ShowPrevious",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "uUXqB8"
+          },
+          "condition": "dialog.datetime != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "YmkANM"
+              },
+              "value": "=addDays(formatDateTime(dialog.datetime), -1)",
+              "property": "dialog.datetime"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "xkCasL"
+              },
+              "value": "=addDays(utcNow(), -1)",
+              "property": "dialog.datetime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "RcyI2A"
+          },
+          "dialog": "GetEventsByDateDialog",
+          "options": {
+            "datetime": "=dialog.datetime"
+          },
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "cD0Ohz"
+          },
+          "activity": "${SendActivity_cD0Ohz()}"
+        }
+      ],
+      "activityProcessed": true,
+      "defaultResultProperty": "dialog.result"
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "5nlOwR"
+      },
+      "defaultResultProperty": "dialog.result",
+      "actions": [
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "mgB32T"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetScheduleDialog.lg",
+  "recognizer": "GetScheduleDialog.lu"
+}
