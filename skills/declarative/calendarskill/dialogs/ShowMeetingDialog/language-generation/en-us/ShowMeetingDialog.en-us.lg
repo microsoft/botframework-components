@@ -10,8 +10,7 @@
     Text = You have ${count(dialog.meetingsList)} events planned for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}. The first one is ${dialog.meetingsList[0].Title} with ${GetAttendeeString(dialog.meetingsList[0].Attendees)} at ${formatDateTime(dialog.meetingsList[0].StartTime, 'HH:mm:ss')}. The last one for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')} is ${turn.lastMeeting.Title} at ${formatDateTime(turn.lastMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(turn.lastMeeting.Attendees)}.
     Attachments = ${json(MeetingListCard('Meetings', count(dialog.meetingsList), int(dialog.overlapCount), formatDateTime(dialog.startDateTime, 'yyyy-MM-dd'), GetIndicator(dialog.currentPage, int(settings.DisplaySize), count(dialog.meetingsList)), null, 'Powered by **Microsoft**', 'UTC', dialog.displayMeetingData, true))}
 ]
-# TextInput_Prompt_4u0r_m()
-- Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
+
 # SendActivity_meJEs5()
 - The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
 
@@ -46,3 +45,12 @@
 
 # prompt_bqUDX2()
 - Do you want to review your calendar overview again for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}? You can also ask me to update or decline this event for you.
+- 
+# ConfirmInput_Prompt_JSASJZ()
+- Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees.
+# ConfirmInput_UnrecognizedPrompt_JSASJZ()
+- Not recognized, please retry
+# ConfirmInput_DefaultValueResponse_JSASJZ()
+- Sorry, I don't understand
+# SendActivity_Qfr1b9()
+- Sorry, I don't understand
