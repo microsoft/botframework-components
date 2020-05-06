@@ -122,7 +122,6 @@ Also tricky
 all is handled wrongly when repeat like 'do nothing at all'
 
 support all in GetInput in mark/delete
-<<<<<<< HEAD
 
 support ordinal in GetInput in mark/delete
 
@@ -131,5 +130,3 @@ task content incorrect message
 # SDK
 
 ChoiceInput will update property if value not null.
-=======
->>>>>>> origin/preview-build2020
