@@ -93,7 +93,8 @@
           "property": "dialog.confirm",
           "outputFormat": "= this.value",
           "choiceOptions": {
-            "inlineSeparator": ", "
+            "inlineSeparator": ", ",
+            "includeNumbers": true
           }
         },
         {

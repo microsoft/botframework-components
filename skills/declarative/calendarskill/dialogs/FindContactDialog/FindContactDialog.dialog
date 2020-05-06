@@ -100,7 +100,8 @@
               "itemsProperty": "dialog.ResolvedAttendees",
               "value": "=dialog.ResolvedAttendee"
             }
-          ]
+          ],
+          "value": "dialog.foreach.value"
         },
         {
           "$kind": "Microsoft.EndDialog",

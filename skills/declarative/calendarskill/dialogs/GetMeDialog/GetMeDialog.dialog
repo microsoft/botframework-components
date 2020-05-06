@@ -1,0 +1,56 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "B29YE0",
+    "name": "GetMeDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Xpm28c"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "s5S8Qz"
+          },
+          "activityProcessed": true,
+          "dialog": "GetMeRequest",
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "nOMrPb"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "WfX8Ec"
+              },
+              "activity": "${SendActivity_WfX8Ec()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "PxmtVV"
+              },
+              "property": "conversation.me",
+              "value": "= dialog.requestResult.me"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetMeDialog.lg"
+}

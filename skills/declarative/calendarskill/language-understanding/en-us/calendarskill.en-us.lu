@@ -991,6 +991,7 @@
 
 @ prebuilt ordinal
 @ prebuilt number
+@ prebuilt personName
 # ConnectToMeeting
 - add me to conference call
 - add me to the conference call

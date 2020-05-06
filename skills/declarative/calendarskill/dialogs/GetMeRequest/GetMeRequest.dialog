@@ -1,23 +1,23 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "zc-lcZ",
-    "name": "GetContactRequest"
+    "id": "YiLFYh",
+    "name": "GetMeRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "hEvFiZ"
+        "id": "gE6iEY"
       },
       "actions": [
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "AutbgI"
+            "id": "EGItdh"
           },
           "dialog": "GetAuthToken",
           "activityProcessed": true
@@ -25,11 +25,11 @@
         {
           "$kind": "Microsoft.HttpRequest",
           "$designer": {
-            "id": "zZYbJY"
+            "id": "zgTxlV"
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName, '${dialog.attendee}') or startswith(givenName,'${dialog.attendee}') or startswith(surname,'${dialog.attendee}') or startswith(mail,'${dialog.attendee}') or startswith(userPrincipalName,'${dialog.attendee}')",
+          "url": "https://graph.microsoft.com/v1.0/me",
           "resultProperty": "dialog.api_result",
           "headers": {
             "Authorization": "Bearer ${turn.token}"
@@ -38,18 +38,18 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "xkeMnU"
+            "id": "EjGoIS"
           }
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "iIq5cl"
+            "id": "zUjq3U"
           },
           "assignments": [
             {
-              "property": "dialog.result.contactsList",
-              "value": "= dialog.api_result.content.value"
+              "property": "dialog.result.me",
+              "value": "= dialog.api_result.content"
             },
             {
               "property": "dialog.result.requestStatus",
@@ -60,12 +60,12 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "hkeqC0"
+            "id": "1S4pGD"
           },
           "value": "= dialog.result"
         }
       ]
     }
   ],
-  "generator": "GetContactRequest.lg"
+  "generator": "GetMeRequest.lg"
 }

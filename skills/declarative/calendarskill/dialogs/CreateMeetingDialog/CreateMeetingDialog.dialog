@@ -21,10 +21,6 @@
           },
           "assignments": [
             {
-              "property": "dialog.slots",
-              "value": "=conversation.slots"
-            },
-            {
               "property": "dialog.slots.personName",
               "value": "=coalesce(@personName, $slots.personName)"
             },
@@ -73,10 +69,6 @@
           },
           "assignments": [
             {
-              "property": "dialog.content",
-              "value": "=conversation.content"
-            },
-            {
               "property": "dialog.content.attendeeList",
               "value": "=coalesce($content.attendeeList, [])"
             },
@@ -99,22 +91,6 @@
             {
               "property": "dialog.content.addAttendee",
               "value": "=coalesce($content.addAttendee, true)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "wpfTgw"
-          },
-          "assignments": [
-            {
-              "property": "conversation.content",
-              "value": "= {}"
-            },
-            {
-              "property": "conversation.slots",
-              "value": "= {}"
             }
           ]
         },
@@ -736,14 +712,6 @@
                 {
                   "property": "dialog.content.repeat",
                   "value": true
-                },
-                {
-                  "property": "conversation.content",
-                  "value": "= dialog.content"
-                },
-                {
-                  "property": "conversation.slots",
-                  "value": "= dialog.slots"
                 }
               ]
             },
@@ -751,6 +719,11 @@
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
                 "id": "0KzgkA"
+              },
+              "activityProcessed": true,
+              "options": {
+                "slots": "=dialog.slots",
+                "content": "=dialog.content"
               }
             }
           ],
