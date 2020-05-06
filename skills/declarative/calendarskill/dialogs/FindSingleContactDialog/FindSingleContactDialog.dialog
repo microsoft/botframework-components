@@ -42,12 +42,6 @@
               "activityProcessed": true
             },
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "5BUyOQ"
-              }
-            },
-            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "mJunrH"
@@ -72,7 +66,7 @@
                   },
                   "activityProcessed": true,
                   "options": {
-                    "dialog.attendee": "=dialog.NewAttendee"
+                    "attendee": "=dialog.NewAttendee"
                   }
                 }
               ]
