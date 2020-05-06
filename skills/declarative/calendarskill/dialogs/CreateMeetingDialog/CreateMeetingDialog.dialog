@@ -136,22 +136,22 @@
               "$designer": {
                 "id": "WFuc6K"
               },
-              "dialog": "FindSingleContactDialog",
+              "dialog": "FindContactDialog",
               "disabled": false,
               "options": {
-                "attendee": "=coalesce(dialog.slots.personName)"
+                "AttendeeList": "=[coalesce(dialog.slots.personName)]",
+                "fromDialog": "CreateMeeting"
               },
-              "resultProperty": "dialog.attendee"
+              "resultProperty": "dialog.attendeeList",
+              "activityProcessed": true
             },
             {
-              "$kind": "Microsoft.EditArray",
+              "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "DmSDaZ"
+                "id": "h1WZVY"
               },
-              "changeType": "push",
-              "itemsProperty": "dialog.content.attendeeList",
-              "value": "=dialog.attendee",
-              "disabled": false
+              "property": "dialog.content.attendeeList",
+              "value": "=union(dialog.content.attendeeList, dialog.attendeeList)"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -326,7 +326,8 @@
             "location": "=dialog.content.location",
             "attendees": "=dialog.content.attendeeList"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -359,7 +360,8 @@
             "id": "eW3QJE"
           }
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",

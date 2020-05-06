@@ -43,9 +43,6 @@
           "allowInterruptions": "#_Interruption.Score >= 0.95",
           "prompt": "${TextInput_Prompt__ACAJO()}",
           "property": "dialog.title",
-          "validations": [
-            "length(this.value) < 100"
-          ],
           "invalidPrompt": "${TextInput_InvalidPrompt__ACAJO()}",
           "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt__ACAJO()}",
           "value": "=@Subject"

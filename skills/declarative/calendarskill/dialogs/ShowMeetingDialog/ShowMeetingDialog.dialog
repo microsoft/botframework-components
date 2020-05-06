@@ -19,7 +19,7 @@
           "$designer": {
             "id": "DUBRRc"
           },
-          "condition": "dialog.MeetingsList == null",
+          "condition": "dialog.meetingsList == null",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -58,7 +58,7 @@
               "$designer": {
                 "id": "gc2Rpn"
               },
-              "property": "dialog.ShowMeeting_Subject",
+              "property": "dialog.subject",
               "value": "=@Subject"
             },
             {
@@ -66,7 +66,7 @@
               "$designer": {
                 "id": "bcJpwG"
               },
-              "property": "dialog.ShowNext",
+              "property": "dialog.showNext",
               "value": "=@OrderReference == 'next'"
             },
             {
@@ -127,7 +127,7 @@
                   "$designer": {
                     "id": "XIuV6k"
                   },
-                  "condition": "dialog.ShowNext",
+                  "condition": "dialog.showNext",
                   "elseActions": [
                     {
                       "$kind": "Microsoft.SetProperty",
@@ -196,14 +196,15 @@
               "options": {
                 "StartDateTime": "=dialog.startDateTime",
                 "EndDateTime": "=dialog.endDateTime"
-              }
+              },
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "kAUcwM"
               },
-              "condition": "count(dialog.requestResult.meetingsList) > 0 && dialog.ShowNext",
+              "condition": "count(dialog.requestResult.meetingsList) > 0 && dialog.showNext",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -211,7 +212,7 @@
                     "id": "Bew26m"
                   },
                   "value": "=dialog.requestResult.meetingsList",
-                  "property": "dialog.MeetingsList"
+                  "property": "dialog.meetingsList"
                 }
               ],
               "actions": [
@@ -221,7 +222,7 @@
                     "id": "ISBWjh"
                   },
                   "changeType": "push",
-                  "itemsProperty": "dialog.MeetingsList",
+                  "itemsProperty": "dialog.meetingsList",
                   "value": "=dialog.requestResult.meetingsList[0]"
                 }
               ]
@@ -261,7 +262,7 @@
                 "id": "QN-ObT"
               },
               "value": "=0",
-              "property": "dialog.ShowMeeting_CurrentPage"
+              "property": "dialog.currentPage"
             }
           ]
         },
@@ -270,22 +271,22 @@
           "$designer": {
             "id": "Fgo9LT"
           },
-          "condition": "dialog.MeetingsList == null || count(dialog.MeetingsList) == 0",
+          "condition": "dialog.meetingsList == null || count(dialog.meetingsList) == 0",
           "elseActions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "jsbYb5"
               },
-              "condition": "count(dialog.MeetingsList) > 1",
+              "condition": "count(dialog.meetingsList) > 1",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "RxBh_e"
                   },
-                  "property": "conversation.DisplayMeetingsList",
-                  "value": "=subArray(dialog.MeetingsList, dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize), min(dialog.ShowMeeting_CurrentPage * int(settings.DisplaySize) + int(settings.DisplaySize), count(dialog.MeetingsList)))"
+                  "property": "conversation.displayMeetingsList",
+                  "value": "=subArray(dialog.meetingsList, dialog.currentPage * int(settings.DisplaySize), min(dialog.currentPage * int(settings.DisplaySize) + int(settings.DisplaySize), count(dialog.meetingsList)))"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",
@@ -298,14 +299,14 @@
                   "$designer": {
                     "id": "Iy1aRj"
                   },
-                  "itemsProperty": "conversation.DisplayMeetingsList",
+                  "itemsProperty": "conversation.displayMeetingsList",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
                         "id": "2Ddf6w"
                       },
-                      "property": "dialog.ItemDate",
+                      "property": "dialog.itemDate",
                       "value": "=startOfDay(formatDateTime(dialog.foreach.value.StartTime))"
                     },
                     {
@@ -313,15 +314,15 @@
                       "$designer": {
                         "id": "APmUgz"
                       },
-                      "condition": "dialog.CurrentAddedDate == null || dialog.CurrentAddedDate  != dialog.ItemDate",
+                      "condition": "dialog.currentAddedDate == null || dialog.currentAddedDate  != dialog.itemDate",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperty",
                           "$designer": {
                             "id": "dpkTA1"
                           },
-                          "property": "dialog.CurrentAddedDate",
-                          "value": "=dialog.ItemDate"
+                          "property": "dialog.currentAddedDate",
+                          "value": "=dialog.itemDate"
                         },
                         {
                           "$kind": "Microsoft.SetProperties",
@@ -330,11 +331,11 @@
                           },
                           "assignments": [
                             {
-                              "property": "dialog.CurrentDateData.Name",
+                              "property": "dialog.currentDateData.Name",
                               "value": "CalendarDate"
                             },
                             {
-                              "property": "dialog.CurrentDateData.Date",
+                              "property": "dialog.currentDateData.Date",
                               "value": "=formatDateTime(dialog.foreach.value.StartTime)"
                             }
                           ]
@@ -345,8 +346,8 @@
                             "id": "Tj8UJQ"
                           },
                           "changeType": "push",
-                          "itemsProperty": "dialog.DisplayMeetingData",
-                          "value": "=dialog.CurrentDateData"
+                          "itemsProperty": "dialog.displayMeetingData",
+                          "value": "=dialog.currentDateData"
                         }
                       ]
                     },
@@ -357,11 +358,11 @@
                       },
                       "assignments": [
                         {
-                          "property": "dialog.CurrentMeetingData.Name",
+                          "property": "dialog.currentMeetingData.Name",
                           "value": "CalendarItem"
                         },
                         {
-                          "property": "dialog.CurrentMeetingData.Event",
+                          "property": "dialog.currentMeetingData.Event",
                           "value": "=dialog.foreach.value"
                         }
                       ]
@@ -372,16 +373,18 @@
                         "id": "WdjRKV"
                       },
                       "changeType": "push",
-                      "itemsProperty": "dialog.DisplayMeetingData",
-                      "value": "=dialog.CurrentMeetingData"
+                      "itemsProperty": "dialog.displayMeetingData",
+                      "value": "=dialog.currentMeetingData"
                     }
-                  ]
+                  ],
+                  "value": "dialog.foreach.value"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "PIdoic"
-                  }
+                  },
+                  "value": "=where(dialog.meetingsList, x, x.IsConflict)"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -389,7 +392,7 @@
                     "id": "VJVL3f"
                   },
                   "property": "turn.lastMeeting",
-                  "value": "=dialog.MeetingsList[count(dialog.MeetingsList) - 1]"
+                  "value": "=dialog.meetingsList[count(dialog.meetingsList) - 1]"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -397,7 +400,7 @@
                     "id": "UEVwzr"
                   },
                   "property": "dialog.overlapCount",
-                  "value": "0"
+                  "value": "=count(where(dialog.meetingsList, x, x.IsConflict))"
                 },
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -409,15 +412,25 @@
                 {
                   "$kind": "Microsoft.ConfirmInput",
                   "$designer": {
-                    "id": "4u0r-m"
+                    "id": "JSASJZ"
                   },
-                  "maxTurnCount": 1,
+                  "disabled": false,
+                  "maxTurnCount": 3,
                   "alwaysPrompt": false,
+                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.6 || #PreviousPage.Score >= 0.6",
                   "defaultLocale": "en-us",
-                  "style": "Auto",
-                  "prompt": "${TextInput_Prompt_4u0r_m()}",
+                  "prompt": "${ConfirmInput_Prompt_JSASJZ()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
                   "property": "dialog.ConfirmRead",
-                  "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.9 || #PreviousPage.Score >= 0.9"
+                  "style": "auto",
+                  "unrecognizedPrompt": "${ConfirmInput_UnrecognizedPrompt_JSASJZ()}",
+                  "invalidPrompt": "${ConfirmInput_InvalidPrompt_JSASJZ()}",
+                  "defaultValueResponse": "${ConfirmInput_DefaultValueResponse_JSASJZ()}"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",
@@ -428,70 +441,79 @@
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "I6DDru"
+                    "id": "Gnv9XQ"
                   },
-                  "condition": "dialog.ConfirmRead",
+                  "condition": "dialog.ConfirmRead != null",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "khfZ-a"
-                      },
-                      "property": "conversation.FocusedMeeting",
-                      "value": "=dialog.MeetingsList[0]"
-                    },
-                    {
-                      "$kind": "Microsoft.EmitEvent",
-                      "$designer": {
-                        "id": "DJJLuk"
-                      },
-                      "eventName": "ShowMeetingDetailInfo"
-                    }
-                  ],
-                  "elseActions": [
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "0KZPcM"
-                      },
-                      "property": "turn.number",
-                      "value": "=coalesce(@ordinal, @number)"
-                    },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "MOZiwh"
+                        "id": "Bdsryy"
                       },
-                      "condition": "turn.number > 0 && turn.number <= count(conversation.DisplayMeetingsList)",
+                      "condition": "dialog.ConfirmRead",
                       "actions": [
-                        {
-                          "$kind": "Microsoft.TraceActivity",
-                          "$designer": {
-                            "id": "udoIL2"
-                          },
-                          "value": "=turn.number - 1"
-                        },
                         {
                           "$kind": "Microsoft.SetProperty",
                           "$designer": {
-                            "id": "xrxUrq"
+                            "id": "gWNgVT"
                           },
                           "property": "conversation.FocusedMeeting",
-                          "value": "=conversation.DisplayMeetingsList[int(turn.number - 1)]"
+                          "value": "=dialog.meetingsList[0]"
                         },
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "a-xoGz"
+                            "id": "7rmKrq"
                           },
                           "eventName": "ShowMeetingDetailInfo"
                         }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "wRG3uT"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "GetFocusedMeeting"
+                        },
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "k5LSKF"
+                          },
+                          "condition": "conversation.focusedMeeting != null",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.EmitEvent",
+                              "$designer": {
+                                "id": "eqxmO8"
+                              },
+                              "eventName": "ShowMeetingDetailInfo"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.TraceActivity",
+                          "$designer": {
+                            "id": "vW7f7V"
+                          }
+                        }
                       ]
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "Qfr1b9"
+                      },
+                      "activity": "${SendActivity_Qfr1b9()}"
                     },
                     {
-                      "$kind": "Microsoft.TraceActivity",
+                      "$kind": "Microsoft.EndDialog",
                       "$designer": {
-                        "id": "-FzBUM"
+                        "id": "00YAQC"
                       }
                     }
                   ]
@@ -666,15 +688,15 @@
           "$designer": {
             "id": "Wh_hYC"
           },
-          "condition": "=(dialog.ShowMeeting_CurrentPage + 1) * int(settings.DisplaySize) < count(dialog.MeetingsList)",
+          "condition": "=(dialog.currentPage + 1) * int(settings.displaySize) < count(dialog.meetingsList)",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "zCz1I7"
               },
-              "property": "dialog.ShowMeeting_CurrentPage",
-              "value": "=dialog.ShowMeeting_CurrentPage + 1"
+              "property": "dialog.currentPage",
+              "value": "=dialog.currentPage + 1"
             }
           ],
           "elseActions": [
@@ -692,9 +714,11 @@
           "$designer": {
             "id": "MWll21"
           },
+          "activityProcessed": true,
           "options": {
-            "ShowMeeting_CurrentPage": "=dialog.ShowMeeting_CurrentPage",
-            "MeetingsList": "=dialog.MeetingsList"
+            "currentPage": "=dialog.currentPage",
+            "meetingsList": "=dialog.meetingsList",
+            "startDateTime": "=dialog.startDateTime"
           }
         }
       ]
@@ -711,15 +735,15 @@
           "$designer": {
             "id": "4rzSyB"
           },
-          "condition": "=dialog.ShowMeeting_CurrentPage > 0",
+          "condition": "=dialog.currentPage > 0",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "kqAcxS"
               },
-              "property": "dialog.ShowMeeting_CurrentPage",
-              "value": "=dialog.ShowMeeting_CurrentPage - 1"
+              "property": "dialog.currentPage",
+              "value": "=dialog.currentPage - 1"
             }
           ],
           "elseActions": [
@@ -738,9 +762,11 @@
             "id": "2l22hK"
           },
           "options": {
-            "ShowMeeting_CurrentPage": "=dialog.ShowMeeting_CurrentPage",
-            "MeetingsList": "=dialog.MeetingsList"
-          }
+            "currentPage": "=dialog.currentPage",
+            "meetingsList": "=dialog.meetingsList",
+            "startDateTime": "=dialog.startDateTime"
+          },
+          "activityProcessed": true
         }
       ]
     },

@@ -62,50 +62,90 @@
               },
               "assignments": [
                 {
-                  "property": "dialog.CurrentMeetingData.IsConflict",
+                  "property": "dialog.currentMeetingData.IsConflict",
                   "value": false
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.StartTime",
+                  "property": "dialog.currentMeetingData.StartTime",
                   "value": "=formatDateTime(dialog.foreach.value.start.datetime)"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.EndTime",
+                  "property": "dialog.currentMeetingData.EndTime",
                   "value": "=formatDateTime(dialog.foreach.value.end.datetime)"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.IsAccepted",
+                  "property": "dialog.currentMeetingData.IsAccepted",
                   "value": "=dialog.foreach.value.isOrganizer || (dialog.foreach.value.responseStatus.response == 'accepted')"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.Title",
+                  "property": "dialog.currentMeetingData.Title",
                   "value": "=dialog.foreach.value.subject"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.Location",
+                  "property": "dialog.currentMeetingData.Location",
                   "value": "=dialog.foreach.value.location.displayName"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.Content",
+                  "property": "dialog.currentMeetingData.Content",
                   "value": "=dialog.foreach.value.body.bodyPreview"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.OnlineMeetingUrl",
-                  "value": "=dialog.foreach.value.body.onlineMeetingUrl"
+                  "property": "dialog.currentMeetingData.OnlineMeetingUrl",
+                  "value": "=dialog.foreach.value.onlineMeeting.joinUrl"
                 },
                 {
-                  "property": "dialog.CurrentMeetingData.Attendees",
+                  "property": "dialog.currentMeetingData.Attendees",
                   "value": "=dialog.foreach.value.attendees"
+                },
+                {
+                  "property": "dialog.currentMeetingData.IsOrganizer ",
+                  "value": "=dialog.foreach.value.isOrganizer"
+                },
+                {
+                  "property": "dialog.currentMeetingData.id",
+                  "value": "=dialog.foreach.value.id"
+                },
+                {
+                  "property": "dialog.currentMeetingData.OnlineMeetingNumber",
+                  "value": "=dialog.foreach.value.onlineMeeting.tollNumber"
                 }
               ]
             },
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.Foreach",
               "$designer": {
-                "id": "SWXq3k"
+                "id": "BalXjU"
               },
-              "value": "=dialog.CurrentMeetingData",
-              "name": "dialog.CurrentMeetingData"
+              "index": "dialog.foreach.index2",
+              "value": "dialog.foreach.value2",
+              "itemsProperty": "dialog.meetingsList",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "UzQr1s"
+                  },
+                  "condition": "(ticks(formatDateTime(dialog.currentMeetingData.StartTime)) >= ticks(formatDateTime(dialog.foreach.value2.StartTime))) && (ticks(formatDateTime(dialog.currentMeetingData.StartTime)) < ticks(formatDateTime(dialog.foreach.value2.EndTime))) || (ticks(formatDateTime(dialog.foreach.value2.StartTime)) >= ticks(formatDateTime(dialog.currentMeetingData.StartTime))) && (ticks(formatDateTime(dialog.foreach.value2.StartTime)) < ticks(formatDateTime(dialog.currentMeetingData.EndTime)))",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "v1S149"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.currentMeetingData.IsConflict",
+                          "value": true
+                        },
+                        {
+                          "property": "dialog.meetingsList[dialog.foreach.index2].IsConflict",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -114,9 +154,19 @@
               },
               "changeType": "push",
               "itemsProperty": "dialog.meetingsList",
-              "value": "=dialog.CurrentMeetingData"
+              "value": "=dialog.currentMeetingData"
             }
-          ]
+          ],
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hPoxJ8"
+          },
+          "value": "=dialog.CurrentMeetingData",
+          "name": "dialog.CurrentMeetingData"
         },
         {
           "$kind": "Microsoft.SetProperty",

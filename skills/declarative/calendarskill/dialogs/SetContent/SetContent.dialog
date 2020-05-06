@@ -44,7 +44,8 @@
           "prompt": "${TextInput_Prompt_BTMO0q()}",
           "property": "dialog.description",
           "outputFormat": "= this.value",
-          "value": "=@Desciption"
+          "value": "=@Desciption",
+          "invalidPrompt": "${TextInput_InvalidPrompt_BTMO0q()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -53,7 +54,8 @@
           },
           "value": "= dialog.description"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SetContent.lg",

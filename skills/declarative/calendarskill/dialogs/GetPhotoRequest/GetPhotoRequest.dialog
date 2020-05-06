@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "R-jCpL",
-    "name": "SearchMeetingRequest"
+    "id": "CJVGJl",
+    "name": "GetPhotoRequest"
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
@@ -11,50 +11,30 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "6QXwfx"
+        "id": "drZESg"
       },
       "actions": [
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ajkY6u"
+            "id": "sNXjfb"
           },
           "dialog": "GetAuthToken"
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "LvmHSd"
+            "id": "wkOqS9"
           }
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "LjS7hR"
-          },
-          "assignments": [
-            {
-              "property": "dialog.utcStart",
-              "value": "= addHours(formatDateTime(dialog.startDateTime), int(user.timeOffset))"
-            },
-            {
-              "property": "dialog.endDateTime",
-              "value": "= coalesce($endDateTime, $startDateTime)"
-            },
-            {
-              "property": "dialog.utcEnd",
-              "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
-            }
-          ]
         },
         {
           "$kind": "Microsoft.HttpRequest",
           "$designer": {
-            "id": "2uLCeS"
+            "id": "uGESsX"
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=${dialog.utcStart}&endDateTime=${dialog.utcEnd}",
+          "url": "https://graph.microsoft.com/v1.0/me/photos/64x64/$value",
           "headers": {
             "authorization": "${turn.token}"
           },
@@ -62,9 +42,15 @@
           "contentType": "application/json"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "URh71d"
+          }
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "XlWAka"
+            "id": "r4rdf8"
           },
           "assignments": [
             {
@@ -76,51 +62,51 @@
               "value": "= dialog.api_result.statusCode == 200"
             },
             {
-              "property": "dialog.result.meetings",
-              "value": "= if(dialog.result.requestStatus, dialog.api_result.content.value, null)"
+              "property": "dialog.result.photo",
+              "value": "= base64(dialog.api_result.content)"
             }
           ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "Tw3OMD"
+            "id": "VoMFus"
           }
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "4Ctj82"
+            "id": "NJed9x"
           },
           "value": "= dialog.result"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "enNXg-"
+            "id": "niHYZe"
           },
           "condition": "dialog.api_result.statusCode == 200",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "Xpp4m9"
+                "id": "cIvLv4"
               },
-              "activity": "${SendActivity_Xpp4m9()}"
+              "activity": "${activity_cIvLv4()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "kBlKBp"
+                "id": "1ytqQu"
               },
               "condition": "count(dialog.api_result.content.value) > 0",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "A7l96X"
+                    "id": "Wxu9Ms"
                   },
                   "property": "dialog.meetings",
                   "value": "= foreach(dialog.api_result.content.value, x, x)"
@@ -130,9 +116,9 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "x47OV4"
+                    "id": "8nL36E"
                   },
-                  "activity": "${SendActivity_x47OV4()}"
+                  "activity": "${activity_8nL36E()}"
                 }
               ]
             }
@@ -141,13 +127,13 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "F7gsc6"
+            "id": "OQB4s0"
           },
-          "activity": "${SendActivity_F7gsc6()}",
+          "activity": "${activity_OQB4s0()}",
           "disabled": true
         }
       ]
     }
   ],
-  "generator": "SearchMeetingRequest.lg"
+  "generator": "GetPhotoRequest.lg"
 }

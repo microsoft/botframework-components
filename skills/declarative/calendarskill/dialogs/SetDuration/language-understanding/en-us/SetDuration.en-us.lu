@@ -17,6 +17,19 @@
 - {@SlotOperation={@Operation=add} an {@Slot=attendee}}
 - {@SlotOperation={@Operation=change} it to {@Value={@ToTime=6pm}}}
 - {@SlotOperation={@Operation=change} {@Slot=location}}
+- {@SlotOperation={@Operation=change} the {@Slot=building}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=london}}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=beijing}}}
+- {@SlotOperation={@Operation=change} the {@Slot=building} to {@Building={@Value=bellevue}}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=1 hour}}}
+- {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=30 mins}}}
+- please {@SlotOperation={@Operation=change} the {@Slot=duration} to {@Duration={@Value=30 mins}}}
+- {@SlotOperation={@Operation=change} the {@Slot=floor}}
+- {@SlotOperation={@Operation=change} the {@Slot=floor} to {@FloorNumber={@Value=2}}}
+- {@SlotOperation={@Operation=change} to {@FloorNumber={@Value=2}} {@Slot=floor}}
+- {@SlotOperation={@Operation=change} the {@Slot={@ToDate=room}}}
+- {@SlotOperation={@Operation=change} the {@Slot=room} to {@MeetingRoom={@Value=hoth}}}
 - {@SlotOperation={@Operation=change} the {@Slot=subject}}
 - {@SlotOperation={@Operation=change} the {@Slot=subject} to {@Value={@Subject=lunch}}}
 - {@SlotOperation={@Operation=change} the {@Slot=time}}
@@ -32,8 +45,9 @@
 - i'd like to {@SlotOperation={@Operation=change} the {@Slot=date}}
 - please {@SlotOperation={@Operation=change} the {@Slot=date} to {@Value=tomorrow}} and {@SlotOperation={@Operation=add} {@Value=graham}}
 - {@SlotOperation={@Operation=set} {@Slot=time} as {@ToTime={@Value=11 am}}}
-- {@SlotOperation={@Operation=update} {@Slot=location} to {@Value=bjw2}}
+- {@SlotOperation={@Operation=update} {@Slot=building} to {@Value=bjw2}}
 - {@SlotOperation={@Operation=update} {@Slot=title}}
+
 > # Entity definitions
 
 @ ml FromDate
@@ -50,14 +64,32 @@
     - @ OperationName Operation
     - @ SlotAttributeName Slot
     - @ ml Value usesFeatures FromDate,ToDate,FromTime,ToTime,Subject
-    
+
+
+@ ml SlotOperations
+
+@ ml Subject
+
+@ ml ToDate
+
+@ ml ToTime
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+> # List entities
+
 @ list OperationName = 
-	- add :
+	- add  :
 		- create
-	- delete :
-	- change :
+	- delete  :
+	- change  :
 		- update
 		- set
+
 
 @ list SlotAttributeName = 
 	- room :
@@ -76,12 +108,4 @@
 		- subject
 	- content :
 		- description
-	- location :
-
-@ ml SlotOperations
-
-@ ml Subject
-
-@ ml ToDate
-
-@ ml ToTime
+	- duration :

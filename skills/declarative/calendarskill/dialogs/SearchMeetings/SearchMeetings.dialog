@@ -26,7 +26,7 @@
             },
             {
               "property": "dialog.slots.Subject",
-              "value": "=coalesce(@Subject, $Subject)"
+              "value": "=coalesce(@Subject, @SubjectPattenAny, $Subject)"
             },
             {
               "property": "dialog.slots.FromDate",
@@ -51,7 +51,7 @@
           "$designer": {
             "id": "cTHmKE"
           },
-          "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.title == null",
+          "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.Subject == null",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
@@ -144,7 +144,8 @@
             "startDateTime": "=dialog.startDateTime",
             "query": "=dialog.title"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -174,7 +175,7 @@
                 "id": "58eW2h"
               },
               "property": "dialog.meetings",
-              "value": "= dialog.requestResult.meetings"
+              "value": "= dialog.requestResult.meetingsList"
             }
           ],
           "disabled": false
@@ -182,20 +183,13 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "4tnFi3"
+            "id": "Rtls2T"
           },
-          "dialog": "GetMeetingRequest",
+          "dialog": "ChooseMeeting",
           "options": {
-            "StartDateTime": "=dialog.utcStart",
-            "EndDateTime": "=dialog.utcStart"
+            "meetings": "=dialog.meetings"
           },
-          "resultProperty": "dialog.getMeetingResult"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "eu-go7"
-          }
+          "resultProperty": "dialog.choosenMeeting"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -239,7 +233,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "name": "SearchMeetingsByConditions"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -248,7 +243,8 @@
           },
           "value": "= dialog.choosenMeeting"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SearchMeetings.lg",
