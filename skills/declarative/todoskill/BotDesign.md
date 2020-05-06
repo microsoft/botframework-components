@@ -70,7 +70,11 @@ items
 
 When repeat, previous dialog state are cleared
 
+## Interruption
+
 Suppress complete message when being interrupted?
+
+Suppress interruption when PVA
 
 Interruption is tricky like in mark todo -> interrupt to delete all -> then ??
 

@@ -186,35 +186,22 @@
               "$designer": {
                 "id": "fIglrD"
               },
-              "condition": "=#FinishTask.score > float(settings.intentScore)",
+              "condition": "=#FinishTask.score < float(settings.intentScore)",
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "AGbjS1"
+                    "id": "TRKOeS"
                   },
-                  "activity": "${SendActivity_Activity_AGbjS1()}"
+                  "dialog": "ShowNextPrev"
                 },
                 {
-                  "$kind": "Microsoft.EndDialog",
+                  "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
-                    "id": "q4ZCgi"
+                    "id": "GM0pgg"
                   }
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "ss8EUt"
-              },
-              "dialog": "ShowNextPrev"
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "oedBQN"
-              }
             }
           ],
           "elseActions": [
@@ -245,6 +232,20 @@
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "oRpA8K"
+          },
+          "activity": "${activity_oRpA8K()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "04ZyTU"
+          },
+          "value": "=setProperty(setProperty({},\"todoList\",string(dialog.count)),\"actionSuccess\",true)"
         }
       ]
     },

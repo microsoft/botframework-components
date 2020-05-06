@@ -240,7 +240,15 @@
           "$designer": {
             "id": "wsEkIh"
           },
-          "dialog": "ShowToDo"
+          "dialog": "ShowToDo",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "eUDB4q"
+          },
+          "value": "=dialog.result"
         }
       ]
     }
