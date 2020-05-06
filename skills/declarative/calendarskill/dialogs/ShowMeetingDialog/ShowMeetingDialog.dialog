@@ -412,21 +412,25 @@
                 {
                   "$kind": "Microsoft.ConfirmInput",
                   "$designer": {
-                    "id": "4u0r-m"
+                    "id": "JSASJZ"
                   },
-                  "maxTurnCount": 1,
+                  "disabled": false,
+                  "maxTurnCount": 3,
                   "alwaysPrompt": false,
-                  "defaultLocale": "en-us",
-                  "style": "Auto",
-                  "prompt": "${TextInput_Prompt_4u0r_m()}",
-                  "property": "dialog.ConfirmRead",
                   "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.6 || #PreviousPage.Score >= 0.6",
+                  "defaultLocale": "en-us",
+                  "prompt": "${ConfirmInput_Prompt_JSASJZ()}",
                   "choiceOptions": {
                     "includeNumbers": true,
                     "inlineOrMore": ", or ",
                     "inlineOr": " or ",
                     "inlineSeparator": ", "
-                  }
+                  },
+                  "property": "dialog.ConfirmRead",
+                  "style": "auto",
+                  "unrecognizedPrompt": "${ConfirmInput_UnrecognizedPrompt_JSASJZ()}",
+                  "invalidPrompt": "${ConfirmInput_InvalidPrompt_JSASJZ()}",
+                  "defaultValueResponse": "${ConfirmInput_DefaultValueResponse_JSASJZ()}"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",
@@ -437,55 +441,79 @@
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "I6DDru"
+                    "id": "Gnv9XQ"
                   },
-                  "condition": "dialog.ConfirmRead",
+                  "condition": "dialog.ConfirmRead != null",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "khfZ-a"
+                        "id": "Bdsryy"
                       },
-                      "property": "conversation.FocusedMeeting",
-                      "value": "=dialog.meetingsList[0]"
-                    },
-                    {
-                      "$kind": "Microsoft.EmitEvent",
-                      "$designer": {
-                        "id": "DJJLuk"
-                      },
-                      "eventName": "ShowMeetingDetailInfo"
+                      "condition": "dialog.ConfirmRead",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "gWNgVT"
+                          },
+                          "property": "conversation.FocusedMeeting",
+                          "value": "=dialog.meetingsList[0]"
+                        },
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "7rmKrq"
+                          },
+                          "eventName": "ShowMeetingDetailInfo"
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "wRG3uT"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "GetFocusedMeeting"
+                        },
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "k5LSKF"
+                          },
+                          "condition": "conversation.focusedMeeting != null",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.EmitEvent",
+                              "$designer": {
+                                "id": "eqxmO8"
+                              },
+                              "eventName": "ShowMeetingDetailInfo"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.TraceActivity",
+                          "$designer": {
+                            "id": "vW7f7V"
+                          }
+                        }
+                      ]
                     }
                   ],
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.BeginDialog",
+                      "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "uua8PY"
+                        "id": "Qfr1b9"
                       },
-                      "activityProcessed": true,
-                      "dialog": "GetFocusedMeeting"
+                      "activity": "${SendActivity_Qfr1b9()}"
                     },
                     {
-                      "$kind": "Microsoft.IfCondition",
+                      "$kind": "Microsoft.EndDialog",
                       "$designer": {
-                        "id": "JDc5RD"
-                      },
-                      "condition": "conversation.focusedMeeting != null",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.EmitEvent",
-                          "$designer": {
-                            "id": "WAhYYf"
-                          },
-                          "eventName": "ShowMeetingDetailInfo"
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.TraceActivity",
-                      "$designer": {
-                        "id": "-FzBUM"
+                        "id": "00YAQC"
                       }
                     }
                   ]
@@ -607,19 +635,6 @@
             "id": "EckUyy"
           },
           "activity": "${SendActivity_EckUyy()}"
-        },
-        {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "HDFe4y"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_HDFe4y()}",
-          "property": "turn.RepeatOverviewConfirm",
-          "allowInterruptions": "#_Interruption.Score >= 0.9"
         },
         {
           "$kind": "Microsoft.IfCondition",

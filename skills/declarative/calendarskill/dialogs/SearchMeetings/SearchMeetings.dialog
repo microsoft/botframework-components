@@ -243,7 +243,8 @@
           },
           "value": "= dialog.choosenMeeting"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SearchMeetings.lg",

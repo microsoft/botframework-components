@@ -360,7 +360,8 @@
             "id": "eW3QJE"
           }
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",
