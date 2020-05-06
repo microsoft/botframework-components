@@ -23,15 +23,7 @@
         },
         {
             "$kind": "Microsoft.Test.UserSays",
-            "text": "delete a task"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Do you want to delete something from your To Do, Shopping, or Grocery list? (1) Shopping, (2) Grocery, or (3) To Do"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "todo"
+            "text": "view my todo list"
         },
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -45,27 +37,7 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item on To Do list is:"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Ok, give me the exact title of the todo you would like to delete.."
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "delete all tasks"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Are you sure you want to delete everything from your To Do list? (1) Yes or (2) No"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "yes"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I cleared your To Do list."
+            "text": "You don't have anything in your To Do list."
         },
         {
             "$kind": "Microsoft.Test.AssertReply",

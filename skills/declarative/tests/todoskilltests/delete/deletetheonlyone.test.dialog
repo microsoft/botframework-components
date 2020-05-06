@@ -58,6 +58,10 @@
         {
             "$kind": "Microsoft.Test.AssertReply",
             "text": "I deleted milk from your To Do list. You don't have anything in your To Do list now."
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "I'm here if you need anything else."
         }
     ]
 }
