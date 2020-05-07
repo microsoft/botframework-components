@@ -1,0 +1,14 @@
+[import](common.lg)
+
+# TextInput_Prompt_XUoWhN()
+- Who should I invite?
+# SendActivity_pmgdHg()
+- Sorry, I couldn't find a contact with that name.
+
+# ChoiceInput_Prompt_yVdZ5r()
+- I found multiple contacts with that name. Which one should I invite?
+# SendActivity_ChJFWb()
+- ```
+I've added the folowing recipients:
+\n * ${join(dialog.attendees, " \n * ")}
+```

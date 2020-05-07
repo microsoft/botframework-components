@@ -1,0 +1,148 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "cU20nz",
+    "name": "TimeRemainingDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "0wgdKE"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IszNNb"
+          },
+          "assignments": [
+            {
+              "value": "=coalesce(@Subject, @SubjectPattenAny, $Subject)",
+              "property": "dialog.slots.subject"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "V6GKZs"
+          },
+          "assignments": [
+            {
+              "property": "dialog.startDateTime",
+              "value": "= utcNow()"
+            },
+            {
+              "property": "dialog.endDateTime",
+              "value": "= addHours(formatDateTime(dialog.startDateTime), 24 * 7)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "nlmCSf"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Jk9ftA"
+              },
+              "activityProcessed": true,
+              "dialog": "GetMeetingRequest",
+              "options": {
+                "StartDateTime": "=dialog.startDateTime",
+                "EndDateTime": "=dialog.endDateTime"
+              },
+              "resultProperty": "dialog.requestResult"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "VGZtsq"
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "hbXhbZ"
+              },
+              "condition": "dialog.requestResult != null && count(dialog.requestResult.meetingsList)>0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "8brEsJ"
+                  },
+                  "activity": "${SendActivity_8brEsJ()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "hIFMwq"
+                  },
+                  "activity": "${SendActivity_hIFMwq()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "0bYXR0"
+              },
+              "activityProcessed": true,
+              "dialog": "SearchMeetings",
+              "resultProperty": "dialog.requestResult",
+              "options": {
+                "Subject": "=dialog.slot.subject"
+              }
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "oCZxt4"
+              },
+              "name": "SearchMeeting"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "syQDmU"
+              },
+              "condition": "dialog.requestResult != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "oWSUis"
+                  },
+                  "activity": "${SendActivity_oWSUis()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "gWQSo6"
+                  },
+                  "activity": "${SendActivity_gWQSo6()}"
+                }
+              ]
+            }
+          ],
+          "condition": "dialog.slots.subject == null"
+        }
+      ]
+    }
+  ],
+  "generator": "TimeRemainingDialog.lg"
+}
