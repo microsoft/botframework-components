@@ -149,7 +149,8 @@
           "$designer": {
             "id": "xgbv3v"
           },
-          "dialog": "DeleteMeetingDialog"
+          "dialog": "DeleteMeetingDialog",
+          "activityProcessed": true
         }
       ]
     },
@@ -165,7 +166,8 @@
           "$designer": {
             "id": "6artiV"
           },
-          "dialog": "AcceptMeetingDialog"
+          "dialog": "AcceptMeetingDialog",
+          "activityProcessed": true
         }
       ]
     },
@@ -291,7 +293,7 @@
           "$designer": {
             "id": "5C2lfJ"
           },
-          "condition": "@MeetingRoom != null || @Building != null || @FloorNumber != null",
+          "condition": "@personName == null && (@MeetingRoom != null || @Building != null || @FloorNumber != null)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -307,7 +309,8 @@
               "$designer": {
                 "id": "TRnoX7"
               },
-              "dialog": "CheckPersonAvailableDialog"
+              "dialog": "CheckPersonAvailableDialog",
+              "activityProcessed": true
             }
           ]
         }
@@ -327,6 +330,23 @@
           },
           "activityProcessed": true,
           "dialog": "TimeRemainingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "fCcESl"
+      },
+      "intent": "ConnectToMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "0nL43c"
+          },
+          "activityProcessed": true,
+          "dialog": "ConnectToMeeting"
         }
       ]
     }

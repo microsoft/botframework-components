@@ -159,21 +159,36 @@
               "choices": "dialog.unconfirmedAttendeeList",
               "property": "turn.ResolvedAttendee",
               "allowInterruptions": "#_Interruption.Score >= 0.9 || #NextPage.Score >= 0.6 || #PreviousPage.Score >= 0.6"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "gXBD6q"
-              }
             }
           ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "DvmU48"
+            "id": "o6r65p"
           },
-          "activity": "${SendActivity_DvmU48()}"
+          "name": "findSingleContact"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "1NDOwH"
+          },
+          "condition": "dialog.fromDialog",
+          "cases": [
+            {
+              "value": "CreateMeeting",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "KzmhdK"
+                  },
+                  "activity": "${SendActivity_KzmhdK()}"
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

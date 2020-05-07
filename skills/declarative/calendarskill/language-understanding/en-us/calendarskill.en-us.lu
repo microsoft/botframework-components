@@ -1000,7 +1000,63 @@
 
 @ prebuilt ordinal
 @ prebuilt number
-
+@ prebuilt personName
+# ConnectToMeeting
+- add me to conference call
+- add me to the conference call
+- call conference
+- call conference call
+- call genpact conference call
+- call harris conference
+- call into conference call
+- call into {Subject=marketing meeting}
+- call into meeting
+- call the {Subject=morning breifing} conference number
+- call the {Subject=weekly marketing meeting}
+- conference join
+- connect me to {FromTime=10 00} conf call with bryan
+- connect me to conference call
+- connect me to conference call with debra
+- connect me to {Subject=marketing meeting}
+- connect me to the {Subject=budget meeting} conference call
+- connect me to the conference call
+- connect me to the {Subject=marketing meeting}
+- connect me with conference call
+- connect me with my {FromTime=2 o clock} meeting
+- connect to conference call
+- connect to conference call {FromTime=now}
+- connect to {Subject=weekly marketing meeting}
+- dial into conference call
+- dial {Subject=marketing meeting}
+- get me on the conference call
+- i need to join conference call
+- i need to join the conference call
+- join {Subject=budget} conference call
+- join conference
+- join conference call
+- join {FromTime=current} {Subject=budget} conf call
+- join {FromTime=current} conference
+- join {FromTime=current} conference call
+- join lync meeting
+- join meeting
+- join meeting {FromTime=now}
+- join my meeting
+- join my {OrderReference=next} meeting
+- join {OrderReference=next} {Subject=link meeting}
+- join {OrderReference=next} meeting
+- join {OrderReference=next} meeting on link
+- join the {Subject=budget meeting} conference call
+- join the conference
+- join the meeting
+- join the {OrderReference=next} {Subject=lync meeting}
+- link join my {OrderReference=next} meeting
+- link join {OrderReference=next} meeting
+- lync join {OrderReference=next} meeting
+- {MeetingRoom=nokia conference room} join
+- start meeting
+- start my conference
+- start my meeting
+- start the meeting
 # TimeRemaining
 - can you show me the time remaining before my {OrderReference=next} appointment
 - check on the time to see when i {Subject=go to school and pick up mark}

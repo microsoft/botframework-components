@@ -34,7 +34,7 @@
           },
           "responseType": "Json",
           "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}",
+          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}&$top=50",
           "resultProperty": "dialog.api_result",
           "headers": {
             "Authorization": "Bearer ${turn.token}"
@@ -104,6 +104,10 @@
                 {
                   "property": "dialog.currentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
+                  "value": "=dialog.foreach.value.onlineMeeting"
                 },
                 {
                   "property": "dialog.currentMeetingData.OnlineMeetingNumber",
@@ -196,7 +200,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "NmZ3vB"
-          }
+          },
+          "name": "AfterGetMeeting"
         },
         {
           "$kind": "Microsoft.EndDialog",
