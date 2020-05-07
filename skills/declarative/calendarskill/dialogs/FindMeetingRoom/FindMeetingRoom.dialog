@@ -657,9 +657,10 @@
           "options": {
             "startDateTime": "=dialog.content.startDateTime",
             "endDateTime": "=dialog.content.endDateTime",
-            "meetingRooms": "=dialog.meetingRooms",
+            "emails": "= foreach(dialog.meetingRooms, x, x.emailAddress)",
             "duration": "=dialog.content.duration"
-          }
+          },
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

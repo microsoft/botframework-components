@@ -25,7 +25,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "Ze2SaE"
-          }
+          },
+          "name": "getScheduleRequest"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -40,10 +41,6 @@
             {
               "property": "dialog.utcEnd",
               "value": "= addHours(formatDateTime(dialog.endDateTime), int(user.timeOffset))"
-            },
-            {
-              "property": "dialog.meetingRoomEmails",
-              "value": "= foreach(dialog.meetingRooms, x, x.emailAddress)"
             }
           ]
         },
@@ -55,7 +52,7 @@
           "responseType": "Json",
           "method": "POST",
           "body": {
-            "schedules": "=dialog.meetingRoomEmails",
+            "schedules": "=dialog.emails",
             "startTime": {
               "dateTime": "${dialog.utcStart}",
               "timeZone": "UTC"

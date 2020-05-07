@@ -59,6 +59,24 @@
                       "value": "=@personName"
                     }
                   ]
+                },
+                {
+                  "value": "CheckPersonAvailable",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.TextInput",
+                      "$designer": {
+                        "id": "rVGh7H"
+                      },
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": "#_Interruption.Score >= 0.9",
+                      "prompt": "${TextInput_Prompt_rVGh7H()}",
+                      "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_rVGh7H()}",
+                      "property": "dialog.attendee",
+                      "value": "=@personName"
+                    }
+                  ]
                 }
               ]
             },
@@ -85,7 +103,8 @@
                 "id": "5ORhpF"
               },
               "options": {
-                "attendee": "${dialog.foreach.value}"
+                "attendee": "${dialog.foreach.value}",
+                "fromDialog": "${dialog.fromDialog}"
               },
               "dialog": "FindSingleContactDialog",
               "resultProperty": "dialog.ResolvedAttendee",
@@ -100,7 +119,8 @@
               "itemsProperty": "dialog.ResolvedAttendees",
               "value": "=dialog.ResolvedAttendee"
             }
-          ]
+          ],
+          "value": "dialog.foreach.value"
         },
         {
           "$kind": "Microsoft.EndDialog",

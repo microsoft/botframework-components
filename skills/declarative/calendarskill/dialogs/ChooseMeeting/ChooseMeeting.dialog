@@ -229,7 +229,9 @@
                   },
                   "recognizerOptions": {
                     "noValue": false,
-                    "noAction": false
+                    "noAction": false,
+                    "recognizeOrdinals": true,
+                    "recognizeNumbers": true
                   },
                   "prompt": "${TextInput_Prompt_jnDMmQ()}",
                   "property": "dialog.choosenMeetingName",

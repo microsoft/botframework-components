@@ -1,0 +1,47 @@
+[import](common.lg)
+
+# ConfirmInput_Prompt_eEN1ZI()
+- ${ConfirmPrompt(dialog.meeting.OnlineMeeting.tollNumber, dialog.meeting.OnlineMeeting.joinUrl)}
+
+# SendActivity_o3Sci5()
+- ${LinkUnavailable()}
+# JoinMeeting()
+- OK, I'll call into the meeting.
+
+# NotJoinMeeting()
+- OK, I won't join the upcoming meeting. 
+
+# NoMeetingToConnect()
+- What's the start time or title of the event you want to join?
+
+# LinkUnavailable()
+- Sorry, there is no phone number or meeting link for the meeting to connect.
+
+# ConfirmPrompt(PhoneNumber, MeetingLink)
+- IF: ${PhoneNumber  !=  null}
+    - ${ConfirmPhoneNumber(PhoneNumber)}
+- ELSE:
+    - ${ConfirmMeetingLink(MeetingLink)}
+
+# ConfirmPhoneNumber(PhoneNumber)
+- Here's the number I'm about to call: ${PhoneNumber}. Please be aware that charges may apply. Do you want to continue?
+
+# ConfirmMeetingLink(MeetingLink)
+- Here's the link I'm about to join: ${MeetingLink}. Please be aware that charges may apply. Do you want to continue?
+
+# SendActivity_zv8hsP()
+- ${JoinMeeting()}
+
+# SendActivity_6S4Dor()
+- ${NotJoinMeeting()}
+
+# SendActivity_PcgWSx()
+- ${NotJoinMeeting()}
+
+
+# SendActivity_lbyA1f()
+[Activity
+    type = event
+    name = OpenDefaultApp
+    value = ${dialog.event}
+]

@@ -186,7 +186,8 @@
             "startTime": "=coalesce(dialog.slots.FromTime, dialog.content.startDateTime)"
           },
           "resultProperty": "dialog.content.startDateTime",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -356,7 +357,8 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           }
         },
         {

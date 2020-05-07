@@ -13,8 +13,6 @@
 
 # TextInput_Prompt_GG_dh5()
 - Which ${dialog.attendee} do you want to invite?
-# SendActivity_DvmU48()
-- Alright, I've added ${turn.ResolvedAttendee.name}: ${turn.ResolvedAttendee.email}.
 
 # TextInput_Prompt_EY5D1b()
 - No such attendee named ${dialog.attendee}! Please retry input an attendee.
@@ -23,3 +21,7 @@
 - This is already the last page.
 # SendActivity_Xz9hrb()
 - This is already the first page.
+
+
+# SendActivity_KzmhdK()
+- Alright, I've added ${turn.ResolvedAttendee.name}: ${turn.ResolvedAttendee.email}.
