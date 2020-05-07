@@ -206,6 +206,51 @@
         }
       ],
       "condition": "#MarkToDo.Score > float(settings.intentScore)"
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "SmNqfy",
+        "name": "ShowToDo Event"
+      },
+      "condition": "=turn.activity.name == \"ShowToDo\"",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "YrOlPT"
+          },
+          "dialog": "CorrectListType",
+          "options": "=setProperty({},\"listType\",turn.activity.value.listType)"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9UwlVa"
+          },
+          "assignments": [
+            {
+              "property": "conversation.page",
+              "value": "=1"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wsEkIh"
+          },
+          "dialog": "ShowToDo",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "eUDB4q"
+          },
+          "value": "=dialog.result"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
