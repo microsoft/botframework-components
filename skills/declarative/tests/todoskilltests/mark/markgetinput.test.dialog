@@ -8,6 +8,11 @@
     "userTokens": [
         "usertoken.mock"
     ],
+    "httpRequestMocks": [
+        "getlist.mock",
+        "gettask.mock",
+        "marktask.mock"
+    ],
     "dialog": "ToDoSkill",
     "script": [
         {

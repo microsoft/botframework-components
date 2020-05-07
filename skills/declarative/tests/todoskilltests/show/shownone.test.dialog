@@ -7,6 +7,10 @@
     "userTokens": [
         "usertoken.mock"
     ],
+    "httpRequestMocks": [
+        "getlist.mock",
+        "shownone.gettask.mock"
+    ],
     "dialog": "ToDoSkill",
     "script": [
         {

@@ -1,4 +1,5 @@
 {
+    "$kind": "Microsoft.Test.HttpRequestSequenceMock",
     "Method": "POST",
     "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
     "Responses": [
