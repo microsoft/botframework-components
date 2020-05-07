@@ -41,7 +41,7 @@
               "assignments": [
                 {
                   "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
-                  "value": "=dialog.foreach.value"
+                  "value": "=dialog.foreach.value.email"
                 },
                 {
                   "property": "dialog.CreateHttpRequestEmailItem.type",
@@ -67,50 +67,62 @@
             }
           ],
           "itemsProperty": "dialog.attendees",
-          "disabled": false
+          "disabled": false,
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
         },
         {
-          "$kind": "Microsoft.Foreach",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "SvMfA6"
+            "id": "z3xRtK"
           },
+          "condition": "dialog.rooms != null",
           "actions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.Foreach",
               "$designer": {
-                "id": "SPMgcb"
+                "id": "y7dQap"
               },
-              "assignments": [
+              "actions": [
                 {
-                  "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
-                  "value": "=dialog.foreach.value"
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "hudYmy"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.CreateHttpRequestEmailItem.emailAddress.address",
+                      "value": "=dialog.foreach.value"
+                    },
+                    {
+                      "property": "dialog.CreateHttpRequestEmailItem.type",
+                      "value": "Resource"
+                    }
+                  ]
                 },
                 {
-                  "property": "dialog.CreateHttpRequestEmailItem.type",
-                  "value": "Resource"
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "3aGxGF"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.CreateHttpRequestEmailList",
+                  "value": "=dialog.CreateHttpRequestEmailItem"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "lWM2bj"
+                  },
+                  "name": "email loop"
                 }
-              ]
-            },
-            {
-              "$kind": "Microsoft.EditArray",
-              "$designer": {
-                "id": "KWmByR"
-              },
-              "changeType": "push",
-              "itemsProperty": "dialog.CreateHttpRequestEmailList",
-              "value": "=dialog.CreateHttpRequestEmailItem"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "l16h0I"
-              },
-              "name": "email loop"
+              ],
+              "itemsProperty": "dialog.rooms",
+              "disabled": false,
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value"
             }
-          ],
-          "itemsProperty": "dialog.rooms",
-          "disabled": false,
-          "index": "dialog.foreach.index"
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -197,7 +209,8 @@
           },
           "value": "= dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "CreateMeetingRequest.lg"

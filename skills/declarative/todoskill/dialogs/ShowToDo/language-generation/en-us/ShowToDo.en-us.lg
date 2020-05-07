@@ -3,7 +3,7 @@
 > From ShowToDo
 
 # NoTasksMessageText(ListType)
-- You don't have anything in your ${ListType} list. Let me know if you want to add an item.
+- You don't have anything in your ${ListType} list.
 
 # NoTasksMessage(ListType)
 [Activity
@@ -22,21 +22,21 @@
 
 # ShowToDoText(AllTasksCount, ListType, ToDos)
 - IF: ${AllTasksCount <= count(ToDos)}
-  - ${ShowToDoTextForSinglePage(ToDos)}
+  - ${ShowToDoTextForSinglePage(ToDos, ListType)}
 - ELSE:
   - ${ShowToDoTextForMultiPage(AllTasksCount, ListType, ToDos)}
 
-  # ShowToDoTextForSinglePage(ToDos)
+  # ShowToDoTextForSinglePage(ToDos, ListType)
 - IF: ${count(ToDos) == 1}
-  - ${LatestTaskText()}
+  - ${LatestTaskText(ListType)}
 - ELSE:
-  - ${LatestTasksText()}
+  - ${LatestTasksText(ListType)}
 
-# LatestTaskText
-- The most recent item is:
+# LatestTaskText(ListType)
+- The most recent item on ${ListType} list is:
 
-# LatestTasksText
-- The most recent items are:
+# LatestTasksText(ListType)
+- The most recent items on ${ListType} list are:
 
 # ShowToDoTextForMultiPage(AllTasksCount, ListType, ToDos)
 - ${CardSummary(AllTasksCount, ListType, ToDos)}
@@ -168,3 +168,6 @@
 
 # bfdactivity_QOaqmn()
 - ${NoTasksMessage(conversation.listType)}
+
+# activity_oRpA8K()
+- ${CompletedMessage()}

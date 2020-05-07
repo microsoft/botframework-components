@@ -64,7 +64,9 @@
           },
           "value": "= dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result",
+      "activityProcessed": true
     }
   ],
   "generator": "GetContactRequest.lg"

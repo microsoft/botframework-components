@@ -80,7 +80,9 @@
             }
           ]
         }
-      ]
+      ],
+      "allowInterruptions": true,
+      "maxTurnCount": 3
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -91,13 +93,31 @@
       "condition": "#CreateCalendarEntry.score > 0.6",
       "actions": [
         {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "1aAUX2"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.ConnectionName",
+          "text": "Please sign in",
+          "title": "Login",
+          "property": "user.token",
+          "alwaysPrompt": "false"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "ozMJOx"
           },
-          "dialog": "CreateMeetingDialog"
+          "dialog": "CreateEventDialog",
+          "activityProcessed": true
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result",
+      "activityProcessed": true,
+      "allowInterruptions": true
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -111,9 +131,11 @@
           "$designer": {
             "id": "Jnb65S"
           },
-          "dialog": "ShowMeetingDialog"
+          "dialog": "ShowMeetingDialog",
+          "activityProcessed": true
         }
-      ]
+      ],
+      "activityProcessed": true
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -163,7 +185,8 @@
           },
           "dialog": "UpdateMeetingDialog"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -236,7 +259,8 @@
           },
           "dialog": "ShowMeetingDialog"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -269,7 +293,7 @@
           "$designer": {
             "id": "5C2lfJ"
           },
-          "condition": "@MeetingRoom != null || @Building != null || @FloorNumber != null",
+          "condition": "@personName == null && (@MeetingRoom != null || @Building != null || @FloorNumber != null)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -295,20 +319,34 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "jCdGhH"
+        "id": "7vdrMD"
+      },
+      "intent": "TimeRemaining",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wvnDDL"
+          },
+          "activityProcessed": true,
+          "dialog": "TimeRemainingDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "fCcESl"
       },
       "intent": "ConnectToMeeting",
       "actions": [
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "nCuyGG"
+            "id": "0nL43c"
           },
           "activityProcessed": true,
-          "dialog": "ConnectToMeeting",
-          "options": {
-            "title": "test title"
-          }
+          "dialog": "ConnectToMeeting"
         }
       ]
     }

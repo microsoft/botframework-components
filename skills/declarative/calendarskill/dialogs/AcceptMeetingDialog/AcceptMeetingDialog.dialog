@@ -27,7 +27,7 @@
           "$designer": {
             "id": "eut_7K"
           },
-          "condition": "conversation.FocusedMeeting == null",
+          "condition": "conversation.focusedMeeting == null",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -36,7 +36,8 @@
                 "name": "search a meeting"
               },
               "dialog": "SearchMeetings",
-              "resultProperty": "dialog.meeting"
+              "resultProperty": "dialog.meeting",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -72,7 +73,8 @@
             "name": "search a meeting"
           },
           "dialog": "SearchMeetings",
-          "resultProperty": "dialog.meeting"
+          "resultProperty": "dialog.meeting",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

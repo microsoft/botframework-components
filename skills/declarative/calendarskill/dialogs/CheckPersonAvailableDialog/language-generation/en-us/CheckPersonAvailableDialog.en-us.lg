@@ -53,15 +53,15 @@
 # SendActivity_7LfbVk()
 - ${CalendarErrorMessage()}
 # SendActivity_Aejjb3()
-- ${NotAvailable(dialog.content.attendeeList[0], formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
+- ${NotAvailable(dialog.content.attendeeList[0].name, formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
 
 # ConfirmInput_Prompt_YORfYD()
-- ${AskForCreateNewMeetingPrompt(dialog.conflict, dialog.content.attendeeList[0], dialog.content.startDateTime)}
+- ${AskForCreateNewMeetingPrompt(dialog.conflict, dialog.content.attendeeList[0].name, dialog.content.startDateTime)}
 # SendActivity_68o6jy()
-- ${NoNextBothAvailableTime(dialog.content.attendeeList[0])}
+- ${NoNextBothAvailableTime(dialog.content.attendeeList[0].name)}
 # ConfirmInput_Prompt_VyKcs9()
-- ${AskForNextAvailableTime(dialog.content.attendeeList[0])}
+- ${AskForNextAvailableTime(dialog.content.attendeeList[0].name)}
 # SendActivity_UC5d1p()
-- ${AttendeeIsAvailablePrompt(dialog.conflict, dialog.content.attendeeList[0],  formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
+- ${AttendeeIsAvailablePrompt(dialog.conflict, dialog.content.attendeeList[0].name,  formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
 # SendActivity_W6IGcj()
-- ${NextBothAvailableTime(dialog.content.attendeeList[0], formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
+- ${NextBothAvailableTime(dialog.content.attendeeList[0].name, formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}

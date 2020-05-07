@@ -116,18 +116,19 @@
               "disabled": false,
               "options": {
                 "AttendeeList": "=[coalesce(dialog.slots.personName)]",
-                "fromDialog": "CreateMeeting"
+                "fromDialog": "CheckPersonAvailable"
               },
               "resultProperty": "dialog.content.attendeeList",
               "activityProcessed": true
             },
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "CftSl7"
+                "id": "iIjlOV"
               },
-              "property": "dialog.attendeeList",
-              "value": "=union(dialog.attendeeList, dialog.content.attendeeList)"
+              "itemsProperty": "dialog.attendeeList",
+              "changeType": "push",
+              "value": "= dialog.content.attendeeList[0].email"
             },
             {
               "$kind": "Microsoft.SetProperties",

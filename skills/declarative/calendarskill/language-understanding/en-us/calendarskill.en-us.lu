@@ -236,6 +236,15 @@
 - we make an appointment for me
 - Go back to create meeting
 - create meeting
+- New meeting with adele
+- schedule a meeting tomorrow
+- create a new meeting
+- book time with Darren this week
+- schedule a meeting with Patrick
+
+@ prebuilt datetimeV2
+@ prebuilt personName
+@ prebuilt email
 
 
 # FindCalendarEntry
@@ -1048,3 +1057,59 @@
 - start my conference
 - start my meeting
 - start the meeting
+# TimeRemaining
+- can you show me the time remaining before my {OrderReference=next} appointment
+- check on the time to see when i {Subject=go to school and pick up mark}
+- do i have any spare time before {OrderReference=next} appointment
+- how long is it until the {FromDate=14th of march}
+- how long till {Subject=disneyland paris}
+- how long till my {OrderReference=next} appointment
+- how long till the {OrderReference=next} meeting
+- how long until {Subject=christmas}
+- how long until my {OrderReference=next} appointment
+- how long until my {OrderReference=next} meeting
+- how long until the {Subject=social}
+- how long will i wait for the {OrderReference=next} appointment
+- how many days is it until {FromDate=christmas}
+- how many days left until the {Subject=opening ceremony}
+- how many days till {FromDate=april}
+- how many days till {FromDate=christmas}
+- how many days until {FromDate=june the fifteenth}
+- how many days until {FromDate=june the fifteenth 2019}
+- how many days until {FromDate=march twenty six}
+- how many days until my {Subject=doctor ' s appointment}
+- how many days until {FromDate=thanksgiving}
+- how many days until the {FromDate=10th of december}
+- how many hours left till the {Subject=closing ceremony}
+- how many hours remaining till {OrderReference=next} appointment
+- how many hours until my {Subject=doc appointment}
+- how many minutes before my {OrderReference=next} appointment
+- how many minutes free do i have before {OrderReference=next} scheduled appointment
+- how much longer do i have before {Subject=pick up mary from school}
+- how much longer do i have until {Subject=pick up john from school}
+- how much longer until my {OrderReference=next} appointment
+- how much longer until my {OrderReference=next} meeting
+- how much time before {Subject=lunch}
+- how much time before my {OrderReference=next} appointment
+- how much time before {OrderReference=next} appointment
+- how much time do i have
+- how much time do i have before my {OrderReference=next} appointment
+- how much time do i have before my {OrderReference=next} meeting
+- how much time do i have free until my {OrderReference=next} meeting
+- how much time do i have until i have to {Subject=meet} with michael
+- how much time do i have until i {Subject=start the meeting}
+- how much time do i have until my {Subject=doc appt}
+- how much time do i have until my meeting with larry
+- how much time do i have until my {OrderReference=next} appointment
+- how much time is there before {Subject=office meeting}
+- how much time remaining till {OrderReference=next} meeting
+- how much time until my meeting with lori
+- how much time until {OrderReference=next} scheduled appointment
+- how much time until {FromTime=noon}
+- i want to know the time left for my {OrderReference=next} appointment
+- show time before {OrderReference=next} appointment
+- tell me how much free time i have before {OrderReference=next} appt
+- tell me how much time before my {OrderReference=next} meeting
+- time before my {OrderReference=next} appointment
+- time remaining
+- ^how long do i have (until|before|till) the [next] (meeting|appointment|{SubjectPattenAny})
