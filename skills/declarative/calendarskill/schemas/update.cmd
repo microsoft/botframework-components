@@ -1,2 +1,2 @@
 cd ..
-bf dialog:merge *.csproj -o schema/sdk.schema -v -b ""
+bf dialog:merge *.csproj -o schemas/sdk.schema -v -b ""

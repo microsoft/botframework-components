@@ -1,6 +1,5 @@
 {
 	"$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
-	"$id": "file:///C:/Users/lamil/Documents/Composer/calendarskill/schemas/sdk.schema#",
 	"type": "object",
 	"title": "Component kinds",
 	"description": "These are all of the kinds that can be created by the loader.",
@@ -124,6 +123,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.RetrievePhoto"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
@@ -3719,6 +3721,98 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.RetrievePhoto": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Retrieve Photo",
+			"description": "Retrieve user photo using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "object",
+							"title": "Object"
+						},
+						{
+							"type": "array",
+							"title": "Array"
+						},
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"examples": [
+								false
+							]
+						},
+						{
+							"type": "number",
+							"title": "Number",
+							"examples": [
+								15.5
+							]
+						},
+						{
+							"examples": [
+								"=..."
+							],
+							"type": "string",
+							"title": "Expression",
+							"pattern": "^=.*\\S.*"
+						}
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.RetrievePhoto"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.SortEvents": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -4631,6 +4725,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.RetrievePhoto"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
