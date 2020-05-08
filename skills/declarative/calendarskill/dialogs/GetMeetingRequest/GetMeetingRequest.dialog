@@ -19,7 +19,8 @@
           "$designer": {
             "id": "5t-yMS"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -210,7 +211,8 @@
           },
           "value": "=dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "GetMeetingRequest.lg"

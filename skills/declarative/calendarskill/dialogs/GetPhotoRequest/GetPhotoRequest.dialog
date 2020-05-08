@@ -19,7 +19,8 @@
           "$designer": {
             "id": "sNXjfb"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -39,7 +40,8 @@
             "authorization": "${turn.token}"
           },
           "resultProperty": "dialog.api_result",
-          "contentType": "application/json"
+          "contentType": "application/json",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -132,7 +134,8 @@
           "activity": "${activity_OQB4s0()}",
           "disabled": true
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "GetPhotoRequest.lg"

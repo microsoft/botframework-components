@@ -70,7 +70,8 @@
           },
           "value": "= dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "DeclineMeetingRequest.lg"
