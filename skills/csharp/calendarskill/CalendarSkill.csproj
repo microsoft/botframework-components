@@ -17,7 +17,6 @@
     <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
     <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />  
   </ItemGroup>
 
   <ItemGroup>

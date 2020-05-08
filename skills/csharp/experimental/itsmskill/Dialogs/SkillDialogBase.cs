@@ -251,7 +251,7 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> BeginInitialDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+            return await sc.ReplaceDialogAsync(InitialDialogId, sc.Options, cancellationToken: cancellationToken);
         }
 
         protected async Task<DialogTurnResult> CheckIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
@@ -411,6 +411,12 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
+                var option = sc.Options as BaseOption;
+                if (option != null && !option.ConfirmSearch)
+                {
+                    return await sc.NextAsync(true, cancellationToken);
+                }
+
                 var replacements = new Dictionary<string, object>
                 {
                     { "Search", state.TicketTitle }
@@ -645,7 +651,7 @@ namespace ITSMSkill.Dialogs
             state.TicketTarget = result.Tickets[0];
             state.Id = state.TicketTarget.Id;
 
-            var card = GetTicketCard(sc.Context, state.TicketTarget, false);
+            var card = GetTicketCard(sc.Context, state, state.TicketTarget, false);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null), cancellationToken);
             return await sc.NextAsync(cancellationToken: cancellationToken);
@@ -781,6 +787,14 @@ namespace ITSMSkill.Dialogs
                         new Choice()
                         {
                             Value = TicketState.Canceled.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Active.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Inactive.ToLocalizedString()
                         }
                     }
                 };
@@ -880,7 +894,7 @@ namespace ITSMSkill.Dialogs
                 {
                     cards.Add(new Card()
                     {
-                        Name = GetDivergedCardName(sc.Context, "Knowledge"),
+                        Name = GetDivergedCardName(sc.Context, state, "Knowledge"),
                         Data = ConvertKnowledge(knowledge)
                     });
                 }
@@ -1060,13 +1074,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected Card GetTicketCard(ITurnContext turnContext, Ticket ticket, bool showButton = true)
+        protected Card GetTicketCard(ITurnContext turnContext, SkillState state, Ticket ticket, bool showButton = true)
         {
             var name = showButton ? (ticket.State != TicketState.Closed ? "TicketUpdateClose" : "TicketUpdate") : "Ticket";
 
             return new Card
             {
-                Name = GetDivergedCardName(turnContext, name),
+                Name = GetDivergedCardName(turnContext, state, name),
                 Data = ConvertTicket(ticket)
             };
         }
@@ -1128,8 +1142,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected string GetDivergedCardName(ITurnContext turnContext, string card)
+        protected string GetDivergedCardName(ITurnContext turnContext, SkillState state, string card)
         {
+            if (state.IsAction)
+            {
+                return card + ".pva";
+            }
+
             if (Channel.GetChannelId(turnContext) == Channels.Msteams)
             {
                 return card + ".1.0";

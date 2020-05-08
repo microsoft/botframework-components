@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
+using ITSMSkill.Models;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
@@ -117,6 +118,34 @@ namespace ITSMSkill.Tests.Flow
                 .Send(MagicCode)
                 .AssertReply(AssertStartsWith(TicketResponses.ShowConstraints, attribute))
                 .AssertReply(AssertContains(SharedResponses.ResultIndicator, null, CardStrings.TicketUpdateClose))
+                .AssertReply(AssertStartsWith(TicketResponses.TicketShow, navigate))
+                .Send(GeneralTestUtterances.Reject)
+                .AssertReply(ActionEndMessage())
+                .StartTestAsync();
+        }
+
+        [TestMethod]
+        public async Task ShowWithStateTest()
+        {
+            var navigate = new Dictionary<string, object>
+            {
+                { "Navigate", string.Empty }
+            };
+
+            var attribute = new Dictionary<string, object>
+            {
+                { "Attributes", $"State: {TicketState.Active.ToLocalizedString()}" }
+            };
+
+            await this.GetTestFlow()
+                .Send(StartActivity)
+                .AssertReply(AssertContains(MainResponses.WelcomeMessage))
+                .AssertReply(AssertContains(MainResponses.FirstPromptMessage))
+                .Send(TicketShowUtterances.ShowWithState)
+                .AssertReply(ShowAuth())
+                .Send(MagicCode)
+                .AssertReply(AssertStartsWith(TicketResponses.ShowConstraints, attribute))
+                .AssertReply(AssertContains(SharedResponses.ResultsIndicator, null, CardStrings.TicketUpdateClose, CardStrings.TicketUpdateClose))
                 .AssertReply(AssertStartsWith(TicketResponses.TicketShow, navigate))
                 .Send(GeneralTestUtterances.Reject)
                 .AssertReply(ActionEndMessage())
