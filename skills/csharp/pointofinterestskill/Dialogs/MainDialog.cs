@@ -180,7 +180,7 @@ namespace PointOfInterestSkill.Dialogs
                 var generalResult = innerDc.Context.TurnState.Get<General>(StateProperties.GeneralLuisResultKey);
                 (var generalIntent, var generalScore) = generalResult.TopIntent();
 
-                if (generalScore > 0.5)
+                if (generalScore > 0.8)
                 {
                     switch (generalIntent)
                     {

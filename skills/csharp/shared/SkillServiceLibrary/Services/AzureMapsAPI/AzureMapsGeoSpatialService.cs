@@ -466,7 +466,7 @@ namespace SkillServiceLibrary.Services.AzureMapsAPI
 
             var pointOfInterestList = new List<PointOfInterestModel>();
 
-            if (apiResponse?.Results != null)
+            if (apiResponse?.Results != null && apiResponse.Results.Count > 0)
             {
                 if (!string.IsNullOrEmpty(favoredEntity))
                 {
