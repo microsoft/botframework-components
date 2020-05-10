@@ -54,6 +54,13 @@
               ]
             },
             {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DRofpd"
+              },
+              "activity": "${SendActivity_DRofpd()}"
+            },
+            {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
                 "id": "FX6rrD"

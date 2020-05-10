@@ -15,6 +15,22 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "vAla17"
+          },
+          "assignments": [
+            {
+              "property": "conversation.Staffing.RequestType",
+              "value": "Staffing"
+            },
+            {
+              "property": "conversation.Staffing.Status",
+              "value": "In Progress"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "V6ICj4"

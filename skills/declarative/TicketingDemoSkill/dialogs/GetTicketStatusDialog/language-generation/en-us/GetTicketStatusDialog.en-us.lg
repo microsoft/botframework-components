@@ -2,5 +2,5 @@
 
 # SendActivity_dcX60S()
 [Activity
-    Attachments = ${json(StatusCard(conversation.Staffing.OpenRequestNumber, conversation.Staffing.RequestId, conversation.Staffing.Requestor, conversation.Staffing.RequestType, conversation.Staffing.RequestQuantity, conversation.Staffing.Status, conversation.Staffing.Urgency))}
+    Attachments = ${json(StatusCard(conversation.Staffing.OpenRequestNumber, conversation.Staffing.RequestId, conversation.Staffing.EmployeeName, conversation.Staffing.RequestType, conversation.Staffing.RequestQuantity, conversation.Staffing.Status, conversation.Staffing.Urgency))}
 ]
