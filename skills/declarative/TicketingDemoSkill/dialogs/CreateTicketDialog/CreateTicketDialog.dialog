@@ -15,13 +15,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "qGF8J0"
-          },
-          "name": "Test"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "H0ApbB"
@@ -86,12 +79,6 @@
               },
               "activityProcessed": true,
               "dialog": "AdditionalStaffingDialog"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "uLhsC2"
-              }
             }
           ]
         },
