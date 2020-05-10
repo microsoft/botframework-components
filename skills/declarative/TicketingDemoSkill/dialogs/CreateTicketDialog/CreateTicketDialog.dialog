@@ -19,7 +19,7 @@
           "$designer": {
             "id": "H0ApbB"
           },
-          "condition": "turn.activity.value != null",
+          "condition": "dialog.data != null",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -29,15 +29,15 @@
               "assignments": [
                 {
                   "property": "conversation.Staffing.NumberOfStaff",
-                  "value": "=getProperty(turn.activity.value, 'additionalStaffs')"
+                  "value": "=getProperty(dialog.data, 'additionalStaffs')"
                 },
                 {
                   "property": "conversation.Staffing.EmployeeId",
-                  "value": "=getProperty(turn.activity.value, 'employeeId')"
+                  "value": "=getProperty(dialog.data, 'employeeId')"
                 },
                 {
                   "property": "conversation.Staffing.EmployeeName",
-                  "value": "=getProperty(turn.activity.value, 'employeeName')"
+                  "value": "=getProperty(dialog.data, 'employeeName')"
                 },
                 {
                   "property": "conversation.Staffing.AdditionalStaffing",
@@ -50,10 +50,6 @@
                 {
                   "property": "conversation.Staffing.RequestId",
                   "value": "= null"
-                },
-                {
-                  "value": "=getProperty(json(turn.activity.value), 'additionalStaffs')",
-                  "property": "conversation.Staffing.additionalStaffs"
                 }
               ]
             },
