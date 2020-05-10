@@ -1,0 +1,142 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "pHLvNB",
+    "name": "CreateTicketDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "BfHlTL"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "qGF8J0"
+          },
+          "name": "Test"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "H0ApbB"
+          },
+          "condition": "turn.activity.value != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "897Acc"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.Staffing.NumberOfStaff",
+                  "value": "=getProperty(turn.activity.value, 'additionalStaffs')"
+                },
+                {
+                  "property": "conversation.Staffing.EmployeeId",
+                  "value": "=getProperty(turn.activity.value, 'employeeId')"
+                },
+                {
+                  "property": "conversation.Staffing.EmployeeName",
+                  "value": "=getProperty(turn.activity.value, 'employeeName')"
+                },
+                {
+                  "property": "conversation.Staffing.AdditionalStaffing",
+                  "value": "=null"
+                },
+                {
+                  "property": "conversation.Staffing.Urgency",
+                  "value": "=null"
+                },
+                {
+                  "property": "conversation.Staffing.RequestId",
+                  "value": "= null"
+                },
+                {
+                  "value": "=getProperty(json(turn.activity.value), 'additionalStaffs')",
+                  "property": "conversation.Staffing.additionalStaffs"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "FX6rrD"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1OIj3S"
+          },
+          "condition": "conversation.Staffing.AdditionalStaffing == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "kPT3m0"
+              },
+              "activityProcessed": true,
+              "dialog": "AdditionalStaffingDialog"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "uLhsC2"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "FE5ok1"
+          },
+          "condition": "conversation.Staffing.Urgency == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "De3bjO"
+              },
+              "activityProcessed": true,
+              "dialog": "UrgencyDialog"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "GzXHCk"
+          },
+          "property": "conversation.Staffing.RequestId",
+          "value": "= rand(1, 100000000)"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "qyo3n0"
+          },
+          "property": "dialog.result",
+          "value": "=setProperty(json(\"{'requestId': '0'}\"),'requestId', conversation.Staffing.RequestId)"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "2fQLTF"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "CreateTicketDialog.lg"
+}

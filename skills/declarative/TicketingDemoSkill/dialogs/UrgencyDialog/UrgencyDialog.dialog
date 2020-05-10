@@ -1,0 +1,55 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "URfsU4",
+    "name": "UrgencyDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "FrXkyn"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "l5AKFu"
+          },
+          "name": "UrgencyDialog"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "XdIjqG"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_XdIjqG()}",
+          "property": "dialog.urgency"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "fKYG90"
+          },
+          "property": "conversation.Staffing.Urgency",
+          "value": "= dialog.urgency"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "UIDGLr"
+          },
+          "value": "= conversation.Staffing"
+        }
+      ]
+    }
+  ],
+  "generator": "UrgencyDialog.lg"
+}
