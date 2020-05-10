@@ -131,6 +131,78 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "OVmHX3"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "9beCfX"
+          },
+          "condition": "toLower(turn.activity.name)",
+          "cases": [
+            {
+              "value": "createticket",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "zZz21Q"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "Xxa0Tf"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "CreateTicketDialog",
+                  "resultProperty": "dialog.result",
+                  "options": {
+                    "data": "=turn.activity.value"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "6085Y4"
+                  }
+                }
+              ]
+            },
+            {
+              "value": "ticketstatus",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "kEuIem"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "KYl9uk"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetTicketStatusDialog",
+                  "resultProperty": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "UVYKKO"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "generator": "ticketingdemoskill.lg",

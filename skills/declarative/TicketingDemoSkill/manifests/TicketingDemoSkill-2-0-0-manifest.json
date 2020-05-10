@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/skills/skill-manifest-2.0.0.json",
+  "$id": "Ticketing Skill",
+  "name": "Ticketing Skill",
+  "version": "1.0",
+  "description": "This skill provides ticketing functionality",
+  "publisherName": "Microsoft",
+  "privacyUrl": "https://itsm-nxsewil.azurewebsites.net/about/privacy-policy",
+  "copyright": "Copyright (c) Microsoft. All rights reserved.",
+  "license": "",
+  "iconUrl": "https://itsm-nxsewil.azurewebsites.net/icon.png",
+  "tags": [
+    "skill"
+  ],
+  "endpoints": [
+    {
+      "name": "default",
+      "protocol": "BotFrameworkV3",
+      "description": "Default endpoint for the ticketing skill",
+      "endpointUrl": "https://995d8142.ngrok.io/api/messages",
+      "msAppId": "d5f49c73-a220-433d-855f-70047cc36446"
+    }
+  ],
+  "activities": {
+    "CreateTicket": {
+      "name": "CreateTicket",
+      "description": "Create ticket",
+      "type": "event",
+      "value": {
+        "$ref": "#/definitions/createTicketInputInfo"
+      },
+      "resultValue": {
+        "$ref": "#/definitions/createTicketOutputInfo"
+      }
+    },
+    "GetTicketStatus": {
+      "name": "TicketStatus",
+      "description": "Get ticket status",
+      "type": "event"
+    }
+  },
+  "definitions": {
+    "createTicketInputInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "additionalStaffs": {
+          "type": "string",
+          "description": "Number of additional staffs"
+        },
+        "employeeName": {
+          "type": "string",
+          "description": "Employee name"
+        },
+        "employeeId": {
+          "type": "string",
+          "description": "Employee id"
+        }
+      }
+    },
+    "createTicketOutputInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "Request id"
+        }
+      }
+    },
+    "getTicketStatusInputInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "Request id"
+        }
+      }
+    },
+    "getTicketStatusOutputInfo": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "Request id"
+        },
+        "requestor": {
+          "type": "string",
+          "description": "Requestor"
+        }
+      }
+    }
+  }
+}
