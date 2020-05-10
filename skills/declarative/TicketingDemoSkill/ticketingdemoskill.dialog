@@ -14,13 +14,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "003038"
-          },
-          "activity": "${SendActivity_003038()}"
-        },
-        {
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
             "id": "8US8vc"
@@ -44,13 +37,6 @@
                   "activityProcessed": true,
                   "dialog": "CreateTicketDialog",
                   "resultProperty": "dialog.result"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "UyWWCd"
-                  },
-                  "activity": "${SendActivity_UyWWCd()}"
                 },
                 {
                   "$kind": "Microsoft.TraceActivity",

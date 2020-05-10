@@ -3,9 +3,3 @@
 # SendActivity_Welcome()
 - This is ticketing demo skill. Input "CreateTicket" and "GetStatus" to start.
 
-# SendActivity_003038
-- You said '${turn.activity.text}'
-
-
-# SendActivity_UyWWCd()
-- The request Id is ${dialog.result}

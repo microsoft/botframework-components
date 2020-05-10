@@ -15,22 +15,15 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.ConfirmInput",
+          "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "L16dsO"
+            "id": "lmckbu"
           },
-          "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ConfirmInput_Prompt_L16dsO()}",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
-          },
+          "prompt": "${TextInput_Prompt_lmckbu()}",
           "property": "dialog.confirmRequest"
         },
         {
