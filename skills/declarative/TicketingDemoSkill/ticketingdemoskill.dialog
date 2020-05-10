@@ -2,7 +2,6 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "433224",
-    "description": "",
     "name": "TicketingDemoSkill"
   },
   "autoEndDialog": true,
@@ -52,6 +51,22 @@
                     "name": "Send a response"
                   },
                   "activity": "${SendActivity_Welcome()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "B84aG1"
+                  },
+                  "property": "conversation.Staffing",
+                  "value": "= {}"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "vylVPj"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetTicketStatusDialog"
                 }
               ]
             }

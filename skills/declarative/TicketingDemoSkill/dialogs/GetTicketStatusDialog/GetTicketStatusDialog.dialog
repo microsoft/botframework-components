@@ -1,0 +1,79 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "IitZPP",
+    "name": "GetTicketStatusDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "sHbilV"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "BbGRIt"
+          },
+          "assignments": [
+            {
+              "property": "conversation.Staffing.OpenRequestNumber",
+              "value": "= 1"
+            },
+            {
+              "property": "conversation.Staffing.RequestId",
+              "value": "63595046"
+            },
+            {
+              "property": "conversation.Staffing.RequestType",
+              "value": "Staffing"
+            },
+            {
+              "property": "conversation.Staffing.RequestStatus",
+              "value": "In Progress"
+            },
+            {
+              "property": "conversation.Staffing.Urgency",
+              "value": "low"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "V6ICj4"
+          },
+          "condition": "conversation.Staffing.RequestId == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "4AAzqV"
+              },
+              "activityProcessed": true,
+              "dialog": "RequestStatusDialog"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "s6YJ98"
+          }
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "dcX60S"
+          },
+          "activity": "${SendActivity_dcX60S()}"
+        }
+      ]
+    }
+  ],
+  "generator": "GetTicketStatusDialog.lg"
+}

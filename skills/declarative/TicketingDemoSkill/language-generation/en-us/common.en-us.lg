@@ -1,2 +1,220 @@
 # WelcomeUser
 - Welcome to the EchoBot sample.
+
+# StatusCard(OpenRequestNumber, RequestId, Requestor, RequestType, RequestQuantity, RequestStatus, Urgency)
+- ```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "size": "medium",
+      "text": "Request Status",
+      "type": "TextBlock"
+    },
+    {
+      "items": [
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Open Request(s)",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${if(OpenRequestNumber == null, '0', OpenRequestNumber)}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "RequestId",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${if(RequestId == null, '', RequestId)}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Requestor",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${if(Requestor == null, '', Requestor)}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Request Type",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${RequestType}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Request Quantity",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${if(RequestQuantity == null, '0', RequestQuantity)}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Request Status",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${RequestStatus}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        },
+        {
+          "columns": [
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "Urgency",
+                  "type": "TextBlock",
+                  "weight": "bolder"
+                }
+              ],
+              "type": "Column",
+              "width": "auto"
+            },
+            {
+              "items": [
+                {
+                  "isSubtle": true,
+                  "text": "${Urgency}",
+                  "type": "TextBlock"
+                }
+              ],
+              "type": "Column",
+              "width": "stretch"
+            }
+          ],
+          "type": "ColumnSet"
+        }
+      ],
+      "style": "emphasis",
+      "type": "Container"
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
