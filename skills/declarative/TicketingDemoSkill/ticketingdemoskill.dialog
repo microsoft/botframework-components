@@ -19,6 +19,43 @@
             "id": "003038"
           },
           "activity": "${SendActivity_003038()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "bRzFv0"
+          },
+          "condition": "turn.activity.text == \"CreateTicket\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "eVPODJ"
+              }
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "t8jMk4"
+              },
+              "activityProcessed": true,
+              "dialog": "CreateTicketDialog",
+              "resultProperty": "dialog.result"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "V74sy0"
+              },
+              "activity": "${SendActivity_V74sy0()}"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "XqrJfk"
+              }
+            }
+          ]
         }
       ]
     },
