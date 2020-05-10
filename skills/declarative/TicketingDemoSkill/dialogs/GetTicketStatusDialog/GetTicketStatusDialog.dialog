@@ -15,34 +15,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "BbGRIt"
-          },
-          "assignments": [
-            {
-              "property": "conversation.Staffing.OpenRequestNumber",
-              "value": "= 1"
-            },
-            {
-              "property": "conversation.Staffing.RequestId",
-              "value": "63595046"
-            },
-            {
-              "property": "conversation.Staffing.RequestType",
-              "value": "Staffing"
-            },
-            {
-              "property": "conversation.Staffing.RequestStatus",
-              "value": "In Progress"
-            },
-            {
-              "property": "conversation.Staffing.Urgency",
-              "value": "low"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "V6ICj4"
@@ -71,6 +43,18 @@
             "id": "dcX60S"
           },
           "activity": "${SendActivity_dcX60S()}"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "x4Ugjm"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "ozaW3g"
+          }
         }
       ]
     }

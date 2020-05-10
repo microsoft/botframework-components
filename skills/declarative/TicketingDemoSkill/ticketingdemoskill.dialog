@@ -21,39 +21,70 @@
           "activity": "${SendActivity_003038()}"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "bRzFv0"
+            "id": "8US8vc"
           },
-          "condition": "turn.activity.text == \"CreateTicket\"",
-          "actions": [
+          "condition": "toLower(turn.activity.text)",
+          "cases": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "eVPODJ"
-              }
+              "value": "createticket",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "xe939g"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "yLT0iX"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "CreateTicketDialog",
+                  "resultProperty": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "UyWWCd"
+                  },
+                  "activity": "${SendActivity_UyWWCd()}"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "1DIrDP"
+                  }
+                }
+              ]
             },
             {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "t8jMk4"
-              },
-              "activityProcessed": true,
-              "dialog": "CreateTicketDialog",
-              "resultProperty": "dialog.result"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "V74sy0"
-              },
-              "activity": "${SendActivity_V74sy0()}"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "XqrJfk"
-              }
+              "value": "getstatus",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "U7h6v4"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "rkYvUh"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetTicketStatusDialog",
+                  "resultProperty": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "06uNf4"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -90,20 +121,24 @@
                   "activity": "${SendActivity_Welcome()}"
                 },
                 {
-                  "$kind": "Microsoft.SetProperty",
+                  "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "B84aG1"
+                    "id": "q0cmiZ"
                   },
-                  "property": "conversation.Staffing",
-                  "value": "= {}"
-                },
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "vylVPj"
-                  },
-                  "activityProcessed": true,
-                  "dialog": "GetTicketStatusDialog"
+                  "assignments": [
+                    {
+                      "property": "conversation.Staffing",
+                      "value": "= {}"
+                    },
+                    {
+                      "property": "conversation.Staffing.RequestType",
+                      "value": "Staffing"
+                    },
+                    {
+                      "property": "conversation.Staffing.Status",
+                      "value": "In Progress"
+                    }
+                  ]
                 }
               ]
             }
