@@ -238,7 +238,7 @@
             "items": [
                 {
                 "size": "medium",
-                "text": "${x.Topic}",
+                "text": "${x.subject}",
                 "type": "TextBlock"
                 }
             ],
@@ -277,7 +277,7 @@
             "items": [
                 {
                 "size": "medium",
-                "text": "${x.Topic}",
+                "text": "${x.subject}",
                 "type": "TextBlock"
                 }
             ],

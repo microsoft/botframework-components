@@ -225,7 +225,8 @@
                             "id": "z8fLGg"
                           },
                           "dialog": "ShowNextPrev",
-                          "resultProperty": "dialog.result"
+                          "resultProperty": "dialog.result",
+                          "activityProcessed": true
                         },
                         {
                           "$kind": "Microsoft.IfCondition",
@@ -334,7 +335,7 @@
                 },
                 {
                   "property": "dialog.result",
-                  "value": "=setProperty(dialog.result , \"taskContent\" ,dialog.items[0].Topic)"
+                  "value": "=setProperty(dialog.result , \"taskContent\" ,dialog.items[0].subject)"
                 },
                 {
                   "property": "dialog.result",

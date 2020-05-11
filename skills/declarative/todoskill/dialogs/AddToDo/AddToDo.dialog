@@ -244,7 +244,8 @@
           "$designer": {
             "id": "T3Z8xG"
           },
-          "options": "=setProperty({},\"taskContent\",dialog.taskContent)"
+          "options": "=setProperty({},\"taskContent\",dialog.taskContent)",
+          "activityProcessed": true
         }
       ]
     }

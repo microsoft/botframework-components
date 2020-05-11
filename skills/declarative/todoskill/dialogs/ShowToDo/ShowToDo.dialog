@@ -186,19 +186,20 @@
               "$designer": {
                 "id": "fIglrD"
               },
-              "condition": "=#FinishTask.score < float(settings.intentScore)",
-              "actions": [
+              "condition": "=#FinishTask.score >= float(settings.intentScore)",
+              "elseActions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "TRKOeS"
+                    "id": "bytxj5"
                   },
-                  "dialog": "ShowNextPrev"
+                  "dialog": "ShowNextPrev",
+                  "activityProcessed": true
                 },
                 {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
-                    "id": "GM0pgg"
+                    "id": "cW1T6O"
                   }
                 }
               ]
