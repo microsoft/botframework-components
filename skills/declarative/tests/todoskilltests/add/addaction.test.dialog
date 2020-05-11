@@ -8,6 +8,7 @@
         "usertoken.mock"
     ],
     "httpRequestMocks": [
+        "addtask.mock",
         "getlist.mock",
         "gettask.mock"
     ],
@@ -18,13 +19,21 @@
             "$kind": "Microsoft.Test.UserActivity",
             "activity": {
                 "type": "event",
-                "name": "ShowToDo",
+                "name": "AddToDo",
                 "locale": "en-US"
             }
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "What list would you like to see? (1) Shopping, (2) Grocery, or (3) To Do"
+            "text": "OK, what do you want to add?"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "buy milk"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Which list should I add **buy milk** to? (1) Shopping, (2) Grocery, or (3) To Do"
         },
         {
             "$kind": "Microsoft.Test.UserSays",
@@ -42,7 +51,7 @@
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item on To Do list is:"
+            "text": "I added buy milk to your To Do list."
         },
         {
             "$kind": "Microsoft.Test.AssertReply",

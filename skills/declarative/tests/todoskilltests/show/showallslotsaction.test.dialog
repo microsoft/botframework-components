@@ -54,7 +54,8 @@
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
             "assertions": [
-                "type == 'endOfConversation'"
+                "type == 'endOfConversation'",
+                "value.actionSuccess == true"
             ]
         }
     ]
