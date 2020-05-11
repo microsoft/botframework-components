@@ -220,20 +220,8 @@
           "$designer": {
             "id": "YrOlPT"
           },
-          "dialog": "CorrectListType",
-          "options": "=setProperty({},\"listType\",turn.activity.value.listType)"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "9UwlVa"
-          },
-          "assignments": [
-            {
-              "property": "conversation.page",
-              "value": "=1"
-            }
-          ]
+          "dialog": "StartAction",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -241,7 +229,16 @@
             "id": "wsEkIh"
           },
           "dialog": "ShowToDo",
-          "resultProperty": "dialog.result"
+          "resultProperty": "dialog.result",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Nn0q79"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -249,6 +246,49 @@
             "id": "eUDB4q"
           },
           "value": "=dialog.result"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "BH8saT",
+        "name": "AddToDo Event"
+      },
+      "condition": "=turn.activity.name == \"AddToDo\"",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FoHkEl"
+          },
+          "activityProcessed": true,
+          "dialog": "StartAction"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wnNXrY"
+          },
+          "activityProcessed": true,
+          "dialog": "AddToDo",
+          "options": "=setProperty({},\"taskContent\",turn.activity.value.taskName)",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1zgtfJ"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "A5AxFv"
+          },
+          "value": "=conversation.actionResult"
         }
       ]
     }

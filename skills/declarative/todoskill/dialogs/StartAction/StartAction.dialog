@@ -1,0 +1,50 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "6CEwAr",
+    "name": "StartAction"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "hedpgA"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "4NlvR9"
+          },
+          "assignments": [
+            {
+              "property": "conversation.isAction",
+              "value": "=true"
+            },
+            {
+              "property": "conversation.page",
+              "value": "=1"
+            },
+            {
+              "property": "conversation.actionResult",
+              "value": "=null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "YrXw0o"
+          },
+          "activityProcessed": true,
+          "dialog": "CorrectListType",
+          "options": "=setProperty({},\"listType\",turn.activity.value.listType)"
+        }
+      ]
+    }
+  ],
+  "generator": "StartAction.lg"
+}

@@ -30,6 +30,12 @@ conversation.listType
 conversation.page
 - for interruption from show to del
 
+conversatoin.isAction
+- for simpleness
+
+conversation.actionResult
+- for simpleness
+
 dialog.taskContent
 - for local interruption, should always repeat to verify logic
 

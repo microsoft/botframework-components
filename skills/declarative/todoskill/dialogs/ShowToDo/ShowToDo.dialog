@@ -242,6 +242,18 @@
           "activity": "${activity_oRpA8K()}"
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "fxGdSa"
+          },
+          "assignments": [
+            {
+              "property": "conversation.actionResult",
+              "value": "=setProperty(setProperty({},\"todoList\",string(dialog.count)),\"actionSuccess\",true)"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "04ZyTU"

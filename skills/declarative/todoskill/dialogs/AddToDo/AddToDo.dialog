@@ -199,7 +199,8 @@
               "dialog": "AddToListOutlook",
               "options": {
                 "taskContent": "${dialog.taskContent}"
-              }
+              },
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.ReplaceDialog",
@@ -210,7 +211,8 @@
               "options": {
                 "fromType": "add",
                 "taskContent": "${dialog.taskContent}"
-              }
+              },
+              "activityProcessed": true
             }
           ]
         }
