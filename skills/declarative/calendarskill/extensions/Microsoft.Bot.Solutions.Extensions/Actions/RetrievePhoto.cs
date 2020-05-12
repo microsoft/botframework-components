@@ -31,18 +31,37 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
+        [JsonProperty("email")]
+        public StringExpression Email { get; set; }
+
+        [JsonProperty("isMe")]
+        public BoolExpression IsMe { get; set; }
+
+        public static readonly string DefaultAvatarIconPathFormat = "https://ui-avatars.com/api/?name={0}";
+
+        private IGraphServiceClient _graphClient;
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
+            _graphClient = GraphClient.GetAuthenticatedClient(token);
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var isMe = IsMe.GetValue(dcState);
+            var user = await GetUserByEmailAsync(Email.GetValue(dcState));
 
             Stream originalPhoto = null;
             string photoUrl = string.Empty;
             try
             {
-                originalPhoto = await graphClient.Me.Photos["64x64"].Content.Request().GetAsync();
+                if (isMe)
+                {
+                    originalPhoto = await _graphClient.Me.Photos["64x64"].Content.Request().GetAsync();
+                }
+                else
+                {
+                    originalPhoto = await _graphClient.Users[user.Id].Photos["64x64"].Content.Request().GetAsync();
+                }
                 photoUrl = Convert.ToBase64String(ReadFully(originalPhoto));
             }
             catch (ServiceException)
@@ -50,7 +69,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 return null;
             }
 
-            var results = string.Format("data:image/jpeg;base64,{0}", photoUrl);
+            var results = string.Empty;
+            if (string.IsNullOrEmpty(photoUrl))
+            {
+                results = string.Format(DefaultAvatarIconPathFormat, isMe ? "Me" : user.DisplayName);
+            }
+            else
+            {
+                results = string.Format("data:image/jpeg;base64,{0}", photoUrl);
+            }
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(RetrievePhoto), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
@@ -70,6 +97,35 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 input.CopyTo(ms);
                 return ms.ToArray();
             }
+        }
+
+        private async Task<User> GetUserByEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+
+            var optionList = new List<QueryOption>();
+            var filterString = $"startswith(mail,'{email}')";
+            optionList.Add(new QueryOption("$filter", filterString));
+
+            IGraphServiceUsersCollectionPage users = null;
+            try
+            {
+                users = await _graphClient.Users.Request(optionList).GetAsync();
+            }
+            catch (ServiceException ex)
+            {
+                throw GraphClient.HandleGraphAPIException(ex);
+            }
+
+            if (users.Count > 0)
+            {
+                return users[0];
+            }
+
+            return null;
         }
     }
 }

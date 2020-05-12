@@ -2,10 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Delete Event",
+  "description": "Delete a meeting using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "meetingId"
   ],
   "properties": {
     "id": {
@@ -29,20 +30,12 @@
         "user.token.token"
       ]
     },
-    "isMe": {
+    "meetingId": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "IsMe",
-      "description": "Whether retrieve photo of current user.",
+      "title": "MeetingId",
+      "description": "Id of meeting",
       "examples": [
-        "true"
-      ]
-    },
-    "email": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
-      "examples": [
-        "dialog.email"
+        "dialog.meeting.id"
       ]
     }
   }

@@ -16,7 +16,7 @@
 
 # SendActivity_EckUyy()
 [Activity
-    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', [], conversation.FocusedMeeting.Title, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
+    Attachments = ${json(MeetingDetailCard(formatDateTime(conversation.FocusedMeeting.StartTime), formatDateTime(conversation.FocusedMeeting.EndTime), 'UTC', if(dialog.attendeesPhoto == null, [], dialog.attendeesPhoto), conversation.FocusedMeeting.Title, conversation.FocusedMeeting.Location, conversation.FocusedMeeting.Content, conversation.FocusedMeeting.OnlineMeetingUrl))}
 ]
 
 # SendActivity_GHfVi1()

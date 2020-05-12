@@ -2,10 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Update Event Time",
+  "description": "Update start and end time of a meeting using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "meetingId",
+    "startTime",
+    "endTime"
   ],
   "properties": {
     "id": {
@@ -29,20 +32,28 @@
         "user.token.token"
       ]
     },
-    "isMe": {
+    "meetingId": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "IsMe",
-      "description": "Whether retrieve photo of current user.",
+      "title": "MeetingId",
+      "description": "Id of meeting",
       "examples": [
-        "true"
+        "dialog.meeting.id"
       ]
     },
-    "email": {
+    "startTime": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
+      "title": "Start",
+      "description": "Expression for event start.",
       "examples": [
-        "dialog.email"
+        "dialog.start"
+      ]
+    },
+    "endTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "End",
+      "description": "Expression for event end.",
+      "examples": [
+        "dialog.end"
       ]
     }
   }

@@ -22,24 +22,19 @@
           "dialog": "GetAuthToken"
         },
         {
+          "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+          "$designer": {
+            "id": "wnrjdR"
+          },
+          "meetingId": "= dialog.meetingId",
+          "token": "= user.token",
+          "resultProperty": "dialog.api_result"
+        },
+        {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "w9rbHF"
           }
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "kdCZKJ"
-          },
-          "responseType": "Json",
-          "method": "POST",
-          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}/decline",
-          "headers": {
-            "authorization": "${turn.token}"
-          },
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -48,12 +43,8 @@
           },
           "assignments": [
             {
-              "property": "dialog.result",
-              "value": "= {}"
-            },
-            {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 202"
+              "value": "= true"
             }
           ]
         },
