@@ -375,6 +375,89 @@
         }
       ],
       "condition": "=turn.activity.name == \"DeleteAll\""
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "lEUmLh",
+        "name": "MarkToDo Event"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "03XFcx"
+          },
+          "activityProcessed": true,
+          "dialog": "StartAction"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ktbKO1"
+          },
+          "activityProcessed": true,
+          "dialog": "MarkToDo",
+          "options": "=setProperty({},\"taskContent\",turn.activity.value.taskName)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4vwXI2"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "HPmBtP"
+          },
+          "value": "=conversation.actionResult"
+        }
+      ],
+      "condition": "=turn.activity.name == \"MarkToDo\""
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "U5OTl8",
+        "name": "MarkAll Event"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "HMRFXs"
+          },
+          "activityProcessed": true,
+          "dialog": "StartAction"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cYu9l3"
+          },
+          "activityProcessed": true,
+          "dialog": "MarkToDo",
+          "options": "=setProperty({},\"containsAll\",true)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "QRakls"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "3PsiAa"
+          },
+          "value": "=conversation.actionResult"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
