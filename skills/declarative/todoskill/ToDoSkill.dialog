@@ -291,6 +291,90 @@
           "value": "=conversation.actionResult"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "J6iMd9",
+        "name": "DeleteToDo Event"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "LzIH1H"
+          },
+          "activityProcessed": true,
+          "dialog": "StartAction"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZzPDjm"
+          },
+          "activityProcessed": true,
+          "dialog": "DeleteToDo",
+          "options": "=setProperty({},\"taskContent\",turn.activity.value.taskName)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Lmp8kw"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "7S7pR2"
+          },
+          "value": "=conversation.actionResult"
+        }
+      ],
+      "condition": "=turn.activity.name == \"DeleteToDo\""
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "oBfUFT",
+        "name": "DeleteAll Event"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1fA53q"
+          },
+          "activityProcessed": true,
+          "dialog": "StartAction"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "qZCgUc"
+          },
+          "activityProcessed": true,
+          "dialog": "DeleteToDo",
+          "options": "=setProperty({},\"containsAll\",true)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "j2iHBP"
+          },
+          "activityProcessed": true,
+          "dialog": "EndAction"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Jlk3rF"
+          },
+          "value": "=conversation.actionResult"
+        }
+      ],
+      "condition": "=turn.activity.name == \"DeleteAll\""
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
