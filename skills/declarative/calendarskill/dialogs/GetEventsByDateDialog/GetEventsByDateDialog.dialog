@@ -1,0 +1,67 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "M0htkU",
+    "name": "GetEventsByDateDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "wQV7J5"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$designer": {
+            "id": "UuaNoE"
+          },
+          "resultProperty": "dialog.calendarEvents",
+          "token": "=user.token.token",
+          "startProperty": "=dialog.datetime",
+          "endProperty": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Xh89HU"
+          },
+          "condition": "dialog.calendarEvents != null && count(dialog.calendarEvents) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.SortEvents",
+              "$designer": {
+                "id": "l04x72"
+              },
+              "eventsProperty": "=dialog.calendarEvents",
+              "previousEventsProperty": "dialog.previousEvents",
+              "upcomingEventsProperty": "dialog.upcomingEvents"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "OQFTQu"
+              },
+              "activity": "${SendActivity_OQFTQu()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Zi2kY7"
+              },
+              "activity": "${SendActivity_Zi2kY7()}"
+            }
+          ]
+        }
+      ],
+      "defaultResultProperty": "dialog.result"
+    }
+  ],
+  "generator": "GetEventsByDateDialog.lg",
+  "activityProcessed": true
+}

@@ -178,21 +178,31 @@
               "value": "= select(turn.recognized.intents,x,x.key)[0]",
               "property": "dialog.showPage",
               "validations": [
-                "#ShowNextPage.score > float(settings.intentScore) || #ShowPreviousPage.score > float(settings.intentScore)"
+                "#ShowNextPage.score > float(settings.intentScore) || #ShowPreviousPage.score > float(settings.intentScore)  || #FinishTask.score > float(settings.intentScore)"
               ]
             },
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "ss8EUt"
+                "id": "fIglrD"
               },
-              "dialog": "ShowNextPrev"
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "oedBQN"
-              }
+              "condition": "=#FinishTask.score >= float(settings.intentScore)",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "bytxj5"
+                  },
+                  "dialog": "ShowNextPrev",
+                  "activityProcessed": true
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "cW1T6O"
+                  }
+                }
+              ]
             }
           ],
           "elseActions": [
@@ -223,6 +233,32 @@
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "oRpA8K"
+          },
+          "activity": "${activity_oRpA8K()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "fxGdSa"
+          },
+          "assignments": [
+            {
+              "property": "conversation.actionResult",
+              "value": "=setProperty(setProperty({},\"todoList\",string(dialog.count)),\"actionSuccess\",true)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "04ZyTU"
+          },
+          "value": "=setProperty(setProperty({},\"todoList\",string(dialog.count)),\"actionSuccess\",true)"
         }
       ]
     },

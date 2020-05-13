@@ -26,7 +26,7 @@
             },
             {
               "property": "dialog.slots.Subject",
-              "value": "=coalesce(@Subject, $Subject)"
+              "value": "=coalesce(@Subject, @SubjectPattenAny, $Subject)"
             },
             {
               "property": "dialog.slots.FromDate",
@@ -51,7 +51,7 @@
           "$designer": {
             "id": "cTHmKE"
           },
-          "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.title == null",
+          "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.Subject == null",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
@@ -144,7 +144,8 @@
             "startDateTime": "=dialog.startDateTime",
             "query": "=dialog.title"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -242,7 +243,8 @@
           },
           "value": "= dialog.choosenMeeting"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SearchMeetings.lg",

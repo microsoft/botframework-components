@@ -93,7 +93,8 @@
           "property": "dialog.confirm",
           "outputFormat": "= this.value",
           "choiceOptions": {
-            "inlineSeparator": ", "
+            "inlineSeparator": ", ",
+            "includeNumbers": true
           }
         },
         {
@@ -107,7 +108,7 @@
           "$designer": {
             "id": "-MGRh-"
           },
-          "condition": "dialog.confirm == \"No\"",
+          "condition": "!dialog.confirm",
           "actions": [
             {
               "$kind": "Microsoft.EndDialog",
@@ -139,7 +140,21 @@
               "options": {
                 "meetingId": "=dialog.meeting.id"
               },
-              "resultProperty": "dialog.requestResult"
+              "resultProperty": "dialog.requestResult",
+              "activityProcessed": true
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "UzoD7o"
+              },
+              "activityProcessed": true,
+              "dialog": "DeclineMeetingRequest",
+              "options": {
+                "meetingId": "=dialog.meeting.id"
+              }
             }
           ]
         },

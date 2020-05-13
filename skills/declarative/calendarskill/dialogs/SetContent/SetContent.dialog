@@ -54,7 +54,8 @@
           },
           "value": "= dialog.description"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "SetContent.lg",

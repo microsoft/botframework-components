@@ -22,7 +22,7 @@
           "assignments": [
             {
               "property": "dialog.result",
-              "value": "=where(dialog.tasks,task,task.Topic==dialog.taskContent)"
+              "value": "=where(dialog.tasks,task,task.subject==dialog.taskContent)"
             },
             {
               "property": "dialog.result",

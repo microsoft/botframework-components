@@ -1,0 +1,39 @@
+[import](common.lg)
+# FormatMeetingTimeRemainingDuration(startTime, endTime, title)
+- You have ${FormatDurationDisplay((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)} until your ${title} meeting.
+
+# FormatNextMeetingTimeRemainingDuration(startTime, endTime)
+- You have ${FormatDurationDisplay((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)} until your next event.
+
+# FormatDurationDisplay(seconds)
+- IF: ${seconds <= 0}
+	- Unexpected duration!
+- ELSEIF: ${seconds < 3600}
+	- ${concat(string(seconds / 60),FormatMinutes(seconds / 60))}
+- ELSEIF: ${seconds % 3600 / 60 != 0}
+	- ${concat(string(seconds / 3600), FormatHours(seconds / 3600), string(seconds % 3600 / 60), FormatMinutes(seconds % 3600 / 60))}
+- ELSE:
+	- ${concat(string(seconds / 3600),FormatHours(seconds / 3600))}
+
+# FormatMinutes(minutes)
+- ${if(minutes > 1,' minutes ',' minute ')}
+
+# FormatHours(hours)
+- ${if(hours > 1,' hours ',' hour ')}
+
+
+
+# SendActivity_8brEsJ()
+- ${FormatNextMeetingTimeRemainingDuration(utcNow(), dialog.requestResult.meetingsList[0].StartTime)}
+
+
+
+# SendActivity_hIFMwq()
+- You don't have any upcomming meeting.
+# SendActivity_oWSUis()
+- ${FormatMeetingTimeRemainingDuration(utcNow(), dialog.requestResult.StartTime, dialog.slots.subject)}
+
+
+
+# SendActivity_gWQSo6()
+- Target meeting not found!

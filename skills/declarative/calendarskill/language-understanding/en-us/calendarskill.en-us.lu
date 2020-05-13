@@ -236,6 +236,15 @@
 - we make an appointment for me
 - Go back to create meeting
 - create meeting
+- New meeting with adele
+- schedule a meeting tomorrow
+- create a new meeting
+- book time with Darren this week
+- schedule a meeting with Patrick
+
+@ prebuilt datetimeV2
+@ prebuilt personName
+@ prebuilt email
 
 
 # FindCalendarEntry
@@ -991,3 +1000,116 @@
 
 @ prebuilt ordinal
 @ prebuilt number
+@ prebuilt personName
+# ConnectToMeeting
+- add me to conference call
+- add me to the conference call
+- call conference
+- call conference call
+- call genpact conference call
+- call harris conference
+- call into conference call
+- call into {Subject=marketing meeting}
+- call into meeting
+- call the {Subject=morning breifing} conference number
+- call the {Subject=weekly marketing meeting}
+- conference join
+- connect me to {FromTime=10 00} conf call with bryan
+- connect me to conference call
+- connect me to conference call with debra
+- connect me to {Subject=marketing meeting}
+- connect me to the {Subject=budget meeting} conference call
+- connect me to the conference call
+- connect me to the {Subject=marketing meeting}
+- connect me with conference call
+- connect me with my {FromTime=2 o clock} meeting
+- connect to conference call
+- connect to conference call {FromTime=now}
+- connect to {Subject=weekly marketing meeting}
+- dial into conference call
+- dial {Subject=marketing meeting}
+- get me on the conference call
+- i need to join conference call
+- i need to join the conference call
+- join {Subject=budget} conference call
+- join conference
+- join conference call
+- join {FromTime=current} {Subject=budget} conf call
+- join {FromTime=current} conference
+- join {FromTime=current} conference call
+- join lync meeting
+- join meeting
+- join meeting {FromTime=now}
+- join my meeting
+- join my {OrderReference=next} meeting
+- join {OrderReference=next} {Subject=link meeting}
+- join {OrderReference=next} meeting
+- join {OrderReference=next} meeting on link
+- join the {Subject=budget meeting} conference call
+- join the conference
+- join the meeting
+- join the {OrderReference=next} {Subject=lync meeting}
+- link join my {OrderReference=next} meeting
+- link join {OrderReference=next} meeting
+- lync join {OrderReference=next} meeting
+- {MeetingRoom=nokia conference room} join
+- start meeting
+- start my conference
+- start my meeting
+- start the meeting
+# TimeRemaining
+- can you show me the time remaining before my {OrderReference=next} appointment
+- check on the time to see when i {Subject=go to school and pick up mark}
+- do i have any spare time before {OrderReference=next} appointment
+- how long is it until the {FromDate=14th of march}
+- how long till {Subject=disneyland paris}
+- how long till my {OrderReference=next} appointment
+- how long till the {OrderReference=next} meeting
+- how long until {Subject=christmas}
+- how long until my {OrderReference=next} appointment
+- how long until my {OrderReference=next} meeting
+- how long until the {Subject=social}
+- how long will i wait for the {OrderReference=next} appointment
+- how many days is it until {FromDate=christmas}
+- how many days left until the {Subject=opening ceremony}
+- how many days till {FromDate=april}
+- how many days till {FromDate=christmas}
+- how many days until {FromDate=june the fifteenth}
+- how many days until {FromDate=june the fifteenth 2019}
+- how many days until {FromDate=march twenty six}
+- how many days until my {Subject=doctor ' s appointment}
+- how many days until {FromDate=thanksgiving}
+- how many days until the {FromDate=10th of december}
+- how many hours left till the {Subject=closing ceremony}
+- how many hours remaining till {OrderReference=next} appointment
+- how many hours until my {Subject=doc appointment}
+- how many minutes before my {OrderReference=next} appointment
+- how many minutes free do i have before {OrderReference=next} scheduled appointment
+- how much longer do i have before {Subject=pick up mary from school}
+- how much longer do i have until {Subject=pick up john from school}
+- how much longer until my {OrderReference=next} appointment
+- how much longer until my {OrderReference=next} meeting
+- how much time before {Subject=lunch}
+- how much time before my {OrderReference=next} appointment
+- how much time before {OrderReference=next} appointment
+- how much time do i have
+- how much time do i have before my {OrderReference=next} appointment
+- how much time do i have before my {OrderReference=next} meeting
+- how much time do i have free until my {OrderReference=next} meeting
+- how much time do i have until i have to {Subject=meet} with michael
+- how much time do i have until i {Subject=start the meeting}
+- how much time do i have until my {Subject=doc appt}
+- how much time do i have until my meeting with larry
+- how much time do i have until my {OrderReference=next} appointment
+- how much time is there before {Subject=office meeting}
+- how much time remaining till {OrderReference=next} meeting
+- how much time until my meeting with lori
+- how much time until {OrderReference=next} scheduled appointment
+- how much time until {FromTime=noon}
+- i want to know the time left for my {OrderReference=next} appointment
+- show time before {OrderReference=next} appointment
+- tell me how much free time i have before {OrderReference=next} appt
+- tell me how much time before my {OrderReference=next} meeting
+- time before my {OrderReference=next} appointment
+- time remaining
+- ^how long do i have (until|before|till) the [next] (meeting|appointment|{SubjectPattenAny})

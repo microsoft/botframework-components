@@ -21,10 +21,6 @@
           },
           "assignments": [
             {
-              "property": "dialog.slots",
-              "value": "=conversation.slots"
-            },
-            {
               "property": "dialog.slots.personName",
               "value": "=coalesce(@personName, $slots.personName)"
             },
@@ -73,10 +69,6 @@
           },
           "assignments": [
             {
-              "property": "dialog.content",
-              "value": "=conversation.content"
-            },
-            {
               "property": "dialog.content.attendeeList",
               "value": "=coalesce($content.attendeeList, [])"
             },
@@ -103,22 +95,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "wpfTgw"
-          },
-          "assignments": [
-            {
-              "property": "conversation.content",
-              "value": "= {}"
-            },
-            {
-              "property": "conversation.slots",
-              "value": "= {}"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "tDjzl6"
@@ -136,22 +112,22 @@
               "$designer": {
                 "id": "WFuc6K"
               },
-              "dialog": "FindSingleContactDialog",
+              "dialog": "FindContactDialog",
               "disabled": false,
               "options": {
-                "attendee": "=coalesce(dialog.slots.personName)"
+                "AttendeeList": "=[coalesce(dialog.slots.personName)]",
+                "fromDialog": "CreateMeeting"
               },
-              "resultProperty": "dialog.attendee"
+              "resultProperty": "dialog.attendeeList",
+              "activityProcessed": true
             },
             {
-              "$kind": "Microsoft.EditArray",
+              "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "DmSDaZ"
+                "id": "h1WZVY"
               },
-              "changeType": "push",
-              "itemsProperty": "dialog.content.attendeeList",
-              "value": "=dialog.attendee",
-              "disabled": false
+              "property": "dialog.content.attendeeList",
+              "value": "=union(dialog.content.attendeeList, dialog.attendeeList)"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -326,7 +302,8 @@
             "location": "=dialog.content.location",
             "attendees": "=dialog.content.attendeeList"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -359,7 +336,8 @@
             "id": "eW3QJE"
           }
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -736,14 +714,6 @@
                 {
                   "property": "dialog.content.repeat",
                   "value": true
-                },
-                {
-                  "property": "conversation.content",
-                  "value": "= dialog.content"
-                },
-                {
-                  "property": "conversation.slots",
-                  "value": "= dialog.slots"
                 }
               ]
             },
@@ -751,6 +721,11 @@
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
                 "id": "0KzgkA"
+              },
+              "activityProcessed": true,
+              "options": {
+                "slots": "=dialog.slots",
+                "content": "=dialog.content"
               }
             }
           ],

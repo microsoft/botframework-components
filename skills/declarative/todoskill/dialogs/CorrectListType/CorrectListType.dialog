@@ -1,0 +1,82 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "9f7r5I",
+    "name": "CorrectListType",
+    "description": "For action"
+  },
+  "autoEndDialog": "true",
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "T5bK1k"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "XYTzte"
+          },
+          "condition": "dialog.listType",
+          "cases": [
+            {
+              "value": "shopping",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "cfi9p8"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.listType",
+                      "value": "='Shopping'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "grocery",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "JCX4ZM"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.listType",
+                      "value": "='Grocery'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "todo",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "Y9abSj"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.listType",
+                      "value": "='To Do'"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "CorrectListType.lg"
+}

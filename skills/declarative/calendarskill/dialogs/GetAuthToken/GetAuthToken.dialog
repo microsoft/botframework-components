@@ -33,7 +33,8 @@
               "timeout": 900000,
               "allowInterruptions": false,
               "alwaysPrompt": false,
-              "disabled": false
+              "disabled": false,
+              "maxTurnCount": 3
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -41,12 +42,17 @@
                 "id": "_46wWj"
               },
               "property": "turn.token",
-              "value": "= dialog.token.token"
+              "value": "= dialog.token.token",
+              "allowInterruptions": true,
+              "maxTurnCount": 3
             }
-          ]
+          ],
+          "allowInterruptions": true
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
-  "generator": "GetAuthToken.lg"
+  "generator": "GetAuthToken.lg",
+  "allowInterruptions": true
 }

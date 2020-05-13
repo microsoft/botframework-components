@@ -15,12 +15,80 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pg2o1y"
+          }
+        },
+        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "Mo22R4"
+            "id": "jhE5LL"
           },
           "value": "=json(dialog.AttendeeList)",
           "property": "dialog.AttendeeList"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hbAuaU"
+          },
+          "condition": "dialog.AttendeeList == null || count(dialog.AttendeeList) == 0 || dialog.AttendeeList[0] == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SwitchCondition",
+              "$designer": {
+                "id": "anWEwr"
+              },
+              "condition": "dialog.fromDialog",
+              "cases": [
+                {
+                  "value": "CreateMeeting",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.TextInput",
+                      "$designer": {
+                        "id": "2jQQfL"
+                      },
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": "#_Interruption.Score >= 0.9",
+                      "prompt": "${TextInput_Prompt_2jQQfL()}",
+                      "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_2jQQfL()}",
+                      "property": "dialog.attendee",
+                      "value": "=@personName"
+                    }
+                  ]
+                },
+                {
+                  "value": "CheckPersonAvailable",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.TextInput",
+                      "$designer": {
+                        "id": "rVGh7H"
+                      },
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": "#_Interruption.Score >= 0.9",
+                      "prompt": "${TextInput_Prompt_rVGh7H()}",
+                      "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_rVGh7H()}",
+                      "property": "dialog.attendee",
+                      "value": "=@personName"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "5n6y5k"
+              },
+              "property": "dialog.AttendeeList",
+              "value": "=split(dialog.attendee, ',')"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -35,10 +103,12 @@
                 "id": "5ORhpF"
               },
               "options": {
-                "CurrentAttendee": "${dialog.foreach.value}"
+                "attendee": "${dialog.foreach.value}",
+                "fromDialog": "${dialog.fromDialog}"
               },
               "dialog": "FindSingleContactDialog",
-              "resultProperty": "dialog.ResolvedAttendee"
+              "resultProperty": "dialog.ResolvedAttendee",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -49,7 +119,8 @@
               "itemsProperty": "dialog.ResolvedAttendees",
               "value": "=dialog.ResolvedAttendee"
             }
-          ]
+          ],
+          "value": "dialog.foreach.value"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -58,7 +129,8 @@
           },
           "value": "=dialog.ResolvedAttendees"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "FindContactDialog.lg"

@@ -1,0 +1,199 @@
+[import](common.lg)
+
+# SendActivity_OQFTQu()
+[Activity
+    Attachments = ${json(BuildScheduleCard(dialog.previousEvents, dialog.upcomingEvents))}
+]
+
+
+# NoEventsResponse()
+- IF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) >= ticks(startOfDay(utcNow()))}
+    - You don't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
+- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) < ticks(startOfDay(utcNow()))}
+    - You didn't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
+- ELSE: 
+    - You don't have any events scheduled for today.
+
+# BuildScheduleCard(previousEvents, upcomingEvents)
+- ```
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "Container",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), 'Today', formatDateTime(dialog.datetime, 'dddd'))} ",
+                            "size": "Large"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "${if(dialog.datetime != null, formatDateTime(dialog.datetime, 'MMMM d, yyyy'), utcNow('MMMM d, yyyy'))}",
+                            "size": "Large",
+                            "weight": "Lighter"
+                        }
+                    ]
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), 'remaining', '')}",
+                    "size": "Small",
+                    "spacing": "None"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "bleed": true,
+            "separator": true,
+            "style": "default",
+            "items": [
+                ${join(foreach(previousEvents, x, BuildPreviousEventItem(x)), ', ')},
+                ${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), BuildSeparator(), '')},
+                ${join(foreach(upcomingEvents, x, BuildUpcomingEventItem(x)), ', ')}
+            ]
+        },
+        {
+            "type": "Container",
+            "separator": true,
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "horizontalAlignment": "Right",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "Powered by ",
+                            "size": "Small"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "Microsoft Graph",
+                            "size": "Small",
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# BuildPreviousEventItem(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 20,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${formatDateTime(event.Start.dateTime,'h:mmt')}",
+                    "weight": "Bolder",
+                    "color": "Accent",
+                    "isSubtle": true
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${if(event.DurationDays > 0, concat(event.DurationDays, 'd'), '')} ${if(event.DurationHours > 0, concat(event.DurationHours, 'h'), '')} ${if(event.DurationMinutes > 0, concat(event.DurationMinutes, 'm'), '')}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "weight": "Lighter",
+                    "isSubtle": true
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 80,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}",
+                    "weight": "Bolder",
+                    "isSubtle": true
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Location}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "isSubtle": true
+                }
+            ]
+        }
+    ]
+}
+```
+
+# BuildSeparator()
+- ```
+{
+    "type": "Image",
+    "altText": "",
+    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAzUAAAAKCAYAAACNKHAJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABDSURBVHhe7cYxAQAgDAOwTiJOkIgzeGZhF8mVAAAAAAAAAAAAAAAAwGdqnX37AAAAAAAAAAAAAAAAAAAAAAAAAFOSB0yCAoJ5nG+nAAAAAElFTkSuQmCC",
+    "size": "Stretch"
+}
+```
+
+# BuildUpcomingEventItem(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 20,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${formatDateTime(event.Start.dateTime,'h:mmt')}",
+                    "weight": "Bolder",
+                    "color": "Accent"
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${if(event.DurationDays > 0, concat(event.DurationDays, 'd'), '')} ${if(event.DurationHours > 0, concat(event.DurationHours, 'h'), '')} ${if(event.DurationMinutes > 0, concat(event.DurationMinutes, 'm'), '')}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "weight": "Lighter"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 80,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}",
+                    "weight": "Bolder"
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Location}",
+                    "size": "Small",
+                    "spacing": "None"
+                }
+            ]
+        }
+    ]
+}
+```
+# SendActivity_Zi2kY7()
+- IF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) >= ticks(startOfDay(utcNow()))}
+    - You don't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
+- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) < ticks(startOfDay(utcNow()))}
+    - You didn't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
+- ELSE: 
+    - You don't have any events scheduled for today.

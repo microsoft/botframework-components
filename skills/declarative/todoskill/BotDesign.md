@@ -30,6 +30,12 @@ conversation.listType
 conversation.page
 - for interruption from show to del
 
+conversatoin.isAction
+- for simpleness
+
+conversation.actionResult
+- for simpleness
+
 dialog.taskContent
 - for local interruption, should always repeat to verify logic
 
@@ -54,7 +60,8 @@ turn.listToId
     // Index
     Id,
     IsCompleted,
-    Topic,
+    // Unchange
+    subject,
     id,
 }
 
@@ -70,6 +77,14 @@ items
 
 When repeat, previous dialog state are cleared
 
+## Interruption
+
+Suppress complete message when being interrupted?
+
+Suppress interruption when PVA
+
+Interruption is tricky like in mark todo -> interrupt to delete all -> then ??
+
 ## All
 
 all is tricky for show after delete
@@ -84,44 +99,12 @@ Also tricky
 
 **if prompt in show, interrupt will not go back**
 
-help, cancel always included
-
-## Add
-### Ask content
-- add
-- show
-    - V
-- mark
-    - V
-
-### Ask list type
-- add
-- show
-    - V
-- mark
-    - V
-
-### Duplicate
-- add
-- show
-    - V
-- mark
-    - V
-
 ## Show
 ### Ask list type
 - add
     - V
 - show
     - not needed here
-- mark
-    - V
-
-### Ask next/prev
-- add
-    - V
-- show
-    - V
 - mark
     - V
 
@@ -146,3 +129,11 @@ help, cancel always included
 all is handled wrongly when repeat like 'do nothing at all'
 
 support all in GetInput in mark/delete
+
+support ordinal in GetInput in mark/delete
+
+task content incorrect message
+
+# SDK
+
+ChoiceInput will update property if value not null.

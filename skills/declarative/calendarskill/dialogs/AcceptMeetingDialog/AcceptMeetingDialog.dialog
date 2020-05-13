@@ -27,7 +27,7 @@
           "$designer": {
             "id": "eut_7K"
           },
-          "condition": "conversation.FocusedMeeting == null",
+          "condition": "conversation.focusedMeeting == null",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -36,7 +36,8 @@
                 "name": "search a meeting"
               },
               "dialog": "SearchMeetings",
-              "resultProperty": "dialog.meeting"
+              "resultProperty": "dialog.meeting",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -72,7 +73,8 @@
             "name": "search a meeting"
           },
           "dialog": "SearchMeetings",
-          "resultProperty": "dialog.meeting"
+          "resultProperty": "dialog.meeting",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -115,7 +117,31 @@
             }
           ],
           "property": "dialog.confirm",
-          "outputFormat": "= this.value"
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WxmZTQ"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ZR1rZA"
+          },
+          "condition": "!dialog.confirm",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "SgEqk8"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -126,7 +152,8 @@
           "options": {
             "meetingId": "=dialog.meeting.id"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",
