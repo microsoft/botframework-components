@@ -15,19 +15,36 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "kJoQsK",
+            "name": "Set properties"
+          },
+          "assignments": [
+            {
+              "property": "dialog.keyword",
+              "value": "=@Keyword"
+            },
+            {
+              "property": "dialog.pron",
+              "value": "=@pron"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "71EKIt"
           },
-          "condition": "conversation.keyword.EmailAddress != null",
+          "condition": "dialog.keyword.EmailAddress != null",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "va6IlK"
               },
-              "property": "conversation.keyword",
-              "value": "=conversation.keyword.EmailAddress[0]"
+              "property": "dialog.keyword",
+              "value": "=dialog.keyword.EmailAddress[0]"
             }
           ],
           "elseActions": [
@@ -36,15 +53,15 @@
               "$designer": {
                 "id": "dgMgLQ"
               },
-              "condition": "conversation.keyword.PersonName != null",
+              "condition": "dialog.keyword.PersonName != null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "w6r5_D"
                   },
-                  "property": "conversation.keyword",
-                  "value": "=conversation.keyword.PersonName[0]"
+                  "property": "dialog.keyword",
+                  "value": "=dialog.keyword.PersonName[0]"
                 }
               ],
               "elseActions": [
@@ -53,21 +70,44 @@
                   "$designer": {
                     "id": "MEIpXs"
                   },
-                  "condition": "conversation.keyword.Topic != null",
+                  "condition": "dialog.keyword.Topic != null",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
                         "id": "mfx9ET"
                       },
-                      "property": "conversation.keyword",
-                      "value": "=conversation.keyword.Topic[0]"
+                      "property": "dialog.keyword",
+                      "value": "=dialog.keyword.Topic[0]"
                     }
                   ]
                 }
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "vsJJRQ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result",
+              "value": "=setProperty({}, \"keyword\", dialog.keyword)"
+            },
+            {
+              "property": "dialog.result",
+              "value": "=setProperty(dialog.result, \"pron\", dialog.pron)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "IFukXI"
+          },
+          "value": "=dialog.result"
         }
       ]
     }
