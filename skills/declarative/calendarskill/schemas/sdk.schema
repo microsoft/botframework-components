@@ -137,6 +137,9 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
 		},
 		{
@@ -3977,6 +3980,85 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.GetMeetingRooms": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Meeting Rooms",
+			"description": "Get meeting room lists using the Azure search API.",
+			"required": [
+				"searchServiceAdminApiKey",
+				"searchServiceName",
+				"searchIndexName",
+				"searchQuery",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"searchServiceAdminApiKey": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Service Admin Api Key",
+					"description": "Azure Search Service Admin API Key.",
+					"examples": [
+						"settings.azureSearch.searchServiceAdminApiKey"
+					]
+				},
+				"searchServiceName": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Service Name",
+					"description": "Azure Search Service Name.",
+					"examples": [
+						"settings.azureSearch.searchServiceName"
+					]
+				},
+				"searchIndexName": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Index Name",
+					"description": "Azure Search Index Name.",
+					"examples": [
+						"settings.azureSearch.searchIndexName"
+					]
+				},
+				"searchQuery": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Query",
+					"description": "Azure Search Query.",
+					"examples": [
+						"dialog.searchQuery"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetMeetingRooms"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.GetSchedule": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -5135,6 +5217,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
