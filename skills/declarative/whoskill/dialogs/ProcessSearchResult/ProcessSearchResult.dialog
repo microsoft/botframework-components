@@ -1,0 +1,85 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "LfKc8U",
+    "name": "ProcessSearchResult"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "B86FKL"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "DikFVG",
+            "name": "Branch: switch (multiple options)"
+          },
+          "condition": "count(conversation.allPersons)",
+          "cases": [
+            {
+              "value": "1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "RZZpZH",
+                    "name": "Set a property"
+                  },
+                  "property": "conversation.chosenPerson",
+                  "value": "=conversation.allPersons[0]"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "Pgd9DL",
+                    "name": "Begin a new dialog"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ProcessFinalResult"
+                }
+              ]
+            },
+            {
+              "value": "0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "6L1rll",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_6L1rll()}"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "vyShND",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_vyShND()}"
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "u2xpLu"
+              },
+              "activityProcessed": true,
+              "dialog": "SendPage"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ProcessSearchResult.lg"
+}

@@ -1,0 +1,10 @@
+[import](common.lg)
+
+# SendActivity_vyShND()
+-${MultiSearchResult(conversation.luisResult.keyword)}
+
+
+# SendActivity_6L1rll()
+- ${NoSearchResult(conversation.luisResult.keyword)}
+
+

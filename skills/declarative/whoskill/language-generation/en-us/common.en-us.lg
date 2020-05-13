@@ -14,7 +14,7 @@
 
 # HelpMessage()
 - ```
-Need help? Here’s a list of the questions I can answer:
+Need help? Here's a list of the questions I can answer:
 	Who is Jane?
 	Who are Jack's peers?
 	Who is Roger's manager?
@@ -36,12 +36,6 @@ Need help? Here’s a list of the questions I can answer:
 
 # NoSearchResult(Keyword)
 - Sorry, I couldn’t find anyone named '${Keyword}'
-
-# ShowItem(Person)
-[Activity
-    Attachments = ${json(CardForItem(Person))}
-    InputHint = acceptingInput
-]
 
 # CardForItem(Person)
 - ```
@@ -65,7 +59,7 @@ Need help? Here’s a list of the questions I can answer:
 							"horizontalAlignment": "Left",
 							"size": "Large",
 							"weight": "Bolder",
-							"text": "${Person.displayName}",
+							"text": "${Person.DisplayName}",
 							"wrap": true
 						}],
 						"width": "stretch"
@@ -79,25 +73,31 @@ Need help? Here’s a list of the questions I can answer:
 						"items": [{
 							"type": "TextBlock",
 							"size": "Medium",
-							"text": "${Person.jobTitle}"
+							"text": "${Person.JobTitle}"
 						}, {
 							"type": "TextBlock",
 							"horizontalAlignment": "Left",
 							"spacing": "Small",
 							"size": "Medium",
-							"text": "${Person.department}"
+							"text": "${Person.Department}"
 						}, {
 							"type": "TextBlock",
 							"horizontalAlignment": "Left",
 							"spacing": "Small",
 							"size": "Medium",
-							"text": "${Person.officeLocation}"
+							"text": "${Person.OfficeLocation}"
 						}, {
 							"type": "TextBlock",
 							"horizontalAlignment": "Left",
 							"spacing": "Small",
 							"size": "Medium",
-							"text": "${Person.mobilePhone}"
+							"text": "${Person.BusinessPhones}"
+						}, {
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"spacing": "Small",
+							"size": "Medium",
+							"text": "${Person.MobilePhone}"
 						}],
 						"width": "stretch"
 					}]
@@ -108,7 +108,7 @@ Need help? Here’s a list of the questions I can answer:
 				"items": [{
 					"type": "Image",
 					"style": "Person",
-					"url": "${Person.photoUrl}",
+					"url": "${Person.PhotoUrl}",
 					"size": "Medium"
 				}],
 				"width": "auto",
@@ -126,7 +126,7 @@ Need help? Here’s a list of the questions I can answer:
 					"actions": [{
 						"type": "Action.Submit",
 						"title": "Manager",
-						"data": "Who is the manager of ${Person.userPrincipalName}?"
+						"data": "Who is the manager of ${Person.UserPrincipalName}?"
 					}]
 				}],
 				"width": "auto"
@@ -137,7 +137,7 @@ Need help? Here’s a list of the questions I can answer:
 					"actions": [{
 						"type": "Action.Submit",
 						"title": "Peers",
-						"data": "Who are the peers of ${Person.userPrincipalName}"
+						"data": "Who are the peers of ${Person.UserPrincipalName}"
 					}]
 				}],
 				"width": "auto"
@@ -146,6 +146,90 @@ Need help? Here’s a list of the questions I can answer:
 		}],
 		"spacing": "Medium",
 		"separator": true
+	}],
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.0"
+}
+```
+
+# CardForActionItem(Person)
+- ```
+{
+	"type": "AdaptiveCard",
+	"id": "WhoCard",
+	"body": [{
+		"type": "Container",
+		"spacing": "Large",
+		"items": [{
+			"type": "ColumnSet",
+			"columns": [{
+				"type": "Column",
+				"items": [{
+					"type": "ColumnSet",
+					"columns": [{
+						"type": "Column",
+						"verticalContentAlignment": "Center",
+						"items": [{
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"size": "Large",
+							"weight": "Bolder",
+							"text": "${Person.DisplayName}",
+							"wrap": true
+						}],
+						"width": "stretch"
+					}]
+				}, {
+					"type": "ColumnSet",
+					"spacing": "Medium",
+					"columns": [{
+						"type": "Column",
+						"verticalContentAlignment": "Center",
+						"items": [{
+							"type": "TextBlock",
+							"size": "Medium",
+							"text": "${Person.JobTitle}"
+						}, {
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"spacing": "Small",
+							"size": "Medium",
+							"text": "${Person.Department}"
+						}, {
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"spacing": "Small",
+							"size": "Medium",
+							"text": "${Person.OfficeLocation}"
+						}, {
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"spacing": "Small",
+							"size": "Medium",
+							"text": "${Person.BusinessPhones}"
+						}, {
+							"type": "TextBlock",
+							"horizontalAlignment": "Left",
+							"spacing": "Small",
+							"size": "Medium",
+							"text": "${Person.MobilePhone}"
+						}],
+						"width": "stretch"
+					}]
+				}],
+				"width": 50
+			}, {
+				"type": "Column",
+				"items": [{
+					"type": "Image",
+					"style": "Person",
+					"url": "${Person.PhotoUrl}",
+					"size": "Medium"
+				}],
+				"width": "auto",
+				"verticalContentAlignment": "Center"
+			}]
+		}]
 	}],
 	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
 	"version": "1.0"
@@ -189,7 +273,7 @@ Need help? Here’s a list of the questions I can answer:
 			"items": [{
 				"type": "Image",
 				"style": "Person",
-				"url": "${Person.photoUrl}",
+				"url": "${Person.PhotoUrl}",
 				"size": "Medium"
 			}],
 			"verticalContentAlignment": "Center"
@@ -206,7 +290,7 @@ Need help? Here’s a list of the questions I can answer:
 							"horizontalAlignment": "Left",
 							"size": "Large",
 							"weight": "Bolder",
-							"text": "${Person.displayName}",
+							"text": "${Person.DisplayName}",
 							"wrap": true
 						}],
 						"width": "stretch"
@@ -220,7 +304,7 @@ Need help? Here’s a list of the questions I can answer:
 						"items": [{
 							"type": "TextBlock",
 							"size": "Medium",
-							"text": "${Person.jobTitle}"
+							"text": "${Person.JobTitle}"
 						}],
 						"width": "stretch"
 					}]
@@ -235,7 +319,7 @@ Need help? Here’s a list of the questions I can answer:
 				"actions": [{
 					"type": "Action.Submit",
 					"title": "Detail",
-					"data": "${Person.actionTitle}"
+					"data": "${Person.ActionTitle}"
 				}]
 			}],
 			"width": "70px",
@@ -248,40 +332,40 @@ Need help? Here’s a list of the questions I can answer:
 ```
 
 # WhoIs(Person)
-- Here's what I found for ${Person.displayName}:
+- Here's what I found for ${Person.DisplayName}:
 
 # JobTitle(Person)
-- '${Person.displayName}' is a ${Person.jobTitle}.
+- '${Person.DisplayName}' is a ${Person.jobTitle}.
 
 # Department(Person)
-- '${Person.displayName}' works in ${Person.department}.
+- '${Person.DisplayName}' works in ${Person.Department}.
 
 # Location(Person)
-- '${Person.displayName}' works in ${Person.officeLocation}.
+- '${Person.DisplayName}' works in ${Person.officeLocation}.
 
 # PhoneNumber(Person)
-- The phone number for '${Person.displayName}' is ${Person.mobilePhone}.
+- The phone number for '${Person.DisplayName}' is ${Person.mobilePhone}.
 
 # EmailAddress(Person)
-- The e-mail address of '${Person.displayName}' is ${Person.mail}.
+- The e-mail address of '${Person.DisplayName}' is ${Person.mail}.
 
 # Manager(Person)
-- I found the manager of '${Person.displayName}'.
+- I found the manager of '${Person.DisplayName}'.
 
 # NoManager(Person)
-- '${Person.displayName}' doesn't report to anyone.
+- '${Person.DisplayName}' doesn't report to anyone.
 
 # DirectReports(Number, Person)
-- ${Number} people currently report to '${Person.displayName}':
+- ${Number} people currently report to '${Person.DisplayName}':
 
 # NoDirectReports(Person)
-- '${Person.displayName}' has no direct reports.
+- '${Person.DisplayName}' has no direct reports.
 
 # Peers(Number, Person)
-- I found ${Number} people who have the same manager as '${Person.displayName}'.
+- I found ${Number} people who have the same manager as '${Person.DisplayName}'.
 
 # NoPeers(Person)
-- There are no other people that have the same manager as '${Person.displayName}'.
+- There are no other people that have the same manager as '${Person.DisplayName}'.
 
 # PeopleEmailsRencently(Number)
 - You exchanged emails with at least ${Number} people.

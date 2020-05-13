@@ -16,15 +16,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "171592",
-            "name": "Set a property"
-          },
-          "property": "conversation.pageSize",
-          "value": 2
-        },
-        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "518944",
@@ -61,6 +52,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "y6y0AH"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "gNFiZW"
@@ -68,7 +67,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "whois"
+              "value": "Whois"
             },
             {
               "property": "conversation.actionTitle",
@@ -77,32 +76,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "311661",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "wGCElZ"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -142,6 +122,14 @@
       "intent": "JobTitle",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "JdJYH4"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "UDnrQR"
@@ -149,7 +137,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "jobTitle"
+              "value": "JobTitle"
             },
             {
               "property": "conversation.actionTitle",
@@ -158,32 +146,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "iE6ZPG",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "qxblvZ"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -204,6 +173,14 @@
       "intent": "Department",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "HIrIEe"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "75gzPg"
@@ -211,7 +188,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "department"
+              "value": "Department"
             },
             {
               "property": "conversation.actionTitle",
@@ -220,32 +197,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "Y8dYHx",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "jqgqoG"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -266,6 +224,14 @@
       "intent": "Location",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xIJE2a"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "iV8YdJ"
@@ -273,7 +239,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "location"
+              "value": "Location"
             },
             {
               "property": "conversation.actionTitle",
@@ -282,32 +248,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "opZZ7D",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "X2k1Wz"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -328,6 +275,14 @@
       "intent": "PhoneNumber",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8g6w4B"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "U5Q3CV"
@@ -335,7 +290,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "phoneNumber"
+              "value": "PhoneNumber"
             },
             {
               "property": "conversation.actionTitle",
@@ -344,32 +299,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "RpWYdh",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "1wqR7r"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -408,14 +344,22 @@
       "intent": "Manager",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "KiX0wt"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "E26_kd"
+            "id": "0sRgdB"
           },
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "manager"
+              "value": "Manager"
             },
             {
               "property": "conversation.actionTitle",
@@ -424,32 +368,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "Qs58Hq",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "f6jhD2"
+            "id": "lASVB4"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -487,6 +412,14 @@
       "intent": "DirectReports",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "07gWkq"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "7G8WtQ"
@@ -494,7 +427,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "directReports"
+              "value": "DirectReports"
             },
             {
               "property": "conversation.actionTitle",
@@ -503,32 +436,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "mP2sAI",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "SVGg-6"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -549,6 +463,14 @@
       "intent": "Peers",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "jpABVG"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "su65_z"
@@ -556,7 +478,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "peers"
+              "value": "Peers"
             },
             {
               "property": "conversation.actionTitle",
@@ -565,32 +487,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "3NNL8x",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "-xIQI9"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -611,31 +514,26 @@
       "intent": "EmailAbout",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "OqZBNG"
+            "id": "BIQr8Q"
           },
-          "property": "conversation.intent",
-          "value": "emailAbout"
+          "activityProcessed": true,
+          "dialog": "InitDialog"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "rPN6aP",
-            "name": "Set properties"
+            "id": "CFKamW"
           },
           "assignments": [
             {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
+              "property": "conversation.intent",
+              "value": "EmailAbout"
             },
             {
-              "property": "conversation.pron",
-              "value": "@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
+              "property": "conversation.actionTitle",
+              "value": "Who is {keyword}?"
             }
           ]
         },
@@ -644,7 +542,9 @@
           "$designer": {
             "id": "qUawRZ"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -652,7 +552,7 @@
             "id": "hatvEW",
             "name": "Begin a new dialog"
           },
-          "dialog": "SearchForFinalResult",
+          "dialog": "ProcessFinalResult",
           "activityProcessed": true
         }
       ]
@@ -665,48 +565,45 @@
       "intent": "MeetAbout",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "KF4L4v"
+            "id": "i09Mcz"
           },
-          "property": "conversation.intent",
-          "value": "meetAbout"
+          "activityProcessed": true,
+          "dialog": "InitDialog"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "R27Vjj",
-            "name": "Set properties"
+            "id": "BMUtZN"
           },
           "assignments": [
             {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
+              "property": "conversation.intent",
+              "value": "MeetAbout"
             },
             {
-              "property": "conversation.pron",
-              "value": "@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
+              "property": "conversation.actionTitle",
+              "value": "Who is {keyword}?"
             }
           ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "wSaK7U"
+            "id": "CNz2yY"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "7BaY1j",
+            "id": "n63f7z",
             "name": "Begin a new dialog"
           },
-          "dialog": "SearchForFinalResult",
+          "dialog": "ProcessFinalResult",
           "activityProcessed": true
         }
       ]
@@ -719,6 +616,14 @@
       "intent": "EmailFind",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lXwFKA"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "OBO9E4"
@@ -726,7 +631,7 @@
           "assignments": [
             {
               "property": "conversation.intent",
-              "value": "emailFind"
+              "value": "EmailFind"
             },
             {
               "property": "conversation.actionTitle",
@@ -735,32 +640,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "JY4PBM",
-            "name": "Set properties"
-          },
-          "assignments": [
-            {
-              "property": "conversation.keyword",
-              "value": "=@Keyword"
-            },
-            {
-              "property": "conversation.pron",
-              "value": "=@pron"
-            },
-            {
-              "property": "conversation.pageIndex",
-              "value": "=0"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "YsWlRx"
           },
-          "dialog": "ExtractKeyword"
+          "dialog": "ExtractKeyword",
+          "activityProcessed": true,
+          "resultProperty": "conversation.luisResult"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -770,6 +656,199 @@
           },
           "dialog": "SearchPerson",
           "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "1nZZxT"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "i4JHq4"
+          },
+          "activityProcessed": true,
+          "dialog": "InitDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "j62PjO"
+          },
+          "property": "conversation.luisResult.keyword",
+          "value": "=turn.Activity.value.keyword"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1OfaAJ"
+          },
+          "activityProcessed": true,
+          "dialog": "Oauth"
+        },
+        {
+          "$kind": "Microsoft.Graph.Who.GetUsers",
+          "token": "=user.token.token",
+          "keywordProperty": "=conversation.luisResult.keyword",
+          "resultProperty": "conversation.allPersons",
+          "$designer": {
+            "id": "glpwjq"
+          },
+          "topProperty": "15"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "taNEeI",
+            "name": "Branch: switch (multiple options)"
+          },
+          "condition": "count(conversation.allPersons)",
+          "cases": [
+            {
+              "value": "1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "ceYmqj",
+                    "name": "Set a property"
+                  },
+                  "property": "conversation.chosenPerson",
+                  "value": "=conversation.allPersons[0]"
+                }
+              ]
+            },
+            {
+              "value": "0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ldvWHq",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_ldvWHq()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "l3Ez4f"
+                  },
+                  "value": "=setProperty({},\"actionSuccess\", true)"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "pJjVKc",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_pJjVKc()}"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "XykBdE"
+              },
+              "itemsProperty": "conversation.allPersons",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cTZiWV"
+                  },
+                  "property": "conversation.allPersons[dialog.foreach.index].ActionTitle",
+                  "value": "=dialog.foreach.value.UserPrincipalName"
+                }
+              ],
+              "value": "dialog.foreach.value",
+              "index": "dialog.foreach.index"
+            },
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "OcDGsF"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_OcDGsF()}",
+              "property": "dialog.chosenPersonName"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "UADeuC"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "conversation.allPersons",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "j33Eo1"
+                  },
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "YUbyu1"
+                      },
+                      "property": "conversation.chosenPerson",
+                      "value": "=dialog.foreach.value"
+                    },
+                    {
+                      "$kind": "Microsoft.BreakLoop",
+                      "$designer": {
+                        "id": "uI5gPt"
+                      }
+                    }
+                  ],
+                  "condition": "dialog.foreach.value.UserPrincipalName == dialog.chosenPersonName"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "rS3g2d",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_rS3g2d()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "U1MJDP",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "cAEsY2",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_cAEsY2()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "0jcBOY"
+          },
+          "value": "=setProperty({},\"actionSuccess\", true)"
         }
       ]
     }

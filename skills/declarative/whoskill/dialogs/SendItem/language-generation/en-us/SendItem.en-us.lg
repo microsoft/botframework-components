@@ -1,0 +1,7 @@
+[import](common.lg)
+
+# SendActivity_qw98U6()
+[Activity
+    Attachments = ${json(CardForItem(conversation.person))}
+    InputHint = acceptingInput
+]

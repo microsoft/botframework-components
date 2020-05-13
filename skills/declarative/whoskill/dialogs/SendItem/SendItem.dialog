@@ -1,0 +1,29 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UB3hHs",
+    "name": "SendItem"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "rkydUy"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "qw98U6",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_qw98U6()}"
+        }
+      ]
+    }
+  ],
+  "generator": "SendItem.lg"
+}

@@ -1,0 +1,691 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "GSWenA",
+    "name": "ProcessFinalResult"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "kvtYbL"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "awJyUd"
+          },
+          "activityProcessed": true,
+          "dialog": "Oauth"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Ko7jf6"
+          },
+          "eventName": "=conversation.intent"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "XFd7hI",
+        "name": "Custom Event"
+      },
+      "event": "Whois",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "oZOlbK",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_oZOlbK()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "cGbILA",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "TJwghV"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "2RVsur",
+        "name": "Custom Event"
+      },
+      "event": "JobTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ewOegE",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_ewOegE()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hvpc6f",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "l5Uxko"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "schBAS",
+        "name": "Custom Event"
+      },
+      "event": "EmailFind",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "AhSn8o",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_AhSn8o()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "1m4xx4",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Fu59wg"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "jQfZkE",
+        "name": "Custom Event"
+      },
+      "event": "Location",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "1fBs7Z",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_1fBs7Z()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "BRNNQr",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "dp8o42"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "PNFU5o",
+        "name": "Custom Event"
+      },
+      "event": "Department",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "KTgYQV",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_KTgYQV()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "3183Ay",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cBtQx0"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "WjIQaD",
+        "name": "Custom Event"
+      },
+      "event": "PhoneNumber",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "QfuCj8",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_QfuCj8()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "sduKGA",
+            "name": "Set a property"
+          },
+          "property": "conversation.person",
+          "value": "=conversation.chosenPerson"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "dWE7Oh"
+          },
+          "activityProcessed": true,
+          "dialog": "SendItem"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "xeui2V",
+        "name": "Custom Event"
+      },
+      "event": "Manager",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Who.GetManager",
+          "$designer": {
+            "id": "bBr5M1"
+          },
+          "token": "=user.token.Token",
+          "resultProperty": "conversation.person",
+          "idProperty": "=conversation.chosenPerson.Id"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "GUd3zh",
+            "name": "Branch: if/else"
+          },
+          "condition": "conversation.person != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UFqhAu",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_UFqhAu()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "MZUlmH"
+              },
+              "activityProcessed": true,
+              "dialog": "SendItem"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "VGJiOX",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_VGJiOX()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "zwBedI",
+        "name": "Custom Event"
+      },
+      "event": "DirectReports",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Who.GetDirectReports",
+          "$designer": {
+            "id": "67Hyt0"
+          },
+          "idProperty": "=conversation.chosenPerson.Id",
+          "token": "=user.token.Token",
+          "resultProperty": "conversation.allPersons"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "IxbKCJ",
+            "name": "Branch: if/else"
+          },
+          "condition": "count(conversation.allPersons) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "wELKpG",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_wELKpG()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "lzHM1I",
+                "name": "Set properties"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.actionTitle",
+                  "value": "Who is {keyword}?"
+                },
+                {
+                  "property": "conversation.pageIndex",
+                  "value": "=0"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "bpJ7ye"
+              },
+              "activityProcessed": true,
+              "dialog": "SendPage"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "vz6xqL",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_vz6xqL()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "evdnlJ",
+        "name": "Custom Event"
+      },
+      "event": "Peers",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Who.GetPeers",
+          "$designer": {
+            "id": "xGO4Kw"
+          },
+          "idProperty": "=conversation.chosenPerson.Id",
+          "token": "=user.token.Token",
+          "resultProperty": "conversation.allPersons"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "liGKRe",
+            "name": "Branch: if/else"
+          },
+          "condition": "count(conversation.allPersons) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "h68EUr",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_h68EUr()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "FY2MCr",
+                "name": "Set properties"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.actionTitle",
+                  "value": "Who is {keyword}?"
+                },
+                {
+                  "property": "conversation.pageIndex",
+                  "value": "=0"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "a07O8W"
+              },
+              "activityProcessed": true,
+              "dialog": "SendPage"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "cqz15Z",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_cqz15Z()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "ycS6vr",
+        "name": "Custom Event"
+      },
+      "event": "EmailAbout",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "klGrpz"
+          },
+          "condition": "conversation.luisResult.keyword == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Who.GetEmailContacts",
+              "$designer": {
+                "id": "DThzji"
+              },
+              "token": "=user.token.Token",
+              "topProperty": "15",
+              "resultProperty": "conversation.allPersons"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "9CsV3q"
+              },
+              "condition": "count(conversation.allPersons) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "TxneWH"
+                  },
+                  "activity": "${SendActivity_TxneWH()}"
+                },
+                {
+                  "$kind": "Microsoft.ReplaceDialog",
+                  "$designer": {
+                    "id": "5IIW6P"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "SendPage"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "BuqFRU"
+                  },
+                  "activity": "${SendActivity_BuqFRU()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Who.GetEmailContactsByKeyword",
+              "$designer": {
+                "id": "OdX7P4"
+              },
+              "resultProperty": "conversation.allPersons",
+              "token": "=user.token.Token",
+              "keywordProperty": "=conversation.luisResult.keyword",
+              "topProperty": "15"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "kAk7SD"
+              },
+              "condition": "count(conversation.allPersons) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "5aTpXS"
+                  },
+                  "activity": "${SendActivity_5aTpXS()}"
+                },
+                {
+                  "$kind": "Microsoft.ReplaceDialog",
+                  "$designer": {
+                    "id": "eVQyGh"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "SendPage"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "bX3nXO"
+                  },
+                  "activity": "${SendActivity_bX3nXO()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "DcTcBK",
+        "name": "Custom Event"
+      },
+      "event": "MeetAbout",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "etWFFy"
+          },
+          "condition": "conversation.luisResult.keyword == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Who.GetEventContacts",
+              "$designer": {
+                "id": "qSga46"
+              },
+              "resultProperty": "conversation.allPersons",
+              "token": "=user.token.Token",
+              "topProperty": "15"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "fM8Tcu"
+              },
+              "condition": "count(conversation.allPersons) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "sgde4b"
+                  },
+                  "activity": "${SendActivity_sgde4b()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "EztjWw",
+                    "name": "Set properties"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.actionTitle",
+                      "value": "Who is {keyword}?"
+                    },
+                    {
+                      "property": "conversation.pageIndex",
+                      "value": "=0"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.ReplaceDialog",
+                  "$designer": {
+                    "id": "YNue6f"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "SendPage"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ehpSEK"
+                  },
+                  "activity": "${SendActivity_ehpSEK()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Who.GetEventContactsByKeyword",
+              "$designer": {
+                "id": "ArBFyt"
+              },
+              "topProperty": "15",
+              "keywordProperty": "=conversation.luisResult.keyword",
+              "token": "=user.token.Token",
+              "resultProperty": "conversation.allPersons"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "EagXlR"
+              },
+              "condition": "count(conversation.allPersons) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "Ai4Rw1"
+                  },
+                  "activity": "${SendActivity_Ai4Rw1()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "z0DG3E",
+                    "name": "Set properties"
+                  },
+                  "assignments": [
+                    {
+                      "property": "conversation.actionTitle",
+                      "value": "Who is {keyword}?"
+                    },
+                    {
+                      "property": "conversation.pageIndex",
+                      "value": "=0"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.ReplaceDialog",
+                  "$designer": {
+                    "id": "knWkE8"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "SendPage"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "WfML3M"
+                  },
+                  "activity": "${SendActivity_WfML3M()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ProcessFinalResult.lg"
+}
