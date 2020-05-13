@@ -1,0 +1,80 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "calendarskill_build2020",
+      "id": "q7qgWj"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "K9Dvk2"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.connectionName",
+          "title": "Login",
+          "text": "Please login to access your calendar.",
+          "property": "user.token"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "iQ8DgV"
+          },
+          "activity": "${SendActivity_iQ8DgV()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Ah82wF"
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "EePsUz"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog"
+        }
+      ],
+      "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.5"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "BeF1jA"
+      },
+      "intent": "GetSchedule",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "5ZrdDE"
+          },
+          "activityProcessed": true,
+          "dialog": "GetMeetingsForDate"
+        }
+      ],
+      "condition": "turn.dialogevent.value.intents.GetSchedule.score > 0.5"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "calendarskill_build2020.lg",
+  "recognizer": "calendarskill_build2020.lu"
+}
