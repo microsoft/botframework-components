@@ -64,7 +64,7 @@
             },
             {
               "property": "dialog.result",
-              "value": "=select(indicesAndValues(dialog.tasks),iter,setProperty(setProperty(setProperty(iter.value, \"Id\", iter.index),\"Topic\",iter.value.subject),\"IsCompleted\",if(iter.value.status==\"completed\",True,False)))"
+              "value": "=select(indicesAndValues(dialog.tasks),iter,setProperty(setProperty(iter.value, \"Id\", iter.index),\"IsCompleted\",if(iter.value.status==\"completed\",True,False)))"
             }
           ]
         },
