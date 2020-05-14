@@ -22,35 +22,105 @@
           },
           "assignments": [
             {
-              "property": "turn.head",
-              "value": "=conversation.pageIndex * conversation.pageSize"
+              "property": "dialog.head",
+              "value": "=conversation.pageIndex * int(settings.PageSize)"
             },
             {
-              "property": "turn.tail",
-              "value": "=min((conversation.pageIndex + 1) * conversation.pageSize, count(conversation.allPersons))"
+              "property": "dialog.tail",
+              "value": "=min((conversation.pageIndex + 1) * int(settings.PageSize), count(conversation.allPersons))"
             },
             {
               "property": "conversation.persons",
-              "value": "=subArray(conversation.allPersons, turn.head, turn.tail)"
+              "value": "=subArray(conversation.allPersons, dialog.head, dialog.tail)"
             },
             {
-              "property": "conversation.isFirstPage",
-              "value": "=turn.head == 0"
+              "property": "dialog.isFirstPage",
+              "value": "=dialog.head == 0"
             },
             {
-              "property": "conversation.isLastPage",
-              "value": "=turn.tail == count(conversation.allPersons)"
+              "property": "dialog.isLastPage",
+              "value": "=dialog.tail == count(conversation.allPersons)"
             }
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "093677",
-            "name": "Begin a new dialog"
+            "id": "X9Xw1d"
           },
-          "activityProcessed": true,
-          "dialog": "ShowList"
+          "itemsProperty": "conversation.persons",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "u8EPk9"
+              },
+              "property": "conversation.persons[dialog.foreach.index].ActionTitle",
+              "value": "=replace(conversation.ActionTitle, '{keyword}', dialog.foreach.value.UserPrincipalName)"
+            }
+          ],
+          "value": "dialog.foreach.value"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "WW4RsU"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ZznN6C"
+              },
+              "activity": "${SendActivity_ZznN6C()}"
+            }
+          ],
+          "condition": "dialog.isFirstPage && dialog.isLastPage",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JCIqoR"
+              },
+              "condition": "dialog.isFirstPage",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "SwFzJI"
+                  },
+                  "activity": "${SendActivity_SwFzJI()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "m4ROZH"
+                  },
+                  "condition": "dialog.isLastPage",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "LDQg8X"
+                      },
+                      "activity": "${SendActivity_LDQg8X()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "PBC9Kr"
+                      },
+                      "activity": "${SendActivity_PBC9Kr()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

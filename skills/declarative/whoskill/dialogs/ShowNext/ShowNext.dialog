@@ -22,8 +22,8 @@
           },
           "assignments": [
             {
-              "property": "conversation.maxPageIndex",
-              "value": "=(count(conversation.allPersons) - 1) / conversation.pageSize + 1"
+              "property": "dialog.maxPageIndex",
+              "value": "=(count(conversation.allPersons) - 1) / int(settings.PageSize) + 1"
             }
           ]
         },
@@ -33,7 +33,7 @@
             "id": "651051",
             "name": "Branch: if/else"
           },
-          "condition": "conversation.pageindex + 1 == conversation.maxPageindex",
+          "condition": "conversation.pageIndex + 1 == dialog.maxPageIndex",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -51,8 +51,8 @@
                 "id": "868400",
                 "name": "Set a property"
               },
-              "property": "conversation.pageindex",
-              "value": "=conversation.pageindex + 1"
+              "property": "conversation.pageIndex",
+              "value": "=conversation.pageIndex + 1"
             }
           ]
         },

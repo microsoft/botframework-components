@@ -31,7 +31,9 @@
               "property": "dialog.result",
               "allowInterruptions": false,
               "text": "Please sign in",
-              "alwaysPrompt": false
+              "alwaysPrompt": false,
+              "maxTurnCount": 3,
+              "timeout": 900000
             },
             {
               "$kind": "Microsoft.SetProperties",

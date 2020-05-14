@@ -20,7 +20,7 @@
             "id": "471701",
             "name": "Branch: if/else"
           },
-          "condition": "conversation.pageindex == 0",
+          "condition": "conversation.pageIndex == 0",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -38,8 +38,8 @@
                 "id": "823451",
                 "name": "Set a property"
               },
-              "property": "conversation.pageindex",
-              "value": "=int(conversation.pageindex) - 1"
+              "property": "conversation.pageIndex",
+              "value": "=conversation.pageIndex - 1"
             }
           ]
         },
