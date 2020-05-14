@@ -267,5 +267,6 @@
       ]
     }
   ],
-  "generator": "CreateEventDialog.lg"
+  "generator": "CreateEventDialog.lg",
+  "activityProcessed": true
 }

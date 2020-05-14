@@ -110,7 +110,16 @@
 			"$ref": "#/definitions/Microsoft.GotoAction"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
@@ -125,10 +134,22 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.RetrievePhoto"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEventTime"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -147,6 +168,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.LogAction"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.LuisRecognizer"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.MentionEntityRecognizer"
@@ -3203,6 +3227,67 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.AcceptEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Accept Event",
+			"description": "Accept a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.CreateEvent": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -3231,7 +3316,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/resultProperty",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3239,7 +3324,7 @@
 					]
 				},
 				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
@@ -3247,7 +3332,7 @@
 					]
 				},
 				"titleProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Title",
 					"description": "Expression for event title.",
 					"examples": [
@@ -3255,7 +3340,7 @@
 					]
 				},
 				"descriptionProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Title",
 					"description": "Expression for event description.",
 					"examples": [
@@ -3263,7 +3348,7 @@
 					]
 				},
 				"startProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Start",
 					"description": "Expression for event start.",
 					"examples": [
@@ -3271,7 +3356,7 @@
 					]
 				},
 				"endProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "End",
 					"description": "Expression for event end.",
 					"examples": [
@@ -3279,7 +3364,7 @@
 					]
 				},
 				"locationProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Location",
 					"description": "Expression for event location.",
 					"examples": [
@@ -3287,7 +3372,7 @@
 					]
 				},
 				"attendeesProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Attendees",
 					"description": "Expression for event attendees.",
 					"examples": [
@@ -3300,6 +3385,128 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.CreateEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeclineEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Decline Event",
+			"description": "Decline a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeleteEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Delete Event",
+			"description": "Delete a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeleteEvent"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3499,7 +3706,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/resultProperty",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3507,7 +3714,7 @@
 					]
 				},
 				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
@@ -3515,7 +3722,7 @@
 					]
 				},
 				"attendeesProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Name",
 					"description": "Expression for contact name to lookup.",
 					"examples": [
@@ -3560,7 +3767,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/resultProperty",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3568,7 +3775,7 @@
 					]
 				},
 				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
@@ -3576,7 +3783,7 @@
 					]
 				},
 				"nameProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Name",
 					"description": "Expression for contact name to lookup.",
 					"examples": [
@@ -3620,6 +3827,74 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"startProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for start of date range for events.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for end of date range for events.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetEvents"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetMe": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Me",
+			"description": "Ge my profile using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3636,7 +3911,7 @@
 							]
 						},
 						{
-							"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token/oneOf/5",
+							"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token/oneOf/5",
 							"examples": [
 								"=concat('x','y','z')"
 							]
@@ -3691,20 +3966,83 @@
 						}
 					]
 				},
-				"startProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
-					"title": "Start",
-					"description": "Expression for start of date range for events.",
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetMe"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetMeetingRooms": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Meeting Rooms",
+			"description": "Get meeting room lists using the Azure search API.",
+			"required": [
+				"searchServiceAdminApiKey",
+				"searchServiceName",
+				"searchIndexName",
+				"searchQuery",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
-						"dialog.start"
+						"dialog.contosodata"
 					]
 				},
-				"endProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
-					"title": "End",
-					"description": "Expression for end of date range for events.",
+				"searchServiceAdminApiKey": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Service Admin Api Key",
+					"description": "Azure Search Service Admin API Key.",
 					"examples": [
-						"dialog.end"
+						"settings.azureSearch.searchServiceAdminApiKey"
+					]
+				},
+				"searchServiceName": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Service Name",
+					"description": "Azure Search Service Name.",
+					"examples": [
+						"settings.azureSearch.searchServiceName"
+					]
+				},
+				"searchIndexName": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Index Name",
+					"description": "Azure Search Index Name.",
+					"examples": [
+						"settings.azureSearch.searchIndexName"
+					]
+				},
+				"searchQuery": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Search Query",
+					"description": "Azure Search Query.",
+					"examples": [
+						"dialog.searchQuery"
 					]
 				},
 				"$kind": {
@@ -3712,7 +4050,94 @@
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Calendar.GetEvents"
+					"const": "Microsoft.Graph.Calendar.GetMeetingRooms"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetSchedule": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Schedule",
+			"description": "Get schedule of users using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"emails",
+				"startTime",
+				"endTime",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"emails": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Emails",
+					"description": "User emails list",
+					"examples": [
+						"dialog.emails"
+					]
+				},
+				"startTime": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for event start.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endTime": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for event end.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"availabilityViewInterval": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Availability View Interval",
+					"description": "Represents the duration of a time slot in an availabilityView in the response. The default is 30 minutes, minimum is 5, maximum is 1440.",
+					"examples": [
+						"5"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetSchedule"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3744,7 +4169,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/resultProperty",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3752,51 +4177,28 @@
 					]
 				},
 				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
 						"user.token.token"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "object",
-							"title": "Object"
-						},
-						{
-							"type": "array",
-							"title": "Array"
-						},
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"type": "boolean",
-							"title": "Boolean",
-							"examples": [
-								false
-							]
-						},
-						{
-							"type": "number",
-							"title": "Number",
-							"examples": [
-								15.5
-							]
-						},
-						{
-							"examples": [
-								"=..."
-							],
-							"type": "string",
-							"title": "Expression",
-							"pattern": "^=.*\\S.*"
-						}
+					]
+				},
+				"retrieveMode": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Retrieve Mode",
+					"description": "Retrieve photo of me or other user.",
+					"examples": [
+						"me",
+						"other"
+					]
+				},
+				"email": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Email",
+					"description": "Email of the user",
+					"examples": [
+						"dialog.email"
 					]
 				},
 				"$kind": {
@@ -3839,7 +4241,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"eventsProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Token",
 					"description": "Events to sort.",
 					"examples": [
@@ -3847,7 +4249,7 @@
 					]
 				},
 				"previousEventsProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Title",
 					"description": "Result property for previous events.",
 					"examples": [
@@ -3855,7 +4257,7 @@
 					]
 				},
 				"upcomingEventsProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents/properties/token",
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
 					"title": "Title",
 					"description": "Result property for upcoming events.",
 					"examples": [
@@ -3868,6 +4270,85 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.SortEvents"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.UpdateEventTime": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Update Event Time",
+			"description": "Update start and end time of a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"startTime",
+				"endTime",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"startTime": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for event start.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endTime": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for event end.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.UpdateEventTime"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -4715,7 +5196,16 @@
 					"$ref": "#/definitions/Microsoft.TextInput"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
@@ -4727,10 +5217,22 @@
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.RetrievePhoto"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEventTime"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
@@ -4839,6 +5341,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.RegexRecognizer"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.LuisRecognizer"
 				}
 			]
 		},
@@ -5293,6 +5798,146 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.LogAction"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.LuisRecognizer": {
+			"$role": "implements(Microsoft.IRecognizer)",
+			"title": "LUIS Recognizer",
+			"description": "LUIS recognizer.",
+			"type": "object",
+			"required": [
+				"applicationId",
+				"endpoint",
+				"endpointKey",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional unique id using with RecognizerSet.  Other recognizers should return 'DeferToRecognizer_{Id}' intent when cross training data for this recognizer."
+				},
+				"applicationId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "LUIS Application ID",
+					"description": "Application ID for your model from the LUIS service."
+				},
+				"endpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "LUIS Endpoint",
+					"description": "Endpoint to use for LUIS service like https://westus.api.cognitive.microsoft.com."
+				},
+				"endpointKey": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "LUIS prediction key",
+					"description": "LUIS prediction key used to call endpoint."
+				},
+				"externalEntityRecognizer": {
+					"$kind": "Microsoft.IRecognizer",
+					"title": "External Entity Recognizer",
+					"description": "Entities recognized by this recognizer will be passed to LUIS as external entities.",
+					"$ref": "#/definitions/Microsoft.IRecognizer"
+				},
+				"dynamicLists": {
+					"$ref": "#/definitions/arrayExpression",
+					"title": "Dynamic lists",
+					"description": "Runtime defined entity lists.",
+					"items": {
+						"title": "Entity list",
+						"description": "Lists of canonical values and synonyms for an entity.",
+						"type": "object",
+						"properties": {
+							"entity": {
+								"title": "Entity",
+								"description": "Entity to extend with a dynamic list.",
+								"type": "string"
+							},
+							"list": {
+								"title": "Dynamic list",
+								"description": "List of canonical forms and synonyms.",
+								"type": "array",
+								"items": {
+									"type": "object",
+									"title": "List entry",
+									"description": "Canonical form and synonynms.",
+									"properties": {
+										"canonicalForm": {
+											"title": "Canonical form",
+											"description": "Resolution if any synonym matches.",
+											"type": "string"
+										},
+										"synonyms": {
+											"title": "Synonyms",
+											"description": "List of synonyms for a canonical form.",
+											"type": "array",
+											"items": {
+												"title": "Synonym",
+												"description": "Synonym for canonical form.",
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"predictionOptions": {
+					"type": "object",
+					"title": "Prediction options",
+					"description": "Options to control LUIS prediction behavior.",
+					"properties": {
+						"includeAllIntents": {
+							"type": "boolean",
+							"title": "Include all intents",
+							"description": "True for all intents, false for only top intent."
+						},
+						"includeInstanceData": {
+							"type": "boolean",
+							"title": "Include $instance",
+							"description": "True to include $instance metadata in the LUIS response."
+						},
+						"log": {
+							"type": "boolean",
+							"title": "Log utterances",
+							"description": "True to log utterances on LUIS service."
+						},
+						"preferExternalEntities": {
+							"type": "boolean",
+							"title": "Prefer External Entities",
+							"description": "True to prefer external entities to those generated by LUIS models."
+						},
+						"slot": {
+							"type": "string",
+							"title": "Slot",
+							"description": "Slot to use for talking to LUIS service like production or staging."
+						},
+						"version": {
+							"type": "string",
+							"title": "Version",
+							"description": "LUIS application version to use."
+						}
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.LuisRecognizer"
 				},
 				"$designer": {
 					"title": "Designer information",

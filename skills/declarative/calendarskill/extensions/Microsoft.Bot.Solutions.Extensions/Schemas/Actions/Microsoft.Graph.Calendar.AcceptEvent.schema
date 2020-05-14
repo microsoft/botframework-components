@@ -2,10 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Accept Event",
+  "description": "Accept a meeting using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "meetingId"
   ],
   "properties": {
     "id": {
@@ -29,21 +30,12 @@
         "user.token.token"
       ]
     },
-    "retrieveMode": {
+    "meetingId": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Retrieve Mode",
-      "description": "Retrieve photo of me or other user.",
+      "title": "MeetingId",
+      "description": "Id of meeting",
       "examples": [
-        "me",
-        "other"
-      ]
-    },
-    "email": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
-      "examples": [
-        "dialog.email"
+        "dialog.meeting.id"
       ]
     }
   }

@@ -128,7 +128,7 @@
               },
               "itemsProperty": "dialog.attendeeList",
               "changeType": "push",
-              "value": "= dialog.content.attendeeList[0].email"
+              "value": "= dialog.content.attendeeList[0].EmailAddresses[0]"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -343,7 +343,7 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnCustomEvent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "WnRSFW",
         "name": "CheckAttendeeAvailable"
@@ -442,7 +442,7 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnCustomEvent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "aACTwv",
         "name": "AskForCreateMeeting"
@@ -516,7 +516,7 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnCustomEvent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "zcgOHf",
         "name": "AskForNextAvailableTime"

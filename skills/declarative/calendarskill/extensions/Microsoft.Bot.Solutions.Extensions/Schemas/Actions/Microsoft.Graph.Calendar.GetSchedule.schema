@@ -2,10 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Get Schedule",
+  "description": "Get schedule of users using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "emails",
+    "startTime",
+    "endTime"
   ],
   "properties": {
     "id": {
@@ -29,21 +32,36 @@
         "user.token.token"
       ]
     },
-    "retrieveMode": {
+    "emails": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Retrieve Mode",
-      "description": "Retrieve photo of me or other user.",
+      "title": "Emails",
+      "description": "User emails list",
       "examples": [
-        "me",
-        "other"
+        "dialog.emails"
       ]
     },
-    "email": {
+    "startTime": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
+      "title": "Start",
+      "description": "Expression for event start.",
       "examples": [
-        "dialog.email"
+        "dialog.start"
+      ]
+    },
+    "endTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "End",
+      "description": "Expression for event end.",
+      "examples": [
+        "dialog.end"
+      ]
+    },
+    "availabilityViewInterval": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Availability View Interval",
+      "description": "Represents the duration of a time slot in an availabilityView in the response. The default is 30 minutes, minimum is 5, maximum is 1440.",
+      "examples": [
+        "5"
       ]
     }
   }

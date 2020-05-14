@@ -28,18 +28,13 @@
           }
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
-            "id": "XRHv2_"
+            "id": "6W8wHZ"
           },
-          "responseType": "Json",
-          "method": "POST",
-          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}/accept",
-          "headers": {
-            "authorization": "${turn.token}"
-          },
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json"
+          "token": "= turn.token",
+          "meetingId": "= dialog.meetingId",
+          "resultProperty": "dialog.api_result"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -48,12 +43,8 @@
           },
           "assignments": [
             {
-              "property": "dialog.result",
-              "value": "= {}"
-            },
-            {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 202"
+              "value": "= true"
             }
           ]
         },
