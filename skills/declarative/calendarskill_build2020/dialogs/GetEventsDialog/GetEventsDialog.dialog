@@ -22,7 +22,8 @@
           "resultProperty": "dialog.calendarEvents",
           "token": "=user.token.token",
           "startProperty": "=dialog.datetime",
-          "endProperty": "=null"
+          "endProperty": "=null",
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -38,7 +39,8 @@
               },
               "eventsProperty": "=dialog.calendarEvents",
               "previousEventsProperty": "dialog.previousEvents",
-              "upcomingEventsProperty": "dialog.upcomingEvents"
+              "upcomingEventsProperty": "dialog.upcomingEvents",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
             },
             {
               "$kind": "Microsoft.SendActivity",

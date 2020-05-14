@@ -8,6 +8,7 @@ using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
+using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Solutions.Extensions.Actions
@@ -33,11 +34,16 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("attendeesProperty")]
         public ArrayExpression<string> Attendees { get; set; }
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = this.Token.GetValue(dcState);
             var attendeesProperty = this.Attendees.GetValue(dcState);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
 
             var attendeesList = new List<Attendee>();
             foreach (var address in attendeesProperty)
@@ -51,6 +57,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 });
             }
 
+            var currentDateinTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+
             var graphClient = GraphClient.GetAuthenticatedClient(token);
 
             var result = await graphClient.Me.FindMeetingTimes(
@@ -63,16 +71,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                                     {
                                         new TimeSlot()
                                         {
-                                            Start = new DateTimeTimeZone()
-                                            {
-                                                DateTime = DateTime.Now.ToString(),
-                                                TimeZone = "Pacific Standard Time"
-                                            },
-                                            End = new DateTimeTimeZone()
-                                            {
-                                                DateTime = DateTime.Now.AddDays(7).ToString(),
-                                                TimeZone = "Pacific Standard Time"
-                                            }
+                                            Start = DateTimeTimeZone.FromDateTime(currentDateinTZ, timeZone),
+                                            End =  DateTimeTimeZone.FromDateTime(currentDateinTZ.AddDays(7), timeZone),
                                         }
                                     }
                                 },
@@ -87,12 +87,12 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var results = new List<object>();
             foreach (var suggestion in result.MeetingTimeSuggestions.OrderBy(s => s.MeetingTimeSlot.Start.DateTime))
             {
-                var start = DateTime.Parse(suggestion.MeetingTimeSlot.Start.DateTime);
-                var end = DateTime.Parse(suggestion.MeetingTimeSlot.End.DateTime);
+                var start = TimeZoneInfo.ConvertTimeFromUtc(suggestion.MeetingTimeSlot.Start.ToDateTime(), timeZone);
+                var end = TimeZoneInfo.ConvertTimeFromUtc(suggestion.MeetingTimeSlot.End.ToDateTime(), timeZone);
 
                 results.Add(new
                 {
-                    display = $"{start.DayOfWeek} ({start.Month}/{start.Day}) {start.ToString("h:mmt")} - {end.ToString("h:mmt")}",
+                    display = $"{start.DayOfWeek} ({start.Month}/{start.Day}) {start:h:mmt} - {end:h:mmt}",
                     start,
                     end
                 });

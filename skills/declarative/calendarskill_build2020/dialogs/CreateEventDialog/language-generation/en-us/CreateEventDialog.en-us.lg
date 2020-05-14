@@ -122,7 +122,7 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "${if(dialog.location != null && !empty(dialog.location), dialog.location, "No location specified")}"
+                                    "text": "${GetLocation(dialog.location, dialog.isTeamsMeeting)}"
                                 }
                             ]
                         }
@@ -196,7 +196,15 @@
 }
 ```
 
-
+# GetLocation(location, isTeamsMeeting)
+- IF: ${ location != null && isTeamsMeeting == true }
+    - ${location}, Microsoft Teams
+- ELSEIF: ${ location != null }
+    - ${location}
+- ELSEIF: ${ isTeamsMeeting == true }
+    - Microsoft Teams
+- ELSE:
+    - No location specified.
 
 # Graph.Calendar.EventDateTimeInput_Prompt_Ofk3Yl()
 - When should I move the meeting to?

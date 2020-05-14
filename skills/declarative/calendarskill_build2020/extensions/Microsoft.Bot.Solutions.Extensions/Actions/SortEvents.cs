@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
+using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -32,19 +33,24 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("upcomingEventsProperty")]
         public string UpcomingEventsProperty { get; set; }
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var events = EventsProperty.GetValue(dcState);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
 
-            var currentDateTime = DateTime.Now;
+            var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
             var previousEvents = new List<object>();
             var upcomingEvents = new List<object>();
 
             foreach (var ev in events)
             {
                 var start = DateTime.Parse(ev.Start.DateTime);
-                var duration = DateTime.Parse(ev.End.DateTime).Subtract(DateTime.Parse(ev.Start.DateTime));
+                var duration = DateTime.Parse(ev.End.DateTime).Subtract(start);
 
                 if (start < currentDateTime)
                 {
@@ -54,6 +60,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         ev.Start,
                         ev.End,
                         ev.Attendees,
+                        ev.IsOnlineMeeting,
+                        ev.OnlineMeeting,
                         Description = ev.BodyPreview,
                         Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
                         DurationDays = duration.Days,
@@ -69,6 +77,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         ev.Start,
                         ev.End,
                         ev.Attendees,
+                        ev.IsOnlineMeeting,
+                        ev.OnlineMeeting,
                         Description = ev.BodyPreview,
                         Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
                         DurationDays = duration.Days,

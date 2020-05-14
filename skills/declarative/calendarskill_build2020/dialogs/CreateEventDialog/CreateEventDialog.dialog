@@ -85,7 +85,15 @@
               },
               "resultProperty": "dialog.meetingTimeSuggestions",
               "token": "=user.token.token",
-              "attendeesProperty": "=dialog.attendees"
+              "attendeesProperty": "=dialog.attendees",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "inXnkE"
+              },
+              "name": "FindMeetingTimesData"
             },
             {
               "$kind": "Microsoft.Foreach",
@@ -168,7 +176,8 @@
                   "allowInterruptions": true,
                   "property": "dialog.meetingTime",
                   "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Aw7goa()}",
-                  "maxTurnCount": 3
+                  "maxTurnCount": 3,
+                  "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
                 }
               ]
             }
@@ -185,7 +194,8 @@
               "property": "dialog.meetingTime",
               "value": "=dialog.datetime",
               "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_o4vGX1()}",
-              "maxTurnCount": 3
+              "maxTurnCount": 3,
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
             }
           ]
         },
@@ -201,9 +211,11 @@
           "allowInterruptions": false,
           "prompt": "${ConfirmInput_Prompt_53FZhJ()}",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           },
-          "property": "dialog.isTeamsMeetings"
+          "property": "dialog.isTeamsMeeting"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -265,7 +277,9 @@
               "startProperty": "=dialog.meetingTime.start",
               "endProperty": "=dialog.meetingTime.end",
               "locationProperty": "=dialog.location",
-              "attendeesProperty": "=dialog.attendees"
+              "attendeesProperty": "=dialog.attendees",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "isOnlineMeetingProperty": "=dialog.isTeamsMeeting"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -472,6 +486,23 @@
         }
       ],
       "condition": "turn.dialogevent.value.intents.SetLocation.score > 0.5"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gZTWX3"
+      },
+      "intent": "SetOnlineMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "ZGGn52"
+          },
+          "property": "dialog.isTeamsMeeting",
+          "value": "=true"
+        }
+      ]
     }
   ],
   "generator": "CreateEventDialog.lg",

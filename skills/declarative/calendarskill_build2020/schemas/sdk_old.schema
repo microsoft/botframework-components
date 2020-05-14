@@ -23,9 +23,6 @@
 			"$ref": "#/definitions/Microsoft.BeginDialog"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.BeginSkill"
-		},
-		{
 			"$ref": "#/definitions/Microsoft.BreakLoop"
 		},
 		{
@@ -116,9 +113,6 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateOnlineMeeting"
-		},
-		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
 		},
 		{
@@ -129,9 +123,6 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetUserSettings"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
@@ -300,6 +291,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.SignOutUser"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.SkillDialog"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.StaticActivityTemplate"
@@ -1065,108 +1059,6 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.BeginDialog"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.BeginSkill": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Begin a skill",
-			"description": "Begin a remote skill.",
-			"type": "object",
-			"required": [
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the skill dialog"
-				},
-				"disabled": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Disabled",
-					"description": "Optional condition which if true will disable this action.",
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"activityProcessed": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Activity Processed",
-					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
-					"default": true,
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Property",
-					"description": "Property to store any value returned by the dialog that is called.",
-					"examples": [
-						"dialog.userName"
-					]
-				},
-				"botId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host bot ID",
-					"description": "The Microsoft App ID that will be calling the skill.",
-					"default": "=settings.MicrosoftAppId"
-				},
-				"skillHostEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host",
-					"description": "The callback Url for the skill host.",
-					"default": "=settings.skillHostEndpoint",
-					"examples": [
-						"https://mybot.contoso.com/api/skills/"
-					]
-				},
-				"connectionName": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "OAuth Connection Name (SSO)",
-					"description": "The OAuth Connection Name, that would be used to perform Single SignOn with a skill.",
-					"default": "=settings.connectionName"
-				},
-				"skillAppId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill App ID",
-					"description": "The Microsoft App ID for the skill."
-				},
-				"skillEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill endpoint ",
-					"description": "The /api/messages endpoint for the skill.",
-					"examples": [
-						"https://myskill.contoso.com/api/messages/"
-					]
-				},
-				"activity": {
-					"$kind": "Microsoft.IActivityTemplate",
-					"title": "Activity",
-					"description": "The activity to send to the skill.",
-					"$ref": "#/definitions/Microsoft.IActivityTemplate"
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.BeginSkill"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3328,9 +3220,7 @@
 				"descriptionProperty",
 				"startProperty",
 				"endProperty",
-				"timeZoneProperty",
 				"locationProperty",
-				"isOnlineMeetingProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3382,12 +3272,6 @@
 					"description": "Event end.",
 					"examples": []
 				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
-					"examples": []
-				},
 				"locationProperty": {
 					"$ref": "#/definitions/valueExpression",
 					"title": "Location",
@@ -3398,12 +3282,6 @@
 					"$ref": "#/definitions/valueExpression",
 					"title": "Attendees",
 					"description": "Event attendees.",
-					"examples": []
-				},
-				"isOnlineMeetingProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "IsOnlineMeeting",
-					"description": "Is online meeting",
 					"examples": []
 				},
 				"$kind": {
@@ -3420,92 +3298,15 @@
 				}
 			}
 		},
-		"Microsoft.Graph.Calendar.CreateOnlineMeeting": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Microsoft Graph - Create Teams Meeting",
-			"description": "Create a Microsoft Teams meeting using the Microsoft Graph API.",
-			"type": "object",
-			"required": [
-				"token",
-				"startProperty",
-				"endProperty",
-				"timeZoneProperty",
-				"subjectProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Result Property",
-					"description": "Result Property (named location to store information).",
-					"examples": []
-				},
-				"token": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Token",
-					"description": "Microsoft Graph API authentication token.",
-					"examples": []
-				},
-				"startProperty": {
-					"$ref": "#/definitions/objectExpression",
-					"title": "Start",
-					"description": "Event start.",
-					"examples": []
-				},
-				"endProperty": {
-					"$ref": "#/definitions/objectExpression",
-					"title": "End",
-					"description": "Event end.",
-					"examples": []
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
-					"examples": []
-				},
-				"subjectProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Subject",
-					"description": "Teams Meeting Subject",
-					"examples": []
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Calendar.CreateOnlineMeeting"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
 		"Microsoft.Graph.Calendar.EventDateTimeInput": {
 			"$role": [
 				"implements(Microsoft.IDialog)",
 				"extends(Microsoft.InputDialog)"
 			],
 			"type": "object",
-			"title": "Microsoft Graph - Event Date Time Input",
+			"title": "MS Graph - Event Date Time Input",
 			"description": "Collection information - Ask for a word or sentence.",
 			"required": [
-				"timeZoneProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3535,12 +3336,6 @@
 						"Hello ${user.name}",
 						"=concat(user.firstname, user.lastName)"
 					]
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
-					"examples": []
 				},
 				"outputFormat": {
 					"$ref": "#/definitions/stringExpression",
@@ -3678,7 +3473,6 @@
 			"required": [
 				"token",
 				"attendeesProperty",
-				"timeZoneProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3710,12 +3504,6 @@
 					"$ref": "#/definitions/valueExpression",
 					"title": "Attendees",
 					"description": "Event attendees.",
-					"examples": []
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
 					"examples": []
 				},
 				"$kind": {
@@ -3796,7 +3584,6 @@
 				"token",
 				"startProperty",
 				"endProperty",
-				"timeZoneProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3836,66 +3623,12 @@
 					"description": "Event range end.",
 					"examples": []
 				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
-					"examples": []
-				},
 				"$kind": {
 					"title": "Kind of dialog object",
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.GetEvents"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Calendar.GetUserSettings": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Microsoft Graph - Get User Settings",
-			"description": "Get user settings from the Microsoft Graph API.",
-			"type": "object",
-			"required": [
-				"token",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Result Property",
-					"description": "Result Property (named location to store information).",
-					"examples": []
-				},
-				"token": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "Token",
-					"description": "Microsoft Graph API authentication token.",
-					"examples": []
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Calendar.GetUserSettings"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3913,7 +3646,6 @@
 				"token",
 				"previousEventsProperty",
 				"upcomingEventsProperty",
-				"timeZoneProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3951,12 +3683,6 @@
 					"$ref": "#/definitions/valueExpression",
 					"title": "Upcoming Events",
 					"description": "Result list for upcoming events.",
-					"examples": []
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "TimeZone",
-					"description": "Timezone.",
 					"examples": []
 				},
 				"$kind": {
@@ -4692,9 +4418,6 @@
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateOnlineMeeting"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
 				},
 				{
@@ -4702,9 +4425,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetUserSettings"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
@@ -4717,9 +4437,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.BeginSkill"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BreakLoop"
@@ -4831,6 +4548,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.SkillDialog"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
@@ -8717,6 +8437,108 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.SignOutUser"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.SkillDialog": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Begin a skill dialog",
+			"description": "Begin a remote skill dialog.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the skill dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"activityProcessed": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Activity Processed",
+					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
+					"default": true,
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Property",
+					"description": "Property to store any value returned by the dialog that is called.",
+					"examples": [
+						"dialog.userName"
+					]
+				},
+				"botId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host bot ID",
+					"description": "The Microsoft App ID that will be calling the skill.",
+					"default": "=settings.MicrosoftAppId"
+				},
+				"skillHostEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host",
+					"description": "The callback Url for the skill host.",
+					"default": "=settings.skillHostEndpoint",
+					"examples": [
+						"https://mybot.contoso.com/api/skills/"
+					]
+				},
+				"connectionName": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "OAuth Connection Name (SSO)",
+					"description": "The OAuth Connection Name, that would be used to perform Single SignOn with a skill.",
+					"default": "=settings.connectionName"
+				},
+				"skillAppId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill App ID",
+					"description": "The Microsoft App ID for the skill."
+				},
+				"skillEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill endpoint ",
+					"description": "The /api/messages endpoint for the skill.",
+					"examples": [
+						"https://myskill.contoso.com/api/messages/"
+					]
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "The activity to send to the skill.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.SkillDialog"
 				},
 				"$designer": {
 					"title": "Designer information",

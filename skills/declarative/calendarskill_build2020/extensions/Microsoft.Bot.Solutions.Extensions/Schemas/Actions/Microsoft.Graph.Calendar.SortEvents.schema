@@ -7,7 +7,8 @@
   "required": [
     "token",
     "previousEventsProperty",
-    "upcomingEventsProperty"
+    "upcomingEventsProperty",
+    "timeZoneProperty"
   ],
   "properties": {
     "id": {
@@ -37,6 +38,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Upcoming Events",
       "description": "Result list for upcoming events.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
       "examples": []
     }
   }

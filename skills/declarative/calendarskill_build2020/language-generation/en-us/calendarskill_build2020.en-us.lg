@@ -2,4 +2,7 @@
 
 
 # SendActivity_iQ8DgV()
-- What can I do for you today?
+- IF: ${user.settings.displayName != null}
+    - Hi, ${user.settings.displayName}! How can I help you today?
+- ELSE: 
+    - Hi there! How can I help you today?

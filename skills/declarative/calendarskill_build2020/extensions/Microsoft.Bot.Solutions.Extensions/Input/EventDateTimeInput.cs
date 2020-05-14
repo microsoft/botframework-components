@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Input;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Templates;
@@ -26,6 +27,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
         protected const string _timeProperty = "this.time";
         protected const string _durationProperty = "this.duration";
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         public EventDateTimeInput([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
         {
             RegisterSourceLocation(callerPath, callerLine);
@@ -42,6 +46,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
         {
             var dcState = dc.State;
             var input = dcState.GetValue<object>(VALUE_PROPERTY);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var culture = GetCulture(dc);
             var refTime = dc.Context.Activity.LocalTimestamp?.LocalDateTime;
             var results = DateTimeRecognizer.RecognizeDateTime(input.ToString(), culture, refTime: refTime);
@@ -55,10 +60,11 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                 {
                     var resolutionValues = (List<Dictionary<string, string>>)res.Resolution["values"];
                     var type = resolutionValues[0]["type"];
+                    var dateTimeNowTZ = TimeZoneInfo.ConvertTime(DateTime.Today, TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty));
 
                     if (type == Constants.TimexTypes.DateTimeRange)
                     {
-                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["start"]) >= DateTime.Today).ToList();
+                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["start"]) >= dateTimeNowTZ).ToList();
                         if (validResolutions.Count == 1)
                         {
                             start = DateTime.Parse(validResolutions[0]["start"]);
@@ -84,7 +90,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                     }
                     else if (type == Constants.TimexTypes.DateRange)
                     {
-                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["start"]) >= DateTime.Today).ToList();
+                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["start"]) >= dateTimeNowTZ).ToList();
                         if (validResolutions.Count == 1)
                         {
                             start = DateTime.Parse(validResolutions[0]["start"]);
@@ -107,8 +113,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                             var rangeStart = TimeSpan.Parse(resolutionValues[0]["start"]);
                             var rangeEnd = TimeSpan.Parse(resolutionValues[0]["end"]);
 
-                            start = DateTime.Today.Add(rangeStart);
-                            end = DateTime.Today.Add(rangeEnd);
+                            start = dateTimeNowTZ.Add(rangeStart);
+                            end = dateTimeNowTZ.Add(rangeEnd);
                         }
                         else
                         {
@@ -122,7 +128,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                     }
                     else if (type == Constants.TimexTypes.DateTime)
                     {
-                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["value"]) >= DateTime.Today).ToList();
+                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["value"]) >= dateTimeNowTZ).ToList();
                         if (validResolutions.Count == 1)
                         {
                             var dateTime = DateTime.Parse(validResolutions[0]["value"]);
@@ -140,7 +146,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                     }
                     else if (type == Constants.TimexTypes.Date)
                     {
-                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["value"]) >= DateTime.Today).ToList();
+                        var validResolutions = resolutionValues.Where(r => DateTime.Parse(r["value"]) >= dateTimeNowTZ).ToList();
                         if (validResolutions.Count == 1)
                         {
                             var date = DateTime.Parse(validResolutions[0]["value"]);
@@ -181,12 +187,12 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
                             {
                                 if (duration != null)
                                 {
-                                    start = DateTime.Today.AddHours(time.Hours).AddMinutes(time.Minutes).AddSeconds(time.Seconds);
+                                    start = dateTimeNowTZ.AddHours(time.Hours).AddMinutes(time.Minutes).AddSeconds(time.Seconds);
                                     end = start.Value.AddSeconds(duration.Value);
                                 }
                                 else
                                 {
-                                    dcState.SetValue(_dateProperty, DateTime.Today);
+                                    dcState.SetValue(_dateProperty, dateTimeNowTZ);
                                     dcState.SetValue(_timeProperty, new TimeSpan(time.Hours, time.Minutes, time.Seconds));
                                 }
                             }

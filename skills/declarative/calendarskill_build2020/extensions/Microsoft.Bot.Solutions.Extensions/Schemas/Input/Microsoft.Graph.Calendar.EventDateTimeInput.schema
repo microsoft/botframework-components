@@ -2,8 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": [ "implements(Microsoft.IDialog)", "extends(Microsoft.InputDialog)" ],
   "type": "object",
-  "title": "MS Graph - Event Date Time Input",
+  "title": "Microsoft Graph - Event Date Time Input",
   "description": "Collection information - Ask for a word or sentence.",
+  "required": [
+    "timeZoneProperty"
+  ],
   "properties": {
     "defaultValue": {
       "$ref": "schema:#/definitions/stringExpression",
@@ -24,6 +27,12 @@
         "Hello ${user.name}",
         "=concat(user.firstname, user.lastName)"
       ]
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
+      "examples": []
     },
     "outputFormat": {
       "$ref": "schema:#/definitions/stringExpression",

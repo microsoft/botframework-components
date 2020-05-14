@@ -125,7 +125,7 @@
                 },
                 {
                     "type": "TextBlock",
-                    "text": "${event.Location}",
+                    "text": "${GetLocation(event)}",
                     "size": "Small",
                     "spacing": "None",
                     "isSubtle": true
@@ -181,7 +181,7 @@
                 },
                 {
                     "type": "TextBlock",
-                    "text": "${event.Location}",
+                    "text": "${GetLocation(event)}",
                     "size": "Small",
                     "spacing": "None"
                 }
@@ -190,3 +190,13 @@
     ]
 }
 ```
+
+# GetLocation(event)
+- IF: ${(event.location != null && event.location != '') && event.isOnlineMeeting == true }
+    - ${ event.location }, [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSEIF: ${event.location != null && event.location != ''}
+    - ${ event.location }
+- ELSEIF: ${ event.isOnlineMeeting == true }
+    - [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSE:
+    - No location specified.

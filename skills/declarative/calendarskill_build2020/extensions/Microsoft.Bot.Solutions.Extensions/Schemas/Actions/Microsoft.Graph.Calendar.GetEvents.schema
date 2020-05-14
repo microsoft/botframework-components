@@ -7,7 +7,8 @@
   "required": [
     "token",
     "startProperty",
-    "endProperty"
+    "endProperty",
+    "timeZoneProperty"
   ],
   "properties": {
     "id": {
@@ -37,6 +38,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "End",
       "description": "Event range end.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
       "examples": []
     }
   }

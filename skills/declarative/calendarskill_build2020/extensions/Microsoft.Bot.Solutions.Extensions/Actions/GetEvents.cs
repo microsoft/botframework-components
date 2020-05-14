@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
+using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -36,20 +37,25 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime?> EndProperty { get; set; }
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
             var startProperty = StartProperty.GetValue(dcState);
             var endProperty = EndProperty.GetValue(dcState);
+            var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
 
             if (startProperty == null || startProperty.Value == DateTime.MinValue)
             {
-                startProperty = DateTime.Today;
+                startProperty = DateTime.UtcNow.Date;
             }
             else
             {
-                startProperty = startProperty.Value.Date;
+                startProperty = startProperty.Value.Date.ToUniversalTime();
             }
 
             if (endProperty == null || endProperty.Value == DateTime.MinValue)
@@ -81,7 +87,16 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             if (events?.Count > 0)
             {
-                results.AddRange(events);
+                foreach (var ev in events)
+                {
+                    var startTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.Start.ToDateTime(), timeZone);
+                    var endTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.End.ToDateTime(), timeZone);
+
+                    ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
+                    ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
+
+                    results.Add(ev);
+                }
             }
 
             while (events.NextPageRequest != null)
@@ -89,7 +104,16 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 events = await events.NextPageRequest.GetAsync();
                 if (events?.Count > 0)
                 {
-                    results.AddRange(events);
+                    foreach (var ev in events)
+                    {
+                        var startTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.Start.ToDateTime(), timeZone);
+                        var endTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.End.ToDateTime(), timeZone);
+
+                        ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
+                        ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
+
+                        results.Add(ev);
+                    }
                 }
             }
 

@@ -29,6 +29,20 @@
           "property": "user.token"
         },
         {
+          "$kind": "Microsoft.Graph.Calendar.GetUserSettings",
+          "$designer": {
+            "id": "cQDN72"
+          },
+          "token": "=user.token.token",
+          "resultProperty": "user.settings"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "P9S9MZ"
+          }
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "iQ8DgV"

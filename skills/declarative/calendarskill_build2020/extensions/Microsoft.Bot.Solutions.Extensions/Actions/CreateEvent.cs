@@ -41,11 +41,17 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime> EndProperty { get; set; }
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         [JsonProperty("locationProperty")]
         public StringExpression LocationProperty { get; set; }
 
         [JsonProperty("attendeesProperty")]
         public ArrayExpression<string> AttendeesProperty { get; set; }
+
+        [JsonProperty("isOnlineMeetingProperty")]
+        public BoolExpression IsOnlineMeetingProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -55,8 +61,10 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var descriptionProperty = this.DescriptionProperty.GetValue(dcState);
             var startProperty = this.StartProperty.GetValue(dcState);
             var endProperty = this.EndProperty.GetValue(dcState);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var locationProperty = this.LocationProperty.GetValue(dcState);
             var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
+            var isOnlineMeetingProperty = this.IsOnlineMeetingProperty.GetValue(dcState);
 
             var newEvent = new Event()
             {
@@ -72,13 +80,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 Start = new DateTimeTimeZone()
                 {
                     DateTime = startProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = TimeZoneInfo.Local.StandardName
+                    TimeZone = timeZoneProperty
                 },
                 End = new DateTimeTimeZone()
                 {
                     DateTime = endProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = TimeZoneInfo.Local.StandardName
-                }
+                    TimeZone = timeZoneProperty
+                },
+                IsOnlineMeeting = isOnlineMeetingProperty,
+                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
             };
 
             // Set event attendees

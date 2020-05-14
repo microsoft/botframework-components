@@ -10,7 +10,9 @@
     "descriptionProperty",
     "startProperty",
     "endProperty",
-    "locationProperty"
+    "timeZoneProperty",
+    "locationProperty",
+    "isOnlineMeetingProperty"
   ],
   "properties": {
     "id": {
@@ -54,6 +56,12 @@
       "description": "Event end.",
       "examples": []
     },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
+      "examples": []
+    },
     "locationProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Location",
@@ -64,6 +72,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Attendees",
       "description": "Event attendees.",
+      "examples": []
+    },
+    "isOnlineMeetingProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "IsOnlineMeeting",
+      "description": "Is online meeting",
       "examples": []
     }
   }
