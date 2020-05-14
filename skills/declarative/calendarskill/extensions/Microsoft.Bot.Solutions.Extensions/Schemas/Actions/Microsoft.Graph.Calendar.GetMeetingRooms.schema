@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Get Meeting Rooms",
+  "description": "Get meeting room lists using the Azure search API.",
+  "required": [
+    "searchServiceAdminApiKey",
+    "searchServiceName",
+    "searchIndexName",
+    "searchQuery"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "searchServiceAdminApiKey": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Search Service Admin Api Key",
+      "description": "Azure Search Service Admin API Key.",
+      "examples": [
+        "settings.azureSearch.searchServiceAdminApiKey"
+      ]
+    },
+    "searchServiceName": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Search Service Name",
+      "description": "Azure Search Service Name.",
+      "examples": [
+        "settings.azureSearch.searchServiceName"
+      ]
+    },
+    "searchIndexName": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Search Index Name",
+      "description": "Azure Search Index Name.",
+      "examples": [
+        "settings.azureSearch.searchIndexName"
+      ]
+    },
+    "searchQuery": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Search Query",
+      "description": "Azure Search Query.",
+      "examples": [
+        "dialog.searchQuery"
+      ]
+    }
+  }
+}

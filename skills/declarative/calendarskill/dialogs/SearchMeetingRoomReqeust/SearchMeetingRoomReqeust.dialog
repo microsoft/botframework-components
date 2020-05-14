@@ -18,7 +18,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "CBu4DM"
-          }
+          },
+          "name": "Search Meeting Room Request"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -34,18 +35,15 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.GetMeetingRooms",
           "$designer": {
-            "id": "tRqOIa"
+            "id": "x8zSHz"
           },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://${settings.azureSearch.searchServiceName}.search.windows.net/indexes/${settings.azureSearch.searchIndexName}/docs?api-version=2019-05-06&${dialog.searchQuery}",
           "resultProperty": "dialog.api_result",
-          "contentType": "application/json",
-          "headers": {
-            "api-key": "${settings.azureSearch.searchServiceAdminApiKey}"
-          }
+          "searchServiceAdminApiKey": "= settings.azureSearch.searchServiceAdminApiKey",
+          "searchServiceName": "= settings.azureSearch.searchServiceName",
+          "searchIndexName": "= settings.azureSearch.searchIndexName",
+          "searchQuery": "= dialog.searchQuery"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -54,16 +52,12 @@
           },
           "assignments": [
             {
-              "property": "dialog.result",
-              "value": "= {}"
-            },
-            {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 200"
+              "value": "= true"
             },
             {
               "property": "dialog.result.meetingRooms",
-              "value": "= if(dialog.result.requestStatus, foreach(dialog.api_result.content.value, x, x), null)"
+              "value": "= dialog.api_result"
             }
           ]
         },

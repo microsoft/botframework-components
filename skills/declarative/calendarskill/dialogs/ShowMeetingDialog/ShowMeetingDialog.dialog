@@ -403,6 +403,24 @@
                   "value": "=count(where(dialog.meetingsList, x, x.IsConflict))"
                 },
                 {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "0ZrU3L"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetPhotoRequest",
+                  "resultProperty": "dialog.mePhotoResult",
+                  "options": {
+                    "retrivePhotoMode": "me"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "9tronj"
+                  }
+                },
+                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
                     "id": "n_iPbD"
@@ -543,7 +561,7 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnCustomEvent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "HXJean",
         "name": "ShowMeetingDetailInfo"
@@ -630,6 +648,51 @@
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6r7On3"
+          }
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "zWEYoQ"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "conversation.FocusedMeeting.Attendees",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "UHf8D3"
+              }
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Vibwii"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPhotoRequest",
+              "options": {
+                "retrivePhotoMode": "other",
+                "email": "=dialog.foreach.value.emailAddress.address"
+              },
+              "resultProperty": "dialog.userPhotoResult"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "xoSk2S"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.attendeesPhoto",
+              "value": "= dialog.userPhotoResult.photo"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "EckUyy"
@@ -654,7 +717,10 @@
               "style": "Auto",
               "prompt": "${prompt_bqUDX2()}",
               "property": "turn.RepeatOverviewConfirm",
-              "allowInterruptions": "#_Interruption.Score >= 0.9"
+              "allowInterruptions": "#_Interruption.Score >= 0.9",
+              "choiceOptions": {
+                "includeNumbers": true
+              }
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -771,7 +837,7 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnCustomEvent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "vUY1wL",
         "name": "ShowAskParameter"
