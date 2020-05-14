@@ -35,8 +35,8 @@
           },
           "token": "= turn.token",
           "resultProperty": "dialog.api_result",
-          "isMe": "= dialog.isMe",
-          "email": "= dialog.email"
+          "email": "= dialog.email",
+          "retrieveMode": "= dialog.retrivePhotoMode"
         },
         {
           "$kind": "Microsoft.TraceActivity",

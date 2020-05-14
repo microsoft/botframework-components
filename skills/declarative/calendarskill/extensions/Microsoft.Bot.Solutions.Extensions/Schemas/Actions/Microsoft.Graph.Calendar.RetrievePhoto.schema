@@ -29,12 +29,13 @@
         "user.token.token"
       ]
     },
-    "isMe": {
+    "retrieveMode": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "IsMe",
-      "description": "Whether retrieve photo of current user.",
+      "title": "Retrieve Mode",
+      "description": "Retrieve photo of me or other user.",
       "examples": [
-        "true"
+        "me",
+        "other"
       ]
     },
     "email": {

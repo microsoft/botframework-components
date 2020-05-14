@@ -34,12 +34,18 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("email")]
         public StringExpression Email { get; set; }
 
-        [JsonProperty("isMe")]
-        public BoolExpression IsMe { get; set; }
+        [JsonProperty("retrieveMode")]
+        public ObjectExpression<RetrieveModeType> RetrieveMode { get; set; }
 
         public static readonly string DefaultAvatarIconPathFormat = "https://ui-avatars.com/api/?name={0}";
 
         private IGraphServiceClient _graphClient;
+
+        public enum RetrieveModeType
+        {
+            Me,
+            Other
+        }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -47,14 +53,14 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var token = Token.GetValue(dcState);
             _graphClient = GraphClient.GetAuthenticatedClient(token);
 
-            var isMe = IsMe.GetValue(dcState);
+            var retrieveMode = RetrieveMode == null ? RetrieveModeType.Me : RetrieveMode.GetValue(dcState);
             var user = await GetUserByEmailAsync(Email.GetValue(dcState));
 
             Stream originalPhoto = null;
             string photoUrl = string.Empty;
             try
             {
-                if (isMe)
+                if (retrieveMode == RetrieveModeType.Me)
                 {
                     originalPhoto = await _graphClient.Me.Photos["64x64"].Content.Request().GetAsync();
                 }
@@ -72,7 +78,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var results = string.Empty;
             if (string.IsNullOrEmpty(photoUrl))
             {
-                results = string.Format(DefaultAvatarIconPathFormat, isMe ? "Me" : user.DisplayName);
+                results = string.Format(DefaultAvatarIconPathFormat, retrieveMode == RetrieveModeType.Me ? "Me" : user.DisplayName);
             }
             else
             {

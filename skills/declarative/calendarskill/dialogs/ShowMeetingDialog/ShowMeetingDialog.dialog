@@ -411,7 +411,7 @@
                   "dialog": "GetPhotoRequest",
                   "resultProperty": "dialog.mePhotoResult",
                   "options": {
-                    "isMe": "true"
+                    "retrivePhotoMode": "me"
                   }
                 },
                 {
@@ -671,20 +671,15 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "alNDG7"
+                "id": "Vibwii"
               },
               "activityProcessed": true,
-              "dialog": "GetAuthToken"
-            },
-            {
-              "$kind": "Microsoft.Graph.Calendar.RetrievePhoto",
-              "$designer": {
-                "id": "IZvrP5"
+              "dialog": "GetPhotoRequest",
+              "options": {
+                "retrivePhotoMode": "other",
+                "email": "=dialog.foreach.value.emailAddress.address"
               },
-              "resultProperty": "dialog.userPhoto",
-              "token": "= turn.token",
-              "isMe": "false",
-              "email": "= dialog.foreach.value.emailAddress.address"
+              "resultProperty": "dialog.userPhotoResult"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -693,7 +688,7 @@
               },
               "changeType": "push",
               "itemsProperty": "dialog.attendeesPhoto",
-              "value": "= dialog.userPhoto"
+              "value": "= dialog.userPhotoResult.photo"
             }
           ]
         },

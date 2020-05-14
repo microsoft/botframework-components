@@ -4184,12 +4184,13 @@
 						"user.token.token"
 					]
 				},
-				"isMe": {
+				"retrieveMode": {
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMe/properties/token",
-					"title": "IsMe",
-					"description": "Whether retrieve photo of current user.",
+					"title": "Retrieve Mode",
+					"description": "Retrieve photo of me or other user.",
 					"examples": [
-						"true"
+						"me",
+						"other"
 					]
 				},
 				"email": {
