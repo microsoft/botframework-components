@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "ToDoSkill.en-us.lu",
+        "": "ToDoSkill.en-us.lu"
+    }
+}
