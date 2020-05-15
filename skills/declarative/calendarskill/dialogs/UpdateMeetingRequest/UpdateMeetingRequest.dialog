@@ -4,7 +4,7 @@
     "id": "AZ-unP",
     "name": "UpdateMeetingRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -44,28 +44,15 @@
           }
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.UpdateEventTime",
           "$designer": {
-            "id": "Rr7EGL"
-          },
-          "responseType": "Json",
-          "method": "PATCH",
-          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}",
-          "headers": {
-            "authorization": "${turn.token}"
+            "id": "UBPlXn"
           },
           "resultProperty": "dialog.api_result",
-          "contentType": "application/json",
-          "body": {
-            "start": {
-              "dateTime": "${dialog.utcStart}",
-              "timeZone": "UTC"
-            },
-            "end": {
-              "dateTime": "${dialog.utcEnd}",
-              "timeZone": "UTC"
-            }
-          }
+          "meetingId": "= dialog.meetingId",
+          "token": "= turn.token",
+          "startTime": "= dialog.utcStart",
+          "endTime": "= dialog.utcEnd"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -74,12 +61,8 @@
           },
           "assignments": [
             {
-              "property": "dialog.result",
-              "value": "= {}"
-            },
-            {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 200"
+              "value": "= true"
             }
           ]
         },

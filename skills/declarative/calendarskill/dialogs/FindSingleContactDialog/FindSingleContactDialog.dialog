@@ -4,7 +4,7 @@
     "id": "0bGhKY",
     "name": "FindSingleContactDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -40,6 +40,12 @@
                 "attendee": "=dialog.attendee"
               },
               "activityProcessed": true
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "RTyrxw"
+              }
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -87,12 +93,8 @@
               },
               "assignments": [
                 {
-                  "property": "turn.resolvedAttendee.email",
-                  "value": "=dialog.attendeeResult.contactsList[0].mail"
-                },
-                {
-                  "property": "turn.resolvedAttendee.name",
-                  "value": "=dialog.attendeeResult.contactsList[0].displayName"
+                  "property": "turn.resolvedAttendee",
+                  "value": "=dialog.attendeeResult.contactsList[0]"
                 }
               ]
             }
@@ -120,7 +122,7 @@
                   },
                   "changeType": "push",
                   "itemsProperty": "dialog.unconfirmedAttendeeList",
-                  "value": "${dialog.foreach.value.displayName} : ${dialog.foreach.value.mail}"
+                  "value": "${dialog.foreach.value.Name} : ${dialog.foreach.value.EmailAddresses}"
                 }
               ],
               "value": "dialog.foreach.value",

@@ -4,7 +4,7 @@
     "id": "2QL2hz",
     "name": "BookMeetingRoom"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

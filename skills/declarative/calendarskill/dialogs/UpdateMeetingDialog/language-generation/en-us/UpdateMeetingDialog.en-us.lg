@@ -8,6 +8,6 @@
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 
 # SendActivity__nHbKA()
-- Updated meeting \"${dialog.meeting.subject}\"
+- Updated meeting \"${dialog.meeting.Title}\"
 # SendActivity_DzKf6N()
 - ${CalendarErrorMessage()}

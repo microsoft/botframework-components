@@ -23,17 +23,12 @@
           "activityProcessed": true
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.GetMe",
           "$designer": {
-            "id": "zgTxlV"
+            "id": "XtvIVK"
           },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me",
-          "resultProperty": "dialog.api_result",
-          "headers": {
-            "Authorization": "Bearer ${turn.token}"
-          }
+          "token": "= turn.token",
+          "resultProperty": "dialog.api_result"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -49,11 +44,11 @@
           "assignments": [
             {
               "property": "dialog.result.me",
-              "value": "= dialog.api_result.content"
+              "value": "= dialog.api_result"
             },
             {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 200"
+              "value": "= true"
             }
           ]
         },

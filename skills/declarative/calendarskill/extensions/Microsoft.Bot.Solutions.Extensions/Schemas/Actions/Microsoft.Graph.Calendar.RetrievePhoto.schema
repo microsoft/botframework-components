@@ -28,6 +28,23 @@
       "examples": [
         "user.token.token"
       ]
+    },
+    "retrieveMode": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Retrieve Mode",
+      "description": "Retrieve photo of me or other user.",
+      "examples": [
+        "me",
+        "other"
+      ]
+    },
+    "email": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Email",
+      "description": "Email of the user",
+      "examples": [
+        "dialog.email"
+      ]
     }
   }
 }

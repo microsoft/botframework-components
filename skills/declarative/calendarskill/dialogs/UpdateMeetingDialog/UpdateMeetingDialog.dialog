@@ -4,7 +4,7 @@
     "id": "2CIszO",
     "name": "UpdateMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -136,6 +136,12 @@
           "disabled": false
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8vDxM6"
+          }
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "qaI3Z2"
@@ -143,7 +149,7 @@
           "assignments": [
             {
               "property": "dialog.duration",
-              "value": "= (ticks(formatDateTime(dialog.meeting.end.dateTime)) - ticks(formatDateTime(dialog.meeting.start.dateTime))) / 10000000"
+              "value": "= (ticks(formatDateTime(dialog.meeting.EndTime)) - ticks(formatDateTime(dialog.meeting.StartTime))) / 10000000"
             },
             {
               "property": "dialog.newEndDateTime",
@@ -162,7 +168,8 @@
             "newEndDateTime": "=dialog.newEndDateTime",
             "meetingId": "=dialog.meeting.id"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

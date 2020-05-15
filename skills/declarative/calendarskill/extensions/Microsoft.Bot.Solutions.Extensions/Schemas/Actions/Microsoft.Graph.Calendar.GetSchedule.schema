@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Get Schedule",
+  "description": "Get schedule of users using the Microsoft Graph API.",
+  "required": [
+    "token",
+    "emails",
+    "startTime",
+    "endTime"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "token": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "emails": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Emails",
+      "description": "User emails list",
+      "examples": [
+        "dialog.emails"
+      ]
+    },
+    "startTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Start",
+      "description": "Expression for event start.",
+      "examples": [
+        "dialog.start"
+      ]
+    },
+    "endTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "End",
+      "description": "Expression for event end.",
+      "examples": [
+        "dialog.end"
+      ]
+    },
+    "availabilityViewInterval": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Availability View Interval",
+      "description": "Represents the duration of a time slot in an availabilityView in the response. The default is 30 minutes, minimum is 5, maximum is 1440.",
+      "examples": [
+        "5"
+      ]
+    }
+  }
+}
