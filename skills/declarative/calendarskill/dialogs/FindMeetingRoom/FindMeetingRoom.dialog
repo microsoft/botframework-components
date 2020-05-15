@@ -4,7 +4,7 @@
     "id": "Q9x1Oj",
     "name": "FindMeetingRoom"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

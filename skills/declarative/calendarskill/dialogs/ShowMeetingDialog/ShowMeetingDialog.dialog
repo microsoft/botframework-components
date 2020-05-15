@@ -4,7 +4,7 @@
     "id": "3qackC",
     "name": "ShowMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

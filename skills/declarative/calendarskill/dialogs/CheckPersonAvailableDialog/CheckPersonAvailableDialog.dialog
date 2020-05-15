@@ -4,7 +4,7 @@
     "id": "nU7YfR",
     "name": "CheckPersonAvailableDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

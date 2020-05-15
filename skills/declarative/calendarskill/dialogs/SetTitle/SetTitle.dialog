@@ -4,7 +4,7 @@
     "id": "t-UqFx",
     "name": "SetTitle"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

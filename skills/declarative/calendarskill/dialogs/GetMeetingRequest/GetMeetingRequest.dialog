@@ -4,7 +4,7 @@
     "id": "e-VxSd",
     "name": "GetMeetingRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

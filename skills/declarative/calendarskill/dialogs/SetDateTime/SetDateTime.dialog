@@ -5,7 +5,7 @@
     "name": "SetDateTime",
     "description": "input: utterance\noutput: {startDateTime, endDateTime}"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

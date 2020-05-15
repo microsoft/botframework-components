@@ -4,7 +4,7 @@
     "id": "G4-9JT",
     "name": "AcceptMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
