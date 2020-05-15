@@ -78,7 +78,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "value": "dialog.foreach.value"
         }
       ],
       "allowInterruptions": true,

@@ -30,16 +30,11 @@
               "value": "=0"
             },
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "Cxln9W"
+                "id": "O9o3uw"
               },
-              "dialog": "GetContactRequest",
-              "resultProperty": "dialog.attendeeResult",
-              "options": {
-                "attendee": "=dialog.attendee"
-              },
-              "activityProcessed": true
+              "eventName": "GetContactRequest"
             },
             {
               "$kind": "Microsoft.TraceActivity",
@@ -293,6 +288,49 @@
             "attendeeResult.contactsList": "=dialog.attendeeResult.contactsList",
             "attendee": "=dialog.attendee"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "53zyWw",
+        "name": "GetContactRequest"
+      },
+      "event": "GetContactRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fzscnv"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetContacts",
+          "$designer": {
+            "id": "aDCUn6"
+          },
+          "token": "=turn.token",
+          "nameProperty": "=dialog.attendee",
+          "resultProperty": "dialog.api_result"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "vxCI0y"
+          },
+          "assignments": [
+            {
+              "property": "dialog.attendeeResult.contactsList",
+              "value": "= dialog.api_result"
+            },
+            {
+              "property": "dialog.attendeeResult.requestStatus",
+              "value": "= true"
+            }
+          ]
         }
       ]
     }

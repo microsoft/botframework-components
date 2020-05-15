@@ -111,7 +111,7 @@
               "outputFormat": "value",
               "appendChoices": "true",
               "defaultLocale": "en-us",
-              "style": "HeroCard",
+              "style": "heroCard",
               "choiceOptions": {
                 "inlineSeparator": ", ",
                 "inlineOr": " or ",
@@ -153,7 +153,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": "true",
-              "property": "=dialog.meetingTime",
+              "property": "dialog.meetingTime",
               "value": "=dialog.datetime",
               "prompt": "${TextInput_Prompt_3N8FuS()}"
             }

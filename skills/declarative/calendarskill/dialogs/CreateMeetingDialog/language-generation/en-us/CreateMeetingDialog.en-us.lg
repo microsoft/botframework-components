@@ -27,8 +27,6 @@
 
 # TextInput_Prompt_OqiDH_()
 - Do you want to create an event using this info?
-
-
 # SendActivity_YZ7nd7()
 - Created meeting \"${dialog.content.title}\"
 

@@ -104,7 +104,9 @@
           "outputFormat": "= this.value",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           }
         },
         {
