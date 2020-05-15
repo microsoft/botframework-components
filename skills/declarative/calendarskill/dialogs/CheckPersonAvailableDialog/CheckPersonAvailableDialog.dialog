@@ -2,8 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "nU7YfR",
-    "name": "CheckPersonAvailableDialog",
-    "description": ""
+    "name": "CheckPersonAvailableDialog"
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
@@ -12,9 +11,693 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "description": "",
         "id": "h0rcpT"
-      }
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XNTSzt"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots.personName",
+              "value": "=coalesce(@personName, $slots.personName)"
+            },
+            {
+              "property": "dialog.slots.FromTime",
+              "value": "=coalesce(@FromTime, $slots.FromTime)"
+            },
+            {
+              "property": "dialog.slots.FromDate",
+              "value": "=coalesce(@FromDate, $slots.FromDate)"
+            },
+            {
+              "property": "dialog.slots.ToDate",
+              "value": "=coalesce(@ToDate, $slots.ToDate)"
+            },
+            {
+              "property": "dialog.slots.ToTime",
+              "value": "=coalesce(@ToTime, $slots.ToTime)"
+            },
+            {
+              "property": "dialog.slots.Duration",
+              "value": "=coalesce(@Duration, $slots.Duration)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "MRPrqu"
+          },
+          "assignments": [
+            {
+              "property": "dialog.content.attendeeList",
+              "value": "= []"
+            },
+            {
+              "property": "dialog.content.addAttendee",
+              "value": true
+            },
+            {
+              "property": "dialog.attendeeList",
+              "value": "= []"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "uWo2A6"
+          },
+          "condition": "conversation.me == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "zqZlHV"
+              },
+              "activityProcessed": true,
+              "dialog": "GetMeDialog",
+              "resultProperty": "dialog.requestResult"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "mwMmli"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.attendeeList",
+          "value": "= conversation.me.mail"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WfaKvP"
+          },
+          "name": "GetMeDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "gH5a5k"
+          },
+          "condition": "dialog.content.addAttendee",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "skwaxJ"
+              },
+              "dialog": "FindContactDialog",
+              "disabled": false,
+              "options": {
+                "AttendeeList": "=[coalesce(dialog.slots.personName)]",
+                "fromDialog": "CheckPersonAvailable"
+              },
+              "resultProperty": "dialog.content.attendeeList",
+              "activityProcessed": true
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "iIjlOV"
+              },
+              "itemsProperty": "dialog.attendeeList",
+              "changeType": "push",
+              "value": "= dialog.content.attendeeList[0].EmailAddresses[0]"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "CCJq4M"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.content.addAttendee",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "UilBbg"
+          },
+          "name": "FindContactDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "lIhrOL"
+          },
+          "condition": "dialog.slots.FromDate==null && dialog.slots.FromTime == null && dialog.content.startDateTime == null && dialog.content.repeat != true",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "CIWSoH"
+              },
+              "property": "dialog.slots.FromTime",
+              "value": "= 'now'"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "e9n3mh"
+          },
+          "dialog": "SetDateTime",
+          "options": {
+            "startDate": "=coalesce(dialog.slots.FromDate, dialog.content.startDateTime)",
+            "startTime": "=coalesce(dialog.slots.FromTime, dialog.content.startDateTime)"
+          },
+          "resultProperty": "dialog.content.startDateTime",
+          "disabled": false,
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "LlUlcQ"
+          },
+          "assignments": [
+            {
+              "property": "dialog.content.startDateTime",
+              "value": "= addSeconds(formatDateTime(dialog.content.startDateTime), 300 - div(mod(ticks(formatDateTime(dialog.content.startDateTime)), int(3000000000)), int(10000000)))"
+            },
+            {
+              "property": "dialog.maxEndDateTime",
+              "value": "= addDays(formatDateTime(date(formatDateTime(dialog.content.startDateTime))), 1)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MfzmHa"
+          },
+          "dialog": "GetScheduleRequest",
+          "resultProperty": "dialog.requestResult",
+          "options": {
+            "startDateTime": "=dialog.content.startDateTime",
+            "endDateTime": "=dialog.maxEndDateTime",
+            "emails": "= dialog.attendeeList",
+            "duration": 5
+          },
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "DM51Ou"
+          },
+          "name": "GetScheduleRequest"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "V5DoTq"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "7LfbVk"
+              },
+              "activity": "${SendActivity_7LfbVk()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "0TeGLw"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "gkDN5B"
+              },
+              "assignments": [
+                {
+                  "value": "= dialog.requestResult.availability",
+                  "property": "dialog.availability"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "0UuKHE"
+          },
+          "eventName": "CheckAttendeeAvailable"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ZwBQQ2"
+          },
+          "condition": "dialog.count > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UC5d1p"
+              },
+              "activity": "${SendActivity_UC5d1p()}"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "s5jb6e"
+              },
+              "eventName": "AskForCreateMeeting"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Aejjb3"
+              },
+              "activity": "${SendActivity_Aejjb3()}"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "mBvJfP"
+              },
+              "eventName": "AskForNextAvailableTime"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ieHRgS"
+              },
+              "condition": "dialog.startIndex > -1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "W6IGcj"
+                  },
+                  "activity": "${SendActivity_W6IGcj()}"
+                },
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "wXJH8X"
+                  },
+                  "eventName": "AskForCreateMeeting"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "68o6jy"
+                  },
+                  "activity": "${SendActivity_68o6jy()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "2Qirym"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "WnRSFW",
+        "name": "CheckAttendeeAvailable"
+      },
+      "event": "CheckAttendeeAvailable",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XjA7US"
+          },
+          "assignments": [
+            {
+              "property": "dialog.indexList",
+              "value": "= range(0, length(dialog.availability[1].availabilityView))"
+            },
+            {
+              "property": "dialog.count",
+              "value": "= 0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "cqg87Y"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.indexList",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "vzNtbA"
+              },
+              "property": "dialog.char",
+              "value": "= substring(dialog.availability[1].availabilityView , dialog.foreach.value, 1)"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "UyUOo9"
+              },
+              "condition": "dialog.char != '0'",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BreakLoop",
+                  "$designer": {
+                    "id": "HgzRzJ"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "k6bwhX"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.count",
+                  "value": "= dialog.foreach.value + 1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "HyC0hU"
+          },
+          "assignments": [
+            {
+              "property": "dialog.endDateTime",
+              "value": "= addMinutes(formatDateTime(dialog.content.startDateTime), dialog.count * 5)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "fCMLnV"
+          },
+          "property": "dialog.conflict",
+          "value": "= if(substring(dialog.availability[0].availabilityView , 0, 1) != '0' , true, false)"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "G34TUg"
+          },
+          "name": "CheckAttendeeAvailable"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "aACTwv",
+        "name": "AskForCreateMeeting"
+      },
+      "event": "AskForCreateMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8oaKER"
+          },
+          "name": "AskForCreateMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "dw7MGS"
+          },
+          "assignments": [
+            {
+              "property": "dialog.confirm",
+              "value": "= null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "YORfYD"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
+          },
+          "property": "dialog.confirm",
+          "prompt": "${ConfirmInput_Prompt_YORfYD()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "s0Gy4E"
+          },
+          "condition": "dialog.confirm",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "U6kbYr"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "oHai4S"
+              },
+              "activityProcessed": true,
+              "dialog": "CreateMeetingDialog",
+              "options": {
+                "content": "=dialog.content"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "zcgOHf",
+        "name": "AskForNextAvailableTime"
+      },
+      "event": "AskForNextAvailableTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "VyKcs9"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
+          },
+          "property": "dialog.confirm",
+          "prompt": "${ConfirmInput_Prompt_VyKcs9()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "BA8Bsw"
+          },
+          "condition": "dialog.confirm",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "anM4DF"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "eBN51Y"
+          },
+          "assignments": [
+            {
+              "property": "dialog.indexList",
+              "value": "= range(0, length(dialog.availability[0].availabilityView ))"
+            },
+            {
+              "property": "dialog.startIndex",
+              "value": "= -1"
+            },
+            {
+              "property": "dialog.endIndex",
+              "value": "= -1"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "LPqIuE"
+          },
+          "name": "AskForNextAvailableTime"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "z1JQen"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.indexList",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "pJAprt"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.char1",
+                  "value": "= substring(dialog.availability[0].availabilityView, dialog.foreach.value, 1)"
+                },
+                {
+                  "property": "dialog.char2",
+                  "value": "= substring(dialog.availability[1].availabilityView, dialog.foreach.value, 1)"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "yIkDe2"
+              },
+              "condition": "dialog.startIndex == -1 && dialog.char1 == '0' && dialog.char2 == '0'",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "O0XiO9"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.startIndex",
+                      "value": "= dialog.foreach.value"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JQVhhD"
+              },
+              "condition": "dialog.startIndex > -1 && (dialog.char1 != '0' || dialog.char2 != '0')",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "JVxtaZ"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.endIndex",
+                      "value": "= dialog.foreach.value"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BreakLoop",
+                  "$designer": {
+                    "id": "fmYUSM"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mjWF2a"
+          },
+          "condition": "dialog.startIndex > -1",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "FWHLtq"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.endIndex",
+                  "value": "= if($endIndex > 0, $endIndex, length(dialog.availability[0].availabilityView))"
+                },
+                {
+                  "property": "dialog.endDateTime",
+                  "value": "= addMinutes(formatDateTime(dialog.content.startDateTime), dialog.endIndex * 5)"
+                },
+                {
+                  "property": "dialog.content.startDateTime",
+                  "value": "= addMinutes(formatDateTime(dialog.content.startDateTime), dialog.startIndex * 5)"
+                },
+                {
+                  "property": "dialog.conflict",
+                  "value": "= false"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Srk8hk"
+          },
+          "name": "AskForNextAvailableTime"
+        }
+      ]
     }
   ],
   "generator": "CheckPersonAvailableDialog.lg"

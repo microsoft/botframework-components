@@ -19,26 +19,18 @@
           "$designer": {
             "id": "5t-yMS"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
           "$designer": {
-            "id": "eeOBwC"
-          }
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "K2hhi2"
+            "id": "RTjkhJ"
           },
-          "responseType": "Json",
-          "method": "GET",
-          "url": "https://graph.microsoft.com/v1.0/me/calendarView?startdatetime=${dialog.StartDateTime}&enddatetime=${dialog.EndDateTime}",
-          "resultProperty": "dialog.api_result",
-          "headers": {
-            "Authorization": "Bearer ${turn.token}"
-          }
+          "token": "=turn.token",
+          "startProperty": "=dialog.StartDateTime",
+          "endProperty": "=dialog.EndDateTime",
+          "resultProperty": "dialog.api_result"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -53,7 +45,7 @@
           "$designer": {
             "id": "lzrTMU"
           },
-          "itemsProperty": "dialog.api_result.content.value",
+          "itemsProperty": "dialog.api_result",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -104,6 +96,10 @@
                 {
                   "property": "dialog.currentMeetingData.id",
                   "value": "=dialog.foreach.value.id"
+                },
+                {
+                  "property": "dialog.CurrentMeetingData.OnlineMeeting",
+                  "value": "=dialog.foreach.value.onlineMeeting"
                 },
                 {
                   "property": "dialog.currentMeetingData.OnlineMeetingNumber",
@@ -188,7 +184,7 @@
             },
             {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 200"
+              "value": "= true"
             }
           ]
         },
@@ -196,7 +192,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "NmZ3vB"
-          }
+          },
+          "name": "AfterGetMeeting"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -205,7 +202,8 @@
           },
           "value": "=dialog.result"
         }
-      ]
+      ],
+      "defaultResultProperty": "dialog.result"
     }
   ],
   "generator": "GetMeetingRequest.lg"

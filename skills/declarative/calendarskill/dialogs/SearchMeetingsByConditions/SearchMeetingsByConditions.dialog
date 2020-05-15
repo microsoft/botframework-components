@@ -94,7 +94,8 @@
             "StartDateTime": "=dialog.utcStart",
             "EndDateTime": "=dialog.utcEnd"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",

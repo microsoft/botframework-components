@@ -1,0 +1,66 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "YiLFYh",
+    "name": "GetMeRequest"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "gE6iEY"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "EGItdh"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetMe",
+          "$designer": {
+            "id": "XtvIVK"
+          },
+          "token": "= turn.token",
+          "resultProperty": "dialog.api_result"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "EjGoIS"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "zUjq3U"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result.me",
+              "value": "= dialog.api_result"
+            },
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "1S4pGD"
+          },
+          "value": "= dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "GetMeRequest.lg"
+}

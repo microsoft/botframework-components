@@ -1,2 +1,32 @@
 [import](common.lg)
 
+
+
+# SendActivity_ZznN6C()
+[Activity
+    Attachments = ${json(CardForList(conversation.persons))}
+    InputHint = acceptingInput
+]
+
+# SendActivity_SwFzJI()
+[Activity
+    Attachments = ${json(CardForList(conversation.persons))}
+    InputHint = acceptingInput
+    SuggestedActions = Next
+]
+
+# SendActivity_LDQg8X()
+[Activity
+    Attachments = ${json(CardForList(conversation.persons))}
+    InputHint = acceptingInput
+    SuggestedActions = Previous
+]
+
+# SendActivity_PBC9Kr()
+[Activity
+    Attachments = ${json(CardForList(conversation.persons))}
+    InputHint = acceptingInput
+    SuggestedActions = Previous | Next
+]
+
+

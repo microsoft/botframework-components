@@ -1,1 +1,67 @@
 [import](common.lg)
+
+
+# AskForCheckAvailableTime()
+- What time?
+
+# AskForCheckAvailableUserName()
+- Who do you want to add to the event?
+- Who would you like to add to the event?
+
+# NotAvailable(UserName, Time, Date)
+- It looks like ${UserName} isn't available on ${Date} at ${Time}. 
+
+# AttendeeIsAvailablePrompt(IsConflict, UserName, StartTime, EndTime, Date)
+- IF: ${IsConflict == false}
+  - ${AttendeeIsAvailable(UserName, StartTime, EndTime, Date)}
+- ELSE:
+  - ${AttendeeIsAvailableWithConflict(UserName, StartTime, EndTime, Date)}
+
+# AttendeeIsAvailable(UserName, StartTime, EndTime, Date)
+- It looks like ${UserName} is available on ${Date} from ${StartTime} to ${EndTime}.
+
+# AttendeeIsAvailableWithConflict(UserName, StartTime, EndTime, Date)
+- It looks like ${UserName} is available on ${Date} from ${StartTime} to ${EndTime}, but you have conflict at that time.
+
+# AttendeeIsAvailableOrgnizerIsUnavailableWithOneConflict(UserName, StartTime, EndTime, Date, Title, EventStartTime, EventEndTime)
+- It looks like ${UserName} is available on ${Date} from ${StartTime} to ${EndTime}, but you have "${Title}" from ${EventStartTime} to ${EventEndTime}.
+
+# AttendeeIsAvailableOrgnizerIsUnavailableWithMutipleConflicts(UserName, StartTime, EndTime, Date, ConflictEventsCount)
+- It looks like ${UserName} is available on ${Date} from ${StartTime} to ${EndTime}, but you have ${ConflictEventsCount} conflicts at that time.
+
+# AskForCreateNewMeetingPrompt(IsConflict, UserName, StartTime)
+- IF: ${IsConflict == false}
+  - ${AskForCreateNewMeeting()}
+- ELSE:
+  - ${AskForCreateNewMeetingAnyway(UserName, StartTime)}
+
+# AskForCreateNewMeeting()
+- Do you want to schedule a new meeting?
+
+# AskForCreateNewMeetingAnyway(UserName, StartTime)
+- Do you want to schedule a new meeting with ${UserName} at ${StartTime} anyway?
+
+# AskForNextAvailableTime(UserName)
+- Do you want me to find a time you and ${UserName} are both available?
+
+# NextBothAvailableTime(UserName, StartTime, EndTime, EndDate)
+- OK, you and ${UserName} are both available from ${StartTime} to ${EndTime} on ${EndDate}.
+
+# NoNextBothAvailableTime(UserName)
+- Sorry, I can't find a time when you and ${UserName} are both available.
+
+# SendActivity_7LfbVk()
+- ${CalendarErrorMessage()}
+# SendActivity_Aejjb3()
+- ${NotAvailable(dialog.content.attendeeList[0].name, formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
+
+# ConfirmInput_Prompt_YORfYD()
+- ${AskForCreateNewMeetingPrompt(dialog.conflict, dialog.content.attendeeList[0].name, dialog.content.startDateTime)}
+# SendActivity_68o6jy()
+- ${NoNextBothAvailableTime(dialog.content.attendeeList[0].name)}
+# ConfirmInput_Prompt_VyKcs9()
+- ${AskForNextAvailableTime(dialog.content.attendeeList[0].name)}
+# SendActivity_UC5d1p()
+- ${AttendeeIsAvailablePrompt(dialog.conflict, dialog.content.attendeeList[0].name,  formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
+# SendActivity_W6IGcj()
+- ${NextBothAvailableTime(dialog.content.attendeeList[0].name, formatDateTime(dialog.content.startDateTime, 'HH:mm:ss'), formatDateTime(dialog.endDateTime, 'HH:mm:ss'), formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd'))}
