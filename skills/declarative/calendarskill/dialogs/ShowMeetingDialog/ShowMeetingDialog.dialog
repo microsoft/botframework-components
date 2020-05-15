@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "slym1Q"
+          },
+          "name": "ShowMeetingDialog"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "DUBRRc"
@@ -719,7 +726,9 @@
               "property": "turn.RepeatOverviewConfirm",
               "allowInterruptions": "#_Interruption.Score >= 0.9",
               "choiceOptions": {
-                "includeNumbers": true
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or "
               }
             },
             {
