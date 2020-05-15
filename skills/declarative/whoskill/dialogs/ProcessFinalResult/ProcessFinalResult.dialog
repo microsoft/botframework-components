@@ -35,7 +35,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "XFd7hI",
-        "name": "Custom Event"
+        "name": "GetWhoisEvent"
       },
       "event": "Whois",
       "actions": [
@@ -70,7 +70,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "2RVsur",
-        "name": "Custom Event"
+        "name": "GetJobTitleEvent"
       },
       "event": "JobTitle",
       "actions": [
@@ -105,7 +105,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "schBAS",
-        "name": "Custom Event"
+        "name": "GetEmailAddressEvent"
       },
       "event": "EmailFind",
       "actions": [
@@ -140,7 +140,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "jQfZkE",
-        "name": "Custom Event"
+        "name": "GetLocationEvent"
       },
       "event": "Location",
       "actions": [
@@ -175,7 +175,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "PNFU5o",
-        "name": "Custom Event"
+        "name": "GetDepartmentEvent"
       },
       "event": "Department",
       "actions": [
@@ -210,7 +210,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "WjIQaD",
-        "name": "Custom Event"
+        "name": "GetPhoneNumberEvent"
       },
       "event": "PhoneNumber",
       "actions": [
@@ -245,7 +245,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "xeui2V",
-        "name": "Custom Event"
+        "name": "GetManagerEvent"
       },
       "event": "Manager",
       "actions": [
@@ -300,7 +300,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "zwBedI",
-        "name": "Custom Event"
+        "name": "GetDirectReportsEvent"
       },
       "event": "DirectReports",
       "actions": [
@@ -372,7 +372,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "evdnlJ",
-        "name": "Custom Event"
+        "name": "GetPeersEvent"
       },
       "event": "Peers",
       "actions": [
@@ -444,7 +444,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "ycS6vr",
-        "name": "Custom Event"
+        "name": "GetEmailContactEvent"
       },
       "event": "EmailAbout",
       "actions": [
@@ -550,7 +550,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "DcTcBK",
-        "name": "Custom Event"
+        "name": "GetMeetAboutEvent"
       },
       "event": "MeetAbout",
       "actions": [
