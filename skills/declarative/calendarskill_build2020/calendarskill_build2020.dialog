@@ -16,38 +16,19 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.OAuthInput",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "K9Dvk2"
+            "id": "vngoQl"
           },
-          "timeout": 900000,
-          "maxTurnCount": 3,
-          "allowInterruptions": true,
-          "connectionName": "=settings.connectionName",
-          "title": "Login",
-          "text": "Please login to access your calendar.",
-          "property": "user.token"
-        },
-        {
-          "$kind": "Microsoft.Graph.Calendar.GetUserSettings",
-          "$designer": {
-            "id": "cQDN72"
-          },
-          "token": "=user.token.token",
-          "resultProperty": "user.settings"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "P9S9MZ"
-          }
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
         },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "iQ8DgV"
+            "id": "Hq37VG"
           },
-          "activity": "${SendActivity_iQ8DgV()}"
+          "activity": "${SendActivity_Hq37VG()}"
         }
       ]
     },
@@ -59,12 +40,61 @@
       "intent": "CreateEvent",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9EVSB0"
+          },
+          "assignments": [
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.initialActivity",
+              "value": "=turn.activity.text"
+            }
+          ],
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zddQr7"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "EePsUz"
           },
           "activityProcessed": true,
-          "dialog": "CreateEventDialog"
+          "dialog": "CreateEventDialog",
+          "options": {
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "datetime": "=dialog.datetime",
+            "emailArray": "=dialog.emailArray",
+            "personNameArray": "=dialog.personNameArray",
+            "initialActivity": "=dialog.initialActivity"
+          }
         }
       ],
       "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.5"
@@ -77,12 +107,35 @@
       "intent": "GetSchedule",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GJebyO"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wIpZVs"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "5ZrdDE"
           },
           "activityProcessed": true,
-          "dialog": "GetMeetingsForDate"
+          "dialog": "GetMeetingsForDate",
+          "options": {
+            "datetime": "=dialog.datetime"
+          }
         }
       ],
       "condition": "turn.dialogevent.value.intents.GetSchedule.score > 0.5"

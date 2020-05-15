@@ -2,10 +2,10 @@
 
 
 # SendActivity_KRT4bP()
-- IF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) >= ticks(startOfDay(utcNow()))}
-    - You don't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
-- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(dialog.datetime)) < ticks(startOfDay(utcNow()))}
-    - You didn't have any events scheduled for ${dateReadBack(utcNow(), formatDateTime(dialog.datetime))}.
+- IF: ${dialog.datetime != null && ticks(ConvertToTZ(dialog.datetime)) >= ticks(startOfDay(ConvertToTZ(utcNow())))}
+    - You don't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
+- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(ConvertToTZ(dialog.datetime))) < ticks(startOfDay(ConvertToTZ(utcNow())))}
+    - You didn't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
 - ELSE: 
     - You don't have any events scheduled for today.
 # SendActivity_tBwx0R()
@@ -30,12 +30,12 @@
                     "inlines": [
                         {
                             "type": "TextRun",
-                            "text": "${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), 'Today', formatDateTime(dialog.datetime, 'dddd'))} ",
+                            "text": "${if(dialog.datetime == null || date(ConvertToTZ(dialog.datetime)) == date(ConvertToTZ(utcNow())), 'Today', formatDateTime(ConvertToTZ(dialog.datetime), 'dddd'))} ",
                             "size": "Large"
                         },
                         {
                             "type": "TextRun",
-                            "text": "${if(dialog.datetime != null, formatDateTime(dialog.datetime, 'MMMM d, yyyy'), utcNow('MMMM d, yyyy'))}",
+                            "text": "${if(dialog.datetime != null, formatDateTime(ConvertToTZ(dialog.datetime), 'MMMM d, yyyy'), formatDateTime(ConvertToTZ(utcNow()), 'MMMM d, yyyy'))}",
                             "size": "Large",
                             "weight": "Lighter"
                         }
@@ -43,7 +43,7 @@
                 },
                 {
                     "type": "TextBlock",
-                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), 'remaining', '')}",
+                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(dialog.datetime == null || date(ConvertToTZ(dialog.datetime)) == date(ConvertToTZ(utcNow())), 'remaining', '')}",
                     "size": "Small",
                     "spacing": "None"
                 }
@@ -56,7 +56,7 @@
             "style": "default",
             "items": [
                 ${join(foreach(previousEvents, x, BuildPreviousEventItem(x)), ', ')},
-                ${if(dialog.datetime == null || date(formatDateTime(dialog.datetime)) == date(utcNow()), BuildSeparator(), '')},
+                ${if(dialog.datetime == null || date(ConvertToTZ(dialog.datetime)) == date(ConvertToTZ(utcNow())), BuildSeparator(), '')},
                 ${join(foreach(upcomingEvents, x, BuildUpcomingEventItem(x)), ', ')}
             ]
         },
@@ -190,6 +190,9 @@
     ]
 }
 ```
+
+# ConvertToTZ(datetime)
+- ${convertFromUTC(formatDateTime(datetime), user.settings.mailboxSettings.timeZone)}
 
 # GetLocation(event)
 - IF: ${(event.location != null && event.location != '') && event.isOnlineMeeting == true }

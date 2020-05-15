@@ -8,9 +8,6 @@
 
 @ prebuilt datetimeV2
 @ prebuilt personName
-
-
-
 # GetSchedule
 - what meetings do i have
 - do i have any meetings
@@ -22,9 +19,7 @@
 
 @ prebuilt datetimeV2
 
-# None
-- Yes
-- No
-- tomorrow
-- yesterday
-- next friday
+#None
+- what color is the sky
+- what is your name
+- who is the president

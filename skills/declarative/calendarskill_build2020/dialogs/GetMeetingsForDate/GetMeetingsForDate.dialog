@@ -15,6 +15,18 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "7WkiRU"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=coalesce(dialog.datetime, @datetime)"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "jQb8bh"
@@ -26,7 +38,7 @@
           "$designer": {
             "id": "7aslgu"
           },
-          "condition": "@datetime != null && (@datetime.type == 'date' || @datetime.type == 'datetime')",
+          "condition": "dialog.datetime != null && (dialog.datetime.type == 'date' || dialog.datetime.type == 'datetime')",
           "actions": [
             {
               "$kind": "Microsoft.DateTimeInput",
@@ -58,7 +70,7 @@
                 "id": "HkoSaU"
               },
               "property": "dialog.datetime",
-              "value": "=utcNow()"
+              "value": "=convertFromUTC(utcNow(), user.settings.mailboxSettings.timeZone)"
             }
           ]
         },

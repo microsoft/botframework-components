@@ -51,11 +51,11 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             if (startProperty == null || startProperty.Value == DateTime.MinValue)
             {
-                startProperty = DateTime.UtcNow.Date;
+                startProperty = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
             }
             else
             {
-                startProperty = startProperty.Value.Date.ToUniversalTime();
+                startProperty = TimeZoneInfo.ConvertTimeFromUtc(startProperty.Value.Date, timeZone).Date;
             }
 
             if (endProperty == null || endProperty.Value == DateTime.MinValue)

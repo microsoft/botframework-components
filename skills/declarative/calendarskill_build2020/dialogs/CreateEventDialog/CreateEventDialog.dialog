@@ -22,27 +22,27 @@
           "assignments": [
             {
               "property": "dialog.title",
-              "value": "=@title"
+              "value": "=coalesce(dialog.title, @title)"
             },
             {
               "property": "dialog.location",
-              "value": "=@location"
+              "value": "=coalesce(dialog.location, @location)"
             },
             {
               "property": "dialog.datetime",
-              "value": "=@datetime"
+              "value": "=coalesce(dialog.datetime, @datetime)"
             },
             {
               "property": "dialog.emailArray",
-              "value": "=@@email"
+              "value": "=coalesce(dialog.emailArray, @@email)"
             },
             {
               "property": "dialog.personNameArray",
-              "value": "=@@personName"
+              "value": "=coalesce(dialog.personNameArray, @@personName)"
             },
             {
               "property": "dialog.initialActivity",
-              "value": "=turn.activity.text"
+              "value": "=coalesce(dialog.initialActivity, turn.activity.text)"
             }
           ],
           "activityProcessed": true
@@ -176,7 +176,6 @@
                   "allowInterruptions": true,
                   "property": "dialog.meetingTime",
                   "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Aw7goa()}",
-                  "maxTurnCount": 3,
                   "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
                 }
               ]
@@ -194,8 +193,8 @@
               "property": "dialog.meetingTime",
               "value": "=dialog.datetime",
               "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_o4vGX1()}",
-              "maxTurnCount": 3,
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "maxTurnCount": 3
             }
           ]
         },
@@ -213,7 +212,8 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.isTeamsMeeting"
         },
@@ -255,8 +255,7 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "property": "dialog.isCreationConfirmed",
-          "maxTurnCount": 3
+          "property": "dialog.isCreationConfirmed"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -427,7 +426,9 @@
           "allowInterruptions": true,
           "property": "dialog.updatedMeetingTime",
           "value": "=turn.activity.text",
-          "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Ofk3Yl()}"
+          "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Ofk3Yl()}",
+          "maxTurnCount": 3,
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
         },
         {
           "$kind": "Microsoft.SetProperty",
