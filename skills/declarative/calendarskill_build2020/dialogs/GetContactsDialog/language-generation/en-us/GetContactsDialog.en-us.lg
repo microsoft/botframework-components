@@ -5,7 +5,7 @@
 - I found multiple contacts with that name. Which one should I invite?
 # SendActivity_ChJFWb()
 - ```
-I've added the folowing recipients:
+I've added the following recipients:
 \n * ${join(dialog.attendees, " \n * ")}
 ```
 # SendActivity_pmgdHg()
