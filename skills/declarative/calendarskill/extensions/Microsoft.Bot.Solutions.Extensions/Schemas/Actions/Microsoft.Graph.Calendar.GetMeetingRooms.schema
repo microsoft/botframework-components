@@ -2,10 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Get Meeting Rooms",
+  "description": "Get meeting room lists using the Azure search API.",
   "required": [
-    "token"
+    "searchServiceAdminApiKey",
+    "searchServiceName",
+    "searchIndexName",
+    "searchQuery"
   ],
   "properties": {
     "id": {
@@ -21,29 +24,36 @@
         "dialog.contosodata"
       ]
     },
-    "token": {
+    "searchServiceAdminApiKey": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Token",
-      "description": "Microsoft Graph Authentication Token",
+      "title": "Search Service Admin Api Key",
+      "description": "Azure Search Service Admin API Key.",
       "examples": [
-        "user.token.token"
+        "settings.azureSearch.searchServiceAdminApiKey"
       ]
     },
-    "retrieveMode": {
+    "searchServiceName": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Retrieve Mode",
-      "description": "Retrieve photo of me or other user.",
+      "title": "Search Service Name",
+      "description": "Azure Search Service Name.",
       "examples": [
-        "me",
-        "other"
+        "settings.azureSearch.searchServiceName"
       ]
     },
-    "email": {
+    "searchIndexName": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
+      "title": "Search Index Name",
+      "description": "Azure Search Index Name.",
       "examples": [
-        "dialog.email"
+        "settings.azureSearch.searchIndexName"
+      ]
+    },
+    "searchQuery": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Search Query",
+      "description": "Azure Search Query.",
+      "examples": [
+        "dialog.searchQuery"
       ]
     }
   }

@@ -4,7 +4,7 @@
     "id": "lUwGgi",
     "name": "SetLocation"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

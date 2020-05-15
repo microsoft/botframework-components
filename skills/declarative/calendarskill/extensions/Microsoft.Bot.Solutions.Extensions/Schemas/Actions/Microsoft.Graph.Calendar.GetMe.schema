@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Retrieve Photo",
-  "description": "Retrieve user photo using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Get Me",
+  "description": "Ge my profile using the Microsoft Graph API.",
   "required": [
     "token"
   ],
@@ -27,23 +27,6 @@
       "description": "Microsoft Graph Authentication Token",
       "examples": [
         "user.token.token"
-      ]
-    },
-    "retrieveMode": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Retrieve Mode",
-      "description": "Retrieve photo of me or other user.",
-      "examples": [
-        "me",
-        "other"
-      ]
-    },
-    "email": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Email",
-      "description": "Email of the user",
-      "examples": [
-        "dialog.email"
       ]
     }
   }

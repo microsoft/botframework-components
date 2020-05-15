@@ -4,7 +4,7 @@
     "id": "2Chhr4",
     "name": "DeleteMeetingRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -28,18 +28,13 @@
           }
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
           "$designer": {
-            "id": "OmJMp9"
+            "id": "OvGwo2"
           },
-          "responseType": "Json",
-          "method": "DELETE",
-          "url": "https://graph.microsoft.com/v1.0/me/events/${dialog.meetingId}",
-          "headers": {
-            "authorization": "${turn.token}"
-          },
-          "resultProperty": "dialog.api_result",
-          "contentType": "application/json"
+          "meetingId": "= dialog.meetingId",
+          "token": "turn.token",
+          "resultProperty": "dialog.api_result"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -53,7 +48,7 @@
             },
             {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 204"
+              "value": "= true"
             }
           ]
         },

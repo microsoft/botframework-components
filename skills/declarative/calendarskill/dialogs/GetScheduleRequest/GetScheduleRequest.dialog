@@ -4,7 +4,7 @@
     "id": "u5fhP3",
     "name": "GetScheduleRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -19,7 +19,8 @@
           "$designer": {
             "id": "2jvdFY"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -45,31 +46,16 @@
           ]
         },
         {
-          "$kind": "Microsoft.HttpRequest",
+          "$kind": "Microsoft.Graph.Calendar.GetSchedule",
           "$designer": {
-            "id": "mJau_h"
+            "id": "yLM9e3"
           },
-          "responseType": "Json",
-          "method": "POST",
-          "body": {
-            "schedules": "=dialog.emails",
-            "startTime": {
-              "dateTime": "${dialog.utcStart}",
-              "timeZone": "UTC"
-            },
-            "endTime": {
-              "dateTime": "${dialog.utcEnd}",
-              "timeZone": "UTC"
-            },
-            "availabilityViewInterval": "=dialog.duration"
-          },
-          "url": "https://graph.microsoft.com/v1.0/me/calendar/getSchedule",
-          "contentType": "application/json",
           "resultProperty": "dialog.api_result",
-          "disabled": false,
-          "headers": {
-            "authorization": "${turn.token}"
-          }
+          "token": "=turn.token",
+          "emails": "=dialog.emails",
+          "startTime": "=dialog.utcStart",
+          "endTime": "=dialog.utcEnd",
+          "availabilityViewInterval": "=dialog.duration"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -83,11 +69,11 @@
             },
             {
               "property": "dialog.result.requestStatus",
-              "value": "= dialog.api_result.statusCode == 200"
+              "value": "= true"
             },
             {
               "property": "dialog.result.availability",
-              "value": "= if(dialog.result.requestStatus, dialog.api_result.content.value, null)"
+              "value": "= dialog.api_result"
             }
           ]
         },

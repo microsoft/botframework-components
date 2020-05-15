@@ -4,7 +4,7 @@
     "id": "gN87kL",
     "name": "SetContent"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
