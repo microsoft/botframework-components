@@ -4,7 +4,7 @@
     "id": "0bGhKY",
     "name": "FindSingleContactDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

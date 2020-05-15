@@ -4,7 +4,7 @@
     "id": "zsT810",
     "name": "SearchMeetingRoomReqeust"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {

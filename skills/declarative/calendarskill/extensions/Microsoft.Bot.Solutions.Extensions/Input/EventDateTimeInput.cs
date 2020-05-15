@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Input;
@@ -37,7 +38,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Input
 
         public string DefaultLocale { get; set; } = null;
 
-        protected override async Task<InputState> OnRecognizeInput(DialogContext dc)
+        protected override async Task<InputState> OnRecognizeInputAsync(DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
             var input = dcState.GetValue<object>(VALUE_PROPERTY);

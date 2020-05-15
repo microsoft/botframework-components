@@ -4,7 +4,7 @@
     "id": "3qackC",
     "name": "ShowMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -14,6 +14,13 @@
         "id": "tw_o8J"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "slym1Q"
+          },
+          "name": "ShowMeetingDialog"
+        },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
@@ -719,7 +726,9 @@
               "property": "turn.RepeatOverviewConfirm",
               "allowInterruptions": "#_Interruption.Score >= 0.9",
               "choiceOptions": {
-                "includeNumbers": true
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or "
               }
             },
             {

@@ -4,7 +4,7 @@
     "id": "AZ-unP",
     "name": "UpdateMeetingRequest"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
