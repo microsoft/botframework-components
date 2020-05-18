@@ -15,39 +15,29 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.OAuthInput",
           "$designer": {
-            "id": "6XMaym"
+            "id": "tiRv2B"
           },
-          "condition": "turn.token == null",
-          "actions": [
-            {
-              "$kind": "Microsoft.OAuthInput",
-              "$designer": {
-                "id": "D_cwts"
-              },
-              "property": "dialog.token",
-              "text": "please sign in",
-              "title": "login",
-              "connectionName": "=settings.ConnectionName",
-              "timeout": 900000,
-              "allowInterruptions": false,
-              "alwaysPrompt": false,
-              "disabled": false,
-              "maxTurnCount": 3
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "_46wWj"
-              },
-              "property": "turn.token",
-              "value": "= dialog.token.token",
-              "allowInterruptions": true,
-              "maxTurnCount": 3
-            }
-          ],
-          "allowInterruptions": true
+          "property": "dialog.token",
+          "text": "please sign in",
+          "title": "login",
+          "connectionName": "=settings.ConnectionName",
+          "timeout": 900000,
+          "allowInterruptions": false,
+          "alwaysPrompt": false,
+          "disabled": false,
+          "maxTurnCount": 3
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "18IZkt"
+          },
+          "property": "turn.token",
+          "value": "= dialog.token.token",
+          "allowInterruptions": true,
+          "maxTurnCount": 3
         }
       ],
       "defaultResultProperty": "dialog.result"

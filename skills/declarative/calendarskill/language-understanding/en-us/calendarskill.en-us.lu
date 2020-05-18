@@ -241,6 +241,8 @@
 - create a new meeting
 - book time with Darren this week
 - schedule a meeting with Patrick
+- ^create [a] (meeting|appointment)^
+- ^book [a] (meeting|appointment)^
 
 @ prebuilt datetimeV2
 @ prebuilt personName
@@ -361,6 +363,7 @@
 - when and where is my {OrderReference=next} meeting
 - which is my {OrderReference=next} event
 - which will be my {OrderReference=next} {Subject=flight}
+- ^show [my] (meeting|meetings)^
 
 # AcceptMeeting
 - accept all meetings for {Subject=christmas party} {FromDate=next week}.
@@ -391,6 +394,8 @@
 - i'll attend the meeting at {FromTime=2pm} {FromDate=tomorrow} in {MeetingRoom=room 304}
 - i'll attend the meeting {FromTime=this afternoon}.
 - i'll attend this upcoming event in {Location=redmond}.
+- ^accept [a] (meeting|event)^
+- ^accept (this|the) (meeting|event)^
 
 # DeleteMeeting
 - can you cancel the {PositionReference=1st} one
@@ -470,6 +475,8 @@
 - delete the {SlotAttribute=meeting room} of my {FromTime=6pm} meeting
 - please cancel the {SlotAttribute=room} of my {FromTime=7pm} meeting
 - ^(clear|delete|remove) (my|the) calendar from {FromTime} to {ToTime}^
+- ^(delete|cancel) [a] meeting^
+- ^delete (this|the) (meeting|event)^
 
 # UpdateMeeting
 - bring forward my {FromTime=4 o'clock} appointment {MoveEarlierTimeSpan=2 hours}
@@ -594,6 +601,10 @@
 - i'd like to change the {SlotAttribute=meeting room}
 - please change the {SlotAttribute=meeting room} to {MeetingRoom=2212}
 - ^[(would|can|could) you] [please] (change|reschedule) [the] ({Subject}|meeting) to {ToTime}^
+- ^update [a] (meeting|event)^
+- ^update (this|the) (meeting|event)^
+- ^update my (calendar|meeting)^
+
 # BookMeetingRoom
 - a new meeting location find one
 - am goin to work tomorrow on another state, i need to book a room in {MeetingRoom=johan} street
@@ -667,6 +678,7 @@
 - book conf room in holliday in {MeetingRoom=45} for this afthernoon
 - book conf room {MeetingRoom=miami / 2379}
 - book conf room {MeetingRoom=sunxhi ally c9} for us
+- ^book [a] (meetingroom|room)^
 
 # FindCalendarWhen
 - my {OrderReference=next} meeting with emily is when
@@ -850,6 +862,7 @@
 - will thomas be in {Subject=insurance meeting} {FromDate=monday} at {FromTime=noon}
 - will timothy be coming to the meeting
 - will virginia be attending my {OrderReference=next} meeting
+- ^who will (attend|join) meeting^
 
 # FindDuration
 - about how long will the meeting last
@@ -890,6 +903,7 @@
 - {FromDate=today} ' s {Subject=lunch} will be how long
 - total {Subject=lunch break} time {FromDate=today} please
 - what allotted time is for {Subject=hair dresser}
+- ^how long is my (meeting|event)^
 
 # CheckAvailability
 - am i available
@@ -1057,6 +1071,7 @@
 - start my conference
 - start my meeting
 - start the meeting
+- ^(start|join) [my] meeting^
 # TimeRemaining
 - can you show me the time remaining before my {OrderReference=next} appointment
 - check on the time to see when i {Subject=go to school and pick up mark}
@@ -1113,3 +1128,4 @@
 - time before my {OrderReference=next} appointment
 - time remaining
 - ^how long do i have (until|before|till) the [next] (meeting|appointment|{SubjectPattenAny})
+- ^how long till [next] (meeting|appointment)^
