@@ -344,7 +344,7 @@ Need help? Here's a list of the questions I can answer:
 - '${Person.DisplayName}' works in ${Person.officeLocation}.
 
 # PhoneNumber(Person)
-- The phone number for '${Person.DisplayName}' is ${Person.mobilePhone}.
+- The phone number for '${Person.DisplayName}' is ${Person.BusinessPhones}.
 
 # EmailAddress(Person)
 - The e-mail address of '${Person.DisplayName}' is ${Person.mail}.
