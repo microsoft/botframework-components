@@ -43,9 +43,3 @@
     name = OpenDefaultApp
     value = ${dialog.event}
 ]
-
-
-# ConfirmInput_Prompt_ur756D()
--
-# TraceActivity_Prompt_IipEer()
--
