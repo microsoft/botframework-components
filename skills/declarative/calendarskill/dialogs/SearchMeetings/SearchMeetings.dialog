@@ -189,7 +189,8 @@
           "options": {
             "meetings": "=dialog.meetings"
           },
-          "resultProperty": "dialog.choosenMeeting"
+          "resultProperty": "dialog.choosenMeeting",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",

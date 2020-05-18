@@ -2,7 +2,6 @@
 
 # ConfirmInput_Prompt_eEN1ZI()
 - ${ConfirmPrompt(dialog.meeting.OnlineMeeting.tollNumber, dialog.meeting.OnlineMeeting.joinUrl)}
-
 # SendActivity_o3Sci5()
 - ${LinkUnavailable()}
 # JoinMeeting()
@@ -37,7 +36,6 @@
 
 # SendActivity_PcgWSx()
 - ${NotJoinMeeting()}
-
 
 # SendActivity_lbyA1f()
 [Activity
