@@ -51,15 +51,20 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Jk9ftA"
+                "id": "gmsUI3"
               },
               "activityProcessed": true,
-              "dialog": "GetMeetingRequest",
-              "options": {
-                "StartDateTime": "=dialog.startDateTime",
-                "EndDateTime": "=dialog.endDateTime"
+              "dialog": "GetAuthToken"
+            },
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetMeetings",
+              "$designer": {
+                "id": "NuDdNz"
               },
-              "resultProperty": "dialog.requestResult"
+              "token": "= turn.token",
+              "startTime": "=dialog.startDateTime",
+              "endTime": "=dialog.endDateTime",
+              "resultProperty": "dialog.requestResult.meetingsList"
             },
             {
               "$kind": "Microsoft.TraceActivity",
