@@ -3,20 +3,8 @@
 # SendActivity_oZOlbK()
 - ${WhoIs(conversation.chosenPerson)}
 
-# SendActivity_ewOegE()
--${JobTitle(conversation.chosenPerson)}
 
-# SendActivity_AhSn8o()
--${EmailAddress(conversation.chosenPerson)}
 
-# SendActivity_1fBs7Z()
--${Location(conversation.chosenPerson)}
-
-# SendActivity_KTgYQV()
--${Department(conversation.chosenPerson)}
-
-# SendActivity_QfuCj8()
--${PhoneNumber(conversation.chosenPerson)}
 
 # SendActivity_UFqhAu()
 - ${Manager(conversation.chosenPerson)}
@@ -82,3 +70,37 @@
 
 
 
+
+# SendActivity_XSLDxH()
+-${Location(conversation.chosenPerson)}
+
+# SendActivity_Err4y3()
+- ${NoLocation(conversation.chosenPerson)}
+
+
+
+# SendActivity_1wTYhu()
+-${JobTitle(conversation.chosenPerson)}
+
+# SendActivity_K8RI0X()
+- ${NoJobTitle(conversation.chosenPerson)}
+# SendActivity_dbDkJz()
+-${EmailAddress(conversation.chosenPerson)}
+
+
+# SendActivity_jPy4wT()
+- ${NoEmailAddress(conversation.chosenPerson)}
+# SendActivity_QK5v21()
+-${Department(conversation.chosenPerson)}
+
+
+# SendActivity_QgefSw()
+- ${NoDepartment(conversation.chosenPerson)}
+# SendActivity_RxxuJv()
+- ${BusinessAndMobilePhoneNumber(conversation.chosenPerson)}
+# SendActivity_q8mFog()
+- ${BusinessPhoneNumber(conversation.chosenPerson)}
+# SendActivity_tolhHi()
+- ${MobileNumber(conversation.chosenPerson)}
+# SendActivity_S2UhBE()
+- ${NoPhoneNumber(conversation.chosenPerson)}

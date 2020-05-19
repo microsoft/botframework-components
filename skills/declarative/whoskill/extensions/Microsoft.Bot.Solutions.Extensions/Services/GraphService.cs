@@ -114,7 +114,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Services
                 var result = await graphClient.Users[id]
                        .Manager
                        .Request()
-                       .Select("businessPhones,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName")
+                       .Select("businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName")
                        .GetAsync();
                 return result;
             }
@@ -140,7 +140,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Services
                 var result = await graphClient.Users[id]
                     .DirectReports
                     .Request()
-                    .Select("businessPhones,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName")
+                    .Select("businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName")
                     .GetAsync();
                 return result;
             }
@@ -251,10 +251,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Services
 
             try
             {
-                // var responseObj = JsonConvert.DeserializeObject<dynamic>(response);
-                // var result = JsonConvert.DeserializeObject<IUserMessagesCollectionPage>(responseObj.value);
-
-
                 var request = await httpClient.GetAsync(requestUrl);
                 var responseString = await request.Content.ReadAsStringAsync();
                 dynamic responseObj = JObject.Parse(responseString);
