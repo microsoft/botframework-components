@@ -67,34 +67,26 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             var result = new List<MeetingModel>();
 
-            try
+            foreach (var item in events)
             {
-
-                foreach (var item in events)
+                var meetingModel = new MeetingModel()
                 {
-                    var meetingModel = new MeetingModel()
-                    {
-                        IsConflict = false,
-                        StartTime = DateTime.Parse(item.Start?.DateTime).ToUniversalTime(),
-                        EndTime = DateTime.Parse(item.End?.DateTime).ToUniversalTime(),
-                        IsAccept = item.ResponseStatus.Response == ResponseType.Accepted || item.ResponseStatus.Response == ResponseType.Organizer ||
-                                (item.IsOrganizer ?? false),
-                        IsOrganizer = item.IsOrganizer.GetValueOrDefault(),
-                        Title = item.Subject,
-                        Location = item.Location?.DisplayName,
-                        Content = item.BodyPreview,
-                        OnlineMeetingUrl = item.OnlineMeeting?.JoinUrl,
-                        OnlineMeetingNumber = item.OnlineMeeting?.TollNumber,
-                        ID = item.Id
-                    };
+                    IsConflict = false,
+                    StartTime = DateTime.Parse(item.Start?.DateTime).ToUniversalTime(),
+                    EndTime = DateTime.Parse(item.End?.DateTime).ToUniversalTime(),
+                    IsAccept = item.ResponseStatus.Response == ResponseType.Accepted || item.ResponseStatus.Response == ResponseType.Organizer ||
+                            (item.IsOrganizer ?? false),
+                    IsOrganizer = item.IsOrganizer.GetValueOrDefault(),
+                    Title = item.Subject,
+                    Location = item.Location?.DisplayName,
+                    Content = item.BodyPreview,
+                    OnlineMeetingUrl = item.OnlineMeeting?.JoinUrl,
+                    OnlineMeetingNumber = item.OnlineMeeting?.TollNumber,
+                    ID = item.Id
+                };
 
-                    result.Add(meetingModel);
+                result.Add(meetingModel);
 
-                }
-            }
-            catch(Exception e)
-            {
-                e.ToString();
             }
 
             // set IsConflict flag
