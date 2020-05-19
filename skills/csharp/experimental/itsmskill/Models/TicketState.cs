@@ -21,6 +21,10 @@ namespace ITSMSkill.Models
         [EnumLocalizedDescription("TicketStateClosed", typeof(SharedStrings))]
         Closed,
         [EnumLocalizedDescription("TicketStateCanceled", typeof(SharedStrings))]
-        Canceled
+        Canceled,
+        [EnumLocalizedDescription("TicketStateActive", typeof(SharedStrings))]
+        Active,
+        [EnumLocalizedDescription("TicketStateInactive", typeof(SharedStrings))]
+        Inactive
     }
 }

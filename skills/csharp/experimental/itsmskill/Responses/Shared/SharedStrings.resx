@@ -234,4 +234,10 @@
   <data name="YesUtterance" xml:space="preserve">
     <value>yes</value>
   </data>
+  <data name="TicketStateActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="TicketStateInactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
 </root>

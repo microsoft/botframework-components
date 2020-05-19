@@ -295,7 +295,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "tH8P3L"
-          }
+          },
+          "name": "Next Page"
         },
         {
           "$kind": "Microsoft.IfCondition",

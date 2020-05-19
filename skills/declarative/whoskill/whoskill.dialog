@@ -662,7 +662,8 @@
     {
       "$kind": "Microsoft.OnEventActivity",
       "$designer": {
-        "id": "1nZZxT"
+        "id": "1nZZxT",
+        "name": "Whois Action"
       },
       "actions": [
         {
@@ -680,6 +681,29 @@
           },
           "property": "conversation.luisResult.keyword",
           "value": "=turn.Activity.value.keyword"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Rs124F"
+          },
+          "condition": "conversation.luisResult.keyword == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "NKIsTO"
+              },
+              "activity": "${SendActivity_NKIsTO()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Zc4tfz"
+              },
+              "value": "=setProperty({},\"actionSuccess\", false)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -850,7 +874,8 @@
           },
           "value": "=setProperty({},\"actionSuccess\", true)"
         }
-      ]
+      ],
+      "condition": "=turn.activity.name == \"Whois\""
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
