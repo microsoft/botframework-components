@@ -5,11 +5,6 @@
 # SendActivity_Q6rGL1()
 - You have no more events scheduled.
 
-# SendActivity_n_iPbD()
-[Activity
-    Text = You have ${count(dialog.meetingsList)} events planned for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}. The first one is ${dialog.meetingsList[0].Title} with ${GetAttendeeString(dialog.meetingsList[0].Attendees)} at ${formatDateTime(dialog.meetingsList[0].StartTime, 'HH:mm:ss')}. The last one for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')} is ${turn.lastMeeting.Title} at ${formatDateTime(turn.lastMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(turn.lastMeeting.Attendees)}.
-    Attachments = ${json(MeetingListCard('Meetings', count(dialog.meetingsList), int(dialog.overlapCount), formatDateTime(dialog.startDateTime, 'yyyy-MM-dd'), GetIndicator(dialog.currentPage, int(settings.DisplaySize), count(dialog.meetingsList)), dialog.mePhotoResult.photo, 'Powered by **Microsoft**', 'UTC', dialog.displayMeetingData, true))}
-]
 
 # SendActivity_meJEs5()
 - The event titled ${conversation.FocusedMeeting.Title} is on ${formatDateTime(conversation.FocusedMeeting.StartTime, 'yyyy-MM-dd')} at ${formatDateTime(conversation.FocusedMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(conversation.FocusedMeeting.Attendees)}. 
@@ -54,3 +49,8 @@
 - Sorry, I don't understand
 # SendActivity_Qfr1b9()
 - Sorry, I don't understand
+# SendActivity_rDwZpJ()
+[Activity
+    Text = You have ${count(dialog.meetingsList)} events planned for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')}. The first one is ${dialog.meetingsList[0].Title} with ${GetAttendeeString(dialog.meetingsList[0].Attendees)} at ${formatDateTime(dialog.meetingsList[0].StartTime, 'HH:mm:ss')}. The last one for ${formatDateTime(dialog.startDateTime, 'yyyy-MM-dd')} is ${turn.lastMeeting.Title} at ${formatDateTime(turn.lastMeeting.StartTime, 'HH:mm:ss')} with ${GetAttendeeString(turn.lastMeeting.Attendees)}.
+    Attachments = ${json(MeetingListCard('Meetings', count(dialog.meetingsList), int(dialog.overlapCount), formatDateTime(dialog.startDateTime, 'yyyy-MM-dd'), GetIndicator(dialog.currentPage, int(settings.DisplaySize), count(dialog.meetingsList)), dialog.mePhotoResult.photo, 'Powered by **Microsoft**', 'UTC', dialog.displayMeetingData, true))}
+]
