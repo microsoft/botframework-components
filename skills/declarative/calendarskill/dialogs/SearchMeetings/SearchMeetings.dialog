@@ -61,7 +61,8 @@
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "prompt": "${TextInput_Prompt_HSMvMH()}",
-              "allowInterruptions": false
+              "allowInterruptions": false,
+              "property": "dialog.meetingKeyword"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -70,12 +71,8 @@
               },
               "assignments": [
                 {
-                  "property": "dialog.slots",
-                  "value": "={}"
-                },
-                {
                   "property": "dialog.slots.Subject",
-                  "value": "=coalesce(@Subject, $Subject)"
+                  "value": "=coalesce(@Subject, $Subject, dialog.meetingKeyword)"
                 },
                 {
                   "property": "dialog.slots.FromDate",
@@ -110,7 +107,8 @@
                 "startDate": "=dialog.slots.FromDate",
                 "startTime": "=dialog.slots.FromTime"
               },
-              "resultProperty": "dialog.startDateTime"
+              "resultProperty": "dialog.startDateTime",
+              "activityProcessed": true
             }
           ]
         },
@@ -130,7 +128,8 @@
               "options": {
                 "title": "=coalesce(dialog.slots.Subject, dialog.fullText)"
               },
-              "resultProperty": "dialog.title"
+              "resultProperty": "dialog.title",
+              "activityProcessed": true
             }
           ]
         },
@@ -189,7 +188,8 @@
           "options": {
             "meetings": "=dialog.meetings"
           },
-          "resultProperty": "dialog.choosenMeeting"
+          "resultProperty": "dialog.choosenMeeting",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
