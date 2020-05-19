@@ -107,7 +107,7 @@ namespace WeatherSkill.Utilities
                 Data = data
             };
 
-            return manager.ExpandTemplate(name + ".Text", input).ToArray();
+            return manager.ExpandTemplate(name + ".Text", input).ToArray() as string[];
         }
 
         public static Templates CreateTemplates()

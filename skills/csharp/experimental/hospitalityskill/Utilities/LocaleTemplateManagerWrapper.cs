@@ -109,7 +109,7 @@ namespace HospitalitySkill.Utilities
             var result = list.Select(value =>
             {
                 return JObject.Parse(value)["text"].ToString();
-            }).ToArray();
+            }).ToArray() as string[];
 
             return result;
         }
