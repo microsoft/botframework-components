@@ -48,9 +48,6 @@ namespace GenericITSMSkill
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add Data Protection
-            services.AddDataProtection();
-
             // Configure MVC
             services.AddControllers().AddNewtonsoftJson();
 
@@ -120,7 +117,7 @@ namespace GenericITSMSkill
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
             // Register dialogs
-            services.AddTransient<CreateFlowURLDialog>();
+            services.AddTransient<SampleDialog>();
             services.AddTransient<SampleAction>();
             services.AddTransient<MainDialog>();
 

@@ -21,7 +21,7 @@ namespace GenericITSMSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private readonly BotServices _services;
-        private readonly CreateFlowURLDialog _sampleDialog;
+        private readonly SampleDialog _sampleDialog;
         private readonly SampleAction _sampleAction;
         private readonly LocaleTemplateManager _templateEngine;
 
@@ -44,7 +44,7 @@ namespace GenericITSMSkill.Dialogs
             InitialDialogId = nameof(MainDialog);
 
             // Register dialogs
-            _sampleDialog = serviceProvider.GetService<CreateFlowURLDialog>();
+            _sampleDialog = serviceProvider.GetService<SampleDialog>();
             _sampleAction = serviceProvider.GetService<SampleAction>();
             AddDialog(_sampleDialog);
             AddDialog(_sampleAction);
