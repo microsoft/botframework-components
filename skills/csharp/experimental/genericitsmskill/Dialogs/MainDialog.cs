@@ -21,8 +21,7 @@ namespace GenericITSMSkill.Dialogs
     public class MainDialog : ComponentDialog
     {
         private readonly BotServices _services;
-        private readonly SampleDialog _sampleDialog;
-        private readonly SampleAction _sampleAction;
+        private readonly CreateFlowURLDialog _createFlowUrlDialog;
         private readonly LocaleTemplateManager _templateEngine;
 
         public MainDialog(
@@ -44,10 +43,8 @@ namespace GenericITSMSkill.Dialogs
             InitialDialogId = nameof(MainDialog);
 
             // Register dialogs
-            _sampleDialog = serviceProvider.GetService<SampleDialog>();
-            _sampleAction = serviceProvider.GetService<SampleAction>();
-            AddDialog(_sampleDialog);
-            AddDialog(_sampleAction);
+            _createFlowUrlDialog = serviceProvider.GetService<CreateFlowURLDialog>();
+            AddDialog(_createFlowUrlDialog);
         }
 
         // Runs when the dialog is started.
@@ -217,7 +214,7 @@ namespace GenericITSMSkill.Dialogs
                     {
                         case GenericITSMSkillLuis.Intent.Sample:
                             {
-                                return await stepContext.BeginDialogAsync(_sampleDialog.Id, cancellationToken: cancellationToken);
+                                return await stepContext.BeginDialogAsync(_createFlowUrlDialog.Id, cancellationToken: cancellationToken);
                             }
 
                         case GenericITSMSkillLuis.Intent.None:
@@ -242,18 +239,6 @@ namespace GenericITSMSkill.Dialogs
                 {
                     switch (ev.Name)
                     {
-                        case "SampleAction":
-                            {
-                                SampleActionInput actionData = null;
-
-                                if (ev.Value is JObject eventValue)
-                                {
-                                    actionData = eventValue.ToObject<SampleActionInput>();
-                                }
-
-                                // Invoke the SampleAction dialog passing input data if available
-                                return await stepContext.BeginDialogAsync(nameof(SampleAction), actionData, cancellationToken);
-                            }
 
                         default:
                             {
