@@ -90,6 +90,15 @@ namespace SkillServiceLibrary.Models.AzureMaps
         [JsonProperty(PropertyName = "postalCode")]
         public string PostalCode { get; set; }
 
+        /// <summary>
+        /// Gets or sets a string specifying the municipality of the address.
+        /// </summary>
+        /// <value>
+        /// A string specifying the municipality of an address.
+        /// </value>
+        [JsonProperty(PropertyName = "municipality")]
+        public string Municipality { get; set; }
+
         internal Address ToBingAddress()
         {
             string addressLine = string.Empty;

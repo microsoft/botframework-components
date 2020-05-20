@@ -41,6 +41,7 @@ namespace SkillServiceLibrary.Models
             Phone = azureMapsPoi.Poi?.Phone;
             Provider = new SortedSet<string> { AzureMapsGeoSpatialService.ProviderName };
             Website = azureMapsPoi.Poi?.Url;
+            Municipality = getFirstMunicipality(azureMapsPoi.Address?.Municipality);
 
             var hours = azureMapsPoi.Poi?.OpeningHours?.TimeRanges;
             if (hours != null)
@@ -74,6 +75,24 @@ namespace SkillServiceLibrary.Models
             {
                 Category = azureMapsPoi.ResultType;
             }
+        }
+
+        private string getFirstMunicipality(string municipalityString)
+        {
+            if (string.IsNullOrEmpty(municipalityString))
+            {
+                // API did not return municipalities
+                return string.Empty;
+            }
+
+            if (municipalityString.Contains(','))
+            {
+                // API returned muliple municipalities
+                var municipalityArray = municipalityString.Split(',');
+                return municipalityArray[0].Trim();
+            }
+
+            return municipalityString.Trim();
         }
     }
 }

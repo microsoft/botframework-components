@@ -230,6 +230,8 @@ namespace SkillServiceLibrary.Models
 
         public string ActionStartNavigation { get; set; }
 
+        public string Municipality { get; set; }
+
         /// <summary>
         /// Gets the formatted string for available details.
         /// </summary>

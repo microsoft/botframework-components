@@ -341,7 +341,9 @@ namespace PointOfInterestSkill.Dialogs
 
                     List<PointOfInterestModelSlim> slimPointOfInterestList = pointOfInterestList.Select(x => new PointOfInterestModelSlim(x)).ToList();
 
-                    options.Prompt.ChannelData = slimPointOfInterestList;
+                    var comcastResponseData = new ComcastPointOfInterestResponse() { Results = slimPointOfInterestList, Municipality = state.Municipality };
+
+                    options.Prompt.ChannelData = comcastResponseData;
 
                     return await sc.PromptAsync(Actions.SelectPointOfInterestPrompt, options, cancellationToken);
                 }

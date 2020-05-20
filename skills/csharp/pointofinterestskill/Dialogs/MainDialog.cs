@@ -459,6 +459,7 @@ namespace PointOfInterestSkill.Dialogs
                             var model = await service.GetZipcodeAsync(zipcode);
 
                             state.CurrentCoordinates = model?.Geolocation ?? state.CurrentCoordinates;
+                            state.Municipality = model?.Municipality ?? "";
                         }
                     }
 

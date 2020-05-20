@@ -29,6 +29,8 @@ namespace PointOfInterestSkill.Models
 
         public List<RouteDirections.Summary> FoundRoutes { get; set; }
 
+        public string Municipality { get; set; }
+
         public string Keyword { get; set; }
 
         public string Category { get; set; }
