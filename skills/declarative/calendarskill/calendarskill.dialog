@@ -78,7 +78,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "value": "dialog.foreach.value"
         }
       ],
       "allowInterruptions": true,
@@ -219,7 +220,8 @@
           "dialog": "ShowMeetingDialog",
           "options": {
             "askParameter": "when"
-          }
+          },
+          "activityProcessed": true
         }
       ]
     },
@@ -238,7 +240,8 @@
           "options": {
             "askParameter": "where"
           },
-          "dialog": "ShowMeetingDialog"
+          "dialog": "ShowMeetingDialog",
+          "activityProcessed": true
         }
       ]
     },
@@ -277,7 +280,8 @@
           "dialog": "ShowMeetingDialog",
           "options": {
             "askParameter": "duration"
-          }
+          },
+          "activityProcessed": true
         }
       ]
     },

@@ -4,7 +4,7 @@
     "id": "2CIszO",
     "name": "UpdateMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -158,18 +158,11 @@
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "H7PwTe"
+            "id": "wGcYcf"
           },
-          "dialog": "UpdateMeetingRequest",
-          "options": {
-            "newStartDateTime": "=dialog.newStartDateTime",
-            "newEndDateTime": "=dialog.newEndDateTime",
-            "meetingId": "=dialog.meeting.id"
-          },
-          "resultProperty": "dialog.requestResult",
-          "activityProcessed": true
+          "eventName": "UpdateMeetingRequest"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -204,6 +197,63 @@
         }
       ],
       "defaultResultProperty": "dialog.result"
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "tIfb4n",
+        "name": "UpdateMeetingRequest"
+      },
+      "event": "UpdateMeetingRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "EPKcr2"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.newStartDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcEnd",
+              "value": "= addHours(formatDateTime(dialog.newEndDateTime), int(user.timeOffset))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "egDunK"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.UpdateEventTime",
+          "$designer": {
+            "id": "Id8uSA"
+          },
+          "resultProperty": "dialog.requestResult",
+          "meetingId": "= dialog.meeting.id",
+          "token": "= turn.token",
+          "startTime": "= dialog.utcStart",
+          "endTime": "= dialog.utcEnd"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "hzrSY4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
+            }
+          ]
+        }
+      ]
     }
   ],
   "generator": "UpdateMeetingDialog.lg"

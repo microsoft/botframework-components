@@ -4,7 +4,7 @@
     "id": "7JK9Uj",
     "name": "SearchMeetings"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -189,7 +189,8 @@
           "options": {
             "meetings": "=dialog.meetings"
           },
-          "resultProperty": "dialog.choosenMeeting"
+          "resultProperty": "dialog.choosenMeeting",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",

@@ -23,6 +23,9 @@
 			"$ref": "#/definitions/Microsoft.BeginDialog"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.BeginSkill"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.BreakLoop"
 		},
 		{
@@ -278,6 +281,12 @@
 			"$ref": "#/definitions/Microsoft.PhoneNumberEntityRecognizer"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.QnAMakerDialog"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.QnAMakerRecognizer"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.RandomSelector"
 		},
 		{
@@ -309,9 +318,6 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.SignOutUser"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.SkillDialog"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.StaticActivityTemplate"
@@ -1077,6 +1083,108 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.BeginDialog"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.BeginSkill": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Begin a skill",
+			"description": "Begin a remote skill.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the skill dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"activityProcessed": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Activity Processed",
+					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
+					"default": true,
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Property",
+					"description": "Property to store any value returned by the dialog that is called.",
+					"examples": [
+						"dialog.userName"
+					]
+				},
+				"botId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host bot ID",
+					"description": "The Microsoft App ID that will be calling the skill.",
+					"default": "=settings.MicrosoftAppId"
+				},
+				"skillHostEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host",
+					"description": "The callback Url for the skill host.",
+					"default": "=settings.skillHostEndpoint",
+					"examples": [
+						"https://mybot.contoso.com/api/skills/"
+					]
+				},
+				"connectionName": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "OAuth Connection Name (SSO)",
+					"description": "The OAuth Connection Name, that would be used to perform Single SignOn with a skill.",
+					"default": "=settings.connectionName"
+				},
+				"skillAppId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill App ID",
+					"description": "The Microsoft App ID for the skill."
+				},
+				"skillEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill endpoint ",
+					"description": "The /api/messages endpoint for the skill.",
+					"examples": [
+						"https://myskill.contoso.com/api/messages/"
+					]
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "The activity to send to the skill.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.BeginSkill"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -5073,10 +5181,16 @@
 					"type": "string"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.QnAMakerDialog"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.BeginSkill"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BreakLoop"
@@ -5188,9 +5302,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.SkillDialog"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
@@ -5331,6 +5442,12 @@
 					"type": "string"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.LuisRecognizer"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.QnAMakerRecognizer"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.CrossTrainedRecognizerSet"
 				},
 				{
@@ -5341,9 +5458,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.RegexRecognizer"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.LuisRecognizer"
 				}
 			]
 		},
@@ -8190,6 +8304,314 @@
 				}
 			}
 		},
+		"Microsoft.QnAMakerDialog": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "QnAMaker Dialog",
+			"description": "Dialog which uses QnAMAker knowledge base to answer questions.",
+			"type": "object",
+			"required": [
+				"knowledgeBaseId",
+				"endpointKey",
+				"hostname",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"knowledgeBaseId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "KnowledgeBase Id",
+					"description": "KnowledgeBase Id of your QnA Maker KnowledgeBase.",
+					"default": "=settings.qna.knowledgebaseid"
+				},
+				"endpointKey": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Endpoint Key",
+					"description": "Endpoint key for the QnA Maker KB.",
+					"default": "=settings.qna.endpointkey"
+				},
+				"hostname": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Hostname",
+					"description": "Hostname for your QnA Maker service.",
+					"default": "=settings.qna.hostname",
+					"examples": [
+						"https://yourserver.azurewebsites.net/qnamaker"
+					]
+				},
+				"noAnswer": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Fallback answer",
+					"description": "Default answer to return when none found in KB.",
+					"default": "Sorry, I did not find an answer.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"threshold": {
+					"$ref": "#/definitions/numberExpression",
+					"title": "Threshold",
+					"description": "Threshold score to filter results.",
+					"default": 0.3
+				},
+				"activeLearningCardTitle": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Active learning card title",
+					"description": "Title for active learning suggestions card.",
+					"default": "Did you mean:"
+				},
+				"cardNoMatchText": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Card no match text",
+					"description": "Text for no match option.",
+					"default": "None of the above."
+				},
+				"cardNoMatchResponse": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Card no match response",
+					"description": "Custom response when no match option was selected.",
+					"default": "Thanks for the feedback.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"strictFilters": {
+					"$ref": "#/definitions/arrayExpression",
+					"title": "Strict Filters",
+					"description": "Metadata filters to use when calling the QnA Maker KB.",
+					"items": {
+						"type": "object",
+						"title": "Metadata filter",
+						"description": "Metadata filter.",
+						"properties": {
+							"name": {
+								"type": "string",
+								"title": "Name",
+								"description": "Name of filter property.",
+								"maximum": 100
+							},
+							"value": {
+								"type": "string",
+								"title": "Value",
+								"description": "Value to filter on.",
+								"maximum": 100
+							}
+						}
+					}
+				},
+				"top": {
+					"$ref": "#/definitions/numberExpression",
+					"title": "Top",
+					"description": "The number of answers you want to retrieve.",
+					"default": 3
+				},
+				"isTest": {
+					"type": "boolean",
+					"title": "IsTest",
+					"description": "True, if pointing to Test environment, else false.",
+					"default": false
+				},
+				"rankerType": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Ranker Type",
+					"description": "Type of Ranker.",
+					"oneOf": [
+						{
+							"title": "Standard ranker",
+							"description": "Standard ranker types.",
+							"enum": [
+								"default",
+								"questionOnly",
+								"autoSuggestQuestion"
+							],
+							"default": "default"
+						},
+						{
+							"$ref": "#/definitions/equalsExpression"
+						}
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.QnAMakerDialog"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.QnAMakerRecognizer": {
+			"$role": "implements(Microsoft.IRecognizer)",
+			"title": "QnAMaker Recognizer",
+			"description": "Recognizer for generating QnAMatch intents from a KB.",
+			"type": "object",
+			"required": [
+				"knowledgeBaseId",
+				"endpointKey",
+				"hostname",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional unique id using with RecognizerSet."
+				},
+				"knowledgeBaseId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "KnowledgeBase Id",
+					"description": "KnowledgeBase Id of your QnA Maker KnowledgeBase.",
+					"default": "settings.qna.knowledgebaseid"
+				},
+				"endpointKey": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Endpoint Key",
+					"description": "Endpoint key for the QnA Maker KB.",
+					"default": "settings.qna.endpointkey"
+				},
+				"hostname": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Hostname",
+					"description": "Hostname for your QnA Maker service.",
+					"default": "settings.qna.hostname",
+					"examples": [
+						"https://yourserver.azurewebsites.net/qnamaker"
+					]
+				},
+				"threshold": {
+					"$ref": "#/definitions/numberExpression",
+					"title": "Threshold",
+					"description": "Threshold score to filter results.",
+					"default": 0.3
+				},
+				"strictFilters": {
+					"$ref": "#/definitions/arrayExpression",
+					"title": "Strict Filters",
+					"description": "Metadata filters to use when calling the QnA Maker KB.",
+					"items": {
+						"type": "object",
+						"title": "Metadata filters",
+						"description": "Metadata filters to use when querying QnA Maker KB.",
+						"properties": {
+							"name": {
+								"type": "string",
+								"title": "Name",
+								"description": "Name to filter on.",
+								"maximum": 100
+							},
+							"value": {
+								"type": "string",
+								"title": "Value",
+								"description": "Value to restrict filter.",
+								"maximum": 100
+							}
+						}
+					}
+				},
+				"top": {
+					"$ref": "#/definitions/numberExpression",
+					"title": "Top",
+					"description": "The number of answers you want to retrieve.",
+					"default": 3
+				},
+				"isTest": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "IsTest",
+					"description": "True, if pointing to Test environment, else false.",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"rankerType": {
+					"title": "Ranker Type",
+					"description": "Type of Ranker.",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "Ranker type",
+							"description": "Type of Ranker.",
+							"enum": [
+								"default",
+								"questionOnly",
+								"autoSuggestQuestion"
+							],
+							"default": "default"
+						},
+						{
+							"$ref": "#/definitions/equalsExpression"
+						}
+					]
+				},
+				"includeDialogNameInMetadata": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Include Dialog Name",
+					"description": "When set to false, the dialog name will not be passed to QnAMaker. (default) is true",
+					"default": true,
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"metadata": {
+					"$ref": "#/definitions/arrayExpression",
+					"title": "Metadata filters",
+					"description": "Metadata filters to use when calling the QnA Maker KB.",
+					"items": {
+						"type": "object",
+						"title": "Metadata filter",
+						"description": "Metadata filter to use when calling the QnA Maker KB.",
+						"properties": {
+							"name": {
+								"type": "string",
+								"title": "Name",
+								"description": "Name of value to test."
+							},
+							"value": {
+								"type": "string",
+								"title": "Value",
+								"description": "Value to filter against."
+							}
+						}
+					}
+				},
+				"context": {
+					"$ref": "#/definitions/objectExpression",
+					"title": "QnARequestContext",
+					"description": "Context to use for ranking."
+				},
+				"qnaId": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "QnAId",
+					"description": "A number or expression which is the QnAId to paass to QnAMaker API."
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.QnAMakerRecognizer"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.RandomSelector": {
 			"$role": "implements(Microsoft.ITriggerSelector)",
 			"title": "Random rule selector",
@@ -8805,102 +9227,6 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.SignOutUser"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.SkillDialog": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Begin a skill dialog",
-			"description": "Begin a remote skill dialog.",
-			"type": "object",
-			"required": [
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the skill dialog"
-				},
-				"disabled": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Disabled",
-					"description": "Optional condition which if true will disable this action.",
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"activityProcessed": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Activity Processed",
-					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
-					"default": true,
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Property",
-					"description": "Property to store any value returned by the dialog that is called.",
-					"examples": [
-						"dialog.userName"
-					]
-				},
-				"botId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host bot ID",
-					"description": "The Microsoft App ID that will be calling the skill.",
-					"default": "=settings.MicrosoftAppId"
-				},
-				"skillHostEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host",
-					"description": "The callback Url for the skill host.",
-					"default": "=settings.skillHostEndpoint",
-					"examples": [
-						"https://mybot.contoso.com/api/skills/"
-					]
-				},
-				"skillAppId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill App ID",
-					"description": "The Microsoft App ID for the skill."
-				},
-				"skillEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill endpoint ",
-					"description": "The /api/messages endpoint for the skill.",
-					"examples": [
-						"https://myskill.contoso.com/api/messages/"
-					]
-				},
-				"activity": {
-					"$kind": "Microsoft.IActivityTemplate",
-					"title": "Activity",
-					"description": "The activity to send to the skill.",
-					"$ref": "#/definitions/Microsoft.IActivityTemplate"
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.SkillDialog"
 				},
 				"$designer": {
 					"title": "Designer information",

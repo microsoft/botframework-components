@@ -15,13 +15,11 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "s5S8Qz"
+            "id": "MpG3HI"
           },
-          "activityProcessed": true,
-          "dialog": "GetMeRequest",
-          "resultProperty": "dialog.requestResult"
+          "eventName": "GetMeRequest"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -46,6 +44,48 @@
               },
               "property": "conversation.me",
               "value": "= dialog.requestResult.me"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "yx4n59",
+        "name": "GetMeRequest"
+      },
+      "event": "GetMeRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PllKiR"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetMe",
+          "$designer": {
+            "id": "dBRjW7"
+          },
+          "token": "= turn.token",
+          "resultProperty": "dialog.api_result"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9AY3b4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.requestResult.me",
+              "value": "= dialog.api_result"
+            },
+            {
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
             }
           ]
         }

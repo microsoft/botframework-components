@@ -5,7 +5,7 @@
     "name": "SetDateTime",
     "description": "input: utterance\noutput: {startDateTime, endDateTime}"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -74,7 +74,7 @@
             "id": "vk1yn8"
           },
           "property": "dialog.startDateTime",
-          "value": "=formatDateTime((ticks(startOfDay(formatDateTime(dialog.startDate)))+(ticks(formatDateTime(dialog.startTime))-ticks(startOfDay(formatDateTime(dialog.startTime))))-621355968000000000)/10000000)"
+          "value": "=formatTicks(ticks(startOfDay(formatDateTime(dialog.startDate)))+(ticks(formatDateTime(dialog.startTime))-ticks(startOfDay(formatDateTime(dialog.startTime))))) "
         },
         {
           "$kind": "Microsoft.EndDialog",

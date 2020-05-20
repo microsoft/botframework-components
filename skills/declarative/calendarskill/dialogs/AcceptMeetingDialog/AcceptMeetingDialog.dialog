@@ -4,7 +4,7 @@
     "id": "G4-9JT",
     "name": "AcceptMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -94,7 +94,8 @@
           "property": "dialog.confirm",
           "outputFormat": "= this.value",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           }
         },
         {
@@ -119,16 +120,11 @@
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "OaqhZq"
+            "id": "Yr1tab"
           },
-          "dialog": "AcceptMeetingRequest",
-          "options": {
-            "meetingId": "=dialog.meeting.id"
-          },
-          "resultProperty": "dialog.requestResult",
-          "activityProcessed": true
+          "eventName": "AcceptMeetingRequest"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -160,6 +156,59 @@
           "$designer": {
             "id": "vySl6l"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "swGgII",
+        "name": "AcceptMeetingRequest"
+      },
+      "event": "AcceptMeetingRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xbwnqL"
+          },
+          "name": "AcceptMeetingRequestEventStart"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "hE2iOi"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+          "$designer": {
+            "id": "aX1hIK"
+          },
+          "token": "= turn.token",
+          "meetingId": "= dialog.meeting.id",
+          "resultProperty": "dialog.requestResult"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "UzJ7j8"
+          },
+          "assignments": [
+            {
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "kwFY5C"
+          },
+          "name": "AcceptMeetingRequestEventEnd"
         }
       ]
     }

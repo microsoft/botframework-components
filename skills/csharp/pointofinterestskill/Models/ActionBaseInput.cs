@@ -16,6 +16,12 @@ namespace PointOfInterestSkill.Models
         [JsonProperty("currentLongitude")]
         public double? CurrentLongitude { get; set; }
 
+        [JsonProperty("zipcode")]
+        public string Zipcode { get; set; }
+
+        [JsonProperty("countrySet")]
+        public string CountrySet { get; set; }
+
         [JsonProperty("keyword")]
         public string Keyword { get; set; }
 

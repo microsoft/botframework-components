@@ -4,7 +4,7 @@
     "id": "0T0Ron",
     "name": "DeleteMeetingDialog"
   },
-  "autoEndDialog": "true",
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -130,31 +130,22 @@
             "id": "mhtftF"
           },
           "condition": "dialog.meeting.IsOrganizer ",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "EnWBo3"
-              },
-              "dialog": "DeleteMeetingRequest",
-              "options": {
-                "meetingId": "=dialog.meeting.id"
-              },
-              "resultProperty": "dialog.requestResult",
-              "activityProcessed": true
-            }
-          ],
           "elseActions": [
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "UzoD7o"
+                "id": "at84k2"
               },
-              "activityProcessed": true,
-              "dialog": "DeclineMeetingRequest",
-              "options": {
-                "meetingId": "=dialog.meeting.id"
-              }
+              "eventName": "DeclineMeetingRequest"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "W5YbJI"
+              },
+              "eventName": "DeleteMeetingRequest"
             }
           ]
         },
@@ -163,7 +154,7 @@
           "$designer": {
             "id": "MeUzZf"
           },
-          "condition": "dialog.requestResult.requestStatus",
+          "condition": "dialog.result.requestStatus",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -188,6 +179,122 @@
           "$designer": {
             "id": "fuFvDL"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "jtC0Je",
+        "name": "DeclineMeetingRequest"
+      },
+      "event": "DeclineMeetingRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "QOlsDl"
+          },
+          "name": "DeclineMeetingRequest"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "e1ExFJ"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5wNghV"
+          }
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+          "$designer": {
+            "id": "ua6tyM"
+          },
+          "meetingId": "= dialog.meeting.id",
+          "token": "= turn.token",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xJrSFj"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "F5n0Gb"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "sqWyYc",
+        "name": "DeleteMeetingRequest"
+      },
+      "event": "DeleteMeetingRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8tjIao"
+          },
+          "name": "DeleteMeetingRequest"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WQQe2f"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "cut5Ok"
+          }
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
+          "$designer": {
+            "id": "Eemo4j"
+          },
+          "meetingId": "= dialog.meeting.id",
+          "resultProperty": "dialog.result",
+          "token": "= turn.token"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "LO1Q4h"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JvVycH"
+          },
+          "assignments": [
+            {
+              "property": "dialog.result.requestStatus",
+              "value": "= true"
+            }
+          ]
         }
       ]
     }
