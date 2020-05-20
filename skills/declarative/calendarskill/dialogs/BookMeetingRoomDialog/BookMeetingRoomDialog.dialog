@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "heDl9L",
-    "name": "CreateMeetingDialog"
+    "id": "2QL2hz",
+    "name": "BookMeetingRoomDialog"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -11,13 +11,29 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "FoSwSk"
+        "id": "fu9w3A"
       },
       "actions": [
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "lMyBZ4"
+            "id": "91Hty4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots",
+              "value": "=conversation.slots"
+            },
+            {
+              "property": "dialog.content",
+              "value": "=conversation.content"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "6mJfIN"
           },
           "assignments": [
             {
@@ -59,13 +75,25 @@
             {
               "property": "conversation.slots",
               "value": "= {}"
+            },
+            {
+              "property": "dialog.slots.Building",
+              "value": "=coalesce(@Building, $slots.Building)"
+            },
+            {
+              "property": "dialog.slots.FloorNumber",
+              "value": "=coalesce(@FloorNumber, $slots.FloorNumber)"
+            },
+            {
+              "property": "dialog.slots.MeetingRoom",
+              "value": "=coalesce(@MeetingRoom, $slots.MeetingRoom)"
             }
           ]
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "C4Fu7F"
+            "id": "tkyevv"
           },
           "assignments": [
             {
@@ -91,99 +119,66 @@
             {
               "property": "dialog.content.addAttendee",
               "value": "=coalesce($content.addAttendee, true)"
+            },
+            {
+              "property": "dialog.content.repeat",
+              "value": "=coalesce($content.repeat, false)"
+            },
+            {
+              "property": "dialog.content.addRoom",
+              "value": "=coalesce($content.addRoom, true)"
+            },
+            {
+              "property": "dialog.content.roomList",
+              "value": "=coalesce($content.roomList, [])"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "OEwJsZ"
+          },
+          "assignments": [
+            {
+              "property": "conversation.content",
+              "value": "= {}"
+            },
+            {
+              "property": "conversation.slots",
+              "value": "= {}"
             }
           ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "tDjzl6"
-          }
+            "id": "Vdagn_",
+            "name": "BookMeetingRoomDialog"
+          },
+          "name": "BookMeetingRoomDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "mZuhsb"
+            "id": "CjiOXm"
           },
-          "condition": "dialog.content.addAttendee",
+          "condition": "dialog.slots.FromDate==null && dialog.slots.FromTime == null && dialog.content.startDateTime == null && dialog.content.repeat != true",
           "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "WFuc6K"
-              },
-              "dialog": "FindContact",
-              "disabled": false,
-              "options": {
-                "AttendeeList": "=[coalesce(dialog.slots.personName)]",
-                "fromDialog": "CreateMeeting"
-              },
-              "resultProperty": "dialog.attendeeList",
-              "activityProcessed": true
-            },
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "h1WZVY"
+                "id": "FVaHll"
               },
-              "property": "dialog.content.attendeeList",
-              "value": "=union(dialog.content.attendeeList, dialog.attendeeList)"
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "K8GCIS"
-              },
-              "assignments": [
-                {
-                  "property": "dialog.content.addAttendee",
-                  "value": false
-                }
-              ]
+              "property": "dialog.slots.FromTime",
+              "value": "= 'now'"
             }
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "r_MoJc"
-          },
-          "name": "After find attendee"
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Jg6Qry"
-          },
-          "dialog": "SetTitle",
-          "options": {
-            "title": "=coalesce(dialog.slots.Subject, dialog.content.title)"
-          },
-          "resultProperty": "dialog.content.title",
-          "activityProcessed": true
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "5p9ZfG"
-          }
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "2nC2zy"
-          },
-          "dialog": "SetContent",
-          "options": {
-            "description": "=coalesce(dialog.slots.Desciption, dialog.content.description)"
-          },
-          "resultProperty": "dialog.content.description",
-          "disabled": false
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "DmWkIl"
+            "id": "NYfjGR"
           },
           "dialog": "SetDateTime",
           "options": {
@@ -191,12 +186,13 @@
             "startTime": "=coalesce(dialog.slots.FromTime, dialog.content.startDateTime)"
           },
           "resultProperty": "dialog.content.startDateTime",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "akTxcB"
+            "id": "JMrJnu"
           },
           "dialog": "SetDuration",
           "options": {
@@ -208,7 +204,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "yB7uOp"
+            "id": "jfUEIY"
           },
           "assignments": [
             {
@@ -219,80 +215,156 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "jfYb1u"
+            "id": "KTn8HO"
           },
-          "dialog": "SetLocation",
-          "options": {
-            "location": "=coalesce(dialog.slots.Location, dialog.content.location)"
-          },
-          "resultProperty": "dialog.content.location",
-          "disabled": false
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "6uYkfu"
-          }
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "IqaYUz"
-          },
-          "activity": "${SendActivity_IqaYUz()}"
-        },
-        {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "OqiDH-"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_OqiDH_()}",
-          "property": "dialog.confirm",
-          "choiceOptions": {
-            "inlineSeparator": ", ",
-            "includeNumbers": true,
-            "inlineOr": " or ",
-            "inlineOrMore": ", or "
-          }
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "JNQpRm"
-          },
-          "name": "After confirm"
+          "condition": "dialog.content.addRoom",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "TesD2R"
+              },
+              "dialog": "FindMeetingRoom",
+              "resultProperty": "dialog.meetingRoom",
+              "options": {
+                "slots": "=dialog.slots",
+                "startDateTime": "=dialog.content.startDateTime",
+                "endDateTime": "=dialog.content.endDateTime",
+                "duration": "=dialog.content.duration"
+              },
+              "disabled": false
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "T1qOqn"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.content.roomList",
+              "value": "=dialog.meetingRoom",
+              "disabled": false
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "Y6BiSk"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.content.addRoom",
+                  "value": false
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "OaLtc4"
+            "id": "nqDUCB"
           },
-          "condition": "!dialog.confirm",
+          "condition": "dialog.content.addAttendee",
           "actions": [
             {
-              "$kind": "Microsoft.TextInput",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "-EJ-Mg"
+                "id": "sqVzpc"
               },
-              "maxTurnCount": 3,
-              "alwaysPrompt": false,
-              "allowInterruptions": "#GetInput.Score >= 0.5",
-              "prompt": "${TextInput_Prompt__EJ_Mg()}",
-              "invalidPrompt": "${TextInput_InvalidPrompt__EJ_Mg()}"
+              "dialog": "FindSingleContact",
+              "disabled": false,
+              "options": {
+                "attendee": "=coalesce(dialog.slots.personName)"
+              },
+              "resultProperty": "dialog.attendee"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "DP0elR"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.content.attendeeList",
+              "value": "=dialog.attendee",
+              "disabled": false
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "0hcTyQ"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.content.addAttendee",
+                  "value": false
+                }
+              ]
             }
           ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "LnEDtm"
+            "id": "I6tJuo"
+          },
+          "dialog": "SetTitle",
+          "options": {
+            "title": "=coalesce(dialog.slots.Subject, dialog.content.title)"
+          },
+          "resultProperty": "dialog.content.title"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8iodr9"
+          },
+          "dialog": "SetContent",
+          "options": {
+            "description": "=coalesce(dialog.slots.Desciption, dialog.content.description)"
+          },
+          "resultProperty": "dialog.content.description",
+          "disabled": false
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "hLNUtb"
+          },
+          "assignments": [
+            {
+              "property": "dialog.location",
+              "value": "= join(foreach(dialog.content.roomList, x, x.DisplayName), ',', ' and ')"
+            },
+            {
+              "property": "dialog.roomEmails",
+              "value": "= foreach(dialog.content.roomList, x, x.EmailAddress)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "OigRoD"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${TextInput_Prompt_OigRoD()}",
+          "property": "dialog.confirm",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "i4Zeri"
           },
           "dialog": "CreateMeetingRequest",
           "options": {
@@ -300,57 +372,55 @@
             "endDateTime": "=dialog.content.endDateTime",
             "title": "=dialog.content.title",
             "desciption": "=dialog.content.description",
-            "location": "=dialog.content.location",
+            "rooms": "=dialog.roomEmails",
             "attendees": "=dialog.content.attendeeList"
           },
-          "resultProperty": "dialog.requestResult",
-          "activityProcessed": true
+          "resultProperty": "dialog.requestResult"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "1D31fM"
+            "id": "DuQQm7"
           },
           "condition": "dialog.requestResult.requestStatus",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "Sac_7l"
+                "id": "OqVPIR"
               },
-              "activity": "${SendActivity_Sac_7l()}"
+              "activity": "${SendActivity_OqVPIR()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "YZ7nd7"
+                "id": "aN26Uv"
               },
-              "activity": "${SendActivity_YZ7nd7()}"
+              "activity": "${SendActivity_aN26Uv()}"
             }
           ]
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "eW3QJE"
+            "id": "e6jYF6"
           }
         }
-      ],
-      "defaultResultProperty": "dialog.result"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "QCZA_3"
+        "id": "DK__Hl"
       },
       "intent": "GetInput",
       "actions": [
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "ZewayD"
+            "id": "msd6RL"
           },
           "assignments": [
             {
@@ -386,33 +456,20 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "MOcvTI"
-          }
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "atwIdB"
+            "id": "la5sh2"
           },
-          "activity": "${SendActivity_atwIdB()}",
-          "disabled": true
+          "name": "BookMeetingRoomDialog GetInput"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "xSk2R4"
+            "id": "0vvcZ0"
           },
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "Lgf5NF"
-              }
-            },
-            {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-                "id": "Yj351k"
+                "id": "XJ1Ra9"
               },
               "condition": "dialog.foreach.value.Operation[0][0]",
               "cases": [
@@ -422,21 +479,21 @@
                     {
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
-                        "id": "vkfprH"
+                        "id": "9GYnnb"
                       },
                       "name": "Slot Change"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "EH3XT9"
+                        "id": "5kVZry"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "aoPLVk"
+                            "id": "FE0ONq"
                           },
                           "assignments": [
                             {
@@ -458,14 +515,14 @@
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "kBZ69j"
+                        "id": "AptYVh"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'title') || @Subject != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "3Et0zC"
+                            "id": "1Tn1hF"
                           },
                           "assignments": [
                             {
@@ -483,14 +540,14 @@
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "zS4HSE"
+                        "id": "5gomRK"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'content') || @Description != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "zMbADQ"
+                            "id": "au2i6K"
                           },
                           "assignments": [
                             {
@@ -508,14 +565,14 @@
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "tInynh"
+                        "id": "VGXz6a"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'time') || @ToDate != null || @ToTime != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "V83Dw3"
+                            "id": "IbKyGk"
                           },
                           "assignments": [
                             {
@@ -541,14 +598,14 @@
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "jJvykH"
+                        "id": "4lGB9a"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'duration') || @Duration != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "pq1WmQ"
+                            "id": "aI8QJP"
                           },
                           "assignments": [
                             {
@@ -566,23 +623,27 @@
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "64mhX7"
+                        "id": "25YzIt"
                       },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'location') || @Location != null",
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "G8ed3U"
+                            "id": "DjFTMh"
                           },
                           "assignments": [
                             {
-                              "property": "dialog.slots.Location ",
-                              "value": "=@Location "
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
                             },
                             {
-                              "property": "dialog.content.location ",
-                              "value": "= null"
+                              "property": "dialog.content.roomList",
+                              "value": "= []"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
+                              "value": true
                             }
                           ]
                         }
@@ -596,28 +657,28 @@
                     {
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
-                        "id": "IDvc0z"
+                        "id": "2vSXp5"
                       },
                       "name": "Slot Delete"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "Ytb5xq"
+                        "id": "VKWh8X"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.IfCondition",
                           "$designer": {
-                            "id": "2m1W8e"
+                            "id": "6RTvaZ"
                           },
                           "condition": "@personName != null",
                           "elseActions": [
                             {
                               "$kind": "Microsoft.SetProperties",
                               "$designer": {
-                                "id": "RuI6EM"
+                                "id": "1HJ7dc"
                               },
                               "assignments": [
                                 {
@@ -631,7 +692,7 @@
                             {
                               "$kind": "Microsoft.BeginDialog",
                               "$designer": {
-                                "id": "2i3HBY"
+                                "id": "AwIQM4"
                               },
                               "dialog": "FindSingleContact",
                               "disabled": false,
@@ -643,7 +704,7 @@
                             {
                               "$kind": "Microsoft.SetProperties",
                               "$designer": {
-                                "id": "pJPRfn"
+                                "id": "dG9Gb4"
                               },
                               "assignments": [
                                 {
@@ -651,6 +712,35 @@
                                   "value": "= where(dialog.content.attendeeList, x , x != dialog.attendee)"
                                 }
                               ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "ox1rvU"
+                      },
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "xort0u"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
+                            },
+                            {
+                              "property": "dialog.content.roomList",
+                              "value": "= []"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
+                              "value": true
                             }
                           ]
                         }
@@ -664,21 +754,21 @@
                     {
                       "$kind": "Microsoft.TraceActivity",
                       "$designer": {
-                        "id": "9j8SlT"
+                        "id": "NURp0q"
                       },
                       "name": "Slot Add"
                     },
                     {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "Ws4OD0"
+                        "id": "hT6yPU"
                       },
                       "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "YfVgsQ"
+                            "id": "qC5G0c"
                           },
                           "assignments": [
                             {
@@ -692,6 +782,31 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "HfHDHG"
+                      },
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'room') || @MeetingRoom != null",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "GHCLBU"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.slots.MeetingRoom",
+                              "value": "=@MeetingRoom"
+                            },
+                            {
+                              "property": "dialog.content.addRoom",
+                              "value": true
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -700,7 +815,7 @@
                 {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
-                    "id": "tjdFMF"
+                    "id": "tba3sD"
                   },
                   "name": "Default"
                 }
@@ -709,33 +824,37 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "f29aW_"
+                "id": "mZHLbB"
               },
               "assignments": [
                 {
                   "property": "dialog.content.repeat",
                   "value": true
+                },
+                {
+                  "property": "conversation.content",
+                  "value": "= dialog.content"
+                },
+                {
+                  "property": "conversation.slots",
+                  "value": "= dialog.slots"
                 }
               ]
             },
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-                "id": "0KzgkA"
-              },
-              "activityProcessed": true,
-              "options": {
-                "slots": "=dialog.slots",
-                "content": "=dialog.content"
+                "id": "rYufCa"
               }
             }
           ],
-          "itemsProperty": "dialog.slotOperation"
+          "itemsProperty": "@@SlotOperation",
+          "value": "dialog.foreach.value"
         }
       ],
       "condition": "#GetInput.Score >= 0.5 && @SlotOperation != null"
     }
   ],
-  "generator": "CreateMeetingDialog.lg",
-  "recognizer": "CreateMeetingDialog.lu"
+  "generator": "BookMeetingRoomDialog.lg",
+  "recognizer": "BookMeetingRoomDialog.lu"
 }
