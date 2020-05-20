@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.9.1" />
-    <PackageReference Include="Microsoft.Graph" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="3.5.0" />
     <PackageReference Include="Microsoft.Azure.Search" Version="10.0.1" />
   </ItemGroup>
 

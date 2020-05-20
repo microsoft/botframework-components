@@ -15,20 +15,11 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "-3ftvY"
+            "id": "r9q6k9"
           },
-          "assignments": [
-            {
-              "property": "dialog.startDateTime",
-              "value": "= $startDateTime"
-            },
-            {
-              "property": "dialog.query",
-              "value": "= $query"
-            }
-          ]
+          "name": "Search"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -46,7 +37,8 @@
                 "startTime": "now"
               },
               "dialog": "SetDateTime",
-              "resultProperty": "dialog.startDateTime"
+              "resultProperty": "dialog.startDateTime",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -87,15 +79,26 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "rJnUYP"
+            "id": "M7qTOI"
           },
-          "dialog": "GetMeetingRequest",
-          "options": {
-            "StartDateTime": "=dialog.utcStart",
-            "EndDateTime": "=dialog.utcEnd"
+          "activityProcessed": true,
+          "dialog": "GetAuthToken"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "POQZLf"
+          }
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetMeetings",
+          "$designer": {
+            "id": "q5yfJB"
           },
-          "resultProperty": "dialog.requestResult",
-          "activityProcessed": true
+          "token": "= turn.token",
+          "startTime": "= dialog.utcStart",
+          "endTime": "= dialog.utcEnd",
+          "resultProperty": "dialog.requestResult.meetingsList"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -105,12 +108,23 @@
           "name": "GetMeetingRequest"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "bVLB8V"
+            "id": "sMNCeG"
           },
-          "property": "dialog.result",
-          "value": "= dialog.requestResult"
+          "assignments": [
+            {
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Ay15Uh"
+          },
+          "name": "test"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -124,7 +138,7 @@
               "$designer": {
                 "id": "cHR2pt"
               },
-              "property": "dialog.result.meetingsList",
+              "property": "dialog.requestResult.meetingsList",
               "value": "= where(dialog.requestResult.meetingsList, x, contains(toLower(x.Title), toLower(dialog.query)))"
             }
           ]
@@ -134,14 +148,14 @@
           "$designer": {
             "id": "X5OKpF"
           },
-          "name": "GetMeetingRequest"
+          "name": "SearchMeetingsByConditionsEnd"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "4wYsQK"
           },
-          "value": "= dialog.result"
+          "value": "= dialog.requestResult"
         }
       ]
     }

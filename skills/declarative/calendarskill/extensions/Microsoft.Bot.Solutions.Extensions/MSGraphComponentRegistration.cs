@@ -29,6 +29,7 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<GetSchedule>(GetSchedule.DeclarativeType);
             yield return new DeclarativeType<UpdateEventTime>(UpdateEventTime.DeclarativeType);
             yield return new DeclarativeType<GetMeetingRooms>(GetMeetingRooms.DeclarativeType);
+            yield return new DeclarativeType<GetMeetings>(GetMeetings.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

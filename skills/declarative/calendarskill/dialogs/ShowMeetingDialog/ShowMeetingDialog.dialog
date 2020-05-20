@@ -115,15 +115,28 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "HavJhe"
+                "id": "7iWqGw"
               },
-              "resultProperty": "dialog.requestResult",
-              "dialog": "GetMeetingRequest",
-              "options": {
-                "StartDateTime": "=dialog.startDateTime",
-                "EndDateTime": "=dialog.endDateTime"
+              "activityProcessed": true,
+              "dialog": "GetAuthToken"
+            },
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetMeetings",
+              "$designer": {
+                "id": "qcb2Mx"
               },
-              "activityProcessed": true
+              "resultProperty": "dialog.requestResult.meetingsList",
+              "token": "=turn.token",
+              "startTime": "=dialog.startDateTime",
+              "endTime": "=dialog.endDateTime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "WA3Hto"
+              },
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
             },
             {
               "$kind": "Microsoft.IfCondition",
