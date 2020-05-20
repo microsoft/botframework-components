@@ -79,7 +79,7 @@
                 "id": "zqZlHV"
               },
               "activityProcessed": true,
-              "dialog": "GetMeDialog",
+              "dialog": "GetMe",
               "resultProperty": "dialog.requestResult"
             }
           ]
@@ -98,7 +98,7 @@
           "$designer": {
             "id": "WfaKvP"
           },
-          "name": "GetMeDialog"
+          "name": "GetMe"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -112,7 +112,7 @@
               "$designer": {
                 "id": "skwaxJ"
               },
-              "dialog": "FindContactDialog",
+              "dialog": "FindContact",
               "disabled": false,
               "options": {
                 "AttendeeList": "=[coalesce(dialog.slots.personName)]",
@@ -149,7 +149,7 @@
           "$designer": {
             "id": "UilBbg"
           },
-          "name": "FindContactDialog"
+          "name": "FindContact"
         },
         {
           "$kind": "Microsoft.IfCondition",
