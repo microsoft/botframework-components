@@ -457,7 +457,8 @@
           },
           "value": "=conversation.actionResult"
         }
-      ]
+      ],
+      "condition": "=turn.activity.name == \"MarkAll\""
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
