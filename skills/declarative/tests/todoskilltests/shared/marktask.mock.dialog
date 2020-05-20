@@ -1,10 +1,10 @@
 {
-    "$kind": "Microsoft.Test.HttpRequestSequenceMock",
-    "Method": "POST",
-    "Url": "https://graph.microsoft.com/beta/me/outlook/tasks/*/complete",
-    "Responses": [
-        {
-            "Content": ""
-        }
-    ]
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "POST",
+  "Url": "https://graph.microsoft.com/beta/me/outlook/tasks/*/complete",
+  "Responses": [
+    {
+      "Content": ""
+    }
+  ]
 }

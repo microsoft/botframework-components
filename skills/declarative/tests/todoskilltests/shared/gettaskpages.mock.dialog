@@ -1,38 +1,38 @@
 {
-    "$kind": "Microsoft.Test.HttpRequestSequenceMock",
-    "Method": "GET",
-    "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
-    "Responses": [
-        {
-            "Content": {
-                "value": [
-                    {
-                        "id": "BuyMilkId",
-                        "status": "notStarted",
-                        "subject": "buy milk"
-                    },
-                    {
-                        "id": "BuyWaterId",
-                        "status": "notStarted",
-                        "subject": "buy water"
-                    },
-                    {
-                        "id": "MilkId",
-                        "status": "notStarted",
-                        "subject": "milk"
-                    },
-                    {
-                        "id": "BuyFishId",
-                        "status": "notStarted",
-                        "subject": "buy fish"
-                    },
-                    {
-                        "id": "BuyShoesId",
-                        "status": "notStarted",
-                        "subject": "buy shoes"
-                    }
-                ]
-            }
-        }
-    ]
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "GET",
+  "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+          {
+            "id": "BuyMilkId",
+            "status": "notStarted",
+            "subject": "buy milk"
+          },
+          {
+            "id": "BuyWaterId",
+            "status": "notStarted",
+            "subject": "buy water"
+          },
+          {
+            "id": "MilkId",
+            "status": "notStarted",
+            "subject": "milk"
+          },
+          {
+            "id": "BuyFishId",
+            "status": "notStarted",
+            "subject": "buy fish"
+          },
+          {
+            "id": "BuyShoesId",
+            "status": "notStarted",
+            "subject": "buy shoes"
+          }
+        ]
+      }
+    }
+  ]
 }

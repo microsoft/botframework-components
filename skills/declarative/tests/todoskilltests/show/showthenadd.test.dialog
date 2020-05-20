@@ -1,64 +1,64 @@
 {
-    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-    "$kind": "Microsoft.Test.Script",
-    "properties": [
-        "settings.mock"
-    ],
-    "userTokens": [
-        "usertoken.mock"
-    ],
-    "httpRequestMocks": [
-        "addtask.mock",
-        "getlist.mock",
-        "gettask.mock"
-    ],
-    "dialog": "ToDoSkill",
-    "script": [
-        {
-            "$kind": "Microsoft.Test.UserConversationUpdate",
-            "membersAdded": [
-                "User"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyOneOf",
-            "text": [
-                "Hello, I'm the Todo sample bot. What can I do for you today?"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "view my todo list"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyActivity",
-            "assertions": [
-                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "000000"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item on To Do list is:"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Let me know if you want to add an item or mark one as complete."
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "add buy milk in grocery list"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I added buy milk to your Grocery list."
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Let me know if you want to add an item or mark one as complete."
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "properties": [
+    "settings.mock"
+  ],
+  "userTokens": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "addtask.mock",
+    "getlist.mock",
+    "gettask.mock"
+  ],
+  "dialog": "ToDoSkill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hello, I'm the Todo sample bot. What can I do for you today?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "view my todo list"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "The most recent item on To Do list is:"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Let me know if you want to add an item or mark one as complete."
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "add buy milk in grocery list"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I added buy milk to your Grocery list."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Let me know if you want to add an item or mark one as complete."
+    }
+  ]
 }

@@ -1,80 +1,80 @@
 {
-    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-    "$kind": "Microsoft.Test.Script",
-    "properties": [
-        "settings.mock"
-    ],
-    "userTokens": [
-        "usertoken.mock"
-    ],
-    "httpRequestMocks": [
-        "getlist.mock",
-        "gettask.mock",
-        "marktask.mock"
-    ],
-    "skillClaim": "skillclaim.mock",
-    "dialog": "ToDoSkill",
-    "script": [
-        {
-            "$kind": "Microsoft.Test.UserActivity",
-            "activity": {
-                "type": "event",
-                "name": "MarkToDo",
-                "locale": "en-US"
-            }
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Do you want to mark an item on your To Do, Shopping, or Grocery list as complete? (1) Shopping, (2) Grocery, or (3) To Do"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "todo"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyActivity",
-            "assertions": [
-                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "000000"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item on To Do list is:"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Ok, give me the exact title of the todo you would like to mark.."
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "milk"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "OK, I marked milk on your To Do list as complete."
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Let me know if you want to add an item or mark one as complete."
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "done"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I'm here if you need anything else."
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyActivity",
-            "assertions": [
-                "type == 'endOfConversation'",
-                "value.actionSuccess == true"
-            ]
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "properties": [
+    "settings.mock"
+  ],
+  "userTokens": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "getlist.mock",
+    "gettask.mock",
+    "marktask.mock"
+  ],
+  "skillClaim": "skillclaim.mock",
+  "dialog": "ToDoSkill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "MarkToDo",
+        "locale": "en-US"
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Do you want to mark an item on your To Do, Shopping, or Grocery list as complete? (1) Shopping, (2) Grocery, or (3) To Do"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "todo"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "The most recent item on To Do list is:"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Ok, give me the exact title of the todo you would like to mark.."
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "milk"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OK, I marked milk on your To Do list as complete."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Let me know if you want to add an item or mark one as complete."
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "done"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm here if you need anything else."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'endOfConversation'",
+        "value.actionSuccess == true"
+      ]
+    }
+  ]
 }

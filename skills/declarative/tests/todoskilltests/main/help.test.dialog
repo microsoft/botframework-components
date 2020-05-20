@@ -1,15 +1,15 @@
 {
-    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-    "$kind": "Microsoft.Test.Script",
-    "dialog": "ToDoSkill",
-    "script": [
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "help"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I can create a To Do, Shopping, or Grocery list for you, add or delete items to lists, or mark items as complete."
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "ToDoSkill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "help"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I can create a To Do, Shopping, or Grocery list for you, add or delete items to lists, or mark items as complete."
+    }
+  ]
 }

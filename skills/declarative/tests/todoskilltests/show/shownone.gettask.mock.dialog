@@ -1,13 +1,13 @@
 {
-    "$kind": "Microsoft.Test.HttpRequestSequenceMock",
-    "Method": "GET",
-    "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
-    "Responses": [
-        {
-            "Content": {
-                "value": [
-                ]
-            }
-        }
-    ]
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "GET",
+  "Url": "https://graph.microsoft.com/beta/me/outlook/taskFolders/*/tasks",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+        ]
+      }
+    }
+  ]
 }

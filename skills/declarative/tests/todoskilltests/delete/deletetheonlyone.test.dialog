@@ -1,72 +1,72 @@
 {
-    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-    "$kind": "Microsoft.Test.Script",
-    "properties": [
-        "settings.mock"
-    ],
-    "userTokens": [
-        "usertoken.mock"
-    ],
-    "httpRequestMocks": [
-        "deletetask.mock",
-        "getlist.mock",
-        "deletetheonlyone.gettask.mock"
-    ],
-    "dialog": "ToDoSkill",
-    "script": [
-        {
-            "$kind": "Microsoft.Test.UserConversationUpdate",
-            "membersAdded": [
-                "User"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyOneOf",
-            "text": [
-                "Hello, I'm the Todo sample bot. What can I do for you today?"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "delete a task"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Do you want to delete something from your To Do, Shopping, or Grocery list? (1) Shopping, (2) Grocery, or (3) To Do"
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "todo"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyActivity",
-            "assertions": [
-                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
-            ]
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "000000"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "The most recent item on To Do list is:"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "Ok, give me the exact title of the todo you would like to delete.."
-        },
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "milk"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I deleted milk from your To Do list. You don't have anything in your To Do list now."
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReply",
-            "text": "I'm here if you need anything else."
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "properties": [
+    "settings.mock"
+  ],
+  "userTokens": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "deletetask.mock",
+    "getlist.mock",
+    "deletetheonlyone.gettask.mock"
+  ],
+  "dialog": "ToDoSkill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hello, I'm the Todo sample bot. What can I do for you today?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "delete a task"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Do you want to delete something from your To Do, Shopping, or Grocery list? (1) Shopping, (2) Grocery, or (3) To Do"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "todo"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "The most recent item on To Do list is:"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Ok, give me the exact title of the todo you would like to delete.."
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "milk"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I deleted milk from your To Do list. You don't have anything in your To Do list now."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm here if you need anything else."
+    }
+  ]
 }
