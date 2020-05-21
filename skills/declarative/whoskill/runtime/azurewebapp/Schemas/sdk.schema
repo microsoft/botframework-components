@@ -23,6 +23,9 @@
 			"$ref": "#/definitions/Microsoft.BeginDialog"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.BeginSkill"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.BreakLoop"
 		},
 		{
@@ -108,33 +111,6 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GotoAction"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetDirectReports"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContacts"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContactsByKeyword"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContacts"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContactsByKeyword"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetManager"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetMe"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetPeers"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.Graph.Who.GetUsers"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -300,9 +276,6 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.SignOutUser"
-		},
-		{
-			"$ref": "#/definitions/Microsoft.SkillDialog"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.StaticActivityTemplate"
@@ -1068,6 +1041,108 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.BeginDialog"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.BeginSkill": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Begin a skill",
+			"description": "Begin a remote skill.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the skill dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"activityProcessed": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Activity Processed",
+					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
+					"default": true,
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Property",
+					"description": "Property to store any value returned by the dialog that is called.",
+					"examples": [
+						"dialog.userName"
+					]
+				},
+				"botId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host bot ID",
+					"description": "The Microsoft App ID that will be calling the skill.",
+					"default": "=settings.MicrosoftAppId"
+				},
+				"skillHostEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill host",
+					"description": "The callback Url for the skill host.",
+					"default": "=settings.skillHostEndpoint",
+					"examples": [
+						"https://mybot.contoso.com/api/skills/"
+					]
+				},
+				"connectionName": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "OAuth Connection Name (SSO)",
+					"description": "The OAuth Connection Name, that would be used to perform Single SignOn with a skill.",
+					"default": "=settings.connectionName"
+				},
+				"skillAppId": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill App ID",
+					"description": "The Microsoft App ID for the skill."
+				},
+				"skillEndpoint": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Skill endpoint ",
+					"description": "The /api/messages endpoint for the skill.",
+					"examples": [
+						"https://myskill.contoso.com/api/messages/"
+					]
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "The activity to send to the skill.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.BeginSkill"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3218,628 +3293,6 @@
 				}
 			}
 		},
-		"Microsoft.Graph.Who.GetDirectReports": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get DirectReports",
-			"description": "Get directReports using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"idProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"idProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Id",
-					"description": "Expression for id.",
-					"examples": [
-						"dialog.id"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetDirectReports"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetEmailContacts": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Email Contacts",
-			"description": "Get email contacts using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"topProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"topProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Top",
-					"description": "Expression for number of results.",
-					"examples": [
-						"dialog.top"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetEmailContacts"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetEmailContactsByKeyword": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Email Contacts By Keyword",
-			"description": "Get email contacts by keyword using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"topProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"keywordProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Keyword",
-					"description": "Expression for keyword.",
-					"examples": [
-						"dialog.keyword"
-					]
-				},
-				"topProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Top",
-					"description": "Expression for number of results.",
-					"examples": [
-						"dialog.top"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetEmailContactsByKeyword"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetEventContacts": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Event Contacts",
-			"description": "Get event contacts using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"topProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"topProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Top",
-					"description": "Expression for number of results.",
-					"examples": [
-						"dialog.top"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetEventContacts"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetEventContactsByKeyword": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Event Contacts By Keyword",
-			"description": "Get event contacts by keyword using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"keywordProperty",
-				"topProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"keywordProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Keyword",
-					"description": "Expression for keyword.",
-					"examples": [
-						"dialog.keyword"
-					]
-				},
-				"topProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Top",
-					"description": "Expression for number of results.",
-					"examples": [
-						"dialog.top"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetEventContactsByKeyword"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetManager": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Manager",
-			"description": "Get manager using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"idProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"idProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Id",
-					"description": "Expression for id.",
-					"examples": [
-						"dialog.id"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetManager"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetMe": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Me",
-			"description": "Get current user using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token/oneOf/5",
-							"examples": [
-								"=concat('x','y','z')"
-							]
-						}
-					]
-				},
-				"token": {
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "object",
-							"title": "Object"
-						},
-						{
-							"type": "array",
-							"title": "Array"
-						},
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"type": "boolean",
-							"title": "Boolean",
-							"examples": [
-								false
-							]
-						},
-						{
-							"type": "number",
-							"title": "Number",
-							"examples": [
-								15.5
-							]
-						},
-						{
-							"examples": [
-								"=..."
-							],
-							"type": "string",
-							"title": "Expression",
-							"pattern": "^=.*\\S.*"
-						}
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetMe"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetPeers": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Peers",
-			"description": "Get peers using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"idProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"idProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Id",
-					"description": "Expression for id.",
-					"examples": [
-						"dialog.id"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetPeers"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Graph.Who.GetUsers": {
-			"$role": "implements(Microsoft.IDialog)",
-			"type": "object",
-			"title": "Microsoft Graph - Get Users",
-			"description": "Get users by keyword using the Microsoft Graph API.",
-			"required": [
-				"token",
-				"keywordProperty",
-				"topProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/resultProperty",
-					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-					"examples": [
-						"dialog.contosodata"
-					]
-				},
-				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Token",
-					"description": "Microsoft Graph Authentication Token",
-					"examples": [
-						"user.token.token"
-					]
-				},
-				"keywordProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Keyword",
-					"description": "Expression for keyword.",
-					"examples": [
-						"dialog.keyword"
-					]
-				},
-				"topProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe/properties/token",
-					"title": "Top",
-					"description": "Expression for number of results.",
-					"examples": [
-						"dialog.top"
-					]
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Who.GetUsers"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
 		"Microsoft.GuidEntityRecognizer": {
 			"$role": "implements(Microsoft.IEntityRecognizer)",
 			"title": "Guid Entity Recognizer",
@@ -3964,7 +3417,7 @@
 				"resultProperty": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
 					"examples": [
 						"dialog.contosodata"
 					]
@@ -4583,13 +4036,13 @@
 					"$ref": "#/definitions/Microsoft.OAuthInput"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.SkillDialog"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.TextInput"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.BeginSkill"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BreakLoop"
@@ -4680,33 +4133,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetDirectReports"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContacts"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContactsByKeyword"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContacts"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContactsByKeyword"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetManager"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetMe"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetPeers"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Who.GetUsers"
 				}
 			]
 		},
@@ -8587,108 +8013,6 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.SignOutUser"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.SkillDialog": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Begin a skill dialog",
-			"description": "Begin a remote skill dialog.",
-			"type": "object",
-			"required": [
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the skill dialog"
-				},
-				"disabled": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Disabled",
-					"description": "Optional condition which if true will disable this action.",
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"activityProcessed": {
-					"$ref": "#/definitions/booleanExpression",
-					"title": "Activity Processed",
-					"description": "When set to false, the skill will be started using the activity in the current turn context instead of the activity in the Activity property.",
-					"default": true,
-					"examples": [
-						true,
-						"=f(x)"
-					]
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Property",
-					"description": "Property to store any value returned by the dialog that is called.",
-					"examples": [
-						"dialog.userName"
-					]
-				},
-				"botId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host bot ID",
-					"description": "The Microsoft App ID that will be calling the skill.",
-					"default": "=settings.MicrosoftAppId"
-				},
-				"skillHostEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill host",
-					"description": "The callback Url for the skill host.",
-					"default": "=settings.skillHostEndpoint",
-					"examples": [
-						"https://mybot.contoso.com/api/skills/"
-					]
-				},
-				"connectionName": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "OAuth Connection Name (SSO)",
-					"description": "The OAuth Connection Name, that would be used to perform Single SignOn with a skill.",
-					"default": "=settings.connectionName"
-				},
-				"skillAppId": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill App ID",
-					"description": "The Microsoft App ID for the skill."
-				},
-				"skillEndpoint": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Skill endpoint ",
-					"description": "The /api/messages endpoint for the skill.",
-					"examples": [
-						"https://myskill.contoso.com/api/messages/"
-					]
-				},
-				"activity": {
-					"$kind": "Microsoft.IActivityTemplate",
-					"title": "Activity",
-					"description": "The activity to send to the skill.",
-					"$ref": "#/definitions/Microsoft.IActivityTemplate"
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.SkillDialog"
 				},
 				"$designer": {
 					"title": "Designer information",
