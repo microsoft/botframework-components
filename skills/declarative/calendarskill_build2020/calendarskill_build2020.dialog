@@ -1,0 +1,147 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "calendarskill_build2020",
+      "id": "q7qgWj"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "vngoQl"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Hq37VG"
+          },
+          "activity": "${SendActivity_Hq37VG()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Ah82wF"
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9EVSB0"
+          },
+          "assignments": [
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.initialActivity",
+              "value": "=turn.activity.text"
+            }
+          ],
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zddQr7"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "EePsUz"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog",
+          "options": {
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "datetime": "=dialog.datetime",
+            "emailArray": "=dialog.emailArray",
+            "personNameArray": "=dialog.personNameArray",
+            "initialActivity": "=dialog.initialActivity"
+          }
+        }
+      ],
+      "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.5"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "BeF1jA"
+      },
+      "intent": "GetSchedule",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GJebyO"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wIpZVs"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "5ZrdDE"
+          },
+          "activityProcessed": true,
+          "dialog": "GetMeetingsForDate",
+          "options": {
+            "datetime": "=dialog.datetime"
+          }
+        }
+      ],
+      "condition": "turn.dialogevent.value.intents.GetSchedule.score > 0.5"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "calendarskill_build2020.lg",
+  "recognizer": "calendarskill_build2020.lu"
+}

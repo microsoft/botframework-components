@@ -1,0 +1,61 @@
+
+# SetTitle
+- Change the title to {title=team meeting}
+- Set the title to {title=lunch meeting}
+- Update the title to {title=engineering review}
+- rename this meeting to {title=baseball practice}
+- rename the meeting to {title=release planning}
+
+@ ml title
+
+# SetAttendees
+- Add elaine
+- Add ted to this meeting
+- Add ryan to this
+- Add ryan@outlook.com
+- Invite ted@email.com to this
+- Invite Alex
+- invite Adele to this
+- invite adele@gmail.com
+- invite Tom Jones and invite Alexa Montez
+- add allan
+- add allan to this
+- add diego
+- add diego to this
+
+@ prebuilt personName
+@ prebuilt email
+
+# SetDateTime
+- Change the time to 5pm
+- Move this to next week
+- Can you move this to Thursday?
+- move this to tomorrow at 2pm for 1 hour
+- reschedule this for next monday
+- move this to tomorrow at 3pm
+- move this to tomorrow
+- move this to next wednesday
+
+@ prebuilt datetimeV2
+
+# SetLocation
+- Set the location to {location=Bellevue}
+- Change the location to {location=City Center}
+- Update the location
+- Change the location to {location=Dough Zone in Bellevue}
+
+@ ml location
+
+# SetOnlineMeeting
+- Make this a teams meeting
+- Add a teams meeting to this
+- Add a teams link
+- Add an online meeting link
+- Make this an online meeting
+
+# ConfirmInput_Response_53FZhJ
+- yes
+- no
+- y
+- n
+

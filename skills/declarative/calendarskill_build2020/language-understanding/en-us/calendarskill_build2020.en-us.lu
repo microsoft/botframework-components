@@ -1,0 +1,25 @@
+
+# CreateEvent
+- new meeting
+- create meeting
+- schedule a meeting
+- book a meeting
+- book time with adele
+
+@ prebuilt datetimeV2
+@ prebuilt personName
+# GetSchedule
+- what meetings do i have
+- do i have any meetings
+- show my meetings
+- what meetings do i have today
+- do i have any meetings next wednesday
+- show my meetings for tomorrow
+- show schedule for 5/2/2020
+
+@ prebuilt datetimeV2
+
+#None
+- what color is the sky
+- what is your name
+- who is the president

@@ -1,0 +1,48 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "ixMfEG",
+    "name": "AuthenticationDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "JzF7Pc"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "9esul3"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.connectionName",
+          "title": "Login",
+          "text": "Please login to access your calendar.",
+          "property": "user.token"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetUserSettings",
+          "$designer": {
+            "id": "nCow5V"
+          },
+          "token": "=user.token.token",
+          "resultProperty": "user.settings"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Eypc02"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "AuthenticationDialog.lg"
+}
