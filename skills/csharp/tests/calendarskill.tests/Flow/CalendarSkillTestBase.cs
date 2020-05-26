@@ -135,7 +135,7 @@ namespace CalendarSkill.Test.Flow
             var sp = Services.BuildServiceProvider();
             var templates = sp.GetService<Templates>();
             var formatTemplateName = templateName + ".Text";
-            return templates.ExpandTemplate(formatTemplateName, data).ToArray();
+            return templates.ExpandTemplate(formatTemplateName, data).Select(obj => obj.ToString()).ToArray();
         }
 
         [TestCleanup]
