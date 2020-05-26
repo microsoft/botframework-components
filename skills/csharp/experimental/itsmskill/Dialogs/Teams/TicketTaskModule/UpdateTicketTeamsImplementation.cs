@@ -74,7 +74,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails)
+                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails, _settings.MicrosoftAppId)
                     }
                 }
             };
@@ -132,7 +132,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
+                            RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                             cancellationToken);
 
                         // Return Added Incident Envelope

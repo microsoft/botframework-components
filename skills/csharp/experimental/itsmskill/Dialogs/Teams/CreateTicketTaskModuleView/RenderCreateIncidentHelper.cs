@@ -82,7 +82,7 @@
             return response;
         }
 
-        public static AdaptiveCard BuildTicketCard(Ticket ticketResponse)
+        public static AdaptiveCard BuildTicketCard(Ticket ticketResponse, string botId)
         {
             var card = new AdaptiveCard("1.0")
             {
@@ -140,6 +140,7 @@
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
                         FlowData = new Dictionary<string, object>
                         {
@@ -156,6 +157,7 @@
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
                         FlowData = new Dictionary<string, object>
                         {

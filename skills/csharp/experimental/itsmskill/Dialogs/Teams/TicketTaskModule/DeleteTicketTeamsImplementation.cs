@@ -73,7 +73,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.GetDeleteConfirmationCard(incidentId)
+                        Content = TicketDialogHelper.GetDeleteConfirmationCard(incidentId, _settings.MicrosoftAppId)
                     }
                 }
             };

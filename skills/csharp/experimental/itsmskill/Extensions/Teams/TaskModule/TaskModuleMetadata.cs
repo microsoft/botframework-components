@@ -16,7 +16,10 @@ namespace ITSMSkill.Extensions.Teams.TaskModule
     public class TaskModuleMetadata
     {
         [DataMember]
-        public string AppName { get; set; }
+        public string SkillId { get; set; }
+
+        [DataMember]
+        public string SkillName { get; set; }
 
         [DataMember]
         public string TaskModuleFlowType { get; set; }

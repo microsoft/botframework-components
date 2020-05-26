@@ -64,7 +64,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.CreateIncidentAdaptiveCard()
+                        Content = TicketDialogHelper.CreateIncidentAdaptiveCard(_settings.MicrosoftAppId)
                     }
                 }
             };
@@ -74,7 +74,6 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
-            var accessToken = state.AccessTokenResponse.Token;
 
             ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
                 context,
@@ -114,7 +113,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                         context,
                         activityReference,
-                        RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
+                        RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                         cancellationToken);
 
                     return new TaskModuleContinueResponse()

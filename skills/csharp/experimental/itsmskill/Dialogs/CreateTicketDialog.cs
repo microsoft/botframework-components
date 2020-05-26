@@ -33,6 +33,7 @@ namespace ITSMSkill.Dialogs
     {
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly ConversationState _conversationState;
+        private readonly BotSettings _settings;
 
         public CreateTicketDialog(
              IServiceProvider serviceProvider)
@@ -40,6 +41,7 @@ namespace ITSMSkill.Dialogs
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+            _settings = serviceProvider.GetService<BotSettings>();
 
             var createTicket = new WaterfallStep[]
             {
@@ -106,7 +108,7 @@ namespace ITSMSkill.Dialogs
             var reply = sc.Context.Activity.CreateReply();
             reply.Attachments = new List<Attachment>()
             {
-                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = TicketDialogHelper.GetUserInputIncidentCard() }
+                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = TicketDialogHelper.GetUserInputIncidentCard(_settings.MicrosoftAppId) }
             };
 
             // Get ActivityId for purpose of mapping
