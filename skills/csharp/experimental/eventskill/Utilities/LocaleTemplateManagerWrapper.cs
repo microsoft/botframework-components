@@ -106,14 +106,7 @@ namespace EventSkill.Utilities
                 Data = data
             };
 
-            // Not use .Text in case text and speak are different
-            var list = manager.ExpandTemplate(name, input);
-            var result = list.Select(value =>
-            {
-                return JObject.Parse(value)["text"].ToString();
-            }).ToArray();
-
-            return result;
+            return manager.ExpandTemplate(name + ".Text", input).Select(obj => obj.ToString()).ToArray();
         }
 
         public static Templates CreateTemplates()

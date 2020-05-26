@@ -34,7 +34,10 @@
 - Sure, I can help you with this later.
 
 # MultipleLocationsFound.Text(Data)
-- ${MultipleLocationsFoundTextAndSpeak1(Data)}
+- I found the following.
+
+# MultipleLocationsFound.Speak(Data)
+- I've found ${Data.Count} options. ${Data.Options} Which one would you like?
 
 # MultipleLocationsFoundTextAndSpeak1(Data)
 [Activity
@@ -79,7 +82,10 @@
 - Which would you like?
 
 # CurrentLocationMultipleSelection.Text(Data)
-- ${CurrentLocationMultipleSelectionTextAndSpeak1(Data)}
+- Which one?
+
+# CurrentLocationMultipleSelection.Speak(Data)
+- I've found ${Data.Count} options. ${Data.Options} Which one is correct?
 
 # CurrentLocationMultipleSelectionTextAndSpeak1(Data)
 [Activity
