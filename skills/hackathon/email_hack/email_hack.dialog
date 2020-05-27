@@ -1,0 +1,118 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "email_hack",
+      "id": "wpXy75"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Welcome()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "zGk4iu"
+      },
+      "intent": "SendEmail",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ojCY4n"
+          },
+          "activity": "${SendActivity_ojCY4n()}"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Rt5C5B"
+          },
+          "activityProcessed": true,
+          "dialog": "Oauth"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "gN6fWd"
+          },
+          "property": "dialog.emailSubject",
+          "value": "EmailSubject"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "gDI6RR"
+          },
+          "property": "dialog.emailContent",
+          "value": "EmailContent"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "6A8KdO"
+          },
+          "property": "dialog.emailAddress",
+          "value": "shzhen@microsoft.com"
+        },
+        {
+          "$kind": "Microsoft.Graph.Email.SendEmail",
+          "$designer": {
+            "id": "C7HkJW"
+          },
+          "token": "=user.token.Token",
+          "emailSubjectProperty": "=dialog.emailSubject",
+          "emailContentProperty": "=dialog.emailContent",
+          "emailAddressProperty": "=dialog.emailAddress"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "email_hack.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "SendEmail",
+        "pattern": "send"
+      }
+    ]
+  }
+}
