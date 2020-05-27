@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="Action\" />
+    <Folder Include="Schema\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.9.1" />
-    <PackageReference Include="Microsoft.Graph" Version="3.6.0" />
   </ItemGroup>
 
 </Project>

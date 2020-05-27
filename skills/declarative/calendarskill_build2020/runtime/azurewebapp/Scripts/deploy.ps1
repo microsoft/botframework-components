@@ -71,12 +71,12 @@ Remove-Item $remoteBotPath -Recurse -ErrorAction Ignore
 
 if (-not $botPath) {
 	# If don't provide bot path, then try to copy all dialogs except the runtime folder in parent folder to the publishing folder (bin\Realse\ Folder)
-	$botPath = '..\..'
+	$botPath = '..'
 }
 
 $botPath = $(Join-Path $botPath '*')
 Write-Host "Publishing dialogs from external bot project: $($botPath)"
-Copy-Item -Path (Get-Item -Path $botPath -Exclude ('runtime')).FullName -Destination $remoteBotPath -Recurse -Force -Container
+Copy-Item -Path (Get-Item -Path $botPath -Exclude ('runtime', 'generated')).FullName -Destination $remoteBotPath -Recurse -Force -Container
 
 # Try to get luis config from appsettings
 $settings = Get-Content $(Join-Path $projFolder appsettings.deployment.json) | ConvertFrom-Json
