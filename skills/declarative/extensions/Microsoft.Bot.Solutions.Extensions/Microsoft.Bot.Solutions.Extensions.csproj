@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.9.1" />
     <PackageReference Include="Microsoft.Graph" Version="3.6.0" />
   </ItemGroup>
-
+  
 </Project>
