@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Update Work Book Data",
+  "description": "Update Work Book Data from Microsoft Graph API.",
+  "required": [
+    "token",
+    "xArray",
+    "yArray"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "token": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "xArray": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "xArray",
+      "description": "x Array",
+      "examples": [
+        "dialog.xArray"
+      ]
+    },
+    "yArray": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "yArray",
+      "description": "y Array",
+      "examples": [
+        "dialog.yArray"
+      ]
+    }
+  }
+}

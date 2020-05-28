@@ -54,6 +54,21 @@
       "actions": [
         "GetGithubIssues.main"
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "0hK6Zt"
+      },
+      "intent": "SubscribeChart"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "hyjAVq"
+      },
+      "schema": "",
+      "intent": "GetGitHubIssueTrend"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
@@ -64,6 +79,14 @@
       {
         "intent": "GetGithubIssues",
         "pattern": "find github issues"
+      },
+      {
+        "intent": "SubscribeChart",
+        "pattern": "subscribe chart"
+      },
+      {
+        "intent": "GetGitHubIssueTrend",
+        "pattern": "get issue trend"
       }
     ]
   }
