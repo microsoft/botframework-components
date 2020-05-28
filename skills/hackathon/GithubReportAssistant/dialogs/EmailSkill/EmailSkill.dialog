@@ -1,0 +1,20 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "ERWEd2",
+    "name": "EmailSkill"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "PMjny7"
+      },
+      "actions": []
+    }
+  ],
+  "generator": "EmailSkill.lg"
+}
