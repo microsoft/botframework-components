@@ -128,7 +128,8 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
+                // Check if Error is UnAuthorized and logout user
+                return await HandleAPIUnauthorizedError(sc, result, cancellationToken);
             }
 
             var card = GetTicketCard(sc.Context, state, result.Tickets[0]);
