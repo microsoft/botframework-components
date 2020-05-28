@@ -1,9 +1,0 @@
-[import](common.lg)
-
-# SendActivity_Welcome
-- ${WelcomeUser()}
-
-# SendActivity_s9EGxX()
-- add task
-# SendActivity_udDFcj()
-- ${dialog.contosodata}

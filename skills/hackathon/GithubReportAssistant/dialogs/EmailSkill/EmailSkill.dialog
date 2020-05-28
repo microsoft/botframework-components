@@ -13,7 +13,64 @@
         "name": "BeginDialog",
         "id": "PMjny7"
       },
-      "actions": []
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "bR0lZc"
+          },
+          "activity": "${SendActivity_bR0lZc()}"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "A7Cg2O"
+          },
+          "activityProcessed": true,
+          "dialog": "Oauth"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "JUE9eB"
+          },
+          "property": "dialog.emailSubject",
+          "value": "EmailSubject"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "9kCA8T"
+          },
+          "property": "dialog.emailContent",
+          "value": "EmailContent"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "LrY4B5"
+          },
+          "property": "dialog.emailAddress",
+          "value": "shzhen@microsoft.com"
+        },
+        {
+          "$kind": "Microsoft.Graph.Email.SendEmail",
+          "$designer": {
+            "id": "ecmrAx"
+          },
+          "token": "=user.token.Token",
+          "emailSubjectProperty": "=dialog.emailSubject",
+          "emailContentProperty": "=dialog.emailContent",
+          "emailAddressProperty": "=dialog.emailAddress"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "mDQJEK"
+          },
+          "activity": "${SendActivity_mDQJEK()}"
+        }
+      ]
     }
   ],
   "generator": "EmailSkill.lg"

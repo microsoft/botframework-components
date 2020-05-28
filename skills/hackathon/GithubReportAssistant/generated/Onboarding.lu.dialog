@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "Onboarding.en-us.lu",
+        "": "Onboarding.en-us.lu"
+    }
+}

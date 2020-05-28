@@ -147,6 +147,23 @@
           "dialog": "EmailSkill"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "P9cbGp"
+      },
+      "intent": "ToDoSkill",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wkzFdZ"
+          },
+          "activityProcessed": true,
+          "dialog": "ToDoSkill"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

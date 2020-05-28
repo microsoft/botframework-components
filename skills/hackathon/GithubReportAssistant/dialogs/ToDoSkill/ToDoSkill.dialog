@@ -1,0 +1,60 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "0Lk89H",
+    "name": "ToDoSkill"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "QMnpzP"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "GSOS9l"
+          },
+          "activity": "${SendActivity_GSOS9l()}"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wmaU1B"
+          },
+          "activityProcessed": true,
+          "dialog": "Oauth"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "xM8gZA"
+          },
+          "property": "dialog.taskContent",
+          "value": "TaskContent"
+        },
+        {
+          "$kind": "Microsoft.Graph.ToDo.AddTask",
+          "$designer": {
+            "id": "1MWkY8"
+          },
+          "token": "=user.token.Token",
+          "taskContentProperty": "=dialog.taskContent",
+          "resultProperty": "dialog.contosodata"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "0YqSLn"
+          },
+          "activity": "${SendActivity_0YqSLn()}"
+        }
+      ]
+    }
+  ],
+  "generator": "ToDoSkill.lg"
+}
