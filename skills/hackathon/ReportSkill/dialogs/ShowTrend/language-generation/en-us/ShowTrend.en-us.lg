@@ -1,0 +1,12 @@
+[import](common.lg)
+
+# OAuthInput_InvalidPrompt_EbH9kK()
+- Invalid
+# OAuthInput_DefaultValueResponse_EbH9kK()
+- default
+
+# SendActivity_1yDJdU()
+[Activity
+    Text = Here is the chart:
+    Attachments = ${json(ChartCard(dialog.title, dialog.chartUrl))}
+]

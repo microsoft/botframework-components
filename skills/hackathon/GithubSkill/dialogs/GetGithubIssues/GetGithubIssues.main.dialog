@@ -1,0 +1,1037 @@
+{
+	"$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/master/experimental/generation/runbot/runbot.schema",
+	"$kind": "Microsoft.AdaptiveDialog",
+	"recognizer": "GetGithubIssues.lu",
+	"generator": "GetGithubIssues.lg",
+	"schema": "GetGithubIssues.json",
+	"triggers": [
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$owner || $PropertyToChange == 'owner'",
+			"priority": "=indexOf(dialog.requiredProperties, 'owner')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askowner()}",
+					"expectedProperties": [
+						"owner"
+					]
+				}
+			],
+			"id": "GetGithubIssues-owner-missing",
+			"$Generator": "103d7b1b88f6eb420408884f54b432aa"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'owner'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('owner')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$owner"
+				}
+			],
+			"id": "GetGithubIssues-owner-clear",
+			"$Generator": "9cbcbdde41905bd50b5d2a33944051a2"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'owner'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-owner-show",
+			"$Generator": "67dfe1c5909a790c523615b194e4ea7d"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "owner",
+			"entity": "utterance",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('owner', @utterance)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$owner",
+					"value": "=@utterance"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'owner'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-owner-add-utterance",
+			"$Generator": "795a4ecacb72ec7745e6579c8228e011"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$repo || $PropertyToChange == 'repo'",
+			"priority": "=indexOf(dialog.requiredProperties, 'repo')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askrepo()}",
+					"expectedProperties": [
+						"repo"
+					]
+				}
+			],
+			"id": "GetGithubIssues-repo-missing",
+			"$Generator": "c222bdb01c1158e0c90e707758fc8e7f"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'repo'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('repo')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$repo"
+				}
+			],
+			"id": "GetGithubIssues-repo-clear",
+			"$Generator": "38f63ba5610f0686744126f610bcc2f2"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'repo'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-repo-show",
+			"$Generator": "b5e66ec465a8df9278ae14506afd59c6"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "repo",
+			"entity": "utterance",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('repo', @utterance)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$repo",
+					"value": "=@utterance"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'repo'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-repo-add-utterance",
+			"$Generator": "8c7f780ac94dd9037f423b060b82e91a"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$filter || $PropertyToChange == 'filter'",
+			"priority": "=indexOf(dialog.requiredProperties, 'filter')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askfilter()}",
+					"expectedProperties": [
+						"filter"
+					]
+				}
+			],
+			"id": "GetGithubIssues-filter-missing",
+			"$Generator": "323591d8df4b3949a702cdfa5fc8ed67"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'filter'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('filter')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$filter"
+				}
+			],
+			"id": "GetGithubIssues-filter-clear",
+			"$Generator": "afed560e8d2c5a76b9acce8a92f23c90"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'filter'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-filter-show",
+			"$Generator": "6ea03ab97376b1c9c63077d8fa88b9de"
+		},
+		{
+			"$kind": "Microsoft.OnChooseEntity",
+			"entity": "filterEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${choosefilterEntity()}",
+					"expectedProperties": [
+						"filter"
+					]
+				}
+			],
+			"id": "GetGithubIssues-filterEntity-choose",
+			"$Generator": "b62ddbaf441b03fa03bb612f2008e727"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "filter",
+			"entity": "filterEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('filter', @filterEntity)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$filter",
+					"value": "=@filterEntity"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'filter'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-filter-add-filterEntity",
+			"$Generator": "5ecceaa662dacb8271f0bb6a5e3722b0"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "RemoveFromProperty",
+			"property": "filter",
+			"entity": "filterEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$filter == @filterEntity",
+					"actions": [
+						{
+							"$kind": "Microsoft.SendActivity",
+							"activity": "${removePropertyMessage('filter', @filterEntity)}"
+						},
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "filter"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-filter-remove-filterEntity",
+			"$Generator": "9eaf1bf11d9e8ff45a226fe69657a78e"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$assignee || $PropertyToChange == 'assignee'",
+			"priority": "=indexOf(dialog.requiredProperties, 'assignee')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askassignee()}",
+					"expectedProperties": [
+						"assignee"
+					]
+				}
+			],
+			"id": "GetGithubIssues-assignee-missing",
+			"$Generator": "59e0ad46957a59f95fbf19d9dab14262"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'assignee'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('assignee')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$assignee"
+				}
+			],
+			"id": "GetGithubIssues-assignee-clear",
+			"$Generator": "ad9974ee3f543fe2463b4ef7bba27550"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'assignee'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-assignee-show",
+			"$Generator": "33a072b82577b829eac918a6a4576e7a"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "assignee",
+			"entity": "utterance",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('assignee', @utterance)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$assignee",
+					"value": "=@utterance"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'assignee'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-assignee-add-utterance",
+			"$Generator": "9acc6a8baca59da9b6b6dc89eb4fc094"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$state || $PropertyToChange == 'state'",
+			"priority": "=indexOf(dialog.requiredProperties, 'state')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askstate()}",
+					"expectedProperties": [
+						"state"
+					]
+				}
+			],
+			"id": "GetGithubIssues-state-missing",
+			"$Generator": "f0c5e1f36b8a4c5a41a4a8508d7414c8"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'state'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('state')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$state"
+				}
+			],
+			"id": "GetGithubIssues-state-clear",
+			"$Generator": "957b30af423a523d7bb2035dfcee07e4"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'state'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-state-show",
+			"$Generator": "c2ede491dffc295dfad7c36d4bd71f2e"
+		},
+		{
+			"$kind": "Microsoft.OnChooseEntity",
+			"entity": "stateEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${choosestateEntity()}",
+					"expectedProperties": [
+						"state"
+					]
+				}
+			],
+			"id": "GetGithubIssues-stateEntity-choose",
+			"$Generator": "2e00319ee454b2e1f7b877e693535e50"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "state",
+			"entity": "stateEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('state', @stateEntity)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$state",
+					"value": "=@stateEntity"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'state'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-state-add-stateEntity",
+			"$Generator": "247775c05764a05b45aae1264a1017a0"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "RemoveFromProperty",
+			"property": "state",
+			"entity": "stateEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$state == @stateEntity",
+					"actions": [
+						{
+							"$kind": "Microsoft.SendActivity",
+							"activity": "${removePropertyMessage('state', @stateEntity)}"
+						},
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "state"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-state-remove-stateEntity",
+			"$Generator": "e400443791cc6817ccab31ab151977d7"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$labels || $PropertyToChange == 'labels'",
+			"priority": "=indexOf(dialog.requiredProperties, 'labels')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Asklabels()}",
+					"expectedProperties": [
+						"labels"
+					]
+				}
+			],
+			"id": "GetGithubIssues-labels-missing",
+			"$Generator": "d4cbb2498071c25210d22d75ae321aaf"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'labels'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('labels')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$labels"
+				}
+			],
+			"id": "GetGithubIssues-labels-clear",
+			"$Generator": "6ee5bc044c7e32a308540d3d7f80b9c0"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'labels'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-labels-show",
+			"$Generator": "73eff4d4ca46eb94913670f436705cce"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "labels",
+			"entity": "utterance",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('labels', @utterance)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$labels",
+					"value": "=@utterance"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'labels'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-labels-add-utterance",
+			"$Generator": "2259a7b065de4598b59b759850ca045e"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$sort || $PropertyToChange == 'sort'",
+			"priority": "=indexOf(dialog.requiredProperties, 'sort')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Asksort()}",
+					"expectedProperties": [
+						"sort"
+					]
+				}
+			],
+			"id": "GetGithubIssues-sort-missing",
+			"$Generator": "a0b4b0af15ac33612250169f56f542eb"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'sort'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('sort')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$sort"
+				}
+			],
+			"id": "GetGithubIssues-sort-clear",
+			"$Generator": "e70272351c2a23cba09fe5f10f36cb13"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'sort'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-sort-show",
+			"$Generator": "f829d0e20fd3309bd55b52613c513af3"
+		},
+		{
+			"$kind": "Microsoft.OnChooseEntity",
+			"entity": "sortEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${choosesortEntity()}",
+					"expectedProperties": [
+						"sort"
+					]
+				}
+			],
+			"id": "GetGithubIssues-sortEntity-choose",
+			"$Generator": "3d1a0f29e9fcaf541513e8755cf147d7"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "sort",
+			"entity": "sortEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('sort', @sortEntity)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$sort",
+					"value": "=@sortEntity"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'sort'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-sort-add-sortEntity",
+			"$Generator": "7e3e70272dad80d0be08b33c1d69440a"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "RemoveFromProperty",
+			"property": "sort",
+			"entity": "sortEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$sort == @sortEntity",
+					"actions": [
+						{
+							"$kind": "Microsoft.SendActivity",
+							"activity": "${removePropertyMessage('sort', @sortEntity)}"
+						},
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "sort"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-sort-remove-sortEntity",
+			"$Generator": "71a856942dd52e4e3aaba8bfe8f4bfa9"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "!$direction || $PropertyToChange == 'direction'",
+			"priority": "=indexOf(dialog.requiredProperties, 'direction')",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${Askdirection()}",
+					"expectedProperties": [
+						"direction"
+					]
+				}
+			],
+			"id": "GetGithubIssues-direction-missing",
+			"$Generator": "c940a8e88ad5446a46c05ce69b3a153a"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ClearProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'direction'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${clearPropertyMessage('direction')}"
+				},
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "$direction"
+				}
+			],
+			"id": "GetGithubIssues-direction-clear",
+			"$Generator": "5b49bf2c9eb9b67f2b91de80acc91647"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "ShowProperty",
+			"entity": "PROPERTYName",
+			"condition": "@PROPERTYName == 'direction'",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showPropertyMessage(@PROPERTYName)}"
+				}
+			],
+			"id": "GetGithubIssues-direction-show",
+			"$Generator": "2ac3ffc4b128429f51ad603d180e84b0"
+		},
+		{
+			"$kind": "Microsoft.OnChooseEntity",
+			"entity": "directionEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${choosedirectionEntity()}",
+					"expectedProperties": [
+						"direction"
+					]
+				}
+			],
+			"id": "GetGithubIssues-directionEntity-choose",
+			"$Generator": "adfbf5cd2e404b39fa95fa96f2536eec"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "direction",
+			"entity": "directionEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${setPropertyMessage('direction', @directionEntity)}"
+				},
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$direction",
+					"value": "=@directionEntity"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$PropertyToChange == 'direction'",
+					"actions": [
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "$PropertyToChange"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-direction-add-directionEntity",
+			"$Generator": "853bcff5d0224140033a35c19e9d041c"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "RemoveFromProperty",
+			"property": "direction",
+			"entity": "directionEntity",
+			"actions": [
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$direction == @directionEntity",
+					"actions": [
+						{
+							"$kind": "Microsoft.SendActivity",
+							"activity": "${removePropertyMessage('direction', @directionEntity)}"
+						},
+						{
+							"$kind": "Microsoft.DeleteProperty",
+							"property": "direction"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-direction-remove-directionEntity",
+			"$Generator": "699f433f56e5c0124f20bf05b67982b7"
+		},
+		{
+			"$kind": "Microsoft.OnIntent",
+			"intent": "Cancel",
+			"condition": "turn.recognized.score > 0.5",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${cancel()}",
+					"expectedProperties": [
+						"CancelConfirmation"
+					]
+				}
+			],
+			"id": "GetGithubIssues-library-CancelIntent",
+			"$Generator": "baf91830ab73837b79161ed19a39fc16"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "CancelConfirmation",
+			"entity": "boolean",
+			"actions": [
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$CancelConfirmation",
+					"value": "=@boolean"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$CancelConfirmation == 'true'",
+					"actions": [
+						{
+							"$kind": "Microsoft.EndDialog"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-CancelConfirmation-add-boolean",
+			"$Generator": "a51fa6b76f2fcb886c686e7560fe2398"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "ChangePropertyConfirmation",
+			"entity": "boolean",
+			"actions": [
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$ChangePropertyConfirmation",
+					"value": "=@boolean"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$ChangePropertyConfirmation == 'true'",
+					"actions": [
+						{
+							"$kind": "Microsoft.Ask",
+							"activity": "${template(concat('Ask',$PropertyToRemember))}",
+							"expectedProperties": "createArray($PropertyToRemember)"
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-ChangePropertyConfirmation-add-boolean",
+			"$Generator": "750d41a6ad34125395fbfb46b06daee4"
+		},
+		{
+			"$kind": "Microsoft.OnEndOfActions",
+			"condition": "empty(where(dialog.requiredProperties, property, !dialog[property]))",
+			"priority": 1000,
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showForm('GetGithubIssues', publicProperties())}"
+				},
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${confirmChange()}",
+					"expectedProperties": [
+						"CompleteConfirmation"
+					]
+				}
+			],
+			"id": "GetGithubIssues-library-CompleteConfirmation",
+			"$Generator": "0bca9273a6a8cfb3b0bf377b0acfcfe4"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "CompleteConfirmation",
+			"entity": "boolean",
+			"actions": [
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$CompleteConfirmation",
+					"value": "=@boolean"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"condition": "$CompleteConfirmation == 'false'",
+					"actions": [
+						{
+              "$kind": "Microsoft.HttpRequest",
+              "method": "get",
+              "url": "https://api.github.com/repos/${$owner}/${$repo}/issues?filter=${$filter}&assignee=${$assignee}&state=${$state}&labels=${$labels}",
+              "responseType": "Json",
+              "resultProperty": "dialog.response",
+              "headers": {
+                "User-Agent": "PostmanRuntime/7.22.0"
+              }
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "activity": "${showResponse(dialog.response)}"
+            },
+						{
+							"$kind": "Microsoft.EndDialog"
+						}
+					],
+					"elseActions": [
+						{
+							"$kind": "Microsoft.Ask",
+							"activity": "${chooseProperty()}",
+							"expectedProperties": [
+								"PropertyToChange"
+							]
+						}
+					]
+				}
+			],
+			"id": "GetGithubIssues-CompleteConfirmation-MakeHttpRequest-add-boolean",
+			"$Generator": "64d290089e9c55caedfb92b8e167467a"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "CompleteConfirmation",
+			"entity": "PROPERTYName",
+			"actions": [
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$PropertyToChange",
+					"value": "=@PropertyName"
+				}
+			],
+			"id": "GetGithubIssues-CompleteConfirmation-add-PROPERTYName",
+			"$Generator": "d302459ce5f67294df7315c3fcb76654"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "PropertyToChange",
+			"entity": "PROPERTYName",
+			"actions": [
+				{
+					"$kind": "Microsoft.DeleteProperty",
+					"property": "dialog[@PROPERTYName]"
+				}
+			],
+			"id": "GetGithubIssues-PropertyToChange-add-PROPERTYName",
+			"$Generator": "d57bdba77cfed0d40265b4a032068a35"
+		},
+		{
+			"$kind": "Microsoft.OnAssignEntity",
+			"operation": "AddToProperty",
+			"property": "PropertyToRemember",
+			"entity": "PROPERTYName",
+			"actions": [
+				{
+					"$kind": "Microsoft.SetProperty",
+					"property": "$PropertyToRemember",
+					"value": "=@PROPERTYName"
+				}
+			],
+			"id": "GetGithubIssues-PropertyToRemember-add-PROPERTYName",
+			"$Generator": "6bf76793355b105a658fa13dce0489fa"
+		},
+		{
+			"$kind": "Microsoft.OnBeginDialog",
+			"$comment": "TODO: This is a hack to work around the lack of a way to remit activity or not when invoked.",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${welcome()}"
+				}
+			],
+			"id": "GetGithubIssues-library-BeginDialog",
+			"$Generator": "0d5cad20be440413d38235075cf6fab6"
+		},
+		{
+			"$kind": "Microsoft.OnChooseProperty",
+			"actions": [
+				{
+					"$kind": "Microsoft.Ask",
+					"activity": "${chooseProperties()}",
+					"expectedProperties": [
+						"PropertyToChange"
+					]
+				}
+			],
+			"id": "GetGithubIssues-library-ChooseProperty",
+			"$Generator": "18d0c6a8117ac9f66bb4c9e8180b9216"
+		},
+		{
+			"$kind": "Microsoft.OnIntent",
+			"intent": "Help",
+			"condition": "turn.recognized.score > 0.5",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${help(@PropertyName)}"
+				}
+			],
+			"id": "GetGithubIssues-library-HelpIntent",
+			"$Generator": "1b3d27431648e1906925ac3b2ba25636"
+		},
+		{
+			"$kind": "Microsoft.OnIntent",
+			"intent": "None",
+			"condition": "count(turn.recognizedentities) == 0",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${notUnderstood()}"
+				}
+			],
+			"id": "GetGithubIssues-library-NotUnderstood",
+			"$Generator": "3a179a25172915debe0b5056cc3591f4"
+		},
+		{
+			"$kind": "Microsoft.OnIntent",
+			"intent": "GetGithubIssues",
+			"condition": "count(turn.recognizedentities) == 0",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${notUnderstood()}"
+				}
+			],
+			"id": "GetGithubIssues-trigger",
+			"$Generator": "46abddee287e945396c9e2eb8c4e89ea"
+		},
+		{
+			"$kind": "Microsoft.OnIntent",
+			"intent": "ShowForm",
+			"condition": "turn.recognized.score > 0.5",
+			"actions": [
+				{
+					"$kind": "Microsoft.SendActivity",
+					"activity": "${showForm('GetGithubIssues', dialogClass.schema.$public)}"
+				}
+			],
+			"id": "GetGithubIssues-library-ShowFormIntent",
+			"$Generator": "d4afd90a09120585540dc178d588c308"
+		}
+	],
+	"$Generator": "3e2c4449e664d97ead9c6048a1a703ef"
+}

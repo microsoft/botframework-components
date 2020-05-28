@@ -1,0 +1,167 @@
+
+@ list directionEntity =
+	- asc:
+		- asc
+	- desc:
+		- desc
+
+@ list PROPERTYName
+    - direction:
+
+
+@composite AddToProperty = [directionEntity]
+@composite RemoveFromProperty = [directionEntity]
+@composite ClearProperty = [PROPERTYName]
+@composite ShowProperty = [PROPERTYName]
+# GetGithubIssues
+> Add only
+- add {@AddToProperty=asc}
+- add {@AddToProperty=desc}
+- add {@AddToProperty=asc}
+- with {@AddToProperty=asc}
+- with {@AddToProperty=asc}
+- with {@AddToProperty=desc}
+- add {@AddToProperty=desc and asc}
+- add {@AddToProperty=asc and asc}
+- add {@AddToProperty=desc and desc}
+- with {@AddToProperty=desc and asc}
+- with {@AddToProperty=desc and desc}
+- with {@AddToProperty=asc and asc}
+- add {@AddToProperty=asc, desc and asc}
+- add {@AddToProperty=desc, asc and desc}
+- add {@AddToProperty=desc, asc and asc}
+- with {@AddToProperty=desc, asc and asc}
+- with {@AddToProperty=desc, desc and desc}
+- with {@AddToProperty=asc, desc and asc}
+> Remove only
+- remove {@RemoveFromProperty=desc}
+- remove {@RemoveFromProperty=desc}
+- remove {@RemoveFromProperty=desc}
+- remove {@RemoveFromProperty=asc and desc}
+- remove {@RemoveFromProperty=asc and desc}
+- remove {@RemoveFromProperty=desc and asc}
+- remove {@RemoveFromProperty=asc, asc and asc}
+- remove {@RemoveFromProperty=desc, asc and asc}
+- remove {@RemoveFromProperty=desc, asc and asc}
+- delete {@RemoveFromProperty=asc}
+- delete {@RemoveFromProperty=asc}
+- delete {@RemoveFromProperty=asc}
+- delete {@RemoveFromProperty=desc and asc}
+- delete {@RemoveFromProperty=desc and asc}
+- delete {@RemoveFromProperty=asc and asc}
+- delete {@RemoveFromProperty=desc, asc and desc}
+- delete {@RemoveFromProperty=desc, desc and desc}
+- delete {@RemoveFromProperty=desc, asc and desc}
+- without {@RemoveFromProperty=desc}
+- without {@RemoveFromProperty=desc}
+- without {@RemoveFromProperty=asc}
+- without {@RemoveFromProperty=desc and desc}
+- without {@RemoveFromProperty=asc and desc}
+- without {@RemoveFromProperty=desc and desc}
+- without {@RemoveFromProperty=desc, asc and desc}
+- without {@RemoveFromProperty=asc, asc and desc}
+- without {@RemoveFromProperty=desc, asc and asc}
+- with no {@RemoveFromProperty=desc}
+- with no {@RemoveFromProperty=asc}
+- with no {@RemoveFromProperty=asc}
+- with no {@RemoveFromProperty=desc and asc}
+- with no {@RemoveFromProperty=asc and desc}
+- with no {@RemoveFromProperty=asc and desc}
+- with no {@RemoveFromProperty=asc, asc and asc}
+- with no {@RemoveFromProperty=asc, desc and desc}
+- with no {@RemoveFromProperty=desc, asc and asc}
+> Clear only
+- clear {@ClearProperty=direction}
+- clear {@ClearProperty=direction}
+- clear {@ClearProperty=direction}
+- remove {@ClearProperty=direction}
+- remove {@ClearProperty=direction}
+- remove {@ClearProperty=direction}
+- empty {@ClearProperty=direction}
+- empty {@ClearProperty=direction}
+- empty {@ClearProperty=direction}
+> Show only
+- value of {@ShowProperty=direction}
+- value of {@ShowProperty=direction}
+- value of {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- selection of {@ShowProperty=direction}
+- selection of {@ShowProperty=direction}
+- selection of {@ShowProperty=direction}
+- selection for {@ShowProperty=direction}
+- selection for {@ShowProperty=direction}
+- selection for {@ShowProperty=direction}
+- display {@ShowProperty=direction}
+- display {@ShowProperty=direction}
+- display {@ShowProperty=direction}
+- show {@ShowProperty=direction}
+- show {@ShowProperty=direction}
+- show {@ShowProperty=direction}
+- value of {@ShowProperty=direction}
+- value of {@ShowProperty=direction}
+- value of {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- value for {@ShowProperty=direction}
+- {@ShowProperty=direction} value
+- {@ShowProperty=direction} value
+- {@ShowProperty=direction} value
+- {@ShowProperty=direction} values
+- {@ShowProperty=direction} values
+- {@ShowProperty=direction} values
+- {@ShowProperty=direction} selection
+- {@ShowProperty=direction} selection
+- {@ShowProperty=direction} selection
+> Combinations
+- add {@AddToProperty=desc} and remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc} and remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=desc} and remove {@RemoveFromProperty=desc}
+- add {@AddToProperty=desc} remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc} remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=desc} remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=desc}, remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=desc}, remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc}, remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc and desc} and remove {@RemoveFromProperty=desc}
+- add {@AddToProperty=asc and asc} and remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc and asc} and remove {@RemoveFromProperty=asc}
+- add {@AddToProperty=asc, asc and desc} and remove {@RemoveFromProperty=asc and desc}
+- add {@AddToProperty=desc, desc and desc} and remove {@RemoveFromProperty=desc and asc}
+- add {@AddToProperty=asc, desc and asc} and remove {@RemoveFromProperty=desc and asc}
+- add {@AddToProperty=asc, asc and desc} remove {@RemoveFromProperty=asc and desc}
+- add {@AddToProperty=desc, asc and asc} remove {@RemoveFromProperty=desc and asc}
+- add {@AddToProperty=asc, asc and asc} remove {@RemoveFromProperty=desc and desc}
+- add {@AddToProperty=desc}, remove {@RemoveFromProperty=desc} and show {@ShowProperty=direction}
+- add {@AddToProperty=desc}, remove {@RemoveFromProperty=asc} and show {@ShowProperty=direction}
+- add {@AddToProperty=desc}, remove {@RemoveFromProperty=asc} and show {@ShowProperty=direction}
+- remove {@RemoveFromProperty=desc} and add {@AddToProperty=desc}
+- remove {@RemoveFromProperty=asc} and add {@AddToProperty=desc}
+- remove {@RemoveFromProperty=desc} and add {@AddToProperty=desc}
+- remove {@RemoveFromProperty=asc and desc} and add {@AddToProperty=asc}
+- remove {@RemoveFromProperty=asc and asc} and add {@AddToProperty=asc}
+- remove {@RemoveFromProperty=asc and asc} and add {@AddToProperty=desc}
+- remove {@RemoveFromProperty=asc, asc and asc} and add {@AddToProperty=desc and asc}
+- remove {@RemoveFromProperty=desc, desc and asc} and add {@AddToProperty=desc and desc}
+- remove {@RemoveFromProperty=desc, desc and asc} and add {@AddToProperty=asc and asc}
+- remove {@RemoveFromProperty=asc}, add {@AddToProperty=desc} and show {@ShowProperty=direction}
+- remove {@RemoveFromProperty=asc}, add {@AddToProperty=asc} and show {@ShowProperty=direction}
+- remove {@RemoveFromProperty=desc}, add {@AddToProperty=asc} and show {@ShowProperty=direction}
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=asc} and add {@AddToProperty=desc}
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=desc} and add {@AddToProperty=asc}
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=desc} and add {@AddToProperty=desc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=desc and asc} and add {@AddToProperty=asc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=desc and desc} and add {@AddToProperty=desc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=asc and asc} and add {@AddToProperty=desc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=asc, asc and desc} and add {@AddToProperty=desc and desc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=desc, desc and asc} and add {@AddToProperty=asc and asc}
+- show {@ShowProperty=direction} remove {@RemoveFromProperty=desc, asc and desc} and add {@AddToProperty=asc and desc}
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=asc}, add {@AddToProperty=desc} 
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=desc}, add {@AddToProperty=desc} 
+- display {@ShowProperty=direction} remove {@RemoveFromProperty=desc}, add {@AddToProperty=asc} 
+
+- direction
+
+
+> Generator: 2e16bf472bfb2a79752fb0ec1cd50376

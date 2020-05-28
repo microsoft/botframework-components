@@ -1,0 +1,139 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "ReportSkill",
+      "id": "7T5fDX"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Welcome()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GLTX6I"
+      },
+      "intent": "ShowTrend",
+      "actions": [
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "O4RduJ"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.x",
+          "resultProperty": "dialog.xResult",
+          "value": "2020.5.1"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "6lsFyj"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.x",
+          "resultProperty": "dialog.xResult",
+          "value": "2020.5.2"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "WDn1vi"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.x",
+          "resultProperty": "dialog.xResult",
+          "value": "2020.5.3"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "g8lQ1Z"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.y",
+          "resultProperty": "dialog.yResult",
+          "value": "3"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "T9oMUU"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.y",
+          "resultProperty": "dialog.yResult",
+          "value": "2"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "SIfVN2"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.y",
+          "resultProperty": "dialog.yResult",
+          "value": "1"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2UzhG8"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "w3kIyb"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowTrend",
+          "options": {
+            "x": "=dialog.x",
+            "y": "=dialog.y"
+          }
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "reportskill.lg",
+  "recognizer": "reportskill.lu"
+}

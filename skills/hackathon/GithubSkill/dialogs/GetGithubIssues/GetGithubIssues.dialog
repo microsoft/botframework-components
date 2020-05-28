@@ -1,0 +1,13 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "84HcSH",
+    "name": "GetGithubIssues",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "schema": "",
+  "dialogType": "swaggerDialog",
+  "generator": "GetGithubIssues.lg"
+}

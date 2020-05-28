@@ -1,0 +1,19 @@
+
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Choose.en-us.lg](GetGithubIssues-library-Choose.en-us.lg)
+
+# stateEntity(value) 
+- SWITCH: ${value}
+  - CASE: ${'open'} 
+    - open
+  - CASE: ${'closed'} 
+    - closed
+  - DEFAULT: 
+    - no value
+
+
+# choosestateEntity
+- ${chooseEnumEntity('state')}
+
+
+> Generator: 1d173a966e53e252ed4af3a95e1f699b

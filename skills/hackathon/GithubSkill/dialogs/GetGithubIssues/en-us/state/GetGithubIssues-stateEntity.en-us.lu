@@ -1,0 +1,167 @@
+
+@ list stateEntity =
+	- open:
+		- open
+	- closed:
+		- closed
+
+@ list PROPERTYName
+    - state:
+
+
+@composite AddToProperty = [stateEntity]
+@composite RemoveFromProperty = [stateEntity]
+@composite ClearProperty = [PROPERTYName]
+@composite ShowProperty = [PROPERTYName]
+# GetGithubIssues
+> Add only
+- add {@AddToProperty=open}
+- add {@AddToProperty=closed}
+- add {@AddToProperty=open}
+- with {@AddToProperty=open}
+- with {@AddToProperty=open}
+- with {@AddToProperty=closed}
+- add {@AddToProperty=closed and open}
+- add {@AddToProperty=open and open}
+- add {@AddToProperty=closed and closed}
+- with {@AddToProperty=closed and open}
+- with {@AddToProperty=closed and closed}
+- with {@AddToProperty=open and open}
+- add {@AddToProperty=open, closed and open}
+- add {@AddToProperty=closed, open and closed}
+- add {@AddToProperty=closed, open and open}
+- with {@AddToProperty=closed, open and open}
+- with {@AddToProperty=closed, closed and closed}
+- with {@AddToProperty=open, closed and open}
+> Remove only
+- remove {@RemoveFromProperty=closed}
+- remove {@RemoveFromProperty=closed}
+- remove {@RemoveFromProperty=closed}
+- remove {@RemoveFromProperty=open and closed}
+- remove {@RemoveFromProperty=open and closed}
+- remove {@RemoveFromProperty=closed and open}
+- remove {@RemoveFromProperty=open, open and open}
+- remove {@RemoveFromProperty=closed, open and open}
+- remove {@RemoveFromProperty=closed, open and open}
+- delete {@RemoveFromProperty=open}
+- delete {@RemoveFromProperty=open}
+- delete {@RemoveFromProperty=open}
+- delete {@RemoveFromProperty=closed and open}
+- delete {@RemoveFromProperty=closed and open}
+- delete {@RemoveFromProperty=open and open}
+- delete {@RemoveFromProperty=closed, open and closed}
+- delete {@RemoveFromProperty=closed, closed and closed}
+- delete {@RemoveFromProperty=closed, open and closed}
+- without {@RemoveFromProperty=closed}
+- without {@RemoveFromProperty=closed}
+- without {@RemoveFromProperty=open}
+- without {@RemoveFromProperty=closed and closed}
+- without {@RemoveFromProperty=open and closed}
+- without {@RemoveFromProperty=closed and closed}
+- without {@RemoveFromProperty=closed, open and closed}
+- without {@RemoveFromProperty=open, open and closed}
+- without {@RemoveFromProperty=closed, open and open}
+- with no {@RemoveFromProperty=closed}
+- with no {@RemoveFromProperty=open}
+- with no {@RemoveFromProperty=open}
+- with no {@RemoveFromProperty=closed and open}
+- with no {@RemoveFromProperty=open and closed}
+- with no {@RemoveFromProperty=open and closed}
+- with no {@RemoveFromProperty=open, open and open}
+- with no {@RemoveFromProperty=open, closed and closed}
+- with no {@RemoveFromProperty=closed, open and open}
+> Clear only
+- clear {@ClearProperty=state}
+- clear {@ClearProperty=state}
+- clear {@ClearProperty=state}
+- remove {@ClearProperty=state}
+- remove {@ClearProperty=state}
+- remove {@ClearProperty=state}
+- empty {@ClearProperty=state}
+- empty {@ClearProperty=state}
+- empty {@ClearProperty=state}
+> Show only
+- value of {@ShowProperty=state}
+- value of {@ShowProperty=state}
+- value of {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- selection of {@ShowProperty=state}
+- selection of {@ShowProperty=state}
+- selection of {@ShowProperty=state}
+- selection for {@ShowProperty=state}
+- selection for {@ShowProperty=state}
+- selection for {@ShowProperty=state}
+- display {@ShowProperty=state}
+- display {@ShowProperty=state}
+- display {@ShowProperty=state}
+- show {@ShowProperty=state}
+- show {@ShowProperty=state}
+- show {@ShowProperty=state}
+- value of {@ShowProperty=state}
+- value of {@ShowProperty=state}
+- value of {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- value for {@ShowProperty=state}
+- {@ShowProperty=state} value
+- {@ShowProperty=state} value
+- {@ShowProperty=state} value
+- {@ShowProperty=state} values
+- {@ShowProperty=state} values
+- {@ShowProperty=state} values
+- {@ShowProperty=state} selection
+- {@ShowProperty=state} selection
+- {@ShowProperty=state} selection
+> Combinations
+- add {@AddToProperty=closed} and remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open} and remove {@RemoveFromProperty=open}
+- add {@AddToProperty=closed} and remove {@RemoveFromProperty=closed}
+- add {@AddToProperty=closed} remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open} remove {@RemoveFromProperty=open}
+- add {@AddToProperty=closed} remove {@RemoveFromProperty=open}
+- add {@AddToProperty=closed}, remove {@RemoveFromProperty=open}
+- add {@AddToProperty=closed}, remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open}, remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open and closed} and remove {@RemoveFromProperty=closed}
+- add {@AddToProperty=open and open} and remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open and open} and remove {@RemoveFromProperty=open}
+- add {@AddToProperty=open, open and closed} and remove {@RemoveFromProperty=open and closed}
+- add {@AddToProperty=closed, closed and closed} and remove {@RemoveFromProperty=closed and open}
+- add {@AddToProperty=open, closed and open} and remove {@RemoveFromProperty=closed and open}
+- add {@AddToProperty=open, open and closed} remove {@RemoveFromProperty=open and closed}
+- add {@AddToProperty=closed, open and open} remove {@RemoveFromProperty=closed and open}
+- add {@AddToProperty=open, open and open} remove {@RemoveFromProperty=closed and closed}
+- add {@AddToProperty=closed}, remove {@RemoveFromProperty=closed} and show {@ShowProperty=state}
+- add {@AddToProperty=closed}, remove {@RemoveFromProperty=open} and show {@ShowProperty=state}
+- add {@AddToProperty=closed}, remove {@RemoveFromProperty=open} and show {@ShowProperty=state}
+- remove {@RemoveFromProperty=closed} and add {@AddToProperty=closed}
+- remove {@RemoveFromProperty=open} and add {@AddToProperty=closed}
+- remove {@RemoveFromProperty=closed} and add {@AddToProperty=closed}
+- remove {@RemoveFromProperty=open and closed} and add {@AddToProperty=open}
+- remove {@RemoveFromProperty=open and open} and add {@AddToProperty=open}
+- remove {@RemoveFromProperty=open and open} and add {@AddToProperty=closed}
+- remove {@RemoveFromProperty=open, open and open} and add {@AddToProperty=closed and open}
+- remove {@RemoveFromProperty=closed, closed and open} and add {@AddToProperty=closed and closed}
+- remove {@RemoveFromProperty=closed, closed and open} and add {@AddToProperty=open and open}
+- remove {@RemoveFromProperty=open}, add {@AddToProperty=closed} and show {@ShowProperty=state}
+- remove {@RemoveFromProperty=open}, add {@AddToProperty=open} and show {@ShowProperty=state}
+- remove {@RemoveFromProperty=closed}, add {@AddToProperty=open} and show {@ShowProperty=state}
+- display {@ShowProperty=state} remove {@RemoveFromProperty=open} and add {@AddToProperty=closed}
+- display {@ShowProperty=state} remove {@RemoveFromProperty=closed} and add {@AddToProperty=open}
+- display {@ShowProperty=state} remove {@RemoveFromProperty=closed} and add {@AddToProperty=closed}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=closed and open} and add {@AddToProperty=open}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=closed and closed} and add {@AddToProperty=closed}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=open and open} and add {@AddToProperty=closed}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=open, open and closed} and add {@AddToProperty=closed and closed}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=closed, closed and open} and add {@AddToProperty=open and open}
+- show {@ShowProperty=state} remove {@RemoveFromProperty=closed, open and closed} and add {@AddToProperty=open and closed}
+- display {@ShowProperty=state} remove {@RemoveFromProperty=open}, add {@AddToProperty=closed} 
+- display {@ShowProperty=state} remove {@RemoveFromProperty=closed}, add {@AddToProperty=closed} 
+- display {@ShowProperty=state} remove {@RemoveFromProperty=closed}, add {@AddToProperty=open} 
+
+- state
+
+
+> Generator: 2ac03f2227feda1fe794d6386edfcb56

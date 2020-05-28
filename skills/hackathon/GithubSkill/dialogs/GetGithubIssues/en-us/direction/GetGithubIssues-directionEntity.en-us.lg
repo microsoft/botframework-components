@@ -1,0 +1,19 @@
+
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Choose.en-us.lg](GetGithubIssues-library-Choose.en-us.lg)
+
+# directionEntity(value) 
+- SWITCH: ${value}
+  - CASE: ${'asc'} 
+    - asc
+  - CASE: ${'desc'} 
+    - desc
+  - DEFAULT: 
+    - no value
+
+
+# choosedirectionEntity
+- ${chooseEnumEntity('direction')}
+
+
+> Generator: b466a602ad06c79ff946b3c1c82d3271

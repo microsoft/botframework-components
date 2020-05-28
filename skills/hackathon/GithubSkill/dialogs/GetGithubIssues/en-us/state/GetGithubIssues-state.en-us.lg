@@ -1,0 +1,17 @@
+
+[GetGithubIssues-stateEntity.en-us.lg](GetGithubIssues-stateEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askstate
+- ${askEnum('state')}
+
+
+# stateName
+- state
+
+# state(val)
+- ${stateEntity(val)}
+
+
+> Generator: 4f6cf9e0c3c826e8431dd2700daab17a

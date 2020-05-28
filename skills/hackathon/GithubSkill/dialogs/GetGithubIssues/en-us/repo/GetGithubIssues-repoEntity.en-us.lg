@@ -1,0 +1,8 @@
+
+# repoEntity(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+> Generator: d1a0ebcd713e66a278959511389ff619

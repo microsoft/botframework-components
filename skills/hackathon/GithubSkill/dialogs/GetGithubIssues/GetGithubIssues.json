@@ -1,0 +1,177 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"properties": {
+		"owner": {
+			"type": "string",
+			"$entities": [
+				"utterance"
+			]
+		},
+		"repo": {
+			"type": "string",
+			"$entities": [
+				"utterance"
+			]
+		},
+		"filter": {
+			"type": "string",
+			"enum": [
+				"assigned",
+				"created",
+				"mentioned",
+				"subscribed",
+				"all"
+			],
+			"$entities": [
+				"filterEntity"
+			]
+		},
+		"assignee": {
+			"type": "string",
+			"$entities": [
+				"utterance"
+			]
+		},
+		"state": {
+			"type": "string",
+			"enum": [
+				"open",
+				"closed"
+			],
+			"$entities": [
+				"stateEntity"
+			]
+		},
+		"labels": {
+			"type": "string",
+			"$entities": [
+				"utterance"
+			]
+		},
+		"sort": {
+			"type": "string",
+			"enum": [
+				"created",
+				"updated",
+				"comments"
+			],
+			"$entities": [
+				"sortEntity"
+			]
+		},
+		"direction": {
+			"type": "string",
+			"enum": [
+				"asc",
+				"desc"
+			],
+			"$entities": [
+				"directionEntity"
+			]
+		},
+		"CancelConfirmation": {
+			"type": "boolean",
+			"$entities": [
+				"boolean"
+			]
+		},
+		"ChangePropertyConfirmation": {
+			"type": "boolean",
+			"$entities": [
+				"boolean"
+			]
+		},
+		"CompleteConfirmation": {
+			"type": "string",
+			"$entities": [
+				"boolean",
+				"PROPERTYName"
+			]
+		},
+		"PropertyToChange": {
+			"type": "string",
+			"enum": [
+				"owner",
+				"repo",
+				"filter",
+				"assignee",
+				"state",
+				"labels",
+				"sort",
+				"direction"
+			],
+			"$entities": [
+				"PROPERTYName"
+			]
+		},
+		"PropertyToRemember": {
+			"type": "string",
+			"enum": [
+				"owner",
+				"repo",
+				"filter",
+				"assignee",
+				"state",
+				"labels",
+				"sort",
+				"direction"
+			],
+			"$entities": [
+				"PROPERTYName"
+			]
+		}
+	},
+	"required": [
+		"owner",
+		"repo",
+		"filter",
+		"assignee",
+		"state",
+		"labels",
+		"sort",
+		"direction"
+	],
+	"$expectedOnly": [
+		"boolean",
+		"PROPERTYName",
+		"utterance",
+		"keyPhrase",
+		"personName"
+	],
+	"$operations": [
+		"AddToProperty",
+		"RemoveFromProperty",
+		"ClearProperty",
+		"ShowProperty"
+	],
+	"$public": [
+		"owner",
+		"repo",
+		"filter",
+		"assignee",
+		"state",
+		"labels",
+		"sort",
+		"direction"
+	],
+	"definitions": {
+		"PROPERTYName": {
+			"type": "string",
+			"enum": [
+				"owner",
+				"repo",
+				"filter",
+				"assignee",
+				"state",
+				"labels",
+				"sort",
+				"direction"
+			],
+			"$entities": [
+				"PROPERTYName"
+			]
+		}
+	},
+	"$defaultOperation": "AddToProperty"
+}

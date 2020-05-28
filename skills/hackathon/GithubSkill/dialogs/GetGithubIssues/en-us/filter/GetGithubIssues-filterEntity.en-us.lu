@@ -1,0 +1,173 @@
+
+@ list filterEntity =
+	- assigned:
+		- assigned
+	- created:
+		- created
+	- mentioned:
+		- mentioned
+	- subscribed:
+		- subscribed
+	- all:
+		- all
+
+@ list PROPERTYName
+    - filter:
+
+
+@composite AddToProperty = [filterEntity]
+@composite RemoveFromProperty = [filterEntity]
+@composite ClearProperty = [PROPERTYName]
+@composite ShowProperty = [PROPERTYName]
+# GetGithubIssues
+> Add only
+- add {@AddToProperty=all}
+- add {@AddToProperty=assigned}
+- add {@AddToProperty=assigned}
+- with {@AddToProperty=assigned}
+- with {@AddToProperty=assigned}
+- with {@AddToProperty=created}
+- add {@AddToProperty=created and created}
+- add {@AddToProperty=all and created}
+- add {@AddToProperty=assigned and assigned}
+- with {@AddToProperty=subscribed and all}
+- with {@AddToProperty=subscribed and mentioned}
+- with {@AddToProperty=mentioned and created}
+- add {@AddToProperty=mentioned, subscribed and mentioned}
+- add {@AddToProperty=subscribed, created and mentioned}
+- add {@AddToProperty=subscribed, mentioned and assigned}
+- with {@AddToProperty=created, all and mentioned}
+- with {@AddToProperty=mentioned, assigned and created}
+- with {@AddToProperty=mentioned, subscribed and subscribed}
+> Remove only
+- remove {@RemoveFromProperty=mentioned}
+- remove {@RemoveFromProperty=subscribed}
+- remove {@RemoveFromProperty=mentioned}
+- remove {@RemoveFromProperty=assigned and created}
+- remove {@RemoveFromProperty=subscribed and mentioned}
+- remove {@RemoveFromProperty=all and mentioned}
+- remove {@RemoveFromProperty=subscribed, assigned and assigned}
+- remove {@RemoveFromProperty=assigned, mentioned and mentioned}
+- remove {@RemoveFromProperty=mentioned, mentioned and created}
+- delete {@RemoveFromProperty=mentioned}
+- delete {@RemoveFromProperty=assigned}
+- delete {@RemoveFromProperty=subscribed}
+- delete {@RemoveFromProperty=all and subscribed}
+- delete {@RemoveFromProperty=subscribed and created}
+- delete {@RemoveFromProperty=all and assigned}
+- delete {@RemoveFromProperty=assigned, assigned and all}
+- delete {@RemoveFromProperty=all, all and assigned}
+- delete {@RemoveFromProperty=subscribed, mentioned and all}
+- without {@RemoveFromProperty=assigned}
+- without {@RemoveFromProperty=mentioned}
+- without {@RemoveFromProperty=assigned}
+- without {@RemoveFromProperty=all and assigned}
+- without {@RemoveFromProperty=mentioned and assigned}
+- without {@RemoveFromProperty=assigned and assigned}
+- without {@RemoveFromProperty=assigned, all and created}
+- without {@RemoveFromProperty=all, assigned and mentioned}
+- without {@RemoveFromProperty=assigned, assigned and created}
+- with no {@RemoveFromProperty=assigned}
+- with no {@RemoveFromProperty=created}
+- with no {@RemoveFromProperty=created}
+- with no {@RemoveFromProperty=created and mentioned}
+- with no {@RemoveFromProperty=created and mentioned}
+- with no {@RemoveFromProperty=created and mentioned}
+- with no {@RemoveFromProperty=created, created and subscribed}
+- with no {@RemoveFromProperty=created, assigned and assigned}
+- with no {@RemoveFromProperty=assigned, created and created}
+> Clear only
+- clear {@ClearProperty=filter}
+- clear {@ClearProperty=filter}
+- clear {@ClearProperty=filter}
+- remove {@ClearProperty=filter}
+- remove {@ClearProperty=filter}
+- remove {@ClearProperty=filter}
+- empty {@ClearProperty=filter}
+- empty {@ClearProperty=filter}
+- empty {@ClearProperty=filter}
+> Show only
+- value of {@ShowProperty=filter}
+- value of {@ShowProperty=filter}
+- value of {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- selection of {@ShowProperty=filter}
+- selection of {@ShowProperty=filter}
+- selection of {@ShowProperty=filter}
+- selection for {@ShowProperty=filter}
+- selection for {@ShowProperty=filter}
+- selection for {@ShowProperty=filter}
+- display {@ShowProperty=filter}
+- display {@ShowProperty=filter}
+- display {@ShowProperty=filter}
+- show {@ShowProperty=filter}
+- show {@ShowProperty=filter}
+- show {@ShowProperty=filter}
+- value of {@ShowProperty=filter}
+- value of {@ShowProperty=filter}
+- value of {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- value for {@ShowProperty=filter}
+- {@ShowProperty=filter} value
+- {@ShowProperty=filter} value
+- {@ShowProperty=filter} value
+- {@ShowProperty=filter} values
+- {@ShowProperty=filter} values
+- {@ShowProperty=filter} values
+- {@ShowProperty=filter} selection
+- {@ShowProperty=filter} selection
+- {@ShowProperty=filter} selection
+> Combinations
+- add {@AddToProperty=assigned} and remove {@RemoveFromProperty=mentioned}
+- add {@AddToProperty=assigned} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=mentioned} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=created} remove {@RemoveFromProperty=all}
+- add {@AddToProperty=created} remove {@RemoveFromProperty=mentioned}
+- add {@AddToProperty=assigned} remove {@RemoveFromProperty=assigned}
+- add {@AddToProperty=all}, remove {@RemoveFromProperty=all}
+- add {@AddToProperty=all}, remove {@RemoveFromProperty=assigned}
+- add {@AddToProperty=created}, remove {@RemoveFromProperty=all}
+- add {@AddToProperty=created and assigned} and remove {@RemoveFromProperty=assigned}
+- add {@AddToProperty=assigned and mentioned} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=created and subscribed} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=subscribed, subscribed and mentioned} and remove {@RemoveFromProperty=mentioned and all}
+- add {@AddToProperty=mentioned, created and all} and remove {@RemoveFromProperty=mentioned and mentioned}
+- add {@AddToProperty=mentioned, created and created} and remove {@RemoveFromProperty=all and subscribed}
+- add {@AddToProperty=assigned, created and subscribed} remove {@RemoveFromProperty=mentioned and mentioned}
+- add {@AddToProperty=subscribed, subscribed and mentioned} remove {@RemoveFromProperty=all and mentioned}
+- add {@AddToProperty=mentioned, subscribed and mentioned} remove {@RemoveFromProperty=mentioned and all}
+- add {@AddToProperty=all}, remove {@RemoveFromProperty=subscribed} and show {@ShowProperty=filter}
+- add {@AddToProperty=assigned}, remove {@RemoveFromProperty=all} and show {@ShowProperty=filter}
+- add {@AddToProperty=subscribed}, remove {@RemoveFromProperty=all} and show {@ShowProperty=filter}
+- remove {@RemoveFromProperty=created} and add {@AddToProperty=assigned}
+- remove {@RemoveFromProperty=mentioned} and add {@AddToProperty=mentioned}
+- remove {@RemoveFromProperty=mentioned} and add {@AddToProperty=mentioned}
+- remove {@RemoveFromProperty=created and all} and add {@AddToProperty=all}
+- remove {@RemoveFromProperty=mentioned and created} and add {@AddToProperty=subscribed}
+- remove {@RemoveFromProperty=subscribed and assigned} and add {@AddToProperty=mentioned}
+- remove {@RemoveFromProperty=subscribed, mentioned and assigned} and add {@AddToProperty=mentioned and all}
+- remove {@RemoveFromProperty=subscribed, subscribed and created} and add {@AddToProperty=subscribed and subscribed}
+- remove {@RemoveFromProperty=mentioned, subscribed and created} and add {@AddToProperty=created and assigned}
+- remove {@RemoveFromProperty=mentioned}, add {@AddToProperty=assigned} and show {@ShowProperty=filter}
+- remove {@RemoveFromProperty=mentioned}, add {@AddToProperty=subscribed} and show {@ShowProperty=filter}
+- remove {@RemoveFromProperty=mentioned}, add {@AddToProperty=all} and show {@ShowProperty=filter}
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=mentioned} and add {@AddToProperty=all}
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=all} and add {@AddToProperty=created}
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=assigned} and add {@AddToProperty=subscribed}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=all and subscribed} and add {@AddToProperty=assigned}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=all and mentioned} and add {@AddToProperty=mentioned}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=subscribed and assigned} and add {@AddToProperty=all}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=all, subscribed and assigned} and add {@AddToProperty=all and subscribed}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=all, created and assigned} and add {@AddToProperty=mentioned and assigned}
+- show {@ShowProperty=filter} remove {@RemoveFromProperty=created, created and subscribed} and add {@AddToProperty=subscribed and assigned}
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=mentioned}, add {@AddToProperty=mentioned} 
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=subscribed}, add {@AddToProperty=all} 
+- display {@ShowProperty=filter} remove {@RemoveFromProperty=all}, add {@AddToProperty=created} 
+
+- filter
+
+
+> Generator: 8d078f75865acc2e1d97c944ccf0f391

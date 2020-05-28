@@ -1,0 +1,20 @@
+
+[GetGithubIssues-repoEntity.en-us.lg](GetGithubIssues-repoEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askrepo
+- ${askString('repo')}
+
+
+# repoName
+- repo
+
+# repo(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+
+> Generator: f59b236e14d1cb492bfe03a00fa6e6ba

@@ -1,0 +1,17 @@
+
+[GetGithubIssues-filterEntity.en-us.lg](GetGithubIssues-filterEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askfilter
+- ${askEnum('filter')}
+
+
+# filterName
+- filter
+
+# filter(val)
+- ${filterEntity(val)}
+
+
+> Generator: d2bec3cbbc3887a0d9663ade64d947ea

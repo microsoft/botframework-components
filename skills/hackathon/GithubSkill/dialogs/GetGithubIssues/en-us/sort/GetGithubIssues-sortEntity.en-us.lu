@@ -1,0 +1,169 @@
+
+@ list sortEntity =
+	- created:
+		- created
+	- updated:
+		- updated
+	- comments:
+		- comments
+
+@ list PROPERTYName
+    - sort:
+
+
+@composite AddToProperty = [sortEntity]
+@composite RemoveFromProperty = [sortEntity]
+@composite ClearProperty = [PROPERTYName]
+@composite ShowProperty = [PROPERTYName]
+# GetGithubIssues
+> Add only
+- add {@AddToProperty=comments}
+- add {@AddToProperty=updated}
+- add {@AddToProperty=updated}
+- with {@AddToProperty=updated}
+- with {@AddToProperty=comments}
+- with {@AddToProperty=created}
+- add {@AddToProperty=updated and created}
+- add {@AddToProperty=updated and created}
+- add {@AddToProperty=updated and created}
+- with {@AddToProperty=updated and comments}
+- with {@AddToProperty=updated and updated}
+- with {@AddToProperty=comments and created}
+- add {@AddToProperty=comments, updated and created}
+- add {@AddToProperty=comments, comments and comments}
+- add {@AddToProperty=comments, updated and created}
+- with {@AddToProperty=created, created and created}
+- with {@AddToProperty=updated, created and updated}
+- with {@AddToProperty=updated, comments and comments}
+> Remove only
+- remove {@RemoveFromProperty=created}
+- remove {@RemoveFromProperty=comments}
+- remove {@RemoveFromProperty=updated}
+- remove {@RemoveFromProperty=comments and updated}
+- remove {@RemoveFromProperty=created and created}
+- remove {@RemoveFromProperty=updated and created}
+- remove {@RemoveFromProperty=comments, comments and updated}
+- remove {@RemoveFromProperty=created, updated and comments}
+- remove {@RemoveFromProperty=comments, comments and comments}
+- delete {@RemoveFromProperty=updated}
+- delete {@RemoveFromProperty=comments}
+- delete {@RemoveFromProperty=updated}
+- delete {@RemoveFromProperty=updated and updated}
+- delete {@RemoveFromProperty=comments and updated}
+- delete {@RemoveFromProperty=comments and comments}
+- delete {@RemoveFromProperty=updated, updated and updated}
+- delete {@RemoveFromProperty=created, updated and updated}
+- delete {@RemoveFromProperty=comments, created and created}
+- without {@RemoveFromProperty=created}
+- without {@RemoveFromProperty=created}
+- without {@RemoveFromProperty=updated}
+- without {@RemoveFromProperty=created and updated}
+- without {@RemoveFromProperty=comments and created}
+- without {@RemoveFromProperty=created and created}
+- without {@RemoveFromProperty=updated, updated and comments}
+- without {@RemoveFromProperty=comments, created and created}
+- without {@RemoveFromProperty=comments, created and comments}
+- with no {@RemoveFromProperty=created}
+- with no {@RemoveFromProperty=comments}
+- with no {@RemoveFromProperty=updated}
+- with no {@RemoveFromProperty=created and created}
+- with no {@RemoveFromProperty=comments and comments}
+- with no {@RemoveFromProperty=comments and updated}
+- with no {@RemoveFromProperty=comments, comments and comments}
+- with no {@RemoveFromProperty=comments, updated and updated}
+- with no {@RemoveFromProperty=comments, updated and updated}
+> Clear only
+- clear {@ClearProperty=sort}
+- clear {@ClearProperty=sort}
+- clear {@ClearProperty=sort}
+- remove {@ClearProperty=sort}
+- remove {@ClearProperty=sort}
+- remove {@ClearProperty=sort}
+- empty {@ClearProperty=sort}
+- empty {@ClearProperty=sort}
+- empty {@ClearProperty=sort}
+> Show only
+- value of {@ShowProperty=sort}
+- value of {@ShowProperty=sort}
+- value of {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- selection of {@ShowProperty=sort}
+- selection of {@ShowProperty=sort}
+- selection of {@ShowProperty=sort}
+- selection for {@ShowProperty=sort}
+- selection for {@ShowProperty=sort}
+- selection for {@ShowProperty=sort}
+- display {@ShowProperty=sort}
+- display {@ShowProperty=sort}
+- display {@ShowProperty=sort}
+- show {@ShowProperty=sort}
+- show {@ShowProperty=sort}
+- show {@ShowProperty=sort}
+- value of {@ShowProperty=sort}
+- value of {@ShowProperty=sort}
+- value of {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- value for {@ShowProperty=sort}
+- {@ShowProperty=sort} value
+- {@ShowProperty=sort} value
+- {@ShowProperty=sort} value
+- {@ShowProperty=sort} values
+- {@ShowProperty=sort} values
+- {@ShowProperty=sort} values
+- {@ShowProperty=sort} selection
+- {@ShowProperty=sort} selection
+- {@ShowProperty=sort} selection
+> Combinations
+- add {@AddToProperty=comments} and remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=created} and remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=updated} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=comments} remove {@RemoveFromProperty=updated}
+- add {@AddToProperty=comments} remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=comments} remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=comments}, remove {@RemoveFromProperty=created}
+- add {@AddToProperty=created}, remove {@RemoveFromProperty=created}
+- add {@AddToProperty=updated}, remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=created and created} and remove {@RemoveFromProperty=created}
+- add {@AddToProperty=updated and comments} and remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=created and updated} and remove {@RemoveFromProperty=comments}
+- add {@AddToProperty=created, comments and comments} and remove {@RemoveFromProperty=updated and updated}
+- add {@AddToProperty=updated, updated and comments} and remove {@RemoveFromProperty=updated and comments}
+- add {@AddToProperty=comments, comments and comments} and remove {@RemoveFromProperty=updated and updated}
+- add {@AddToProperty=updated, comments and created} remove {@RemoveFromProperty=updated and created}
+- add {@AddToProperty=comments, updated and created} remove {@RemoveFromProperty=updated and updated}
+- add {@AddToProperty=created, updated and updated} remove {@RemoveFromProperty=updated and updated}
+- add {@AddToProperty=comments}, remove {@RemoveFromProperty=created} and show {@ShowProperty=sort}
+- add {@AddToProperty=created}, remove {@RemoveFromProperty=comments} and show {@ShowProperty=sort}
+- add {@AddToProperty=created}, remove {@RemoveFromProperty=comments} and show {@ShowProperty=sort}
+- remove {@RemoveFromProperty=comments} and add {@AddToProperty=comments}
+- remove {@RemoveFromProperty=comments} and add {@AddToProperty=updated}
+- remove {@RemoveFromProperty=updated} and add {@AddToProperty=updated}
+- remove {@RemoveFromProperty=updated and comments} and add {@AddToProperty=created}
+- remove {@RemoveFromProperty=created and comments} and add {@AddToProperty=comments}
+- remove {@RemoveFromProperty=created and comments} and add {@AddToProperty=comments}
+- remove {@RemoveFromProperty=created, created and comments} and add {@AddToProperty=comments and created}
+- remove {@RemoveFromProperty=comments, updated and comments} and add {@AddToProperty=comments and comments}
+- remove {@RemoveFromProperty=created, comments and created} and add {@AddToProperty=created and created}
+- remove {@RemoveFromProperty=created}, add {@AddToProperty=comments} and show {@ShowProperty=sort}
+- remove {@RemoveFromProperty=created}, add {@AddToProperty=updated} and show {@ShowProperty=sort}
+- remove {@RemoveFromProperty=created}, add {@AddToProperty=updated} and show {@ShowProperty=sort}
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=created} and add {@AddToProperty=updated}
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=created} and add {@AddToProperty=comments}
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=updated} and add {@AddToProperty=created}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=created and created} and add {@AddToProperty=comments}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=created and comments} and add {@AddToProperty=created}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=created and updated} and add {@AddToProperty=comments}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=updated, created and updated} and add {@AddToProperty=updated and updated}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=created, created and created} and add {@AddToProperty=comments and comments}
+- show {@ShowProperty=sort} remove {@RemoveFromProperty=updated, created and updated} and add {@AddToProperty=comments and created}
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=updated}, add {@AddToProperty=updated} 
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=comments}, add {@AddToProperty=created} 
+- display {@ShowProperty=sort} remove {@RemoveFromProperty=comments}, add {@AddToProperty=created} 
+
+- sort
+
+
+> Generator: 75ee9a9c7eb4e15ead4ba34f4ea35724

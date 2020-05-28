@@ -1,0 +1,8 @@
+
+# ownerEntity(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+> Generator: b2503e8163c884338276c083f33525cf
