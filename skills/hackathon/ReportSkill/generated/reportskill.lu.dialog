@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "reportskill.en-us.lu",
+        "": "reportskill.en-us.lu"
+    }
+}

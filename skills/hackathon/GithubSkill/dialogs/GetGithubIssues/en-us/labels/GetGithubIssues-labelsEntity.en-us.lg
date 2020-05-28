@@ -1,0 +1,8 @@
+
+# labelsEntity(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+> Generator: 475e8c48e10ce92b1251a884a8cb2a63

@@ -1,0 +1,8 @@
+
+{
+    "botName": "testCN",
+    "deleteOldVersion": true, 
+    "out": ".",
+    "dialog": "multiLanguage",
+    "models": ["zh-cn/reportskill.zh-cn.lu",  "en-us/reportskill.en-us.lu"]
+}

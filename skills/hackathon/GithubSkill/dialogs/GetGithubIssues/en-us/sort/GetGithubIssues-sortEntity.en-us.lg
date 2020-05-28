@@ -1,0 +1,21 @@
+
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Choose.en-us.lg](GetGithubIssues-library-Choose.en-us.lg)
+
+# sortEntity(value) 
+- SWITCH: ${value}
+  - CASE: ${'created'} 
+    - created
+  - CASE: ${'updated'} 
+    - updated
+  - CASE: ${'comments'} 
+    - comments
+  - DEFAULT: 
+    - no value
+
+
+# choosesortEntity
+- ${chooseEnumEntity('sort')}
+
+
+> Generator: 70a644a2c6ff8129661f8819f14dc94d

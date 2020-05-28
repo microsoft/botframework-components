@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "owner": {
+            "type": "string",
+            "$entities": [
+                "utterance"
+            ]
+        },
+        "repo": {
+            "type": "string",
+            "$entities": [
+                "utterance"
+            ]
+        },
+        "filter": {
+            "type": "string",
+            "enum": [
+                "assigned",
+                "created",
+                "mentioned",
+                "subscribed",
+                "all"
+            ]
+        },
+        "assignee": {
+            "type": "string",
+            "$entities": [
+                "utterance"
+            ]
+        },
+        "state": {
+            "type": "string",
+            "enum": [
+                "open",
+                "closed"
+            ]
+        },
+        "labels": {
+            "type": "string",
+            "$entities": [
+                "utterance"
+            ]
+        },
+        "sort": {
+            "type": "string",
+            "enum": [
+                "created",
+                "updated",
+                "comments"
+            ]
+        },
+        "direction": {
+            "type": "string",
+            "enum": [
+                "asc",
+                "desc"
+            ]
+        }
+    },
+    "required": [
+        "owner",
+        "repo",
+        "filter",
+        "assignee",
+        "state",
+        "labels",
+        "sort",
+        "direction"
+    ],
+    "$requires": [
+        "http.schema"
+    ]
+}

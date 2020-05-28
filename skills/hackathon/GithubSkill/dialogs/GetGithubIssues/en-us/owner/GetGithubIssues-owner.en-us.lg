@@ -1,0 +1,20 @@
+
+[GetGithubIssues-ownerEntity.en-us.lg](GetGithubIssues-ownerEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askowner
+- ${askString('owner')}
+
+
+# ownerName
+- owner
+
+# owner(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+
+> Generator: 494d09275aea9d5a1c16fa27a56d9d41

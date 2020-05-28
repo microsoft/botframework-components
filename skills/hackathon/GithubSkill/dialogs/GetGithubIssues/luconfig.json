@@ -1,0 +1,8 @@
+
+{
+    "botName": "GetGithubIssues",
+    "deleteOldVersion": true, 
+    "out": ".",
+    "dialog": "multiLanguage",
+    "models": ["en-us/GetGithubIssues.en-us.lu"]
+}

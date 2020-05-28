@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "GetGithubIssues.en-us.lu",
+        "": "GetGithubIssues.en-us.lu"
+    }
+}

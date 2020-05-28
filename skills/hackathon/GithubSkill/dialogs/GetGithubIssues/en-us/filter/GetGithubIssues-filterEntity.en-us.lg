@@ -1,0 +1,25 @@
+
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Choose.en-us.lg](GetGithubIssues-library-Choose.en-us.lg)
+
+# filterEntity(value) 
+- SWITCH: ${value}
+  - CASE: ${'assigned'} 
+    - assigned
+  - CASE: ${'created'} 
+    - created
+  - CASE: ${'mentioned'} 
+    - mentioned
+  - CASE: ${'subscribed'} 
+    - subscribed
+  - CASE: ${'all'} 
+    - all
+  - DEFAULT: 
+    - no value
+
+
+# choosefilterEntity
+- ${chooseEnumEntity('filter')}
+
+
+> Generator: 62199e6eec686257bfc7d32a0a7a2322

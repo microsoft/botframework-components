@@ -1,0 +1,20 @@
+
+[GetGithubIssues-assigneeEntity.en-us.lg](GetGithubIssues-assigneeEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askassignee
+- ${askString('assignee')}
+
+
+# assigneeName
+- assignee
+
+# assignee(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+
+> Generator: 487cca48115523ae4b56773c9f9e405c

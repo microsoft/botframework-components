@@ -1,0 +1,25 @@
+
+# PROPERTYName(value) 
+- SWITCH: ${value}
+
+ - CASE: ${'owner'} 
+  - owner,
+ - CASE: ${'repo'} 
+  - repo,
+ - CASE: ${'filter'} 
+  - filter,
+ - CASE: ${'assignee'} 
+  - assignee,
+ - CASE: ${'state'} 
+  - state,
+ - CASE: ${'labels'} 
+  - labels,
+ - CASE: ${'sort'} 
+  - sort,
+ - CASE: ${'direction'} 
+  - direction
+
+ - DEFAULT: 
+  - I don't understand ${value}
+
+> Generator: 4912e2b7579861be2520e9e1a6fb8640

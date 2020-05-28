@@ -1,0 +1,17 @@
+
+[GetGithubIssues-directionEntity.en-us.lg](GetGithubIssues-directionEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Askdirection
+- ${askEnum('direction')}
+
+
+# directionName
+- direction
+
+# direction(val)
+- ${directionEntity(val)}
+
+
+> Generator: 84ec3574982f07e0609e0f0cfd5cbfe5

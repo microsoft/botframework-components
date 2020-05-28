@@ -1,0 +1,17 @@
+
+[GetGithubIssues-sortEntity.en-us.lg](GetGithubIssues-sortEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Asksort
+- ${askEnum('sort')}
+
+
+# sortName
+- sort
+
+# sort(val)
+- ${sortEntity(val)}
+
+
+> Generator: 64a184bfe42204bcc0942d657f403e8c

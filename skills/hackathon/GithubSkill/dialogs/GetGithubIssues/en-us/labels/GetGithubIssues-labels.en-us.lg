@@ -1,0 +1,20 @@
+
+[GetGithubIssues-labelsEntity.en-us.lg](GetGithubIssues-labelsEntity.en-us.lg)
+[GetGithubIssues-library.en-us.lg](GetGithubIssues-library.en-us.lg)
+[GetGithubIssues-library-Missing.en-us.lg](GetGithubIssues-library-Missing.en-us.lg)
+
+# Asklabels
+- ${askString('labels')}
+
+
+# labelsName
+- labels
+
+# labels(val)
+ - IF: ${val}
+ - ${val}
+ - ELSE:
+ - no value
+
+
+> Generator: e2abb65f22e14a89e9073f0679f4569c

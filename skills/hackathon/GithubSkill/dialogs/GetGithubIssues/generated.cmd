@@ -1,0 +1,1 @@
+D:/Workspace/BotBuilder-Samples/experimental/generation/generator/bin/run dialog:generate GetGithubIssues.schema -o . --singleton --force --verbose 
