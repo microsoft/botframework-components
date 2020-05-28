@@ -10,7 +10,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Solutions;
 
-namespace backToWorkSkill.Services
+namespace BackToWorkSkill.Services
 {
     public class BotServices
     {

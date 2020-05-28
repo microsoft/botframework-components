@@ -17,10 +17,10 @@ using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Extensions.Logging;
-using backToWorkSkill.Dialogs;
-using backToWorkSkill.Services;
+using BackToWorkSkill.Dialogs;
+using BackToWorkSkill.Services;
 
-namespace backToWorkSkill.Adapters
+namespace BackToWorkSkill.Adapters
 {
     public class DefaultAdapter : BotFrameworkHttpAdapter
     {

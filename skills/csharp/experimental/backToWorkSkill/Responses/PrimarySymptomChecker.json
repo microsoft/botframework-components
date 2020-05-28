@@ -1,0 +1,178 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "PrimarySymptoms Checker",
+      "id": "PrimarySymptoms",
+      "horizontalAlignment": "Center",
+      "size": "Medium",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": " ",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": " ",
+      "wrap": true
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "separator": true,
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Shortness Of Breath",
+                  "id": "ShortnessOfBreath"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Yes",
+                      "value": "Yes"
+                    },
+                    {
+                      "title": "No",
+                      "value": "No"
+                    }
+                  ],
+                  "style": "expanded",
+                  "id": "ShortnessOfBreathInput"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ColumnSet",
+          "separator": true,
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Cough",
+                  "id": "Cough"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Yes",
+                      "value": "Yes"
+                    },
+                    {
+                      "title": "No",
+                      "value": "No"
+                    }
+                  ],
+                  "style": "expanded",
+                  "id": "CoughInput"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ColumnSet",
+          "separator": true,
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Fever",
+                  "id": "Fever"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Yes",
+                      "value": "Yes"
+                    },
+                    {
+                      "title": "No",
+                      "value": "No"
+                    }
+                  ],
+                  "style": "expanded",
+                  "id": "FeverInput"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ColumnSet",
+          "separator": true,
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "None",
+                  "id": "None"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "choices": [
+                    {
+                      "title": "Yes",
+                      "value": "Yes"
+                    }
+                  ],
+                  "style": "expanded",
+                  "id": "NoneInput"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+}

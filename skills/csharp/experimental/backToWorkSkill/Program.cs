@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace backToWorkSkill
+namespace BackToWorkSkill
 {
     public class Program
     {

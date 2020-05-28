@@ -10,7 +10,7 @@ using Microsoft.Bot.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
-namespace backToWorkSkill.Tests
+namespace BackToWorkSkill.Tests
 {
     [TestClass]
     [TestCategory("UnitTests")]

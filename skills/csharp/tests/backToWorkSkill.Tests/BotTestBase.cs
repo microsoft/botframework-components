@@ -19,14 +19,14 @@ using Microsoft.Bot.Solutions.Skills.Dialogs;
 using Microsoft.Bot.Solutions.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using backToWorkSkill.Bots;
-using backToWorkSkill.Dialogs;
-using backToWorkSkill.Models;
-using backToWorkSkill.Services;
-using backToWorkSkill.Tests.Mocks;
-using backToWorkSkill.Tests.Utilities;
+using BackToWorkSkill.Bots;
+using BackToWorkSkill.Dialogs;
+using BackToWorkSkill.Models;
+using BackToWorkSkill.Services;
+using BackToWorkSkill.Tests.Mocks;
+using BackToWorkSkill.Tests.Utilities;
 
-namespace backToWorkSkill.Tests
+namespace BackToWorkSkill.Tests
 {
     public class BotTestBase
     {

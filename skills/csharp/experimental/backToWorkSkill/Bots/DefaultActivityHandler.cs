@@ -14,9 +14,9 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
-using backToWorkSkill.Models;
+using BackToWorkSkill.Models;
 
-namespace backToWorkSkill.Bots
+namespace BackToWorkSkill.Bots
 {
     public class DefaultActivityHandler<T> : TeamsActivityHandler
         where T : Dialog

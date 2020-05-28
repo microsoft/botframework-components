@@ -18,7 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
-namespace backToWorkSkill.TokenExchange
+namespace BackToWorkSkill.TokenExchange
 {
     public class TokenExchangeSkillHandler : SkillHandler
     {

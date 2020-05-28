@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace backToWorkSkill.TokenExchange
+namespace BackToWorkSkill.TokenExchange
 {
     public interface ITokenExchangeConfig
     {

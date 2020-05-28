@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using Luis;
 using Microsoft.Bot.Builder;
-using backToWorkSkill.Tests.Mocks;
-using backToWorkSkill.Tests.Utterances;
+using BackToWorkSkill.Tests.Mocks;
+using BackToWorkSkill.Tests.Utterances;
 
-namespace backToWorkSkill.Tests.Utilities
+namespace BackToWorkSkill.Tests.Utilities
 {
     public class GeneralTestUtil
     {

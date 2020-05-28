@@ -10,10 +10,10 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
-using backToWorkSkill.Models;
-using backToWorkSkill.Services;
+using BackToWorkSkill.Models;
+using BackToWorkSkill.Services;
 
-namespace backToWorkSkill.Dialogs
+namespace BackToWorkSkill.Dialogs
 {
     // Example onboarding dialog to initial user profile information.
     public class OnboardingDialog : ComponentDialog

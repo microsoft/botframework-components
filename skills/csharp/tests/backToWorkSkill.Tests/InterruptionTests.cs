@@ -4,9 +4,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using backToWorkSkill.Tests.Utterances;
+using BackToWorkSkill.Tests.Utterances;
 
-namespace backToWorkSkill.Tests
+namespace BackToWorkSkill.Tests
 {
     [TestClass]
     [TestCategory("UnitTests")]

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace backToWorkSkill.Tests.Utterances
+namespace BackToWorkSkill.Tests.Utterances
 {
     using System;
 

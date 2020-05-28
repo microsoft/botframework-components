@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using backToWorkSkill.Models;
+using BackToWorkSkill.Models;
 
-namespace backToWorkSkill.Tests
+namespace BackToWorkSkill.Tests
 {
     [TestClass]
     [TestCategory("UnitTests")]

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 
-namespace backToWorkSkill.Tests.Mocks
+namespace BackToWorkSkill.Tests.Mocks
 {
     public class MockLuisRecognizer : LuisRecognizer
     {

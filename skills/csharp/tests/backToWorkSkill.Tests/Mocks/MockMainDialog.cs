@@ -7,9 +7,9 @@ using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using RichardSzalay.MockHttp;
-using backToWorkSkill.Dialogs;
+using BackToWorkSkill.Dialogs;
 
-namespace backToWorkSkill.Tests.Mocks
+namespace BackToWorkSkill.Tests.Mocks
 {
     public class MockMainDialog : MainDialog
     {

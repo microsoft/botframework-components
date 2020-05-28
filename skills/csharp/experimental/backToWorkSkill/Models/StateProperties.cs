@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace backToWorkSkill.Models
+namespace BackToWorkSkill.Models
 {
     public class StateProperties
     {

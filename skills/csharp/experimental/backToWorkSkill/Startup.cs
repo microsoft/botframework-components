@@ -23,14 +23,14 @@ using Microsoft.Bot.Solutions.Skills.Dialogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using backToWorkSkill.Adapters;
-using backToWorkSkill.Authentication;
-using backToWorkSkill.Bots;
-using backToWorkSkill.Dialogs;
-using backToWorkSkill.Services;
-using backToWorkSkill.TokenExchange;
+using BackToWorkSkill.Adapters;
+using BackToWorkSkill.Authentication;
+using BackToWorkSkill.Bots;
+using BackToWorkSkill.Dialogs;
+using BackToWorkSkill.Services;
+using BackToWorkSkill.TokenExchange;
 
-namespace backToWorkSkill
+namespace BackToWorkSkill
 {
     public class Startup
     {

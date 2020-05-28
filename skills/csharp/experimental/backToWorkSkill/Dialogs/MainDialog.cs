@@ -19,10 +19,10 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Skills.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
-using backToWorkSkill.Models;
-using backToWorkSkill.Services;
+using BackToWorkSkill.Models;
+using BackToWorkSkill.Services;
 
-namespace backToWorkSkill.Dialogs
+namespace BackToWorkSkill.Dialogs
 {
     // Dialog providing activity routing and message/event processing.
     public class MainDialog : ComponentDialog

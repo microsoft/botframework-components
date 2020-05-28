@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using Microsoft.Bot.Solutions;
-using backToWorkSkill.TokenExchange;
+using BackToWorkSkill.TokenExchange;
 
-namespace backToWorkSkill.Services
+namespace BackToWorkSkill.Services
 {
     public class BotSettings : BotSettingsBase
     {
