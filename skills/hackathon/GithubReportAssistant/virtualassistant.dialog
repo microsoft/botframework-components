@@ -180,73 +180,127 @@
           "name": "ShowSummary"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "K8WkRB"
+          },
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "7L8QRO"
+              },
+              "name": "ShowNewIssuesCreated"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "woagST"
+              },
+              "activityProcessed": true,
+              "dialog": "GetGithubIssue",
+              "options": {
+                "startDate": "=addDays(utcNow(), -1)",
+                "endDate": "=utcNow()",
+                "createOrUpdate": "create"
+              }
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "PLqFMO"
+              },
+              "activityProcessed": true,
+              "dialog": "ShowGithubIssues",
+              "options": {
+                "title": "New Issues Created Today:",
+                "fallbackTitle": "Sorry no new issue for today."
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "tw9C40"
+            "id": "EW5TEh"
           },
-          "name": "ShowNewIssuesCreated"
+          "name": "ShowIssuesUpdated"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Hmls7B"
+            "id": "DiaWWA"
           },
           "activityProcessed": true,
           "dialog": "GetGithubIssue",
           "options": {
             "startDate": "=addDays(utcNow(), -1)",
             "endDate": "=utcNow()",
-            "createOrUpdate": "create"
+            "createOrUpdate": "update"
           }
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "5J7iHf"
+            "id": "86qi1F"
           },
           "activityProcessed": true,
-          "dialog": "ShowGithubIssues"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "SIYmog"
-          },
-          "name": "ShowIssuesTrend"
-        },
-        {
-          "$kind": "Microsoft.EditArray",
-          "$designer": {
-            "id": "XpAmKm"
-          },
-          "changeType": "push",
-          "itemsProperty": "dialog.labels",
-          "resultProperty": "dialog.labelsResult",
-          "value": "R10"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "fCIAQl"
-          },
-          "activityProcessed": true,
-          "dialog": "GetGithubIssue",
+          "dialog": "ShowGithubIssues",
           "options": {
-            "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
-            "endDate": "=utcNow()",
-            "labels": "=dialog.labels"
+            "title": "Issues Updated Today:",
+            "fallbackTitle": "Sorry no issue updated for today."
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "WJklFw"
+            "id": "guifx8"
           },
-          "activityProcessed": true,
-          "dialog": "ShowTrend",
-          "options": {
-            "title": "Opened Issues Per Day"
-          }
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "TdUQjV"
+              },
+              "name": "ShowIssuesTrend"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "hR5hri"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.labels",
+              "resultProperty": "dialog.labelsResult",
+              "value": "R10"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "w595la"
+              },
+              "activityProcessed": true,
+              "dialog": "GetGithubIssue",
+              "options": {
+                "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+                "endDate": "=utcNow()",
+                "labels": "=dialog.labels"
+              }
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "m3ThIJ"
+              },
+              "activityProcessed": true,
+              "dialog": "ShowTrend",
+              "options": {
+                "title": "Opened Issues Per Day"
+              }
+            }
+          ]
         }
       ]
     }

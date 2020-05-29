@@ -23,11 +23,29 @@
           "name": "ShowGithubIssues"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "OB5DZ1"
+            "id": "81yoCO"
           },
-          "activity": "${SendActivity_OB5DZ1()}"
+          "condition": "count(turn.issues)>0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "tjXf2y"
+              },
+              "activity": "${SendActivity_tjXf2y()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Ro03Jw"
+              },
+              "activity": "${SendActivity_Ro03Jw()}"
+            }
+          ]
         }
       ]
     }

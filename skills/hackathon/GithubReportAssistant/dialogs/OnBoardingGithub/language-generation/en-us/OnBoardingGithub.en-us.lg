@@ -1,0 +1,20 @@
+[import](common.lg)
+
+# TextInput_Prompt_n36wgl()
+[Activity
+     Text = For the github repo you want to watch, what is the owner  name?
+    SuggestedActions  = microsoft
+]
+# TextInput_Prompt_dsWeVp()
+- What is your github account name?
+# TextInput_Prompt_Xhv1r4()
+[Activity
+     Text = What is the branch name?
+    SuggestedActions  = BotFramework-Composer
+]
+
+# TextInput_Prompt_9zIkRm()
+[Activity
+     Text = What is the label you are interested?
+     SuggestedActions  = R10
+]

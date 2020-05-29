@@ -87,14 +87,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     var isAdd = false;
                     if(createOrUpdate.ToLower().Equals("update"))
                     {
-                        if(issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0)
+                        if ((issue.UpdatedAt.Value != null && issue.UpdatedAt.Value.CompareTo(startDate) >= 0 && issue.UpdatedAt.Value.CompareTo(endDate) <= 0)
+                            && !(issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0))
                         {
                             isAdd = true;
                         }
                     }
                     else
                     {
-                        if (issue.UpdatedAt.Value != null && issue.UpdatedAt.Value.CompareTo(startDate) >= 0 && issue.UpdatedAt.Value.CompareTo(endDate) <= 0)
+                        if (issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0)
                         {
                             isAdd = true;
                         }

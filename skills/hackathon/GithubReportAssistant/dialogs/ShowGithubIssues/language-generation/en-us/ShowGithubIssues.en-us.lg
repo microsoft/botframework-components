@@ -1,6 +1,9 @@
 [import](common.lg)
-# SendActivity_OB5DZ1()
+
+# SendActivity_tjXf2y()
 [Activity
-    Text = New Created Issues:
+    Text = ${dialog.title}
     Attachments = ${json(IssueCard(turn.issues))}
 ]
+# SendActivity_Ro03Jw()
+- ${dialog.fallbackTitle}
