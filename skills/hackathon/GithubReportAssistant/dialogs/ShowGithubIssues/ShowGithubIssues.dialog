@@ -1,0 +1,53 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "n6Ds50",
+    "name": "ShowGithubIssues"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "dialogType": "sandwich",
+  "generator": "ShowGithubIssues.lg",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "id": "qg5OgP"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uSZ7Ph"
+          },
+          "name": "ShowGithubIssues"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "81yoCO"
+          },
+          "condition": "count(turn.issues)>0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "tjXf2y"
+              },
+              "activity": "${SendActivity_tjXf2y()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Ro03Jw"
+              },
+              "activity": "${SendActivity_Ro03Jw()}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -51,18 +51,46 @@
           "activity": "${SendActivity_5eOsgQ()}"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "agc7MH"
+            "id": "fXRhlM"
           },
-          "activity": "${SendActivity_agc7MH()}"
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_fXRhlM()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          },
+          "property": "dialog.githubWatch"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "SchMPS"
+          },
+          "condition": "dialog.githubWatch",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "4Rb2dY"
+              },
+              "activityProcessed": true,
+              "dialog": "OnBoardingGithub"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "RMag6B"
+            "id": "BFjjwJ"
           },
-          "activity": "${SendActivity_RMag6B()}"
+          "activity": "${SendActivity_BFjjwJ()}"
         }
       ]
     },

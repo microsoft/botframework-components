@@ -1,0 +1,9 @@
+[import](common.lg)
+
+# SendActivity_tjXf2y()
+[Activity
+    Text = ${dialog.title}
+    Attachments = ${json(IssueCard(turn.issues))}
+]
+# SendActivity_Ro03Jw()
+- ${dialog.fallbackTitle}

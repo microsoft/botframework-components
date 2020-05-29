@@ -43,6 +43,65 @@
 }
 ```
 
+# IssueCard(issues)
+- ```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "id": "EventItemContainer",
+      "type": "Container",
+      "items": [
+		${IssueItemContainerCard(issues)}
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
+
+# IssueItemContainerCard(itemData)
+- ${join(foreach(itemData, x, IssueItemCard(x)), ', ')}
+
+# IssueItemCard(item)
+- ```
+{
+    "type": "Container",
+    "items": [
+		{
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.id}",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "[${item.title}](${item.url})",
+                            "wrap": true
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        }
+    ]
+}
+```
+
+
 
 # YouCanAskMeCard
 [Activity
@@ -90,15 +149,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"What's new?\"",
+                                    "text": "\"show today's summary\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "What's new?",
-                                "data": "What's new?"
+                                "title": "show today's summary",
+                                "data": "show today's summary"
                             }
                         }
                     ],
@@ -132,15 +191,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"What's on my agenda today?\"",
+                                    "text": "\"show issues assigned to me\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "What's on my agenda today?",
-                                "data": "What's on my agenda today?"
+                                "title": "show issues assigned to me",
+                                "data": "show issues assigned to me"
                             }
                         }
                     ],
@@ -174,15 +233,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"Who emailed me about Bot Framework?\"",
+                                    "text": "\"issues opened today\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "Who emailed me about Bot Framework?",
-                                "data": "Who emailed me about Bot Framework?"
+                                "title": "issues opened today",
+                                "data": "issues opened today"
                             }
                         }
                     ],

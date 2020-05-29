@@ -2,8 +2,10 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Solutions.Extensions.Common;
 using Microsoft.Graph;
+using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -35,6 +37,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("labels")]
         public ArrayExpression<string> Labels { get; set; }
 
+        [JsonProperty("startDate")]
+        public ObjectExpression<DateTime> StartDate { get; set; }
+
+        [JsonProperty("endDate")]
+        public ObjectExpression<DateTime> EndDate { get; set; }
+
+        [JsonProperty("createOrUpdate")]
+        public StringExpression CreateOrUpdate { get; set; }
+
         [JsonProperty("resultProperty")]
         public string resultProperty { get; set; }
 
@@ -46,34 +57,64 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var name = Name.GetValue(dcState);
             var status = Status.GetValue(dcState);
             var labels = Labels.GetValue(dcState);
+            var startDate = StartDate.GetValue(dcState);
+            var endDate = EndDate.GetValue(dcState);
+            var createOrUpdate = CreateOrUpdate.GetValue(dcState);
             var github = new GitHubClient(new ProductHeaderValue("TestClient"));
 
             IReadOnlyList<Issue> issues = new List<Issue>();
             var resultIssue = new List<object>();
             try
             {
-                int timespan = 14;
                 var recently = new RepositoryIssueRequest
                 {
                     Filter = IssueFilter.All,
                     State = GetStatus(status),
                 };
-                foreach(var label in labels)
+
+                if(labels != null)
                 {
-                    recently.Labels.Add(label);
+                    foreach (var label in labels)
+                    {
+                        recently.Labels.Add(label);
+                    }
                 }
+
                 issues = await github.Issue.GetAllForRepository(owner, name, recently);
 
                 foreach(var issue in issues)
                 {
-                    resultIssue.Add(new GitHubIssue() {
-                        UpdatedAt = issue.UpdatedAt,
-                        CreatedAt = issue.CreatedAt,
-                        ClosedAt = issue.ClosedAt,
-                        Body = issue.Body,
-                        Title = issue.Title,
-                        Status = issue.State.StringValue
-                    });
+                    var isAdd = false;
+                    if(createOrUpdate.ToLower().Equals("update"))
+                    {
+                        if ((issue.UpdatedAt.Value != null && issue.UpdatedAt.Value.CompareTo(startDate) >= 0 && issue.UpdatedAt.Value.CompareTo(endDate) <= 0)
+                            && !(issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0))
+                        {
+                            isAdd = true;
+                        }
+                    }
+                    else
+                    {
+                        if (issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0)
+                        {
+                            isAdd = true;
+                        }
+                    }
+
+                    if(isAdd)
+                    {
+                        resultIssue.Add(new GitHubIssue()
+                        {
+                            Id = issue.Id,
+                            UpdatedAt = issue.UpdatedAt,
+                            CreatedAt = issue.CreatedAt,
+                            ClosedAt = issue.ClosedAt,
+                            Body = issue.Body,
+                            Title = issue.Title.Replace("\"", ""),
+                            Status = issue.State.StringValue,
+                            Url = issue.HtmlUrl
+                        });
+                    }
                 }
             }
             catch (ServiceException)

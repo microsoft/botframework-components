@@ -448,6 +448,30 @@
 						"dialog.labels"
 					]
 				},
+				"createOrUpdate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "createOrUpdate",
+					"description": "createOrUpdate",
+					"examples": [
+						"update"
+					]
+				},
+				"startDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "startDate",
+					"description": "startDate",
+					"examples": [
+						"dialog.startDate"
+					]
+				},
+				"endDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "endDate",
+					"description": "endDate",
+					"examples": [
+						"dialog.endDate"
+					]
+				},
 				"$kind": {
 					"title": "Kind of dialog object",
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",

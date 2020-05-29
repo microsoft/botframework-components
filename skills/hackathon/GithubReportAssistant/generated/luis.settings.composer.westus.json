@@ -1,7 +1,7 @@
 {
     "luis": {
+        "General_en_us_lu": "d780809e-c39a-4198-96e4-b7b199928532",
         "Onboarding_en_us_lu": "1202380f-4cd3-4a69-9ef1-aa6829f97aed",
-        "virtualassistant_en_us_lu": "881513d2-4047-4ba4-973c-467cd0a85a82",
-        "General_en_us_lu": "d780809e-c39a-4198-96e4-b7b199928532"
+        "virtualassistant_en_us_lu": "881513d2-4047-4ba4-973c-467cd0a85a82"
     }
 }
