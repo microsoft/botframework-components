@@ -1,0 +1,89 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "QJkPDu",
+    "name": "GetGithubIssue"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "dialogType": "sandwich",
+  "generator": "GetGithubIssue.lg",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "id": "AXbzpr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xfP0t1"
+          },
+          "name": "GetGithubIssue"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "tf2GbY"
+          },
+          "property": "dialog.owner",
+          "value": "microsoft"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "v6TNsF"
+          },
+          "property": "dialog.name",
+          "value": "BotFramework-Composer"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "5uTqV3"
+          },
+          "property": "dialog.status",
+          "value": "open"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "5plKzm"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.labels",
+          "resultProperty": "dialog.labelsResult",
+          "value": "R10"
+        },
+        {
+          "$kind": "Github.GetIssues",
+          "$designer": {
+            "id": "GmerZe"
+          },
+          "resultProperty": "dialog.issues",
+          "owner": "=dialog.owner",
+          "name": "=dialog.name",
+          "status": "=dialog.status",
+          "labels": "=dialog.labels"
+        },
+        {
+          "$kind": "Github.GetIssuesPerDayData",
+          "$designer": {
+            "id": "4UkNiM"
+          },
+          "xResultProperty": "turn.x",
+          "yResultProperty": "turn.y",
+          "issues": "=dialog.issues",
+          "startDate": "=utcNow()"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zkLYPK"
+          }
+        }
+      ]
+    }
+  ]
+}

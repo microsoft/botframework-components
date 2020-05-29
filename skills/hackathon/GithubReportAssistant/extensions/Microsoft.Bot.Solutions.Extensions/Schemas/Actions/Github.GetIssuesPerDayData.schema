@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Github.GetIssuesPerDayData",
+  "description": "Retrieve chart data using the Microsoft Graph API.",
+  "required": [
+    "token"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "xResultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "x result property",
+      "description": "x result property",
+      "examples": [
+        "dialog.x"
+      ]
+    },
+    "yResultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "y result property",
+      "description": "y result property",
+      "examples": [
+        "dialog.y"
+      ]
+    },
+    "issues": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Issues",
+      "description": "Github issue",
+      "examples": [
+        "dialog.Issues"
+      ]
+    },
+    "startDate": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "StartDate",
+      "description": "Start Date",
+      "examples": [
+        "dialog.startDate"
+      ]
+    }
+  }
+}
