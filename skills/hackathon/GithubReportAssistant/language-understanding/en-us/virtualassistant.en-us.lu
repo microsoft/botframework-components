@@ -137,3 +137,29 @@
 # ShowSummary
 - show summary
 - summary
+
+# StartNotification
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+- start notification
+- turn on
+- turn on notification
+- switch on
+- switch on notification
+
+# StopNotification
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+- stop notification
+- turn off
+- turn off notification
+- switch off
+- switch off notification

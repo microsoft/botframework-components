@@ -1,0 +1,51 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "ManageNotification",
+  "description": "Send proactive notification when time up.",
+  "required": [
+    "identifier"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog."
+    },
+    "identifier": {
+      "type": "string",
+      "title": "Identifier",
+      "description": "Identifier for this notification."
+    },
+    "activity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Activity",
+      "description": "Activity to notify."
+    },
+    "time": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Time",
+      "description": "Notification time.",
+      "examples": [
+        "dialog.time"
+      ]
+    },
+    "repeat": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/integerExpression",
+      "title": "Repeat",
+      "description": "Repeat in days(0 is no repeat).",
+      "examples": [
+        "dialog.repeat"
+      ]
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Result property.",
+      "examples": [
+        "dialog.result"
+      ]
+    }
+  }
+}
