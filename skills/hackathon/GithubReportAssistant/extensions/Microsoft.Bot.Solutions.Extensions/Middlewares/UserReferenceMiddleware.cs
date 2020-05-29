@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Solutions.Extensions.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,9 +15,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Middlewares
     {
         private readonly UserReferenceState userReferenceState;
 
-        public UserReferenceMiddleware(IServiceProvider serviceProvider)
+        public UserReferenceMiddleware(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter)
         {
-            userReferenceState = serviceProvider.GetService<UserReferenceState>();
+            userReferenceState = new UserReferenceState(serviceProvider, adapter);
         }
 
         public async Task OnTurnAsync(ITurnContext turnContext, NextDelegate next, CancellationToken cancellationToken)

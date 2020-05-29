@@ -24,6 +24,8 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core.Skills;
 using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions.Extensions;
+using Microsoft.Bot.Solutions.Extensions.Middlewares;
+using Microsoft.Bot.Solutions.Extensions.Utilities;
 using Microsoft.BotFramework.Composer.Core;
 using Microsoft.BotFramework.Composer.Core.Settings;
 
@@ -92,6 +94,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
               .UseStorage(storage)
               .UseBotState(userState, conversationState)
               .Use(new RegisterClassMiddleware<IConfiguration>(Configuration))
+              .Use(new UserReferenceMiddleware(s, adapter))
               .Use(telemetryInitializerMiddleware);
 
             // Configure Middlewares
@@ -118,6 +121,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             // Load settings
             var settings = new BotSettings();
             Configuration.Bind(settings);
+            services.AddSingleton(settings);
 
             // Create the credential provider to be used with the Bot Framework Adapter.
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
@@ -135,6 +139,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new MSGraphComponentRegistration());
             ComponentRegistration.Add(new GithubComponentRegistration());
+            ComponentRegistration.Add(new ManageNotificationRegistration());
 
             // This is for custom action component registration.
             //ComponentRegistration.Add(new CustomActionComponentRegistration());

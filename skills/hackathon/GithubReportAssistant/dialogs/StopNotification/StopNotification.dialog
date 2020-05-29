@@ -1,0 +1,47 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "DVf7RZ",
+    "name": "StopNotification"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "NdzLQV"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "yYVOAX"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_yYVOAX()}",
+          "property": "dialog.content"
+        },
+        {
+          "$kind": "ManageNotification",
+          "$designer": {
+            "id": "ctedej"
+          },
+          "identifier": "=dialog.content"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "sxKnxJ"
+          },
+          "activity": "${SendActivity_sxKnxJ()}"
+        }
+      ]
+    }
+  ],
+  "generator": "StopNotification.lg"
+}

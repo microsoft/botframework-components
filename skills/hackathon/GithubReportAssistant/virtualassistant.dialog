@@ -309,14 +309,34 @@
       "$designer": {
         "id": "SjfJbc"
       },
-      "intent": "StartNotification"
+      "intent": "StartNotification",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sk1bNe"
+          },
+          "activityProcessed": true,
+          "dialog": "StartNotification"
+        }
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "s6OFkX"
       },
-      "intent": "StopNotification"
+      "intent": "StopNotification",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FsGnnU"
+          },
+          "activityProcessed": true,
+          "dialog": "StopNotification"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

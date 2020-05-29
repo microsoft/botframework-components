@@ -3,13 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.BotFramework.Composer.Core.Settings;
@@ -24,13 +21,18 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
         private readonly BotSettings botSettings;
         private readonly string key;
 
-        public UserReferenceState(IServiceProvider serviceProvider)
+        public UserReferenceState(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter)
         {
-            var adapter = serviceProvider.GetService<BotFrameworkHttpAdapter>();
             this.adapter = adapter;
             storage = null; // serviceProvider.GetService<IStorage>();
             botSettings = serviceProvider.GetService<BotSettings>();
-            key = $"{botSettings.MicrosoftAppId}/{nameof(UserReferenceState)}";
+            var appId = botSettings.MicrosoftAppId;
+            if (string.IsNullOrEmpty(appId))
+            {
+                appId = "DummyAppId";
+            }
+
+            key = $"{appId}/{nameof(UserReferenceState)}";
 
             if (storage != null)
             {
