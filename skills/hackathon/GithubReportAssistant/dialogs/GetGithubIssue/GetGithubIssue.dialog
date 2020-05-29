@@ -28,7 +28,19 @@
             "id": "tf2GbY"
           },
           "property": "dialog.owner",
-          "value": "microsoft"
+          "value": "=user.owner"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "TqM3NK"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_TqM3NK()}",
+          "property": "dialog.owner"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -36,7 +48,19 @@
             "id": "v6TNsF"
           },
           "property": "dialog.name",
-          "value": "BotFramework-Composer"
+          "value": "=user.branchName"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "43UkVz"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_43UkVz()}",
+          "property": "dialog.name"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -44,7 +68,7 @@
             "id": "5uTqV3"
           },
           "property": "dialog.status",
-          "value": "open"
+          "value": "=coalesce(dialog.issueStatus, \"open\")"
         },
         {
           "$kind": "Github.GetIssues",

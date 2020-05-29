@@ -8,13 +8,13 @@
      Text = What's your name?
     SuggestedActions  = Why?
 ]
-# SendActivity_agc7MH()
-- ${YouCanAskMeCard()}
-
-# SendActivity_RMag6B()
-- ${HowCanIHelp()}
 
 # SendActivity_oSGbxz()
 - I need your name so I can address you!
 - How will I know what to call you?
 - I need your name to know what to call you.
+# ConfirmInput_Prompt_fXRhlM()
+- Do you want me watch a github repo for you?
+# SendActivity_BFjjwJ()
+- ${YouCanAskMeCard()}
+

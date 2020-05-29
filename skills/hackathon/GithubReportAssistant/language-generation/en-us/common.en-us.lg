@@ -149,15 +149,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"What's new?\"",
+                                    "text": "\"show today's summary\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "What's new?",
-                                "data": "What's new?"
+                                "title": "show today's summary",
+                                "data": "show today's summary"
                             }
                         }
                     ],
@@ -191,15 +191,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"What's on my agenda today?\"",
+                                    "text": "\"show issues assigned to me\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "What's on my agenda today?",
-                                "data": "What's on my agenda today?"
+                                "title": "show issues assigned to me",
+                                "data": "show issues assigned to me"
                             }
                         }
                     ],
@@ -233,15 +233,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"Who emailed me about Bot Framework?\"",
+                                    "text": "\"issues opened today\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "Who emailed me about Bot Framework?",
-                                "data": "Who emailed me about Bot Framework?"
+                                "title": "issues opened today",
+                                "data": "issues opened today"
                             }
                         }
                     ],
