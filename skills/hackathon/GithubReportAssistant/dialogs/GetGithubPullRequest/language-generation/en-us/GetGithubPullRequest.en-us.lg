@@ -1,0 +1,4 @@
+[import](common.lg)
+
+# SendActivity_TiYhKD()
+- The repo has ${count(dialog.pullRequest)} PRs open. ${join(select(dialog.pullRequest ,x ,x.Title), "; ")}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Github.GetPullRequest",
+  "description": "Retrieve pullRequests using the github api.",
+  "required": [
+    "token"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "result property",
+      "description": "result property",
+      "examples": [
+        "dialog.pullRequests"
+      ]
+    },
+    "owner": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Owner",
+      "description": "Github repo owner",
+      "examples": [
+        "microsoft"
+      ]
+    },
+    "name": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Name",
+      "description": "Github repo name",
+      "examples": [
+        "botframework-solutions"
+      ]
+    },
+    "status": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Status",
+      "description": "status",
+      "examples": [
+        "open"
+      ]
+    }
+  }
+}

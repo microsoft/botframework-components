@@ -1,0 +1,53 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "lDzPBB",
+    "name": "GetGithubPullRequest"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "a9iN73"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2LUS4i"
+          },
+          "name": "get pr"
+        },
+        {
+          "$kind": "Github.GetPullRequest",
+          "$designer": {
+            "id": "ee8p1F"
+          },
+          "resultProperty": "dialog.pullRequest",
+          "name": "botframework-skills",
+          "owner": "microsoft",
+          "status": "open"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "TiYhKD"
+          },
+          "activity": "${SendActivity_TiYhKD()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "MWtgIG"
+          },
+          "value": "=dialog.pullRequest"
+        }
+      ]
+    }
+  ],
+  "dialogType": "none",
+  "generator": "GetGithubPullRequest.lg"
+}
