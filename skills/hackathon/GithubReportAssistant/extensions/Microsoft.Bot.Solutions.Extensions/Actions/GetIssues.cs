@@ -71,10 +71,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     Filter = IssueFilter.All,
                     State = GetStatus(status),
                 };
-                foreach(var label in labels)
+
+                if(labels != null)
                 {
-                    recently.Labels.Add(label);
+                    foreach (var label in labels)
+                    {
+                        recently.Labels.Add(label);
+                    }
                 }
+
                 issues = await github.Issue.GetAllForRepository(owner, name, recently);
 
                 foreach(var issue in issues)
@@ -104,9 +109,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                             CreatedAt = issue.CreatedAt,
                             ClosedAt = issue.ClosedAt,
                             Body = issue.Body,
-                            Title = issue.Title,
+                            Title = issue.Title.Replace("\"", ""),
                             Status = issue.State.StringValue,
-                            Url = issue.Url
+                            Url = issue.HtmlUrl
                         });
                     }
                 }

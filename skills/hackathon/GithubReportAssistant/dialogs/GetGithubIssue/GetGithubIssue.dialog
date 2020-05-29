@@ -47,16 +47,6 @@
           "value": "open"
         },
         {
-          "$kind": "Microsoft.EditArray",
-          "$designer": {
-            "id": "5plKzm"
-          },
-          "changeType": "push",
-          "itemsProperty": "dialog.labels",
-          "resultProperty": "dialog.labelsResult",
-          "value": "R10"
-        },
-        {
           "$kind": "Github.GetIssues",
           "$designer": {
             "id": "GmerZe"

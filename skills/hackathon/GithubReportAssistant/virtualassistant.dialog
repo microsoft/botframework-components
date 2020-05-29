@@ -180,6 +180,13 @@
           "name": "ShowSummary"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tw9C40"
+          },
+          "name": "ShowNewIssuesCreated"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "Hmls7B"
@@ -188,7 +195,8 @@
           "dialog": "GetGithubIssue",
           "options": {
             "startDate": "=addDays(utcNow(), -1)",
-            "endDate": "=utcNow()"
+            "endDate": "=utcNow()",
+            "createOrUpdate": "create"
           }
         },
         {
@@ -200,6 +208,23 @@
           "dialog": "ShowGithubIssues"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SIYmog"
+          },
+          "name": "ShowIssuesTrend"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "XpAmKm"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.labels",
+          "resultProperty": "dialog.labelsResult",
+          "value": "R10"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "fCIAQl"
@@ -208,7 +233,8 @@
           "dialog": "GetGithubIssue",
           "options": {
             "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
-            "endDate": "=utcNow()"
+            "endDate": "=utcNow()",
+            "labels": "=dialog.labels"
           }
         },
         {
