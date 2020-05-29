@@ -22,6 +22,16 @@
           "name": "BeginShowTrend"
         },
         {
+          "$kind": "Github.GetIssuesPerDayData",
+          "$designer": {
+            "id": "b3v6Rb"
+          },
+          "xResultProperty": "dialog.x",
+          "yResultProperty": "dialog.y",
+          "issues": "=turn.issues",
+          "startDate": "=utcNow()"
+        },
+        {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
             "id": "EbH9kK"
@@ -58,14 +68,6 @@
           },
           "resultProperty": "dialog.chartUrl",
           "token": "=dialog.token.token"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "MLXPaC"
-          },
-          "property": "dialog.title",
-          "value": "Issues per day trend"
         },
         {
           "$kind": "Microsoft.SendActivity",

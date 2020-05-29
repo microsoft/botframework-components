@@ -1,0 +1,6 @@
+[import](common.lg)
+# SendActivity_OB5DZ1()
+[Activity
+    Text = New Created Issues:
+    Attachments = ${json(IssueCard(turn.issues))}
+]

@@ -43,6 +43,65 @@
 }
 ```
 
+# IssueCard(issues)
+- ```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "id": "EventItemContainer",
+      "type": "Container",
+      "items": [
+		${IssueItemContainerCard(issues)}
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
+
+# IssueItemContainerCard(itemData)
+- ${join(foreach(itemData, x, IssueItemCard(x)), ', ')}
+
+# IssueItemCard(item)
+- ```
+{
+    "type": "Container",
+    "items": [
+		{
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.id}",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "[${item.title}](${item.url})",
+                            "wrap": true
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        }
+    ]
+}
+```
+
+
 
 # YouCanAskMeCard
 [Activity
