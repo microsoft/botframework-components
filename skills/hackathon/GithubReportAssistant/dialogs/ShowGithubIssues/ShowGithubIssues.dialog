@@ -1,0 +1,35 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "n6Ds50",
+    "name": "ShowGithubIssues"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "dialogType": "sandwich",
+  "generator": "ShowGithubIssues.lg",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "id": "qg5OgP"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uSZ7Ph"
+          },
+          "name": "ShowGithubIssues"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "OB5DZ1"
+          },
+          "activity": "${SendActivity_OB5DZ1()}"
+        }
+      ]
+    }
+  ]
+}

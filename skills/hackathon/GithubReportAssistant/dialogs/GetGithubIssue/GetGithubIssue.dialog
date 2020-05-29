@@ -61,21 +61,14 @@
           "$designer": {
             "id": "GmerZe"
           },
-          "resultProperty": "dialog.issues",
+          "resultProperty": "turn.issues",
           "owner": "=dialog.owner",
           "name": "=dialog.name",
           "status": "=dialog.status",
-          "labels": "=dialog.labels"
-        },
-        {
-          "$kind": "Github.GetIssuesPerDayData",
-          "$designer": {
-            "id": "4UkNiM"
-          },
-          "xResultProperty": "turn.x",
-          "yResultProperty": "turn.y",
-          "issues": "=dialog.issues",
-          "startDate": "=utcNow()"
+          "labels": "=dialog.labels",
+          "createOrUpdate": "create",
+          "endDate": "=dialog.endDate",
+          "startDate": "=dialog.startDate"
         },
         {
           "$kind": "Microsoft.TraceActivity",

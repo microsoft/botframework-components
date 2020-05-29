@@ -182,10 +182,34 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "Hmls7B"
+          },
+          "activityProcessed": true,
+          "dialog": "GetGithubIssue",
+          "options": {
+            "startDate": "=addDays(utcNow(), -1)",
+            "endDate": "=utcNow()"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "5J7iHf"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowGithubIssues"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "fCIAQl"
           },
           "activityProcessed": true,
-          "dialog": "GetGithubIssue"
+          "dialog": "GetGithubIssue",
+          "options": {
+            "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+            "endDate": "=utcNow()"
+          }
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -195,8 +219,7 @@
           "activityProcessed": true,
           "dialog": "ShowTrend",
           "options": {
-            "x": "=turn.x",
-            "y": "=turn.y"
+            "title": "Opened Issues Per Day"
           }
         }
       ]
