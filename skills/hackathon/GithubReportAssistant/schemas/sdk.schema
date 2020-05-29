@@ -5,6 +5,12 @@
 	"description": "These are all of the kinds that can be created by the loader.",
 	"oneOf": [
 		{
+			"$ref": "#/definitions/Github.GetIssues"
+		},
+		{
+			"$ref": "#/definitions/Github.GetIssuesPerDayData"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.ActivityTemplate"
 		},
 		{
@@ -114,6 +120,12 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"
@@ -315,6 +327,206 @@
 		}
 	],
 	"definitions": {
+		"Github.GetIssues": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Github.GetIssues",
+			"description": "Retrieve issues using the github api.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"title": "result property",
+					"description": "result property",
+					"examples": [
+						"dialog.issues"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
+							"examples": [
+								"=concat('x','y','z')"
+							]
+						}
+					]
+				},
+				"owner": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Owner",
+					"description": "Github repo owner",
+					"examples": [
+						"microsoft"
+					]
+				},
+				"name": {
+					"title": "Name",
+					"description": "Github repo name",
+					"examples": [
+						"botframework-solutions"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "object",
+							"title": "Object"
+						},
+						{
+							"type": "array",
+							"title": "Array"
+						},
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"examples": [
+								false
+							]
+						},
+						{
+							"type": "number",
+							"title": "Number",
+							"examples": [
+								15.5
+							]
+						},
+						{
+							"examples": [
+								"=..."
+							],
+							"type": "string",
+							"title": "Expression",
+							"pattern": "^=.*\\S.*"
+						}
+					]
+				},
+				"status": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Status",
+					"description": "status",
+					"examples": [
+						"open"
+					]
+				},
+				"labels": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "labels",
+					"description": "labels",
+					"examples": [
+						"dialog.labels"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Github.GetIssues"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Github.GetIssuesPerDayData": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Github.GetIssuesPerDayData",
+			"description": "Retrieve chart data using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"xResultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "x result property",
+					"description": "x result property",
+					"examples": [
+						"dialog.x"
+					]
+				},
+				"yResultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "y result property",
+					"description": "y result property",
+					"examples": [
+						"dialog.y"
+					]
+				},
+				"issues": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Issues",
+					"description": "Github issue",
+					"examples": [
+						"dialog.Issues"
+					]
+				},
+				"startDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "StartDate",
+					"description": "Start Date",
+					"examples": [
+						"dialog.startDate"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Github.GetIssuesPerDayData"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.ActivityTemplate": {
 			"$role": "implements(Microsoft.IActivityTemplate)",
 			"title": "Microsoft ActivityTemplate",
@@ -3322,7 +3534,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/resultProperty",
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3330,7 +3542,7 @@
 					]
 				},
 				"token": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token",
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
@@ -3338,7 +3550,7 @@
 					]
 				},
 				"emailSubjectProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token",
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "EmailSubject",
 					"description": "Expression for email subject.",
 					"examples": [
@@ -3346,7 +3558,7 @@
 					]
 				},
 				"emailContentProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token",
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "EmailContent",
 					"description": "Expression for email content.",
 					"examples": [
@@ -3354,7 +3566,7 @@
 					]
 				},
 				"emailAddressProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token",
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "EmailAddress",
 					"description": "Expression for email address.",
 					"examples": [
@@ -3367,6 +3579,120 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Email.SendEmail"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Excel.RetrieveChart": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Retrieve Chart",
+			"description": "Retrieve chart using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Excel.RetrieveChart"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Excel.UpdateWorkData": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Update Work Book Data",
+			"description": "Update Work Book Data from Microsoft Graph API.",
+			"required": [
+				"token",
+				"xArray",
+				"yArray",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"token": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"xArray": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "xArray",
+					"description": "x Array",
+					"examples": [
+						"dialog.xArray"
+					]
+				},
+				"yArray": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "yArray",
+					"description": "y Array",
+					"examples": [
+						"dialog.yArray"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Excel.UpdateWorkData"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3398,79 +3724,23 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
 						"dialog.contosodata"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token/oneOf/5",
-							"examples": [
-								"=concat('x','y','z')"
-							]
-						}
 					]
 				},
 				"token": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "Token",
 					"description": "Microsoft Graph Authentication Token",
 					"examples": [
 						"user.token.token"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "object",
-							"title": "Object"
-						},
-						{
-							"type": "array",
-							"title": "Array"
-						},
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"type": "boolean",
-							"title": "Boolean",
-							"examples": [
-								false
-							]
-						},
-						{
-							"type": "number",
-							"title": "Number",
-							"examples": [
-								15.5
-							]
-						},
-						{
-							"examples": [
-								"=..."
-							],
-							"type": "string",
-							"title": "Expression",
-							"pattern": "^=.*\\S.*"
-						}
 					]
 				},
 				"taskContentProperty": {
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask/properties/token",
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "TaskContent",
 					"description": "Expression for task content.",
 					"examples": [
@@ -4213,6 +4483,30 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -4309,31 +4603,19 @@
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
+					"$ref": "#/definitions/Github.GetIssues"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
+					"$ref": "#/definitions/Github.GetIssuesPerDayData"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"

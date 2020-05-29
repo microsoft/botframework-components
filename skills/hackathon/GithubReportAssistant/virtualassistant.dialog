@@ -164,6 +164,42 @@
           "dialog": "ToDoSkill"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "x4YIh4"
+      },
+      "intent": "ShowSummary",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ENYTvg"
+          },
+          "name": "ShowSummary"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fCIAQl"
+          },
+          "activityProcessed": true,
+          "dialog": "GetGithubIssue"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WJklFw"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowTrend",
+          "options": {
+            "x": "=turn.x",
+            "y": "=turn.y"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
