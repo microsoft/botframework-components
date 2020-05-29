@@ -29,28 +29,36 @@
         "user.token.token"
       ]
     },
-    "emailSubjectProperty": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "EmailSubject",
-      "description": "Expression for email subject.",
-      "examples": [
-        "dialog.emailSubject"
-      ]
-    },
-    "emailContentProperty": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "EmailContent",
-      "description": "Expression for email content.",
-      "examples": [
-        "dialog.emailContent"
-      ]
-    },
     "emailAddressProperty": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
       "title": "EmailAddress",
       "description": "Expression for email address.",
       "examples": [
         "dialog.emailAddress"
+      ]
+    },
+    "emailImgContentProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "EmailImgContent",
+      "description": "Expression for email image content.",
+      "examples": [
+        "dialog.emailImgContent"
+      ]
+    },
+    "newIssuesProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "New issues property",
+      "description": "New issues.",
+      "examples": [
+        "dialog.newIssues"
+      ]
+    },
+    "updatedIssuesProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Updated issues property",
+      "description": "Updated issues.",
+      "examples": [
+        "dialog.updatedIssues"
       ]
     }
   }

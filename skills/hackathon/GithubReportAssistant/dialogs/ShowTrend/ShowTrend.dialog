@@ -44,7 +44,7 @@
           "property": "dialog.token",
           "invalidPrompt": "${OAuthInput_InvalidPrompt_EbH9kK()}",
           "defaultValueResponse": "${OAuthInput_DefaultValueResponse_EbH9kK()}",
-          "connectionName": "Outlook"
+          "connectionName": "msGraph"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -66,7 +66,7 @@
           "$designer": {
             "id": "Meq37b"
           },
-          "resultProperty": "dialog.chartUrl",
+          "resultProperty": "conversation.chartUrl",
           "token": "=dialog.token.token"
         },
         {

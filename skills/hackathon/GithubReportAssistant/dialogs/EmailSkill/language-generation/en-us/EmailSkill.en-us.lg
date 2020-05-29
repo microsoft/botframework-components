@@ -2,7 +2,10 @@
 
 
 
-# SendActivity_bR0lZc()
-- Send email...
+
 # SendActivity_mDQJEK()
 - Send email successfully.
+# TextInput_Prompt_VeFP8e()
+- Tell me the email address you want to send to.
+# SendActivity_pbNnp5()
+- Note: Remember to add current account to [Safe sender] first. Or this email will be treated as junk email.
