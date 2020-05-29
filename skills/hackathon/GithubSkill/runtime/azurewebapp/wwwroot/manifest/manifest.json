@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/skills/skill-manifest-2.0.0.json",
+  "$id": "GithubSkill",
+  "name": "Github Skill",
+  "description": "github",
+  "publisherName": "Microsoft",
+  "version": "0.8",
+  "iconUrl": "",
+  "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
+  "license": "",
+  "privacyUrl": "",
+  "tags": [
+    "github",
+    "skill"
+  ],
+  "endpoints": [
+    {
+      "name": "production",
+      "protocol": "BotFrameworkV3",
+      "description": "Production endpoint for the github Skill",
+      "endpointUrl": "https://28687d32db1e.ngrok.io/api/messages",
+      "msAppId": "6e2d2c9e-9951-40c7-885f-06737b814363"
+    }
+  ],
+  "activities": {
+    "message": {
+      "type": "message",
+      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
+    }
+  }
+}

@@ -122,6 +122,9 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
 		},
 		{
@@ -3672,6 +3675,58 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Excel.RetrieveChart": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Retrieve Chart",
+			"description": "Retrieve chart using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Excel.RetrieveChart"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Excel.UpdateWorkData": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -4456,6 +4511,30 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -4552,34 +4631,13 @@
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
 					"$ref": "#/definitions/Github.GetIssues"
 				},
 				{
 					"$ref": "#/definitions/Github.GetIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"

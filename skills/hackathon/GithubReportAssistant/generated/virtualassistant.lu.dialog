@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "virtualassistant.en-us.lu",
+        "": "virtualassistant.en-us.lu"
+    }
+}

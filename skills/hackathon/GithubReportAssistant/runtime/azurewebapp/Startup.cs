@@ -133,6 +133,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
             ComponentRegistration.Add(new LuisComponentRegistration());
+            ComponentRegistration.Add(new MSGraphComponentRegistration());
             ComponentRegistration.Add(new GithubComponentRegistration());
 
             // This is for custom action component registration.

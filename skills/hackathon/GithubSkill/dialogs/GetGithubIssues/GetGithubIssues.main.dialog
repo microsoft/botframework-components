@@ -92,7 +92,8 @@
           "activity": "${Askrepo()}",
           "expectedProperties": [
             "repo"
-          ]
+          ],
+          "top": 3
         }
       ],
       "id": "GetGithubIssues-repo-missing",

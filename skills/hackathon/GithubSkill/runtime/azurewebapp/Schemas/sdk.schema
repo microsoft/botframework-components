@@ -5,6 +5,12 @@
 	"description": "These are all of the kinds that can be created by the loader.",
 	"oneOf": [
 		{
+			"$ref": "#/definitions/Github.GetIssues"
+		},
+		{
+			"$ref": "#/definitions/Github.GetIssuesPerDayData"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.ActivityTemplate"
 		},
 		{
@@ -111,6 +117,12 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GotoAction"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -309,6 +321,206 @@
 		}
 	],
 	"definitions": {
+		"Github.GetIssues": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Github.GetIssues",
+			"description": "Retrieve issues using the github api.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"title": "result property",
+					"description": "result property",
+					"examples": [
+						"dialog.issues"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
+							"examples": [
+								"=concat('x','y','z')"
+							]
+						}
+					]
+				},
+				"owner": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Owner",
+					"description": "Github repo owner",
+					"examples": [
+						"microsoft"
+					]
+				},
+				"name": {
+					"title": "Name",
+					"description": "Github repo name",
+					"examples": [
+						"botframework-solutions"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "object",
+							"title": "Object"
+						},
+						{
+							"type": "array",
+							"title": "Array"
+						},
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"examples": [
+								false
+							]
+						},
+						{
+							"type": "number",
+							"title": "Number",
+							"examples": [
+								15.5
+							]
+						},
+						{
+							"examples": [
+								"=..."
+							],
+							"type": "string",
+							"title": "Expression",
+							"pattern": "^=.*\\S.*"
+						}
+					]
+				},
+				"status": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Status",
+					"description": "status",
+					"examples": [
+						"open"
+					]
+				},
+				"labels": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "labels",
+					"description": "labels",
+					"examples": [
+						"dialog.labels"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Github.GetIssues"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Github.GetIssuesPerDayData": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Github.GetIssuesPerDayData",
+			"description": "Retrieve chart data using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"xResultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "x result property",
+					"description": "x result property",
+					"examples": [
+						"dialog.x"
+					]
+				},
+				"yResultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "y result property",
+					"description": "y result property",
+					"examples": [
+						"dialog.y"
+					]
+				},
+				"issues": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Issues",
+					"description": "Github issue",
+					"examples": [
+						"dialog.Issues"
+					]
+				},
+				"startDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "StartDate",
+					"description": "Start Date",
+					"examples": [
+						"dialog.startDate"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Github.GetIssuesPerDayData"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.ActivityTemplate": {
 			"$role": "implements(Microsoft.IActivityTemplate)",
 			"title": "Microsoft ActivityTemplate",
@@ -3293,6 +3505,235 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.EventDateTimeInput": {
+			"$role": [
+				"implements(Microsoft.IDialog)",
+				"extends(Microsoft.InputDialog)"
+			],
+			"type": "object",
+			"title": "Event datetime input dialog",
+			"description": "Collect information - Select the date, time, and duration for a Microsoft calendar event.",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"defaultValue": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Default value",
+					"description": "'Property' will be set to the value of this expression when max turn count is exceeded.",
+					"examples": [
+						"hello world",
+						"Hello ${user.name}",
+						"=concat(user.firstname, user.lastName)"
+					]
+				},
+				"value": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Value",
+					"description": "'Property' will be set to the value of this expression unless it evaluates to null.",
+					"examples": [
+						"hello world",
+						"Hello ${user.name}",
+						"=concat(user.firstname, user.lastName)"
+					]
+				},
+				"outputFormat": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Output format",
+					"description": "Expression to format the output.",
+					"examples": [
+						"=toUpper(this.value)",
+						"${toUpper(this.value)}"
+					]
+				},
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"default": false,
+					"examples": [
+						false,
+						"=user.isVip"
+					]
+				},
+				"prompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Initial prompt",
+					"description": "Message to send to collect information.",
+					"examples": [
+						"What is your birth date?"
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"unrecognizedPrompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Unrecognized prompt",
+					"description": "Message to send when max turn count (if specified) has been exceeded and the default value is selected as the value.",
+					"examples": [
+						"Sorry, I'm having trouble understanding you. I will just use {this.options.defaultValue} for now. You can say 'I'm 36 years old' to change it."
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"invalidPrompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Invalid prompt",
+					"description": "Message to send when the user input does not meet any validation expression.",
+					"examples": [
+						"Sorry, '{this.value}' does not work. I need a number between 1-150. What is your age?"
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"defaultValueResponse": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Default value response",
+					"description": "Message to send when max turn count (if specified) has been exceeded and the default value is selected as the value.",
+					"examples": [
+						"Sorry, I'm having trouble understanding you. I will just use {this.options.defaultValue} for now. You can say 'I'm 36 years old' to change it."
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"maxTurnCount": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Max turn count",
+					"description": "Maximum number of re-prompt attempts to collect information.",
+					"default": 3,
+					"examples": [
+						3,
+						"=settings.xyz"
+					]
+				},
+				"validations": {
+					"type": "array",
+					"title": "Validation expressions",
+					"description": "Expression to validate user input.",
+					"items": {
+						"$ref": "#/definitions/condition",
+						"title": "Condition",
+						"description": "Expression which needs to met for the input to be considered valid",
+						"examples": [
+							"int(this.value) > 1 && int(this.value) <= 150",
+							"count(this.value) < 300"
+						]
+					}
+				},
+				"property": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Property",
+					"description": "Property to store collected information. Input will be skipped if property has value (unless 'Always prompt' is true).",
+					"examples": [
+						"$birthday",
+						"dialog.${user.name}",
+						"=f(x)"
+					]
+				},
+				"alwaysPrompt": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Always prompt",
+					"description": "Collect information even if the specified 'property' is not empty.",
+					"default": false,
+					"examples": [
+						false,
+						"=$val"
+					]
+				},
+				"allowInterruptions": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Allow Interruptions",
+					"description": "A boolean expression that determines whether the parent should be allowed to interrupt the input.",
+					"default": true,
+					"examples": [
+						true,
+						"=user.xyz"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.EventDateTimeInput"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Excel.UpdateWorkData": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Update Work Book Data",
+			"description": "Update Work Book Data from Microsoft Graph API.",
+			"required": [
+				"token",
+				"xArray",
+				"yArray",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"token": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"xArray": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "xArray",
+					"description": "x Array",
+					"examples": [
+						"dialog.xArray"
+					]
+				},
+				"yArray": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "yArray",
+					"description": "y Array",
+					"examples": [
+						"dialog.yArray"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Excel.UpdateWorkData"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.GuidEntityRecognizer": {
 			"$role": "implements(Microsoft.IEntityRecognizer)",
 			"title": "Guid Entity Recognizer",
@@ -3417,7 +3858,7 @@
 				"resultProperty": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "Result property",
-					"description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
 						"dialog.contosodata"
 					]
@@ -4015,30 +4456,6 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -4133,6 +4550,42 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssues"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
 				}
 			]
 		},

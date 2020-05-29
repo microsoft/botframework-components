@@ -36,5 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\core\Microsoft.BotFramework.Composer.Core.csproj" />
+    <ProjectReference Include="..\extensions\Microsoft.Bot.Solutions.Extensions.csproj" />
   </ItemGroup>
 </Project>
