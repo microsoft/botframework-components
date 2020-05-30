@@ -415,7 +415,10 @@
           },
           "activityProcessed": true,
           "dialog": "GetGithubIssue",
-          "resultProperty": "dialog.issues"
+          "resultProperty": "dialog.issues",
+          "options": {
+            "status": "open"
+          }
         },
         {
           "$kind": "Microsoft.BeginDialog",
