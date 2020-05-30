@@ -60,7 +60,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
                 for (int i = 0; i < timespan; i++)
                 {
-                    dates.Add(queryDate.Subtract(TimeSpan.FromDays(timespan - i)).ToString("D"));
+                    dates.Add(queryDate.Subtract(TimeSpan.FromDays(timespan - i)).ToString("d-MMM"));
                 }
 
                 for (int i = 0; i < timespan; i++)
@@ -71,6 +71,10 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     {
                         if (issue.CreatedAt.Date.CompareTo(date) < 0)
                         {
+                            if(issue.Status.Equals("closed") && issue.ClosedAt!=null && issue.ClosedAt.Value.Date.CompareTo(date) < 0)
+                            {
+                                continue;
+                            }
                             issueNumber++;
                         }
                     }

@@ -137,3 +137,12 @@
 # ShowSummary
 - show summary
 - summary
+
+# Clear
+- clear
+- clean up
+
+# QueryIssues
+- issues assign to {Assignee=me}
+- all issues in {Label=R10}
+- issues in {Label=R11}

@@ -22,13 +22,27 @@
           "name": "BeginShowTrend"
         },
         {
+          "$kind": "Github.FilterIssues",
+          "$designer": {
+            "id": "vQZAqa"
+          },
+          "resultProperty": "dialog.filteredIssues",
+          "issues": "=dialog.issues",
+          "assignee": "=dialog.assignee",
+          "status": "=dialog.status",
+          "labels": "=dialog.labels",
+          "createOrUpdate": "=dialog.createOrUpdate",
+          "startDate": "=dialog.startDate",
+          "endDate": "=dialog.endDate"
+        },
+        {
           "$kind": "Github.GetIssuesPerDayData",
           "$designer": {
             "id": "b3v6Rb"
           },
           "xResultProperty": "dialog.x",
           "yResultProperty": "dialog.y",
-          "issues": "=turn.issues",
+          "issues": "=dialog.filteredIssues",
           "startDate": "=utcNow()"
         },
         {
@@ -44,7 +58,7 @@
           "property": "dialog.token",
           "invalidPrompt": "${OAuthInput_InvalidPrompt_EbH9kK()}",
           "defaultValueResponse": "${OAuthInput_DefaultValueResponse_EbH9kK()}",
-          "connectionName": "Outlook"
+          "connectionName": "=settings.connectionName"
         },
         {
           "$kind": "Microsoft.TraceActivity",

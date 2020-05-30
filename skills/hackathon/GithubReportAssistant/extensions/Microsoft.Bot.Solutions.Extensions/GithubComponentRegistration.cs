@@ -14,6 +14,7 @@ namespace Microsoft.Bot.Solutions.Extensions
         {
             // Actions
             yield return new DeclarativeType<GetIssues>(GetIssues.DeclarativeType);
+            yield return new DeclarativeType<FilterIssues>(FilterIssues.DeclarativeType);
             yield return new DeclarativeType<GetIssuesPerDayData>(GetIssuesPerDayData.DeclarativeType);
         }
 
