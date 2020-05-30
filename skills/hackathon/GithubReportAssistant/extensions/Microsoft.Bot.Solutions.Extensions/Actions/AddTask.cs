@@ -43,19 +43,33 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             var oneNoteService = new OneNoteService();
             var taskService = await oneNoteService.InitAsync(token, new Dictionary<string, string>());
-            await taskService.AddTaskAsync(ListType, taskContentProperty);
             var alltasks = await taskService.GetTasksAsync(ListType);
+            var newIssues = new List<string>();
+            var issueList = JsonConvert.DeserializeObject<List<dynamic>>(taskContentProperty);
+            foreach (var issue in issueList)
+            {
+                var taskContent = string.Format("{0}    {1}", ((string)issue.Id).PadRight(12, ' '), (string)issue.Title);
+                if (!alltasks.Exists(x => x.Topic == taskContent))
+                {
+                    newIssues.Add(taskContent);
+                }
+            }
+
+            foreach (var newIssue in newIssues)
+            {
+                await taskService.AddTaskAsync(ListType, newIssue);
+            }
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(AddTask), alltasks, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(AddTask), null, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
-                dcState.SetValue(ResultProperty, alltasks);
+                dcState.SetValue(ResultProperty, null);
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: alltasks, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken);
         }
     }
 }

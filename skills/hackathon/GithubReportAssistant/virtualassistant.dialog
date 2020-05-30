@@ -227,6 +227,14 @@
                 "title": "New Issues Created Today:",
                 "fallbackTitle": "Sorry no new issue for today."
               }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "QujXkC"
+              },
+              "property": "conversation.newIssues",
+              "value": "=turn.issues"
             }
           ]
         },
@@ -262,6 +270,14 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "oxkWPP"
+          },
+          "property": "conversation.updatedIssues",
+          "value": "=turn.issues"
         },
         {
           "$kind": "Microsoft.IfCondition",

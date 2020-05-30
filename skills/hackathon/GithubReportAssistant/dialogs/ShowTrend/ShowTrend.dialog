@@ -80,7 +80,7 @@
           "$designer": {
             "id": "Meq37b"
           },
-          "resultProperty": "dialog.chartUrl",
+          "resultProperty": "conversation.chartUrl",
           "token": "=dialog.token.token"
         },
         {

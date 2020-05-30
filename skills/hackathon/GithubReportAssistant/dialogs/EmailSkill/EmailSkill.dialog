@@ -15,13 +15,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "bR0lZc"
-          },
-          "activity": "${SendActivity_bR0lZc()}"
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "A7Cg2O"
@@ -35,7 +28,7 @@
             "id": "JUE9eB"
           },
           "property": "dialog.emailSubject",
-          "value": "EmailSubject"
+          "value": "Issues Report"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -43,15 +36,26 @@
             "id": "9kCA8T"
           },
           "property": "dialog.emailContent",
-          "value": "EmailContent"
+          "value": "=conversation.chartUrl"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "LrY4B5"
+            "id": "pbNnp5"
           },
-          "property": "dialog.emailAddress",
-          "value": "shzhen@microsoft.com"
+          "activity": "${SendActivity_pbNnp5()}"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "VeFP8e"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_VeFP8e()}",
+          "property": "dialog.emailAddress"
         },
         {
           "$kind": "Microsoft.Graph.Email.SendEmail",
@@ -61,7 +65,10 @@
           "token": "=user.token.Token",
           "emailSubjectProperty": "=dialog.emailSubject",
           "emailContentProperty": "=dialog.emailContent",
-          "emailAddressProperty": "=dialog.emailAddress"
+          "emailAddressProperty": "=dialog.emailAddress",
+          "emailImgContentProperty": "=conversation.chartUrl",
+          "newIssuesProperty": "=conversation.newIssues",
+          "updatedIssuesProperty": "=conversation.updatedIssues"
         },
         {
           "$kind": "Microsoft.SendActivity",

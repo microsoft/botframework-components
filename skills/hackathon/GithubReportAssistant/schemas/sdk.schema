@@ -3636,28 +3636,36 @@
 						"user.token.token"
 					]
 				},
-				"emailSubjectProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "EmailSubject",
-					"description": "Expression for email subject.",
-					"examples": [
-						"dialog.emailSubject"
-					]
-				},
-				"emailContentProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "EmailContent",
-					"description": "Expression for email content.",
-					"examples": [
-						"dialog.emailContent"
-					]
-				},
 				"emailAddressProperty": {
 					"$ref": "#/definitions/Github.GetIssues/properties/name",
 					"title": "EmailAddress",
 					"description": "Expression for email address.",
 					"examples": [
 						"dialog.emailAddress"
+					]
+				},
+				"emailImgContentProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "EmailImgContent",
+					"description": "Expression for email image content.",
+					"examples": [
+						"dialog.emailImgContent"
+					]
+				},
+				"newIssuesProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "New issues property",
+					"description": "New issues.",
+					"examples": [
+						"dialog.newIssues"
+					]
+				},
+				"updatedIssuesProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Updated issues property",
+					"description": "Updated issues.",
+					"examples": [
+						"dialog.updatedIssues"
 					]
 				},
 				"$kind": {
