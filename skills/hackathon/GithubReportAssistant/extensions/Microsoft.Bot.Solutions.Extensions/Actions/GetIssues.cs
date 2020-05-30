@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Octokit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,18 +35,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("status")]
         public StringExpression Status { get; set; }
 
-        [JsonProperty("labels")]
-        public ArrayExpression<string> Labels { get; set; }
-
-        [JsonProperty("startDate")]
-        public ObjectExpression<DateTime> StartDate { get; set; }
-
-        [JsonProperty("endDate")]
-        public ObjectExpression<DateTime> EndDate { get; set; }
-
-        [JsonProperty("createOrUpdate")]
-        public StringExpression CreateOrUpdate { get; set; }
-
         [JsonProperty("resultProperty")]
         public string resultProperty { get; set; }
 
@@ -56,65 +45,59 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var owner = Owner.GetValue(dcState);
             var name = Name.GetValue(dcState);
             var status = Status.GetValue(dcState);
-            var labels = Labels.GetValue(dcState);
-            var startDate = StartDate.GetValue(dcState);
-            var endDate = EndDate.GetValue(dcState);
-            var createOrUpdate = CreateOrUpdate.GetValue(dcState);
             var github = new GitHubClient(new ProductHeaderValue("TestClient"));
 
-            IReadOnlyList<Issue> issues = new List<Issue>();
             var resultIssue = new List<object>();
             try
             {
-                var recently = new RepositoryIssueRequest
+                var issues = new List<Issue>();
+                var request = new RepositoryIssueRequest
                 {
                     Filter = IssueFilter.All,
-                    State = GetStatus(status),
+                    State = ItemStateFilter.Open
                 };
 
-                if(labels != null)
+                if ((status == null) || (status!= null && status.Equals("open")))
                 {
-                    foreach (var label in labels)
-                    {
-                        recently.Labels.Add(label);
-                    }
+                    // Get open issues
+                    var openIssues = await github.Issue.GetAllForRepository(owner, name, request);
+                    issues.AddRange(openIssues);
                 }
 
-                issues = await github.Issue.GetAllForRepository(owner, name, recently);
-
-                foreach(var issue in issues)
+                if((status == null) || (status != null && status.Equals("closed")))
                 {
-                    var isAdd = false;
-                    if(createOrUpdate.ToLower().Equals("update"))
+                    // Get closed issues
+                    request.State = ItemStateFilter.Closed;
+                    request.Since = DateTime.UtcNow.Subtract(TimeSpan.FromDays(14));
+                    var closedIssues = await github.Issue.GetAllForRepository(owner, name, request);
+                    issues.AddRange(closedIssues);
+                }
+
+                foreach (var issue in issues)
+                {
+                    var githubIssue = new GitHubIssue()
                     {
-                        if ((issue.UpdatedAt.Value != null && issue.UpdatedAt.Value.CompareTo(startDate) >= 0 && issue.UpdatedAt.Value.CompareTo(endDate) <= 0)
-                            && !(issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0))
-                        {
-                            isAdd = true;
-                        }
-                    }
-                    else
+                        Id = issue.Id,
+                        UpdatedAt = issue.UpdatedAt,
+                        CreatedAt = issue.CreatedAt,
+                        ClosedAt = issue.ClosedAt,
+                        Body = issue.Body,
+                        Title = issue.Title.Replace("\"", ""),
+                        Status = issue.State.StringValue.ToLower(),
+                        Url = issue.HtmlUrl
+                    };
+
+                    foreach (var label in issue.Labels)
                     {
-                        if (issue.CreatedAt.CompareTo(startDate) >= 0 && issue.CreatedAt.CompareTo(endDate) <= 0)
-                        {
-                            isAdd = true;
-                        }
+                        githubIssue.Labels.Add(label.Name);
                     }
 
-                    if(isAdd)
+                    foreach (var assignee in issue.Assignees)
                     {
-                        resultIssue.Add(new GitHubIssue()
-                        {
-                            Id = issue.Id,
-                            UpdatedAt = issue.UpdatedAt,
-                            CreatedAt = issue.CreatedAt,
-                            ClosedAt = issue.ClosedAt,
-                            Body = issue.Body,
-                            Title = issue.Title.Replace("\"", ""),
-                            Status = issue.State.StringValue,
-                            Url = issue.HtmlUrl
-                        });
+                        githubIssue.Assignees.Add(assignee.Login);
                     }
+
+                    resultIssue.Add(githubIssue);
                 }
             }
             catch (ServiceException)
@@ -129,21 +112,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: resultIssue, cancellationToken: cancellationToken);
-        }
-
-        private ItemStateFilter GetStatus(string status)
-        {
-            var stateFilter = ItemStateFilter.All;
-            if (status.ToLower().Equals("open"))
-            {
-                stateFilter = ItemStateFilter.Open;
-            }
-            else if(status.ToLower().Equals("closed"))
-            {
-                stateFilter = ItemStateFilter.Closed;
-            }
-
-            return stateFilter;
         }
     }
 }

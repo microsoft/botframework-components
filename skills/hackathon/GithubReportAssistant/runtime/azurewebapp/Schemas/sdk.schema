@@ -5,6 +5,9 @@
 	"description": "These are all of the kinds that can be created by the loader.",
 	"oneOf": [
 		{
+			"$ref": "#/definitions/Github.FilterIssues"
+		},
+		{
 			"$ref": "#/definitions/Github.GetIssues"
 		},
 		{
@@ -327,6 +330,106 @@
 		}
 	],
 	"definitions": {
+		"Github.FilterIssues": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Github.FilterIssues",
+			"description": "Filter issues.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"title": "result property",
+					"description": "result property",
+					"examples": [
+						"dialog.issues"
+					]
+				},
+				"issues": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Issues",
+					"description": "Github issue",
+					"examples": [
+						"dialog.Issues"
+					]
+				},
+				"assignee": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "assignee",
+					"description": "assignee",
+					"examples": [
+						"dialog.assignee"
+					]
+				},
+				"status": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Status",
+					"description": "status",
+					"examples": [
+						"open"
+					]
+				},
+				"labels": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "labels",
+					"description": "labels",
+					"examples": [
+						"dialog.labels"
+					]
+				},
+				"createOrUpdate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "createOrUpdate",
+					"description": "createOrUpdate",
+					"examples": [
+						"update"
+					]
+				},
+				"startDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "startDate",
+					"description": "startDate",
+					"examples": [
+						"dialog.startDate"
+					]
+				},
+				"endDate": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "endDate",
+					"description": "endDate",
+					"examples": [
+						"dialog.endDate"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Github.FilterIssues"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Github.GetIssues": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -435,38 +538,6 @@
 					"description": "status",
 					"examples": [
 						"open"
-					]
-				},
-				"labels": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "labels",
-					"description": "labels",
-					"examples": [
-						"dialog.labels"
-					]
-				},
-				"createOrUpdate": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "createOrUpdate",
-					"description": "createOrUpdate",
-					"examples": [
-						"update"
-					]
-				},
-				"startDate": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "startDate",
-					"description": "startDate",
-					"examples": [
-						"dialog.startDate"
-					]
-				},
-				"endDate": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "endDate",
-					"description": "endDate",
-					"examples": [
-						"dialog.endDate"
 					]
 				},
 				"$kind": {
@@ -4633,6 +4704,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Github.FilterIssues"
 				},
 				{
 					"$ref": "#/definitions/Github.GetIssues"

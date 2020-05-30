@@ -63,32 +63,31 @@
           "property": "dialog.name"
         },
         {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "5uTqV3"
-          },
-          "property": "dialog.status",
-          "value": "=coalesce(dialog.issueStatus, \"open\")"
-        },
-        {
           "$kind": "Github.GetIssues",
           "$designer": {
             "id": "GmerZe"
           },
-          "resultProperty": "turn.issues",
+          "resultProperty": "dialog.issues",
           "owner": "=dialog.owner",
           "name": "=dialog.name",
           "status": "=dialog.status",
           "labels": "=dialog.labels",
-          "createOrUpdate": "create",
           "endDate": "=dialog.endDate",
-          "startDate": "=dialog.startDate"
+          "startDate": "=dialog.startDate",
+          "createOrUpdate": "=dialog.createOrUpdate"
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "zkLYPK"
           }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "FdazBl"
+          },
+          "value": "=dialog.issues"
         }
       ]
     }

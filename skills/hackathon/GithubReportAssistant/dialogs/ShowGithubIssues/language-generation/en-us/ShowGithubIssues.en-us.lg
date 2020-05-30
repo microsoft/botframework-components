@@ -3,7 +3,7 @@
 # SendActivity_tjXf2y()
 [Activity
     Text = ${dialog.title}
-    Attachments = ${json(IssueCard(turn.issues))}
+    Attachments = ${json(IssueCard(dialog.filteredIssues))}
 ]
 # SendActivity_Ro03Jw()
 - ${dialog.fallbackTitle}

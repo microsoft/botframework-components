@@ -44,38 +44,6 @@
       "examples": [
         "open"
       ]
-    },
-    "labels": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "labels",
-      "description": "labels",
-      "examples": [
-        "dialog.labels"
-      ]
-    },
-    "createOrUpdate": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "createOrUpdate",
-      "description": "createOrUpdate",
-      "examples": [
-        "update"
-      ]
-    },
-    "startDate": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "startDate",
-      "description": "startDate",
-      "examples": [
-        "dialog.startDate"
-      ]
-    },
-    "endDate": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "endDate",
-      "description": "endDate",
-      "examples": [
-        "dialog.endDate"
-      ]
     }
   }
 }
