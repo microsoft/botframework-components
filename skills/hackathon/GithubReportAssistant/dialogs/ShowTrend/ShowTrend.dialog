@@ -22,14 +22,49 @@
           "name": "BeginShowTrend"
         },
         {
-          "$kind": "Github.GetIssuesPerDayData",
+          "$kind": "Github.FilterIssues",
           "$designer": {
-            "id": "b3v6Rb"
+            "id": "vQZAqa"
           },
-          "xResultProperty": "dialog.x",
-          "yResultProperty": "dialog.y",
-          "issues": "=turn.issues",
-          "startDate": "=utcNow()"
+          "resultProperty": "dialog.filteredIssues",
+          "issues": "=dialog.issues",
+          "assignee": "=dialog.assignee",
+          "status": "=dialog.status",
+          "labels": "=dialog.labels",
+          "createOrUpdate": "=dialog.createOrUpdate",
+          "startDate": "=dialog.startDate",
+          "endDate": "=dialog.endDate"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "WlpSrn"
+          },
+          "condition": "dialog.type==\"closed\"",
+          "elseActions": [
+            {
+              "$kind": "Github.GetIssuesPerDayData",
+              "$designer": {
+                "id": "rKRFIZ"
+              },
+              "xResultProperty": "dialog.x",
+              "yResultProperty": "dialog.y",
+              "issues": "=dialog.filteredIssues",
+              "startDate": "=utcNow()"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Github.GetClosedIssuesPerDayData",
+              "$designer": {
+                "id": "VS7baO"
+              },
+              "xResultProperty": "dialog.x",
+              "yResultProperty": "dialog.y",
+              "issues": "=dialog.filteredIssues",
+              "startDate": "=utcNow()"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.OAuthInput",
@@ -44,7 +79,7 @@
           "property": "dialog.token",
           "invalidPrompt": "${OAuthInput_InvalidPrompt_EbH9kK()}",
           "defaultValueResponse": "${OAuthInput_DefaultValueResponse_EbH9kK()}",
-          "connectionName": "Outlook"
+          "connectionName": "=settings.connectionName"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -59,7 +94,8 @@
           },
           "token": "=dialog.token.token",
           "xArray": "=dialog.x",
-          "yArray": "=dialog.y"
+          "yArray": "=dialog.y",
+          "sheetName": "=dialog.sheetName"
         },
         {
           "$kind": "Microsoft.Graph.Excel.RetrieveChart",
@@ -67,7 +103,9 @@
             "id": "Meq37b"
           },
           "resultProperty": "dialog.chartUrl",
-          "token": "=dialog.token.token"
+          "token": "=dialog.token.token",
+          "sheetName": "=dialog.sheetName",
+          "chartName": "=dialog.chartName"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -75,6 +113,13 @@
             "id": "1yDJdU"
           },
           "activity": "${SendActivity_1yDJdU()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "muEsS7"
+          },
+          "value": "=dialog.chartUrl"
         }
       ]
     }

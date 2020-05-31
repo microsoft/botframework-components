@@ -6,7 +6,11 @@ namespace Microsoft.Bot.Solutions.Extensions.Common
 {
     public class GitHubIssue
     {
-        public GitHubIssue() { }
+        public GitHubIssue()
+        {
+            Labels = new List<string>();
+            Assignees = new List<string>();
+        }
 
         public int Id { get; set; }
 
@@ -28,6 +32,11 @@ namespace Microsoft.Bot.Solutions.Extensions.Common
 
 
         public string Url { get; set; }
-        
+
+
+        public List<string> Labels { get; set; }
+
+
+        public List<string> Assignees { get; set; }
     }
 }

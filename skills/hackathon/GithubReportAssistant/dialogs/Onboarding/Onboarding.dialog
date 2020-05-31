@@ -64,16 +64,17 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
-          "property": "dialog.githubWatch"
+          "property": "user.githubWatch"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "SchMPS"
           },
-          "condition": "dialog.githubWatch",
+          "condition": "user.githubWatch",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",

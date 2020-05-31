@@ -163,3 +163,13 @@
 - turn off notification
 - switch off
 - switch off notification
+
+# Clear
+- clear
+- clean up
+
+# QueryIssues
+- issues assign to {Assignee=me}
+- all issues in {Label=R10}
+- issues in {Label=R11}
+-issues with {Label=needs-triage}

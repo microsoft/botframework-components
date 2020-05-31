@@ -33,11 +33,19 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
+        [JsonProperty("sheetName")]
+        public StringExpression SheetName { get; set; }
+
+        [JsonProperty("chartName")]
+        public StringExpression ChartName { get; set; }
+
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
+            var sheetName = SheetName.GetValue(dcState);
+            var chartName = ChartName.GetValue(dcState);
             var graphClient = GraphClient.GetAuthenticatedClient(token);
 
             string chartResource = string.Empty;
@@ -46,10 +54,22 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 var searchResults = await GraphHelper.GetFilesAsync(graphClient);//SearchFilesAsync(graphClient, "Book");
                 if (searchResults.Count() > 0)
                 {
-                    var id = searchResults[0].Id;
+                    var id = String.Empty;
+                    foreach (var searchResult in searchResults)
+                    {
+                        if (searchResult.Name.ToLower().Contains("book") && !searchResult.Name.ToLower().Contains("notebook"))
+                        {
+                            id = searchResult.Id;
+                            break;
+                        }
+                    }
+
+                    var querySheetName = (sheetName == null) ? "Sheet1" : sheetName;
+                    var queryChartName = (chartName == null) ? "Chart 2" : chartName;
+
                     var persistChanges = true;
                     var sessionInfo = await GraphHelper.CreateSession(graphClient, id, persistChanges);
-                    chartResource = await GraphHelper.GetChart(graphClient, id, "Sheet1", "Chart 2");
+                    chartResource = await GraphHelper.GetChart(graphClient, id, querySheetName, queryChartName);
                     
                     await GraphHelper.CloseSession(graphClient, id, sessionInfo);
                 }
