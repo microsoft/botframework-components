@@ -181,7 +181,7 @@ namespace EmailSkill.Services.MSGraphAPI
 
             string emailContent = @"
 Here is your recent issues trend chart!
-<img src='cid:IssuesTrend' />
+<br><img src='cid:IssuesTrend' /><br>
 ";
 
             emailContent += "<style type=\"text/css\">  table.paleBlueRows {   font-family: \"Times New Roman\", Times, serif;   border: 1px solid #FFFFFF;   width: 700px;   height: 100px;   text-align: center;   border-collapse: collapse; } table.paleBlueRows td, table.paleBlueRows th {   border: 1px solid #FFFFFF;   padding: 3px 2px; } table.paleBlueRows tbody td {   font-size: 17px; } table.paleBlueRows tr:nth-child(even) {   background: #D0E4F5; } table.paleBlueRows thead {   background: #0B6FA4;   border-bottom: 5px solid #FFFFFF; } table.paleBlueRows thead th {   font-size: 17px;   font-weight: bold;   color: #FFFFFF;   text-align: center;   border-left: 2px solid #FFFFFF; } table.paleBlueRows thead th:first-child {   border-left: none; }  table.paleBlueRows tfoot {   font-size: 14px;   font-weight: bold;   color: #333333;   background: #D0E4F5;   border-top: 3px solid #444444; } table.paleBlueRows tfoot td {   font-size: 17px; }  </style> ";

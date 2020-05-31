@@ -51,7 +51,8 @@
           "prompt": "${ConfirmInput_Prompt_IHqn2q()}",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           },
           "property": "dialog.repeat"
         },

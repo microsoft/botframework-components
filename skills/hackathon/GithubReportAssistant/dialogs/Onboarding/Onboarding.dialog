@@ -83,6 +83,14 @@
               },
               "activityProcessed": true,
               "dialog": "OnBoardingGithub"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "L0YTOa"
+              },
+              "activityProcessed": true,
+              "dialog": "StartNotification"
             }
           ]
         },
