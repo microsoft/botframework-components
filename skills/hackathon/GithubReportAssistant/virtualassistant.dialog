@@ -284,6 +284,14 @@
         {
           "$kind": "Microsoft.EditArray",
           "$designer": {
+            "id": "8810Ah"
+          },
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
             "id": "2Vaq4F"
           },
           "changeType": "push",
@@ -402,6 +410,14 @@
               "value": "=null"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "T53zuA"
+          },
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
         }
       ]
     },
@@ -444,6 +460,14 @@
         {
           "$kind": "Microsoft.EditArray",
           "$designer": {
+            "id": "iPmcEf"
+          },
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
             "id": "5Q9dIk"
           },
           "changeType": "push",
@@ -459,16 +483,25 @@
           "name": "Query Issue"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "91ekq8"
+            "id": "Fv12YJ"
           },
-          "activityProcessed": true,
-          "dialog": "GetGithubIssue",
-          "resultProperty": "dialog.issues",
-          "options": {
-            "status": "open"
-          }
+          "condition": "count(dialog.issues)==0",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "z3s73n"
+              },
+              "activityProcessed": true,
+              "dialog": "GetGithubIssue",
+              "resultProperty": "dialog.issues",
+              "options": {
+                "status": "open"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
