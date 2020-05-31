@@ -14,7 +14,7 @@
       "description": "Optional id for the dialog."
     },
     "identifier": {
-      "type": "string",
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
       "title": "Identifier",
       "description": "Identifier for this notification."
     },
@@ -22,6 +22,11 @@
       "$kind": "Microsoft.IActivityTemplate",
       "title": "Activity",
       "description": "Activity to notify."
+    },
+    "toBot": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/booleanExpression",
+      "title": "ToBot",
+      "description": "Activity to bot or not(user)."
     },
     "time": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",

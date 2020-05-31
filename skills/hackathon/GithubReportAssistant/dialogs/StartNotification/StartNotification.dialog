@@ -70,7 +70,8 @@
           "time": "=dialog.time[0].Value",
           "repeat": "=if(dialog.repeat, 1, 0)",
           "activity": "${ManageNotification_Activity_IVSx3a()}",
-          "identifier": "=dialog.content"
+          "identifier": "=dialog.content",
+          "toBot": true
         },
         {
           "$kind": "Microsoft.SendActivity",

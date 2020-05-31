@@ -31,6 +31,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("activity")]
         public ITemplate<Activity> Activity { get; set; }
 
+        [JsonProperty("toBot")]
+        public BoolExpression ToBot { get; set; }
+
         [JsonProperty("time")]
         public ObjectExpression<DateTime> Time { get; set; }
 
@@ -58,13 +61,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             else
             {
                 var activity = await Activity.BindAsync(dc, dc.State).ConfigureAwait(false);
+                var toBot = this.ToBot?.GetValue(dcState) ?? false;
                 var time = this.Time.GetValue(dcState);
-                var repeat = this.Repeat.GetValue(dcState);
+                var repeat = this.Repeat?.GetValue(dcState) ?? 0;
 
                 result = userReference.StartNotification(dc.Context, new UserReferenceState.NotificationOption
                 {
                     Id = identifier,
                     Activity = activity,
+                    ToBot = toBot,
                     Time = time,
                     Repeat = repeat,
                 });

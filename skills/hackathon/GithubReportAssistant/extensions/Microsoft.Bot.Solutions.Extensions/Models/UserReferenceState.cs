@@ -17,13 +17,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
     public class UserReferenceState
     {
         private readonly IBotFrameworkHttpAdapter adapter;
+        private readonly IBot bot;
         private readonly IStorage storage;
         private readonly BotSettings botSettings;
         private readonly string key;
 
-        public UserReferenceState(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter)
+        public UserReferenceState(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter, IBot bot)
         {
             this.adapter = adapter;
+            this.bot = bot;
             storage = null; // serviceProvider.GetService<IStorage>();
             botSettings = serviceProvider.GetService<BotSettings>();
             var appId = botSettings.MicrosoftAppId;
@@ -72,7 +74,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
             }
         }
 
-        public async Task<ResourceResponse> Send(string name, Activity activity, CancellationToken cancellationToken)
+        public async Task<ResourceResponse> Send(string name, Activity activity, BotCallbackHandler handler, CancellationToken cancellationToken)
         {
             UserReference reference = GetLock(name);
 
@@ -82,7 +84,21 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
 
                 ResourceResponse response = null;
 
-                if (reference.Reference.ChannelId == Channels.Msteams)
+                if (handler != null)
+                {
+                    ((BotAdapter)adapter).ContinueConversationAsync(botSettings.MicrosoftAppId, reference.Reference, async (tc, ct) =>
+                    {
+                        // TODO middlewares still use ContinueConversation activity
+                        tc.Activity.Type = activity.Type;
+                        tc.Activity.Text = activity.Text;
+                        tc.Activity.Speak = activity.Speak;
+                        tc.Activity.Value = activity.Value;
+                        tc.Activity.Attachments = activity.Attachments;
+                        tc.Activity.AttachmentLayout = activity.AttachmentLayout;
+                        await handler(tc, ct);
+                    }, cancellationToken).Wait();
+                }
+                else if (reference.Reference.ChannelId == Channels.Msteams)
                 {
                     // https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/send-proactive-messages?tabs=dotnet
                     var client = new ConnectorClient(new Uri(activity.ServiceUrl), botSettings.MicrosoftAppId, botSettings.MicrosoftAppPassword);
@@ -168,7 +184,13 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
                     // if we happen to cancel when in the delay we will get a TaskCanceledException
                     await Task.Delay(delayInMill, CTS.Token).ConfigureAwait(false);
 
-                    await Send(name, notificationOption.Activity, CTS.Token);
+                    BotCallbackHandler botCallbackHandler = null;
+                    if (notificationOption.ToBot)
+                    {
+                        botCallbackHandler = bot.OnTurnAsync;
+                    }
+
+                    await Send(name, notificationOption.Activity, botCallbackHandler, CTS.Token);
                     if (notificationOption.Repeat <= 0)
                     {
                         CTS.Cancel();
@@ -208,6 +230,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
             public string Id { get; set; }
 
             public Activity Activity { get; set; }
+
+            public bool ToBot { get; set; }
 
             public DateTime Time { get; set; }
 

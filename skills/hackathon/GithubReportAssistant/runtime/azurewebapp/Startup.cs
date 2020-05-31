@@ -88,13 +88,14 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
 
         public BotFrameworkHttpAdapter GetBotAdapter(IStorage storage, BotSettings settings, UserState userState, ConversationState conversationState, IServiceProvider s, TelemetryInitializerMiddleware telemetryInitializerMiddleware)
         {
+            var bot = s.GetService<IBot>();
             var adapter = new BotFrameworkHttpAdapter(new ConfigurationCredentialProvider(this.Configuration));
 
             adapter
               .UseStorage(storage)
               .UseBotState(userState, conversationState)
               .Use(new RegisterClassMiddleware<IConfiguration>(Configuration))
-              .Use(new UserReferenceMiddleware(s, adapter))
+              .Use(new UserReferenceMiddleware(s, adapter, bot))
               .Use(telemetryInitializerMiddleware);
 
             // Configure Middlewares
@@ -183,8 +184,6 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
 
             services.AddSingleton(resourceExplorer);
 
-            services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>((s) => GetBotAdapter(storage, settings, userState, conversationState, s, s.GetService<TelemetryInitializerMiddleware>()));
-
             services.AddSingleton<IBot>(s =>
                 new ComposerBot(
                     s.GetService<ConversationState>(),
@@ -195,6 +194,8 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
                     s.GetService<IBotTelemetryClient>(),
                     rootDialog,
                     defaultLocale));
+
+            services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>((s) => GetBotAdapter(storage, settings, userState, conversationState, s, s.GetService<TelemetryInitializerMiddleware>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
