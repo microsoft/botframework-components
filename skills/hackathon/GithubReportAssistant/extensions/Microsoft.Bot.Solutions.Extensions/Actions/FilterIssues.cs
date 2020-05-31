@@ -77,12 +77,12 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             {
                 foreach(var issue in issues)
                 {
-                    if (assignee != null && !issue.Assignees.Contains(assignee))
+                    if (assignee != null && !issue.Assignees.Contains(assignee.ToLower()))
                     {
                         continue;
                     }
 
-                    if (status != null && !status.Equals(issue.Status))
+                    if (status != null && !status.ToLower().Equals(issue.Status))
                     {
                         continue;
                     }
@@ -92,7 +92,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         var containLabel = true;
                         foreach (var label in labels)
                         {
-                            containLabel = containLabel && issue.Labels.Contains(label);
+                            containLabel = containLabel && issue.Labels.Contains(label.ToLower());
                         }
                         
                         if(!containLabel)

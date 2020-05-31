@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Bot.Solutions.Extensions.Actions
 {
-    public class GetIssuesPerDayData : Dialog
+    public class GetClosedIssuesPerDayData : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Github.GetIssuesPerDayData";
+        public const string DeclarativeType = "Github.GetClosedIssuesPerDayData";
 
         [JsonConstructor]
-        public GetIssuesPerDayData([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
+        public GetClosedIssuesPerDayData([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base()
         {
             this.RegisterSourceLocation(callerPath, callerLine);
@@ -69,13 +69,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     int issueNumber = 0;
                     foreach (var issue in issues)
                     {
-                        if (issue.Status.Equals("open") && issue.CreatedAt.Date.CompareTo(date) < 0)
-                        {
-                            issueNumber++;
-                        }
-                        else if (issue.Status.Equals("closed") 
-                            && issue.ClosedAt != null 
-                            && ((issue.ClosedAt.Value.Date.CompareTo(date) >= 0) && (issue.CreatedAt.Date.CompareTo(date) < 0)))
+                        if (issue.Status.Equals("closed") && issue.ClosedAt != null && issue.ClosedAt.Value.Date.Equals(date.Date))
                         {
                             issueNumber++;
                         }
@@ -100,21 +94,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken);
-        }
-
-        private ItemStateFilter GetStatus(string status)
-        {
-            var stateFilter = ItemStateFilter.All;
-            if (status.ToLower().Equals("open"))
-            {
-                stateFilter = ItemStateFilter.Open;
-            }
-            else if(status.ToLower().Equals("closed"))
-            {
-                stateFilter = ItemStateFilter.Closed;
-            }
-
-            return stateFilter;
         }
     }
 }

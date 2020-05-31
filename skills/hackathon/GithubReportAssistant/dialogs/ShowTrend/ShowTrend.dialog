@@ -36,14 +36,35 @@
           "endDate": "=dialog.endDate"
         },
         {
-          "$kind": "Github.GetIssuesPerDayData",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "b3v6Rb"
+            "id": "WlpSrn"
           },
-          "xResultProperty": "dialog.x",
-          "yResultProperty": "dialog.y",
-          "issues": "=dialog.filteredIssues",
-          "startDate": "=utcNow()"
+          "condition": "dialog.type==\"closed\"",
+          "elseActions": [
+            {
+              "$kind": "Github.GetIssuesPerDayData",
+              "$designer": {
+                "id": "rKRFIZ"
+              },
+              "xResultProperty": "dialog.x",
+              "yResultProperty": "dialog.y",
+              "issues": "=dialog.filteredIssues",
+              "startDate": "=utcNow()"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Github.GetClosedIssuesPerDayData",
+              "$designer": {
+                "id": "VS7baO"
+              },
+              "xResultProperty": "dialog.x",
+              "yResultProperty": "dialog.y",
+              "issues": "=dialog.filteredIssues",
+              "startDate": "=utcNow()"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.OAuthInput",
@@ -73,15 +94,18 @@
           },
           "token": "=dialog.token.token",
           "xArray": "=dialog.x",
-          "yArray": "=dialog.y"
+          "yArray": "=dialog.y",
+          "sheetName": "=dialog.sheetName"
         },
         {
           "$kind": "Microsoft.Graph.Excel.RetrieveChart",
           "$designer": {
             "id": "Meq37b"
           },
-          "resultProperty": "conversation.chartUrl",
-          "token": "=dialog.token.token"
+          "resultProperty": "dialog.chartUrl",
+          "token": "=dialog.token.token",
+          "sheetName": "=dialog.sheetName",
+          "chartName": "=dialog.chartName"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -89,6 +113,13 @@
             "id": "1yDJdU"
           },
           "activity": "${SendActivity_1yDJdU()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "muEsS7"
+          },
+          "value": "=dialog.chartUrl"
         }
       ]
     }

@@ -28,6 +28,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
+        [JsonProperty("sheetName")]
+        public StringExpression SheetName { get; set; }
+
         [JsonProperty("xArray")]
         public ArrayExpression<string> XArray { get; set; }
 
@@ -38,6 +41,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
+            var sheetName = SheetName.GetValue(dcState);
             var xArray = XArray.GetValue(dcState);
             var yArray = YArray.GetValue(dcState);
 
@@ -61,7 +65,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     var persistChanges = true;
                     var sessionInfo = await GraphHelper.CreateSession(graphClient, id, persistChanges);
 
-                    var workbookRange = await GraphHelper.GetRange(graphClient, id, "Sheet1", "A1:B"+ xArray.Count(), sessionInfo);
+                    var name = (sheetName == null) ? "Sheet1" : sheetName;
+                    var workbookRange = await GraphHelper.GetRange(graphClient, id, name, "A1:B"+ xArray.Count(), sessionInfo);
 
                     var values = workbookRange.Values;
 
@@ -75,7 +80,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         values[i][1] = yArray[i];
                     }
 
-                    var workbookRangeUpdated = await GraphHelper.PatchRange(graphClient, id, "Sheet1", "A1:B" + xArray.Count(), workbookRange, sessionInfo);
+                    var workbookRangeUpdated = await GraphHelper.PatchRange(graphClient, id, name, "A1:B" + xArray.Count(), workbookRange, sessionInfo);
                     await GraphHelper.CloseSession(graphClient, id, sessionInfo);
                 }
             }

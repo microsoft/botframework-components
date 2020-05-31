@@ -89,12 +89,12 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
                     foreach (var label in issue.Labels)
                     {
-                        githubIssue.Labels.Add(label.Name);
+                        githubIssue.Labels.Add(label.Name.ToLower());
                     }
 
                     foreach (var assignee in issue.Assignees)
                     {
-                        githubIssue.Assignees.Add(assignee.Login);
+                        githubIssue.Assignees.Add(assignee.Login.ToLower());
                     }
 
                     resultIssue.Add(githubIssue);

@@ -233,15 +233,15 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "\"issues opened today\"",
+                                    "text": "\"issues with needs-triage\"",
                                     "size": "Medium",
                                     "color": "Accent"
                                 }
                             ],
                             "selectAction": {
                                 "type": "Action.Submit",
-                                "title": "issues opened today",
-                                "data": "issues opened today"
+                                "title": "issues with needs-triage",
+                                "data": "issues with needs-triage"
                             }
                         }
                     ],
