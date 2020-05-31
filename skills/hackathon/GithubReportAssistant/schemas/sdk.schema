@@ -17,6 +17,9 @@
 			"$ref": "#/definitions/Github.GetIssuesPerDayData"
 		},
 		{
+			"$ref": "#/definitions/GithubNotification"
+		},
+		{
 			"$ref": "#/definitions/ManageNotification"
 		},
 		{
@@ -359,7 +362,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "result property",
 					"description": "result property",
 					"examples": [
@@ -459,7 +462,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"xResultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "x result property",
 					"description": "x result property",
 					"examples": [
@@ -467,7 +470,7 @@
 					]
 				},
 				"yResultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "y result property",
 					"description": "y result property",
 					"examples": [
@@ -527,7 +530,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "result property",
 					"description": "result property",
 					"examples": [
@@ -635,7 +638,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"xResultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "x result property",
 					"description": "x result property",
 					"examples": [
@@ -643,7 +646,7 @@
 					]
 				},
 				"yResultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "y result property",
 					"description": "y result property",
 					"examples": [
@@ -680,13 +683,12 @@
 				}
 			}
 		},
-		"ManageNotification": {
+		"GithubNotification": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
-			"title": "ManageNotification",
-			"description": "Send proactive notification when time up.",
+			"title": "GithubNotification",
+			"description": "Send proactive notification when new github notifications come up.",
 			"required": [
-				"identifier",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -702,9 +704,9 @@
 					"title": "Id",
 					"description": "Optional id for the dialog."
 				},
-				"identifier": {
-					"title": "Identifier",
-					"description": "Identifier for this notification.",
+				"token": {
+					"title": "Token",
+					"description": "Token for github.",
 					"$role": "expression",
 					"oneOf": [
 						{
@@ -729,6 +731,12 @@
 					"description": "Activity to notify.",
 					"$ref": "#/definitions/Microsoft.IActivityTemplate"
 				},
+				"failedActivity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "FailedActivity",
+					"description": "Activity to notify when failed.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
 				"toBot": {
 					"title": "ToBot",
 					"description": "Activity to bot or not(user).",
@@ -750,19 +758,11 @@
 						}
 					]
 				},
-				"time": {
-					"$ref": "#/definitions/Github.GetIssues/properties/name",
-					"title": "Time",
-					"description": "Notification time.",
+				"delay": {
+					"title": "Delay",
+					"description": "Loop delay in seconds.",
 					"examples": [
-						"dialog.time"
-					]
-				},
-				"repeat": {
-					"title": "Repeat",
-					"description": "Repeat in days(0 is no repeat).",
-					"examples": [
-						"dialog.repeat"
+						"100"
 					],
 					"$role": "expression",
 					"oneOf": [
@@ -783,7 +783,83 @@
 					]
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
+					"title": "Result property",
+					"description": "Result property.",
+					"examples": [
+						"dialog.result"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "GithubNotification"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"ManageNotification": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "ManageNotification",
+			"description": "Send proactive notification when time up.",
+			"required": [
+				"identifier",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog."
+				},
+				"identifier": {
+					"$ref": "#/definitions/GithubNotification/properties/token",
+					"title": "Identifier",
+					"description": "Identifier for this notification."
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "Activity to notify.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"toBot": {
+					"$ref": "#/definitions/GithubNotification/properties/toBot",
+					"title": "ToBot",
+					"description": "Activity to bot or not(user)."
+				},
+				"time": {
+					"$ref": "#/definitions/Github.GetIssues/properties/name",
+					"title": "Time",
+					"description": "Notification time.",
+					"examples": [
+						"dialog.time"
+					]
+				},
+				"repeat": {
+					"$ref": "#/definitions/GithubNotification/properties/delay",
+					"title": "Repeat",
+					"description": "Repeat in days(0 is no repeat).",
+					"examples": [
+						"dialog.repeat"
+					]
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Result property.",
 					"examples": [
@@ -3811,7 +3887,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3897,7 +3973,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -4036,7 +4112,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/ManageNotification/properties/identifier",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -4801,6 +4877,9 @@
 					"$ref": "#/definitions/Github.GetIssuesPerDayData"
 				},
 				{
+					"$ref": "#/definitions/GithubNotification"
+				},
+				{
 					"$ref": "#/definitions/ManageNotification"
 				},
 				{
@@ -4820,6 +4899,30 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
@@ -4916,30 +5019,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
 				}
 			]
 		},

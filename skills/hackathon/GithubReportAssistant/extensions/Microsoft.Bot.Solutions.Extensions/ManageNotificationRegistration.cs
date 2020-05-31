@@ -17,6 +17,7 @@ namespace Microsoft.Bot.Solutions.Extensions
         {
             // Actions
             yield return new DeclarativeType<ManageNotification>(ManageNotification.DeclarativeType);
+            yield return new DeclarativeType<GithubNotification>(GithubNotification.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

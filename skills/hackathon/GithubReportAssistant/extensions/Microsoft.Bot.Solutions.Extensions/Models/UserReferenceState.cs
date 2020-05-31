@@ -74,7 +74,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
             }
         }
 
-        public async Task<ResourceResponse> Send(string name, Activity activity, BotCallbackHandler handler, CancellationToken cancellationToken)
+        public async Task<ResourceResponse> Send(string name, Activity activity, bool toBot, CancellationToken cancellationToken)
         {
             UserReference reference = GetLock(name);
 
@@ -84,7 +84,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
 
                 ResourceResponse response = null;
 
-                if (handler != null)
+                if (toBot)
                 {
                     ((BotAdapter)adapter).ContinueConversationAsync(botSettings.MicrosoftAppId, reference.Reference, async (tc, ct) =>
                     {
@@ -95,7 +95,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
                         tc.Activity.Value = activity.Value;
                         tc.Activity.Attachments = activity.Attachments;
                         tc.Activity.AttachmentLayout = activity.AttachmentLayout;
-                        await handler(tc, ct);
+                        await bot.OnTurnAsync(tc, ct);
                     }, cancellationToken).Wait();
                 }
                 else if (reference.Reference.ChannelId == Channels.Msteams)
@@ -159,43 +159,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
                 bool first = true;
                 while (!CTS.Token.IsCancellationRequested)
                 {
-                    int delayInMill = 0;
-                    var now = DateTime.Now;
-                    if (first)
-                    {
-                        var target = new DateTime(now.Year, now.Month, now.Day, notificationOption.Time.Hour, notificationOption.Time.Minute, notificationOption.Time.Second);
-                        if (target < now)
-                        {
-                            target = target.AddDays(1);
-                        }
-
-                        delayInMill = (int)(target - now).TotalMilliseconds;
-                        first = false;
-                    }
-                    else
-                    {
-                        // TODO: Assume around target time
-                        var target = new DateTime(now.Year, now.Month, now.Day, notificationOption.Time.Hour, notificationOption.Time.Minute, notificationOption.Time.Second);
-                        target.AddDays(notificationOption.Repeat);
-
-                        delayInMill = (int)(target - now).TotalMilliseconds;
-                    }
-                    
-                    // if we happen to cancel when in the delay we will get a TaskCanceledException
-                    await Task.Delay(delayInMill, CTS.Token).ConfigureAwait(false);
-
-                    BotCallbackHandler botCallbackHandler = null;
-                    if (notificationOption.ToBot)
-                    {
-                        botCallbackHandler = bot.OnTurnAsync;
-                    }
-
-                    await Send(name, notificationOption.Activity, botCallbackHandler, CTS.Token);
-                    if (notificationOption.Repeat <= 0)
-                    {
-                        CTS.Cancel();
-                        break;
-                    }
+                    await notificationOption.Handle(this, name, first, CTS);
+                    first = false;
                 }
             }
             catch (TaskCanceledException)
@@ -225,17 +190,11 @@ namespace Microsoft.Bot.Solutions.Extensions.Utilities
             return reference;
         }
 
-        public class NotificationOption
+        public abstract class NotificationOption
         {
             public string Id { get; set; }
 
-            public Activity Activity { get; set; }
-
-            public bool ToBot { get; set; }
-
-            public DateTime Time { get; set; }
-
-            public int Repeat { get; set; }
+            public abstract Task Handle(UserReferenceState userReferenceState, string name, bool first, CancellationTokenSource CTS);
         }
     }
 }

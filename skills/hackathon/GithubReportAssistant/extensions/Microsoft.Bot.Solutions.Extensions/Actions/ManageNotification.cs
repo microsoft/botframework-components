@@ -52,6 +52,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 throw new ArgumentNullException(identifier);
             }
 
+            // TODO make unique
+            identifier = nameof(ManageNotification) + identifier;
+
             var result = false;
             var userReference = dc.Context.TurnState.Get<UserReferenceState>();
             if (Activity == null)
@@ -65,7 +68,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 var time = this.Time.GetValue(dcState);
                 var repeat = this.Repeat?.GetValue(dcState) ?? 0;
 
-                result = userReference.StartNotification(dc.Context, new UserReferenceState.NotificationOption
+                result = userReference.StartNotification(dc.Context, new ManageNotificationOption
                 {
                     Id = identifier,
                     Activity = activity,
@@ -82,6 +85,50 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+        }
+
+        private class ManageNotificationOption : UserReferenceState.NotificationOption
+        {
+            public Activity Activity { get; set; }
+
+            public bool ToBot { get; set; }
+
+            public DateTime Time { get; set; }
+
+            public int Repeat { get; set; }
+
+            public override async Task Handle(UserReferenceState userReferenceState, string name, bool first, CancellationTokenSource CTS)
+            {
+                int delayInMill = 0;
+                var now = DateTime.Now;
+                if (first)
+                {
+                    var target = new DateTime(now.Year, now.Month, now.Day, Time.Hour, Time.Minute, Time.Second);
+                    if (target < now)
+                    {
+                        target = target.AddDays(1);
+                    }
+
+                    delayInMill = (int)(target - now).TotalMilliseconds;
+                }
+                else
+                {
+                    // TODO: Assume around target time
+                    var target = new DateTime(now.Year, now.Month, now.Day, Time.Hour, Time.Minute, Time.Second);
+                    target.AddDays(Repeat);
+
+                    delayInMill = (int)(target - now).TotalMilliseconds;
+                }
+
+                // if we happen to cancel when in the delay we will get a TaskCanceledException
+                await Task.Delay(delayInMill, CTS.Token).ConfigureAwait(false);
+
+                await userReferenceState.Send(name, Activity, ToBot, CTS.Token);
+                if (Repeat <= 0)
+                {
+                    CTS.Cancel();
+                }
+            }
         }
     }
 }
