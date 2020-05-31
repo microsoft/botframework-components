@@ -226,7 +226,8 @@
                 "status": "open",
                 "title": "New Issues Created Today:",
                 "fallbackTitle": "Sorry no new issue for today."
-              }
+              },
+              "resultProperty": "dialog.filteredIssues"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -234,7 +235,7 @@
                 "id": "QujXkC"
               },
               "property": "conversation.newIssues",
-              "value": "=turn.issues"
+              "value": "=dialog.filteredIssues"
             }
           ]
         },
@@ -267,7 +268,8 @@
                 "status": "open",
                 "title": "Issues Updated Today:",
                 "fallbackTitle": "Sorry no issue updated for today."
-              }
+              },
+              "resultProperty": "dialog.updatedFilteredIssues"
             }
           ]
         },
@@ -277,7 +279,7 @@
             "id": "oxkWPP"
           },
           "property": "conversation.updatedIssues",
-          "value": "=turn.issues"
+          "value": "=dialog.updatedFilteredIssues"
         },
         {
           "$kind": "Microsoft.EditArray",
@@ -484,7 +486,16 @@
             "labels": "=dialog.labels",
             "title": "Issues you query:",
             "fallbackTitle": "You don't have related issues."
-          }
+          },
+          "resultProperty": "dialog.filteredIssues"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hqz1ZQ"
+          },
+          "property": "conversation.newIssues",
+          "value": "=dialog.filteredIssues"
         }
       ]
     }
