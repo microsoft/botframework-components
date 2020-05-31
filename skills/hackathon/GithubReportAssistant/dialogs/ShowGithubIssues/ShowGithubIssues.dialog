@@ -60,6 +60,13 @@
               "activity": "${SendActivity_Ro03Jw()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Doz5oc"
+          },
+          "value": "=dialog.filteredIssues"
         }
       ]
     }
