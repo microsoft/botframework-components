@@ -4768,27 +4768,6 @@
 					"type": "string"
 				},
 				{
-					"$ref": "#/definitions/Github.GetIssues"
-				},
-				{
-					"$ref": "#/definitions/Github.GetIssuesPerDayData"
-				},
-				{
-					"$ref": "#/definitions/ManageNotification"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.QnAMakerDialog"
 				},
 				{
@@ -4900,15 +4879,6 @@
 					"$ref": "#/definitions/Microsoft.ChoiceInput"
 				},
 				{
-					"$ref": "#/definitions/Github.FilterIssues"
-				},
-				{
-					"$ref": "#/definitions/Github.GetClosedIssuesPerDayData"
-				},
-				{
-					"$ref": "#/definitions/Github.GetIssues"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.ConfirmInput"
 				},
 				{
@@ -4922,6 +4892,33 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Github.FilterIssues"
+				},
+				{
+					"$ref": "#/definitions/Github.GetClosedIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssues"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/ManageNotification"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"
 				}
 			]
 		},
