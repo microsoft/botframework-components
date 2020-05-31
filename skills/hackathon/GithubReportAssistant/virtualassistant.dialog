@@ -280,6 +280,16 @@
           "value": "=turn.issues"
         },
         {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "2Vaq4F"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.labels",
+          "resultProperty": "dialog.labelsResult",
+          "value": "=user.label"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "guifx8"
@@ -294,16 +304,6 @@
               "name": "ShowIssuesTrend"
             },
             {
-              "$kind": "Microsoft.EditArray",
-              "$designer": {
-                "id": "hR5hri"
-              },
-              "changeType": "push",
-              "itemsProperty": "dialog.labels",
-              "resultProperty": "dialog.labelsResult",
-              "value": "=user.label"
-            },
-            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "m3ThIJ"
@@ -315,8 +315,56 @@
                 "issues": "=dialog.issues",
                 "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
                 "endDate": "=utcNow()",
-                "labels": "=dialog.labels"
-              }
+                "labels": "=dialog.labels",
+                "sheetName": "Sheet1",
+                "chartName": "Chart 2",
+                "type": "open"
+              },
+              "resultProperty": "dialog.url"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "pMnWD8"
+              },
+              "property": "conversation.chartUrl",
+              "value": "=dialog.url"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yGbvEo"
+          },
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "rFFjnq"
+              },
+              "name": "ShowIssuesTrend"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "cbZg6K"
+              },
+              "activityProcessed": true,
+              "dialog": "ShowTrend",
+              "options": {
+                "title": "Closed Issues Per Day",
+                "issues": "=dialog.issues",
+                "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+                "endDate": "=utcNow()",
+                "labels": "=dialog.labels",
+                "state": "=closed",
+                "sheetName": "Sheet2",
+                "chartName": "Chart 1",
+                "type": "closed"
+              },
+              "resultProperty": "dialog.url"
             }
           ]
         }

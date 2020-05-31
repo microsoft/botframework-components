@@ -16,6 +16,7 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<GetIssues>(GetIssues.DeclarativeType);
             yield return new DeclarativeType<FilterIssues>(FilterIssues.DeclarativeType);
             yield return new DeclarativeType<GetIssuesPerDayData>(GetIssuesPerDayData.DeclarativeType);
+            yield return new DeclarativeType<GetClosedIssuesPerDayData>(GetClosedIssuesPerDayData.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

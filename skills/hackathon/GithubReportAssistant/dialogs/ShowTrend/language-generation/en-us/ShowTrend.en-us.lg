@@ -7,5 +7,5 @@
 
 # SendActivity_1yDJdU()
 [Activity
-    Attachments = ${json(ChartCard(dialog.title, conversation.chartUrl))}
+    Attachments = ${json(ChartCard(dialog.title, dialog.chartUrl))}
 ]

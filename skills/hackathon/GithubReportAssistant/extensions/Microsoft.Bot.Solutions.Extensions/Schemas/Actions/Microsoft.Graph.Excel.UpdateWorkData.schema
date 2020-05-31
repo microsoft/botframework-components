@@ -6,6 +6,7 @@
   "description": "Update Work Book Data from Microsoft Graph API.",
   "required": [
     "token",
+    "sheetName",
     "xArray",
     "yArray"
   ],
@@ -21,6 +22,14 @@
       "description": "Microsoft Graph Authentication Token",
       "examples": [
         "user.token.token"
+      ]
+    },
+    "sheetName": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "sheetName",
+      "description": "sheetName",
+      "examples": [
+        "Sheet1"
       ]
     },
     "xArray": {
