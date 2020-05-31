@@ -292,16 +292,6 @@
           "value": "=user.label"
         },
         {
-          "$kind": "Microsoft.EditArray",
-          "$designer": {
-            "id": "2Vaq4F"
-          },
-          "changeType": "push",
-          "itemsProperty": "dialog.labels",
-          "resultProperty": "dialog.labelsResult",
-          "value": "=user.label"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "guifx8"
