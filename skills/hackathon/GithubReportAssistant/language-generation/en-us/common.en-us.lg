@@ -94,18 +94,6 @@
                         }
                     ],
                     "width": "stretch"
-                },
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "weight": "Bolder",
-                            "text": "${item.assignee}",
-                            "wrap": true
-                        }
-                    ],
-                    "width": "auto"
                 }
             ]
         }

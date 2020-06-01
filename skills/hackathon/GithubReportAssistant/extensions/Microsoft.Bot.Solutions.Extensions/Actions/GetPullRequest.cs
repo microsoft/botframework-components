@@ -74,8 +74,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     var isAdd = false;
                     if (createOrUpdate.ToLower().Equals("update"))
                     {
-                        if ((pr.UpdatedAt != null && pr.UpdatedAt.CompareTo(startDate) >= 0 && pr.UpdatedAt.CompareTo(endDate) <= 0)
-                            && !(pr.CreatedAt.CompareTo(startDate) >= 0 && pr.CreatedAt.CompareTo(endDate) <= 0))
+                        if (pr.UpdatedAt != null && pr.UpdatedAt.CompareTo(startDate) >= 0 && pr.UpdatedAt.CompareTo(endDate) <= 0)
                         {
                             isAdd = true;
                         }
@@ -97,7 +96,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                             UpdatedAt = pr.UpdatedAt,
                             ClosedAt = pr.ClosedAt,
                             Status = pr.State.StringValue,
-                            Url = pr.Url,
+                            Url = pr.HtmlUrl,
                             Number = pr.Number
                         });
                     }
