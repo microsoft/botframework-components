@@ -28,6 +28,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Common
 
 
         public string Url { get; set; }
+
+        public string Assignee { get; set; }
         
     }
 }

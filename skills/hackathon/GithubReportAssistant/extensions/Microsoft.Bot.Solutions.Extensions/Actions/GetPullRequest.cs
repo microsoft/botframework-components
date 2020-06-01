@@ -5,6 +5,7 @@ using Microsoft.Bot.Solutions.Extensions.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -33,6 +34,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("status")]
         public StringExpression Status { get; set; }
 
+        [JsonProperty("startDate")]
+        public ObjectExpression<DateTime> StartDate { get; set; }
+
+        [JsonProperty("endDate")]
+        public ObjectExpression<DateTime> EndDate { get; set; }
+
+        [JsonProperty("createOrUpdate")]
+        public StringExpression CreateOrUpdate { get; set; }
+
         [JsonProperty("resultProperty")]
         public string resultProperty { get; set; }
 
@@ -43,6 +53,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var owner = Owner.GetValue(dcState);
             var name = Name.GetValue(dcState);
             var status = Status.GetValue(dcState);
+            var startDate = StartDate.GetValue(dcState);
+            var endDate = EndDate.GetValue(dcState);
+            var createOrUpdate = CreateOrUpdate.GetValue(dcState);
             var github = new GitHubClient(new ProductHeaderValue("TestClient"));
 
             IReadOnlyList<PullRequest> pullRequests = new List<PullRequest>();
@@ -58,15 +71,36 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
                 foreach(var pr in pullRequests)
                 {
-                    resultPullRequest.Add(new GitHubPullRequest()
+                    var isAdd = false;
+                    if (createOrUpdate.ToLower().Equals("update"))
                     {
-                        Title = pr.Title,
-                        CreatedAt = pr.CreatedAt,
-                        UpdatedAt = pr.UpdatedAt,
-                        ClosedAt = pr.ClosedAt,
-                        Status = pr.State.StringValue,
-                        Url = pr.Url
-                    });
+                        if ((pr.UpdatedAt != null && pr.UpdatedAt.CompareTo(startDate) >= 0 && pr.UpdatedAt.CompareTo(endDate) <= 0)
+                            && !(pr.CreatedAt.CompareTo(startDate) >= 0 && pr.CreatedAt.CompareTo(endDate) <= 0))
+                        {
+                            isAdd = true;
+                        }
+                    }
+                    else
+                    {
+                        if (pr.CreatedAt.CompareTo(startDate) >= 0 && pr.CreatedAt.CompareTo(endDate) <= 0)
+                        {
+                            isAdd = true;
+                        }
+                    }
+
+                    if (isAdd)
+                    {
+                        resultPullRequest.Add(new GitHubPullRequest()
+                        {
+                            Title = pr.Title,
+                            CreatedAt = pr.CreatedAt,
+                            UpdatedAt = pr.UpdatedAt,
+                            ClosedAt = pr.ClosedAt,
+                            Status = pr.State.StringValue,
+                            Url = pr.Url,
+                            Number = pr.Number
+                        });
+                    }
                 }
             }
             catch (ServiceException)

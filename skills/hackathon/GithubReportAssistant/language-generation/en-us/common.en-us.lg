@@ -94,6 +94,18 @@
                         }
                     ],
                     "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "${item.assignee}",
+                            "wrap": true
+                        }
+                    ],
+                    "width": "auto"
                 }
             ]
         }
@@ -101,7 +113,63 @@
 }
 ```
 
+# PullRequestCard(issues)
+- ```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "id": "EventItemContainer",
+      "type": "Container",
+      "items": [
+		${PullRequestItemContainerCard(issues)}
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
 
+# PullRequestItemContainerCard(itemData)
+- ${join(foreach(itemData, x, PullRequestItemCard(x)), ', ')}
+
+# PullRequestItemCard(item)
+- ```
+{
+    "type": "Container",
+    "items": [
+		{
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.number}",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "[${item.title}](${item.url})",
+                            "wrap": true
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ]
+        }
+    ]
+}
+```
 
 # YouCanAskMeCard
 [Activity

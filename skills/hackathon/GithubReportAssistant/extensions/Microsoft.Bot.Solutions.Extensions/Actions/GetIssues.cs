@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Octokit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,14 +106,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     {
                         resultIssue.Add(new GitHubIssue()
                         {
-                            Id = issue.Id,
+                            Id = issue.Number,
                             UpdatedAt = issue.UpdatedAt,
                             CreatedAt = issue.CreatedAt,
                             ClosedAt = issue.ClosedAt,
                             Body = issue.Body,
                             Title = issue.Title.Replace("\"", ""),
                             Status = issue.State.StringValue,
-                            Url = issue.HtmlUrl
+                            Url = issue.HtmlUrl,
+                            Assignee = issue.Assignee?.Name
                         });
                     }
                 }

@@ -1,4 +1,7 @@
 [import](common.lg)
 
-# SendActivity_TiYhKD()
-- The repo has ${count(dialog.pullRequest)} PRs open. ${join(select(dialog.pullRequest ,x ,x.Title), "; ")}
+
+# TextInput_Prompt_Vzr3S3()
+- What is the owner of repo?
+# TextInput_Prompt_QAM3mM()
+- What is the branch name of repo?

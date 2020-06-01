@@ -1,0 +1,11 @@
+[import](common.lg)
+
+
+
+# SendActivity_sexUAE()
+- ${dialog.fallbackTitle}
+# SendActivity_GbjLyw()
+[Activity
+    Text = ${dialog.title}
+    Attachments = ${json(PullRequestCard(turn.pullRequest))}
+]

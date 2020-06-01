@@ -17,5 +17,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Models
         public DateTimeOffset? ClosedAt { get; set; }
 
         public string Url { get; set; }
+
+        public int Number { get; set; }
     }
 }
