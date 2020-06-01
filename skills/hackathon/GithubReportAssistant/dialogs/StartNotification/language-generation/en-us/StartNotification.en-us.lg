@@ -59,6 +59,8 @@
 
 # ManageNotification_Activity_IVSx3a()
 [Activity
+  Text = ${dialog.content}
   Attachments = ${json(if(turn.activity.ChannelId=='msteams',ManageNotificationJsonTeams(),ManageNotificationJson()))}
 ]
+
 

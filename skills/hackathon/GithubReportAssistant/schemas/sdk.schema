@@ -17,6 +17,9 @@
 			"$ref": "#/definitions/Github.GetIssuesPerDayData"
 		},
 		{
+			"$ref": "#/definitions/GithubNotification"
+		},
+		{
 			"$ref": "#/definitions/ManageNotification"
 		},
 		{
@@ -359,7 +362,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "result property",
 					"description": "result property",
 					"examples": [
@@ -459,7 +462,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"xResultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "x result property",
 					"description": "x result property",
 					"examples": [
@@ -467,7 +470,7 @@
 					]
 				},
 				"yResultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "y result property",
 					"description": "y result property",
 					"examples": [
@@ -527,27 +530,11 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "result property",
 					"description": "result property",
 					"examples": [
 						"dialog.issues"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "string",
-							"title": "String",
-							"pattern": "^(?!(=)).*",
-							"examples": [
-								"Hello ${user.name}"
-							]
-						},
-						{
-							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
-							"examples": [
-								"=concat('x','y','z')"
-							]
-						}
 					]
 				},
 				"owner": {
@@ -651,7 +638,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"xResultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "x result property",
 					"description": "x result property",
 					"examples": [
@@ -659,7 +646,7 @@
 					]
 				},
 				"yResultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "y result property",
 					"description": "y result property",
 					"examples": [
@@ -696,6 +683,127 @@
 				}
 			}
 		},
+		"GithubNotification": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "GithubNotification",
+			"description": "Send proactive notification when new github notifications come up.",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog."
+				},
+				"token": {
+					"title": "Token",
+					"description": "Token for github.",
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
+							"examples": [
+								"=concat('x','y','z')"
+							]
+						}
+					]
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "Activity to notify.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"failedActivity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "FailedActivity",
+					"description": "Activity to notify when failed.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"toBot": {
+					"title": "ToBot",
+					"description": "Activity to bot or not(user).",
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"default": false,
+							"examples": [
+								false
+							]
+						},
+						{
+							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
+							"examples": [
+								"=user.isVip"
+							]
+						}
+					]
+				},
+				"delay": {
+					"title": "Delay",
+					"description": "Loop delay in seconds.",
+					"examples": [
+						"100"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "integer",
+							"title": "Integer",
+							"default": 0,
+							"examples": [
+								15
+							]
+						},
+						{
+							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
+							"examples": [
+								"=user.age"
+							]
+						}
+					]
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/GithubNotification/properties/token",
+					"title": "Result property",
+					"description": "Result property.",
+					"examples": [
+						"dialog.result"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "GithubNotification"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"ManageNotification": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
@@ -719,7 +827,7 @@
 					"description": "Optional id for the dialog."
 				},
 				"identifier": {
-					"type": "string",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Identifier",
 					"description": "Identifier for this notification."
 				},
@@ -728,6 +836,11 @@
 					"title": "Activity",
 					"description": "Activity to notify.",
 					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"toBot": {
+					"$ref": "#/definitions/GithubNotification/properties/toBot",
+					"title": "ToBot",
+					"description": "Activity to bot or not(user)."
 				},
 				"time": {
 					"$ref": "#/definitions/Github.GetIssues/properties/name",
@@ -738,31 +851,15 @@
 					]
 				},
 				"repeat": {
+					"$ref": "#/definitions/GithubNotification/properties/delay",
 					"title": "Repeat",
 					"description": "Repeat in days(0 is no repeat).",
 					"examples": [
 						"dialog.repeat"
-					],
-					"$role": "expression",
-					"oneOf": [
-						{
-							"type": "integer",
-							"title": "Integer",
-							"default": 0,
-							"examples": [
-								15
-							]
-						},
-						{
-							"$ref": "#/definitions/Github.GetIssues/properties/name/oneOf/5",
-							"examples": [
-								"=user.age"
-							]
-						}
 					]
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Result property.",
 					"examples": [
@@ -3790,7 +3887,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -3876,7 +3973,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -4015,7 +4112,7 @@
 					"description": "Optional id for the dialog"
 				},
 				"resultProperty": {
-					"$ref": "#/definitions/Github.GetIssues/properties/resultProperty",
+					"$ref": "#/definitions/GithubNotification/properties/token",
 					"title": "Result property",
 					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
@@ -4768,10 +4865,64 @@
 					"type": "string"
 				},
 				{
+					"$ref": "#/definitions/Github.FilterIssues"
+				},
+				{
+					"$ref": "#/definitions/Github.GetClosedIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssues"
+				},
+				{
+					"$ref": "#/definitions/Github.GetIssuesPerDayData"
+				},
+				{
+					"$ref": "#/definitions/GithubNotification"
+				},
+				{
+					"$ref": "#/definitions/ManageNotification"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.QnAMakerDialog"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
@@ -4868,57 +5019,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
-					"$ref": "#/definitions/Github.FilterIssues"
-				},
-				{
-					"$ref": "#/definitions/Github.GetClosedIssuesPerDayData"
-				},
-				{
-					"$ref": "#/definitions/Github.GetIssues"
-				},
-				{
-					"$ref": "#/definitions/Github.GetIssuesPerDayData"
-				},
-				{
-					"$ref": "#/definitions/ManageNotification"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Email.SendEmail"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Excel.RetrieveChart"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.Excel.UpdateWorkData"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Graph.ToDo.AddTask"
 				}
 			]
 		},

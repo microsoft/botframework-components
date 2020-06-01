@@ -15,9 +15,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Middlewares
     {
         private readonly UserReferenceState userReferenceState;
 
-        public UserReferenceMiddleware(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter)
+        public UserReferenceMiddleware(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter, IBot bot)
         {
-            userReferenceState = new UserReferenceState(serviceProvider, adapter);
+            userReferenceState = new UserReferenceState(serviceProvider, adapter, bot);
         }
 
         public async Task OnTurnAsync(ITurnContext turnContext, NextDelegate next, CancellationToken cancellationToken)

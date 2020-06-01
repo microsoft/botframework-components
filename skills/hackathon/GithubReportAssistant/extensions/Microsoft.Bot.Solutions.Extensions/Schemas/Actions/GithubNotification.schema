@@ -2,10 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "ManageNotification",
-  "description": "Send proactive notification when time up.",
+  "title": "GithubNotification",
+  "description": "Send proactive notification when new github notifications come up.",
   "required": [
-    "identifier"
   ],
   "properties": {
     "id": {
@@ -13,35 +12,32 @@
       "title": "Id",
       "description": "Optional id for the dialog."
     },
-    "identifier": {
+    "token": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
-      "title": "Identifier",
-      "description": "Identifier for this notification."
+      "title": "Token",
+      "description": "Token for github."
     },
     "activity": {
       "$kind": "Microsoft.IActivityTemplate",
       "title": "Activity",
       "description": "Activity to notify."
     },
+    "failedActivity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "FailedActivity",
+      "description": "Activity to notify when failed."
+    },
     "toBot": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/booleanExpression",
       "title": "ToBot",
       "description": "Activity to bot or not(user)."
     },
-    "time": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Time",
-      "description": "Notification time.",
-      "examples": [
-        "dialog.time"
-      ]
-    },
-    "repeat": {
+    "delay": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/integerExpression",
-      "title": "Repeat",
-      "description": "Repeat in days(0 is no repeat).",
+      "title": "Delay",
+      "description": "Loop delay in seconds.",
       "examples": [
-        "dialog.repeat"
+        "100"
       ]
     },
     "resultProperty": {
