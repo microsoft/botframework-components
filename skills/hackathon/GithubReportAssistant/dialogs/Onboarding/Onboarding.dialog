@@ -64,16 +64,17 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
-          "property": "dialog.githubWatch"
+          "property": "user.githubWatch"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "SchMPS"
           },
-          "condition": "dialog.githubWatch",
+          "condition": "user.githubWatch",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -82,6 +83,14 @@
               },
               "activityProcessed": true,
               "dialog": "OnBoardingGithub"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "L0YTOa"
+              },
+              "activityProcessed": true,
+              "dialog": "StartNotification"
             }
           ]
         },

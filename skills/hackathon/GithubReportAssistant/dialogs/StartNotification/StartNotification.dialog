@@ -1,0 +1,87 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "HexkYz",
+    "name": "StartNotification"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "xb8gbW"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "vb2tKe"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_vb2tKe()}",
+          "property": "dialog.content"
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "UqfblE"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${DateTimeInput_Prompt_UqfblE()}",
+          "property": "dialog.time"
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "IHqn2q"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_IHqn2q()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          },
+          "property": "dialog.repeat"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6ocaVp"
+          }
+        },
+        {
+          "$kind": "ManageNotification",
+          "$designer": {
+            "id": "GS8Mtn"
+          },
+          "time": "=dialog.time[0].Value",
+          "repeat": "=if(dialog.repeat, 1, 0)",
+          "activity": "${ManageNotification_Activity_IVSx3a()}",
+          "identifier": "=dialog.content",
+          "toBot": true
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "q2StKz"
+          },
+          "activity": "${SendActivity_q2StKz()}"
+        }
+      ]
+    }
+  ],
+  "generator": "StartNotification.lg"
+}

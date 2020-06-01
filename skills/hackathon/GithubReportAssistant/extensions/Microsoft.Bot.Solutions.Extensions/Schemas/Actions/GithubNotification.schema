@@ -1,0 +1,52 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "GithubNotification",
+  "description": "Send proactive notification when new github notifications come up.",
+  "required": [
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog."
+    },
+    "token": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Token",
+      "description": "Token for github."
+    },
+    "activity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Activity",
+      "description": "Activity to notify."
+    },
+    "failedActivity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "FailedActivity",
+      "description": "Activity to notify when failed."
+    },
+    "toBot": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/booleanExpression",
+      "title": "ToBot",
+      "description": "Activity to bot or not(user)."
+    },
+    "delay": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/integerExpression",
+      "title": "Delay",
+      "description": "Loop delay in seconds.",
+      "examples": [
+        "100"
+      ]
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Result property.",
+      "examples": [
+        "dialog.result"
+      ]
+    }
+  }
+}

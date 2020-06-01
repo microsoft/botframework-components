@@ -182,6 +182,24 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
+            "id": "Qnhhg1"
+          },
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "GJ8cai"
+              },
+              "activityProcessed": true,
+              "dialog": "GetGithubIssue",
+              "resultProperty": "dialog.issues"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
             "id": "K8WkRB"
           },
           "condition": true,
@@ -196,61 +214,90 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "woagST"
-              },
-              "activityProcessed": true,
-              "dialog": "GetGithubIssue",
-              "options": {
-                "startDate": "=addDays(utcNow(), -1)",
-                "endDate": "=utcNow()",
-                "createOrUpdate": "create"
-              }
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
                 "id": "PLqFMO"
               },
               "activityProcessed": true,
               "dialog": "ShowGithubIssues",
               "options": {
+                "issues": "=dialog.issues",
+                "startDate": "=addDays(utcNow(), -1)",
+                "endDate": "=utcNow()",
+                "createOrUpdate": "create",
+                "status": "open",
                 "title": "New Issues Created Today:",
                 "fallbackTitle": "Sorry no new issue for today."
-              }
+              },
+              "resultProperty": "dialog.filteredIssues"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "QujXkC"
+              },
+              "property": "conversation.newIssues",
+              "value": "=dialog.filteredIssues"
             }
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "EW5TEh"
+            "id": "pOxaci"
           },
-          "name": "ShowIssuesUpdated"
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "CDGOzj"
+              },
+              "name": "ShowIssuesUpdated"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "2WqaVt"
+              },
+              "activityProcessed": true,
+              "dialog": "ShowGithubIssues",
+              "options": {
+                "issues": "=dialog.issues",
+                "startDate": "=addDays(utcNow(), -1)",
+                "endDate": "=utcNow()",
+                "createOrUpdate": "update",
+                "status": "open",
+                "title": "Issues Updated Today:",
+                "fallbackTitle": "Sorry no issue updated for today."
+              },
+              "resultProperty": "dialog.updatedFilteredIssues"
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "DiaWWA"
+            "id": "oxkWPP"
           },
-          "activityProcessed": true,
-          "dialog": "GetGithubIssue",
-          "options": {
-            "startDate": "=addDays(utcNow(), -1)",
-            "endDate": "=utcNow()",
-            "createOrUpdate": "update"
-          }
+          "property": "conversation.updatedIssues",
+          "value": "=dialog.updatedFilteredIssues"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EditArray",
           "$designer": {
-            "id": "86qi1F"
+            "id": "8810Ah"
           },
-          "activityProcessed": true,
-          "dialog": "ShowGithubIssues",
-          "options": {
-            "title": "Issues Updated Today:",
-            "fallbackTitle": "Sorry no issue updated for today."
-          }
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "2Vaq4F"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.labels",
+          "resultProperty": "dialog.labelsResult",
+          "value": "=user.label"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -292,29 +339,6 @@
               "name": "ShowIssuesTrend"
             },
             {
-              "$kind": "Microsoft.EditArray",
-              "$designer": {
-                "id": "hR5hri"
-              },
-              "changeType": "push",
-              "itemsProperty": "dialog.labels",
-              "resultProperty": "dialog.labelsResult",
-              "value": "R10"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "w595la"
-              },
-              "activityProcessed": true,
-              "dialog": "GetGithubIssue",
-              "options": {
-                "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
-                "endDate": "=utcNow()",
-                "labels": "=dialog.labels"
-              }
-            },
-            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "m3ThIJ"
@@ -322,10 +346,248 @@
               "activityProcessed": true,
               "dialog": "ShowTrend",
               "options": {
-                "title": "Opened Issues Per Day"
+                "title": "Opened Issues Per Day",
+                "issues": "=dialog.issues",
+                "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+                "endDate": "=utcNow()",
+                "labels": "=dialog.labels",
+                "sheetName": "Sheet1",
+                "chartName": "Chart 2",
+                "type": "open"
+              },
+              "resultProperty": "dialog.url"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "pMnWD8"
+              },
+              "property": "conversation.chartUrl",
+              "value": "=dialog.url"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yGbvEo"
+          },
+          "condition": true,
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "rFFjnq"
+              },
+              "name": "ShowIssuesTrend"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "cbZg6K"
+              },
+              "activityProcessed": true,
+              "dialog": "ShowTrend",
+              "options": {
+                "title": "Closed Issues Per Day",
+                "issues": "=dialog.issues",
+                "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+                "endDate": "=utcNow()",
+                "labels": "=dialog.labels",
+                "state": "=closed",
+                "sheetName": "Sheet2",
+                "chartName": "Chart 1",
+                "type": "closed"
+              },
+              "resultProperty": "dialog.url"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gAi35Z"
+      },
+      "intent": "Clear",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "cqZIg0"
+          },
+          "assignments": [
+            {
+              "property": "user.owner",
+              "value": "=null"
+            },
+            {
+              "property": "user.githubAccountName",
+              "value": "=null"
+            },
+            {
+              "property": "user.branchName",
+              "value": "=null"
+            },
+            {
+              "property": "user.label",
+              "value": "=null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "T53zuA"
+          },
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "h94N8j"
+      },
+      "intent": "QueryIssues",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jcV0lz"
+          },
+          "assignments": [
+            {
+              "property": "dialog.label",
+              "value": "=@Label"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "kYshWz"
+          },
+          "condition": "!(@Assignee==null) && @Assignee==\"me\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "WYPWwf"
+              },
+              "property": "dialog.assignee",
+              "value": "=user.githubAccountName"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "iPmcEf"
+          },
+          "changeType": "clear",
+          "itemsProperty": "dialog.labels"
+        },
+        {
+          "$kind": "Microsoft.EditArray",
+          "$designer": {
+            "id": "5Q9dIk"
+          },
+          "changeType": "push",
+          "itemsProperty": "dialog.labels",
+          "resultProperty": "dialog.labelsResult",
+          "value": "=dialog.label"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "gCqQaF"
+          },
+          "name": "Query Issue"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Fv12YJ"
+          },
+          "condition": "count(dialog.issues)==0",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "z3s73n"
+              },
+              "activityProcessed": true,
+              "dialog": "GetGithubIssue",
+              "resultProperty": "dialog.issues",
+              "options": {
+                "status": "open"
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "EHqpfs"
+          },
+          "activityProcessed": true,
+          "dialog": "ShowGithubIssues",
+          "options": {
+            "issues": "=dialog.issues",
+            "startDate": "=formatDateTime('03/15/2018 23:59:59', 'yyyy-MM-ddTHH:mm:ss')",
+            "endDate": "=utcNow()",
+            "assignee": "=dialog.assignee",
+            "status": "open",
+            "labels": "=dialog.labels",
+            "title": "Issues you query:",
+            "fallbackTitle": "You don't have related issues."
+          },
+          "resultProperty": "dialog.filteredIssues"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hqz1ZQ"
+          },
+          "property": "conversation.newIssues",
+          "value": "=dialog.filteredIssues"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "SjfJbc"
+      },
+      "intent": "StartNotification",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sk1bNe"
+          },
+          "activityProcessed": true,
+          "dialog": "StartNotification"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "s6OFkX"
+      },
+      "intent": "StopNotification",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FsGnnU"
+          },
+          "activityProcessed": true,
+          "dialog": "StopNotification"
         }
       ]
     },

@@ -30,20 +30,12 @@
           "dialog": "Oauth"
         },
         {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "xM8gZA"
-          },
-          "property": "dialog.taskContent",
-          "value": "TaskContent"
-        },
-        {
           "$kind": "Microsoft.Graph.ToDo.AddTask",
           "$designer": {
             "id": "1MWkY8"
           },
           "token": "=user.token.Token",
-          "taskContentProperty": "=dialog.taskContent",
+          "taskContentProperty": "=conversation.newIssues",
           "resultProperty": "dialog.contosodata"
         },
         {

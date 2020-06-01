@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Graph;
+using Newtonsoft.Json;
 
 namespace EmailSkill.Services.MSGraphAPI
 {
@@ -144,11 +145,11 @@ namespace EmailSkill.Services.MSGraphAPI
         /// <summary>
         /// Send an email message.
         /// </summary>
-        /// <param name="content">Email Body.</param>
+        /// <param name="imgContent">Email Body.</param>
         /// <param name="subject">Eamil Subject.</param>
         /// <param name="recipients">List of recipient.</param>
         /// <returns>Completed Task.</returns>
-        public async Task SendMessageAsync(string content, string subject, List<Recipient> recipients)
+        public async Task SendMessageAsync(string imgContent, string newIssues, string updatedIssues, List<Recipient> recipients)
         {
             // todo: I don't know why but recipient list need to be create again to avoid 400 error
             List<Recipient> re = new List<Recipient>();
@@ -163,16 +164,49 @@ namespace EmailSkill.Services.MSGraphAPI
                 });
             }
 
+            // Create the message with attachment.
+            var base64String = imgContent.Substring(imgContent.IndexOf(",") + 1);
+            byte[] contentBytes = Convert.FromBase64String(base64String);
+            string contentType = "image/png";
+            MessageAttachmentsCollectionPage attachments = new MessageAttachmentsCollectionPage();
+            attachments.Add(new FileAttachment
+            {
+                ODataType = "#microsoft.graph.fileAttachment",
+                ContentBytes = contentBytes,
+                ContentType = contentType,
+                ContentId = "IssuesTrend",
+                Name = "Issues Trend.png",
+                IsInline = true
+            });
+
+            string emailContent = @"
+Here is your recent issues trend chart!
+<br><img src='cid:IssuesTrend' /><br>
+";
+
+            emailContent += "<style type=\"text/css\">  table.paleBlueRows {   font-family: \"Times New Roman\", Times, serif;   border: 1px solid #FFFFFF;   width: 700px;   height: 100px;   text-align: center;   border-collapse: collapse; } table.paleBlueRows td, table.paleBlueRows th {   border: 1px solid #FFFFFF;   padding: 3px 2px; } table.paleBlueRows tbody td {   font-size: 17px; } table.paleBlueRows tr:nth-child(even) {   background: #D0E4F5; } table.paleBlueRows thead {   background: #0B6FA4;   border-bottom: 5px solid #FFFFFF; } table.paleBlueRows thead th {   font-size: 17px;   font-weight: bold;   color: #FFFFFF;   text-align: center;   border-left: 2px solid #FFFFFF; } table.paleBlueRows thead th:first-child {   border-left: none; }  table.paleBlueRows tfoot {   font-size: 14px;   font-weight: bold;   color: #333333;   background: #D0E4F5;   border-top: 3px solid #444444; } table.paleBlueRows tfoot td {   font-size: 17px; }  </style> ";
+
+            emailContent += "<br>";
+            emailContent += "<br>";
+            emailContent += "New Issues Created Today:";
+            emailContent += IssuesToContent(newIssues);
+
+            emailContent += "<br>";
+            emailContent += "Issues Updated Today:";
+            emailContent += IssuesToContent(updatedIssues);
+
+
             // Create the message.
             Message email = new Message
             {
                 Body = new ItemBody
                 {
-                    Content = content,
+                    Content = emailContent,
                     ContentType = BodyType.Html,
                 },
-                Subject = subject,
+                Subject = "Issues Report",
                 ToRecipients = re,
+                Attachments = attachments
             };
 
             // Send the message.
@@ -186,6 +220,19 @@ namespace EmailSkill.Services.MSGraphAPI
             }
 
             // This operation doesn't return anything.
+        }
+
+        public string IssuesToContent(string issues)
+        {
+            var content = string.Empty;
+            content += "<table class=\"paleBlueRows\"> <tbody>";
+            var issueList = JsonConvert.DeserializeObject<List<dynamic>>(issues);
+            foreach (var issue in issueList)
+            {
+                content += string.Format("<tr><th>{0}</th><td>{1}</td></tr>", (string)issue.Id, (string)issue.Title);
+            }
+            content += "</tbody></table>";
+            return content;
         }
 
         /// <summary>

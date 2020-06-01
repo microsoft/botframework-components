@@ -23,11 +23,25 @@
           "name": "ShowGithubIssues"
         },
         {
+          "$kind": "Github.FilterIssues",
+          "$designer": {
+            "id": "sfWNcH"
+          },
+          "resultProperty": "dialog.filteredIssues",
+          "assignee": "=dialog.assignee",
+          "status": "=dialog.status",
+          "labels": "=dialog.labels",
+          "createOrUpdate": "=dialog.createOrUpdate",
+          "startDate": "=dialog.startDate",
+          "endDate": "=dialog.endDate",
+          "issues": "=dialog.issues"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "81yoCO"
           },
-          "condition": "count(turn.issues)>0",
+          "condition": "count(dialog.filteredIssues)>0",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -46,6 +60,13 @@
               "activity": "${SendActivity_Ro03Jw()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Doz5oc"
+          },
+          "value": "=dialog.filteredIssues"
         }
       ]
     }

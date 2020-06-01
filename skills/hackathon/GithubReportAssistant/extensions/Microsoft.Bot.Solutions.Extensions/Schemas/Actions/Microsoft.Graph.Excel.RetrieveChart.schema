@@ -5,7 +5,9 @@
   "title": "Microsoft Graph - Retrieve Chart",
   "description": "Retrieve chart using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "sheetName",
+    "chartName"
   ],
   "properties": {
     "id": {
@@ -27,6 +29,22 @@
       "description": "Microsoft Graph Authentication Token",
       "examples": [
         "user.token.token"
+      ]
+    },
+    "sheetName": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "sheetName",
+      "description": "sheetName",
+      "examples": [
+        "Sheet1"
+      ]
+    },
+    "chartName": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "chartName",
+      "description": "chartName",
+      "examples": [
+        "Chart 1"
       ]
     }
   }

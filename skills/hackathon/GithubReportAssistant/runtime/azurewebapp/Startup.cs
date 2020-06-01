@@ -24,6 +24,8 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core.Skills;
 using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions.Extensions;
+using Microsoft.Bot.Solutions.Extensions.Middlewares;
+using Microsoft.Bot.Solutions.Extensions.Utilities;
 using Microsoft.BotFramework.Composer.Core;
 using Microsoft.BotFramework.Composer.Core.Settings;
 
@@ -86,12 +88,14 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
 
         public BotFrameworkHttpAdapter GetBotAdapter(IStorage storage, BotSettings settings, UserState userState, ConversationState conversationState, IServiceProvider s, TelemetryInitializerMiddleware telemetryInitializerMiddleware)
         {
+            var bot = s.GetService<IBot>();
             var adapter = new BotFrameworkHttpAdapter(new ConfigurationCredentialProvider(this.Configuration));
 
             adapter
               .UseStorage(storage)
               .UseBotState(userState, conversationState)
               .Use(new RegisterClassMiddleware<IConfiguration>(Configuration))
+              .Use(new UserReferenceMiddleware(s, adapter, bot))
               .Use(telemetryInitializerMiddleware);
 
             // Configure Middlewares
@@ -118,6 +122,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             // Load settings
             var settings = new BotSettings();
             Configuration.Bind(settings);
+            services.AddSingleton(settings);
 
             // Create the credential provider to be used with the Bot Framework Adapter.
             services.AddSingleton<ICredentialProvider, ConfigurationCredentialProvider>();
@@ -135,6 +140,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new MSGraphComponentRegistration());
             ComponentRegistration.Add(new GithubComponentRegistration());
+            ComponentRegistration.Add(new ManageNotificationRegistration());
 
             // This is for custom action component registration.
             //ComponentRegistration.Add(new CustomActionComponentRegistration());
@@ -178,8 +184,6 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
 
             services.AddSingleton(resourceExplorer);
 
-            services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>((s) => GetBotAdapter(storage, settings, userState, conversationState, s, s.GetService<TelemetryInitializerMiddleware>()));
-
             services.AddSingleton<IBot>(s =>
                 new ComposerBot(
                     s.GetService<ConversationState>(),
@@ -190,6 +194,8 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
                     s.GetService<IBotTelemetryClient>(),
                     rootDialog,
                     defaultLocale));
+
+            services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>((s) => GetBotAdapter(storage, settings, userState, conversationState, s, s.GetService<TelemetryInitializerMiddleware>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

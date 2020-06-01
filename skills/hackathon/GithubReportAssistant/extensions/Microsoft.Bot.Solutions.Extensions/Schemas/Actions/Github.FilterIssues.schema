@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Send Email.",
-  "description": "Send email using the Microsoft Graph API.",
+  "title": "Github.FilterIssues",
+  "description": "Filter issues.",
   "required": [
     "token"
   ],
@@ -15,50 +15,66 @@
     },
     "resultProperty": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
-      "title": "Result property",
-      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "title": "result property",
+      "description": "result property",
       "examples": [
-        "dialog.contosodata"
+        "dialog.issues"
       ]
     },
-    "token": {
+    "issues": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Token",
-      "description": "Microsoft Graph Authentication Token",
+      "title": "Issues",
+      "description": "Github issue",
       "examples": [
-        "user.token.token"
+        "dialog.Issues"
       ]
     },
-    "emailAddressProperty": {
+    "assignee": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "EmailAddress",
-      "description": "Expression for email address.",
+      "title": "assignee",
+      "description": "assignee",
       "examples": [
-        "dialog.emailAddress"
+        "dialog.assignee"
       ]
     },
-    "emailImgContentProperty": {
+    "status": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "EmailImgContent",
-      "description": "Expression for email image content.",
+      "title": "Status",
+      "description": "status",
       "examples": [
-        "dialog.emailImgContent"
+        "open"
       ]
     },
-    "newIssuesProperty": {
+    "labels": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "New issues property",
-      "description": "New issues.",
+      "title": "labels",
+      "description": "labels",
       "examples": [
-        "dialog.newIssues"
+        "dialog.labels"
       ]
     },
-    "updatedIssuesProperty": {
+    "createOrUpdate": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Updated issues property",
-      "description": "Updated issues.",
+      "title": "createOrUpdate",
+      "description": "createOrUpdate",
       "examples": [
-        "dialog.updatedIssues"
+        "update"
+      ]
+    },
+    "startDate": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "startDate",
+      "description": "startDate",
+      "examples": [
+        "dialog.startDate"
+      ]
+    },
+    "endDate": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "endDate",
+      "description": "endDate",
+      "examples": [
+        "dialog.endDate"
       ]
     }
   }

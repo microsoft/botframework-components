@@ -31,27 +31,31 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
-        [JsonProperty("emailSubjectProperty")]
-        public StringExpression EmailSubjectProperty { get; set; }
-
-        [JsonProperty("emailContentProperty")]
-        public StringExpression EmailContentProperty { get; set; }
-
         [JsonProperty("emailAddressProperty")]
         public StringExpression EmailAddressProperty { get; set; }
+
+        [JsonProperty("emailImgContentProperty")]
+        public StringExpression EmailImgContentProperty { get; set; }
+
+        [JsonProperty("newIssuesProperty")]
+        public StringExpression NewIssuesProperty { get; set; }
+
+        [JsonProperty("updatedIssuesProperty")]
+        public StringExpression UpdatedIssuesProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = this.Token.GetValue(dcState);
-            var emailSubjectProperty = this.EmailSubjectProperty.GetValue(dcState);
-            var emailContentProperty = this.EmailContentProperty.GetValue(dcState);
             var emailAddressProperty = this.EmailAddressProperty.GetValue(dcState);
+            var emailImgContentProperty = this.EmailImgContentProperty.GetValue(dcState);
+            var newIssuesProperty = this.NewIssuesProperty.GetValue(dcState);
+            var updatedIssuesProperty = this.UpdatedIssuesProperty.GetValue(dcState);
             var recipient = new Recipient() { EmailAddress = new EmailAddress() { Address = emailAddressProperty } };
 
             var service = new ServiceManager().InitMailService(token);
             // send user message.
-            await service.SendMessageAsync(emailContentProperty, emailSubjectProperty, new List<Recipient>() { recipient });
+            await service.SendMessageAsync(emailImgContentProperty, newIssuesProperty, updatedIssuesProperty, new List<Recipient>() { recipient });
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(SendEmail), null, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);

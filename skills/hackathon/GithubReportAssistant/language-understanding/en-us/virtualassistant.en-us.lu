@@ -138,5 +138,38 @@
 - show summary
 - summary
 
-# ShowPR
-- show pr
+# StartNotification
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+- start notification
+- turn on
+- turn on notification
+- switch on
+- switch on notification
+
+# StopNotification
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+- stop notification
+- turn off
+- turn off notification
+- switch off
+- switch off notification
+
+# Clear
+- clear
+- clean up
+
+# QueryIssues
+- issues assign to {Assignee=me}
+- all issues in {Label=R10}
+- issues in {Label=R11}
+-issues with {Label=needs-triage}

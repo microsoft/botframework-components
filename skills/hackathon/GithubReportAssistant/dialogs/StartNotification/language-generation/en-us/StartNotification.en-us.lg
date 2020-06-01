@@ -1,0 +1,66 @@
+[import](common.lg)
+
+# ManageNotificationJson
+-```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Notification for ${dialog.content}",
+          "data": "${dialog.content}"
+        }
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
+
+# ManageNotificationJsonTeams
+-```
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Notification for ${dialog.content}",
+          "data": {
+            "msteams": {
+              "type": "imBack",
+              "value": "${dialog.content}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.0"
+}
+```
+
+# TextInput_Prompt_vb2tKe()
+- what should I notify?
+# DateTimeInput_Prompt_UqfblE()
+- when should I notify?
+
+# ConfirmInput_Prompt_IHqn2q()
+- should I repeat?
+# SendActivity_q2StKz()
+- notification ${dialog.content} has been started.
+
+# ManageNotification_Activity_IVSx3a()
+[Activity
+  Text = ${dialog.content}
+  Attachments = ${json(if(turn.activity.ChannelId=='msteams',ManageNotificationJsonTeams(),ManageNotificationJson()))}
+]
+
+

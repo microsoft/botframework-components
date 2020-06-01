@@ -140,9 +140,3 @@ Attachments = ${json(NewUserIntroCardJson())}
   "speak": "${ReturningUserGreeting()}"
 }
 ```
-# BeginSkill_Activity_ZIqej0()
-[Activity
-    type=event
-    name = sendEmail
-    value = json({"subject": “test", "content": "test content"})
-]
