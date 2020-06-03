@@ -1,0 +1,56 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "tBvcXU",
+    "name": "FindEventDateTime"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "lkW3D1"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "V4qdqU"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=coalesce(dialog.datetime, @datetime)"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=coalesce(dialog.title, @title)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Mdumfe"
+          },
+          "activity": "${SendActivity_Mdumfe()}"
+        }
+      ]
+    }
+  ],
+  "generator": "FindEventDateTime.lg"
+}

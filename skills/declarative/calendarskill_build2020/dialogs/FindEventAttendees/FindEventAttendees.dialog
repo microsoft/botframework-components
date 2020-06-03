@@ -1,0 +1,56 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "LqO4z2",
+    "name": "FindEventAttendees"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "ZCAwyU"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "AtR5rM"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=coalesce(dialog.datetime, @datetime)"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=coalesce(dialog.title, @title)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "PORi1b"
+          },
+          "activity": "${SendActivity_PORi1b()}"
+        }
+      ]
+    }
+  ],
+  "generator": "FindEventAttendees.lg"
+}

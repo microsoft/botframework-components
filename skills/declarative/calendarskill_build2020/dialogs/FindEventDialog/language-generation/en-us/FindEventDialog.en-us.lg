@@ -1,0 +1,14 @@
+[import](common.lg)
+
+
+
+
+# DateTimeInput_Prompt_1IHT8b()
+- What date?
+
+# SendActivity_SxEi06()
+-
+# SendActivity_eQwRQg()
+- I found the following events matching your query: ${count(dialog.events)}
+# SendActivity_8cPjuu()
+- I couldn't find any events matching that criteria today. Would you like to expand your search to the upcoming week?
