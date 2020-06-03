@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,5 +28,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Model
         public string OnlineMeetingNumber { get; set; }
 
         public string ID { get; set; }
+
+        public List<Attendee> Attendees { get; set; }
     }
 }

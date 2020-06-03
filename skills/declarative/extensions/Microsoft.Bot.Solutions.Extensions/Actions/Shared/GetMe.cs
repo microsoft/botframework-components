@@ -14,7 +14,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
     class GetMe : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.GetMe";
+        public const string DeclarativeType = "Microsoft.Graph.GetMe";
 
         [JsonConstructor]
         public GetMe([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)

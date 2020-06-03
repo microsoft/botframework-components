@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Get Events",
-  "description": "Lookup events from Microsoft Graph API.",
+  "title": "Microsoft Graph - Retrieve Photo",
+  "description": "Retrieve user photo using the Microsoft Graph API.",
   "required": [
     "token"
   ],
@@ -29,20 +29,12 @@
         "user.token.token"
       ]
     },
-    "startProperty": {
+    "userId": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Start",
-      "description": "Expression for start of date range for events.",
+      "title": "User Id",
+      "description": "Id of the user",
       "examples": [
-        "dialog.start"
-      ]
-    },
-    "endProperty": {
-      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "End",
-      "description": "Expression for end of date range for events.",
-      "examples": [
-        "dialog.end"
+        "dialog.user.id"
       ]
     }
   }

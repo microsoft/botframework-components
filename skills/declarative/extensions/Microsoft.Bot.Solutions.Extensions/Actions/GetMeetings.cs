@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,7 +83,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     Content = item.BodyPreview,
                     OnlineMeetingUrl = item.OnlineMeeting?.JoinUrl,
                     OnlineMeetingNumber = item.OnlineMeeting?.TollNumber,
-                    ID = item.Id
+                    ID = item.Id,
+                    Attendees = item.Attendees.ToList()
                 };
 
                 result.Add(meetingModel);

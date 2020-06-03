@@ -16,7 +16,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
     public class RetrievePhoto : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.RetrievePhoto";
+        public const string DeclarativeType = "Microsoft.Graph.RetrievePhoto";
 
         [JsonConstructor]
         public RetrievePhoto([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
@@ -31,21 +31,10 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
-        [JsonProperty("email")]
-        public StringExpression Email { get; set; }
-
-        [JsonProperty("retrieveMode")]
-        public ObjectExpression<RetrieveModeType> RetrieveMode { get; set; }
-
-        public static readonly string DefaultAvatarIconPathFormat = "https://ui-avatars.com/api/?name={0}";
+        [JsonProperty("userId")]
+        public StringExpression UserId { get; set; }
 
         private IGraphServiceClient _graphClient;
-
-        public enum RetrieveModeType
-        {
-            Me,
-            Other
-        }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -53,47 +42,35 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var token = Token.GetValue(dcState);
             _graphClient = GraphClient.GetAuthenticatedClient(token);
 
-            var retrieveMode = RetrieveMode == null ? RetrieveModeType.Me : RetrieveMode.GetValue(dcState);
-            var user = await GetUserByEmailAsync(Email.GetValue(dcState));
-
             Stream originalPhoto = null;
             string photoUrl = string.Empty;
             try
             {
-                if (retrieveMode == RetrieveModeType.Me)
+                if (UserId != null)
                 {
-                    originalPhoto = await _graphClient.Me.Photos["64x64"].Content.Request().GetAsync();
+                    originalPhoto = await _graphClient.Users[UserId.GetValue(dcState)].Photos["64x64"].Content.Request().GetAsync();
+                    photoUrl = Convert.ToBase64String(ReadFully(originalPhoto));
+                    if (!string.IsNullOrEmpty(photoUrl))
+                    {
+                        photoUrl = string.Format("data:image/jpeg;base64,{0}", photoUrl);
+                    }
                 }
-                else
-                {
-                    originalPhoto = await _graphClient.Users[user.Id].Photos["64x64"].Content.Request().GetAsync();
-                }
-                photoUrl = Convert.ToBase64String(ReadFully(originalPhoto));
             }
             catch (ServiceException)
             {
                 return null;
             }
 
-            var results = string.Empty;
-            if (string.IsNullOrEmpty(photoUrl))
-            {
-                results = string.Format(DefaultAvatarIconPathFormat, retrieveMode == RetrieveModeType.Me ? "Me" : user.DisplayName);
-            }
-            else
-            {
-                results = string.Format("data:image/jpeg;base64,{0}", photoUrl);
-            }
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(RetrievePhoto), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(RetrievePhoto), photoUrl, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
-                dcState.SetValue(ResultProperty, results);
+                dcState.SetValue(ResultProperty, photoUrl);
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: photoUrl , cancellationToken: cancellationToken);
         }
 
         private byte[] ReadFully(Stream input)
