@@ -6,9 +6,12 @@
 - book a meeting
 - book time with adele
 
-@ prebuilt datetimeV2
-@ prebuilt personName
-# GetSchedule
+#None
+- what color is the sky
+- what is your name
+- who is the president
+
+# FindEvent
 - what meetings do i have
 - do i have any meetings
 - show my meetings
@@ -16,10 +19,60 @@
 - do i have any meetings next wednesday
 - show my meetings for tomorrow
 - show schedule for 5/2/2020
+- do i have any meetings about the {@title=release} this week
+- do i have any meetings in {@location=city center} this week
+- do i have any meetings with ryan coming up
+- what meetings do i have with darren this week
+- whats on my schedule this week
+
+# FindEventAttendees
+- is darren coming to the meeting today
+- is ryan coming to the meeting tomorrow
+- who accepted my meeting invite
+- who is attending my next meeting
+- who is attending the {@title=team sync} this week
+- who is coming to my meeting at 3 today
+- who is coming to the monday morning meeting
+
+# FindEventDateTime
+- what time do i need to be here tomorrow
+- what time does the meeting start tomorrow morning
+- what time is my meeting with darren this afternoon
+- when is my last meeting on wednesday
+- when is my next meeting
+- when is my next meeting with darren
+
+# FindEventLocation
+- what building is my meeting in tomorrow morning
+- what room is my meeting with darren in today
+- where is my first meeting tomorrow
+- where is my last meeting on friday
+- where is my next meeting
+
+# UpdateEvent
+- change a meeting
+- change the location to {@location=bellevue}
+- change the title of my meeting with darren to {@toTitle=performance review}
+- change the title to {@toTitle=security training}
+- move my {@fromDateTime=2pm} meeting up {@toDateTime=1 hour}
+- move my meeting at 3pm today
+- move my meeting {@fromDateTime=today at 2pm} to {@toDateTime=tomorrow at 1pm}
+- move my meeting  {@fromDateTime=tomorrow afternoon} to {@toDateTime=next week}
+- move my meeting with ryan to {@location=building 34}
+- move this meeting to {@location=city center}
+- move this meeting to {@location=redmond}
+- update an event
+- update my {@fromDateTime=4pm} meeting
+- update the title to {@toTitle=design review}
+
+> # Entity definitions
+
+@ ml location
+@ ml title hasRoles toTitle,fromTitle
+
+> # PREBUILT Entity definitions
 
 @ prebuilt datetimeV2
-
-#None
-- what color is the sky
-- what is your name
-- who is the president
+@ prebuilt email
+@ prebuilt ordinalV2
+@ prebuilt personName

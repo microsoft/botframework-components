@@ -23,6 +23,7 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<UpdateEvent>(UpdateEvent.DeclarativeType);
             yield return new DeclarativeType<EventDateTimeInput>(EventDateTimeInput.DeclarativeType);
             yield return new DeclarativeType<SortEvents>(SortEvents.DeclarativeType);
+            yield return new DeclarativeType<ResolveTimex>(ResolveTimex.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

@@ -3,12 +3,212 @@
 
 
 
-# DateTimeInput_Prompt_1IHT8b()
-- What date?
 
 # SendActivity_SxEi06()
 -
-# SendActivity_eQwRQg()
-- I found the following events matching your query: ${count(dialog.events)}
-# SendActivity_8cPjuu()
-- I couldn't find any events matching that criteria today. Would you like to expand your search to the upcoming week?
+
+
+# SendActivity_gUGZRJ()
+[Activity
+    Attachments = ${json(BuildScheduleCard(coalesce(dialog.datetime.value, dialog.datetime.start), dialog.previousEvents, dialog.upcomingEvents))}
+]
+
+
+# SendActivity_xEJ9J1()
+- IF: ${dialog.datetime != null && ticks(ConvertToTZ(dialog.datetime)) >= ticks(startOfDay(ConvertToTZ(utcNow())))}
+    - You don't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
+- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(ConvertToTZ(dialog.datetime))) < ticks(startOfDay(ConvertToTZ(utcNow())))}
+    - You didn't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
+- ELSE: 
+    - You don't have any events scheduled for today.
+
+    
+# BuildScheduleCard(datetime, previousEvents, upcomingEvents)
+- ```
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "Container",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "${if(dialog.datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), 'Today', formatDateTime(ConvertToTZ(datetime), 'dddd'))} ",
+                            "size": "Large"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "${if(dialog.datetime != null, formatDateTime(ConvertToTZ(datetime), 'MMMM d, yyyy'), formatDateTime(ConvertToTZ(utcNow()), 'MMMM d, yyyy'))}",
+                            "size": "Large",
+                            "weight": "Lighter"
+                        }
+                    ]
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), 'remaining', '')}",
+                    "size": "Small",
+                    "spacing": "None"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "bleed": true,
+            "separator": true,
+            "style": "default",
+            "items": [
+                ${join(foreach(previousEvents, x, BuildPreviousEventItem(x)), ', ')},
+                ${if(dialog.datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), BuildSeparator(), '')},
+                ${join(foreach(upcomingEvents, x, BuildUpcomingEventItem(x)), ', ')}
+            ]
+        },
+        {
+            "type": "Container",
+            "separator": true,
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "horizontalAlignment": "Right",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "Powered by ",
+                            "size": "Small"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "Microsoft Graph",
+                            "size": "Small",
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# BuildPreviousEventItem(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 20,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${formatDateTime(event.Start.dateTime,'h:mmt')}",
+                    "weight": "Bolder",
+                    "color": "Accent",
+                    "isSubtle": true
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${if(event.DurationDays > 0, concat(event.DurationDays, 'd'), '')} ${if(event.DurationHours > 0, concat(event.DurationHours, 'h'), '')} ${if(event.DurationMinutes > 0, concat(event.DurationMinutes, 'm'), '')}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "weight": "Lighter",
+                    "isSubtle": true
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 80,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}",
+                    "weight": "Bolder",
+                    "isSubtle": true
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${GetLocation(event)}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "isSubtle": true
+                }
+            ]
+        }
+    ]
+}
+```
+
+# BuildSeparator()
+- ```
+{
+    "type": "Image",
+    "altText": "",
+    "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAzUAAAAKCAYAAACNKHAJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABDSURBVHhe7cYxAQAgDAOwTiJOkIgzeGZhF8mVAAAAAAAAAAAAAAAAwGdqnX37AAAAAAAAAAAAAAAAAAAAAAAAAFOSB0yCAoJ5nG+nAAAAAElFTkSuQmCC",
+    "size": "Stretch"
+}
+```
+
+# BuildUpcomingEventItem(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 20,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${formatDateTime(event.Start.dateTime,'h:mmt')}",
+                    "weight": "Bolder",
+                    "color": "Accent"
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${if(event.DurationDays > 0, concat(event.DurationDays, 'd'), '')} ${if(event.DurationHours > 0, concat(event.DurationHours, 'h'), '')} ${if(event.DurationMinutes > 0, concat(event.DurationMinutes, 'm'), '')}",
+                    "size": "Small",
+                    "spacing": "None",
+                    "weight": "Lighter"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 80,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}",
+                    "weight": "Bolder"
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "${GetLocation(event)}",
+                    "size": "Small",
+                    "spacing": "None"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# ConvertToTZ(datetime)
+- ${convertFromUTC(formatDateTime(datetime), user.settings.mailboxSettings.timeZone)}
+
+# GetLocation(event)
+- IF: ${(event.location != null && event.location != '') && event.isOnlineMeeting == true }
+    - ${ event.location }, [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSEIF: ${event.location != null && event.location != ''}
+    - ${ event.location }
+- ELSEIF: ${ event.isOnlineMeeting == true }
+    - [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSE:
+    - No location specified

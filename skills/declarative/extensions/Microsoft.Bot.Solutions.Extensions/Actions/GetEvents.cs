@@ -31,6 +31,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
+        [JsonProperty("titleProperty")]
+        public StringExpression TitleProperty { get; set; }
+
+        [JsonProperty("locationProperty")]
+        public StringExpression LocationProperty { get; set; }
+
+        [JsonProperty("attendeesProperty")]
+        public ArrayExpression<string> AttendeesProperty { get; set; }
+
         [JsonProperty("startProperty")]
         public ObjectExpression<DateTime?> StartProperty { get; set; }
 
@@ -48,19 +57,43 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
+            var titleProperty = string.Empty;
+            var locationProperty = string.Empty;
+            var attendeesProperty = new List<string>();
 
+            if (TitleProperty != null)
+            {
+                titleProperty = TitleProperty.GetValue(dcState);
+            }
+
+            if (LocationProperty != null)
+            {
+                locationProperty = LocationProperty.GetValue(dcState);
+            }
+
+            if (AttendeesProperty != null)
+            {
+                attendeesProperty = AttendeesProperty.GetValue(dcState);
+            }
+
+            // if start date is not provided, default to DateTime.Now
             if (startProperty == null || startProperty.Value == DateTime.MinValue)
             {
                 startProperty = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
             }
             else
             {
-                startProperty = TimeZoneInfo.ConvertTimeFromUtc(startProperty.Value.Date, timeZone).Date;
+                startProperty = TimeZoneInfo.ConvertTimeFromUtc(startProperty.Value, timeZone);
             }
 
+            // if end date is not provided, default to start property +7days
             if (endProperty == null || endProperty.Value == DateTime.MinValue)
             {
                 endProperty = startProperty.Value.Date.AddHours(23).AddMinutes(59);
+            }
+            else
+            {
+                endProperty = TimeZoneInfo.ConvertTimeFromUtc(endProperty.Value, timeZone);
             }
 
             var graphClient = GraphClient.GetAuthenticatedClient(token);
@@ -115,6 +148,28 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         results.Add(ev);
                     }
                 }
+            }
+
+            // Filter results by title
+            if (titleProperty != null)
+            {
+                var title = titleProperty as string;
+                results = results.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
+            }
+
+            // Filter results by location
+            if (locationProperty != null)
+            {
+                var location = locationProperty as string;
+                results = results.Where(r => r.Location.DisplayName.ToLower().Contains(location.ToLower())).ToList();
+            }
+
+            // Filter results by attendees
+            if (attendeesProperty != null)
+            {
+                // TODO: update to use contacts from graph rather than string matching
+                var attendees = attendeesProperty as List<string>;
+                results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
             }
 
             // Write Trace Activity for the http request and response values

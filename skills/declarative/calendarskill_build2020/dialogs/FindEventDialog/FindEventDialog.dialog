@@ -43,64 +43,34 @@
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "9Enkwn"
-          },
-          "name": "BeforePromptCheck"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "3gEZAe"
+            "id": "5Bhcg8"
           },
           "condition": "dialog.datetime != null",
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.Bot.Solutions.ResolveTimex",
               "$designer": {
-                "id": "5tFQWb"
+                "id": "CTelff"
               },
-              "name": "DateTimePrompt"
-            },
-            {
-              "$kind": "Microsoft.DateTimeInput",
-              "$designer": {
-                "id": "1IHT8b"
-              },
-              "disabled": false,
-              "maxTurnCount": 3,
-              "alwaysPrompt": false,
-              "allowInterruptions": false,
-              "prompt": "${DateTimeInput_Prompt_1IHT8b()}",
-              "value": "=dialog.datetime",
-              "property": "dialog.datetimeResolution"
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "cDD02e"
-              },
-              "assignments": [
-                {
-                  "property": "dialog.datetime",
-                  "value": "=dialog.datetimeResolution[0]"
-                }
-              ]
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "PKJOeH"
-              },
-              "name": "DefaultDateTime"
+              "resultProperty": "dialog.timexResolutions",
+              "timexProperty": "=dialog.datetime.timex"
             },
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "j4dIC0"
+                "id": "oxNPxp"
+              },
+              "property": "dialog.datetime",
+              "value": "=dialog.timexResolutions[0]"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "q5MIkb"
               },
               "property": "dialog.datetime.value",
               "value": "=date(utcNow())"
@@ -111,14 +81,15 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "O6XDlU"
-          }
+          },
+          "name": "AfterDate"
         },
         {
           "$kind": "Microsoft.Graph.Calendar.GetEvents",
           "$designer": {
             "id": "eOTm1D"
           },
-          "resultProperty": "dialog.events",
+          "resultProperty": "dialog.calendarEvents",
           "token": "=user.token.token",
           "startProperty": "=if(dialog.datetime.start != null, dialog.datetime.start, if(dialog.datetime.value != null, dialog.datetime.value, null))",
           "endProperty": "=if(dialog.datetime.end != null, dialog.datetime.end, null)",
@@ -130,25 +101,35 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "Sdgoa0"
+            "id": "xh08wp"
           },
-          "condition": "dialog.events != null && count(dialog.events) > 0",
+          "condition": "dialog.calendarEvents != null && count(dialog.calendarEvents) > 0",
           "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.SortEvents",
+              "$designer": {
+                "id": "KHOTs4"
+              },
+              "eventsProperty": "=dialog.calendarEvents",
+              "previousEventsProperty": "dialog.previousEvents",
+              "upcomingEventsProperty": "dialog.upcomingEvents",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "eQwRQg"
+                "id": "gUGZRJ"
               },
-              "activity": "${SendActivity_eQwRQg()}"
+              "activity": "${SendActivity_gUGZRJ()}"
             }
           ],
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "8cPjuu"
+                "id": "xEJ9J1"
               },
-              "activity": "${SendActivity_8cPjuu()}"
+              "activity": "${SendActivity_xEJ9J1()}"
             }
           ]
         }
