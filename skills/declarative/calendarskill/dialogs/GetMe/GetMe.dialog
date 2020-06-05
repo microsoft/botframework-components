@@ -66,12 +66,12 @@
           "activityProcessed": true
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.GetMe",
+          "$kind": "Microsoft.Graph.GetMe",
           "$designer": {
-            "id": "dBRjW7"
+            "id": "sMDCU9"
           },
-          "token": "= turn.token",
-          "resultProperty": "dialog.api_result"
+          "resultProperty": "dialog.api_result",
+          "token": "=turn.token"
         },
         {
           "$kind": "Microsoft.SetProperties",
