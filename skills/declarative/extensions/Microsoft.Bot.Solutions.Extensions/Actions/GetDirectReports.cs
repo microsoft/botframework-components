@@ -9,19 +9,18 @@ using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Bot.Solutions.Extensions.Models;
-using Microsoft.Bot.Solutions.Extensions.Services;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Solutions.Extensions.Actions
 {
-    public class GetManager : Dialog
+    public class GetDirectReports : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Who.GetManager";
+        public const string DeclarativeType = "Microsoft.Graph.Who.GetDirectReports";
 
         [JsonConstructor]
-        public GetManager([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
+        public GetDirectReports([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base()
         {
             this.RegisterSourceLocation(callerPath, callerLine);
@@ -42,7 +41,28 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var token = this.Token.GetValue(dcState);
             var idProperty = this.IdProperty.GetValue(dcState);
 
-            var result = await GraphService.GetManager(token, idProperty);
+            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            IUserDirectReportsCollectionWithReferencesPage result;
+            try
+            {
+                result = await graphClient.Users[idProperty]
+                    .DirectReports
+                    .Request()
+                    .Select("businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName")
+                    .GetAsync();
+            }
+            catch (ServiceException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.NotFound)
+                {
+                    result = null;
+                }
+                else
+                {
+                    throw GraphClient.HandleGraphAPIException(ex);
+                }
+            }
+
             if (result == null)
             {
                 if (this.ResultProperty != null)
@@ -53,18 +73,22 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken);
             }
 
-            var manager = new WhoSkillUser(token, result as User);
+            var directReports = new List<WhoSkillUserModel>();
+            foreach (var user in result)
+            {
+                directReports.Add(new WhoSkillUserModel(user as User));
+            }
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(GetManager), manager, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(GetDirectReports), directReports, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
-                dcState.SetValue(ResultProperty, manager);
+                dcState.SetValue(ResultProperty, directReports);
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: manager, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: directReports, cancellationToken: cancellationToken);
         }
     }
 }

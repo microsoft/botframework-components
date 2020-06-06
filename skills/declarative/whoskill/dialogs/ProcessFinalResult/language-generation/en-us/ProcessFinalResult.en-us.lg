@@ -21,14 +21,6 @@
 - ${NoDirectReports(conversation.chosenPerson)}
 
 
-# SendActivity_h68EUr()
-- ${Peers(count(conversation.allPersons), conversation.chosenPerson)}
-
-
-# SendActivity_cqz15Z()
-- ${NoPeers(conversation.chosenPerson)}
-
-
 
 
 # SendActivity_DT8OV1()
@@ -104,3 +96,35 @@
 - ${MobileNumber(conversation.chosenPerson)}
 # SendActivity_S2UhBE()
 - ${NoPhoneNumber(conversation.chosenPerson)}
+# SendActivity_UcMRoe()
+- ${NoPeers(conversation.chosenPerson)}
+
+
+
+
+# SendActivity_kQjyVo()
+- ${Peers(count(conversation.allPersons), conversation.chosenPerson)}
+
+
+# SendActivity_FxUeCH()
+- ${NoPeers(conversation.chosenPerson)}
+
+
+
+
+# SendActivity_pqPljr()
+- ${NoPeers(conversation.chosenPerson)}
+
+
+
+
+# SendActivity_0qzqny()
+- ${Peers(count(conversation.allPersons), conversation.chosenPerson)}
+
+
+
+
+
+
+# SendActivity_pqlACk()
+- ${conversation.chosenPerson}
