@@ -66,7 +66,7 @@ namespace EventSkill.Bots
             _logger.LogError(exception, $"[OnTurnError] unhandled error : {exception.Message}");
 
             await SendErrorMessageAsync(turnContext, exception);
-            await SendEoCToParentAsync(turnContext, exception);
+            await SendEndOfConversationToParentAsync(turnContext, exception);
             await ClearConversationStateAsync(turnContext);
         }
 
@@ -92,7 +92,7 @@ namespace EventSkill.Bots
             }
         }
 
-        private async Task SendEoCToParentAsync(ITurnContext turnContext, Exception exception)
+        private async Task SendEndOfConversationToParentAsync(ITurnContext turnContext, Exception exception)
         {
             try
             {
