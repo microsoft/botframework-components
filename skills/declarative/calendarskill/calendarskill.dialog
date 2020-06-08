@@ -110,10 +110,10 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ozMJOx"
+            "id": "r1nv95"
           },
-          "dialog": "CreateEventDialog",
-          "activityProcessed": true
+          "activityProcessed": true,
+          "dialog": "CreateMeetingDialog"
         }
       ],
       "defaultResultProperty": "dialog.result",

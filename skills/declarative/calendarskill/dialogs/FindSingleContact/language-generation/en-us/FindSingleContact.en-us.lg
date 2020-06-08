@@ -24,4 +24,4 @@
 
 
 # SendActivity_KzmhdK()
-- Alright, I've added ${turn.ResolvedAttendee.name}: ${turn.ResolvedAttendee.email}.
+- Alright, I've added ${turn.ResolvedAttendee.name}: ${turn.ResolvedAttendee.EmailAddresses[0]}.

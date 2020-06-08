@@ -663,7 +663,7 @@
       "$kind": "Microsoft.OnEventActivity",
       "$designer": {
         "id": "1nZZxT",
-        "name": "Whois Action"
+        "name": "WhoisAction"
       },
       "actions": [
         {

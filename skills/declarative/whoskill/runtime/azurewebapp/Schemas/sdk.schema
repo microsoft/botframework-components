@@ -113,6 +113,78 @@
 			"$ref": "#/definitions/Microsoft.GotoAction"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateOnlineMeeting"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetContacts"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetings"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetUserSettings"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEventTime"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.GetMe"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.RetrievePhoto"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetDirectReports"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContacts"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContactsByKeyword"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContacts"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContactsByKeyword"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetManager"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Who.GetUsers"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
 		},
 		{
@@ -3293,6 +3365,1779 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.AcceptEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Accept Event",
+			"description": "Accept a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.CreateEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Create Event",
+			"description": "Create a calendar event using the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"titleProperty",
+				"descriptionProperty",
+				"startProperty",
+				"endProperty",
+				"timeZoneProperty",
+				"locationProperty",
+				"isOnlineMeetingProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"titleProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Title",
+					"description": "Event title.",
+					"examples": []
+				},
+				"descriptionProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Description",
+					"description": "Event description.",
+					"examples": []
+				},
+				"startProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Start",
+					"description": "Event start.",
+					"examples": []
+				},
+				"endProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "End",
+					"description": "Event end.",
+					"examples": []
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"locationProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Location",
+					"description": "Event location.",
+					"examples": []
+				},
+				"attendeesProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Attendees",
+					"description": "Event attendees.",
+					"examples": []
+				},
+				"isOnlineMeetingProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "IsOnlineMeeting",
+					"description": "Is online meeting",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.CreateEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.CreateOnlineMeeting": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Create Teams Meeting",
+			"description": "Create a Microsoft Teams meeting using the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"startProperty",
+				"endProperty",
+				"timeZoneProperty",
+				"subjectProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"startProperty": {
+					"$ref": "#/definitions/objectExpression",
+					"title": "Start",
+					"description": "Event start.",
+					"examples": []
+				},
+				"endProperty": {
+					"$ref": "#/definitions/objectExpression",
+					"title": "End",
+					"description": "Event end.",
+					"examples": []
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"subjectProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Subject",
+					"description": "Teams Meeting Subject",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.CreateOnlineMeeting"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeclineEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Decline Event",
+			"description": "Decline a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeleteEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Delete Event",
+			"description": "Delete a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeleteEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.EventDateTimeInput": {
+			"$role": [
+				"implements(Microsoft.IDialog)",
+				"extends(Microsoft.InputDialog)"
+			],
+			"type": "object",
+			"title": "Microsoft Graph - Event Date Time Input",
+			"description": "Collection information - Ask for a word or sentence.",
+			"required": [
+				"timeZoneProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"defaultValue": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Default value",
+					"description": "'Property' will be set to the value of this expression when max turn count is exceeded.",
+					"examples": [
+						"hello world",
+						"Hello ${user.name}",
+						"=concat(user.firstname, user.lastName)"
+					]
+				},
+				"value": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Value",
+					"description": "'Property' will be set to the value of this expression unless it evaluates to null.",
+					"examples": [
+						"hello world",
+						"Hello ${user.name}",
+						"=concat(user.firstname, user.lastName)"
+					]
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"outputFormat": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Output format",
+					"description": "Expression to format the output.",
+					"examples": [
+						"=toUpper(this.value)",
+						"${toUpper(this.value)}"
+					]
+				},
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"default": false,
+					"examples": [
+						false,
+						"=user.isVip"
+					]
+				},
+				"prompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Initial prompt",
+					"description": "Message to send to collect information.",
+					"examples": [
+						"What is your birth date?"
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"unrecognizedPrompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Unrecognized prompt",
+					"description": "Message to send when max turn count (if specified) has been exceeded and the default value is selected as the value.",
+					"examples": [
+						"Sorry, I'm having trouble understanding you. I will just use {this.options.defaultValue} for now. You can say 'I'm 36 years old' to change it."
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"invalidPrompt": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Invalid prompt",
+					"description": "Message to send when the user input does not meet any validation expression.",
+					"examples": [
+						"Sorry, '{this.value}' does not work. I need a number between 1-150. What is your age?"
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"defaultValueResponse": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Default value response",
+					"description": "Message to send when max turn count (if specified) has been exceeded and the default value is selected as the value.",
+					"examples": [
+						"Sorry, I'm having trouble understanding you. I will just use {this.options.defaultValue} for now. You can say 'I'm 36 years old' to change it."
+					],
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"maxTurnCount": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Max turn count",
+					"description": "Maximum number of re-prompt attempts to collect information.",
+					"default": 3,
+					"examples": [
+						3,
+						"=settings.xyz"
+					]
+				},
+				"validations": {
+					"type": "array",
+					"title": "Validation expressions",
+					"description": "Expression to validate user input.",
+					"items": {
+						"$ref": "#/definitions/condition",
+						"title": "Condition",
+						"description": "Expression which needs to met for the input to be considered valid",
+						"examples": [
+							"int(this.value) > 1 && int(this.value) <= 150",
+							"count(this.value) < 300"
+						]
+					}
+				},
+				"property": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Property",
+					"description": "Property to store collected information. Input will be skipped if property has value (unless 'Always prompt' is true).",
+					"examples": [
+						"$birthday",
+						"dialog.${user.name}",
+						"=f(x)"
+					]
+				},
+				"alwaysPrompt": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Always prompt",
+					"description": "Collect information even if the specified 'property' is not empty.",
+					"default": false,
+					"examples": [
+						false,
+						"=$val"
+					]
+				},
+				"allowInterruptions": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Allow Interruptions",
+					"description": "A boolean expression that determines whether the parent should be allowed to interrupt the input.",
+					"default": true,
+					"examples": [
+						true,
+						"=user.xyz"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.EventDateTimeInput"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.FindMeetingTimes": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Find Meeting Times",
+			"description": "Find meeting times using the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"attendeesProperty",
+				"timeZoneProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"attendeesProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Attendees",
+					"description": "Event attendees.",
+					"examples": []
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.FindMeetingTimes"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetContacts": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Get Contacts",
+			"description": "Get Outlook contacts from the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"nameProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"nameProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Contact Name",
+					"description": "Contact name search parameter.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetContacts"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetEvents": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Get Events",
+			"description": "Lookup events from Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"startProperty",
+				"endProperty",
+				"timeZoneProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"startProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Start",
+					"description": "Event range start.",
+					"examples": []
+				},
+				"endProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "End",
+					"description": "Event range end.",
+					"examples": []
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetEvents"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetMeetingRooms": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Meeting Rooms",
+			"description": "Get meeting room lists using the Azure search API.",
+			"required": [
+				"searchServiceAdminApiKey",
+				"searchServiceName",
+				"searchIndexName",
+				"searchQuery",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"searchServiceAdminApiKey": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Search Service Admin Api Key",
+					"description": "Azure Search Service Admin API Key.",
+					"examples": [
+						"settings.azureSearch.searchServiceAdminApiKey"
+					]
+				},
+				"searchServiceName": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Search Service Name",
+					"description": "Azure Search Service Name.",
+					"examples": [
+						"settings.azureSearch.searchServiceName"
+					]
+				},
+				"searchIndexName": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Search Index Name",
+					"description": "Azure Search Index Name.",
+					"examples": [
+						"settings.azureSearch.searchIndexName"
+					]
+				},
+				"searchQuery": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Search Query",
+					"description": "Azure Search Query.",
+					"examples": [
+						"dialog.searchQuery"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetMeetingRooms"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetMeetings": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Meetings",
+			"description": "Lookup events from Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"startTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for start of date range for events.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for end of date range for events.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetMeetings"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetSchedule": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Schedule",
+			"description": "Get schedule of users using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"emails",
+				"startTime",
+				"endTime",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"emails": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Emails",
+					"description": "User emails list",
+					"examples": [
+						"dialog.emails"
+					]
+				},
+				"startTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for event start.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for event end.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"availabilityViewInterval": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Availability View Interval",
+					"description": "Represents the duration of a time slot in an availabilityView in the response. The default is 30 minutes, minimum is 5, maximum is 1440.",
+					"examples": [
+						"5"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetSchedule"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.GetUserSettings": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Get User Settings",
+			"description": "Get user settings from the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetUserSettings"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.SortEvents": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Sort Events",
+			"description": "Sort calendar events into previous and upcoming based on the current datetime.",
+			"type": "object",
+			"required": [
+				"token",
+				"previousEventsProperty",
+				"upcomingEventsProperty",
+				"timeZoneProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"eventsProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Events",
+					"description": "List of events to sort.",
+					"examples": []
+				},
+				"previousEventsProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Previous Events",
+					"description": "Result list for previous events.",
+					"examples": []
+				},
+				"upcomingEventsProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Upcoming Events",
+					"description": "Result list for upcoming events.",
+					"examples": []
+				},
+				"timeZoneProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "TimeZone",
+					"description": "Timezone.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.SortEvents"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.UpdateEventTime": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Update Event Time",
+			"description": "Update start and end time of a meeting using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"meetingId",
+				"startTime",
+				"endTime",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"meetingId": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "MeetingId",
+					"description": "Id of meeting",
+					"examples": [
+						"dialog.meeting.id"
+					]
+				},
+				"startTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Start",
+					"description": "Expression for event start.",
+					"examples": [
+						"dialog.start"
+					]
+				},
+				"endTime": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "End",
+					"description": "Expression for event end.",
+					"examples": [
+						"dialog.end"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.UpdateEventTime"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.GetMe": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Me",
+			"description": "Ge my profile using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token/oneOf/5",
+							"examples": [
+								"=concat('x','y','z')"
+							]
+						}
+					]
+				},
+				"token": {
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "object",
+							"title": "Object"
+						},
+						{
+							"type": "array",
+							"title": "Array"
+						},
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"examples": [
+								false
+							]
+						},
+						{
+							"type": "number",
+							"title": "Number",
+							"examples": [
+								15.5
+							]
+						},
+						{
+							"examples": [
+								"=..."
+							],
+							"type": "string",
+							"title": "Expression",
+							"pattern": "^=.*\\S.*"
+						}
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.GetMe"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.RetrievePhoto": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Retrieve Photo",
+			"description": "Retrieve user photo using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"userId": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "User Id",
+					"description": "Id of the user",
+					"examples": [
+						"dialog.user.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.RetrievePhoto"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetDirectReports": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get DirectReports",
+			"description": "Get directReports using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"idProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"idProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Id",
+					"description": "Expression for id.",
+					"examples": [
+						"dialog.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetDirectReports"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetEmailContacts": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Email Contacts",
+			"description": "Get email contacts using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"topProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"topProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Top",
+					"description": "Expression for number of results.",
+					"examples": [
+						"dialog.top"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetEmailContacts"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetEmailContactsByKeyword": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Email Contacts By Keyword",
+			"description": "Get email contacts by keyword using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"topProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"keywordProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Keyword",
+					"description": "Expression for keyword.",
+					"examples": [
+						"dialog.keyword"
+					]
+				},
+				"topProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Top",
+					"description": "Expression for number of results.",
+					"examples": [
+						"dialog.top"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetEmailContactsByKeyword"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetEventContacts": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Event Contacts",
+			"description": "Get event contacts using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"topProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"topProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Top",
+					"description": "Expression for number of results.",
+					"examples": [
+						"dialog.top"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetEventContacts"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetEventContactsByKeyword": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Event Contacts By Keyword",
+			"description": "Get event contacts by keyword using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"keywordProperty",
+				"topProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"keywordProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Keyword",
+					"description": "Expression for keyword.",
+					"examples": [
+						"dialog.keyword"
+					]
+				},
+				"topProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Top",
+					"description": "Expression for number of results.",
+					"examples": [
+						"dialog.top"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetEventContactsByKeyword"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetManager": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Manager",
+			"description": "Get manager using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"idProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"idProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Id",
+					"description": "Expression for id.",
+					"examples": [
+						"dialog.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetManager"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Who.GetUsers": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Get Users",
+			"description": "Get users by keyword using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"keywordProperty",
+				"topProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"keywordProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Keyword",
+					"description": "Expression for keyword.",
+					"examples": [
+						"dialog.keyword"
+					]
+				},
+				"topProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.GetMe/properties/token",
+					"title": "Top",
+					"description": "Expression for number of results.",
+					"examples": [
+						"dialog.top"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Who.GetUsers"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.GuidEntityRecognizer": {
 			"$role": "implements(Microsoft.IEntityRecognizer)",
 			"title": "Guid Entity Recognizer",
@@ -3417,7 +5262,7 @@
 				"resultProperty": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "Result property",
-					"description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
 					"examples": [
 						"dialog.contosodata"
 					]
@@ -4015,30 +5860,6 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -4133,6 +5954,102 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateOnlineMeeting"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetContacts"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetings"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetSchedule"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetUserSettings"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEventTime"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetDirectReports"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContacts"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetEmailContactsByKeyword"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContacts"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetEventContactsByKeyword"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetManager"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Who.GetUsers"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.EventDateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.GetMe"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.RetrievePhoto"
 				}
 			]
 		},

@@ -470,7 +470,8 @@
               "dialog": "GetPhotoRequest",
               "options": {
                 "retrivePhotoMode": "other",
-                "email": "=dialog.foreach.value.emailAddress.address"
+                "email": "=dialog.foreach.value.emailAddress.address",
+                "userName": "=dialog.foreach.value.emailAddress.name"
               },
               "resultProperty": "dialog.userPhotoResult"
             },

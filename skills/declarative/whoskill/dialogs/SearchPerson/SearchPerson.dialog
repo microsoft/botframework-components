@@ -23,6 +23,14 @@
           "dialog": "Oauth"
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "sZ7Fx1"
+          },
+          "property": "conversation.allPersons",
+          "value": "=null"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "mkV3qO",
@@ -31,12 +39,12 @@
           "condition": "conversation.luisResult.pron != null",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Who.GetMe",
-              "token": "=user.token.token",
-              "resultProperty": "conversation.allPersons[0]",
+              "$kind": "Microsoft.Graph.GetMe",
               "$designer": {
-                "id": "fJSaxH"
-              }
+                "id": "Ayozk7"
+              },
+              "token": "=user.token.token",
+              "resultProperty": "conversation.allPersons[0]"
             }
           ],
           "elseActions": [
