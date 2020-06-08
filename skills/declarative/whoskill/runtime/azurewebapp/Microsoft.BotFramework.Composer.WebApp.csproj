@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.9.1" />
     <PackageReference Include="Microsoft.Bot.Builder.ApplicationInsights" Version="4.9.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Azure" Version="4.9.1" />
-	<PackageReference Include="Microsoft.Bot.Builder.Dialogs.Declarative" Version="4.9.1" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Declarative" Version="4.9.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.9.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Debugging" Version="4.9.1-preview" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.9.1" />
@@ -35,7 +35,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\extensions\Microsoft.Bot.Solutions.Extensions\Microsoft.Bot.Solutions.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\extensions\Microsoft.Bot.Solutions.Extensions\Microsoft.Bot.Solutions.Extensions.csproj" />
     <ProjectReference Include="..\core\Microsoft.BotFramework.Composer.Core.csproj" />
   </ItemGroup>
 </Project>

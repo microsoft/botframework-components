@@ -8,7 +8,7 @@ using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Bot.Solutions.Extensions.Models;
-using Microsoft.Bot.Solutions.Extensions.Services;
+using Microsoft.Graph;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Solutions.Extensions.Actions
@@ -49,11 +49,40 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 top = 15;
             }
 
-            var result = await GraphService.GetUser(token, keywordProperty, top);
-            var users = new List<WhoSkillUser>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var filterClause = string.Format(
+                "(startswith(displayName,'{0}') or startswith(givenName,'{0}') or startswith(surname,'{0}') or startswith(mail,'{0}') or startswith(userPrincipalName,'{0}'))",
+                keywordProperty);
+            IGraphServiceUsersCollectionPage result;
+            try
+            {
+                result = await graphClient.Users
+                       .Request()
+                       .Select(x => new
+                       {
+                           x.BusinessPhones,
+                           x.Department,
+                           x.DisplayName,
+                           x.Id,
+                           x.JobTitle,
+                           x.Mail,
+                           x.MobilePhone,
+                           x.OfficeLocation,
+                           x.UserPrincipalName
+                       })
+                       .Filter(filterClause)
+                       .Top(top)
+                       .GetAsync();
+            }
+            catch (ServiceException ex)
+            {
+                throw GraphClient.HandleGraphAPIException(ex);
+            }
+
+            var users = new List<WhoSkillUserModel>();
             foreach (var user in result)
             {
-                users.Add(new WhoSkillUser(token, user));
+                users.Add(new WhoSkillUserModel(user));
             }
 
             // Write Trace Activity for the http request and response values

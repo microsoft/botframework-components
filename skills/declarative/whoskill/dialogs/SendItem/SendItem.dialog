@@ -15,6 +15,15 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.Graph.RetrievePhoto",
+          "$designer": {
+            "id": "A65810"
+          },
+          "token": "=user.token.Token",
+          "userId": "=conversation.person.Id",
+          "resultProperty": "conversation.person.PhotoUrl"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "qw98U6",

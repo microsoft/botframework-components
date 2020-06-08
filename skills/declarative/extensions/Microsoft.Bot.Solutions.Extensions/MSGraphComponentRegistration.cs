@@ -31,6 +31,14 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<GetSchedule>(GetSchedule.DeclarativeType);
             yield return new DeclarativeType<UpdateEventTime>(UpdateEventTime.DeclarativeType);
 
+            yield return new DeclarativeType<GetUsers>(GetUsers.DeclarativeType);
+            yield return new DeclarativeType<GetManager>(GetManager.DeclarativeType);
+            yield return new DeclarativeType<GetDirectReports>(GetDirectReports.DeclarativeType);
+            yield return new DeclarativeType<GetEventContacts>(GetEventContacts.DeclarativeType);
+            yield return new DeclarativeType<GetEventContactsByKeyword>(GetEventContactsByKeyword.DeclarativeType);
+            yield return new DeclarativeType<GetEmailContacts>(GetEmailContacts.DeclarativeType);
+            yield return new DeclarativeType<GetEmailContactsByKeyword>(GetEmailContactsByKeyword.DeclarativeType);
+
             // shared
             yield return new DeclarativeType<GetMe>(GetMe.DeclarativeType);
             yield return new DeclarativeType<RetrievePhoto>(RetrievePhoto.DeclarativeType);

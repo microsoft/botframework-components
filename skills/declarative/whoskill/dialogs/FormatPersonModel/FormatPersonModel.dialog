@@ -1,0 +1,149 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "5yleUc",
+    "name": "FormatPersonModel"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "x2F7to"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.Department == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.Department",
+              "value": " "
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.JobTitle == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.JobTitle",
+              "value": " "
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.Mail == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.Mail",
+              "value": " "
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.MobilePhone == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.MobilePhone",
+              "value": " "
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.OfficeLocation == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.OfficeLocation",
+              "value": " "
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ViQb74"
+          },
+          "condition": "dialog.person.BusinessPhones == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "20TbAr"
+              },
+              "property": "dialog.person.BusinessPhones",
+              "value": " "
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "9jZOHj"
+              },
+              "condition": "dialog.person.BusinessPhones[0] != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Xe1L66"
+                  },
+                  "property": "dialog.person.BusinessPhones",
+                  "value": "=dialog.person.BusinessPhones[0]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "VaiNl2"
+          },
+          "value": "=dialog.person"
+        }
+      ]
+    }
+  ],
+  "generator": "FormatPersonModel.lg"
+}

@@ -58,7 +58,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
             catch (ServiceException)
             {
-                return null;
+                photoUrl = null;
             }
 
             // Write Trace Activity for the http request and response values
