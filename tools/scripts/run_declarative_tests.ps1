@@ -1,5 +1,3 @@
-#Requires -Version 6
-
 Param(
 	[string] $BuildConfiguration
 )
