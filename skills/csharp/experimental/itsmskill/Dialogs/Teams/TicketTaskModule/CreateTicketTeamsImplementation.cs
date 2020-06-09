@@ -1,28 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AdaptiveCards;
+using ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView;
+using ITSMSkill.Extensions.Teams;
+using ITSMSkill.Models;
+using ITSMSkill.Models.UpdateActivity;
+using ITSMSkill.Services;
+using ITSMSkill.TeamsChannels;
+using ITSMSkill.TeamsChannels.Invoke;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
+using Microsoft.Bot.Schema.Teams;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AdaptiveCards;
-    using ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView;
-    using ITSMSkill.Extensions.Teams;
-    using ITSMSkill.Models;
-    using ITSMSkill.Models.UpdateActivity;
-    using ITSMSkill.Services;
-    using ITSMSkill.TeamsChannels;
-    using ITSMSkill.TeamsChannels.Invoke;
-    using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Connector;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-    using Microsoft.Bot.Schema.Teams;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json.Linq;
-    using Attachment = Microsoft.Bot.Schema.Attachment;
-    using System.Linq;
-
     /// <summary>
     /// CreateTicketTeamsImplementation Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
