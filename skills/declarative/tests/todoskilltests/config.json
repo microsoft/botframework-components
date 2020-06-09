@@ -1,3 +1,5 @@
 {
-    "botFolder": "..\\..\\..\\..\\..\\botframework-skills-next\\skills\\declarative\\todoskill"
+    "$kind": "DeclarativeTestConfiguration",
+    "botFolder": "../../todoskill",
+    "ut": "../../sdk/declarative_ut"
 }
