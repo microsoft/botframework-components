@@ -60,7 +60,6 @@ namespace GenericITSMSkill.Dialogs
         {
             // NOTE: Uncomment the following lines to access LUIS result for this turn.
             // var luisResult = stepContext.Context.TurnState.Get<LuisResult>(StateProperties.SkillLuisResult);
-            MockData fakePayload = new MockData("1234", "This is Test", 3, "Active");
             var attachmentCard = GetFlowUrlInput.GetTicketIdInput("123", "123");
             var cardReply = MessageFactory.Attachment(attachmentCard);
             ResourceResponse resourceResponse = await sc.Context.SendActivityAsync(cardReply);
@@ -143,40 +142,6 @@ namespace GenericITSMSkill.Dialogs
         private static class DialogIds
         {
             public const string NamePrompt = "namePrompt";
-        }
-
-        private Attachment CreateAdpativeCardAttachment(MockData fakePayload)
-        {
-            AdaptiveCard card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0));
-            card.Body.Add(new AdaptiveTextBlock()
-            {
-                Text = "ServiceNow Update Receipt Card",
-                Size = AdaptiveTextSize.ExtraLarge
-            });
-
-            card.Body.Add(new AdaptiveFactSet()
-            {
-                Type = "FactSet",
-                Facts = new List<AdaptiveFact>()
-                {
-                    new AdaptiveFact() { Title = "Id", Value = fakePayload.Id }
-                }
-            });
-            card.Actions.Add(new AdaptiveSubmitAction()
-            {
-                Type = "Action.Submit",
-                Title = "Click me for messageBack"
-            });
-
-            string jsonObj = card.ToJson();
-
-            Attachment attachmentCard = new Attachment()
-            {
-                ContentType = AdaptiveCard.ContentType,
-                Content = JsonConvert.DeserializeObject(jsonObj)
-            };
-
-            return attachmentCard;
         }
     }
 }
