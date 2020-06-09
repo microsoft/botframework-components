@@ -1,0 +1,3 @@
+[submodule "skills/declarative/sdk"]
+	path = skills/declarative/sdk
+	url = https://github.com/xieofxie/botbuilder-dotnet.git
