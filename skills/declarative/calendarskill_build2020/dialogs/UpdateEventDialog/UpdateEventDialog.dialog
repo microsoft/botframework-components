@@ -1,0 +1,72 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "8gI5nw",
+    "name": "UpdateEventDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "BDdO1Z"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "BlufaR"
+          },
+          "assignments": [
+            {
+              "property": "dialog.fromDateTime",
+              "value": "=coalesce(dialog.fromDateTime, @fromDateTime)"
+            },
+            {
+              "property": "dialog.toDateTime",
+              "value": "=coalesce(dialog.toDateTime, @toDateTime)"
+            },
+            {
+              "property": "dialog.fromTitle",
+              "value": "=coalesce(dialog.fromTitle, @fromTitle)"
+            },
+            {
+              "property": "dialog.toTitle",
+              "value": "=coalesce(dialog.toTitle, @toTitle)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "=dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "0nvIO8"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEvents",
+          "options": {
+            "datetime": "=dialog.fromDateTime",
+            "title": "=dialog.fromTitle",
+            "location": "=dialog.location",
+            "personNameArray": "=dialog.personNameArray",
+            "ordinal": "=ordinal"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "UpdateEventDialog.lg"
+}

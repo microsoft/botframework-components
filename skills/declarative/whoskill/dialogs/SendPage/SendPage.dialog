@@ -51,15 +51,33 @@
           "itemsProperty": "conversation.persons",
           "actions": [
             {
-              "$kind": "Microsoft.SetProperty",
+              "$kind": "Microsoft.Graph.RetrievePhoto",
               "$designer": {
-                "id": "u8EPk9"
+                "id": "pXOIkb"
               },
-              "property": "conversation.persons[dialog.foreach.index].ActionTitle",
-              "value": "=replace(conversation.ActionTitle, '{keyword}', dialog.foreach.value.UserPrincipalName)"
+              "token": "=user.token.Token",
+              "userId": "=conversation.persons[dialog.foreach.index].id",
+              "resultProperty": "dialog.photoUrl"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "cfnUGQ"
+              },
+              "assignments": [
+                {
+                  "property": "conversation.persons[dialog.foreach.index].ActionTitle",
+                  "value": "=replace(conversation.ActionTitle, '{keyword}', dialog.foreach.value.UserPrincipalName)"
+                },
+                {
+                  "property": "conversation.persons[dialog.foreach.index].PhotoUrl",
+                  "value": "=dialog.photoUrl"
+                }
+              ]
             }
           ],
-          "value": "dialog.foreach.value"
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
         },
         {
           "$kind": "Microsoft.IfCondition",

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Graph - Find Meeting Times",
+  "description": "Find meeting times using the Microsoft Graph API.",
+  "type": "object",
+  "required": [
+    "token",
+    "attendeesProperty",
+    "timeZoneProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result Property",
+      "description": "Result Property (named location to store information).",
+      "examples": []
+    },
+    "token": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph API authentication token.",
+      "examples": []
+    },
+    "attendeesProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Attendees",
+      "description": "Event attendees.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
+      "examples": []
+    }
+  }
+}

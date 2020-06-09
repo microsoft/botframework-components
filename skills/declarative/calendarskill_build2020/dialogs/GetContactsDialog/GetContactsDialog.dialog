@@ -1,0 +1,252 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "19Ua0Q",
+    "name": "GetContactsDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "4Oub2q"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3U65xS"
+          },
+          "name": "GetContactsDialogStarted"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Rpu0Wq"
+          },
+          "condition": "(dialog.emailArray == null) && (dialog.personNameArray == null)",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "UnqHUH"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "property": "dialog.contactName",
+              "prompt": "${TextInput_Prompt_UnqHUH()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "eGkq4u"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.emailArray",
+                  "value": "=@@email"
+                },
+                {
+                  "property": "dialog.personNameArray",
+                  "value": "=@@personName"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "DmmP72"
+              },
+              "condition": "(dialog.emailArray == null) && (dialog.personNameArray == null)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "ZZrfSl"
+                  },
+                  "property": "dialog.personNameArray",
+                  "value": "=json(concat('[\"', dialog.contactName, '\"]'))"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "QbaMCv"
+          },
+          "condition": "dialog.emailArray != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "kdx0NL"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "dialog.emailArray",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "VFzbYZ"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.attendees",
+                  "value": "=dialog.foreach.value"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qHY2xL"
+          },
+          "condition": "dialog.personNameArray != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "DaPrvV"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "dialog.personNameArray",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.GetContacts",
+                  "$designer": {
+                    "id": "LCqscE"
+                  },
+                  "resultProperty": "dialog.contactsList",
+                  "nameProperty": "=dialog.foreach.value",
+                  "token": "=user.token.token",
+                  "value": "dialog.foreach.value",
+                  "index": "dialog.foreach.index"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "UocYlr"
+                  },
+                  "condition": "dialog.contactsList != null && count(dialog.contactsList) > 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "pAttDw"
+                      },
+                      "condition": "count(dialog.contactsList) == 1",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "Kx3oT0"
+                          },
+                          "value": "=dialog.contactsList[0].EmailAddresses[0]",
+                          "property": "dialog.emailAddress"
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "JBBfP4"
+                          },
+                          "value": "=foreach(dialog.contactsList, item, item.EmailAddresses[0])",
+                          "property": "dialog.emailChoiceList"
+                        },
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "yVdZ5r"
+                          },
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "outputFormat": "value",
+                          "defaultLocale": "en-us",
+                          "choiceOptions": {
+                            "inlineSeparator": ", ",
+                            "inlineOr": " or ",
+                            "inlineOrMore": ", or ",
+                            "includeNumbers": true
+                          },
+                          "recognizerOptions": {
+                            "noValue": false,
+                            "noAction": false
+                          },
+                          "choices": "=dialog.emailChoiceList",
+                          "property": "dialog.emailAddress",
+                          "prompt": "${ChoiceInput_Prompt_yVdZ5r()}"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "YVJMjK"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.attendees",
+                      "value": "=dialog.emailAddress"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LgF2fZ"
+          },
+          "condition": "dialog.attendees != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ChJFWb"
+              },
+              "activity": "${SendActivity_ChJFWb()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "63dlwQ"
+              },
+              "value": "=dialog.attendees"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "pmgdHg"
+              },
+              "activity": "${SendActivity_pmgdHg()}"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "sLro5t"
+              },
+              "activityProcessed": true
+            }
+          ]
+        }
+      ],
+      "defaultResultProperty": "dialog.result"
+    }
+  ],
+  "generator": "GetContactsDialog.lg",
+  "activityProcessed": true
+}

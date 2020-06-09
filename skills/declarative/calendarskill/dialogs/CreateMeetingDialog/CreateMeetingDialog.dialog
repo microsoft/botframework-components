@@ -112,7 +112,7 @@
               "$designer": {
                 "id": "WFuc6K"
               },
-              "dialog": "FindContactDialog",
+              "dialog": "FindContact",
               "disabled": false,
               "options": {
                 "AttendeeList": "=[coalesce(dialog.slots.personName)]",
@@ -159,7 +159,8 @@
           "options": {
             "title": "=coalesce(dialog.slots.Subject, dialog.content.title)"
           },
-          "resultProperty": "dialog.content.title"
+          "resultProperty": "dialog.content.title",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -632,7 +633,7 @@
                               "$designer": {
                                 "id": "2i3HBY"
                               },
-                              "dialog": "FindSingleContactDialog",
+                              "dialog": "FindSingleContact",
                               "disabled": false,
                               "options": {
                                 "attendee": "=@personName"

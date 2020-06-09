@@ -1,0 +1,10 @@
+[import](common.lg)
+
+
+
+
+# SendActivity_Hq37VG()
+- IF: ${user.settings.displayName != null}
+    - Hi, ${user.settings.displayName}! How can I help you today?
+- ELSE: 
+    - Hi there! How can I help you today?

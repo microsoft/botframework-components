@@ -1,0 +1,374 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "calendarskill_build2020",
+      "id": "q7qgWj"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "vngoQl"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Hq37VG"
+          },
+          "activity": "${SendActivity_Hq37VG()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Ah82wF"
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9EVSB0"
+          },
+          "assignments": [
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.initialActivity",
+              "value": "=turn.activity.text"
+            }
+          ],
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zddQr7"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "EePsUz"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog",
+          "options": {
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "datetime": "=dialog.datetime",
+            "emailArray": "=dialog.emailArray",
+            "personNameArray": "=dialog.personNameArray",
+            "initialActivity": "=dialog.initialActivity"
+          }
+        }
+      ],
+      "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.5"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "hFO5oj"
+      },
+      "intent": "FindEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "2nvoia"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@toDateTime"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=@ordinal"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "S2b2Bg"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "VIs194"
+          },
+          "activityProcessed": true,
+          "dialog": "FindEventDialog",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "personNameArray": "=dialog.personNameArray",
+            "ordinal": "=dialog.ordinal"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "6ObjgS"
+      },
+      "intent": "FindEventAttendees",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jcYIFy"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=@ordinal"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "jp2xPv"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lpgwQ1"
+          },
+          "activityProcessed": true,
+          "dialog": "FindEventAttendees"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "dqi1T1"
+      },
+      "intent": "FindEventDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jODbUh"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=@ordinal"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2tTGKU"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sX8iUh"
+          },
+          "activityProcessed": true,
+          "dialog": "FindEventDateTime"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qlezAU"
+      },
+      "intent": "FindEventLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "3lgR2I"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@title"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=@ordinal"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1eERu3"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "w2TqYg"
+          },
+          "activityProcessed": true,
+          "dialog": "FindEventLocation"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Jf1fBe"
+      },
+      "intent": "UpdateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XurRTv"
+          },
+          "assignments": [
+            {
+              "property": "dialog.fromDateTime",
+              "value": "=@fromDateTime"
+            },
+            {
+              "property": "dialog.toDateTime",
+              "value": "=@toDateTime"
+            },
+            {
+              "property": "dialog.toTitle",
+              "value": "=@toTitle"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@location"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=@ordinal"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "JRqmkt"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "calendarskill_build2020.lg",
+  "recognizer": "calendarskill_build2020.lu"
+}

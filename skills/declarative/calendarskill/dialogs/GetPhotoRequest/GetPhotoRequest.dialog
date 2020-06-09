@@ -29,14 +29,111 @@
           }
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.RetrievePhoto",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "NnUw9j"
+            "id": "NXZ3W7"
+          },
+          "condition": "dialog.retrivePhotoMode == \"me\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.GetMe",
+              "$designer": {
+                "id": "0BLqYK"
+              },
+              "resultProperty": "dialog.me_result",
+              "token": "= turn.token"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "6UmOum"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "AG5Scs"
+              },
+              "property": "dialog.userId",
+              "value": "=dialog.me_result.Id"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetContacts",
+              "$designer": {
+                "id": "DaR5vu"
+              },
+              "token": "= turn.token",
+              "resultProperty": "dialog.contact_result",
+              "nameProperty": "= dialog.email"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "MgVZrj"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "NpMojl"
+              },
+              "property": "dialog.userId",
+              "value": "=dialog.contact_result[0].Id"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6vFuwj"
+          }
+        },
+        {
+          "$kind": "Microsoft.Graph.RetrievePhoto",
+          "$designer": {
+            "id": "X4nhI4"
           },
           "token": "= turn.token",
           "resultProperty": "dialog.api_result",
-          "email": "= dialog.email",
-          "retrieveMode": "= dialog.retrivePhotoMode"
+          "userId": "= dialog.userId"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "JJRWkl"
+          },
+          "condition": "dialog.api_result == \"\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ojGFi0"
+              },
+              "condition": "dialog.retrivePhotoMode == \"me\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "lBcK3s"
+                  },
+                  "value": "https://ui-avatars.com/api/?name=me",
+                  "property": "dialog.api_result"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WLcNX9"
+                  },
+                  "property": "dialog.api_result",
+                  "value": "https://ui-avatars.com/api/?name=${dialog.userName}"
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",

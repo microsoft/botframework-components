@@ -375,3 +375,8 @@ ASALocalRun/
 .DS_Store
 /.project
 *.luis
+/skills/declarative/calendarskill_build2020/generated
+/skills/declarative/calendarskill_build2020/runtime/azurefunctions/appsettings.Deployment.json
+/skills/declarative/calendarskill_build2020/runtime/azurewebapp/appsettings.Deployment.json
+/skills/declarative/calendarskill_build2020/runtime/azurewebapp/create_log.txt
+/skills/declarative/calendarskill_build2020/settings/appsettings.json

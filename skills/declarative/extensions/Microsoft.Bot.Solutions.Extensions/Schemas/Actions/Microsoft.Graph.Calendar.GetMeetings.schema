@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Get Meetings",
+  "description": "Lookup events from Microsoft Graph API.",
+  "required": [
+    "token"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "token": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "startTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Start",
+      "description": "Expression for start of date range for events.",
+      "examples": [
+        "dialog.start"
+      ]
+    },
+    "endTime": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "End",
+      "description": "Expression for end of date range for events.",
+      "examples": [
+        "dialog.end"
+      ]
+    }
+  }
+}

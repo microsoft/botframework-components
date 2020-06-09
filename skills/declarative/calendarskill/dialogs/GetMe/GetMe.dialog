@@ -1,0 +1,96 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "B29YE0",
+    "name": "GetMe"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Xpm28c"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "MpG3HI"
+          },
+          "eventName": "GetMeRequest"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "nOMrPb"
+          },
+          "condition": "dialog.requestResult.requestStatus",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "WfX8Ec"
+              },
+              "activity": "${SendActivity_WfX8Ec()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "PxmtVV"
+              },
+              "property": "conversation.me",
+              "value": "= dialog.requestResult.me"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "yx4n59",
+        "name": "GetMeRequest"
+      },
+      "event": "GetMeRequest",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PllKiR"
+          },
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.Graph.GetMe",
+          "$designer": {
+            "id": "sMDCU9"
+          },
+          "resultProperty": "dialog.api_result",
+          "token": "=turn.token"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9AY3b4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.requestResult.me",
+              "value": "= dialog.api_result"
+            },
+            {
+              "property": "dialog.requestResult.requestStatus",
+              "value": "= true"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetMe.lg"
+}

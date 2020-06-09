@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# CardAction(title, type, value)
+[CardAction
+	title = ${title}
+    type = ${type}
+    value = ${value}
+  ]
+
+# SendActivity_Dgnkxl()
+[Activity
+    SuggestedActions = ${CardAction('previous', 'imBack', concat('show schedule on ', dialog.previousDate))} | ${CardAction('next', 'imBack', string(concat('show schedule on ', dialog.nextDate)))}
+]
+
+# DateTimeInput_Prompt_S72XvW()
+- What date?

@@ -332,22 +332,43 @@ Need help? Here's a list of the questions I can answer:
 ```
 
 # WhoIs(Person)
-- Here's what I found for ${Person.DisplayName}:
+- Here's what I found for '${Person.DisplayName}':
 
 # JobTitle(Person)
-- '${Person.DisplayName}' is a ${Person.jobTitle}.
+- '${Person.DisplayName}' is a ${Person.JobTitle}.
+
+# NoJobTitle(Person)
+- I didn't find any record about '${Person.DisplayName}'s job title.
 
 # Department(Person)
 - '${Person.DisplayName}' works in ${Person.Department}.
 
-# Location(Person)
-- '${Person.DisplayName}' works in ${Person.officeLocation}.
+# NoDepartment(Person)
+- I didn't find any record about '${Person.DisplayName}'s department.
 
-# PhoneNumber(Person)
-- The phone number for '${Person.DisplayName}' is ${Person.BusinessPhones}.
+# Location(Person)
+- '${Person.DisplayName}' works in ${Person.OfficeLocation}.
+
+# NoLocation(Person)
+- I didn't find any record about '${Person.DisplayName}'s location.
+
+# BusinessAndMobilePhoneNumber(Person)
+- '${Person.DisplayName}''s business phone number is ${Person.BusinessPhones}, and mobile phone number is ${Person.MobilePhone}.
+
+# BusinessPhoneNumber(Person)
+- The business phone number for '${Person.DisplayName}' is ${Person.BusinessPhones}.
+
+# MobileNumber(Person)
+- The mobile phone number for '${Person.DisplayName}' is ${Person.MobilePhone}.
+
+# NoPhoneNumber(Person)
+- I didn't find any record about '${Person.DisplayName}'s phone number.
 
 # EmailAddress(Person)
-- The e-mail address of '${Person.DisplayName}' is ${Person.mail}.
+- The e-mail address of '${Person.DisplayName}' is ${Person.Mail}.
+
+# NoEmailAddress(Person)
+- I didn't find any record about '${Person.DisplayName}'s email address.
 
 # Manager(Person)
 - I found the manager of '${Person.DisplayName}'.

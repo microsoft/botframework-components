@@ -6,8 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.AI.QnA;
+using Microsoft.Bot.Builder.ApplicationInsights;
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
@@ -35,22 +40,23 @@ namespace Microsoft.BotFramework.Composer.Functions
         {
             var config = new ConfigurationBuilder();
 
+            // Config precedence 1: root app.settings
             config
                 .SetBasePath(rootDirectory)
-                .AddJsonFile("ComposerDialogs/settings/appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .UseLuisConfigAdapter()
                 .UseLuisSettings();
 
+            // Config precedence 2: ComposerDialogs/settings settings which are injected by the composer publish
+            // Hard code the settings path to 'ComposerDialogs' for deployment
+            var configFile = Path.GetFullPath(Path.Combine(rootDirectory, @"ComposerDialogs/settings/appsettings.json"));
+            config.AddJsonFile(configFile, optional: true, reloadOnChange: true);
+
+            // Config Precedence 3: Deployment specific config
             config.AddJsonFile("appsettings.deployment.json", optional: true, reloadOnChange: true);
-            if (Debugger.IsAttached)
+
+            if (!Debugger.IsAttached)
             {
-                // Local Debug
-                //config.AddJsonFile("appsettings.development.json", optional: true, reloadOnChange: true);
-            }
-            else
-            {
-                //Azure Deploy
-                //config.AddJsonFile("appsettings.deployment.json", optional: true, reloadOnChange: true);
                 config.AddUserSecrets<Startup>();
             }
 
@@ -71,6 +77,8 @@ namespace Microsoft.BotFramework.Composer.Functions
 
             var services = builder.Services;
 
+            services.AddSingleton<IConfiguration>(rootConfiguration);
+
             services.AddLogging();
 
             // Create the credential provider to be used with the Bot Framework Adapter.
@@ -80,15 +88,24 @@ namespace Microsoft.BotFramework.Composer.Functions
             // Register AuthConfiguration to enable custom claim validation.
             services.AddSingleton<AuthenticationConfiguration>();
 
+            // Adaptive component registration
+            ComponentRegistration.Add(new DialogsComponentRegistration());
+            ComponentRegistration.Add(new DeclarativeComponentRegistration());
+            ComponentRegistration.Add(new AdaptiveComponentRegistration());
+            ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
+            ComponentRegistration.Add(new QnAMakerComponentRegistration());
+            ComponentRegistration.Add(new LuisComponentRegistration());
+
             // Register the skills client and skills request handler.
             services.AddSingleton<SkillConversationIdFactoryBase, SkillConversationIdFactory>();
             services.AddHttpClient<BotFrameworkClient, SkillHttpClient>();
             services.AddSingleton<ChannelServiceHandler, SkillHandler>();
 
             // Register telemetry client, initializers and middleware
-            services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetry(settings.ApplicationInsights.InstrumentationKey);
             services.AddSingleton<ITelemetryInitializer, OperationCorrelationTelemetryInitializer>();
             services.AddSingleton<ITelemetryInitializer, TelemetryBotIdInitializer>();
+            services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
             services.AddSingleton<TelemetryLoggerMiddleware>(sp =>
             {
                 var telemetryClient = sp.GetService<IBotTelemetryClient>();
@@ -103,7 +120,7 @@ namespace Microsoft.BotFramework.Composer.Functions
 
             // Storage
             IStorage storage;
-            if (settings.Feature.UseCosmosDbPersistentStorage && !string.IsNullOrEmpty(settings.CosmosDb.AuthKey))
+            if (ConfigSectionValid(settings.CosmosDb.AuthKey))
             {
                 storage = new CosmosDbPartitionedStorage(settings.CosmosDb);
             }
@@ -119,7 +136,7 @@ namespace Microsoft.BotFramework.Composer.Functions
             services.AddSingleton(conversationState);
 
             // Resource explorer to track declarative assets
-            var resourceExplorer = new ResourceExplorer().AddFolder(Path.Combine(rootDirectory, "ComposerDialogs"));
+            var resourceExplorer = new ResourceExplorer().AddFolder(Path.Combine(rootDirectory, settings.Bot ?? "."));
             services.AddSingleton(resourceExplorer);
 
             // Adapter
@@ -130,12 +147,14 @@ namespace Microsoft.BotFramework.Composer.Functions
                 IStorage storage = s.GetService<IStorage>();
                 UserState userState = s.GetService<UserState>();
                 ConversationState conversationState = s.GetService<ConversationState>();
+                TelemetryInitializerMiddleware telemetryInitializerMiddleware = s.GetService<TelemetryInitializerMiddleware>();
 
                 var adapter = new BotFrameworkHttpAdapter(new ConfigurationCredentialProvider(rootConfiguration));
 
                 adapter
                   .UseStorage(storage)
-                  .UseState(userState, conversationState);
+                  .UseBotState(userState, conversationState)
+                  .Use(telemetryInitializerMiddleware);
 
                 // Configure Middlewares
                 ConfigureTranscriptLoggerMiddleware(adapter, settings);
@@ -169,12 +188,9 @@ namespace Microsoft.BotFramework.Composer.Functions
 
         public void ConfigureTranscriptLoggerMiddleware(BotFrameworkHttpAdapter adapter, BotSettings settings)
         {
-            if (settings.Feature.UseTranscriptLoggerMiddleware)
+            if (ConfigSectionValid(settings.BlobStorage.ConnectionString) && ConfigSectionValid(settings.BlobStorage.Container))
             {
-                if (!string.IsNullOrEmpty(settings.BlobStorage.ConnectionString) && !string.IsNullOrEmpty(settings.BlobStorage.Container))
-                {
-                    adapter.Use(new TranscriptLoggerMiddleware(new AzureBlobTranscriptStore(settings.BlobStorage.ConnectionString, settings.BlobStorage.Container)));
-                }
+                adapter.Use(new TranscriptLoggerMiddleware(new AzureBlobTranscriptStore(settings.BlobStorage.ConnectionString, settings.BlobStorage.Container)));
             }
         }
 
@@ -206,6 +222,11 @@ namespace Microsoft.BotFramework.Composer.Functions
             }
 
             throw new Exception($"Can't locate root dialog in {dir.FullName}");
+        }
+
+        private bool ConfigSectionValid(string val)
+        {
+            return !string.IsNullOrEmpty(val) && !val.StartsWith('<');
         }
     }
 }

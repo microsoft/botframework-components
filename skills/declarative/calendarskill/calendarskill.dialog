@@ -110,10 +110,10 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ozMJOx"
+            "id": "r1nv95"
           },
-          "dialog": "CreateEventDialog",
-          "activityProcessed": true
+          "activityProcessed": true,
+          "dialog": "CreateMeetingDialog"
         }
       ],
       "defaultResultProperty": "dialog.result",
@@ -201,7 +201,7 @@
           "$designer": {
             "id": "9uFd2q"
           },
-          "dialog": "BookMeetingRoom"
+          "dialog": "BookMeetingRoomDialog"
         }
       ]
     },
@@ -304,7 +304,7 @@
               "$designer": {
                 "id": "OQaV1v"
               },
-              "dialog": "BookMeetingRoom"
+              "dialog": "BookMeetingRoomDialog"
             }
           ],
           "elseActions": [
@@ -350,7 +350,7 @@
             "id": "0nL43c"
           },
           "activityProcessed": true,
-          "dialog": "ConnectToMeeting"
+          "dialog": "ConnectToMeetingDialog"
         }
       ]
     }

@@ -60,7 +60,8 @@
                 "name": "search a meeting"
               },
               "dialog": "SearchMeetings",
-              "resultProperty": "dialog.meeting"
+              "resultProperty": "dialog.meeting",
+              "activityProcessed": true
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -90,39 +91,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "34JbXw"
-          },
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "defaultLocale": "en-us",
-          "style": "Auto",
-          "prompt": "${TextInput_Prompt_34JbXw()}",
-          "confirmChoices": [
-            {
-              "value": "Yes",
-              "synonyms": [
-                "sure"
-              ]
-            },
-            {
-              "value": "No",
-              "synonyms": [
-                "nope"
-              ]
-            }
-          ],
-          "property": "dialog.confirm",
-          "outputFormat": "= this.value",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or "
-          }
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "FVnGEG"
@@ -133,7 +101,8 @@
             "startTime": "=dialog.slots.ToTime"
           },
           "resultProperty": "dialog.newStartDateTime",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -158,34 +127,77 @@
           ]
         },
         {
-          "$kind": "Microsoft.EmitEvent",
+          "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "wGcYcf"
+            "id": "NwIfS0"
           },
-          "eventName": "UpdateMeetingRequest"
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "defaultLocale": "en-us",
+          "style": "Auto",
+          "prompt": "${ConfirmInput_Prompt_NwIfS0()}",
+          "confirmChoices": [
+            {
+              "value": "Yes",
+              "synonyms": [
+                "sure"
+              ]
+            },
+            {
+              "value": "No",
+              "synonyms": [
+                "nope"
+              ]
+            }
+          ],
+          "property": "dialog.confirm",
+          "outputFormat": "= this.value",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "rwFUJD"
+            "id": "Sqlwzb"
           },
-          "condition": "dialog.requestResult.requestStatus",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "DzKf6N"
-              },
-              "activity": "${SendActivity_DzKf6N()}"
-            }
-          ],
+          "condition": "dialog.confirm",
           "actions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "-nHbKA"
+                "id": "Z2kW9Q"
               },
-              "activity": "${SendActivity__nHbKA()}"
+              "eventName": "UpdateMeetingRequest"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QjVJgw"
+              },
+              "condition": "dialog.requestResult.requestStatus",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "sMTEi4"
+                  },
+                  "activity": "${SendActivity_sMTEi4()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "m4TrSW"
+                  },
+                  "activity": "${SendActivity_m4TrSW()}"
+                }
+              ]
             }
           ]
         },

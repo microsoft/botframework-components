@@ -1,0 +1,140 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "m9RGGG",
+    "name": "FindEventDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "iXs06X"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "n6xgOg"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=coalesce(dialog.datetime, @datetime)"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=coalesce(dialog.title, @title)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5Bhcg8"
+          },
+          "condition": "dialog.datetime != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Bot.Solutions.ResolveTimex",
+              "$designer": {
+                "id": "CTelff"
+              },
+              "resultProperty": "dialog.timexResolutions",
+              "timexProperty": "=dialog.datetime.timex"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "oxNPxp"
+              },
+              "property": "dialog.datetime",
+              "value": "=dialog.timexResolutions[0]"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "q5MIkb"
+              },
+              "property": "dialog.datetime.value",
+              "value": "=date(utcNow())"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "O6XDlU"
+          },
+          "name": "AfterDate"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$designer": {
+            "id": "eOTm1D"
+          },
+          "resultProperty": "dialog.calendarEvents",
+          "token": "=user.token.token",
+          "startProperty": "=if(dialog.datetime.start != null, dialog.datetime.start, if(dialog.datetime.value != null, dialog.datetime.value, null))",
+          "endProperty": "=if(dialog.datetime.end != null, dialog.datetime.end, null)",
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "titleProperty": "=if(dialog.title != null, dialog.title, null)",
+          "locationProperty": "=if(dialog.location != null, dialog.location, null)",
+          "attendeesProperty": "=if(dialog.personNameArray != null, dialog.personNameArray, null)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "xh08wp"
+          },
+          "condition": "dialog.calendarEvents != null && count(dialog.calendarEvents) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.SortEvents",
+              "$designer": {
+                "id": "KHOTs4"
+              },
+              "eventsProperty": "=dialog.calendarEvents",
+              "previousEventsProperty": "dialog.previousEvents",
+              "upcomingEventsProperty": "dialog.upcomingEvents",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "gUGZRJ"
+              },
+              "activity": "${SendActivity_gUGZRJ()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xEJ9J1"
+              },
+              "activity": "${SendActivity_xEJ9J1()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "FindEventDialog.lg"
+}
