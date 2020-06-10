@@ -14,6 +14,7 @@ foreach ($configFile in $configFiles)
         $test = $configFile.DirectoryName
         $ut = Join-Path $test $config.ut "DeclarativeUT.csproj"
         $bot = Join-Path $test $config.botFolder
-        dotnet run --project "$ut" --configuration $BuildConfiguration -- --bot "$bot" --test "$test" --debug true
+        $result = Join-Path $test "test-result.xml"
+        dotnet run --project "$ut" --configuration $BuildConfiguration -- --bot "$bot" --test "$test" --debug true --outputResult "$result"
     }
 }
