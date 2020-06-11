@@ -191,7 +191,8 @@
             "startTime": "=coalesce(dialog.slots.FromTime, dialog.content.startDateTime)"
           },
           "resultProperty": "dialog.content.startDateTime",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -354,20 +355,16 @@
           },
           "assignments": [
             {
-              "property": "dialog.slots",
-              "value": "={}"
-            },
-            {
               "property": "dialog.slots.Subject",
-              "value": "=coalesce(@Subject, $Subject)"
+              "value": "=coalesce(@Subject, $Subject, dialog.slots.Subject)"
             },
             {
               "property": "dialog.slots.FromDate",
-              "value": "=coalesce(@FromDate, $FromDate)"
+              "value": "=coalesce(@FromDate, $FromDate, dialog.slots.FromDate)"
             },
             {
               "property": "dialog.slots.FromTime",
-              "value": "=coalesce(@FromTime, $FromTime)"
+              "value": "=coalesce(@FromTime, $FromTime, dialog.slots.FromTime)"
             },
             {
               "property": "dialog.title",
@@ -375,7 +372,7 @@
             },
             {
               "property": "dialog.slots.ToTime",
-              "value": "=coalesce(@ToTime, $ToTime)"
+              "value": "=coalesce(@ToTime, $ToTime, dialog.slots.ToTime)"
             },
             {
               "property": "dialog.slotOperation",
@@ -431,7 +428,7 @@
                       "$designer": {
                         "id": "EH3XT9"
                       },
-                      "condition": "contains(dialog.foreach.value.Slot[0], 'person') || @personName != null",
+                      "condition": "contains(dialog.foreach.value.Slot[0], 'person')",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
@@ -638,7 +635,8 @@
                               "options": {
                                 "attendee": "=@personName"
                               },
-                              "resultProperty": "dialog.attendee"
+                              "resultProperty": "dialog.attendee",
+                              "activityProcessed": true
                             },
                             {
                               "$kind": "Microsoft.SetProperties",
@@ -648,7 +646,7 @@
                               "assignments": [
                                 {
                                   "property": "dialog.content.attendeeList",
-                                  "value": "= where(dialog.content.attendeeList, x , x != dialog.attendee)"
+                                  "value": "= union(dialog.content.attendeeList, dialog.attendee)"
                                 }
                               ]
                             }
@@ -717,20 +715,20 @@
                   "value": true
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "0KzgkA"
-              },
-              "activityProcessed": true,
-              "options": {
-                "slots": "=dialog.slots",
-                "content": "=dialog.content"
-              }
             }
           ],
           "itemsProperty": "dialog.slotOperation"
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "YMDFym"
+          },
+          "activityProcessed": true,
+          "options": {
+            "slots": "=dialog.slots",
+            "content": "=dialog.content"
+          }
         }
       ],
       "condition": "#GetInput.Score >= 0.5 && @SlotOperation != null"
