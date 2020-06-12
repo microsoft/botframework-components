@@ -45,13 +45,14 @@ namespace GenericITSMSkill.Controllers
         private readonly ConversationState _conversationState;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly IStatePropertyAccessor<TicketIdCorrelationMap> _ticketIdCorrelationMapAccessor;
-        private string _encryptionKey;
+        //private string _encryptionKey;
         private string channelID;
 
         public BotControllerForFlow(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter, IBot bot, IConfiguration config,
-            IDocumentClient documentClient, IDataProtectionProvider dataProtectionProvider, String encryptionKey)
+             IDataProtectionProvider dataProtectionProvider)
         {
             _config = serviceProvider.GetService<IConfiguration>();
+            _conversationState = serviceProvider.GetService<ConversationState>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
 
@@ -59,10 +60,10 @@ namespace GenericITSMSkill.Controllers
             Bot = bot;
             _appId = config["MicrosoftAppId"];
             _appPassword = config["MicrosoftAppPassword"];
-            _documentClient = documentClient;
+            //_documentClient = documentClient;
             _config = config;
             _dataProtectionProvider = dataProtectionProvider;
-            _encryptionKey = encryptionKey;
+            //_encryptionKey = encryptionKey;
         }
 
         [HttpPost]
@@ -77,13 +78,13 @@ namespace GenericITSMSkill.Controllers
             }
 
             // 0) Decrypt the channelID.
-            var protector = _dataProtectionProvider.CreateProtector("test");
-            channelID = protector.Unprotect(encryptedChannelID);
+            //var protector = _dataProtectionProvider.CreateProtector("test");
+            //channelID = protector.Unprotect(encryptedChannelID);
 
             // 1) Deserialize the body to FlowHttpRequestData format, and deserialize comments of the github issue.
             var dataFromRequestString = JsonConvert.DeserializeObject(bodyStr).ToString();
             serviceNowNotification = JsonConvert.DeserializeObject<ServiceDeskNotification>(dataFromRequestString);
-            serviceNowNotification.ChannelId = channelID;
+            serviceNowNotification.ChannelId = encryptedChannelID;
 
             var activity = new Activity
             {

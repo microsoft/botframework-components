@@ -15,6 +15,7 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.Logging;
 using GenericITSMSkill.Extensions;
 using GenericITSMSkill.Services;
+using Microsoft.Bot.Solutions.Proactive;
 
 namespace GenericITSMSkill.Adapters
 {
@@ -34,7 +35,8 @@ namespace GenericITSMSkill.Adapters
             ConversationState conversationState,
             TelemetryInitializerMiddleware telemetryMiddleware,
             IBotTelemetryClient telemetryClient,
-            ILogger<BotFrameworkHttpAdapter> logger)
+            ILogger<BotFrameworkHttpAdapter> logger,
+            ProactiveState proactiveState)
             : base(credentialProvider, authConfig, channelProvider, logger: logger)
         {
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
@@ -54,6 +56,9 @@ namespace GenericITSMSkill.Adapters
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
             Use(new SetSpeakMiddleware());
+
+            // SAMPLE: Proactive notifications
+            Use(new ProactiveStateMiddleware(proactiveState));
         }
 
         private async Task HandleTurnErrorAsync(ITurnContext turnContext, Exception exception)

@@ -239,6 +239,19 @@ namespace GenericITSMSkill.Dialogs
                 {
                     switch (ev.Name)
                     {
+                        case "Proactive":
+                            {
+                                await stepContext.BeginDialogAsync(nameof(FlowEventDispatchDialog), stepContext.Context.Activity.Value, cancellationToken);
+                                //var eventData = JsonConvert.DeserializeObject<ServiceDeskNotification>(turnContext.Activity.Value.ToString());
+
+                                //var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
+
+                                //// TODO: Implement a proactive subscription manager for mapping Notification to ConversationReference
+                                //var conversationReference = proactiveModel[eventData.ChannelId].Conversation;
+
+                                //await turnContext.Adapter.ContinueConversationAsync(_configuration.GetSection(MicrosoftAppCredentials.MicrosoftAppIdKey)?.Value, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                                break;
+                            }
 
                         default:
                             {

@@ -17,6 +17,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
+using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -29,6 +30,8 @@ namespace GenericITSMSkill.Dialogs
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly IStatePropertyAccessor<TicketIdCorrelationMap> _ticketIdCorrelationMapAccessor;
+        private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
+        private readonly ProactiveState _proactiveState;
         private readonly ConversationState _conversationState;
 
         public CreateFlowURLDialog(
@@ -40,17 +43,19 @@ namespace GenericITSMSkill.Dialogs
             _conversationState = serviceProvider.GetService<ConversationState>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
+            _proactiveState = serviceProvider.GetService<ProactiveState>();
+            _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
 
-            var sample = new WaterfallStep[]
+            var createFlow = new WaterfallStep[]
             {
-                GetAuthTokenAsync,
-                AfterGetAuthTokenAsync,
+                //GetAuthTokenAsync,
+                //AfterGetAuthTokenAsync,
                 GetFlowInputAsync,
                 CreateFlowUrlAsync,
                 EndAsync,
             };
 
-            AddDialog(new WaterfallDialog(nameof(CreateFlowURLDialog), sample));
+            AddDialog(new WaterfallDialog(nameof(CreateFlowURLDialog), createFlow));
             AddDialog(new TextPrompt(DialogIds.NamePrompt));
 
             InitialDialogId = nameof(CreateFlowURLDialog);
@@ -104,23 +109,38 @@ namespace GenericITSMSkill.Dialogs
             TeamsChannelData channelData = sc.Context.Activity.GetChannelData<TeamsChannelData>();
             string channelID = channelData.Team.Id;
             string protectedChannelID = protector.Protect(channelID);
-            endPointReply.Append(protectedChannelID);
+            var guid = Guid.NewGuid().ToString("N");
+            //endPointReply.Append(protectedChannelID);
+            endPointReply.Append(guid);
             var endpointReplyActivity = MessageFactory.Text(endPointReply.ToString());
             await sc.Context.SendActivityAsync(endpointReplyActivity, cancellationToken);
 
+            var proactiveModel = await _proactiveStateAccessor.GetAsync(sc.Context, () => new ProactiveModel()).ConfigureAwait(false);
+
+            proactiveModel[guid] = new ProactiveModel.ProactiveData
+            {
+                Conversation = sc.Context.Activity.GetConversationReference()
+            };
+
+            await _proactiveStateAccessor.SetAsync(sc.Context, proactiveModel).ConfigureAwait(false);
             TicketIdCorrelationMap ticketIdReferenceMap = await _ticketIdCorrelationMapAccessor.GetAsync(
              sc.Context,
              () => new TicketIdCorrelationMap(),
              cancellationToken)
-         .ConfigureAwait(false);
+            .ConfigureAwait(false);
 
             // Store Activity and Thread Id
-            ticketIdReferenceMap[protectedChannelID] = new TicketIdCorrelation
+            ticketIdReferenceMap[guid] = new TicketIdCorrelation
             {
                 TicketId = protectedChannelID,
                 ThreadId = sc.Context.Activity.Conversation.Id,
             };
             await _ticketIdCorrelationMapAccessor.SetAsync(sc.Context, ticketIdReferenceMap).ConfigureAwait(false);
+
+            // Save Conversation State
+            await _conversationState
+                .SaveChangesAsync(sc.Context, false, cancellationToken);
+            await _proactiveState.SaveChangesAsync(sc.Context, false, cancellationToken);
 
             return await sc.NextAsync(cancellationToken: cancellationToken);
         }

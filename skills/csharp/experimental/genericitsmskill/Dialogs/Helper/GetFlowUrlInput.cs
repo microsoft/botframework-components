@@ -56,20 +56,6 @@ namespace GenericITSMSkill.Dialogs.Helper
                 Type = "Action.Submit",
                 Title = "Click me for messageBack"
             });
-            //card.Actions.Add(new AdaptiveSubmitAction()
-            //{
-            //    Title = "Update Incident",
-            //    Data = new AdaptiveCardValue<TaskModuleMetadata>()
-            //    {
-            //        Data = new TaskModuleMetadata()
-            //        {
-            //            SkillId = botId,
-            //            TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
-            //            Submit = true
-            //        }
-            //    }
-            //});
-            //card.Id = "UpdateAdaptiveCard";
 
             Attachment attachmentCard = new Attachment()
             {

@@ -11,26 +11,32 @@ using GenericITSMSkill.Models.ServiceDesk;
 using GenericITSMSkill.UpdateActivity;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace GenericITSMSkill.Bots
 {
-    public class DefaultActivityHandler<T> : ActivityHandler
+    public class DefaultActivityHandler<T> : TeamsActivityHandler /*ActivityHandler*/
         where T : Dialog
     {
         private readonly Dialog _dialog;
         private readonly BotState _conversationState;
         private readonly BotState _userState;
+        private readonly ProactiveState _proactiveState;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
         private readonly LocaleTemplateManager _templateEngine;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly IStatePropertyAccessor<TicketIdCorrelationMap> _ticketIdCorrelationMapAccessor;
+        private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
         private readonly MicrosoftAppCredentials _appCredentials;
+        private readonly IConfiguration _configuration;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -42,7 +48,10 @@ namespace GenericITSMSkill.Bots
             _templateEngine = serviceProvider.GetService<LocaleTemplateManager>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
-            _appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
+            //_appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
+            _configuration = serviceProvider.GetService<IConfiguration>();
+            _proactiveState = serviceProvider.GetService<ProactiveState>();
+            _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -51,6 +60,7 @@ namespace GenericITSMSkill.Bots
 
             // Save any state changes that might have occured during the turn.
             await _conversationState.SaveChangesAsync(turnContext, false, cancellationToken);
+
             await _userState.SaveChangesAsync(turnContext, false, cancellationToken);
         }
 
@@ -79,29 +89,18 @@ namespace GenericITSMSkill.Bots
 
             switch (ev.Name)
             {
-                case "Proactive":
-                    {
-                        var eventData = JsonConvert.DeserializeObject<ServiceDeskNotification>(turnContext.Activity.Value.ToString());
+                //case "Proactive":
+                //    {
+                //        var eventData = JsonConvert.DeserializeObject<ServiceDeskNotification>(turnContext.Activity.Value.ToString());
 
-                        TicketIdCorrelationMap ticketReferenceMap = await _ticketIdCorrelationMapAccessor.GetAsync(
-                           turnContext,
-                           () => new TicketIdCorrelationMap(),
-                           cancellationToken)
-                       .ConfigureAwait(false);
+                //        var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
 
-                        ticketReferenceMap.TryGetValue(eventData.ChannelId, out var ticketCorrelationId);
+                //        // TODO: Implement a proactive subscription manager for mapping Notification to ConversationReference
+                //        var conversationReference = proactiveModel[eventData.ChannelId].Conversation;
 
-                        ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
-                           turnContext,
-                           () => new ActivityReferenceMap(),
-                           cancellationToken)
-                       .ConfigureAwait(false);
-
-                        activityReferenceMap.TryGetValue(ticketCorrelationId.ThreadId, out var activityReference);
-
-                        await turnContext.Adapter.ContinueConversationAsync(_appCredentials.MicrosoftAppId, activityReference.ConversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
-                        break;
-                    }
+                //        await turnContext.Adapter.ContinueConversationAsync(_configuration.GetSection(MicrosoftAppCredentials.MicrosoftAppIdKey)?.Value, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                //        break;
+                //    }
 
                 default:
                     {

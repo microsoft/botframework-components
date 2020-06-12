@@ -25,6 +25,7 @@ using GenericITSMSkill.Authentication;
 using GenericITSMSkill.Bots;
 using GenericITSMSkill.Dialogs;
 using GenericITSMSkill.Services;
+using Microsoft.Bot.Solutions.Proactive;
 
 namespace GenericITSMSkill
 {
@@ -97,6 +98,7 @@ namespace GenericITSMSkill
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
+            services.AddSingleton<ProactiveState>();
 
             // Configure proactive
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
@@ -121,6 +123,7 @@ namespace GenericITSMSkill
 
             // Register dialogs
             services.AddTransient<CreateFlowURLDialog>();
+            services.AddTransient<FlowEventDispatchDialog>();
             services.AddTransient<MainDialog>();
 
             // Configure adapters
