@@ -27,43 +27,28 @@ using Attachment = Microsoft.Bot.Schema.Attachment;
 
 namespace GenericITSMSkill.Controllers
 {
-    // This ASP Controller is created to handle a request. Dependency Injection will provide the Adapter and IBot
-    // implementation at runtime. Multiple different IBot implementations running at different endpoints can be
-    // achieved by specifying a more specific type for the bot constructor argument.
+    // Controller to manager flow callback
     [Route("flow/messages/{encryptedChannelID}")]
     [ApiController]
     public class BotControllerForFlow : ControllerBase
     {
-        private readonly IBotFrameworkHttpAdapter Adapter;
-        private readonly IBot Bot;
+        private readonly IBotFrameworkHttpAdapter _adapter;
+        private readonly IBot _bot;
         private readonly string _appId;
         private readonly string _appPassword;
-        private ServiceDeskNotification serviceNowNotification;
-        private IDocumentClient _documentClient;
         private readonly IConfiguration _config;
         private readonly IDataProtectionProvider _dataProtectionProvider;
-        private readonly ConversationState _conversationState;
-        private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
-        private readonly IStatePropertyAccessor<TicketIdCorrelationMap> _ticketIdCorrelationMapAccessor;
-        //private string _encryptionKey;
-        private string channelID;
 
         public BotControllerForFlow(IServiceProvider serviceProvider, IBotFrameworkHttpAdapter adapter, IBot bot, IConfiguration config,
              IDataProtectionProvider dataProtectionProvider)
         {
             _config = serviceProvider.GetService<IConfiguration>();
-            _conversationState = serviceProvider.GetService<ConversationState>();
-            _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
-            _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
-
-            Adapter = adapter;
-            Bot = bot;
+            _adapter = serviceProvider.GetService<IBotFrameworkHttpAdapter>();
+            _bot = bot;
             _appId = config["MicrosoftAppId"];
             _appPassword = config["MicrosoftAppPassword"];
-            //_documentClient = documentClient;
             _config = config;
             _dataProtectionProvider = dataProtectionProvider;
-            //_encryptionKey = encryptionKey;
         }
 
         [HttpPost]
@@ -77,59 +62,29 @@ namespace GenericITSMSkill.Controllers
                 bodyStr = await reader.ReadToEndAsync();
             }
 
-            // 0) Decrypt the channelID.
-            //var protector = _dataProtectionProvider.CreateProtector("test");
-            //channelID = protector.Unprotect(encryptedChannelID);
+            // Decrypt the channelID.
+            var protector = _dataProtectionProvider.CreateProtector("test");
+            var channelID = protector.Unprotect(encryptedChannelID);
 
-            // 1) Deserialize the body to FlowHttpRequestData format, and deserialize comments of the github issue.
+            // Deserialize the body to FlowHttpRequestData format, and deserialize comments of the github issue.
             var dataFromRequestString = JsonConvert.DeserializeObject(bodyStr).ToString();
-            serviceNowNotification = JsonConvert.DeserializeObject<ServiceDeskNotification>(dataFromRequestString);
-            serviceNowNotification.ChannelId = encryptedChannelID;
+            var serviceNowNotification = JsonConvert.DeserializeObject<ServiceDeskNotification>(dataFromRequestString);
+            serviceNowNotification.ChannelId = channelID;
 
+            // Create New Activity
             var activity = new Activity
             {
                 Type = ActivityTypes.Event,
-                ChannelId = "ServicenowNotification",
+                ChannelId = "ServiceDeskNotification",
                 Conversation = new ConversationAccount(id: $"{Guid.NewGuid()}"),
-                From = new ChannelAccount(id: $"Notification.ServicenowWebhook", name: $"Notification.ITSMSkill"),
-                Recipient = new ChannelAccount(id: $"Notification.ServicenowWebhook", name: $"Notification.ITSMSkill"),
+                From = new ChannelAccount(id: $"Notification.ServiceDesk", name: $"Notification.GenericITSMSkill"),
+                Recipient = new ChannelAccount(id: $"Notification.ServiceDesk", name: $"Notification.GenericITSMSkill"),
                 Name = "Proactive",
                 Value = JsonConvert.SerializeObject(serviceNowNotification)
             };
 
-            await Bot.OnTurnAsync(new TurnContext((BotAdapter)Adapter, activity), CancellationToken.None);
-        }
-
-        private async Task ServiceNowNotificationBotCallbackForSend(ITurnContext turnContext, CancellationToken cancellationToken)
-        {
-            // Create a card by using the data from the request body.
-            var card = serviceNowNotification.ToAdaptiveCard();
-
-            Attachment attachmentCard = new Attachment()
-            {
-                ContentType = AdaptiveCard.ContentType,
-                Content = JsonConvert.DeserializeObject(card.ToJson())
-            };
-
-            TicketIdCorrelationMap ticketReferenceMap = await _ticketIdCorrelationMapAccessor.GetAsync(
-               turnContext,
-               () => new TicketIdCorrelationMap(),
-               cancellationToken)
-           .ConfigureAwait(false);
-
-            ticketReferenceMap.TryGetValue(channelID, out var ticketCorrelationId);
-
-            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
-               turnContext,
-               () => new ActivityReferenceMap(),
-               cancellationToken)
-           .ConfigureAwait(false);
-
-            activityReferenceMap.TryGetValue(ticketCorrelationId.ThreadId, out var activityReference);
-
-            var cardReplyActivity = MessageFactory.Attachment(attachmentCard);
-            cardReplyActivity.Id = activityReference.ActivityId;
-            await turnContext.SendActivityAsync(cardReplyActivity);
+            // Send Activity to the bot to process as a Proactive event
+            await _bot.OnTurnAsync(new TurnContext((BotAdapter)_adapter, activity), CancellationToken.None);
         }
     }
 }

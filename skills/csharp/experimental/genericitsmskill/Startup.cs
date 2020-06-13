@@ -26,6 +26,8 @@ using GenericITSMSkill.Bots;
 using GenericITSMSkill.Dialogs;
 using GenericITSMSkill.Services;
 using Microsoft.Bot.Solutions.Proactive;
+using Microsoft.Bot.Connector;
+using System;
 
 namespace GenericITSMSkill
 {
@@ -131,6 +133,9 @@ namespace GenericITSMSkill
 
             // Configure bot
             services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
+
+            MicrosoftAppCredentials.TrustServiceUrl("");
+            services.AddSingleton<IConnectorClient>(new ConnectorClient(new Uri(""), new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

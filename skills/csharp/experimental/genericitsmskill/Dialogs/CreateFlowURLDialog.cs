@@ -48,8 +48,6 @@ namespace GenericITSMSkill.Dialogs
 
             var createFlow = new WaterfallStep[]
             {
-                //GetAuthTokenAsync,
-                //AfterGetAuthTokenAsync,
                 GetFlowInputAsync,
                 CreateFlowUrlAsync,
                 EndAsync,
@@ -65,8 +63,11 @@ namespace GenericITSMSkill.Dialogs
         {
             // NOTE: Uncomment the following lines to access LUIS result for this turn.
             // var luisResult = stepContext.Context.TurnState.Get<LuisResult>(StateProperties.SkillLuisResult);
-            var attachmentCard = GetFlowUrlInput.GetTicketIdInput("123", "123");
+            // Get Input from User
+            var attachmentCard = GetFlowUrlInput.GetTicketIdInput();
             var cardReply = MessageFactory.Attachment(attachmentCard);
+
+            // Get ResourceResponse of Sending Reply
             ResourceResponse resourceResponse = await sc.Context.SendActivityAsync(cardReply);
 
             ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
@@ -95,10 +96,6 @@ namespace GenericITSMSkill.Dialogs
         {
             var result = sc.Result as string;
 
-            // Save Conversation State
-            await _conversationState
-                .SaveChangesAsync(sc.Context);
-
             var endPointReply = new StringBuilder("Please connect your flow to: ");
             var hostingURL = _config["BotHostingURL"];
             endPointReply.Append(hostingURL);
@@ -108,34 +105,23 @@ namespace GenericITSMSkill.Dialogs
             var protector = _dataProtectionProvider.CreateProtector("test");
             TeamsChannelData channelData = sc.Context.Activity.GetChannelData<TeamsChannelData>();
             string channelID = channelData.Team.Id;
-            string protectedChannelID = protector.Protect(channelID);
-            var guid = Guid.NewGuid().ToString("N");
-            //endPointReply.Append(protectedChannelID);
-            endPointReply.Append(guid);
+
+            var id = channelID.Substring(0, 10);
+            string protectedChannelID = protector.Protect(id);
+            endPointReply.Append(protectedChannelID);
             var endpointReplyActivity = MessageFactory.Text(endPointReply.ToString());
+
+            // Send Activity
             await sc.Context.SendActivityAsync(endpointReplyActivity, cancellationToken);
 
             var proactiveModel = await _proactiveStateAccessor.GetAsync(sc.Context, () => new ProactiveModel()).ConfigureAwait(false);
 
-            proactiveModel[guid] = new ProactiveModel.ProactiveData
+            proactiveModel[id] = new ProactiveModel.ProactiveData
             {
                 Conversation = sc.Context.Activity.GetConversationReference()
             };
 
             await _proactiveStateAccessor.SetAsync(sc.Context, proactiveModel).ConfigureAwait(false);
-            TicketIdCorrelationMap ticketIdReferenceMap = await _ticketIdCorrelationMapAccessor.GetAsync(
-             sc.Context,
-             () => new TicketIdCorrelationMap(),
-             cancellationToken)
-            .ConfigureAwait(false);
-
-            // Store Activity and Thread Id
-            ticketIdReferenceMap[guid] = new TicketIdCorrelation
-            {
-                TicketId = protectedChannelID,
-                ThreadId = sc.Context.Activity.Conversation.Id,
-            };
-            await _ticketIdCorrelationMapAccessor.SetAsync(sc.Context, ticketIdReferenceMap).ConfigureAwait(false);
 
             // Save Conversation State
             await _conversationState
@@ -143,15 +129,6 @@ namespace GenericITSMSkill.Dialogs
             await _proactiveState.SaveChangesAsync(sc.Context, false, cancellationToken);
 
             return await sc.NextAsync(cancellationToken: cancellationToken);
-        }
-
-        private async Task<DialogTurnResult> GreetUserAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            dynamic data = new { Name = stepContext.Result.ToString() };
-            var response = TemplateEngine.GenerateActivityForLocale("HaveNameMessage", data);
-            await stepContext.Context.SendActivityAsync(response);
-
-            return await stepContext.NextAsync(cancellationToken: cancellationToken);
         }
 
         private Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

@@ -15,6 +15,7 @@ using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Schema.Teams;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +24,7 @@ using Newtonsoft.Json;
 
 namespace GenericITSMSkill.Bots
 {
-    public class DefaultActivityHandler<T> : TeamsActivityHandler /*ActivityHandler*/
+    public class DefaultActivityHandler<T> : TeamsActivityHandler
         where T : Dialog
     {
         private readonly Dialog _dialog;
@@ -37,6 +38,7 @@ namespace GenericITSMSkill.Bots
         private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
         private readonly MicrosoftAppCredentials _appCredentials;
         private readonly IConfiguration _configuration;
+        private readonly IConnectorClient _connectorClient;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -48,10 +50,11 @@ namespace GenericITSMSkill.Bots
             _templateEngine = serviceProvider.GetService<LocaleTemplateManager>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
-            //_appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
             _configuration = serviceProvider.GetService<IConfiguration>();
+            _connectorClient = serviceProvider.GetService<IConnectorClient>();
             _proactiveState = serviceProvider.GetService<ProactiveState>();
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
+            _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -89,18 +92,21 @@ namespace GenericITSMSkill.Bots
 
             switch (ev.Name)
             {
-                //case "Proactive":
-                //    {
-                //        var eventData = JsonConvert.DeserializeObject<ServiceDeskNotification>(turnContext.Activity.Value.ToString());
+                case "Proactive":
+                    {
+                        // Deserialize EventData
+                        var eventData = JsonConvert.DeserializeObject<ServiceDeskNotification>(turnContext.Activity.Value.ToString());
 
-                //        var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
+                        // Get ProactiveModel from state
+                        var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
 
-                //        // TODO: Implement a proactive subscription manager for mapping Notification to ConversationReference
-                //        var conversationReference = proactiveModel[eventData.ChannelId].Conversation;
+                        // Get Conversation Reference from ProactiveModel
+                        var conversationReference = proactiveModel[eventData.ChannelId].Conversation;
 
-                //        await turnContext.Adapter.ContinueConversationAsync(_configuration.GetSection(MicrosoftAppCredentials.MicrosoftAppIdKey)?.Value, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
-                //        break;
-                //    }
+                        // Send notification to activity
+                        await turnContext.Adapter.ContinueConversationAsync(_configuration.GetSection(MicrosoftAppCredentials.MicrosoftAppIdKey)?.Value, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                        break;
+                    }
 
                 default:
                     {
@@ -119,8 +125,8 @@ namespace GenericITSMSkill.Bots
         {
             return async (turnContext, cancellationToken) =>
             {
-                var activity = context.Activity.CreateReply();
-                activity.Attachments = new List<Attachment>
+                var reply = context.Activity.CreateReply();
+                reply.Attachments = new List<Attachment>
                 {
                     new Attachment
                     {
@@ -128,9 +134,57 @@ namespace GenericITSMSkill.Bots
                         Content = notification.ToAdaptiveCard()
                     }
                 };
-                EnsureActivity(activity);
-                await turnContext.SendActivityAsync(activity);
+                EnsureActivity(reply);
+
+                // Get Activity mapping conversation id
+                var activityMap = await _activityReferenceMapAccessor.GetAsync(turnContext, () => new ActivityReferenceMap());
+                activityMap.TryGetValue(turnContext.Activity.Conversation.Id, out ActivityReference activityReference);
+
+                // Get Old Activity and update it
+                if (activityReference != null)
+                {
+                    // Perform in-place update
+                    var teamsChannelActivity = reply.CreateConversationToTeamsChannel(
+                             new TeamsChannelData
+                             {
+                                 Channel = new ChannelInfo(id: activityReference.ThreadId),
+                             });
+
+                    var response = await _connectorClient.Conversations.UpdateActivityAsync(
+                      activityReference.ThreadId,
+                      activityReference.ActivityId,
+                      teamsChannelActivity,
+                      cancellationToken);
+                }
+                else
+                {
+                    // Store Activity Id for in-place updates
+                    var response = await turnContext.SendActivityAsync(reply).ConfigureAwait(false);
+                    StoreActivityId(turnContext, response);
+                }
             };
+        }
+
+        private async void StoreActivityId(ITurnContext turnContext, ResourceResponse resourceResponse)
+        {
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+            turnContext,
+            () => new ActivityReferenceMap(),
+            CancellationToken.None)
+            .ConfigureAwait(false);
+
+            // Store Activity and Thread Id
+            activityReferenceMap[turnContext.Activity.Conversation.Id] = new ActivityReference
+            {
+                ActivityId = resourceResponse.Id,
+                ThreadId = turnContext.Activity.Conversation.Id,
+                ConversationReference = turnContext.Activity.GetConversationReference()
+            };
+            await _activityReferenceMapAccessor.SetAsync(turnContext, activityReferenceMap).ConfigureAwait(false);
+
+            // Save Conversation State
+            await _conversationState
+                .SaveChangesAsync(turnContext);
         }
 
         /// <summary>

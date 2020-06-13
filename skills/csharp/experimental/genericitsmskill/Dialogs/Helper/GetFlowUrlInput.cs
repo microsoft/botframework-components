@@ -10,7 +10,7 @@ namespace GenericITSMSkill.Dialogs.Helper
 {
     public class GetFlowUrlInput
     {
-        public static Attachment GetTicketIdInput(string ticketId, string botId = null)
+        public static Attachment GetTicketIdInput(string ticketId = null, string botId = null)
         {
             var card = new AdaptiveCard("1.0")
             {
