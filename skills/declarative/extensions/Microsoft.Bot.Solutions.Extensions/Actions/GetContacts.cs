@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing.Mocks;
 using Microsoft.Bot.Builder.TraceExtensions;
+using Microsoft.Bot.Solutions.Extensions.Model;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 
@@ -41,7 +43,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             dc.Context.TurnState.TryGetValue(MockHttpRequestMiddleware.HttpMessageHandlerKey, out var httpHandler);
             var graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
-            var results = new List<object>();
+            var results = new List<CalendarSkillUserModel>();
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
 
@@ -57,6 +59,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
 
             // var users = await _graphClient.Users.Request(optionList).GetAsync();
+            var contactsResult = new List<CalendarSkillUserModel>();
             if (contacts?.Count > 0)
             {
                 foreach (var contact in contacts)
@@ -65,11 +68,14 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
                     foreach (var email in contact.EmailAddresses)
                     {
-                        emailAddresses.Add(email.Address);
+                        if (!string.IsNullOrEmpty(email.Address))
+                        {
+                            emailAddresses.Add(email.Address);
+                        }
                     }
 
                     // Get user properties.
-                    results.Add(new
+                    contactsResult.Add(new CalendarSkillUserModel
                     {
                         Name = contact.DisplayName,
                         EmailAddresses = emailAddresses
@@ -95,19 +101,37 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 {
                     var emailAddresses = new List<string>();
 
+                    var isDup = false;
+
                     foreach (var email in person.ScoredEmailAddresses)
                     {
                         emailAddresses.Add(email.Address);
+
+                        if (!isDup)
+                        {
+                            foreach (var contact in contactsResult)
+                            {
+                                if (contact.EmailAddresses.Contains(email.Address, StringComparer.CurrentCultureIgnoreCase))
+                                {
+                                    isDup = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     // Get user properties.
-                    results.Add(new
+                    if (!isDup)
                     {
-                        Name = person.DisplayName,
-                        EmailAddresses = emailAddresses
-                    });
+                        results.Add(new CalendarSkillUserModel
+                        {
+                            Name = person.DisplayName,
+                            EmailAddresses = emailAddresses
+                        });
+                    }
                 }
             }
+            results.AddRange(contactsResult);
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(GetContacts), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
