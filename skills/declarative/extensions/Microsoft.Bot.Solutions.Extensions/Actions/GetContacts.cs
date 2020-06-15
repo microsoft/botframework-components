@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing.Mocks;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
 using Newtonsoft.Json;
@@ -37,7 +39,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var name = this.NameProperty.GetValue(dcState);
             var token = this.Token.GetValue(dcState);
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            dc.Context.TurnState.TryGetValue(MockHttpRequestMiddleware.HttpMessageHandlerKey, out var httpHandler);
+            var graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
             var results = new List<object>();
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DeclarativeUT": {
+      "commandName": "Project",
+      "commandLineArgs": "--botFolder C:/dctest/skills/declarative/calendarskill --testFolder C:/dctest/skills/declarative/tests/calendarskilltests --outputDebug true"
+    }
+  }
+}
