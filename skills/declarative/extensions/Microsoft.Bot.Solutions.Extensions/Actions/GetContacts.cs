@@ -79,7 +79,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     contactsResult.Add(new CalendarSkillUserModel
                     {
                         Name = contact.DisplayName,
-                        EmailAddresses = emailAddresses
+                        EmailAddresses = emailAddresses,
+                        Id = contact.Id
                     });
                 }
             }
@@ -127,7 +128,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         results.Add(new CalendarSkillUserModel
                         {
                             Name = person.DisplayName,
-                            EmailAddresses = emailAddresses
+                            EmailAddresses = emailAddresses,
+                            Id = person.Id
                         });
                     }
                 }
