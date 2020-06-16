@@ -621,6 +621,7 @@ namespace CalendarSkill.Dialogs
                     EndTime = (DateTime)state.MeetingInfo.EndDateTime,
                     TimeZone = TimeZoneInfo.Utc,
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
+                    IsOnlineMeeting = true
                 };
 
                 var status = false;

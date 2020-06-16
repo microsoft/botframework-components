@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using CalendarSkill.Models;
 using CalendarSkill.Models.DialogOptions;
 using CalendarSkill.Options;
@@ -1096,8 +1097,9 @@ namespace CalendarSkill.Dialogs
                 attendeePhotoList,
                 subject = eventItem.Title,
                 location = eventItem.Location,
-                content = eventItem.ContentPreview ?? eventItem.Content,
-                meetingLink = eventItem.OnlineMeetingUrl
+                content = !string.IsNullOrEmpty(eventItem.OnlineMeetingUrl) ?
+                    GetOnlineMeetingInfo(eventItem.OnlineMeetingUrl, eventItem.OnlineMeetingTollNumber, eventItem.OnlineMeetingConferenceId) :
+                    eventItem.ContentPreview,
             };
 
             var cardName = GetDivergedCardName(dc.Context, SummaryResponses.MeetingDetailCard);
@@ -2400,6 +2402,22 @@ namespace CalendarSkill.Dialogs
             {
                 return card;
             }
+        }
+
+        private string GetOnlineMeetingInfo(string link, string tollNumber, string conferenceId)
+        {
+            string info = "## [Join Microsoft Teams Meeting](" + link + ")";
+            if (!string.IsNullOrEmpty(tollNumber))
+            {
+                info += "\r\n### [" + tollNumber + "](" + "tel:" + HttpUtility.UrlEncode(tollNumber) + ")";
+            }
+
+            if (!string.IsNullOrEmpty(conferenceId))
+            {
+                info += "\r\nConference ID: " + conferenceId + "#";
+            }
+
+            return info;
         }
 
         private List<EventModel> GetCurrentPageMeetings(CalendarSkillState state)
