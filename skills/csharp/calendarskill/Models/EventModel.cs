@@ -714,14 +714,87 @@ namespace CalendarSkill.Models
                 switch (source)
                 {
                     case EventSource.Microsoft:
-                        if (msftEventData.OnlineMeetingUrl == string.Empty)
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.JoinUrl))
                         {
                             return null;
                         }
 
-                        return msftEventData.OnlineMeetingUrl;
+                        return msftEventData.OnlineMeeting.JoinUrl;
                     case EventSource.Google:
                         return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public string OnlineMeetingTollNumber
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.TollNumber))
+                        {
+                            return null;
+                        }
+
+                        return msftEventData.OnlineMeeting.TollNumber;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public string OnlineMeetingConferenceId
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.ConferenceId))
+                        {
+                            return null;
+                        }
+
+                        return msftEventData.OnlineMeeting.ConferenceId;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public bool? IsOnlineMeeting
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        return msftEventData.IsOnlineMeeting;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+
+            set
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        msftEventData.IsOnlineMeeting = value;
+                        break;
+                    case EventSource.Google:
+                        // todo check google ones
+                        break;
                     default:
                         throw new Exception("Event Type not Defined");
                 }
