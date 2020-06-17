@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "GetScheduleDialog.en-us.lu",
+        "": "GetScheduleDialog.en-us.lu"
+    }
+}

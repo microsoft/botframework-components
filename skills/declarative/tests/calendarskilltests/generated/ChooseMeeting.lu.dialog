@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "ChooseMeeting.en-us.lu",
+        "": "ChooseMeeting.en-us.lu"
+    }
+}
