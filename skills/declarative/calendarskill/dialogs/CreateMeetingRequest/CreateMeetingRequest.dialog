@@ -69,7 +69,7 @@
           "timeZoneProperty": "UTC",
           "locationProperty": "=dialog.location",
           "attendeesProperty": "=union(dialog.attendeeEmailList, coalesce(dialog.rooms, []))",
-          "isOnlineMeetingProperty": "=false"
+          "isOnlineMeetingProperty": "=true"
         },
         {
           "$kind": "Microsoft.SetProperties",

@@ -72,7 +72,8 @@
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
                 "id": "MgVZrj"
-              }
+              },
+              "name": "getContactInGetPhoto"
             },
             {
               "$kind": "Microsoft.SetProperty",

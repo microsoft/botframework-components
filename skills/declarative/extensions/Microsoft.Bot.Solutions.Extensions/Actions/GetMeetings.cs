@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
@@ -82,7 +83,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     Location = item.Location?.DisplayName,
                     Content = item.BodyPreview,
                     OnlineMeetingUrl = item.OnlineMeeting?.JoinUrl,
-                    OnlineMeetingNumber = item.OnlineMeeting?.TollNumber,
+                    OnlineMeetingCardInfo = item.OnlineMeeting?.JoinUrl != null ? GetOnlineMeetingInfo(item.OnlineMeeting?.JoinUrl, item.OnlineMeeting?.TollNumber, item.OnlineMeeting?.ConferenceId) : null,
                     ID = item.Id,
                     Attendees = item.Attendees.ToList()
                 };
@@ -119,6 +120,22 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+        }
+
+        private string GetOnlineMeetingInfo(string link, string tollNumber, string conferenceId)
+        {
+            string info = "## [Join Microsoft Teams Meeting](" + link + ")";
+            if (!string.IsNullOrEmpty(tollNumber))
+            {
+                info += "\r\n### [" + tollNumber + "](" + "tel:" + HttpUtility.UrlEncode(tollNumber) + ")";
+            }
+
+            if (!string.IsNullOrEmpty(conferenceId))
+            {
+                info += "\r\nConference ID: " + conferenceId + "#";
+            }
+
+            return info;
         }
     }
 }
