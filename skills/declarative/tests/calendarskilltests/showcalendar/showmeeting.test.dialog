@@ -52,8 +52,10 @@
       ]
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "Do you want to review your calendar overview again for 2020-06-16? You can also ask me to update or decline this event for you. (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "text == concat('Do you want to review your calendar overview again for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '? You can also ask me to update or decline this event for you. (1) Yes or (2) No')"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
