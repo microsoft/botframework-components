@@ -25,7 +25,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Model
 
         public string OnlineMeetingUrl { get; set; }
 
-        public string OnlineMeetingCardInfo { get; set; }     
+        public string OnlineMeetingNumber { get; set; }
+
+        public string OnlineMeetingCardInfo { get; set; }
 
         public string ID { get; set; }
 

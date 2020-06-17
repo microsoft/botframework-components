@@ -83,6 +83,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     Location = item.Location?.DisplayName,
                     Content = item.BodyPreview,
                     OnlineMeetingUrl = item.OnlineMeeting?.JoinUrl,
+                    OnlineMeetingNumber = item.OnlineMeeting?.TollNumber,
                     OnlineMeetingCardInfo = item.OnlineMeeting?.JoinUrl != null ? GetOnlineMeetingInfo(item.OnlineMeeting?.JoinUrl, item.OnlineMeeting?.TollNumber, item.OnlineMeeting?.ConferenceId) : null,
                     ID = item.Id,
                     Attendees = item.Attendees.ToList()
