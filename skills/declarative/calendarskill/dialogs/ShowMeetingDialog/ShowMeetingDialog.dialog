@@ -456,12 +456,6 @@
           "itemsProperty": "conversation.FocusedMeeting.Attendees",
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "UHf8D3"
-              }
-            },
-            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "Vibwii"
@@ -483,6 +477,13 @@
               "changeType": "push",
               "itemsProperty": "dialog.attendeesPhoto",
               "value": "= dialog.userPhotoResult.photo"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "ZIrRFO"
+              },
+              "name": "GetPhoto"
             }
           ]
         },
