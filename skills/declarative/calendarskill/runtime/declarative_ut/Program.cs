@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using DeclarativeTestLibrary;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Solutions.Extensions;
-using DeclarativeTestLibrary;
 
 namespace DeclarativeUT
 {
