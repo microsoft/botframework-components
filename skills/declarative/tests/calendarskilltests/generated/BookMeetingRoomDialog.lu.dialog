@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "BookMeetingRoomDialog.en-us.lu",
+        "": "BookMeetingRoomDialog.en-us.lu"
+    }
+}

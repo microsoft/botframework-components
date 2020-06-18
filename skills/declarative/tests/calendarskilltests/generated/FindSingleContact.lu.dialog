@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "FindSingleContact.en-us.lu",
+        "": "FindSingleContact.en-us.lu"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "SetTitle.en-us.lu",
+        "": "SetTitle.en-us.lu"
+    }
+}

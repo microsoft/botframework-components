@@ -9,5 +9,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Model
         public string Name { get; set; }
 
         public List<string> EmailAddresses { get; set; }
+
+        public string Id { get; set; }
     }
 }

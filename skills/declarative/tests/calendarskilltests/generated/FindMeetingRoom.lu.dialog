@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "FindMeetingRoom.en-us.lu",
+        "": "FindMeetingRoom.en-us.lu"
+    }
+}

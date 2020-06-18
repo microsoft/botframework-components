@@ -1,11 +1,13 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing.Mocks;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -40,7 +42,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
-            _graphClient = GraphClient.GetAuthenticatedClient(token);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            _graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
 
             Stream originalPhoto = null;
             string photoUrl = string.Empty;
@@ -56,7 +59,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     }
                 }
             }
-            catch (ServiceException)
+            catch (ServiceException ex)
             {
                 photoUrl = null;
             }

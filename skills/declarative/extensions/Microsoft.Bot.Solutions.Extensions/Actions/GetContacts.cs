@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing.Mocks;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Bot.Solutions.Extensions.Model;
 using Microsoft.Graph;
@@ -40,7 +42,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var name = this.NameProperty.GetValue(dcState);
             var token = this.Token.GetValue(dcState);
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
             var results = new List<CalendarSkillUserModel>();
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
@@ -76,7 +79,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     contactsResult.Add(new CalendarSkillUserModel
                     {
                         Name = contact.DisplayName,
-                        EmailAddresses = emailAddresses
+                        EmailAddresses = emailAddresses,
+                        Id = contact.Id
                     });
                 }
             }
@@ -124,7 +128,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                         results.Add(new CalendarSkillUserModel
                         {
                             Name = person.DisplayName,
-                            EmailAddresses = emailAddresses
+                            EmailAddresses = emailAddresses,
+                            Id = person.Id
                         });
                     }
                 }
