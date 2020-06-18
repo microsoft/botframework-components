@@ -860,7 +860,7 @@
 - IF: ${time == null}
   - ${startOfDay(date)}
 - ELSE:
-  - ${formatDateTime((ticks(startOfDay(formatDateTime(date)))+(ticks(formatDateTime(time))-ticks(startOfDay(formatDateTime(time))))-621355968000000000)/10000000)}
+  - ${formatTicks(ticks(startOfDay(formatDateTime(date)))+(ticks(formatDateTime(time))-ticks(startOfDay(formatDateTime(time)))))}
 
 # CalendarErrorMessage()
 - Sorry, it looks like something happened and I can't complete that right now. Please try again later.
