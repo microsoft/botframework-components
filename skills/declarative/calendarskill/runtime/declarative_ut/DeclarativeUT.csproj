@@ -11,10 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\extensions\Microsoft.Bot.Solutions.Extensions\Microsoft.Bot.Solutions.Extensions.csproj" />
-    <ProjectReference Include="..\..\..\sdk\libraries\Microsoft.Bot.Builder.Dialogs.Adaptive.Testing\Microsoft.Bot.Builder.Dialogs.Adaptive.Testing.csproj" />
-    <ProjectReference Include="..\..\..\sdk\libraries\Microsoft.Bot.Builder.Dialogs.Adaptive\Microsoft.Bot.Builder.Dialogs.Adaptive.csproj" />
-    <ProjectReference Include="..\..\..\sdk\libraries\Microsoft.Bot.Builder.Dialogs.Declarative\Microsoft.Bot.Builder.Dialogs.Declarative.csproj" />
-    <ProjectReference Include="..\..\..\sdk\libraries\Microsoft.Bot.Builder.Dialogs\Microsoft.Bot.Builder.Dialogs.csproj" />
+    <ProjectReference Include="..\..\..\sdk\DeclarativeTestLibrary\DeclarativeTestLibrary.csproj" />
   </ItemGroup>
 
 </Project>

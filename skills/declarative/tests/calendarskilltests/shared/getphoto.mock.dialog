@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "Method": "",
-  "Url": "https://graph.microsoft.com/v1.0/users/*/photo/*",
+  "Url": "https://graph.microsoft.com/v1.0/users/*/photo*",
   "Responses": [
     {
       "contentType": "ByteArray",

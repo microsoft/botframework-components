@@ -46,7 +46,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var startTime = StartTime.GetValue(dcState);
             var endTime = EndTime.GetValue(dcState);
 
-            dc.Context.TurnState.TryGetValue(MockHttpRequestMiddleware.HttpMessageHandlerKey, out var httpHandler);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
 
             var graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
 

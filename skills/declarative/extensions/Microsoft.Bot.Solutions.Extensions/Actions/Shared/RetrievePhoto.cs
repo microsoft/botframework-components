@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         {
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
-            dc.Context.TurnState.TryGetValue(MockHttpRequestMiddleware.HttpMessageHandlerKey, out var httpHandler);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
             _graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
 
             Stream originalPhoto = null;
@@ -59,7 +59,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                     }
                 }
             }
-            catch (ServiceException)
+            catch (ServiceException ex)
             {
                 photoUrl = null;
             }

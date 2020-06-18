@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var name = this.NameProperty.GetValue(dcState);
             var token = this.Token.GetValue(dcState);
 
-            dc.Context.TurnState.TryGetValue(MockHttpRequestMiddleware.HttpMessageHandlerKey, out var httpHandler);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
             var graphClient = GraphClient.GetAuthenticatedClient(token, (HttpMessageHandler)httpHandler);
             var results = new List<CalendarSkillUserModel>();
             var optionList = new List<QueryOption>();
