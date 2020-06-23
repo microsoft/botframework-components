@@ -105,7 +105,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketResource);
+                var request = ServiceNowHelper.CreateRequest(TicketResource, token);
                 var body = new CreateTicketRequest()
                 {
                     caller_id = userId,
@@ -136,7 +136,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketResource);
+                var request = ServiceNowHelper.CreateRequest(TicketResource, token);
 
                 var sysparmQuery = await CreateTicketSearchQuery(query: query, urgencies: urgencies, id: id, states: states, number: number);
 
@@ -167,7 +167,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketCount);
+                var request = ServiceNowHelper.CreateRequest(TicketCount, token);
 
                 var sysparmQuery = await CreateTicketSearchQuery(query: query, urgencies: urgencies, id: id, states: states, number: number);
 
@@ -194,7 +194,7 @@ namespace ITSMSkill.Services.ServiceNow
 
         public async Task<TicketsResult> UpdateTicket(string id, string title = null, string description = null, UrgencyLevel urgency = UrgencyLevel.None)
         {
-            var request = CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true");
+            var request = ServiceNowHelper.CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true", token);
             var body = new CreateTicketRequest()
             {
                 short_description = title,
@@ -228,7 +228,7 @@ namespace ITSMSkill.Services.ServiceNow
             try
             {
                 // minimum field required: https://community.servicenow.com/community?id=community_question&sys_id=84ceb6a5db58dbc01dcaf3231f9619e9
-                var request = CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true");
+                var request = ServiceNowHelper.CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true", token);
                 var body = new
                 {
                     close_code = "Closed/Resolved by Caller",
@@ -261,7 +261,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(KnowledgeResource);
+                var request = ServiceNowHelper.CreateRequest(KnowledgeResource, token);
 
                 var sysparmQuery = await CreateKnowledgeSearchQuery(query: query);
 
@@ -292,7 +292,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(KnowledgeCount);
+                var request = ServiceNowHelper.CreateRequest(KnowledgeCount, token);
 
                 var sysparmQuery = await CreateKnowledgeSearchQuery(query: query);
 
@@ -367,7 +367,7 @@ namespace ITSMSkill.Services.ServiceNow
 
         private async Task<string> GetUserId()
         {
-            var request = CreateRequest(getUserIdResource);
+            var request = ServiceNowHelper.CreateRequest(getUserIdResource, token);
             var userId = await client.GetAsync<GetUserIdResponse>(request);
             if (userId == null || string.IsNullOrEmpty(userId.result))
             {
@@ -435,14 +435,14 @@ namespace ITSMSkill.Services.ServiceNow
             return knowledge;
         }
 
-        private RestRequest CreateRequest(string resource)
-        {
-            var request = new RestRequest(resource);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", $"Bearer {token}");
-            return request;
-        }
+        //private RestRequest CreateRequest(string resource)
+        //{
+        //    var request = new RestRequest(resource);
+        //    request.AddHeader("Accept", "application/json");
+        //    request.AddHeader("Content-Type", "application/json");
+        //    request.AddHeader("Authorization", $"Bearer {token}");
+        //    return request;
+        //}
 
         private class JsonNoNull : ISerializer
         {

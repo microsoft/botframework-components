@@ -15,6 +15,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 {
@@ -64,8 +65,36 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             };
         }
 
-        public Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
+        public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
+            var state = await _stateAccessor.GetAsync(context, () => new SkillState());
+
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                context,
+                () => new ActivityReferenceMap(),
+                cancellationToken)
+            .ConfigureAwait(false);
+
+            var activityValueObject = JObject.FromObject(context.Activity.Value);
+
+            var isDataObject = activityValueObject.TryGetValue("data", StringComparison.InvariantCultureIgnoreCase, out JToken dataValue);
+            JObject dataObject = null;
+            if (isDataObject)
+            {
+                dataObject = dataValue as JObject;
+
+                // Get Title
+                var filterUrgency = dataObject.GetValue("UrgencyFilter");
+
+                // Get Title
+                var filterName = dataObject.GetValue("FilterName");
+                
+
+                // Create Managemenet object
+                var management = _serviceManager.CreateManagement(_settings, state.AccessTokenResponse, state.ServiceCache);
+
+            }
+
             throw new NotImplementedException();
         }
     }

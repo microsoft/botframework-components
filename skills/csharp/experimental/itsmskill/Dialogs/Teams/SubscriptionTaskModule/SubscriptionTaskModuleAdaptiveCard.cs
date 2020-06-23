@@ -70,16 +70,30 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             {
                 Body = new List<AdaptiveElement>
                 {
-                    new AdaptiveTextBlock
+                     new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.FilterName,
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                     new AdaptiveTextInput
+                    {
+                        Id = "FilterName",
+                        Placeholder = IncidentSubscriptionStrings.FilterName,
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    },
+                     new AdaptiveTextBlock
                     {
                         Text = IncidentSubscriptionStrings.SeverityTextBlock,
                         Size = AdaptiveTextSize.Medium,
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder
                     },
-                    new AdaptiveChoiceSetInput
+                     new AdaptiveChoiceSetInput
                     {
-                        Id = "SeverityFilter",
+                        Id = "UrgencyFilter",
                         Style = AdaptiveChoiceInputStyle.Compact,
                         IsMultiSelect = true,
                         Value = "UrgencyFilter",

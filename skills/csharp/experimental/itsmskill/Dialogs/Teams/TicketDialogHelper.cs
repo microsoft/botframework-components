@@ -65,6 +65,7 @@ namespace ITSMSkill.Dialogs.Teams
                                         {
                                             new AdaptiveTextBlock
                                             {
+                                                // Get Title
                                                 Text = $"Title: {details.Title}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
@@ -72,7 +73,7 @@ namespace ITSMSkill.Dialogs.Teams
                                             },
                                             new AdaptiveTextBlock
                                             {
-                                                // Incase of IcmForwarder, Triggers do not have incidentUrl hence being explicit here
+                                                // Get Urgency
                                                 Text = $"Urgency: {details.Urgency}",
                                                 Color = AdaptiveTextColor.Good,
                                                 MaxLines = 1,
@@ -81,6 +82,7 @@ namespace ITSMSkill.Dialogs.Teams
                                             },
                                             new AdaptiveTextBlock
                                             {
+                                                // Get Description
                                                 Text = $"Description: {details.Description}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,

@@ -34,7 +34,7 @@ namespace ITSMSkill.Dialogs
             {
                 GetAuthTokenAsync,
                 AfterGetAuthTokenAsync,
-                CreateSubscriptionTeamsTaskModuleAsync
+                //CreateSubscriptionTeamsTaskModuleAsync
             };
         }
 
@@ -52,7 +52,7 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected async Task<DialogTurnResult> CreateTicketTeamsTaskModuleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<DialogTurnResult> CreateSubscriptionTeamsTaskModuleAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Create Ticket TaskModule Card
             var reply = sc.Context.Activity.CreateReply();

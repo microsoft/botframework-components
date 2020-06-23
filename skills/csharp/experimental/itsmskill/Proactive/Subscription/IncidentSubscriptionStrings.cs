@@ -13,6 +13,7 @@ namespace ITSMSkill.Proactive.Subscription
             UrgencyLevel.None.ToString()
         };
 
+        public static string FilterName = "FilterName";
         public static string SeverityTextBlock = "SeverityTextBlock";
     }
 }
