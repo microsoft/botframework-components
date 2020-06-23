@@ -528,10 +528,21 @@
               "condition": "turn.RepeatOverviewConfirm",
               "actions": [
                 {
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "28rBs8"
+                  },
+                  "properties": [
+                    "conversation.FocusedMeeting",
+                    "turn.RepeatOverviewConfirm"
+                  ]
+                },
+                {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
                     "id": "0eD7Kz"
-                  }
+                  },
+                  "activityProcessed": true
                 }
               ]
             }

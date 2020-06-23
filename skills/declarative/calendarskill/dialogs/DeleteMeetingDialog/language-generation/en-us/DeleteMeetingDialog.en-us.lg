@@ -12,7 +12,7 @@
 
 
 # TextInput_Prompt_Fm38sQ()
-- Are you confirmed to cancel the meeting \"${dialog.meeting.Title}\"
+- Are you confirmed to cancel the meeting "${dialog.meeting.Title}"
 
 # SendActivity_qFefqJ()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
@@ -25,6 +25,6 @@
 # SendActivity_86KqPI()
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 # SendActivity_Nqbvyc()
-- Deleted meeting \"${dialog.meeting.Title}\"
+- Deleted meeting "${dialog.meeting.Title}"
 # SendActivity_zvacDp()
 - ${CalendarErrorMessage()}
