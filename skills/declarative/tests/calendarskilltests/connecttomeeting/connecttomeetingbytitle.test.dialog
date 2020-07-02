@@ -8,11 +8,7 @@
     "usertoken.mock"
   ],
   "httpRequestMocks": [
-    "getmultiplemeetings.mock",
-    "getcontacts.mock",
-    "getpeople.mock",
-    "getphoto.mock",
-    "getme.mock"
+    "getmeetings.mock",
   ],
   "dialog": "calendarskill",
   "script": [
@@ -30,7 +26,17 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "show my meetings"
+      "text": "connect to my meeting"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What is the time or subject of the meeting?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -43,19 +49,24 @@
       "text": "000000"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyActivity",
-      "assertions": [
-        "text == concat('You have 4 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
-        "count(attachments) == 1"
-      ]
-    },
-    {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees. (1) Yes or (2) No"
+      "text": "Here's the number I'm about to call: 123456. Please be aware that charges may apply. Do you want to continue? (1) Yes or (2) No"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "no"
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OK, I'll call into the meeting."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'event'",
+        "value.MeetingUri == 'testurl'",
+        "value.TelephoneUri == '123456'"
+      ]
     }
   ]
 }

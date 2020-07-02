@@ -45,7 +45,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
       "assertions": [
-        "text == concat('You have 2 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
+        "text == concat('You have 4 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
         "count(attachments) == 1"
       ]
     },

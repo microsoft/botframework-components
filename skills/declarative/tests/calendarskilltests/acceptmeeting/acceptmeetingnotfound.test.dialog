@@ -8,11 +8,8 @@
     "usertoken.mock"
   ],
   "httpRequestMocks": [
-    "getmultiplemeetings.mock",
-    "getcontacts.mock",
-    "getpeople.mock",
-    "getphoto.mock",
-    "getme.mock"
+    "getmeetings.mock",
+    "acceptmeeting.mock"
   ],
   "dialog": "calendarskill",
   "script": [
@@ -30,7 +27,17 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "show my meetings"
+      "text": "accept my meeting"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What is the time or subject of the meeting?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test1"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -43,19 +50,32 @@
       "text": "000000"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyActivity",
-      "assertions": [
-        "text == concat('You have 4 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
-        "count(attachments) == 1"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I didn't find any meeting. Let's try again."
       ]
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees. (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What is the time or subject of the meeting?"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "no"
+      "text": "test"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Are you confirmed to accept the meeting \"test subject\" (1) Yes or (2) No"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Accepted meeting \"test subject\""
     }
   ]
 }

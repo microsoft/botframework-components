@@ -8,11 +8,8 @@
     "usertoken.mock"
   ],
   "httpRequestMocks": [
-    "getmultiplemeetings.mock",
-    "getcontacts.mock",
-    "getpeople.mock",
-    "getphoto.mock",
-    "getme.mock"
+    "getmultiplemeetingsnotorgnizer.mock",
+    "cancelmeeting.mock"
   ],
   "dialog": "calendarskill",
   "script": [
@@ -30,7 +27,17 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "show my meetings"
+      "text": "cancel my meeting"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What is the time or subject of the meeting?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2pm"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
@@ -45,17 +52,25 @@
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
       "assertions": [
-        "text == concat('You have 4 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
+        "text == 'I found more than one event that might match. Please select the one you want. (1) test subject or (2) test subject'",
         "count(attachments) == 1"
       ]
     },
     {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees. (1) Yes or (2) No"
+      "text": "Are you confirmed to cancel the meeting \"test subject\" (1) Yes or (2) No"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "no"
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Deleted meeting \"test subject\""
     }
   ]
 }

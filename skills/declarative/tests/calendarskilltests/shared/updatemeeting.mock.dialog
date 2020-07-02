@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
-  "Method": "GET",
-  "Url": "https://graph.microsoft.com/v1.0/me/calendarView*",
+  "Method": "PATCH",
+  "Url": "https://graph.microsoft.com/v1.0/me/events/*",
   "Responses": [
     {
       "Content": {
@@ -91,12 +91,7 @@
             },
             "subject": "test subject",
             "type": "occurrence",
-            "webLink": "test link",
-            "onlineMeeting": {
-              "joinUrl": "testurl",
-              "tollNumber": "123456",
-              "conferenceId": "123456"
-            }
+            "webLink": "test link"
           }
         ]
       }

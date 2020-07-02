@@ -45,7 +45,7 @@
             "isAllDay": false,
             "isCancelled": false,
             "isOnlineMeeting": false,
-            "isOrganizer": true,
+            "isOrganizer": false,
             "isReminderOn": false,
             "lastModifiedDateTime": "2020-05-20T08:27:40.8898817Z",
             "location": {
@@ -79,7 +79,7 @@
             "responseRequested": true,
             "responseStatus": {
               "@odata.type": "microsoft.graph.responseStatus",
-              "response": "organizer",
+              "response": "accepted",
               "time": "0001-01-01T00:00:00Z"
             },
             "sensitivity": "normal",
@@ -91,12 +91,7 @@
             },
             "subject": "test subject",
             "type": "occurrence",
-            "webLink": "test link",
-            "onlineMeeting": {
-              "joinUrl": "testurl",
-              "tollNumber": "123456",
-              "conferenceId": "123456"
-            }
+            "webLink": "test link"
           }
         ]
       }
