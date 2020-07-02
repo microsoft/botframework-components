@@ -14,6 +14,8 @@ namespace ITSMSkill.Proactive.Subscription
         };
 
         public static string FilterName = "FilterName";
+        public static string NotificationNameSpace = "NotificationNameSpace";
+        public static string PostNotificationAPIName = "PostNotificationAPIName";
         public static string SeverityTextBlock = "SeverityTextBlock";
     }
 }

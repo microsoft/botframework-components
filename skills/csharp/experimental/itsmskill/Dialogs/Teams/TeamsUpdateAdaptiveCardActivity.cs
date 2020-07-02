@@ -58,7 +58,7 @@ namespace ITSMSkill.Dialogs.Teams
                 activityReference.ThreadId,
                 activityReference.ActivityId,
                 teamsChannelActivity,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             return response;
         }

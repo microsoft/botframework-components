@@ -63,7 +63,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             return card;
         }
 
-        public static AdaptiveCard GetSubscriptionAdaptiveCard()
+        public static AdaptiveCard GetSubscriptionAdaptiveCard(string botId)
         {
             int sevInd = 0;
             var card = new AdaptiveCard("1.0")
@@ -81,6 +81,20 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     {
                         Id = "FilterName",
                         Placeholder = IncidentSubscriptionStrings.FilterName,
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    },
+                     new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.PostNotificationAPIName,
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                     new AdaptiveTextInput
+                    {
+                        Id = "PostNotificationAPIName",
+                        Placeholder = IncidentSubscriptionStrings.PostNotificationAPIName,
                         Spacing = AdaptiveSpacing.Small,
                         IsMultiline = true
                     },
@@ -108,17 +122,83 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     {
                         new AdaptiveSubmitAction
                         {
-                            Title = "Submit"
-                        },
-                        new AdaptiveSubmitAction
-                        {
-                            Title = "Cancel",
-                            Data = new SubscriptionFormInputData
+                            Title = "Submit",
+                            Data = new AdaptiveCardValue<TaskModuleMetadata>()
                             {
-                                Action = SubscriptionFormInputData.Action_Cancel
+                                Data = new TaskModuleMetadata()
+                                {
+                                    SkillId = botId,
+                                    TaskModuleFlowType = TeamsFlowType.CreateSubscription_Form.ToString(),
+                                    Submit = true
+                                }
                             }
                         }
+                        //},
+                        //new AdaptiveSubmitAction
+                        //{
+                        //    Title = "Cancel",
+                        //    Data = new SubscriptionFormInputData
+                        //    {
+                        //        Action = SubscriptionFormInputData.Action_Cancel
+                        //    }
+                        //}
                     }
+            };
+
+            return card;
+        }
+
+        /// <returns>Adaptive Card.</returns>
+        public static AdaptiveCard SubscriptionResponseCard(string response)
+        {
+            var card = new AdaptiveCard("1.0");
+            card.Id = "ResponseCard";
+
+            var columns = new List<AdaptiveColumn>
+            {
+                new AdaptiveColumn
+                {
+                    VerticalContentAlignment = AdaptiveVerticalContentAlignment.Center,
+                    Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveTextBlock
+                            {
+                                Text = response,
+                                Size = AdaptiveTextSize.Small,
+                                Weight = AdaptiveTextWeight.Bolder,
+                                Color = AdaptiveTextColor.Accent,
+                                Wrap = true
+                            }
+                        }
+                }
+            };
+
+            return card;
+        }
+
+        /// <returns>Adaptive Card.</returns>
+        public static AdaptiveCard ThankYouForSubscribing(string response)
+        {
+            var card = new AdaptiveCard("1.0");
+            card.Id = "ThankYouCard";
+
+            var columns = new List<AdaptiveColumn>
+            {
+                new AdaptiveColumn
+                {
+                    VerticalContentAlignment = AdaptiveVerticalContentAlignment.Center,
+                    Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveTextBlock
+                            {
+                                Text = response,
+                                Size = AdaptiveTextSize.Small,
+                                Weight = AdaptiveTextWeight.Bolder,
+                                Color = AdaptiveTextColor.Accent,
+                                Wrap = true
+                            }
+                        }
+                }
             };
 
             return card;

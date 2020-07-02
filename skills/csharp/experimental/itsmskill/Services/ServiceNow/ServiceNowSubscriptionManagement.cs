@@ -1,15 +1,18 @@
-﻿using ITSMSkill.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading.Tasks;
+using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ITSMSkill.Services.ServiceNow
 {
     public class ServiceNowSubscriptionManagement : IServiceNowSubscription
     {
+        private const string TestNameSpace = "Test";
+        private const string TestAPIName = "TestApiName";
         private static readonly string Provider = "ServiceNow";
         private static readonly string BusinessRuleAPI = "api/now/table/sys_script";
         private readonly string token;
@@ -25,21 +28,20 @@ namespace ITSMSkill.Services.ServiceNow
             this.businessRuleUrl = $"{url}/api/now/table/sys_script";
         }
 
-        public async Task CreateSubscriptionBusinessRule(string urgencyFilter, string filterName)
+        public async Task<string> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
         {
             try
             {
-                string TestNameSpace = "Test";
-                string TestAPIName = "TestApiName";
                 var request = ServiceNowHelper.CreateRequest(this.businessRuleUrl, "Bearer " + token);
                 var strBody = "{";
                 strBody += "'Id': current.number.toString() , "; 
                 strBody += "'Title': current.short_description.toString(), ";
                 strBody += "};";
 
+                // Execute Rule function
                 var function = "(function executeRule(current, previous \\/*null when async*\\/) " +
                     "{ var strBody =" + strBody + "var request = new sn_ws.RESTMessageV2("
-                    + TestNameSpace + "," + TestAPIName + "); request.setRequestBody(JSON.stringify()); " +
+                    + notificationNameSpace ?? TestNameSpace + "," + postNotificationAPIName ?? TestAPIName + "); request.setRequestBody(JSON.stringify()); " +
                     "var response = request.execute(); var responseBody = response.getBody(); " +
                     "var httpStatus = response.getStatusCode();})(current, previous);".Replace(@"\", string.Empty);
 
@@ -52,7 +54,11 @@ namespace ITSMSkill.Services.ServiceNow
 
                 // Send Request to ServiceNow
                 request.AddJsonBody(body);
+
+                // Post BusinessRule
                 var result = await client.PostAsync<object>(request);
+
+                return result as string ?? null;
             }
             catch (Exception ex)
             {
@@ -73,6 +79,14 @@ namespace ITSMSkill.Services.ServiceNow
         public Task RemoveSubscriptionRestMessage(string messageName)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<string> GetCreatedFilterId(string filterName, string token)
+        {
+            var request = ServiceNowHelper.CreateRequest(this.businessRuleUrl + $"?sysparm_query=name%3D{filterName}&sysparm_limit=1", "Bearer " + token);
+            var response = await client.GetAsync<object>(request);
+
+            return response as string;
         }
     }
 }

@@ -19,5 +19,17 @@ namespace ITSMSkill.Services
                 return null;
             }
         }
+
+        IServiceNowSubscription IServiceManager.CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache)
+        {
+            if (tokenResponse.ConnectionName == "ServiceNow" && !string.IsNullOrEmpty(botSettings.ServiceNowUrl) && !string.IsNullOrEmpty(botSettings.ServiceNowGetUserId))
+            {
+                return new ServiceNow.ServiceNowSubscriptionManagement(botSettings.ServiceNowUrl, tokenResponse.Token, botSettings.LimitSize, botSettings.ServiceNowGetUserId, serviceCache);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

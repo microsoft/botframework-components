@@ -22,20 +22,21 @@ namespace ITSMSkill.Dialogs
 
         public CreateSubscriptionDialog(
              IServiceProvider serviceProvider)
-            : base(nameof(CreateTicketDialog), serviceProvider)
+            : base(nameof(CreateSubscriptionDialog), serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _settings = serviceProvider.GetService<BotSettings>();
-
 
             // TaskModule Based WaterFallStep
             var createSubscriptionTaskModule = new WaterfallStep[]
             {
                 GetAuthTokenAsync,
                 AfterGetAuthTokenAsync,
-                //CreateSubscriptionTeamsTaskModuleAsync
+                CreateSubscriptionTeamsTaskModuleAsync
             };
+
+            AddDialog(new WaterfallDialog(Actions.CreateSubscriptionTaskModule, createSubscriptionTaskModule));
         }
 
         protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
@@ -43,7 +44,7 @@ namespace ITSMSkill.Dialogs
             // If Channel is MsTeams use Teams TaskModule
             if (dc.Context.Activity.ChannelId == Microsoft.Bot.Connector.Channels.Msteams)
             {
-                return await dc.BeginDialogAsync(Actions.CreateTicketTeamsTaskModule, options, cancellationToken);
+                return await dc.BeginDialogAsync(Actions.CreateSubscriptionTaskModule, options, cancellationToken);
             }
             else
             {

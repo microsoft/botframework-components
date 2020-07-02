@@ -7,7 +7,7 @@ namespace ITSMSkill.Services
 {
     public interface IServiceNowSubscription
     {
-        Task CreateSubscriptionBusinessRule(string urgencyFilter, string filterName);
+        Task<string> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
 
         Task RemoveSubscriptionBusinessRule(string subscriptionId);
 

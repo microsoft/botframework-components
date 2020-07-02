@@ -9,5 +9,7 @@ namespace ITSMSkill.Services
     public interface IServiceManager
     {
         IITServiceManagement CreateManagement(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null);
+
+        IServiceNowSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null);
     }
 }

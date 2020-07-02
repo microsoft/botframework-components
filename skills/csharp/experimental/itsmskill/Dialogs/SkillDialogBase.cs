@@ -1196,6 +1196,7 @@ namespace ITSMSkill.Dialogs
             public const string ShowKnowledgeLoop = "ShowKnowledgeLoop";
 
             public const string CreateTicketTeamsTaskModule = "CreateTickTeamsTaskModule";
+            public const string CreateSubscriptionTaskModule = "CreateSubscriptionTaskModule";
         }
     }
 }
