@@ -10,6 +10,6 @@
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 
 # SendActivity_umV9Wd()
-- Accepted meeting "${dialog.meeting.subject}"
+- Accepted meeting "${dialog.meeting.Title}"
 # SendActivity_niKUww()
 - ${CalendarErrorMessage()}
