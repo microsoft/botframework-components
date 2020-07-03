@@ -85,7 +85,7 @@
               "assignments": [
                 {
                   "property": "dialog.toDate",
-                  "value": "=coalesce(dialog.toDate, if(dialog.showNext, addDays(string(dialog.fromDate), 7), dialog.FromeDate))"
+                  "value": "=coalesce(dialog.toDate, if(dialog.showNext, addDays(formatDateTime(dialog.fromDate), 7), dialog.FromeDate))"
                 },
                 {
                   "property": "dialog.toTime",
