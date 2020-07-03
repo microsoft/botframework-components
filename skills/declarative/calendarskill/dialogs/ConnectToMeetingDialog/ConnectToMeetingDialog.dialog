@@ -64,7 +64,7 @@
           "$designer": {
             "id": "mW4PkQ"
           },
-          "condition": "dialog.meeting.OnlineMeeting == null",
+          "condition": "dialog.meeting.OnlineMeetingUrl == null && dialog.meeting.OnlineMeetingNumber == null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -72,6 +72,12 @@
                 "id": "o3Sci5"
               },
               "activity": "${SendActivity_o3Sci5()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "fxAGo9"
+              }
             }
           ]
         },
@@ -141,11 +147,11 @@
                 },
                 {
                   "property": "dialog.event.MeetingUri",
-                  "value": "= dialog.meeting.OnlineMeeting.joinUrl"
+                  "value": "= dialog.meeting.OnlineMeetingUrl"
                 },
                 {
                   "property": "dialog.event.TelephoneUri",
-                  "value": "= dialog.meeting.OnlineMeeting.tollNumber"
+                  "value": "= dialog.meeting.OnlineMeetingNumber"
                 }
               ]
             },
