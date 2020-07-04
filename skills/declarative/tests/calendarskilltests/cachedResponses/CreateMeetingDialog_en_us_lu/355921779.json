@@ -1,0 +1,1 @@
+{"query":"change the title to happy lunch","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.819192767}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["title"]],"Value":["happy lunch"]}], "Subject":["happy lunch"]}}}

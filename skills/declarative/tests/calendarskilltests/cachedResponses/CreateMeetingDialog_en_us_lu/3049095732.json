@@ -1,0 +1,1 @@
+{"query":"change the duration to 2 hours","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.819192767}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["duration"]],"Value":["2 hours"]}], "Duration":["2 hours"]}}}

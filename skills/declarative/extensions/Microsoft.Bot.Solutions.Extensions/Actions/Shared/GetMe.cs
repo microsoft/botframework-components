@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -34,7 +35,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token, httpHandler);
 
             User result;
 

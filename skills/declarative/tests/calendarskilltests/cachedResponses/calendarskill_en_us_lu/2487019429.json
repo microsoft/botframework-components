@@ -1,0 +1,1 @@
+{"query":"create a meeting at london","prediction":{"topIntent":"CreateCalendarEntry","intents":{"CreateCalendarEntry":{"score":0.9823206}},"entities":{"Location":["london"]}}}

@@ -1,0 +1,1 @@
+{"query":"change the title and add an attendee","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.97138375}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["title"]]},{"Operation":[["add"]],"Slot":[["person"]]}]}}}

@@ -1,0 +1,1 @@
+{"query":"test2","prediction":{"topIntent":"_Interruption","intents":{"_Interruption":{"score":0.5035589}},"entities":{"personName":["test2"]}}}

@@ -1,0 +1,46 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "POST",
+  "Url": "https://*.search.windows.net/*",
+  "Responses": [
+    {
+      "Content": {
+		    "value": [
+		    ]
+      }
+    },
+    {
+      "Content": {
+		    "value": [
+          {
+            "Id": "ef690050-f515-46bb-bb16-2023275ed505",
+            "DisplayName": "Coruscant",
+            "EmailAddress": "confrm_coruscant@VAContoso.onmicrosoft.com",
+            "Building": "London",
+            "FloorNumber": 2,
+            "@search.score": 0.0029823883,
+            "@search.highlights": null
+          },
+          {
+            "Id": "39f87aff-7238-442e-a6a3-5201881b9073",
+            "DisplayName": "Hoth",
+            "EmailAddress": "confrm_hoth@VAContoso.onmicrosoft.com",
+            "Building": "London",
+            "FloorNumber": 2,
+            "@search.score": 0.0029823883,
+            "@search.highlights": null
+          },
+          {
+            "Id": "8b501ee6-11d4-4f0b-858e-470428adca32",
+            "DisplayName": "Alderaan",
+            "EmailAddress": "confrm_alderaan@VAContoso.onmicrosoft.com",
+            "Building": "London",
+            "FloorNumber": 1,
+            "@search.score": 0.0013464284,
+            "@search.highlights": null
+          }
+		    ]
+      }
+	  }
+  ]
+}

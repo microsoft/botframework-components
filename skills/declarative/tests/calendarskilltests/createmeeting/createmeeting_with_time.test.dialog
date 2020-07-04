@@ -1,0 +1,107 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "properties": [
+    "settings.mock"
+  ],
+  "userTokens": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "getcontacts.mock",
+    "getpeople.mock",
+    "getphoto.mock",
+    "createevent.mock"
+  ],
+  "dialog": "calendarskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi, what can I do for you?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "create a meeting at 6 pm"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Sure, who will join?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, I've added test name: test@test.com."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "What's the subject of the meeting?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "lunch"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Can you provide a short description for the meeting?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "just for lunch"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "For how long?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "30 min"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Where will the event take place?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "london"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "count(attachments) == 1"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Do you want to create an event using this info? (1) Yes or (2) No"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, your meeting is confirmed."
+    },
+  ]
+}

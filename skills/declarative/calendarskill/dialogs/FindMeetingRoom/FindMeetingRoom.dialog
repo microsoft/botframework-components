@@ -69,6 +69,31 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "LiQ08s",
+            "name": "handle date content"
+          },
+          "assignments": [
+            {
+              "property": "dialog.utcStart",
+              "value": "= addHours(formatDateTime(dialog.content.startDateTime), int(user.timeOffset))"
+            },
+            {
+              "property": "dialog.utcNow",
+              "value": "= utcNow()"
+            },
+            {
+              "property": "dialog.isNow",
+              "value": "= less(ticks(dialog.utcStart), ticks(dialog.utcNow))"
+            },
+            {
+              "value": "= if(dialog.isNow, \"right now\", dialog.content.startDateTime)",
+              "property": "dialog.showTime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "AIlHXY"
           },
           "assignments": [
@@ -568,7 +593,8 @@
           "options": {
             "searchQuery": "=dialog.searchQuery"
           },
-          "resultProperty": "dialog.requestResult"
+          "resultProperty": "dialog.requestResult",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.IfCondition",

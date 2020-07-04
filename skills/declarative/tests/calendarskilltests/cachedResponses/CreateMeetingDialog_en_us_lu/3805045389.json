@@ -1,0 +1,1 @@
+{"query":"change the time to 7 pm","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.940175354}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["time"]],"Value":["7 pm"]}],"ToTime":["7 pm"]}}}

@@ -1,0 +1,71 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "POST",
+  "Url": "https://graph.microsoft.com/v1.0/me/events",
+  "Responses": [
+    {
+      "Content": {
+		"id": "AAMkADRjN2QyZmY4LTg3YmEtNGVlNS05NGQyLTliOWQ4NzdlOTFmMgBGAAAAAAAGsn6VqpUMQLKYFkrONBivBwDY7oV1-UdXQpN5g_XseT6AAAAAAAENAADY7oV1-UdXQpN5g_XseT6AAAA7yN5DAAA=",
+		"createdDateTime": "2020-06-30T08:14:06.5944511Z",
+		"lastModifiedDateTime": "2020-06-30T08:14:06.9552414Z",
+		"changeKey": "2O6Fdf1HV0KTeYPl7Hk+gAAAO782cg==",
+		"categories": [],
+		"originalStartTimeZone": "UTC",
+		"originalEndTimeZone": "UTC",
+		"iCalUId": "040000008200E00074C5B7101A82E00800000000EDD2896CB64ED6010000000000000000100000007E4E7DFF2D064C47B72C6D697F2BF234",
+		"reminderMinutesBeforeStart": 15,
+		"isReminderOn": true,
+		"hasAttachments": false,
+		"subject": "My event",
+		"bodyPreview": "",
+		"importance": "normal",
+		"sensitivity": "normal",
+		"isAllDay": false,
+		"isCancelled": false,
+		"isOrganizer": true,
+		"responseRequested": true,
+		"seriesMasterId": null,
+		"showAs": "busy",
+		"type": "singleInstance",
+		"webLink": "https://outlook.office365.com/owa/?itemid=AAMkADRjN2QyZmY4LTg3YmEtNGVlNS05NGQyLTliOWQ4NzdlOTFmMgBGAAAAAAAGsn6VqpUMQLKYFkrONBivBwDY7oV1%2FUdXQpN5g%2BXseT6AAAAAAAENAADY7oV1%2FUdXQpN5g%2BXseT6AAAA7yN5DAAA%3D&exvsurl=1&path=/calendar/item",
+		"onlineMeetingUrl": null,
+		"isOnlineMeeting": false,
+		"onlineMeetingProvider": "unknown",
+		"allowNewTimeProposals": true,
+		"recurrence": null,
+		"onlineMeeting": null,
+		"responseStatus": {
+			"response": "organizer",
+			"time": "0001-01-01T00:00:00Z"
+		},
+		"body": {
+			"contentType": "text",
+			"content": ""
+		},
+		"start": {
+			"dateTime": "2020-06-30T08:13:42.1560000",
+			"timeZone": "UTC"
+		},
+		"end": {
+			"dateTime": "2020-07-07T08:13:42.1570000",
+			"timeZone": "UTC"
+		},
+		"location": {
+			"displayName": "",
+			"locationType": "default",
+			"uniqueIdType": "unknown",
+			"address": {},
+			"coordinates": {}
+		},
+		"locations": [],
+		"attendees": [],
+		"organizer": {
+			"emailAddress": {
+				"name": "Megan Bowen",
+				"address": "MeganB@VAContoso.OnMicrosoft.com"
+			}
+		}
+      }
+	}
+  ]
+}

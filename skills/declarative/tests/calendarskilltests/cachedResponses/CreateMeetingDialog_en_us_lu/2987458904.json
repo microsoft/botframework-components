@@ -1,0 +1,1 @@
+{"query":"change the attendee","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.978441834}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["person"]]}]}}}

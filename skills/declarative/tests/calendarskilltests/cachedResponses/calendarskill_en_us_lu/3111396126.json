@@ -1,0 +1,1 @@
+{"query":"book room Coruscant","prediction":{"topIntent":"BookMeetingRoom","intents":{"BookMeetingRoom":{"score":0.9997878}},"entities":{"MeetingRoom":["Coruscant"]}}}

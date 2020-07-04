@@ -1,0 +1,1 @@
+{"query":"2","prediction":{"topIntent":"NumberInput_Response_u6i4m4","intents":{"NumberInput_Response_u6i4m4":{"score":0.3183237}},"entities":{"FloorNumber":["2"]}}}

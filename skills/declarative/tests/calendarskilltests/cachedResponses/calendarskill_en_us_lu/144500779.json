@@ -1,0 +1,1 @@
+{"query":"change the content to a happy lunch","prediction":{"topIntent":"UpdateMeeting","intents":{"UpdateMeeting":{"score":0.967824}},"entities":{"Subject":["content","lunch"]}}}

@@ -19,7 +19,8 @@
           "$designer": {
             "id": "fSeVYt"
           },
-          "dialog": "GetAuthToken"
+          "dialog": "GetAuthToken",
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",

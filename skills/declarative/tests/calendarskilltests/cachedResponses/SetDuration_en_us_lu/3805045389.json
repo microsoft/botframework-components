@@ -1,0 +1,1 @@
+{"query":"change the time to 7 pm","prediction":{"topIntent":"_Interruption","intents":{"_Interruption":{"score":1.0}},"entities":{"Subject":["time"],"ToTime":["7 pm"]}}}

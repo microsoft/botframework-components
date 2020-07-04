@@ -1,0 +1,1 @@
+{"query":"2nd floor","prediction":{"topIntent":"NumberInput_Response_u6i4m4","intents":{"NumberInput_Response_u6i4m4":{"score":0.963927567}},"entities":{"FloorNumber":["2nd floor"]}}}

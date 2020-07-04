@@ -1,0 +1,1 @@
+{"query":"check available at 3pm on 2020-07-02","prediction":{"topIntent":"CheckAvailability","intents":{"CheckAvailability":{"score":0.9321834}},"entities":{"FromTime":["3pm"],"FromDate":["2020-07-02"]}}}

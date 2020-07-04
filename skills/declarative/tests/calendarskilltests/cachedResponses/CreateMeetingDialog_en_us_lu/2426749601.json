@@ -1,0 +1,1 @@
+{"query":"change the title","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.9869036}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["title"]]}]}}}

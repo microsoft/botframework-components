@@ -1,0 +1,57 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "POST",
+  "Url": "https://graph.microsoft.com/v1.0/me/calendar/microsoft.graph.getSchedule*",
+  "Responses": [
+    {
+      "Content": {
+        "value":[
+          {
+            "scheduleId": "MeganB@VAContoso.OnMicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "000000000000000000000000000000000000",
+            "workingHours": {
+              "daysOfWeek": [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday"
+              ],
+              "startTime": "08:00:00",
+              "endTime": "17:00:00",
+              "timeZone": {
+                "name": "Pacific Standard Time",
+                "@odata.type": "microsoft.graph.timeZoneBase"
+              },
+              "@odata.type": "microsoft.graph.workingHours"
+            },
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          },
+          {
+            "scheduleId": "test@test.com",
+            "scheduleItems": [],
+            "availabilityView": "000000000000000000000000000000000000",
+            "workingHours": {
+              "daysOfWeek": [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday"
+              ],
+              "startTime": "08:00:00",
+              "endTime": "17:00:00",
+              "timeZone": {
+                "name": "Pacific Standard Time",
+                "@odata.type": "microsoft.graph.timeZoneBase"
+              },
+              "@odata.type": "microsoft.graph.workingHours"
+            },
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          }
+        ]
+      }
+	  }
+  ]
+}

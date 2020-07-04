@@ -1,0 +1,1 @@
+{"query":"book a meeting room","prediction":{"topIntent":"BookMeetingRoom","intents":{"BookMeetingRoom":{"score":0.9969094}},"entities":{}}}

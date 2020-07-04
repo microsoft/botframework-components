@@ -28,10 +28,10 @@
 - ${CannotFindOtherMeetingRoom(dialog.content.building, dialog.content.floorNumber, dialog.content.startDateTime)}
 
 # activity_vT5X0P()
-- ${MeetingRoomUnavailable(dialog.content.meetingRoomName, dialog.content.building, dialog.content.floorNumber, dialog.content.startDateTime)}
+- ${MeetingRoomUnavailable(dialog.content.meetingRoomName, dialog.content.building, dialog.content.floorNumber, dialog.showTime)}
 
 # prompt_bdQgmW()
-- ${ConfirmMeetingRoomPrompt(dialog.choosenRoom.DisplayName, dialog.content.startDateTime)}
+- ${ConfirmMeetingRoomPrompt(dialog.choosenRoom.DisplayName, dialog.showTime)}
 
 # NumberInput_InvalidPrompt_u6i4m4()
 - ${FloorNumberRetry()}
@@ -63,9 +63,9 @@
 
 # MeetingRoomUnavailable(MeetingRoom, Building, FloorNumber, DateTime)
 - IF: ${MeetingRoom}
-    - MeetingRoomUnavailableByName(${MeetingRoom}, ${DateTime})
+    - ${MeetingRoomUnavailableByName(MeetingRoom, DateTime)}
 - ELSE: 
-    - MeetingRoomUnavailableByBuildingAndFloor(${Building}, ${FloorNumber}, ${DateTime})
+    - ${MeetingRoomUnavailableByBuildingAndFloor(Building, FloorNumber, DateTime)}
 
 # MeetingRoomUnavailableByName(MeetingRoom, DateTime)
 - It looks like ${MeetingRoom} is unavailable ${DateTime}.

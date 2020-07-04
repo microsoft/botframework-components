@@ -1,0 +1,1 @@
+{"query":"book a meeting room on building london","prediction":{"topIntent":"BookMeetingRoom","intents":{"BookMeetingRoom":{"score":0.9769687}},"entities":{"Building":["london"]}}}

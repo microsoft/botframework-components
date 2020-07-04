@@ -1,0 +1,1 @@
+{"query":"book a meeting room on building london floor 2","prediction":{"topIntent":"BookMeetingRoom","intents":{"BookMeetingRoom":{"score":0.9620161}},"entities":{"Building":["london"],"FloorNumber":["floor 2"],"number":[2]}}}
