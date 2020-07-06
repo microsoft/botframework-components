@@ -190,7 +190,7 @@
           "assignments": [
             {
               "property": "dialog.content.startDateTime",
-              "value": "= addSeconds(formatDateTime(dialog.content.startDateTime), 300 - div(mod(ticks(formatDateTime(dialog.content.startDateTime)), int(3000000000)), int(10000000)))"
+              "value": "= addSeconds(formatDateTime(dialog.content.startDateTime), mod(-div(ticks(formatDateTime(dialog.content.startDateTime)), int(10000000)), 300))"
             },
             {
               "property": "dialog.maxEndDateTime",
@@ -480,7 +480,9 @@
           "defaultLocale": "en-us",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.confirm",
           "prompt": "${ConfirmInput_Prompt_YORfYD()}"

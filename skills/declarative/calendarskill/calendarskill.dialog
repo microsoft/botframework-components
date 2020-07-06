@@ -94,20 +94,6 @@
       "condition": "#CreateCalendarEntry.score > 0.6",
       "actions": [
         {
-          "$kind": "Microsoft.OAuthInput",
-          "$designer": {
-            "id": "1aAUX2"
-          },
-          "timeout": 900000,
-          "maxTurnCount": 3,
-          "allowInterruptions": true,
-          "connectionName": "=settings.ConnectionName",
-          "text": "Please sign in",
-          "title": "Login",
-          "property": "user.token",
-          "alwaysPrompt": "false"
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "r1nv95"
