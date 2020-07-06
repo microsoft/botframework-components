@@ -131,8 +131,10 @@
       "text": "2"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "Coruscant is available right now, do you want to reserve it? (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "indexOf(text, '6:00:00 PM') >= 0"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
