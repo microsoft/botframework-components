@@ -54,15 +54,41 @@
           "condition": "dialog.slots.FromTime == null && dialog.slots.FromDate == null &&  dialog.slots.Subject == null",
           "actions": [
             {
-              "$kind": "Microsoft.TextInput",
+              "$kind": "Microsoft.DateTimeInput",
               "$designer": {
-                "id": "HSMvMH"
+                "id": "T8wr8v"
               },
-              "maxTurnCount": 3,
+              "disabled": false,
+              "maxTurnCount": 1,
               "alwaysPrompt": false,
-              "prompt": "${TextInput_Prompt_HSMvMH()}",
               "allowInterruptions": false,
-              "property": "dialog.meetingKeyword"
+              "prompt": "${DateTimeInput_Prompt_T8wr8v()}",
+              "property": "dialog.startDateTime",
+              "outputFormat": "= this.value[0].Value"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "zQnUhC"
+              },
+              "condition": "dialog.startDateTime == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "pR7Rm4"
+                  },
+                  "property": "dialog.meetingKeyword",
+                  "value": "= turn.activity.text"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "dAkmHN"
+              },
+              "name": "after ask time/subject"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -95,7 +121,7 @@
           "$designer": {
             "id": "5PNI4E"
           },
-          "condition": "dialog.slots.FromDate != null || dialog.slots.FromTime != null",
+          "condition": "dialog.startDateTime == null && (dialog.slots.FromDate != null || dialog.slots.FromTime != null)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -178,6 +204,29 @@
             }
           ],
           "disabled": false
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HHkBlT"
+          },
+          "condition": "dialog.meetings == null || count(dialog.meetings) == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "WHOJHp"
+              },
+              "activity": "${SendActivity_WHOJHp()}"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "q5eatI"
+              },
+              "activityProcessed": true
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",

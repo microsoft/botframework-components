@@ -95,7 +95,8 @@
           "outputFormat": "= this.value",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           }
         },
         {
@@ -122,16 +123,21 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "Yr1tab"
+            "id": "nB54rr"
           },
           "eventName": "AcceptMeetingRequest"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jP3tPo"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "F4cCb3"
           },
-          "condition": "dialog.requestResult.requestStatus",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -149,7 +155,8 @@
               },
               "activity": "${SendActivity_umV9Wd()}"
             }
-          ]
+          ],
+          "condition": "=dialog.requestResult.requestStatus"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -177,7 +184,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "hE2iOi"
+            "id": "0t48Z8"
           },
           "dialog": "GetAuthToken",
           "activityProcessed": true
@@ -185,7 +192,7 @@
         {
           "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
-            "id": "aX1hIK"
+            "id": "5AlMd8"
           },
           "token": "= turn.token",
           "meetingId": "= dialog.meeting.id",
@@ -194,9 +201,13 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "UzJ7j8"
+            "id": "PDymBr"
           },
           "assignments": [
+            {
+              "property": "dialog.requestResult",
+              "value": "={}"
+            },
             {
               "property": "dialog.requestResult.requestStatus",
               "value": "= true"

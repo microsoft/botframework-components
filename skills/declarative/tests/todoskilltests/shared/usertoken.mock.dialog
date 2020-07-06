@@ -1,5 +1,5 @@
 {
-  "$kind": "Microsoft.Test.MockUserToken",
+  "$kind": "Microsoft.Test.UserTokenBasicMock",
   "connectionName": "outlook",
   "token": "token",
   "magicCode": "000000"

@@ -1,0 +1,1 @@
+{"query":"cancel my meeting","prediction":{"topIntent":"DeleteMeeting","intents":{"DeleteMeeting":{"score":0.999262154}},"entities":{}}}

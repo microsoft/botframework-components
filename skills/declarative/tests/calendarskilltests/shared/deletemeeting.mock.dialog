@@ -1,0 +1,10 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "DELETE",
+  "Url": "https://graph.microsoft.com/v1.0/me/events/*",
+  "Responses": [
+    {
+      "Content": ""
+    }
+  ]
+}

@@ -7,15 +7,33 @@
       "Content": {
         "value": [
           {
-            "displayName": "Megan Bowen",
-            "givenName": "Megan",
-            "jobTitle": "Marketing Manager",
-            "mail": "MeganB@VAContoso.OnMicrosoft.com",
-            "officeLocation": "12/1110",
-            "preferredLanguage": "en-US",
-            "surname": "Bowen",
-            "userPrincipalName": "MeganB@VAContoso.OnMicrosoft.com",
-            "id": "d4478b21-9085-4f61-88c9-15e3ee77ddf5"
+            "id": "testid",
+            "displayName": "test name",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "scoredEmailAddresses": [
+                {
+                    "address": "test@test.com",
+                    "relevanceScore": 248762882,
+                    "selectionLikelihood": "notSpecified"
+                }
+            ],
+            "phones": [],
+            "personType": {
+                "class": "Person",
+                "subclass": "ImplicitContact"
+            }
           }
         ]
       }

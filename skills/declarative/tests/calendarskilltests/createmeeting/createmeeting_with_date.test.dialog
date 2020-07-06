@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "$kind": "Microsoft.Test.Script",
-  "properties": [
+  "propertyMocks": [
     "settings.mock"
   ],
-  "userTokens": [
+  "userTokenMocks": [
     "usertoken.mock"
   ],
   "httpRequestMocks": [
@@ -113,6 +113,6 @@
 	  {
       "$kind": "Microsoft.Test.AssertReply",
       "text": "Alright, your meeting is confirmed."
-    },
+    }
   ]
 }

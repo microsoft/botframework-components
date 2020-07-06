@@ -1,5 +1,5 @@
 {
-  "$kind": "Microsoft.Test.MockProperties",
+  "$kind": "Microsoft.Test.PropertiesMock",
   "assignments": [
     {
       "property": "settings.connectionName",
