@@ -1,0 +1,55 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "POST",
+  "Url": "https://graph.microsoft.com/v1.0/me/calendar/microsoft.graph.getSchedule*",
+  "Responses": [
+    {
+      "Content": {
+        "value":[
+          {
+            "scheduleId": "confrm_coruscant@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          },
+          {
+            "scheduleId": "confrm_hoth@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          },
+          {
+            "scheduleId": "confrm_alderaan@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          }
+        ]
+	    }
+    },
+    {
+      "Content": {
+        "value":[
+          {
+            "scheduleId": "confrm_coruscant@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          },
+          {
+            "scheduleId": "confrm_hoth@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          },
+          {
+            "scheduleId": "confrm_alderaan@VAContoso.onmicrosoft.com",
+            "scheduleItems": [],
+            "availabilityView": "0",
+            "@odata.type": "microsoft.graph.scheduleInformation"
+          }
+        ]
+	    }
+	  }
+  ]
+}

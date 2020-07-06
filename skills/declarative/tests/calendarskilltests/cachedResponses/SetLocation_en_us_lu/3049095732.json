@@ -1,0 +1,1 @@
+{"query":"change the duration to 2 hours","prediction":{"topIntent":"_Interruption","intents":{"_Interruption":{"score":0.99999845}},"entities":{"Subject":["duration"],"ToTime":["2 hours"]}}}

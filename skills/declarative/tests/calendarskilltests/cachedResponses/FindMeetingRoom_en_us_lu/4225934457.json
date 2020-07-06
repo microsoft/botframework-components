@@ -1,0 +1,1 @@
+{"query":"find another room","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.7792108}},"entities":{}}}

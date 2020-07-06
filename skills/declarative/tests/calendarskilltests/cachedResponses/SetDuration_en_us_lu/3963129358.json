@@ -1,0 +1,1 @@
+{"query":"1 hour","prediction":{"topIntent":"DateTimeInput_Response_pgJEOp","intents":{"DateTimeInput_Response_pgJEOp":{"score":0.9777244}},"entities":{"Duration":["1 hour"]}}}

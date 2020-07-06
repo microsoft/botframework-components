@@ -1,0 +1,179 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "propertyMocks": [
+    "settings.mock"
+  ],
+  "userTokenMocks": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "getcontacts.mock",
+    "getpeople.mock",
+    "getphoto.mock",
+    "createevent.mock",
+    "searchmeetingroom.mock",
+    "getschedule.mock"
+  ],
+  "dialog": "calendarskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi, what can I do for you?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "book a meeting room"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "For how long?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "30 min"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OK, which building?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "building london"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, do you have a floor preference?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Coruscant is available right now, do you want to reserve it? (1) Yes or (2) No"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Sure, who will join?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, I've added test name: test@test.com."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "What's the subject of the meeting?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "change the time"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "What's the date for your event?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "today"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What time does it start?",
+      	"What's the start time?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "6 pm"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OK, which building?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "building london"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, do you have a floor preference?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "indexOf(text, '6:00:00 PM') >= 0"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "What's the subject of the meeting?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "lunch"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Can you provide a short description for the meeting?"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "just for lunch"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "count(attachments) == 1",
+        "indexOf(text, '18:00:00') >= 0"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Do you want to create an event using this info? (1) Yes or (2) No"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Alright, your meeting is confirmed."
+    }
+  ]
+}

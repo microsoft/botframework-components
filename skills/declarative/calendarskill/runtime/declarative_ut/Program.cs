@@ -12,6 +12,7 @@ namespace DeclarativeUT
         public static int Main(string[] args)
         {
             ComponentRegistration.Add(new MSGraphComponentRegistration());
+            ComponentRegistration.Add(new AzureSearchComponentRegistration());
             return DeclarativeTestBase.HandleMain(args);
         }
     }

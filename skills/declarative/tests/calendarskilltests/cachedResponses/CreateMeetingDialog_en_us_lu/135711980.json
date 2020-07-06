@@ -1,0 +1,1 @@
+{"query":"change the time","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.9924628}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["time"]]}]}}}

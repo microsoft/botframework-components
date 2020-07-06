@@ -1,0 +1,1 @@
+{"query":"create a meeting for 30 min","prediction":{"topIntent":"CreateCalendarEntry","intents":{"CreateCalendarEntry":{"score":0.943705559}},"entities":{"number":[30],"Duration":["30 min"]}}}

@@ -1,0 +1,1 @@
+{"query":"change the content","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.6599023}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["content"]]}]}}}

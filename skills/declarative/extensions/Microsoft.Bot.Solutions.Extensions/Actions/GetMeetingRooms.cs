@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -15,7 +16,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
     class GetMeetingRooms : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.GetMeetingRooms";
+        public const string DeclarativeType = "Microsoft.AzureSearch.Calendar.GetMeetingRooms";
 
         [JsonConstructor]
         public GetMeetingRooms([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
@@ -47,10 +48,12 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var searchIndexName = SearchIndexName.GetValue(dcState);
             var searchQuery = SearchQuery.GetValue(dcState);
 
-            var azureSearchClient = AzureSearchClient.GetAzureSearchClient(searchServiceName, searchServiceAdminApiKey, searchIndexName);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var azureSearchClient = AzureSearchClient.GetAzureSearchClient(searchServiceName, searchServiceAdminApiKey, searchIndexName, httpHandler);
+
 
             var searchResult = await azureSearchClient.Documents.SearchWithHttpMessagesAsync(searchQuery, new SearchParameters());
-
+            
             var result = searchResult.Body.Results.Select(x => x.Document);
 
             // Write Trace Activity for the http request and response values

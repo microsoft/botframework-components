@@ -1,0 +1,1 @@
+{"query":"a happy lunch","prediction":{"topIntent":"FindDuration","intents":{"FindDuration":{"score":0.527023852}},"entities":{"Subject":["lunch"]}}}

@@ -1,0 +1,1 @@
+{"query":"change the duration to 2 hours","prediction":{"topIntent":"UpdateMeeting","intents":{"UpdateMeeting":{"score":0.9917364}},"entities":{"SlotAttribute":["duration"],"number":[2]}}}

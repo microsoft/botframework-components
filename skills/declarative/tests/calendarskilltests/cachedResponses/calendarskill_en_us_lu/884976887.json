@@ -1,0 +1,1 @@
+{"query":"create a meeting today","prediction":{"topIntent":"CreateCalendarEntry","intents":{"CreateCalendarEntry":{"score":0.910135746}},"entities":{"FromDate":["today"]}}}

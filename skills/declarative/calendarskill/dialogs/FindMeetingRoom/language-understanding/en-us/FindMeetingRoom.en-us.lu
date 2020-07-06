@@ -82,3 +82,13 @@
 - try {FloorNumber=the floor 23}
 - use {MeetingRoom=room wender}
 - want to book room {MeetingRoom=g5}
+
+@ list SlotAttributeName = 
+	- room :
+		- meeting room
+		- conference room
+		- confroom
+	- time :
+		- date
+	- building :
+	- floor :

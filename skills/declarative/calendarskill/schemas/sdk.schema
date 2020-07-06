@@ -143,7 +143,7 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+			"$ref": "#/definitions/Microsoft.AzureSearch.Calendar.GetMeetingRooms"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetings"
@@ -4156,7 +4156,7 @@
 				}
 			}
 		},
-		"Microsoft.Graph.Calendar.GetMeetingRooms": {
+		"Microsoft.AzureSearch.Calendar.GetMeetingRooms": {
 			"$role": "implements(Microsoft.IDialog)",
 			"type": "object",
 			"title": "Microsoft Graph - Get Meeting Rooms",
@@ -4226,7 +4226,7 @@
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.Calendar.GetMeetingRooms"
+					"const": "Microsoft.AzureSearch.Calendar.GetMeetingRooms"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -6076,7 +6076,7 @@
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetingRooms"
+					"$ref": "#/definitions/Microsoft.AzureSearch.Calendar.GetMeetingRooms"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetMeetings"

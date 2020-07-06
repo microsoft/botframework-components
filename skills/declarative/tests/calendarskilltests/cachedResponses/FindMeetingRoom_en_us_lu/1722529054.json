@@ -1,0 +1,1 @@
+{"query":"change to building london","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.9210345}},"entities":{"Building":["building london"]}}}

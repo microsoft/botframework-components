@@ -1,0 +1,1 @@
+{"query":"change the location to beijing","prediction":{"topIntent":"GetInput","intents":{"GetInput":{"score":0.717014849}},"entities":{"SlotOperation":[{"Operation":[["change"]],"Slot":[["location"]],"Value":["beijing"]}], "Location":["beijing"]}}}

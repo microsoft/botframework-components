@@ -1,0 +1,1 @@
+{"query":"create a meeting with test at london for lunch now for 30 min","prediction":{"topIntent":"CreateCalendarEntry","intents":{"CreateCalendarEntry":{"score":0.9922913}},"entities":{"personName":["test"],"Location":["london"],"Subject":["lunch"],"Duration":["30 min"], "FromTime":["now"]}}}
