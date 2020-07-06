@@ -19,11 +19,7 @@
 - ${MeetingBooked()}
 # SendActivity_OqVPIR()
 - ${CalendarErrorMessage()}
-# TextInput_Prompt_OigRoD()
-[Activity
-	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(dialog.content.attendeeList, ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.location)}${ConfirmCreateContent(dialog.content.description)}
-    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', [], dialog.content.title, dialog.location, dialog.content.description, null))}
-]
+
 # ConfirmCreateAttendees(Attendees)
 - IF: ${Attendees == null || count(Attendees) == 0}
 	- , with ${Attendees} 
@@ -48,3 +44,16 @@
 - ELSE:
     -
 
+
+
+# ConfirmInput_Prompt_bPNqB5()
+- Do you want to create an event using this info?
+# TextInput_Prompt_jKhs3i()
+- What would you like to change?
+# TextInput_InvalidPrompt_jKhs3i()
+- Sorry, I didn't understand
+# SendActivity_zi2EVZ()
+[Activity
+	Text =  I'm ready to create the event for ${formatDateTime(dialog.content.startDateTime, 'yyyy-MM-dd')}, from ${formatDateTime(dialog.content.startDateTime, 'HH:mm:ss')} to ${formatDateTime(dialog.content.endDateTime, 'HH:mm:ss')}, with ${join(foreach(dialog.content.attendeeList, x, x.name), ', ', ' and ')}. ${ConfirmCreateSubject(dialog.content.title)}${ConfirmCreateLocation(dialog.content.location)}${ConfirmCreateContent(dialog.content.description)}
+    Attachments = ${json(MeetingDetailCard(dialog.content.startDateTime, dialog.content.endDateTime, 'UTC', dialog.attendeesPhoto, dialog.content.title, dialog.location, dialog.content.description, null))}
+]

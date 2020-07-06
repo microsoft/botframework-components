@@ -35,7 +35,7 @@
           "disabled": false
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.GetMeetingRooms",
+          "$kind": "Microsoft.AzureSearch.Calendar.GetMeetingRooms",
           "$designer": {
             "id": "x8zSHz"
           },
@@ -43,7 +43,9 @@
           "searchServiceAdminApiKey": "= settings.azureSearch.searchServiceAdminApiKey",
           "searchServiceName": "= settings.azureSearch.searchServiceName",
           "searchIndexName": "= settings.azureSearch.searchIndexName",
-          "searchQuery": "= dialog.searchQuery"
+          "building": "= dialog.building",
+          "floorNumber": "= dialog.floorNumber",
+          "meetingRoom": "= dialog.meetingRoomName"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -65,7 +67,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "t8PP1S"
-          }
+          },
+          "name": "after search meeting room"
         },
         {
           "$kind": "Microsoft.EndDialog",

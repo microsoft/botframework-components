@@ -15,6 +15,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WZfQso"
+          },
+          "name": "Begin Create Meeting"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "lMyBZ4"
@@ -55,10 +62,6 @@
             {
               "property": "dialog.slots.Location",
               "value": "=coalesce(@Location, $slots.Location)"
-            },
-            {
-              "property": "conversation.slots",
-              "value": "= {}"
             }
           ]
         },
@@ -99,6 +102,14 @@
           "$designer": {
             "id": "tDjzl6"
           }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4cEd2w"
+          },
+          "activityProcessed": true,
+          "dialog": "GetAuthToken"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -175,10 +186,11 @@
           },
           "dialog": "SetContent",
           "options": {
-            "description": "=coalesce(dialog.slots.Desciption, dialog.content.description)"
+            "description": "=coalesce(dialog.slots.Description, dialog.content.description)"
           },
           "resultProperty": "dialog.content.description",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -229,13 +241,63 @@
             "location": "=coalesce(dialog.slots.Location, dialog.content.location)"
           },
           "resultProperty": "dialog.content.location",
-          "disabled": false
+          "disabled": false,
+          "activityProcessed": true
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "6uYkfu"
           }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "R6uXwd"
+          },
+          "property": "dialog.attendeesPhoto",
+          "value": "= []"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "caoo2g"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.content.attendeeList",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ktq12U"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPhotoRequest",
+              "options": {
+                "retrivePhotoMode": "other",
+                "email": "=dialog.foreach.value.EmailAddresses[0]",
+                "userName": "=dialog.foreach.value.name"
+              },
+              "resultProperty": "dialog.userPhotoResult"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "cqPloA"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.attendeesPhoto",
+              "value": "= dialog.userPhotoResult.photo"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "mwoyXn"
+              },
+              "name": "GetPhoto"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -384,15 +446,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "MOcvTI"
-          }
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "atwIdB"
           },
-          "activity": "${SendActivity_atwIdB()}",
-          "disabled": true
+          "name": "create meeting  get input"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -717,7 +772,8 @@
               ]
             }
           ],
-          "itemsProperty": "dialog.slotOperation"
+          "itemsProperty": "dialog.slotOperation",
+          "value": "dialog.foreach.value"
         },
         {
           "$kind": "Microsoft.RepeatDialog",

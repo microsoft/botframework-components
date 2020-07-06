@@ -2,13 +2,15 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Get Meeting Rooms",
+  "title": "Microsoft AzureSearch - Get Meeting Rooms",
   "description": "Get meeting room lists using the Azure search API.",
   "required": [
     "searchServiceAdminApiKey",
     "searchServiceName",
     "searchIndexName",
-    "searchQuery"
+    "building",
+    "floorNumber",
+    "meetingRoom"
   ],
   "properties": {
     "id": {
@@ -48,12 +50,28 @@
         "settings.azureSearch.searchIndexName"
       ]
     },
-    "searchQuery": {
+    "building": {
       "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
-      "title": "Search Query",
-      "description": "Azure Search Query.",
+      "title": "building name",
+      "description": "The building of the meeting room.",
       "examples": [
-        "dialog.searchQuery"
+        "dialog.building"
+      ]
+    },
+    "floorNumber": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "floorNumber",
+      "description": "The floorNumber of the meeting room",
+      "examples": [
+        "dialog.floorNumber"
+      ]
+    },
+    "meetingRoom": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "room name",
+      "description": "The name of the meeting room.",
+      "examples": [
+        "dialog.meetingRoom"
       ]
     }
   }
