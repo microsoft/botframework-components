@@ -1,7 +1,7 @@
 [import](common.lg)
 
 # ConfirmInput_Prompt_eEN1ZI()
-- ${ConfirmPrompt(dialog.meeting.OnlineMeeting.tollNumber, dialog.meeting.OnlineMeeting.joinUrl)}
+- ${ConfirmPrompt(dialog.meeting.OnlineMeetingNumber, dialog.meeting.OnlineMeetingUrl)}
 # SendActivity_o3Sci5()
 - ${LinkUnavailable()}
 # JoinMeeting()

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "propertyMocks": [
+    "settings.mock"
+  ],
+  "userTokenMocks": [
+    "usertoken.mock"
+  ],
+  "httpRequestMocks": [
+    "getmultiplemeetings.mock",
+    "getcontacts.mock",
+    "getpeople.mock",
+    "getphoto.mock",
+    "getme.mock"
+  ],
+  "dialog": "calendarskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi, what can I do for you?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "show my meetings"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "000000"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "text == concat('You have 4 events planned for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '. The first one is test subject with test name at 23:00:00. The last one for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), ' is test subject at 23:00:00 with test name.')",
+        "count(attachments) == 1"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Do you want me to read the details for the first event? I can read the details for any event, just let me know which one by providing the subject, time, or attendees. (1) Yes or (2) No"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "The event titled test subject is on 2020-06-12 at 23:00:00 with test name."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "count(attachments) == 1"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "text == concat('Do you want to review your calendar overview again for ', formatDateTime(utcNow(), 'yyyy-MM-dd'), '? You can also ask me to update or decline this event for you. (1) Yes or (2) No')"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "no"
+    }
+  ]
+}

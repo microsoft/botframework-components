@@ -1,0 +1,1 @@
+{"query":"accept my meeting at 2pm","prediction":{"topIntent":"AcceptMeeting","intents":{"AcceptMeeting":{"score":0.9715253}},"entities":{"FromTime":["2pm"]}}}

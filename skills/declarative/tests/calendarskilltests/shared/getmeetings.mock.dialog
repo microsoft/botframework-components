@@ -91,7 +91,12 @@
             },
             "subject": "test subject",
             "type": "occurrence",
-            "webLink": "test link"
+            "webLink": "test link",
+            "onlineMeeting": {
+              "joinUrl": "testurl",
+              "tollNumber": "123456",
+              "conferenceId": "123456"
+            }
           }
         ]
       }

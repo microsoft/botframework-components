@@ -9,8 +9,8 @@
 
 
 # ConfirmInput_Prompt_NwIfS0()
-- Are you confirmed to update the meeting \"${dialog.meeting.Title}\"
+- Are you confirmed to update the meeting "${dialog.meeting.Title}"
 # SendActivity_m4TrSW()
-- Updated meeting \"${dialog.meeting.Title}\"
+- Updated meeting "${dialog.meeting.Title}"
 # SendActivity_sMTEi4()
 - ${CalendarErrorMessage()}

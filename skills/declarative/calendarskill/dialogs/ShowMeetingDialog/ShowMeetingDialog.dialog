@@ -85,7 +85,7 @@
               "assignments": [
                 {
                   "property": "dialog.toDate",
-                  "value": "=coalesce(dialog.toDate, if(dialog.showNext, addDays(string(dialog.fromDate), 7), dialog.FromeDate))"
+                  "value": "=coalesce(dialog.toDate, if(dialog.showNext, addDays(formatDateTime(dialog.fromDate), 7), dialog.FromeDate))"
                 },
                 {
                   "property": "dialog.toTime",
@@ -528,10 +528,21 @@
               "condition": "turn.RepeatOverviewConfirm",
               "actions": [
                 {
+                  "$kind": "Microsoft.DeleteProperties",
+                  "$designer": {
+                    "id": "28rBs8"
+                  },
+                  "properties": [
+                    "conversation.FocusedMeeting",
+                    "turn.RepeatOverviewConfirm"
+                  ]
+                },
+                {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
                     "id": "0eD7Kz"
-                  }
+                  },
+                  "activityProcessed": true
                 }
               ]
             }

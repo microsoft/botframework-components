@@ -1,0 +1,1 @@
+{"query":"how long is my next meeting","prediction":{"topIntent":"FindDuration","intents":{"FindDuration":{"score":0.8223056}},"entities":{"OrderReference":["next"]}}}

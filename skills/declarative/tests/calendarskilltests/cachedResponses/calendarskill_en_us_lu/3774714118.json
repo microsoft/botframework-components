@@ -1,0 +1,1 @@
+{"query":"connect to my meeting","prediction":{"topIntent":"ConnectToMeeting","intents":{"ConnectToMeeting":{"score":0.924757957}},"entities":{}}}

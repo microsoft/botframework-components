@@ -1,0 +1,1 @@
+{"query":"accept the meeting","prediction":{"topIntent":"AcceptMeeting","intents":{"AcceptMeeting":{"score":1.0}},"entities":{}}}
