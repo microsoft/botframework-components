@@ -1,10 +1,13 @@
-﻿using AdaptiveCards;
-using GenericITSMSkill.Models;
-using GenericITSMSkill.Models.ServiceDesk;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AdaptiveCards;
+using GenericITSMSkill.Models;
+using GenericITSMSkill.Models.ServiceDesk;
 
 namespace GenericITSMSkill.Extensions
 {

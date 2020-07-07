@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 using System.Xml;
 using AdaptiveCards;
 using GenericITSMSkill.Dialogs.Helper;
+using GenericITSMSkill.Dialogs.Helper.AdaptiveCardHelper;
 using GenericITSMSkill.Models;
+using GenericITSMSkill.Services;
+using GenericITSMSkill.Teams;
 using GenericITSMSkill.UpdateActivity;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Microsoft.Bot.Solutions.Proactive;
@@ -33,6 +37,7 @@ namespace GenericITSMSkill.Dialogs
         private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
         private readonly ProactiveState _proactiveState;
         private readonly ConversationState _conversationState;
+        private readonly BotSettings _botSettings;
 
         public CreateFlowURLDialog(
             IServiceProvider serviceProvider)
@@ -45,21 +50,42 @@ namespace GenericITSMSkill.Dialogs
             _ticketIdCorrelationMapAccessor = _conversationState.CreateProperty<TicketIdCorrelationMap>(nameof(TicketIdCorrelationMap));
             _proactiveState = serviceProvider.GetService<ProactiveState>();
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
+            _botSettings = serviceProvider.GetService<BotSettings>();
 
             var createFlow = new WaterfallStep[]
             {
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
                 GetFlowInputAsync,
                 CreateFlowUrlAsync,
-                EndAsync,
+            };
+
+            // TaskModule Based WaterFallStep
+            var createFlowUrlTaskModule = new WaterfallStep[]
+            {
+                GetAuthTokenAsync,
+                AfterGetAuthTokenAsync,
+                CreateFlowUrlTeamsImplementation,
             };
 
             AddDialog(new WaterfallDialog(nameof(CreateFlowURLDialog), createFlow));
             AddDialog(new TextPrompt(DialogIds.NamePrompt));
-
+            AddDialog(new WaterfallDialog("CreateFlowUrlTeamsImplementation", createFlowUrlTaskModule));
             InitialDialogId = nameof(CreateFlowURLDialog);
         }
 
-        private async Task<DialogTurnResult> GetFlowInputAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext dc, object options, CancellationToken cancellationToken = default)
+        {
+            // If Channel is MsTeams use Teams TaskModule
+            if (dc.Context.Activity.ChannelId == Channels.Msteams)
+            {
+                return await dc.BeginDialogAsync("CreateFlowUrlTeamsImplementation", options, cancellationToken);
+            }
+
+            return await base.OnBeginDialogAsync(dc, options, cancellationToken);
+        }
+
+        protected async Task<DialogTurnResult> GetFlowInputAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             // NOTE: Uncomment the following lines to access LUIS result for this turn.
             // var luisResult = stepContext.Context.TurnState.Get<LuisResult>(StateProperties.SkillLuisResult);
@@ -92,7 +118,7 @@ namespace GenericITSMSkill.Dialogs
             return await sc.NextAsync(cancellationToken: cancellationToken);
         }
 
-        private async Task<DialogTurnResult> CreateFlowUrlAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> CreateFlowUrlAsync(WaterfallStepContext sc, CancellationToken cancellationToken)
         {
             var result = sc.Result as string;
 
@@ -128,12 +154,41 @@ namespace GenericITSMSkill.Dialogs
                 .SaveChangesAsync(sc.Context, false, cancellationToken);
             await _proactiveState.SaveChangesAsync(sc.Context, false, cancellationToken);
 
-            return await sc.NextAsync(cancellationToken: cancellationToken);
+            return await sc.EndDialogAsync();
         }
 
-        private Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        protected async Task<DialogTurnResult> CreateFlowUrlTeamsImplementation(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return stepContext.EndDialogAsync(cancellationToken: cancellationToken);
+            var reply = sc.Context.Activity.CreateReply();
+
+            var adaptiveCard = GenericITSMSkillAdaptiveCards.CreateFlowUrlAdaptiveCard(_botSettings.MicrosoftAppId);
+            reply = sc.Context.Activity.CreateReply();
+            reply.Attachments = new List<Attachment>()
+            {
+                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = adaptiveCard }
+            };
+
+            ResourceResponse resourceResponse = await sc.Context.SendActivityAsync(reply, cancellationToken);
+
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                sc.Context,
+                () => new ActivityReferenceMap(),
+                cancellationToken)
+            .ConfigureAwait(false);
+
+            // Store Activity and Thread Id
+            activityReferenceMap[sc.Context.Activity.Conversation.Id] = new ActivityReference
+            {
+                ActivityId = resourceResponse.Id,
+                ThreadId = sc.Context.Activity.Conversation.Id,
+            };
+            await _activityReferenceMapAccessor.SetAsync(sc.Context, activityReferenceMap).ConfigureAwait(false);
+
+            // Save Conversation State
+            await _conversationState
+                .SaveChangesAsync(sc.Context);
+
+            return await sc.EndDialogAsync();
         }
 
         private static class DialogIds
