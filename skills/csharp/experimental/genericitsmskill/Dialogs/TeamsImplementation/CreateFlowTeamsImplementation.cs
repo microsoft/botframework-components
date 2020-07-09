@@ -70,7 +70,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = GenericITSMSkillAdaptiveCards.GetSubscriptionAdaptiveCard(string.Empty)
+                        Content = GenericITSMSkillAdaptiveCards.GetSubscriptionAdaptiveCard(_settings.MicrosoftAppId)
                     }
                 }
             };
@@ -123,7 +123,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                             Conversation = context.Activity.GetConversationReference()
                         };
 
-                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                        // Update Create FlowUrl Button with another Adaptive card to Update/Delete Ticket
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,

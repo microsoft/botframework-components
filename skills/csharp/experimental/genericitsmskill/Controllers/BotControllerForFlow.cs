@@ -63,6 +63,7 @@ namespace GenericITSMSkill.Controllers
             }
 
             // Decrypt the channelID.
+            // TODO: Move this to a seperate AuthController instead of doing this check here
             var protector = _dataProtectionProvider.CreateProtector("test");
             var channelID = protector.Unprotect(encryptedChannelID);
 

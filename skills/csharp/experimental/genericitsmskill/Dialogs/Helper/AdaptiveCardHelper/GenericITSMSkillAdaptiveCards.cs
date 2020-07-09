@@ -54,21 +54,21 @@ namespace GenericITSMSkill.Dialogs.Helper.AdaptiveCardHelper
                     }
                 },
                 Actions = new List<AdaptiveAction>
+                {
+                    new AdaptiveSubmitAction
                     {
-                        new AdaptiveSubmitAction
+                        Title = "Submit",
+                        Data = new AdaptiveCardValue<TaskModuleMetadata>()
                         {
-                            Title = "Submit",
-                            Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                            Data = new TaskModuleMetadata()
                             {
-                                Data = new TaskModuleMetadata()
-                                {
-                                    SkillId = botId,
-                                    TaskModuleFlowType = TeamsFlowType.CreateFlow.ToString(),
-                                    Submit = true
-                                }
+                                SkillId = botId,
+                                TaskModuleFlowType = TeamsFlowType.CreateFlow.ToString(),
+                                Submit = true
                             }
                         }
                     }
+                }
             };
 
             return card;
