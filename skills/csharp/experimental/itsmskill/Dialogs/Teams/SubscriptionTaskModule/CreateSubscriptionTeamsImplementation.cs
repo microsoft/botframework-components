@@ -101,6 +101,9 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 // Create Managemenet object
                 var management = _serviceManager.CreateManagementForSubscription(_settings, state.AccessTokenResponse, state.ServiceCache);
 
+                // Create Subscription New RESTAPI for callback from ServiceNow
+                var response = await management.CreateNewRestMessage(notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+
                 // Create Subscription BusinessRule
                 var result = await management.CreateSubscriptionBusinessRule(filterUrgency.Value<string>(), filterName.Value<string>(), notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
 

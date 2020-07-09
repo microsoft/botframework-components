@@ -14,5 +14,7 @@ namespace ITSMSkill.Services
         Task CreateSubscriptionRestMessages(string messageName, string url);
 
         Task RemoveSubscriptionRestMessage(string messageName);
+
+        Task<int> CreateNewRestMessage(string callBackName, string postName);
     }
 }

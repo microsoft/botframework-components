@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
@@ -19,41 +20,51 @@ namespace ITSMSkill.Services.ServiceNow
         private readonly IRestClient client;
         private readonly string userId;
         private readonly string getUserIdResource;
-        private readonly string businessRuleUrl;
+        private readonly string baseUrl;
 
         public ServiceNowSubscriptionManagement(string url, string token, int limitSize, string getUserIdResource, ServiceCache serviceCache = null, IRestClient restClient = null)
         {
             this.client = restClient ?? new RestClient($"{url}/api/");
             this.getUserIdResource = getUserIdResource;
-            this.businessRuleUrl = $"{url}/api/now/table/sys_script";
+            this.baseUrl = url;
+        }
+
+        public async Task<int> CreateNewRestMessage(string callBackName, string postName)
+        {
+            try
+            {
+                // TODO get namespace id: 47562 from appsettings or write an API
+                var url = this.baseUrl + $"475462/createnewrestmessage?name={callBackName}&postFunctionName={postName}";
+
+                var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
+
+                // Post BusinessRule
+                var result = await client.PostAsync<int>(request);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<string> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
         {
             try
             {
-                var request = ServiceNowHelper.CreateRequest(this.businessRuleUrl, "Bearer " + token);
+                var url = this.baseUrl + "475462 /createbusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
+                var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
                 var strBody = "{";
                 strBody += "'Id': current.number.toString() , "; 
                 strBody += "'Title': current.short_description.toString(), ";
                 strBody += "};";
 
-                // Execute Rule function
-                var function = "(function executeRule(current, previous \\/*null when async*\\/) " +
-                    "{ var strBody =" + strBody + "var request = new sn_ws.RESTMessageV2("
-                    + notificationNameSpace ?? TestNameSpace + "," + postNotificationAPIName ?? TestAPIName + "); request.setRequestBody(JSON.stringify()); " +
-                    "var response = request.execute(); var responseBody = response.getBody(); " +
-                    "var httpStatus = response.getStatusCode();})(current, previous);".Replace(@"\", string.Empty);
-
-                var body = new BusinessRule()
-                {
-                    name = filterName,
-                    filter_condition = new FilterCondition { @table = "incident" },
-                    script = function
-                };
+                var postBusinessRule = new Dictionary<string, string>();
+                postBusinessRule["script"] = "(function executeRule(current, previous /*null when async*/) {var strBody = \"{\"; strBody += \"'Id': '\" + current.number.toString() + \"', \"; strBody += \"'Title': '\" + current.short_description.toString() + \"', \"; strBody += \"'Description': '\" + current.description.toString() + \"', \"; strBody += \"'Category': '\" + current.category.toString() + \"', \"; strBody += \"'Impact': '\" + current.impact.toString() + \"',\"; strBody += \"'Urgency': '\" + current.urgency.toString() + \"'\"; strBody += \"}\"; var request = new sn_ws.RESTMessageV2(" + TestAPIName + ", 'PostNotification'); request.setRequestBody(JSON.stringify(strBody)); var response = request.execute(); var responseBody = response.getBody(); var httpStatus = response.getStatusCode();})(current, previous);";
 
                 // Send Request to ServiceNow
-                request.AddJsonBody(body);
+                request.AddJsonBody(postBusinessRule);
 
                 // Post BusinessRule
                 var result = await client.PostAsync<object>(request);
@@ -79,14 +90,6 @@ namespace ITSMSkill.Services.ServiceNow
         public Task RemoveSubscriptionRestMessage(string messageName)
         {
             throw new NotImplementedException();
-        }
-
-        private async Task<string> GetCreatedFilterId(string filterName, string token)
-        {
-            var request = ServiceNowHelper.CreateRequest(this.businessRuleUrl + $"?sysparm_query=name%3D{filterName}&sysparm_limit=1", "Bearer " + token);
-            var response = await client.GetAsync<object>(request);
-
-            return response as string;
         }
     }
 }
