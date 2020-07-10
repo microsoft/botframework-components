@@ -10,83 +10,11 @@
 
     public class RenderCreateIncidentHelper
     {
-        public static TaskEnvelope GetUserInput()
-        {
-            var response = new TaskEnvelope
-            {
-                Task = new TaskProperty()
-                {
-                    Type = "continue",
-                    TaskInfo = new TaskInfo()
-                    {
-                        Title = "GetUserInput",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = TicketDialogHelper.CreateIncidentAdaptiveCard()
-                        }
-                    }
-                }
-            };
-
-            return response;
-        }
-
-        public static TaskEnvelope IncidentAddFailed()
-        {
-            var response = new TaskEnvelope
-            {
-                Task = new TaskProperty()
-                {
-                    Type = "continue",
-                    TaskInfo = new TaskInfo()
-                    {
-                        Title = "Incident Create Failed",
-                        Height = "small",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = ImpactTrackerResponseCard("Incident Create Failed")
-                        }
-                    }
-                }
-            };
-
-            return response;
-        }
-
-        public static TaskEnvelope ImpactAddEnvelope()
-        {
-            var response = new TaskEnvelope
-            {
-                Task = new TaskProperty()
-                {
-                    Type = "continue",
-                    TaskInfo = new TaskInfo()
-                    {
-                        Title = "IncidentAdded",
-                        Height = "small",
-                        Width = 500,
-                        Card = new Attachment
-                        {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = ImpactTrackerResponseCard("Incident has been created")
-                        }
-                    }
-                }
-            };
-
-            return response;
-        }
-
-        public static AdaptiveCard BuildTicketCard(Ticket ticketResponse, string botId)
+        public static AdaptiveCard BuildIncidentCard(Ticket ticketResponse, string botId)
         {
             var card = new AdaptiveCard("1.0")
             {
-                Id = "IncidentResponseCard",
+                Id = "BuildIncidentCard",
                 Body = new List<AdaptiveElement>
                 {
                     new AdaptiveContainer
@@ -171,11 +99,11 @@
             return card;
         }
 
-        public static AdaptiveCard CloseTicketCard(Ticket ticketResponse)
+        public static AdaptiveCard CloseIncidentCard(Ticket ticketResponse)
         {
             var card = new AdaptiveCard("1.0")
             {
-                Id = "IncidentResponseCard",
+                Id = "CloseIncidentResponseCard",
                 Body = new List<AdaptiveElement>
                 {
                     new AdaptiveContainer
@@ -193,7 +121,7 @@
                                         {
                                             new AdaptiveTextBlock
                                             {
-                                                Text = $"Ticket With TicketId: {ticketResponse.Id} is closed with Reason:  {ticketResponse.ResolvedReason}",
+                                                Text = $"Incident With TicketId: {ticketResponse.Id} is closed with Reason:  {ticketResponse.ResolvedReason}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
                                                 Weight = AdaptiveTextWeight.Bolder
@@ -211,10 +139,10 @@
         }
 
         /// <returns>Adaptive Card.</returns>
-        public static AdaptiveCard ImpactTrackerResponseCard(string trackerResponse)
+        public static AdaptiveCard IncidentResponseCard(string trackerResponse)
         {
             var card = new AdaptiveCard("1.0");
-            card.Id = "ResponseCard";
+            card.Id = "IncidentResponseCard";
 
             var columns = new List<AdaptiveColumn>
             {

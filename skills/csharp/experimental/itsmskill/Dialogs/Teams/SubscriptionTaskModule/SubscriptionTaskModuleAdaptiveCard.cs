@@ -65,7 +65,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 
         public static AdaptiveCard GetSubscriptionAdaptiveCard(string botId)
         {
-            int sevInd = 0;
+            int filterCondition = 0;
             var card = new AdaptiveCard("1.0")
             {
                 Body = new List<AdaptiveElement>
@@ -111,10 +111,10 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                         Style = AdaptiveChoiceInputStyle.Compact,
                         IsMultiSelect = true,
                         Value = "UrgencyFilter",
-                        Choices = IncidentSubscriptionStrings.Severities.Select(it => new AdaptiveChoice
+                        Choices = IncidentSubscriptionStrings.FilterConditions.Select(it => new AdaptiveChoice
                         {
                             Title = $"{it}",
-                            Value = sevInd++.ToString()
+                            Value = filterCondition++.ToString()
                         }).ToList()
                     }
                 },
@@ -133,15 +133,6 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                                 }
                             }
                         }
-                        //},
-                        //new AdaptiveSubmitAction
-                        //{
-                        //    Title = "Cancel",
-                        //    Data = new SubscriptionFormInputData
-                        //    {
-                        //        Action = SubscriptionFormInputData.Action_Cancel
-                        //    }
-                        //}
                     }
             };
 

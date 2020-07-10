@@ -146,7 +146,7 @@ namespace EmailSkill.Tests.Flow
             var sp = Services.BuildServiceProvider();
             var templates = sp.GetService<Templates>();
             var formatTemplateName = templateName + ".Text";
-            return templates.ExpandTemplate(formatTemplateName, data).ToArray();
+            return (string[])templates.ExpandTemplate(formatTemplateName, data).ToArray();
         }
 
         public TestFlow GetTestFlow()

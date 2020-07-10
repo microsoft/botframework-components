@@ -105,7 +105,6 @@ namespace ITSMSkill
             // Uncomment the following line for local development without Cosmos Db
             // services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
-            services.AddSingleton(sp => new SubscriptionStorage(settings.CosmosDb));
             services.AddSingleton<SubscriptionManager>();
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();

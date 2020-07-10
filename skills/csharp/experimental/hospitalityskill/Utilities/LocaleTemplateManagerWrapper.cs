@@ -108,7 +108,7 @@ namespace HospitalitySkill.Utilities
             var list = manager.ExpandTemplate(name, input);
             var result = list.Select(value =>
             {
-                return JObject.Parse(value)["text"].ToString();
+                return JObject.Parse((string)value)["text"].ToString();
             }).ToArray();
 
             return result;

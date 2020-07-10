@@ -7,6 +7,7 @@ using AdaptiveCards;
 using ITSMSkill.Extensions.Teams;
 using ITSMSkill.Models;
 using ITSMSkill.Models.UpdateActivity;
+using ITSMSkill.Proactive.Subscription;
 using ITSMSkill.Services;
 using ITSMSkill.TeamsChannels;
 using ITSMSkill.TeamsChannels.Invoke;
@@ -38,6 +39,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
         private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
         private readonly ProactiveState _proactiveState;
+        private readonly SubscriptionManager _subscriptionManager;
 
         public CreateSubscriptionTeamsImplementation(
              IServiceProvider serviceProvider)
@@ -54,6 +56,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _proactiveStateActivityReferenceMapAccessor = _proactiveState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
             _proactiveStateConversationReferenceMapAccessor = _proactiveState.CreateProperty<ConversationReferenceMap>(nameof(ConversationReferenceMap));
+            _subscriptionManager = serviceProvider.GetService<SubscriptionManager>();
         }
 
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
@@ -62,7 +65,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             {
                 Value = new TaskModuleTaskInfo()
                 {
-                    Title = "ImpactTracker",
+                    Title = "Subscription",
                     Height = "medium",
                     Width = 500,
                     Card = new Attachment
@@ -98,14 +101,20 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 //// Get filterName
                 var postNotificationAPIName = dataObject.GetValue("PostNotificationAPIName");
 
+                // Check if this BusinessRule is already created if not create proactivesubscription
+                var isNewSubscription = await _subscriptionManager.AddSubscription(context, filterName.Value<string>(), context.Activity.GetConversationReference(), cancellationToken);
+
                 // Create Managemenet object
-                var management = _serviceManager.CreateManagementForSubscription(_settings, state.AccessTokenResponse, state.ServiceCache);
+                if (isNewSubscription)
+                {
+                    var management = _serviceManager.CreateManagementForSubscription(_settings, state.AccessTokenResponse, state.ServiceCache);
 
-                // Create Subscription New RESTAPI for callback from ServiceNow
-                var response = await management.CreateNewRestMessage(notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+                    // Create Subscription New RESTAPI for callback from ServiceNow
+                    var response = await management.CreateNewRestMessage(notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
 
-                // Create Subscription BusinessRule
-                var result = await management.CreateSubscriptionBusinessRule(filterUrgency.Value<string>(), filterName.Value<string>(), notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+                    // Create Subscription BusinessRule
+                    var result = await management.CreateSubscriptionBusinessRule(filterUrgency.Value<string>(), filterName.Value<string>(), notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+                }
 
                 // Create ProactiveModel
                 var proactiveModel = await _proactiveStateAccessor.GetAsync(context, () => new ProactiveModel()).ConfigureAwait(false);
@@ -138,19 +147,6 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     proactiveConversationReferenceMap[filterName.Value<string>()] = listOfConversationReferences;
                 }
 
-                //ActivityReferenceMap proactiveActivityReferenceMap = await _proactiveStateActivityReferenceMapAccessor.GetAsync(
-                //    context,
-                //    () => new ActivityReferenceMap(),
-                //    cancellationToken)
-                //.ConfigureAwait(false);
-
-                //// Store Activity and Thread Id
-                //proactiveActivityReferenceMap[context.Activity.Conversation.Id] = new ActivityReference
-                //{
-                //    ActivityId = context.Activity.Id,
-                //    ThreadId = context.Activity.Conversation.Id,
-                //};
-
                 // Save ActivityReference and ProactiveState Accessor
                 await _proactiveStateConversationReferenceMapAccessor.SetAsync(context, proactiveConversationReferenceMap).ConfigureAwait(false);
                 await _proactiveStateAccessor.SetAsync(context, proactiveModel).ConfigureAwait(false);
@@ -163,7 +159,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 {
                     Value = new TaskModuleTaskInfo()
                     {
-                        Title = "ImpactTracker",
+                        Title = "Subscription",
                         Height = "medium",
                         Width = 500,
                         Card = new Attachment

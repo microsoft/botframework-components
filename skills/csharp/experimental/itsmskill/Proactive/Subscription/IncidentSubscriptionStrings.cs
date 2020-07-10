@@ -5,12 +5,12 @@ namespace ITSMSkill.Proactive.Subscription
 {
     public class IncidentSubscriptionStrings
     {
-        public static ICollection<string> Severities { get; } = new[]
+        public static ICollection<string> FilterConditions { get; } = new[]
         {
-            UrgencyLevel.High.ToString(),
-            UrgencyLevel.Medium.ToString(),
-            UrgencyLevel.Low.ToString(),
-            UrgencyLevel.None.ToString()
+            "Urgency",
+            "Description",
+            "Priority",
+            "AssignedTo",
         };
 
         public static string FilterName = "FilterName";

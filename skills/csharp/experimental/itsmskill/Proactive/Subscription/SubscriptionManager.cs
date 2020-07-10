@@ -9,25 +9,22 @@
     using ITSMSkill.Utilities;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Schema;
+    using Microsoft.Bot.Solutions.Proactive;
     using Microsoft.Extensions.DependencyInjection;
 
     public class SubscriptionManager
     {
-        private readonly IProactiveStateFactory _proactiveStateFactory;
         private readonly ConversationState _conversationState;
-        private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
+        private readonly IStatePropertyAccessor<ProactiveSubscriptionMap> _proactiveStateSubscription;
+        private readonly ProactiveState _proactiveState;
 
         public SubscriptionManager(IServiceProvider serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
-            _stateAccessor = _conversationState.CreateProperty<SkillState>(nameof(SkillState));
-            _proactiveStateFactory = serviceProvider.GetService<IProactiveStateFactory>();
-            this.SubscriptionStateAccessor = Ensure.ArgIsNotNull(
-                _proactiveStateFactory?.SubscriptionState?.CreateProperty<ProactiveSubscription>(),
-                nameof(_proactiveStateFactory.SubscriptionState));
+            _proactiveState = serviceProvider.GetService<ProactiveState>();
+            _proactiveStateSubscription = _proactiveState.CreateProperty<ProactiveSubscriptionMap>(nameof(ProactiveSubscriptionMap));
         }
 
-        private IStateValueAccessor<ProactiveSubscription> SubscriptionStateAccessor { get; }
         /// <summary>
         /// Add a conversation to a subscription.
         /// </summary>
@@ -48,10 +45,18 @@
 
             if (subscription.ConversationReferences.All(it => it.Conversation.Id != conversationReference.Conversation.Id))
             {
-                subscription.ConversationReferences = new List<ConversationReference>(subscription.ConversationReferences.Append(conversationReference));
-            }
+                var proactiveSubscriptionMap = await this._proactiveStateSubscription.GetAsync(context, () => new ProactiveSubscriptionMap()).ConfigureAwait(false);
 
-            await this.SubscriptionStateAccessor.SetAsync(subscriptionKey, context, subscription, cancellationToken);
+                proactiveSubscriptionMap[subscriptionKey] = new ProactiveSubscription
+                {
+                    ConversationReferences = new List<ConversationReference>(subscription.ConversationReferences.Append(conversationReference))
+                };
+
+                await this._proactiveStateSubscription.SetAsync(context, proactiveSubscriptionMap, cancellationToken);
+
+                // Save ProactiveState
+                await _proactiveState.SaveChangesAsync(context, false, cancellationToken);
+            }
 
             return isNewSubscription;
         }
@@ -60,18 +65,17 @@
         /// Remove a conversation from a subscription.
         /// </summary>
         public async Task<bool> RemoveSubscription(
-            ITurnContext turnContext,
+            ITurnContext context,
             string subscriptionKey,
             ConversationReference conversationReference,
             CancellationToken cancellationToken)
         {
             bool isEmpty = false;
 
-            ProactiveSubscription subscription = await this.SubscriptionStateAccessor.GetAsync(
-                    subscriptionKey,
-                    turnContext,
-                    () => new ProactiveSubscription(),
-                    cancellationToken);
+            ProactiveSubscription subscription = await this.GetSubscriptionByKey(context, subscriptionKey, cancellationToken);
+
+            // Get SubscriptionMap
+            var proactiveSubscriptionMap = await this._proactiveStateSubscription.GetAsync(context, () => new ProactiveSubscriptionMap()).ConfigureAwait(false);
 
             // remove thread message id
             string conversationId = conversationReference.Conversation.Id.Split(';')[0];
@@ -81,14 +85,14 @@
 
             if (subscribedConversations == null || subscribedConversations.Count == 0)
             {
-                await this.SubscriptionStateAccessor.DeleteAsync(subscriptionKey, turnContext, cancellationToken);
+                await this._proactiveStateSubscription.SetAsync(context, null, cancellationToken);
                 isEmpty = true;
             }
             else
             {
                 subscription.ConversationReferences = subscribedConversations;
-                await this.SubscriptionStateAccessor.SetAsync(subscriptionKey, turnContext, subscription, cancellationToken);
-            }
+                proactiveSubscriptionMap[subscriptionKey] = subscription;
+                await this._proactiveStateSubscription.SetAsync(context, proactiveSubscriptionMap, cancellationToken);       }
 
             return isEmpty;
         }
@@ -109,16 +113,14 @@
             return new UpdateSubscriptionResult(isSubscriptionEmpty, isSubscriptionCreated);
         }
 
-        public Task<ProactiveSubscription> GetSubscriptionByKey(
+        public async Task<ProactiveSubscription> GetSubscriptionByKey(
             ITurnContext context,
             string subscriptionKey,
             CancellationToken cancellationToken)
         {
-            return this.SubscriptionStateAccessor.GetAsync(
-                subscriptionKey,
-                context,
-                () => new ProactiveSubscription(),
-                cancellationToken);
+            var proactiveSubscriptionMap = await this._proactiveStateSubscription.GetAsync(context, () => new ProactiveSubscriptionMap()).ConfigureAwait(false);
+            proactiveSubscriptionMap.TryGetValue(subscriptionKey, out var proactiveSubscription);
+            return proactiveSubscription ?? null;
         }
     }
 }

@@ -120,7 +120,7 @@ namespace MusicSkill.Tests
                 Path.Combine(".", "Responses", "ResponsesAndTexts", "ResponsesAndTexts.lg") :
                 Path.Combine(".", "Responses", "ResponsesAndTexts", $"ResponsesAndTexts.{CultureInfo.CurrentUICulture.Name.ToLower()}.lg");
 
-            return Templates.ParseFile(path).ExpandTemplate(templateName + ".Text", data).ToArray();
+            return (string[])Templates.ParseFile(path).ExpandTemplate(templateName + ".Text", data).ToArray();
         }
     }
 }

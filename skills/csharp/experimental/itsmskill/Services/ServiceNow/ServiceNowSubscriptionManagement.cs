@@ -19,14 +19,14 @@ namespace ITSMSkill.Services.ServiceNow
         private readonly string token;
         private readonly IRestClient client;
         private readonly string userId;
-        private readonly string getUserIdResource;
+        private readonly string serviceNowAppId;
         private readonly string baseUrl;
 
-        public ServiceNowSubscriptionManagement(string url, string token, int limitSize, string getUserIdResource, ServiceCache serviceCache = null, IRestClient restClient = null)
+        public ServiceNowSubscriptionManagement(string url, string token, int limitSize, string serviceNowAppId, ServiceCache serviceCache = null, IRestClient restClient = null)
         {
-            this.client = restClient ?? new RestClient($"{url}/api/");
-            this.getUserIdResource = getUserIdResource;
-            this.baseUrl = url;
+            this.serviceNowAppId = serviceNowAppId;
+            this.baseUrl = $"{this.baseUrl}/api/{this.serviceNowAppId}";
+            this.client = restClient ?? new RestClient(this.baseUrl);
         }
 
         public async Task<int> CreateNewRestMessage(string callBackName, string postName)
@@ -34,7 +34,7 @@ namespace ITSMSkill.Services.ServiceNow
             try
             {
                 // TODO get namespace id: 47562 from appsettings or write an API
-                var url = this.baseUrl + $"475462/createnewrestmessage?name={callBackName}&postFunctionName={postName}";
+                var url = this.baseUrl + $"/createnewrestmessage?name={callBackName}&postFunctionName={postName}";
 
                 var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
 
@@ -49,17 +49,15 @@ namespace ITSMSkill.Services.ServiceNow
             }
         }
 
-        public async Task<string> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
+        public async Task<string> CreateSubscriptionBusinessRule(string filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
         {
             try
             {
-                var url = this.baseUrl + "475462 /createbusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
+                // TODO: build filterCondition from userinput instead of hardcoding
+                var url = this.baseUrl + $"/createbusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
                 var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
-                var strBody = "{";
-                strBody += "'Id': current.number.toString() , "; 
-                strBody += "'Title': current.short_description.toString(), ";
-                strBody += "};";
 
+                // Create BusinessRule to execute when 
                 var postBusinessRule = new Dictionary<string, string>();
                 postBusinessRule["script"] = "(function executeRule(current, previous /*null when async*/) {var strBody = \"{\"; strBody += \"'Id': '\" + current.number.toString() + \"', \"; strBody += \"'Title': '\" + current.short_description.toString() + \"', \"; strBody += \"'Description': '\" + current.description.toString() + \"', \"; strBody += \"'Category': '\" + current.category.toString() + \"', \"; strBody += \"'Impact': '\" + current.impact.toString() + \"',\"; strBody += \"'Urgency': '\" + current.urgency.toString() + \"'\"; strBody += \"}\"; var request = new sn_ws.RESTMessageV2(" + TestAPIName + ", 'PostNotification'); request.setRequestBody(JSON.stringify(strBody)); var response = request.execute(); var responseBody = response.getBody(); var httpStatus = response.getStatusCode();})(current, previous);";
 

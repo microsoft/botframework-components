@@ -56,7 +56,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             {
                 Value = new TaskModuleTaskInfo()
                 {
-                    Title = "ImpactTracker",
+                    Title = "Create Incident",
                     Height = "medium",
                     Width = 500,
                     Card = new Attachment
@@ -111,7 +111,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                         context,
                         activityReference,
-                        RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
+                        RenderCreateIncidentHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                         cancellationToken);
 
                     return new TaskModuleContinueResponse()
@@ -119,13 +119,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         Type = "continue",
                         Value = new TaskModuleTaskInfo()
                         {
-                            Title = "Incident Added",
+                            Title = "Incident Created",
                             Height = "medium",
                             Width = 500,
                             Card = new Attachment
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been created")
+                                Content = RenderCreateIncidentHelper.IncidentResponseCard("Incident has been created")
                             }
                         }
                     };
@@ -144,7 +144,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Create Failed")
+                        Content = RenderCreateIncidentHelper.IncidentResponseCard("Incident Create Failed")
                     }
                 }
             };

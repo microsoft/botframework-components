@@ -13,6 +13,7 @@ using ITSMSkill.Extensions.Teams.TaskModule;
 using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Models.UpdateActivity;
 using ITSMSkill.Proactive;
+using ITSMSkill.Proactive.Subscription;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Services;
 using ITSMSkill.TeamsChannels.Invoke;
@@ -51,6 +52,7 @@ namespace ITSMSkill.Bots
         private readonly IServiceProvider _serviceProvider;
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
         private readonly IStatePropertyAccessor<ConversationReferenceMap> _proactiveStateConversationReferenceMapAccessor;
+        private readonly SubscriptionManager _subscriptionManager;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -67,6 +69,7 @@ namespace ITSMSkill.Bots
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             _serviceProvider = serviceProvider;
             _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
+            _subscriptionManager = serviceProvider.GetService<SubscriptionManager>();
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -130,6 +133,17 @@ namespace ITSMSkill.Bots
                         if (listOfConversationReferences != null)
                         {
                             foreach (var conversation in listOfConversationReferences)
+                            {
+                                await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversation, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                            }
+                        }
+
+                        var proactiveSubscriptions = await _subscriptionManager.GetSubscriptionByKey(turnContext, eventData.BusinessRuleName, cancellationToken);
+
+                        // Get list of Conversations to update from SubscriptionManager
+                        if (proactiveSubscriptions != null)
+                        {
+                            foreach (var conversation in proactiveSubscriptions.ConversationReferences)
                             {
                                 await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversation, ContinueConversationCallback(turnContext, eventData), cancellationToken);
                             }
