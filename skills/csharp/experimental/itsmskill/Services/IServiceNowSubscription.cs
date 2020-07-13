@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ITSMSkill.Services
 {
     public interface IServiceNowSubscription
     {
-        Task<string> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
+        Task<HttpStatusCode> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
 
         Task RemoveSubscriptionBusinessRule(string subscriptionId);
 
@@ -15,6 +16,6 @@ namespace ITSMSkill.Services
 
         Task RemoveSubscriptionRestMessage(string messageName);
 
-        Task<int> CreateNewRestMessage(string callBackName, string postName);
+        Task<HttpStatusCode> CreateNewRestMessage(string callBackName, string postName);
     }
 }

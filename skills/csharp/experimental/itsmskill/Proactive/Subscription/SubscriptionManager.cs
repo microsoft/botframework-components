@@ -39,24 +39,31 @@
             ConversationReference conversationReference,
             CancellationToken cancellationToken)
         {
+            bool isNewSubscription = false;
             ProactiveSubscription subscription = await this.GetSubscriptionByKey(context, subscriptionKey, cancellationToken);
+            var proactiveSubscriptionMap = await this._proactiveStateSubscription.GetAsync(context, () => new ProactiveSubscriptionMap()).ConfigureAwait(false);
 
-            bool isNewSubscription = !subscription.ConversationReferences.Any();
-
-            if (subscription.ConversationReferences.All(it => it.Conversation.Id != conversationReference.Conversation.Id))
+            if (subscription != null)
             {
-                var proactiveSubscriptionMap = await this._proactiveStateSubscription.GetAsync(context, () => new ProactiveSubscriptionMap()).ConfigureAwait(false);
-
                 proactiveSubscriptionMap[subscriptionKey] = new ProactiveSubscription
                 {
                     ConversationReferences = new List<ConversationReference>(subscription.ConversationReferences.Append(conversationReference))
                 };
-
-                await this._proactiveStateSubscription.SetAsync(context, proactiveSubscriptionMap, cancellationToken);
-
-                // Save ProactiveState
-                await _proactiveState.SaveChangesAsync(context, false, cancellationToken);
             }
+            else
+            {
+                proactiveSubscriptionMap[subscriptionKey] = new ProactiveSubscription
+                {
+                    ConversationReferences = new List<ConversationReference> { conversationReference }
+                };
+
+                isNewSubscription = true;
+            }
+
+            await this._proactiveStateSubscription.SetAsync(context, proactiveSubscriptionMap, cancellationToken);
+
+            // Save ProactiveState
+            await _proactiveState.SaveChangesAsync(context, false, cancellationToken);
 
             return isNewSubscription;
         }

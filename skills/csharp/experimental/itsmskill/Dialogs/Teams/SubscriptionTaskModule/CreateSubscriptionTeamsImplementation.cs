@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AdaptiveCards;
 using ITSMSkill.Extensions.Teams;
 using ITSMSkill.Models;
+using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Models.UpdateActivity;
 using ITSMSkill.Proactive.Subscription;
 using ITSMSkill.Services;
@@ -114,6 +115,33 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 
                     // Create Subscription BusinessRule
                     var result = await management.CreateSubscriptionBusinessRule(filterUrgency.Value<string>(), filterName.Value<string>(), notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+
+                    if (result == System.Net.HttpStatusCode.OK)
+                    {
+                        var serviceNowSub = new ServiceNowSubscription
+                        {
+                            FilterName = filterName.Value<string>(),
+                            FilterCondition = "UrgencyChanges, DescriptionChanges, PriorityChanges, AssignedToChanges",
+                            NotificationNameSpace = notificationNameSpace.Value<string>(),
+                            NotificationApiName = postNotificationAPIName.Value<string>(),
+                        };
+                        ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                            context,
+                            () => new ActivityReferenceMap(),
+                            cancellationToken)
+                        .ConfigureAwait(false);
+
+                        // Return Added Incident Envelope
+                        // Get saved Activity Reference mapping to conversation Id
+                        activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
+
+                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                        await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
+                            context,
+                            activityReference,
+                            SubscriptionTaskModuleAdaptiveCard.BuildSubscriptionCard(serviceNowSub, _settings.MicrosoftAppId),
+                            cancellationToken);
+                    }
                 }
 
                 // Create ProactiveModel

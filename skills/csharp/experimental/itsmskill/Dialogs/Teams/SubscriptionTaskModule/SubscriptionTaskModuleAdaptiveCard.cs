@@ -6,6 +6,7 @@ using AdaptiveCards;
 using ITSMSkill.Dialogs.Teams.Resources.Subscription;
 using ITSMSkill.Extensions.Teams;
 using ITSMSkill.Extensions.Teams.TaskModule;
+using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Proactive.Subscription;
 
 namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
@@ -81,6 +82,20 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     {
                         Id = "FilterName",
                         Placeholder = IncidentSubscriptionStrings.FilterName,
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.NotificationNameSpace,
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                     new AdaptiveTextInput
+                    {
+                        Id = "NotificationNameSpace",
+                        Placeholder = IncidentSubscriptionStrings.PostNotificationAPIName,
                         Spacing = AdaptiveSpacing.Small,
                         IsMultiline = true
                     },
@@ -192,6 +207,66 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 }
             };
 
+            return card;
+        }
+
+        public static AdaptiveCard BuildSubscriptionCard(ServiceNowSubscription sub, string botId)
+        {
+            var card = new AdaptiveCard("1.0")
+            {
+                Id = "BuildIncidentCard",
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveContainer
+                    {
+                        Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveColumnSet
+                            {
+                                Columns = new List<AdaptiveColumn>
+                                {
+                                    new AdaptiveColumn
+                                    {
+                                        Width = AdaptiveColumnWidth.Stretch,
+                                        Items = new List<AdaptiveElement>
+                                        {
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"FilterName: {sub.FilterName}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"FilterCondition: {sub.FilterCondition}",
+                                                Color = AdaptiveTextColor.Good,
+                                                MaxLines = 1,
+                                                Weight = AdaptiveTextWeight.Bolder,
+                                                Size = AdaptiveTextSize.Large
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"NotificationNameSpace: {sub.NotificationNameSpace}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"NotificationApiNane: {sub.NotificationApiName}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
             return card;
         }
     }

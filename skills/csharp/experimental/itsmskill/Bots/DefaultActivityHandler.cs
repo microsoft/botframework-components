@@ -129,15 +129,6 @@ namespace ITSMSkill.Bots
                         //    eventData.ToAdaptiveCard(),
                         //    cancellationToken);
 
-                        // Get list of Conversations to update
-                        if (listOfConversationReferences != null)
-                        {
-                            foreach (var conversation in listOfConversationReferences)
-                            {
-                                await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversation, ContinueConversationCallback(turnContext, eventData), cancellationToken);
-                            }
-                        }
-
                         var proactiveSubscriptions = await _subscriptionManager.GetSubscriptionByKey(turnContext, eventData.BusinessRuleName, cancellationToken);
 
                         // Get list of Conversations to update from SubscriptionManager
@@ -149,7 +140,6 @@ namespace ITSMSkill.Bots
                             }
                         }
 
-                        await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
                         break;
                     }
 
