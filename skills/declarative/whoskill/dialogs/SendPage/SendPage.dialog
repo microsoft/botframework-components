@@ -51,6 +51,16 @@
           "itemsProperty": "conversation.persons",
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "v694jS"
+              },
+              "activityProcessed": true,
+              "dialog": "FormatPersonModel",
+              "resultProperty": "conversation.persons[dialog.foreach.index]",
+              "options": "=setProperty({}, \"person\", conversation.persons[dialog.foreach.index])"
+            },
+            {
               "$kind": "Microsoft.Graph.RetrievePhoto",
               "$designer": {
                 "id": "pXOIkb"

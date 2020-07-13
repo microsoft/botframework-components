@@ -1,0 +1,1 @@
+{"query":"Who is the manager of allan?","prediction":{"topIntent":"Manager","intents":{"Manager":{"score":0.997711658}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

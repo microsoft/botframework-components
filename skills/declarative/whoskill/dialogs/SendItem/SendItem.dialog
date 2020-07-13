@@ -15,6 +15,16 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "tHlHij"
+          },
+          "activityProcessed": true,
+          "dialog": "FormatPersonModel",
+          "resultProperty": "conversation.person",
+          "options": "=setProperty({}, \"person\", conversation.person)"
+        },
+        {
           "$kind": "Microsoft.Graph.RetrievePhoto",
           "$designer": {
             "id": "A65810"

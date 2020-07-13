@@ -1,0 +1,24 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users/4662b907-6148-405c-8a0c-5c12f568d6f7/manager?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName",
+  "Responses": [
+    {
+      "Content": {
+		"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#directoryObjects(businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName)/$entity",
+		"@odata.type": "#microsoft.graph.user",
+		"businessPhones": [
+			"+1 206 555 0105"
+		],
+		"department": "Operations",
+		"displayName": "Nestor Wilke",
+		"id": "d471984e-0495-4f08-bec1-ec8efe77c021",
+		"jobTitle": "Director",
+		"mail": "NestorW@M365x035709.OnMicrosoft.com",
+		"mobilePhone": null,
+		"officeLocation": "36/2121",
+		"userPrincipalName": "NestorW@M365x035709.OnMicrosoft.com"
+      }
+    }
+  ]
+}

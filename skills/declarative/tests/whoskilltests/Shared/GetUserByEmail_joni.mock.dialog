@@ -1,0 +1,26 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'JoniS@M365x035709.OnMicrosoft.com') or startswith(givenName,'JoniS@M365x035709.OnMicrosoft.com') or startswith(surname,'JoniS@M365x035709.OnMicrosoft.com') or startswith(mail,'JoniS@M365x035709.OnMicrosoft.com') or startswith(userPrincipalName,'JoniS@M365x035709.OnMicrosoft.com'))&$top=1",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+		{
+            "businessPhones": [
+                "+1 980 555 0101"
+            ],
+            "department": "Legal",
+            "displayName": "Joni Sherman",
+            "id": "b451d4b5-257d-4510-b6e9-2208c6a34ab2",
+            "jobTitle": "Paralegal",
+            "mail": "JoniS@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": "20/1109",
+            "userPrincipalName": "JoniS@M365x035709.OnMicrosoft.com"
+        }
+        ]
+      }
+    }
+  ]
+}

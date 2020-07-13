@@ -1,0 +1,52 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'de') or startswith(givenName,'de') or startswith(surname,'de') or startswith(mail,'de') or startswith(userPrincipalName,'de'))&$top=15",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+		{
+			"businessPhones": [
+				"+1 425 555 0105"
+			],
+			"department": "Executive Management",
+			"displayName": "Debra Berger",
+			"id": "69b2336c-c3a9-43eb-b2e2-64d6f42ff734",
+			"jobTitle": "Administrative Assistant",
+			"mail": "DebraB@M365x035709.OnMicrosoft.com",
+			"mobilePhone": null,
+			"officeLocation": "18/2107",
+			"userPrincipalName": "DebraB@M365x035709.OnMicrosoft.com"
+		},
+		{
+			"businessPhones": [
+				"+1 425 555 0100"
+			],
+			"department": "Engineering",
+			"displayName": "Delia Dennis",
+			"id": "67c68604-821a-40b2-96f3-917a09e89073",
+			"jobTitle": "Engineer",
+			"mail": null,
+			"mobilePhone": null,
+			"officeLocation": "20/2051",
+			"userPrincipalName": "DeliaD@M365x035709.OnMicrosoft.com"
+		},
+		{
+			"businessPhones": [
+				"+1 262 555 0106"
+			],
+			"department": "IT",
+			"displayName": "Allan Deyoung",
+			"id": "4662b907-6148-405c-8a0c-5c12f568d6f7",
+			"jobTitle": "IT Admin",
+			"mail": "AllanD@M365x035709.OnMicrosoft.com",
+			"mobilePhone": null,
+			"officeLocation": "24/1106",
+			"userPrincipalName": "AllanD@M365x035709.OnMicrosoft.com"
+		}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'NestorW@M365x035709.OnMicrosoft.com') or startswith(givenName,'NestorW@M365x035709.OnMicrosoft.com') or startswith(surname,'NestorW@M365x035709.OnMicrosoft.com') or startswith(mail,'NestorW@M365x035709.OnMicrosoft.com') or startswith(userPrincipalName,'NestorW@M365x035709.OnMicrosoft.com'))&$top=1",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+		{
+            "businessPhones": [
+                "+1 206 555 0105"
+            ],
+            "department": "Operations",
+            "displayName": "Nestor Wilke",
+            "id": "d471984e-0495-4f08-bec1-ec8efe77c021",
+            "jobTitle": "Director",
+            "mail": "NestorW@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": "36/2121",
+            "userPrincipalName": "NestorW@M365x035709.OnMicrosoft.com"
+		}
+        ]
+      }
+    }
+  ]
+}

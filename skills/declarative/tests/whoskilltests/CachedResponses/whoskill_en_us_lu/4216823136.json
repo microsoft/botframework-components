@@ -1,0 +1,1 @@
+{"query":"What is the phone number of allan?","prediction":{"topIntent":"PhoneNumber","intents":{"PhoneNumber":{"score":0.9783147}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

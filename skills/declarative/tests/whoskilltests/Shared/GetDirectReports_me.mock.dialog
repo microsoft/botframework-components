@@ -1,0 +1,12 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users/f30324f7-4352-4ff4-af1e-06ead69a80f1/directReports?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName",
+  "Responses": [
+    {
+      "Content": {
+        "value": []
+      }
+    }
+  ]
+}

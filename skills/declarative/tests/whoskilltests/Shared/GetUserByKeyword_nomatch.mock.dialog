@@ -1,0 +1,12 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'nomatch') or startswith(givenName,'nomatch') or startswith(surname,'nomatch') or startswith(mail,'nomatch') or startswith(userPrincipalName,'nomatch'))&$top=15",
+  "Responses": [
+    {
+      "Content": {
+       "value": []
+      }
+    }
+  ]
+}

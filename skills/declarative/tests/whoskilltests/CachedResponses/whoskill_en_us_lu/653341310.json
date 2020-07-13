@@ -1,0 +1,1 @@
+{"query":"Who is my manager?","prediction":{"topIntent":"Manager","intents":{"Manager":{"score":0.9994825}},"entities":{"pron":[["my"]]}}}

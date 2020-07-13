@@ -1,0 +1,1 @@
+{"query":"Where is the office of nuller?","prediction":{"topIntent":"Location","intents":{"Location":{"score":0.9989234}},"entities":{"Keyword":[{"PersonName":["nuller"]}]}}}

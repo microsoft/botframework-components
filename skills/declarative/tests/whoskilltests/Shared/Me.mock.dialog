@@ -1,0 +1,23 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/me*",
+  "Responses": [
+    {
+      "Content": {
+		"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName)/$entity",
+		"businessPhones": [
+			"8006427676"
+		],
+		"department": null,
+		"displayName": "Administrator MOD",
+		"id": "f30324f7-4352-4ff4-af1e-06ead69a80f1",
+		"jobTitle": null,
+		"mail": "admin@M365x035709.OnMicrosoft.com",
+		"mobilePhone": "425-882-1032",
+		"officeLocation": null,
+		"userPrincipalName": "admin@M365x035709.onmicrosoft.com"
+      }
+    }
+  ]
+}

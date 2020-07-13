@@ -1,0 +1,41 @@
+﻿{
+	"$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+	"$kind":"Microsoft.Test.Script",
+	"propertyMocks": [
+		"settings.mock"
+	],
+	"userTokenMocks": [
+		"usertoken.mock"
+	],
+	"httpRequestMocks": [
+		"Me.mock",
+		"GetPhoto.mock"
+	],
+	"dialog": "whoskill",
+	"script": [
+	{
+	  "$kind": "Microsoft.Test.UserSays",
+	  "text": "Who am I?"
+	},
+	{
+	  "$kind": "Microsoft.Test.AssertReplyActivity",
+	  "assertions": [
+		"attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+	  ]
+	},
+	{
+	  "$kind": "Microsoft.Test.UserSays",
+	  "text": "000000"
+	},
+	{
+	  "$kind": "Microsoft.Test.AssertReply",
+	  "text": "Here's what I found for 'Administrator MOD':"
+	},
+	{
+	  "$kind": "Microsoft.Test.AssertReplyActivity",
+	  "assertions": [
+		"attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+	  ]
+	}
+	]
+}

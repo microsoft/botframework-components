@@ -1,0 +1,42 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+    "$kind":"Microsoft.Test.Script",
+    "propertyMocks": [
+		"settings.mock"
+	],
+	"userTokenMocks": [
+		"usertoken.mock"
+	],
+	"httpRequestMocks": [
+		"GetUserByKeyword_nestor.mock",
+		"GetDirectReports_nestor.mock",
+		"GetPhoto.mock",
+	],
+    "dialog":"whoskill",
+    "script":[
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"Who reports to nestor?"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+            ]
+        },
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"000000"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReply",
+            "text":"4 people currently report to 'Nestor Wilke':"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+            ]
+        }
+    ]
+}

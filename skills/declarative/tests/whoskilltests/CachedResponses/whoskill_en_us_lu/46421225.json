@@ -1,0 +1,1 @@
+{"query":"What is the department of nuller?","prediction":{"topIntent":"Department","intents":{"Department":{"score":0.997456431}},"entities":{"Keyword":[{"PersonName":["nuller"]}]}}}

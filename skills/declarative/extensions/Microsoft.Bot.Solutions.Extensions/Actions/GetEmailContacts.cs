@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +47,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 top = 15;
             }
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token, httpHandler);
             IUserMessagesCollectionPage messageResult;
             try
             {

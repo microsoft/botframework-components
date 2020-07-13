@@ -1,0 +1,1 @@
+{"query":"Who emailed me recently?","prediction":{"topIntent":"EmailAbout","intents":{"EmailAbout":{"score":0.925814331}},"entities":{"pron":[["me"]]}}}

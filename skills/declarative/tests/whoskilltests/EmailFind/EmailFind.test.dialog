@@ -1,0 +1,41 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+    "$kind":"Microsoft.Test.Script",
+    "propertyMocks": [
+		"settings.mock"
+	],
+	"userTokenMocks": [
+		"usertoken.mock"
+	],
+	"httpRequestMocks": [
+		"GetUserByKeyword_allan.mock",
+		"GetPhoto.mock"
+	],
+    "dialog":"whoskill",
+    "script":[
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"What is the email address of allan?"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+            ]
+        },
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"000000"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReply",
+            "text":"The e-mail address of 'Allan Deyoung' is AllanD@M365x035709.OnMicrosoft.com."
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+            ]
+        }
+    ]
+}

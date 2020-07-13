@@ -1,0 +1,1 @@
+{"query":"What is the job title of allan?","prediction":{"topIntent":"JobTitle","intents":{"JobTitle":{"score":0.9944396}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

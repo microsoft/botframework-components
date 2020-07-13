@@ -1,0 +1,1 @@
+{"query":"What is the phone number of nuller?","prediction":{"topIntent":"PhoneNumber","intents":{"PhoneNumber":{"score":0.9995333}},"entities":{"Keyword":[{"PersonName":["nuller"]}]}}}

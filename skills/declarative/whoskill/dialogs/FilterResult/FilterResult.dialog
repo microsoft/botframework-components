@@ -15,22 +15,12 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.Graph.Who.GetUsers",
-          "token": "=user.token.token",
-          "keywordProperty": "=dialog.chosenPerson.Mail",
-          "resultProperty": "dialog.users",
-          "$designer": {
-            "id": "Xo1zQ1"
-          },
-          "topProperty": "1"
-        },
-        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "tatxPv"
           },
           "property": "dialog.persons",
-          "value": "=where(dialog.persons, x, x.Id != dialog.users[0].Id)"
+          "value": "=where(dialog.persons, x, x.Mail != dialog.chosenPerson.Mail)"
         },
         {
           "$kind": "Microsoft.EndDialog",

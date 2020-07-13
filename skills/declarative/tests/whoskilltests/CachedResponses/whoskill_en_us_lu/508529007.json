@@ -1,0 +1,1 @@
+{"query":"What is the department of allan?","prediction":{"topIntent":"Department","intents":{"Department":{"score":0.9603543}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

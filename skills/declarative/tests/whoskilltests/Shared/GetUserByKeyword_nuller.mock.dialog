@@ -1,0 +1,25 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'nuller') or startswith(givenName,'nuller') or startswith(surname,'nuller') or startswith(mail,'nuller') or startswith(userPrincipalName,'nuller'))&$top=15",
+  "Responses": [
+    {
+      "Content": {
+       "value": [
+        {
+            "businessPhones": [
+            ],
+            "department": null,
+            "displayName": "nuller 1",
+            "id": "4662b907-6148-405c-8a0c-5c12f568d6f7",
+            "jobTitle": null,
+            "mail": null,
+            "mobilePhone": null,
+            "officeLocation": null,
+            "userPrincipalName": "nullerD@M365x035709.OnMicrosoft.com"
+        }
+		]
+      }
+    }
+  ]
+}

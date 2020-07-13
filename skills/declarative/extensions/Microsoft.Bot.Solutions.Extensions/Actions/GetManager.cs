@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,8 +42,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var token = this.Token.GetValue(dcState);
             var idProperty = this.IdProperty.GetValue(dcState);
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
-            DirectoryObject result;
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token, httpHandler);
+            DirectoryObject result = null;
             try
             {
                 result = await graphClient.Users[idProperty]
@@ -53,17 +55,23 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
             catch (ServiceException ex)
             {
-                if (ex.StatusCode == HttpStatusCode.NotFound)
-                {
-                    result =  null;
-                }
-                else
+                // If a user doesn't have manager, it will return a NotFound error. So we only need to throw other exception.
+                if (ex.StatusCode != HttpStatusCode.NotFound)
                 {
                     throw GraphClient.HandleGraphAPIException(ex);
                 }
             }
 
-            if (result == null)
+            WhoSkillUserModel manager = null;
+            try 
+            {
+                manager = new WhoSkillUserModel(result as User);
+            }
+            catch
+            {
+            }
+
+            if (manager == null)
             {
                 if (this.ResultProperty != null)
                 {
@@ -72,8 +80,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
 
                 return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken);
             }
-
-            var manager = new WhoSkillUserModel(result as User);
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(GetManager), manager, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
