@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
             catch (ServiceException ex)
             {
-                // If a user doesn't have manager, it will return a NotFound error. So we only need to throw other exception.
+                // If a user doesn't have directReports, it will return a NotFound error. So we only need to throw other exception.
                 if (ex.StatusCode != HttpStatusCode.NotFound)
                 {
                     throw GraphClient.HandleGraphAPIException(ex);
@@ -63,7 +63,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
 
             var directReports = new List<WhoSkillUserModel>();
-
             foreach (var user in result)
             {
                 try
