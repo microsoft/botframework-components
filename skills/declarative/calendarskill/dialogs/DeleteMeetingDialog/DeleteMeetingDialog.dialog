@@ -230,12 +230,16 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "F5n0Gb"
+            "id": "kNijHS"
           },
           "assignments": [
             {
+              "property": "dialog.result",
+              "value": "={}"
+            },
+            {
               "property": "dialog.result.requestStatus",
-              "value": "= true"
+              "value": "=true"
             }
           ]
         }
@@ -288,12 +292,16 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "JvVycH"
+            "id": "DgsZ5f"
           },
           "assignments": [
             {
+              "property": "dialog.result",
+              "value": "={}"
+            },
+            {
               "property": "dialog.result.requestStatus",
-              "value": "= true"
+              "value": "=true"
             }
           ]
         }

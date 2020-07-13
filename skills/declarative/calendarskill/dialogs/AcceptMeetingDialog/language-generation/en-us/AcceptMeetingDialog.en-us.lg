@@ -1,7 +1,7 @@
 [import](common.lg)
 
 # TextInput_Prompt_w8sm4A()
-- Are you confirmed to accept the meeting \"${dialog.meeting.Title}\"
+- Are you confirmed to accept the meeting "${dialog.meeting.Title}"
 
 # SendActivity_9hcM19()
 - accept meeting ${dialog.meeting.subject}
@@ -10,6 +10,6 @@
 - Sorry, the request got an error ${dialog.api_result.statusCode}
 
 # SendActivity_umV9Wd()
-- Accepted meeting \"${dialog.meeting.subject}\"
+- Accepted meeting "${dialog.meeting.Title}"
 # SendActivity_niKUww()
 - ${CalendarErrorMessage()}

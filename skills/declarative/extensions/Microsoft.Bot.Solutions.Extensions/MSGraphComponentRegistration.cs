@@ -26,7 +26,6 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<AcceptEvent>(AcceptEvent.DeclarativeType);
             yield return new DeclarativeType<DeclineEvent>(DeclineEvent.DeclarativeType);
             yield return new DeclarativeType<DeleteEvent>(DeleteEvent.DeclarativeType);
-            yield return new DeclarativeType<GetMeetingRooms>(GetMeetingRooms.DeclarativeType);
             yield return new DeclarativeType<GetMeetings>(GetMeetings.DeclarativeType);
             yield return new DeclarativeType<GetSchedule>(GetSchedule.DeclarativeType);
             yield return new DeclarativeType<UpdateEventTime>(UpdateEventTime.DeclarativeType);
