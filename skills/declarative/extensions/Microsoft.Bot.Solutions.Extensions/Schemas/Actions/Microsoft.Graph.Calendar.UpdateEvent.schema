@@ -1,0 +1,90 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Update Event",
+  "description": "Update start and end time of a meeting using the Microsoft Graph API.",
+  "required": [
+    "token",
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "token": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "meetingId": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Id",
+      "description": "Event Id",
+      "examples": [
+        "dialog.meeting.id"
+      ]
+    },
+    "startProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Start",
+      "description": "Expression for event start.",
+      "examples": [
+        "dialog.start"
+      ]
+    },
+    "endProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "End",
+      "description": "Expression for event end.",
+      "examples": [
+        "dialog.end"
+      ]
+    },
+    "titleProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Title",
+      "description": "Expression for event title.",
+      "examples": [
+        "dialog.title"
+      ]
+    },
+    "descriptionProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Description",
+      "description": "Expression for event description.",
+      "examples": [
+        "dialog.title"
+      ]
+    },
+    "locationProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Location",
+      "description": "Expression for event location.",
+      "examples": [
+        "dialog.title"
+      ]
+    },
+    "attendeesProperty": {
+      "$ref": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/definitions.schema#/definitions/valueExpression",
+      "title": "Attendees",
+      "description": "Expression for event attendees.",
+      "examples": [
+        "dialog.attendees"
+      ]
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "AuDG44",
+    "name": "SetEventDateTime"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "xuiZzb"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "fnBll9"
+          },
+          "condition": "dialog.datetime != null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
+              "$designer": {
+                "id": "jMxsB6"
+              },
+              "resultProperty": "dialog.meetingTimeSuggestions",
+              "token": "=user.token.token",
+              "attendeesProperty": "=dialog.attendees",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "Cw07Vh"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "dialog.meetingTimeSuggestions",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "LOqDUl"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.meetingTimeChoices",
+                  "value": "=dialog.foreach.value.display"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "tFoqxV"
+              },
+              "value": "Provide my own time",
+              "changeType": "push",
+              "itemsProperty": "dialog.meetingTimeChoices"
+            },
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "BtoqGL"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${ChoiceInput_Prompt_BtoqGL()}",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "style": "heroCard",
+              "choices": "=dialog.meetingTimeChoices",
+              "property": "dialog.selectedMeetingTime",
+              "recognizerOptions": {
+                "recognizeOrdinals": true,
+                "recognizeNumbers": true
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "H4evkt"
+              },
+              "condition": "contains(select(dialog.meetingTimeSuggestions, x, x.display), dialog.selectedMeetingTime)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Fi1XUG"
+                  },
+                  "property": "dialog.meetingTime",
+                  "value": "=where(dialog.meetingTimeSuggestions, item, item.display == dialog.selectedMeetingTime)[0]"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.EventDateTimeInput",
+                  "$designer": {
+                    "id": "ieRJdh"
+                  },
+                  "disabled": false,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": true,
+                  "property": "dialog.meetingTime",
+                  "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Aw7goa()}",
+                  "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+                  "maxTurnCount": 3
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.EventDateTimeInput",
+              "$designer": {
+                "id": "Ny6MEx"
+              },
+              "disabled": false,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "property": "dialog.meetingTime",
+              "value": "=dialog.datetime",
+              "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_o4vGX1()}",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "maxTurnCount": 3
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "3GtyPJ"
+          },
+          "value": "=dialog.meetingTime"
+        }
+      ]
+    }
+  ],
+  "generator": "SetEventDateTime.lg"
+}

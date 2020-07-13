@@ -6,6 +6,7 @@ using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,14 +37,35 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
+        [JsonProperty("eventDictionaryProperty")]
+        public string EventDictionaryProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var events = EventsProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
-
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
+            var eventsByDate = events
+                .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                .GroupBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                .ToDictionary(g => g.Key, g => SortEventsForDay(g.ToList(), currentDateTime));
+
+            // Write Trace Activity for the http request and response values
+            await dc.Context.TraceActivityAsync(nameof(SortEvents), eventsByDate, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+
+            if (this.EventDictionaryProperty != null)
+            {
+                dcState.SetValue(EventDictionaryProperty, eventsByDate);
+            }
+
+            // return the actionResult as the result of this operation
+            return await dc.EndDialogAsync(result: eventsByDate, cancellationToken: cancellationToken);
+        }
+
+        private object SortEventsForDay(List<Event> events, DateTime currentDateTime)
+        {
             var previousEvents = new List<object>();
             var upcomingEvents = new List<object>();
 
@@ -88,21 +110,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 }
             }
 
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(SortEvents), new { previousEvents, upcomingEvents }, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
-
-            if (this.PreviousEventsProperty != null)
-            {
-                dcState.SetValue(PreviousEventsProperty, previousEvents);
-            }
-
-            if (this.UpcomingEventsProperty != null)
-            {
-                dcState.SetValue(UpcomingEventsProperty, upcomingEvents);
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: new { previousEvents, upcomingEvents }, cancellationToken: cancellationToken);
+            return new { previousEvents, upcomingEvents };
         }
     }
 }

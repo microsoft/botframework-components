@@ -1,4 +1,17 @@
 [import](common.lg)
 
-# SendActivity_q9tBcP()
-- Your meeting is in Bellevue.
+# SendActivity_bOAOQw()
+- I couldn't find any meetings matching your criteria. Please try again.
+
+# SendActivity_0VoJmG()
+- ${GetLocation(dialog.selectedEvent)}
+
+    # GetLocation(event)
+- IF: ${(event.location.displayName != null && event.location.displayName != '') && event.isOnlineMeeting == true }
+    - ${ event.location.displayName }, [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSEIF: ${event.location.displayName != null && event.location.displayName != ''}
+    - ${ event.location.displayName }
+- ELSEIF: ${ event.isOnlineMeeting == true }
+    - [Microsoft Teams](${ event.onlineMeeting.joinUrl })
+- ELSE:
+    - No location specified

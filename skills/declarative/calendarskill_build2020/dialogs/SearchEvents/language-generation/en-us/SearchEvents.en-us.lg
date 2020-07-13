@@ -1,0 +1,17 @@
+[import](common.lg)
+
+
+
+
+
+
+
+
+# ConvertToTZ(datetime)
+- ${convertFromUTC(formatDateTime(datetime), user.settings.mailboxSettings.timeZone)}
+
+
+
+
+# ChoiceInput_Prompt_ASi8Di()
+- I found the following events matching the criteria. Please select one.

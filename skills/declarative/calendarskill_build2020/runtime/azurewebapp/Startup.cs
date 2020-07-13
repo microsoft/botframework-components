@@ -102,6 +102,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             adapter.OnTurnError = async (turnContext, exception) =>
             {
                 await turnContext.SendActivityAsync(exception.Message).ConfigureAwait(false);
+                await turnContext.SendActivityAsync(exception.StackTrace).ConfigureAwait(false);
                 await conversationState.ClearStateAsync(turnContext).ConfigureAwait(false);
                 await conversationState.SaveChangesAsync(turnContext).ConfigureAwait(false);
             };

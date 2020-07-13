@@ -1,0 +1,21 @@
+
+# TextInput_Response_3Z7n8w
+> add some expected user responses:
+> - Please remind me to {itemTitle=buy milk}
+> - remind me to {itemTitle}
+> - add {itemTitle} to my todo list
+>
+> entity definitions:
+> @ ml itemTitle
+
+- my 2 o'clock meeting with darren
+- my 2:00 meeting
+- my next meeting
+- the {title=project review}
+- my meeting with elaine
+- the last one
+
+@ prebuilt datetimeV2
+@ prebuilt personName
+@ prebuilt ordinalV2
+@ ml title

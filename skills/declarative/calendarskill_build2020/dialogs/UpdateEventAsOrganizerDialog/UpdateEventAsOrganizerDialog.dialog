@@ -1,0 +1,210 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "RSKCLY",
+    "name": "UpdateEventAsOrganizer",
+    "description": "Update an event that the current user organized"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "V5vZCs"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "bqkLIl"
+          },
+          "name": "UpdateEventDetails"
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "muBmoA"
+          },
+          "id": "muBmoA",
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_muBmoA()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": [
+            "Title",
+            "Description",
+            "Location"
+          ],
+          "property": "dialog.eventProperty",
+          "recognizerOptions": {
+            "recognizeOrdinals": true,
+            "recognizeNumbers": true
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "eo03LT"
+          },
+          "name": "SelectedProperty",
+          "value": "=dialog.eventProperty"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "F6AQLS"
+          },
+          "condition": "dialog.eventProperty",
+          "cases": [
+            {
+              "value": "Title",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "9XoJVK"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_9XoJVK()}",
+                  "property": "dialog.newTitle"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Qph0iD"
+                  }
+                }
+              ]
+            },
+            {
+              "value": "Description",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "Io9Ekw"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_Io9Ekw()}",
+                  "property": "dialog.newDescription"
+                }
+              ]
+            },
+            {
+              "value": "Location",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "0GXOHg"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_0GXOHg()}",
+                  "property": "dialog.newLocation"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xdh12G"
+              },
+              "activity": "${SendActivity_xdh12G()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "OHiB3C"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_OHiB3C()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          },
+          "property": "dialog.changeAnotherProperty"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "31Lubm"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "vAbQtB"
+              },
+              "name": "GoToActionFiring"
+            },
+            {
+              "$kind": "Microsoft.Bot.Solutions.CustomGotoAction",
+              "$designer": {
+                "id": "waghnY"
+              },
+              "actionId": "=\"muBmoA\""
+            }
+          ],
+          "condition": "dialog.changeAnotherProperty == true"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3ESEDn"
+          },
+          "name": "PreUpdatePrintOut"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.UpdateEvent",
+          "$designer": {
+            "id": "P9zkJP"
+          },
+          "token": "=user.token.token",
+          "meetingId": "=dialog.event.id",
+          "titleProperty": "=coalesce(dialog.newTitle, null)",
+          "descriptionProperty": "=coalesce(dialog.newDescription, null)",
+          "attendeesProperty": "=coalesce(dialog.newAttendees, null)",
+          "startProperty": "=coalesce(dialog.newMeetingTime.start, null)",
+          "endProperty": "=coalesce(dialog.newMeetingTime.end, null)",
+          "locationProperty": "=coalesce(dialog.newLocation, null)"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "qIWjQM"
+          },
+          "activity": "${SendActivity_qIWjQM()}"
+        }
+      ]
+    }
+  ],
+  "generator": "UpdateEventAsOrganizerDialog.lg"
+}

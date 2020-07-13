@@ -1,0 +1,33 @@
+
+# TextInput_Response_UnqHUH
+> add some expected user responses:
+> - Please remind me to {itemTitle=buy milk}
+> - remind me to {itemTitle}
+> - add {itemTitle} to my todo list
+>
+> entity definitions:
+> @ ml itemTitle
+
+- darren
+- alex and allan
+- invite darrenj@email.com
+- add ryan and add ted
+- elaine chang
+- bob and karen
+- marieke and em
+
+@prebuilt personName
+@ prebuilt email
+
+# ChoiceInput_Response_yVdZ5r
+> add some expected user responses:
+> - Please remind me to {itemTitle=buy milk}
+> - remind me to {itemTitle}
+> - add {itemTitle} to my todo list
+>
+> entity definitions:
+> @ ml itemTitle
+
+- the first one
+- the second one
+- the third one

@@ -10,14 +10,14 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "LwR2xx"
       },
       "actions": [
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "G4qmlT"
+            "id": "EaZ7cB"
           },
           "assignments": [
             {
@@ -43,11 +43,47 @@
           ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "q9tBcP"
+            "id": "MhHw9J"
           },
-          "activity": "${SendActivity_q9tBcP()}"
+          "activityProcessed": true,
+          "dialog": "SearchEvents",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "personNameArray": "=dialog.personNameArray",
+            "ordinal": "=dialog.ordinal",
+            "futureEventsOnly": true,
+            "isSelection": true
+          },
+          "resultProperty": "dialog.calendarEvents"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VA5jdv"
+          },
+          "condition": "dialog.selectedEvent != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "0VoJmG"
+              },
+              "activity": "${SendActivity_0VoJmG()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "bOAOQw"
+              },
+              "activity": "${SendActivity_bOAOQw()}"
+            }
+          ]
         }
       ]
     }

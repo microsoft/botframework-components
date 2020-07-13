@@ -63,6 +63,12 @@
       "title": "TimeZone",
       "description": "Timezone.",
       "examples": []
+    },
+    "isFutureProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Future Events Only",
+      "description": "Future Events Only",
+      "examples": []
     }
   }
 }

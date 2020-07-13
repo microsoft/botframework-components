@@ -24,6 +24,12 @@
       "title": "Timex",
       "description": "Timex string to resolve.",
       "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Timezone",
+      "description": "Timezone for resolutions.",
+      "examples": []
     }
   }
 }

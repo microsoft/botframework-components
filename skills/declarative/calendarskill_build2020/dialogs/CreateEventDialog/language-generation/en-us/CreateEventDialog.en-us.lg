@@ -217,11 +217,15 @@
 - When should I schedule the meeting?
 # ChoiceInput_Prompt_J7Pz46()
 - I found the following times:
-# ChoiceInput_Prompt_ZFn918()
-- I've found the following times when all attendees are available. Would you like to schedule for one of these times?
+
 # Graph.Calendar.EventDateTimeInput_Prompt_Aw7goa()
 - When should I schedule the meeting?
 # Graph.Calendar.EventDateTimeInput_Prompt_o4vGX1()
 - When should I schedule the meeting?
 # ConfirmInput_Prompt_53FZhJ()
 - Would you like to make this a Microsoft Teams meeting?
+# SendActivity_rL5i1e()
+- ```
+I've added the following recipients:
+\n * ${join(dialog.attendees, " \n * ")}
+```

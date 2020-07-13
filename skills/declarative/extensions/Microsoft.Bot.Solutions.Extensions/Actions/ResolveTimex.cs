@@ -31,16 +31,35 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("timexProperty")]
         public ArrayExpression<string> TimexProperty { get; set; }
 
+        [JsonProperty("timeZoneProperty")]
+        public StringExpression TimeZoneProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var timexProperty = TimexProperty.GetValue(dcState);
+            var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var culture = GetCulture(dc);
-
             var results = TimexResolver.Resolve(timexProperty.ToArray()).Values;
+
+            // if type == date, do special timezone stuff
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(ResolveTimex), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+
+            // if timex type == date
+            // set start and end to full day (unconverted)
+
+            // if timex == datetime
+            // convert to timezone, set value
+
+            // if timex == datetimerange
+            // convert to timezone set start/end
+
+            // if timex == time
+            // set value
+
+
 
             if (this.ResultProperty != null)
             {

@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "ixMfEG",
-    "name": "AuthenticationDialog"
+    "name": "Authentication"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -10,7 +10,7 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "JzF7Pc"
       },
       "actions": [
@@ -34,12 +34,6 @@
           },
           "token": "=user.token.token",
           "resultProperty": "user.settings"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "Eypc02"
-          }
         }
       ]
     }

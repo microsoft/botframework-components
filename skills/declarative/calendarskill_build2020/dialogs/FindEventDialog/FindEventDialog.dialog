@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "m9RGGG",
-    "name": "FindEventDialog"
+    "name": "FindEvent"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -10,7 +10,7 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "iXs06X"
       },
       "actions": [
@@ -21,8 +21,12 @@
           },
           "assignments": [
             {
-              "property": "dialog.datetime",
-              "value": "=coalesce(dialog.datetime, @datetime)"
+              "property": "dialog.start",
+              "value": "=coalesce(dialog.datetime.start, dialog.datetime.value, formatDateTime(utcNow(), \"yyyy-MM-dd\"))"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=coalesce(dialog.datetime.end, null)"
             },
             {
               "property": "dialog.title",
@@ -43,60 +47,21 @@
           ]
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "5Bhcg8"
+            "id": "wD89cS"
           },
-          "condition": "dialog.datetime != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.Bot.Solutions.ResolveTimex",
-              "$designer": {
-                "id": "CTelff"
-              },
-              "resultProperty": "dialog.timexResolutions",
-              "timexProperty": "=dialog.datetime.timex"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "oxNPxp"
-              },
-              "property": "dialog.datetime",
-              "value": "=dialog.timexResolutions[0]"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "q5MIkb"
-              },
-              "property": "dialog.datetime.value",
-              "value": "=date(utcNow())"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "O6XDlU"
+          "activityProcessed": true,
+          "dialog": "SearchEvents",
+          "options": {
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "title": "=dialog.title",
+            "location": "=dialog.location",
+            "personNameArray": "=dialog.personNameArray",
+            "ordinal": "=dialog.ordinal"
           },
-          "name": "AfterDate"
-        },
-        {
-          "$kind": "Microsoft.Graph.Calendar.GetEvents",
-          "$designer": {
-            "id": "eOTm1D"
-          },
-          "resultProperty": "dialog.calendarEvents",
-          "token": "=user.token.token",
-          "startProperty": "=if(dialog.datetime.start != null, dialog.datetime.start, if(dialog.datetime.value != null, dialog.datetime.value, null))",
-          "endProperty": "=if(dialog.datetime.end != null, dialog.datetime.end, null)",
-          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
-          "titleProperty": "=if(dialog.title != null, dialog.title, null)",
-          "locationProperty": "=if(dialog.location != null, dialog.location, null)",
-          "attendeesProperty": "=if(dialog.personNameArray != null, dialog.personNameArray, null)"
+          "resultProperty": "dialog.calendarEvents"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -113,7 +78,8 @@
               "eventsProperty": "=dialog.calendarEvents",
               "previousEventsProperty": "dialog.previousEvents",
               "upcomingEventsProperty": "dialog.upcomingEvents",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "eventDictionaryProperty": "dialog.eventsDictionary"
             },
             {
               "$kind": "Microsoft.SendActivity",

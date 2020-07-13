@@ -23,7 +23,6 @@ namespace Microsoft.Bot.Solutions.Extensions
             yield return new DeclarativeType<UpdateEvent>(UpdateEvent.DeclarativeType);
             yield return new DeclarativeType<EventDateTimeInput>(EventDateTimeInput.DeclarativeType);
             yield return new DeclarativeType<SortEvents>(SortEvents.DeclarativeType);
-            yield return new DeclarativeType<ResolveTimex>(ResolveTimex.DeclarativeType);
             yield return new DeclarativeType<AcceptEvent>(AcceptEvent.DeclarativeType);
             yield return new DeclarativeType<DeclineEvent>(DeclineEvent.DeclarativeType);
             yield return new DeclarativeType<DeleteEvent>(DeleteEvent.DeclarativeType);
@@ -43,6 +42,10 @@ namespace Microsoft.Bot.Solutions.Extensions
             // shared
             yield return new DeclarativeType<GetMe>(GetMe.DeclarativeType);
             yield return new DeclarativeType<RetrievePhoto>(RetrievePhoto.DeclarativeType);
+
+            // general
+            yield return new DeclarativeType<ResolveTimex>(ResolveTimex.DeclarativeType);
+            yield return new DeclarativeType<CustomGotoAction>(CustomGotoAction.Kind);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

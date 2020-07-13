@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "8gI5nw",
-    "name": "UpdateEventDialog"
+    "name": "UpdateEvent"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -10,10 +10,17 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "BDdO1Z"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "DAOGQP"
+          },
+          "name": "UpdateEventTriggered"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -45,25 +52,85 @@
               "value": "=coalesce(dialog.personName, @@personName)"
             },
             {
-              "property": "=dialog.ordinal",
+              "property": "dialog.ordinal",
               "value": "=coalesce(dialog.ordinal, @ordinal)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2R1dex"
+          },
+          "condition": "dialog.fromDateTime == null && dialog.toTitle == null && dialog.personNameArray == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "3Z7n8w"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_3Z7n8w()}",
+              "property": "dialog.searchString"
             }
           ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "0nvIO8"
+            "id": "F7dzOu"
           },
           "activityProcessed": true,
           "dialog": "SearchEvents",
           "options": {
-            "datetime": "=dialog.fromDateTime",
-            "title": "=dialog.fromTitle",
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "title": "=coalesce(dialog.title, dialog.searchString)",
             "location": "=dialog.location",
             "personNameArray": "=dialog.personNameArray",
-            "ordinal": "=ordinal"
-          }
+            "ordinal": "=dialog.ordinal",
+            "isSelection": true
+          },
+          "resultProperty": "dialog.selectedEvent"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "O08YBQ"
+          },
+          "name": "SelectedEventToUpdate"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "duwlhz"
+          },
+          "condition": "dialog.selectedEvent.isOrganizer == true",
+          "actions": [
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "P8bi6h"
+              },
+              "activityProcessed": true,
+              "dialog": "UpdateEventAsOrganizerDialog",
+              "options": {
+                "event": "=dialog.selectedEvent"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "LXxZSN"
+              },
+              "activity": "${SendActivity_LXxZSN()}"
+            }
+          ]
         }
       ]
     }

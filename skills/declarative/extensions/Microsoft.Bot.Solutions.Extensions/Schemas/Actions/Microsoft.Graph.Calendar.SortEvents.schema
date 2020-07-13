@@ -8,6 +8,7 @@
     "token",
     "previousEventsProperty",
     "upcomingEventsProperty",
+    "eventDictionaryProperty",
     "timeZoneProperty"
   ],
   "properties": {
@@ -44,6 +45,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "TimeZone",
       "description": "Timezone.",
+      "examples": []
+    },
+    "eventDictionaryProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Event Dictionary",
+      "description": "Event Dictionary",
       "examples": []
     }
   }

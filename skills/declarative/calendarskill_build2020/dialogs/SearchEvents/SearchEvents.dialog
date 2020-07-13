@@ -1,0 +1,156 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "O4fasQ",
+    "name": "SearchEvents"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "OnBeginDialog",
+        "id": "DsKqXb"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "vt73aT"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=dialog.start"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=dialog.end"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=coalesce(dialog.title, @title)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            },
+            {
+              "property": "dialog.isSelection",
+              "value": "=coalesce(dialog.isSelection, false)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$designer": {
+            "id": "PZpSwZ"
+          },
+          "resultProperty": "dialog.calendarEvents",
+          "token": "=user.token.token",
+          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+          "endProperty": "=coalesce(dialog.end, null)",
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "titleProperty": "=if(dialog.title != null, dialog.title, null)",
+          "locationProperty": "=coalesce(dialog.location, null)",
+          "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
+          "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yXhH39"
+          },
+          "condition": "dialog.isSelection == true",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "inaCLp"
+              },
+              "condition": "count(dialog.calendarEvents) > 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "k2RkgD"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.foreach.value",
+                  "itemsProperty": "dialog.calendarEvents",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "QUF3NB"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.eventChoiceOptions",
+                      "value": "=json(concat('{\"action\": { \"value\": ', json(dialog.foreach.value), ', \"type\": \"postBack\", \"title\": \"', dialog.foreach.value.subject, '\" } }'))"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "ASi8Di"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_ASi8Di()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=dialog.eventChoiceOptions",
+                  "property": "dialog.selectedEvent",
+                  "style": "heroCard"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "zaortR"
+                  },
+                  "value": "=dialog.selectedEvent"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "XZNgFd"
+                  },
+                  "value": "=dialog.calendarEvents[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Pa4U2s"
+              },
+              "value": "=dialog.calendarEvents"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "SearchEvents.lg"
+}

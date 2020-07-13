@@ -40,6 +40,13 @@
       "intent": "CreateEvent",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "GA39yz"
+          },
+          "name": "CreateEventTriggered"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "9EVSB0"
@@ -69,8 +76,7 @@
               "property": "dialog.initialActivity",
               "value": "=turn.activity.text"
             }
-          ],
-          "activityProcessed": true
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -97,7 +103,7 @@
           }
         }
       ],
-      "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.5"
+      "condition": "turn.dialogevent.value.intents.CreateEvent.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -106,6 +112,13 @@
       },
       "intent": "FindEvent",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "njLDEX"
+          },
+          "name": "FindEventTriggered"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -143,6 +156,42 @@
           "dialog": "AuthenticationDialog"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "QN7lbD"
+          },
+          "condition": "dialog.datetime.timex != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.Bot.Solutions.ResolveTimex",
+              "$designer": {
+                "id": "iCrv00"
+              },
+              "resultProperty": "dialog.timexResolutions",
+              "timexProperty": "=dialog.datetime.timex",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "a11HLI"
+              },
+              "property": "dialog.datetime",
+              "value": "=dialog.timexResolutions[0]"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lnl9Ho"
+              },
+              "property": "dialog.datetime.value",
+              "value": "=formatDateTime(utcNow(), 'yyyy-MM-dd')"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "VIs194"
@@ -166,6 +215,13 @@
       },
       "intent": "FindEventAttendees",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "g0yoZo"
+          },
+          "name": "FindEventAttendeesTriggered"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -220,6 +276,13 @@
       "intent": "FindEventDateTime",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "33uEmd"
+          },
+          "name": "FindEventDateTimeTriggered"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "jODbUh"
@@ -272,6 +335,13 @@
       },
       "intent": "FindEventLocation",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "4L5bWP"
+          },
+          "name": "FindEventLocationTriggered"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -326,6 +396,13 @@
       "intent": "UpdateEvent",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "TGQGBi"
+          },
+          "name": "UpdateEventTriggered"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "XurRTv"
@@ -364,6 +441,23 @@
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cE5AQz"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "fromDateTime": "=dialog.fromDateTime",
+            "toDateTime": "=dialog.toDateTime",
+            "toTitle": "=dialog.toTitle",
+            "fromTitle": "=dialog.fromTitle",
+            "location": "=dialog.location",
+            "personNameArray": "=dialog.personNameArray",
+            "ordinal": "=dialog.ordinal"
+          }
         }
       ]
     }

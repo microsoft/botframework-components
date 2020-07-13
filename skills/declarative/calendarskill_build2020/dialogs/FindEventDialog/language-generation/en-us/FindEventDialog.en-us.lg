@@ -1,28 +1,26 @@
 [import](common.lg)
 
 
-
-
-
-# SendActivity_SxEi06()
--
-
-
 # SendActivity_gUGZRJ()
 [Activity
-    Attachments = ${json(BuildScheduleCard(coalesce(dialog.datetime.value, dialog.datetime.start), dialog.previousEvents, dialog.upcomingEvents))}
+    Text = ${GetEventsResult()}
+    Attachments = ${foreach(dialog.eventsDictionary, eventsForDay, json(BuildScheduleCard(eventsForDay.Key, eventsForDay.Value.previousEvents, eventsForDay.Value.upcomingEvents)))}
+    AttachmentLayout = list
 ]
+
+# GetEventsResult
+- ```
+I found these events with matching the search criteria:
+${if(dialog.start != null, concat('* Date: ', formatDateTime(dialog.start,  'dddd, MMMM dd, yyyy')), '')} ${if(dialog.end != null, concat('- ', formatDateTime(dialog.end, 'dddd, MMMM dd, yyyy')), '')}
+${if(dialog.title != null, concat('* Title: ', dialog.title), '')}
+${if(dialog.location != null, concat('* Location: ', dialog.location), '')}
+${if(dialog.personNameArray != null, concat('* Attendees: ', join(dialog.personNameArray, ',')), '')}
+```
 
 
 # SendActivity_xEJ9J1()
-- IF: ${dialog.datetime != null && ticks(ConvertToTZ(dialog.datetime)) >= ticks(startOfDay(ConvertToTZ(utcNow())))}
-    - You don't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
-- ELSEIF: ${dialog.datetime != null && ticks(formatDateTime(ConvertToTZ(dialog.datetime))) < ticks(startOfDay(ConvertToTZ(utcNow())))}
-    - You didn't have any events scheduled for ${dateReadBack(ConvertToTZ(utcNow()), formatDateTime(ConvertToTZ(dialog.datetime)))}.
-- ELSE: 
-    - You don't have any events scheduled for today.
+- You don't have any events matching that criteria.
 
-    
 # BuildScheduleCard(datetime, previousEvents, upcomingEvents)
 - ```
 {
@@ -39,12 +37,12 @@
                     "inlines": [
                         {
                             "type": "TextRun",
-                            "text": "${if(dialog.datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), 'Today', formatDateTime(ConvertToTZ(datetime), 'dddd'))} ",
+                            "text": "${if(IsToday(datetime), 'Today', formatDateTime(datetime, 'dddd'))} ",
                             "size": "Large"
                         },
                         {
                             "type": "TextRun",
-                            "text": "${if(dialog.datetime != null, formatDateTime(ConvertToTZ(datetime), 'MMMM d, yyyy'), formatDateTime(ConvertToTZ(utcNow()), 'MMMM d, yyyy'))}",
+                            "text": "${formatDateTime(datetime, 'MMMM d, yyyy')}",
                             "size": "Large",
                             "weight": "Lighter"
                         }
@@ -52,7 +50,7 @@
                 },
                 {
                     "type": "TextBlock",
-                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), 'remaining', '')}",
+                    "text": "${count(upcomingEvents)} ${if(count(upcomingEvents) == 1, 'event', 'events')} ${if(IsToday(datetime), 'remaining', '')}",
                     "size": "Small",
                     "spacing": "None"
                 }
@@ -65,7 +63,7 @@
             "style": "default",
             "items": [
                 ${join(foreach(previousEvents, x, BuildPreviousEventItem(x)), ', ')},
-                ${if(dialog.datetime == null || date(ConvertToTZ(datetime)) == date(ConvertToTZ(utcNow())), BuildSeparator(), '')},
+                ${if(IsToday(datetime), BuildSeparator(), '')},
                 ${join(foreach(upcomingEvents, x, BuildUpcomingEventItem(x)), ', ')}
             ]
         },
@@ -200,6 +198,12 @@
 }
 ```
 
+# IsToday(datetime)
+- IF: ${ date(datetime) == date(ConvertToTZ(utcNow())) }
+    - ${bool(true)}
+- ELSE:
+    - ${bool(false)}
+
 # ConvertToTZ(datetime)
 - ${convertFromUTC(formatDateTime(datetime), user.settings.mailboxSettings.timeZone)}
 
@@ -211,4 +215,4 @@
 - ELSEIF: ${ event.isOnlineMeeting == true }
     - [Microsoft Teams](${ event.onlineMeeting.joinUrl })
 - ELSE:
-    - No location specified
+    - No location specified.

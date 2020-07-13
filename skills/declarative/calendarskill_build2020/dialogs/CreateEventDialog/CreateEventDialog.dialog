@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "OWz3hh",
-    "name": "CreateEventDialog"
+    "name": "CreateEvent"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -10,7 +10,7 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "ngZ8sU"
       },
       "actions": [
@@ -39,13 +39,8 @@
             {
               "property": "dialog.personNameArray",
               "value": "=coalesce(dialog.personNameArray, @@personName)"
-            },
-            {
-              "property": "dialog.initialActivity",
-              "value": "=coalesce(dialog.initialActivity, turn.activity.text)"
             }
-          ],
-          "activityProcessed": true
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -61,6 +56,13 @@
           "activityProcessed": true
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "rL5i1e"
+          },
+          "activity": "${SendActivity_rL5i1e()}"
+        },
+        {
           "$kind": "Microsoft.TextInput",
           "$designer": {
             "id": "YhjtAz"
@@ -72,131 +74,17 @@
           "allowInterruptions": false
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "G9Or05"
+            "id": "fL6bpL"
           },
-          "condition": "dialog.datetime != null",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
-              "$designer": {
-                "id": "EqxEVA"
-              },
-              "resultProperty": "dialog.meetingTimeSuggestions",
-              "token": "=user.token.token",
-              "attendeesProperty": "=dialog.attendees",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "inXnkE"
-              },
-              "name": "FindMeetingTimesData"
-            },
-            {
-              "$kind": "Microsoft.Foreach",
-              "$designer": {
-                "id": "bvcWA8"
-              },
-              "index": "dialog.foreach.index",
-              "value": "dialog.foreach.value",
-              "itemsProperty": "dialog.meetingTimeSuggestions",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EditArray",
-                  "$designer": {
-                    "id": "fd1c8U"
-                  },
-                  "changeType": "push",
-                  "itemsProperty": "dialog.meetingTimeChoices",
-                  "value": "=dialog.foreach.value.display"
-                }
-              ]
-            },
-            {
-              "$kind": "Microsoft.EditArray",
-              "$designer": {
-                "id": "vFVDCG"
-              },
-              "value": "Provide my own time",
-              "changeType": "push",
-              "itemsProperty": "dialog.meetingTimeChoices"
-            },
-            {
-              "$kind": "Microsoft.ChoiceInput",
-              "$designer": {
-                "id": "ZFn918"
-              },
-              "defaultLocale": "en-us",
-              "disabled": false,
-              "maxTurnCount": 3,
-              "alwaysPrompt": false,
-              "allowInterruptions": false,
-              "prompt": "${ChoiceInput_Prompt_ZFn918()}",
-              "choiceOptions": {
-                "includeNumbers": true,
-                "inlineOrMore": ", or ",
-                "inlineOr": " or ",
-                "inlineSeparator": ", "
-              },
-              "style": "heroCard",
-              "choices": "=dialog.meetingTimeChoices",
-              "property": "dialog.selectedMeetingTime",
-              "recognizerOptions": {
-                "recognizeOrdinals": true,
-                "recognizeNumbers": true
-              }
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "hos8Yh"
-              },
-              "condition": "contains(select(dialog.meetingTimeSuggestions, x, x.display), dialog.selectedMeetingTime)",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "Bv1Ofd"
-                  },
-                  "property": "dialog.meetingTime",
-                  "value": "=where(dialog.meetingTimeSuggestions, item, item.display == dialog.selectedMeetingTime)[0]"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.Graph.Calendar.EventDateTimeInput",
-                  "$designer": {
-                    "id": "Aw7goa"
-                  },
-                  "disabled": false,
-                  "alwaysPrompt": false,
-                  "allowInterruptions": true,
-                  "property": "dialog.meetingTime",
-                  "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Aw7goa()}",
-                  "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
-                }
-              ]
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.Graph.Calendar.EventDateTimeInput",
-              "$designer": {
-                "id": "o4vGX1"
-              },
-              "disabled": false,
-              "alwaysPrompt": false,
-              "allowInterruptions": false,
-              "property": "dialog.meetingTime",
-              "value": "=dialog.datetime",
-              "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_o4vGX1()}",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
-              "maxTurnCount": 3
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "SetEventDateTime",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "attendees": "=dialog.attendees"
+          },
+          "resultProperty": "dialog.meetingTime"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -247,7 +135,7 @@
           "alwaysPrompt": false,
           "allowInterruptions": true,
           "defaultLocale": "en-us",
-          "style": "Auto",
+          "style": "auto",
           "prompt": "${ConfirmInput_Prompt_MwF0M9()}",
           "choiceOptions": {
             "includeNumbers": true,
@@ -304,9 +192,7 @@
             "id": "u7F6gk"
           }
         }
-      ],
-      "defaultResultProperty": "dialog.result",
-      "activityProcessed": true
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -314,15 +200,7 @@
         "id": "oHiQlu"
       },
       "intent": "SetTitle",
-      "defaultResultProperty": "dialog.result",
       "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "2MxmZ3"
-          },
-          "name": "SetTitleInterruption"
-        },
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
@@ -330,22 +208,13 @@
           },
           "disabled": false,
           "maxTurnCount": 3,
-          "alwaysPrompt": false,
+          "alwaysPrompt": "=@title == null",
           "allowInterruptions": false,
           "prompt": "${TextInput_Prompt_xKJtnS()}",
-          "property": "dialog.newTitle",
-          "value": "=@title"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "tMcXHI"
-          },
           "property": "dialog.title",
-          "value": "=dialog.newTitle"
+          "value": "=@title"
         }
       ],
-      "activityProcessed": true,
       "condition": "turn.dialogevent.value.intents.SetTitle.score > 0.5"
     },
     {
@@ -354,15 +223,7 @@
         "id": "bpS3Yr"
       },
       "intent": "SetAttendees",
-      "defaultResultProperty": "dialog.result",
       "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "rgabXQ"
-          },
-          "name": "SetAttendeesInterruption"
-        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
@@ -390,7 +251,6 @@
               "$designer": {
                 "id": "LvrtUU"
               },
-              "activityProcessed": true,
               "changeType": "push",
               "itemsProperty": "dialog.attendees",
               "value": "=dialog.foreach.value"
@@ -398,7 +258,6 @@
           ]
         }
       ],
-      "activityProcessed": true,
       "condition": "turn.dialogevent.value.intents.SetAttendees.score > 0.5"
     },
     {
@@ -407,44 +266,28 @@
         "id": "alSwwm"
       },
       "intent": "SetDateTime",
-      "defaultResultProperty": "dialog.result",
       "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "y4wlWG"
-          },
-          "name": "SetDateTimeInterruption"
-        },
         {
           "$kind": "Microsoft.Graph.Calendar.EventDateTimeInput",
           "$designer": {
             "id": "Ofk3Yl"
           },
           "disabled": false,
-          "alwaysPrompt": false,
           "allowInterruptions": true,
           "property": "dialog.updatedMeetingTime",
           "value": "=turn.activity.text",
           "prompt": "${Graph.Calendar.EventDateTimeInput_Prompt_Ofk3Yl()}",
           "maxTurnCount": 3,
-          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "alwaysPrompt": false
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "ycu5UO"
           },
-          "allowInterruptions": true,
           "property": "dialog.meetingTime",
-          "value": "=dialog.updatedMeetingTime",
-          "maxTurnCount": 3
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "RPxfRK"
-          }
+          "value": "=dialog.updatedMeetingTime"
         }
       ],
       "condition": "turn.dialogevent.value.intents.SetDateTime.score > 0.5"
@@ -455,15 +298,7 @@
         "id": "C36530"
       },
       "intent": "SetLocation",
-      "defaultResultProperty": "dialog.result",
       "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "uL2cQp"
-          },
-          "name": "SetLocationInterruption"
-        },
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
@@ -472,18 +307,10 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=@location == null",
           "prompt": "${TextInput_Prompt_qV8Md1()}",
-          "property": "dialog.newLocation",
-          "value": "=@location"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "UfZZPM"
-          },
           "property": "dialog.location",
-          "value": "=dialog.newLocation"
+          "value": "=@location"
         }
       ],
       "condition": "turn.dialogevent.value.intents.SetLocation.score > 0.5"

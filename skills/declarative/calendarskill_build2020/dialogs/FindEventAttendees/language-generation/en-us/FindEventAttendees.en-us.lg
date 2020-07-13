@@ -1,4 +1,11 @@
 [import](common.lg)
 
-# SendActivity_PORi1b()
-- The following attendees will be at the meeting
+
+# SendActivity_gpVDbJ()
+- ```
+The following people are attending the meeting titled '${dialog.selectedEvent.subject}':
+\n * ${join(foreach(dialog.selectedEvent.attendees, a, a.emailAddress.name), " \n * ")}
+```
+
+# SendActivity_iM5k2s()
+- I couldn't find any meetings matching your criteria. Please try again.

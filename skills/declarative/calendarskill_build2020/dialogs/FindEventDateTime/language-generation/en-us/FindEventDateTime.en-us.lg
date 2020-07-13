@@ -1,4 +1,7 @@
 [import](common.lg)
 
-# SendActivity_Mdumfe()
-- Your meeting is at 4pm tomorrow
+
+# SendActivity_gJSQW0()
+- ${formatDateTime(dialog.selectedEvent.start.datetime, 'dddd, MMMM dd, yyyy')} at ${formatDateTime(dialog.selectedEvent.start.datetime, 'hh:mmtt')}
+# SendActivity_TIwqPA()
+- I couldn't find any meetings matching your criteria. Please try again.

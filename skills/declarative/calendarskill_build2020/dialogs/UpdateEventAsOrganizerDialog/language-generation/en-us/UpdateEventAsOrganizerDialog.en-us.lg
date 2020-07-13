@@ -1,0 +1,27 @@
+[import](common.lg)
+
+
+
+
+
+
+
+
+
+
+
+# SendActivity_qIWjQM()
+- I've updated the event.
+# ChoiceInput_Prompt_muBmoA()
+- What would you like to change?
+# ConfirmInput_Prompt_OHiB3C()
+- Would you like to change anything else?
+
+# TextInput_Prompt_9XoJVK()
+- What should I change the title to?
+# TextInput_Prompt_Io9Ekw()
+- What should I change the description to?
+# TextInput_Prompt_0GXOHg()
+- What should I change the location to?
+# SendActivity_xdh12G()
+- Sorry, I didn't recognize that property.

@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "19Ua0Q",
-    "name": "GetContactsDialog"
+    "name": "GetContacts"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -10,17 +10,10 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "BeginDialog",
+        "name": "OnBeginDialog",
         "id": "4Oub2q"
       },
       "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "3U65xS"
-          },
-          "name": "GetContactsDialogStarted"
-        },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
@@ -36,9 +29,9 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "property": "dialog.contactName",
-              "prompt": "${TextInput_Prompt_UnqHUH()}"
+              "prompt": "${TextInput_Prompt_UnqHUH()}",
+              "allowInterruptions": "=turn.dialogevent.value.intents.TextInput_Response_UnqHUH.score < 0.8"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -181,7 +174,9 @@
                           },
                           "recognizerOptions": {
                             "noValue": false,
-                            "noAction": false
+                            "noAction": false,
+                            "recognizeOrdinals": true,
+                            "recognizeNumbers": true
                           },
                           "choices": "=dialog.emailChoiceList",
                           "property": "dialog.emailAddress",
@@ -212,13 +207,6 @@
           "condition": "dialog.attendees != null",
           "actions": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "ChJFWb"
-              },
-              "activity": "${SendActivity_ChJFWb()}"
-            },
-            {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
                 "id": "63dlwQ"
@@ -248,5 +236,6 @@
     }
   ],
   "generator": "GetContactsDialog.lg",
-  "activityProcessed": true
+  "activityProcessed": true,
+  "recognizer": "GetContactsDialog.lu"
 }

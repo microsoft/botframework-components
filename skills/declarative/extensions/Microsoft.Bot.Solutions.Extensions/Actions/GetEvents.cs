@@ -46,6 +46,9 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime?> EndProperty { get; set; }
 
+        [JsonProperty("isFutureProperty")]
+        public BoolExpression IsFutureProperty { get; set; }
+
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
@@ -57,6 +60,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
+            var isFuture = IsFutureProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -77,24 +81,28 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
 
             // if start date is not provided, default to DateTime.Now
-            if (startProperty == null || startProperty.Value == DateTime.MinValue)
+            if (startProperty == null || startProperty.Value == DateTime.MinValue || isFuture)
             {
                 startProperty = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
             }
-            else
-            {
-                startProperty = TimeZoneInfo.ConvertTimeFromUtc(startProperty.Value, timeZone);
-            }
+            //else
+            //{
+            //    if (startProperty.Value.TimeOfDay != new TimeSpan(0, 0, 0))
+            //    {
+            //        // if that start property is the beginning of the day, don't convert from UTC
+            //        startProperty = TimeZoneInfo.ConvertTimeFromUtc(startProperty.Value, timeZone);
+            //    }
+            //}
 
             // if end date is not provided, default to start property +7days
             if (endProperty == null || endProperty.Value == DateTime.MinValue)
             {
                 endProperty = startProperty.Value.Date.AddHours(23).AddMinutes(59);
             }
-            else
-            {
-                endProperty = TimeZoneInfo.ConvertTimeFromUtc(endProperty.Value, timeZone);
-            }
+            //else
+            //{
+            //    endProperty = TimeZoneInfo.ConvertTimeFromUtc(endProperty.Value, timeZone);
+            //}
 
             var graphClient = GraphClient.GetAuthenticatedClient(token);
 

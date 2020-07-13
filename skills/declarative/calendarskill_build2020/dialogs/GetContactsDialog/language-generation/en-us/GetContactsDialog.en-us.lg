@@ -2,12 +2,7 @@
 
 
 # ChoiceInput_Prompt_yVdZ5r()
-- I found multiple contacts with that name. Which one should I invite?
-# SendActivity_ChJFWb()
-- ```
-I've added the following recipients:
-\n * ${join(dialog.attendees, " \n * ")}
-```
+- I found multiple contacts with that name. Which one?
 # SendActivity_pmgdHg()
 - I couldn't find a contact with that name.
 # TextInput_Prompt_UnqHUH()
