@@ -19,7 +19,9 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SECRET_KEY": "JBha.@oRKr23HaslE5OB:KwKn4im.QF-",
+        "WEBSITE_SITE_NAME": "sidlocalhost.ngrok.io"
       },
       "applicationUrl": "http://localhost:1205/"
     }

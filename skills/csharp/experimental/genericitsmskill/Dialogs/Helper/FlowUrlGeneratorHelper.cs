@@ -5,11 +5,14 @@ using System;
 using System.Text;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Bot.Schema.Teams;
+using GenericITSMSkill.Extensions;
 
 namespace GenericITSMSkill.Dialogs.Helper
 {
     public class FlowUrlGeneratorHelper
     {
+        private static string SecretKey { get; set; } = Environment.GetEnvironmentVariable("SECRET_KEY");
+
         public static string GenerateUrl(IDataProtectionProvider dataProtectionProvider, TeamsChannelData teamsChannelData, string flowBaseUrl, string flowName = null, string serviceName = null)
         {
             if (teamsChannelData == null)
@@ -43,8 +46,7 @@ namespace GenericITSMSkill.Dialogs.Helper
             {
                 endPoint.Append($"&serviceName={serviceName}");
             }
-
-            return endPoint.ToString();
+            return endPoint.ToString().GenerateSasUri(SecretKey);
         }
     }
 }
