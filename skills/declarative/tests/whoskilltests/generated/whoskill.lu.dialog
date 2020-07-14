@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "whoskill.en-us.lu",
+        "": "whoskill.en-us.lu"
+    }
+}
