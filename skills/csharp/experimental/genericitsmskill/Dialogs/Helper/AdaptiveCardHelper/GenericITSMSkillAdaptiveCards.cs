@@ -133,9 +133,10 @@ namespace GenericITSMSkill.Dialogs.Helper.AdaptiveCardHelper
                     new AdaptiveTextBlock
                     {
                         Text = response,
-                        Size = AdaptiveTextSize.Medium,
+                        Size = AdaptiveTextSize.Small,
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder,
+                        Wrap = true
                     },
                 }
             };

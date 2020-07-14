@@ -20,8 +20,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SECRET_KEY": "JBha.@oRKr23HaslE5OB:KwKn4im.QF-",
-        "WEBSITE_SITE_NAME": "sidlocalhost.ngrok.io"
+        "SECRET_KEY": "",
+        "WEBSITE_SITE_NAME": "localhost.ngrok.io/api"
       },
       "applicationUrl": "http://localhost:1205/"
     }

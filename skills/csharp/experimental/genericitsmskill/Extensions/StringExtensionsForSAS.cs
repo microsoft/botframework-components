@@ -77,7 +77,8 @@ namespace GenericITSMSkill.Extensions
                 signature: policy.GetSignature(url, secretKey));
 
             // Create SASUri for workflow callback
-            var sasUri = new Uri(url).GetUriWithSasCredentials(credentials);
+            var uri = new Uri(url);
+            var sasUri = uri.GetUriWithSasCredentials(credentials);
 
             return sasUri.ToString();
         }

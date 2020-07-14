@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using GenericITSMSkill.Authorization.SAS;
 using GenericITSMSkill.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.WebApiCompatShim;
 
@@ -13,8 +14,9 @@ namespace GenericITSMSkill.Authorization
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     public sealed class AuthorizationProcessor : Attribute, IAuthorizationFilter
     {
-        public string SiteName { get; set; } = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
-        public string SecretKey { get; set; } = Environment.GetEnvironmentVariable("SECRET_KEY");
+        private static string siteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
+
+        private static string secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -23,7 +25,12 @@ namespace GenericITSMSkill.Authorization
 
             var result = AuthorizeRequest(httpRequestMessage);
 
-            throw new NotImplementedException();
+            if (result.Result == AuthorizedRequestType.GenericITSMNotification)
+            {
+                return;
+            }
+
+            context.Result = new ForbidResult();
         }
 
         private async Task<AuthorizedRequestType> AuthorizeRequest(HttpRequestMessage request)
@@ -40,27 +47,34 @@ namespace GenericITSMSkill.Authorization
         /// <param name="request">Input HttpRequestMessage to generate signature.</param>
         private async Task AuthenticateUsingSASAuthorizationAsync(HttpRequestMessage request)
         {
+            // Get Credentials from httprequestmessage
             var credentials = request.GetSasCredentials();
 
+            // Validate SASParameters from HttpRequestMessage
             SasValidator.ThrowIf.SasParametersEmpty(credentials: credentials);
             SasValidator.ThrowIf.SasVersionNotAllowed(credentials: credentials, allowedVersions: new string[] { "1.0" });
 
-            string url = $"https://{(this.SiteName.Contains("ngrok") ? SiteName : SiteName + ".azurewebsites.net")}/api/flow/messages";
+            // Create URL to generate signature
+            string url = $"{(siteName.Contains("ngrok") ? siteName : siteName + ".azurewebsites.net")}/flow/messages";
+
+            // GetChannelId, FlowName, ServiceName
             var channelId = request.GetQueryString("channelId");
+
             var flowName = request.GetQueryString("flowName");
             var serviceName = request.GetQueryString("serviceName");
             url += $"?channelId={channelId}";
 
             if (flowName != null)
             {
-                url += $"?channelId={channelId}&flowName={flowName}";
+                url += $"&flowName={flowName}";
             }
 
             if (serviceName != null)
             {
-                url += $"?channelId={channelId}&flowName={flowName}&serviceName={serviceName}";
+                url += $"&serviceName={serviceName}";
             }
 
+            // Create SharedAccessPolicy to generate Signature based on the same permissions when it gets generated
             var policy = new SharedAccessPolicy
             {
                 StartTime = null,
@@ -70,7 +84,7 @@ namespace GenericITSMSkill.Authorization
             };
 
             // Generate a signature based on the url and access key
-            var signature = policy.GetSignature(url, SecretKey);
+            var signature = policy.GetSignature(url, secretKey);
 
             // Generated Signature and Signature as part of SAS Uri should match
             SasValidator.ThrowIf.SignatureInvalid(

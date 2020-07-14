@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
 using GenericITSMSkill.Extensions;
 using GenericITSMSkill.Models.ServiceDesk;
+using GenericITSMSkill.Teams.Invoke;
 using GenericITSMSkill.UpdateActivity;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -39,6 +41,7 @@ namespace GenericITSMSkill.Bots
         private readonly MicrosoftAppCredentials _appCredentials;
         private readonly IConfiguration _configuration;
         private readonly IConnectorClient _connectorClient;
+        private readonly IServiceProvider _serviceProvider;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -55,6 +58,7 @@ namespace GenericITSMSkill.Bots
             _proactiveState = serviceProvider.GetService<ProactiveState>();
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+            _serviceProvider = serviceProvider;
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -114,6 +118,21 @@ namespace GenericITSMSkill.Bots
                         break;
                     }
             }
+        }
+
+        protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        {
+            var itsmTeamsActivityHandler = new FlowTaskModuleHandlerFactory(_serviceProvider);
+            var taskModuleContinueResponse = await itsmTeamsActivityHandler.HandleTaskModuleActivity(turnContext, cancellationToken);
+
+            return new InvokeResponse()
+            {
+                Status = (int)HttpStatusCode.OK,
+                Body = new TaskModuleResponse()
+                {
+                    Task = taskModuleContinueResponse
+                }
+            };
         }
 
         protected override Task OnEndOfConversationActivityAsync(ITurnContext<IEndOfConversationActivity> turnContext, CancellationToken cancellationToken)

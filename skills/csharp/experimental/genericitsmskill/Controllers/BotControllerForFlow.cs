@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using AdaptiveCards;
+using GenericITSMSkill.Authorization;
 using GenericITSMSkill.Extensions;
 using GenericITSMSkill.Models;
 using GenericITSMSkill.Models.ServiceDesk;
@@ -23,13 +24,13 @@ using Microsoft.Bot.Schema.Teams;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Attachment = Microsoft.Bot.Schema.Attachment;
 
 namespace GenericITSMSkill.Controllers
 {
     // Controller to manager flow callback
-    [Route("flow/messages/{encryptedChannelID}")]
+    [Route("api/flow/messages")]
     [ApiController]
+    [AuthorizationProcessor]
     public class BotControllerForFlow : ControllerBase
     {
         private readonly IBotFrameworkHttpAdapter _adapter;

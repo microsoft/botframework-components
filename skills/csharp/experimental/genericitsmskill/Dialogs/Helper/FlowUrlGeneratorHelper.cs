@@ -11,7 +11,7 @@ namespace GenericITSMSkill.Dialogs.Helper
 {
     public class FlowUrlGeneratorHelper
     {
-        private static string SecretKey { get; set; } = Environment.GetEnvironmentVariable("SECRET_KEY");
+        private static string SecretKey { get; set; } = "JBha.@oRKr23HaslE5OB:KwKn4im.QF-";
 
         public static string GenerateUrl(IDataProtectionProvider dataProtectionProvider, TeamsChannelData teamsChannelData, string flowBaseUrl, string flowName = null, string serviceName = null)
         {
@@ -25,18 +25,14 @@ namespace GenericITSMSkill.Dialogs.Helper
                 throw new ArgumentNullException("DataProtectionProvider cannot be null");
             }
 
-            var endPoint = new StringBuilder("Please connect your flow to: ");
-            var hostingURL = flowBaseUrl;
-            endPoint.Append(hostingURL);
-            endPoint.Append("/flow/messages/");
+            var endPoint = new StringBuilder(string.Empty);
+            endPoint.Append(flowBaseUrl);
+            endPoint.Append("/api/flow/messages");
 
             // encrypt the channelID.
-            var protector = dataProtectionProvider.CreateProtector("test");
             string channelID = teamsChannelData.Team.Id;
-
             var id = channelID.Substring(0, 10);
-            string protectedChannelID = protector.Protect(id);
-            endPoint.Append(protectedChannelID);
+            endPoint.Append("?channelId=" + id);
             if (flowName != null)
             {
                 endPoint.Append($"&flowName={flowName}");
@@ -46,6 +42,7 @@ namespace GenericITSMSkill.Dialogs.Helper
             {
                 endPoint.Append($"&serviceName={serviceName}");
             }
+
             return endPoint.ToString().GenerateSasUri(SecretKey);
         }
     }

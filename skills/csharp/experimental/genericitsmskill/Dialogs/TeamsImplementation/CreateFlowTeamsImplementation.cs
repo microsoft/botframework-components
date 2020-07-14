@@ -127,7 +127,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            GenericITSMSkillAdaptiveCards.CreateFlowUrlAdaptiveCard(flowUrl),
+                            GenericITSMSkillAdaptiveCards.FlowUrlResponseCard("Please connect your flow to: " + flowUrl),
                             cancellationToken);
 
                         return new TaskModuleContinueResponse()
@@ -141,7 +141,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                                 Card = new Attachment
                                 {
                                     ContentType = AdaptiveCard.ContentType,
-                                    Content = GenericITSMSkillAdaptiveCards.CreateFlowUrlAdaptiveCard("FlowUrl Created")
+                                    Content = GenericITSMSkillAdaptiveCards.FlowUrlResponseCard("FlowUrl Created")
                                 }
                             }
                         };
@@ -160,7 +160,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                         Card = new Attachment
                         {
                             ContentType = AdaptiveCard.ContentType,
-                            Content = GenericITSMSkillAdaptiveCards.CreateFlowUrlAdaptiveCard("Failed to Create FlowUrl")
+                            Content = GenericITSMSkillAdaptiveCards.FlowUrlResponseCard("Failed to Create FlowUrl")
                         }
                     }
                 };
@@ -179,7 +179,7 @@ namespace GenericITSMSkill.Dialogs.TeamsImplementation
                         Card = new Attachment
                         {
                             ContentType = AdaptiveCard.ContentType,
-                            Content = GenericITSMSkillAdaptiveCards.CreateFlowUrlAdaptiveCard("Failed to Create FlowUrl")
+                            Content = GenericITSMSkillAdaptiveCards.FlowUrlResponseCard("Failed to Create FlowUrl")
                         }
                     }
                 };

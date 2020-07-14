@@ -54,8 +54,8 @@ namespace GenericITSMSkill.Dialogs
 
             var createFlow = new WaterfallStep[]
             {
-                GetAuthTokenAsync,
-                AfterGetAuthTokenAsync,
+                //GetAuthTokenAsync,
+                //AfterGetAuthTokenAsync,
                 GetFlowInputAsync,
                 CreateFlowUrlAsync,
             };
@@ -63,8 +63,8 @@ namespace GenericITSMSkill.Dialogs
             // TaskModule Based WaterFallStep
             var createFlowUrlTaskModule = new WaterfallStep[]
             {
-                GetAuthTokenAsync,
-                AfterGetAuthTokenAsync,
+                //GetAuthTokenAsync,
+                //AfterGetAuthTokenAsync,
                 CreateFlowUrlTeamsImplementation,
             };
 
