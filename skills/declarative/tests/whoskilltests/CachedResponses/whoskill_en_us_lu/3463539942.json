@@ -1,0 +1,1 @@
+{"query":"Who reports to me?","prediction":{"topIntent":"DirectReports","intents":{"DirectReports":{"score":0.999188066}},"entities":{"pron":[["me"]]}}}

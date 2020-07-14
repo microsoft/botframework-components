@@ -1,0 +1,5 @@
+{
+    "$kind": "DeclarativeTestConfiguration",
+    "botFolder": "../../whoskill",
+    "ut": "../../whoskill/runtime/declarative_ut"
+}

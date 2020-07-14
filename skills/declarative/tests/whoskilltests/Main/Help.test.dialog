@@ -1,0 +1,20 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "whoskill",
+  "script": [
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "Help!"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Need help? Here's a list of the questions I can answer:
+	Who is Jane?
+	Who are Jack's peers?
+	Who is Roger's manager?
+	Who does Emma work with?
+	Who reports to Julie?"
+        }
+    ]
+}

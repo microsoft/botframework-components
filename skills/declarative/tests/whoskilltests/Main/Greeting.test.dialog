@@ -1,0 +1,19 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "$kind":"Microsoft.Test.Script",
+  "dialog": "whoskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "User"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi. I'm Who bot. I can answer questions about people in your organization, like \"Who reports to Patti?\" or \"Who is Allan?\"."
+      ]
+    }
+  ]
+}

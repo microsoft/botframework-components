@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,8 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 top = 15;
             }
 
-            var graphClient = GraphClient.GetAuthenticatedClient(token);
+            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
+            var graphClient = GraphClient.GetAuthenticatedClient(token, httpHandler);
             var filterClause = string.Format(
                 "(startswith(displayName,'{0}') or startswith(givenName,'{0}') or startswith(surname,'{0}') or startswith(mail,'{0}') or startswith(userPrincipalName,'{0}'))",
                 keywordProperty);

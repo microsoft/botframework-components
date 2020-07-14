@@ -1,0 +1,43 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+    "$kind":"Microsoft.Test.Script",
+    "propertyMocks": [
+		"settings.mock"
+	],
+	"userTokenMocks": [
+		"usertoken.mock"
+	],
+	"httpRequestMocks": [
+		"GetUserByKeyword_allan.mock",
+		"GetManager_allan.mock",
+		"GetDirectReports_nestor.mock",
+		"GetPhoto.mock"
+	],
+    "dialog":"whoskill",
+    "script":[
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"Who are the peers of allan?"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+            ]
+        },
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"000000"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReply",
+            "text":"I found 3 people who have the same manager as 'Allan Deyoung'."
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+            ]
+        }
+    ]
+}

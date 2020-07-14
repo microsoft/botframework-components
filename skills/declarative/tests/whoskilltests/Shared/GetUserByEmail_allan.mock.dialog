@@ -1,0 +1,26 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'AllanD@M365x035709.OnMicrosoft.com') or startswith(givenName,'AllanD@M365x035709.OnMicrosoft.com') or startswith(surname,'AllanD@M365x035709.OnMicrosoft.com') or startswith(mail,'AllanD@M365x035709.OnMicrosoft.com') or startswith(userPrincipalName,'AllanD@M365x035709.OnMicrosoft.com'))&$top=1",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+		{
+            "businessPhones": [
+                "+1 262 555 0106"
+            ],
+            "department": "IT",
+            "displayName": "Allan Deyoung",
+            "id": "4662b907-6148-405c-8a0c-5c12f568d6f7",
+            "jobTitle": "IT Admin",
+            "mail": "AllanD@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": "24/1106",
+            "userPrincipalName": "AllanD@M365x035709.OnMicrosoft.com"
+		}
+        ]
+      }
+    }
+  ]
+}

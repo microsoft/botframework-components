@@ -1,0 +1,1 @@
+{"query":"Who reports to nestor?","prediction":{"topIntent":"DirectReports","intents":{"DirectReports":{"score":0.9729114}},"entities":{"Keyword":[{"PersonName":["nestor"]}]}}}

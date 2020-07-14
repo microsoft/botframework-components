@@ -1,0 +1,47 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/me/events*",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+          {
+            "@odata.etag": "W/\"4xbJBysv40qDgc2b0SpRFgAAMG+ORQ==\"",
+            "id": "AAMkAGRmMzk5OGVhLTVjMTUtNGYzOC1iYmE1LTE0NzcwODA4ZDBkYwBGAAAAAAA8TbBtCPDST4WJ2uegtX2RBwDjFskHKy-jSoOBzZvRKlEWAAAAAAENAADjFskHKy-jSoOBzZvRKlEWAAAAADTwAAA=",
+            "attendees": [
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Nestor Wilke",
+                  "address": "NestorW@M365x035709.OnMicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Joni Sherman",
+                  "address": "JoniS@M365x035709.OnMicrosoft.com"
+                }
+              }
+            ],
+            "organizer": {
+              "emailAddress": {
+                "name": "Mark 8 Project Team",
+                "address": "Mark8ProjectTeam@M365x035709.onmicrosoft.com"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

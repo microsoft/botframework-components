@@ -1,0 +1,1 @@
+{"query":"Who are the peers of allan?","prediction":{"topIntent":"Peers","intents":{"Peers":{"score":0.98408246}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

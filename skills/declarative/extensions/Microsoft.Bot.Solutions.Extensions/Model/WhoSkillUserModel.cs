@@ -10,15 +10,15 @@ namespace Microsoft.Bot.Solutions.Extensions.Models
     {
         public WhoSkillUserModel(User user)
         {
-            BusinessPhones = user.BusinessPhones.Any() ? user.BusinessPhones.First() : " ";
-            Department = user.Department ?? " ";
-            DisplayName = user.DisplayName ?? " ";
-            Id = user.Id ?? " ";
-            JobTitle = user.JobTitle ?? " ";
-            Mail = user.Mail ?? " ";
-            MobilePhone = user.MobilePhone ?? " ";
-            OfficeLocation = user.OfficeLocation ?? " ";
-            UserPrincipalName = user.UserPrincipalName ?? " ";
+            BusinessPhones = user.BusinessPhones.Any() ? user.BusinessPhones.First() : null;
+            Department = user.Department;
+            DisplayName = user.DisplayName;
+            Id = user.Id;
+            JobTitle = user.JobTitle;
+            Mail = user.Mail;
+            MobilePhone = user.MobilePhone;
+            OfficeLocation = user.OfficeLocation;
+            UserPrincipalName = user.UserPrincipalName;
         }
 
         public string BusinessPhones { get; set; }

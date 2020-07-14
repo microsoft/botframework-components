@@ -1,0 +1,68 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users/d471984e-0495-4f08-bec1-ec8efe77c021/directReports?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+		{
+            "@odata.type": "#microsoft.graph.user",
+            "businessPhones": [
+            ],
+            "department": "Finance",
+            "displayName": "Pradeep Gupta",
+            "id": "d3ddb6a4-4e0a-481c-b6a7-ad7375a20d50",
+            "jobTitle": null,
+            "mail": "PradeepG@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": "98/2202",
+            "userPrincipalName": "PradeepG@M365x035709.OnMicrosoft.com"
+        },
+        {
+            "@odata.type": "#microsoft.graph.user",
+            "businessPhones": [
+                "+1 980 555 0101"
+            ],
+            "department": "Legal",
+            "displayName": "Joni Sherman",
+            "id": "b451d4b5-257d-4510-b6e9-2208c6a34ab2",
+            "jobTitle": "Paralegal",
+            "mail": "JoniS@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": null,
+            "userPrincipalName": "JoniS@M365x035709.OnMicrosoft.com"
+        },
+        {
+            "@odata.type": "#microsoft.graph.user",
+            "businessPhones": [
+                "+1 262 555 0106"
+            ],
+            "department": "IT",
+            "displayName": "Allan Deyoung",
+            "id": "4662b907-6148-405c-8a0c-5c12f568d6f7",
+            "jobTitle": null,
+            "mail": "AllanD@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": "24/1106",
+            "userPrincipalName": "AllanD@M365x035709.OnMicrosoft.com"
+        },
+        {
+            "@odata.type": "#microsoft.graph.user",
+            "businessPhones": [
+                "+1 205 555 0108"
+            ],
+            "department": "HR",
+            "displayName": "Diego Siciliani",
+            "id": "fa17786d-4209-404f-ad2b-690b7884d44c",
+            "jobTitle": "HR Manager",
+            "mail": "DiegoS@M365x035709.OnMicrosoft.com",
+            "mobilePhone": null,
+            "officeLocation": null,
+            "userPrincipalName": "DiegoS@M365x035709.OnMicrosoft.com"
+        }
+        ]
+      }
+    }
+  ]
+}

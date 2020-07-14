@@ -1,0 +1,19 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users/f30324f7-4352-4ff4-af1e-06ead69a80f1/manager?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName",
+  "Responses": [
+    {
+      "Content": {
+        "error": {
+          "code": "Request_ResourceNotFound",
+          "message": "Resource 'manager' does not exist or one of its queried reference-property objects are not present.",
+          "innerError": {
+            "request-id": "e1b86786-23c5-4306-9be5-a68bca5e3921",
+            "date": "2020-04-21T16:55:51"
+          }
+        }
+      }
+    }
+  ]
+}

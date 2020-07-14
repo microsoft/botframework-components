@@ -1,0 +1,1 @@
+{"query":"What is the email address of allan?","prediction":{"topIntent":"EmailFind","intents":{"EmailFind":{"score":0.7692507}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

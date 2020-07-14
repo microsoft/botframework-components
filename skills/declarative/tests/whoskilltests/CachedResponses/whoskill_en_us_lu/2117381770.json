@@ -1,0 +1,1 @@
+{"query":"Who did i meet about ux?","prediction":{"topIntent":"MeetAbout","intents":{"MeetAbout":{"score":0.8712739}},"entities":{"Keyword":[{"Topic":["ux"]}],"pron":[["i"]]}}}

@@ -1,0 +1,1 @@
+{"query":"Who is de?","prediction":{"topIntent":"Whois","intents":{"Whois":{"score":0.969648361}},"entities":{"Keyword":[{"PersonName":["de"]}]}}}

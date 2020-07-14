@@ -1,0 +1,12 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/users?$select=businessPhones,department,displayName,id,jobTitle,mail,mobilePhone,officeLocation,userPrincipalName&$filter=(startswith(displayName,'Mark8ProjectTeam@M365x035709.onmicrosoft.com') or startswith(givenName,'Mark8ProjectTeam@M365x035709.onmicrosoft.com') or startswith(surname,'Mark8ProjectTeam@M365x035709.onmicrosoft.com') or startswith(mail,'Mark8ProjectTeam@M365x035709.onmicrosoft.com') or startswith(userPrincipalName,'Mark8ProjectTeam@M365x035709.onmicrosoft.com'))&$top=1",
+  "Responses": [
+    {
+      "Content": {
+        "value": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$kind": "Microsoft.Test.PropertiesMock",
+  "assignments": [
+    {
+      "property": "settings.connectionName",
+      "value": "outlook"
+    },
+    {
+      "property": "settings.azureSearch.searchServiceName",
+      "value": "test-name"
+    },
+    {
+      "property": "settings.azureSearch.searchServiceAdminApiKey",
+      "value": "test-apikey"
+    },
+    {
+      "property": "settings.azureSearch.searchIndexName",
+      "value": "test-index"
+    }
+  ]
+}

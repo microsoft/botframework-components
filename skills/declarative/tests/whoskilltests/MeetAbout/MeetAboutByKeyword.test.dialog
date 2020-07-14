@@ -1,0 +1,46 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+    "$kind":"Microsoft.Test.Script",
+    "propertyMocks": [
+		"settings.mock"
+	],
+	"userTokenMocks": [
+		"usertoken.mock"
+	],
+	"httpRequestMocks": [
+		"GetEvents.mock",
+		"GetUserByEmail_allan.mock",
+		"GetUserByEmail_joni.mock",
+		"GetUserByEmail_mark8.mock",
+		"GetUserByEmail_nestor.mock",
+		"Me.mock",
+		"GetPhoto.mock"
+	],
+    "dialog":"whoskill",
+    "script":[
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"Who did i meet about ux?"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.oauth'"
+            ]
+        },
+        {
+            "$kind":"Microsoft.Test.UserSays",
+            "text":"000000"
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReply",
+            "text":"You met with at least 2 people recently about 'ux'."
+        },
+        {
+            "$kind":"Microsoft.Test.AssertReplyActivity",
+            "assertions":[
+                "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+            ]
+        }
+    ]
+}

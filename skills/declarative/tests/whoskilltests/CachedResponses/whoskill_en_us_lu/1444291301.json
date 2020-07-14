@@ -1,0 +1,1 @@
+{"query":"Where is the office of allan?","prediction":{"topIntent":"Location","intents":{"Location":{"score":0.9770827}},"entities":{"Keyword":[{"PersonName":["allan"]}]}}}

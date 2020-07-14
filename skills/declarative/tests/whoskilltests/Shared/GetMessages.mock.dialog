@@ -1,0 +1,32 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/v1.0/me/messages?$select=ccRecipients,sender,toRecipients&$top=15",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+          {
+            "@odata.etag": "W/\"CwAAABYAAADjFskHKy/jSoOBzZvRKlEWAABjcm8e\"",
+            "id": "AAMkAGRmMzk5OGVhLTVjMTUtNGYzOC1iYmE1LTE0NzcwODA4ZDBkYwBGAAAAAAA8TbBtCPDST4WJ2uegtX2RBwDjFskHKy-jSoOBzZvRKlEWAAAAAAEJAADjFskHKy-jSoOBzZvRKlEWAABjeVJVAAA=",
+            "sender": {
+              "emailAddress": {
+                "name": "Administrator MOD",
+                "address": "admin@M365x035709.OnMicrosoft.com"
+              }
+            },
+            "toRecipients": [
+              {
+                "emailAddress": {
+                  "name": "Allan Deyoung",
+                  "address": "AllanD@M365x035709.OnMicrosoft.com"
+                }
+              }
+            ],
+            "ccRecipients": []
+          }
+        ]
+      }
+    }
+  ]
+}
