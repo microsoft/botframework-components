@@ -14,6 +14,7 @@ using ITSMSkill.Tests.API.Fakes;
 using Microsoft.Bot.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace ITSMSkill.Tests.API

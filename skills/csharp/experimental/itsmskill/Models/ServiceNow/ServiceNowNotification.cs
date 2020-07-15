@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
-
 namespace ITSMSkill.Models.ServiceNow
 {
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// ServiceNow Notification class.
+    /// </summary>
     public class ServiceNowNotification
     {
         [JsonProperty]

@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Extensions
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Extensions
 {
     using System;
     using System.Collections.Generic;

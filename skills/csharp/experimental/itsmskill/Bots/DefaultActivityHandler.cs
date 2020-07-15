@@ -3,25 +3,32 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
 using ITSMSkill.Extensions;
+using ITSMSkill.Extensions.Teams.TaskModule;
 using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Proactive;
 using ITSMSkill.Responses.Main;
+using ITSMSkill.Services;
+using ITSMSkill.TeamsChannels.Invoke;
 using ITSMSkill.Utilities;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.ApplicationInsights;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Schema.Teams;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Bots
 {
@@ -36,6 +43,11 @@ namespace ITSMSkill.Bots
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
         private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
         private readonly LocaleTemplateManager _templateManager;
+        private readonly BotSettings _botSettings;
+        private readonly BotServices _botServices;
+        private readonly IServiceManager _serviceManager;
+        private readonly BotTelemetryClient _botTelemetryClient;
+        private readonly IServiceProvider _serviceProvider;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -48,6 +60,7 @@ namespace ITSMSkill.Bots
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
             _appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _serviceProvider = serviceProvider;
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -77,11 +90,6 @@ namespace ITSMSkill.Bots
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
-        protected override Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
-        {
-            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
-        }
-
         protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
         {
             var ev = turnContext.Activity.AsEventActivity();
@@ -107,6 +115,39 @@ namespace ITSMSkill.Bots
                         await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
                         break;
                     }
+            }
+        }
+
+        protected virtual Task<InvokeResponse> OnSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        {
+            return Task.FromResult<InvokeResponse>(new InvokeResponse
+            {
+                Status = (int)HttpStatusCode.OK,
+                Body = null
+            });
+        }
+
+        protected override async Task<InvokeResponse> OnInvokeActivityAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
+        {
+            switch (turnContext.Activity.Name)
+            {
+                case "signin/verifyState":
+                    await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+                    return await OnSigninVerifyStateAsync(turnContext, cancellationToken);
+
+                default:
+
+                    var itsmTeamsActivityHandler = new ITSMTeamsInvokeActivityHandlerFactory(_serviceProvider);
+                    var taskModuleContinueResponse = await itsmTeamsActivityHandler.HandleTaskModuleActivity(turnContext, cancellationToken);
+
+                    return new InvokeResponse()
+                    {
+                        Status = (int)HttpStatusCode.OK,
+                        Body = new TaskModuleResponse()
+                        {
+                            Task = taskModuleContinueResponse
+                        }
+                    };
             }
         }
 
