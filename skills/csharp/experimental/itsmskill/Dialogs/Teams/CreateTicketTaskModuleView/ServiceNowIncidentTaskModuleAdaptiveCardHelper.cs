@@ -1,14 +1,18 @@
-﻿namespace ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView
-{
-    using System.Collections.Generic;
-    using AdaptiveCards;
-    using ITSMSkill.Dialogs.Teams;
-    using ITSMSkill.Extensions.Teams;
-    using ITSMSkill.Extensions.Teams.TaskModule;
-    using ITSMSkill.Models;
-    using Microsoft.Bot.Schema;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-    public class RenderCreateIncidentHelper
+using System.Collections.Generic;
+using AdaptiveCards;
+using ITSMSkill.Extensions.Teams;
+using ITSMSkill.Extensions.Teams.TaskModule;
+using ITSMSkill.Models;
+
+namespace ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView
+{
+    /// <summary>
+    /// class housing all adaptive cards related to ServiceNow Incidents.
+    /// </summary>
+    public class ServiceNowIncidentTaskModuleAdaptiveCardHelper
     {
         public static AdaptiveCard BuildIncidentCard(Ticket ticketResponse, string botId)
         {

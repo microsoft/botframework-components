@@ -111,7 +111,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                         context,
                         activityReference,
-                        RenderCreateIncidentHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
+                        ServiceNowIncidentTaskModuleAdaptiveCardHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                         cancellationToken);
 
                     return new TaskModuleContinueResponse()
@@ -125,7 +125,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                             Card = new Attachment
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = RenderCreateIncidentHelper.IncidentResponseCard("Incident has been created")
+                                Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been created")
                             }
                         }
                     };
@@ -144,7 +144,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = RenderCreateIncidentHelper.IncidentResponseCard("Incident Create Failed")
+                        Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident Create Failed")
                     }
                 }
             };

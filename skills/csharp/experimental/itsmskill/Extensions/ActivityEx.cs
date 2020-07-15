@@ -10,7 +10,7 @@ namespace ITSMSkill.Extensions
     using Newtonsoft.Json.Linq;
 
     /// <summary>
-    /// ActivityEx for purpose of TeamsTaskModule
+    /// ActivityEx for purpose of TeamsTaskModule.
     /// </summary>
     public static class ActivityEx
     {

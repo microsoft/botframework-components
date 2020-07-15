@@ -1,22 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Connector.Authentication;
+
 namespace ITSMSkill.Middleware
 {
-    using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Connector;
-    using Microsoft.Bot.Connector.Authentication;
-    using Microsoft.Rest.TransientFaultHandling;
-
     /// <summary>
-    /// Middleware to update Teams Activity
+    /// Middleware to update Teams Activity.
     /// </summary>
     public class SetConnectorClientMiddleware : IMiddleware
     {

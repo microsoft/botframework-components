@@ -11,7 +11,10 @@ using RestSharp;
 
 namespace ITSMSkill.Services.ServiceNow
 {
-    public class ServiceNowSubscriptionManagement : IServiceNowSubscription
+    /// <summary>
+    /// class for creating ServiceNow BusinessRules and RestMessages.
+    /// </summary>
+    public class ServiceNowBusinessRuleSubscribption : IServiceNowBusinessRuleSubscription
     {
         private const string TestNameSpace = "Test";
         private const string TestAPIName = "TestApiName";
@@ -20,18 +23,18 @@ namespace ITSMSkill.Services.ServiceNow
         private readonly string baseUrl;
         private readonly string callBackUrl = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
 
-        public ServiceNowSubscriptionManagement(string url, string token, int limitSize, string serviceNowAppId, ServiceCache serviceCache = null, IRestClient restClient = null)
+        public ServiceNowBusinessRuleSubscribption(string url, string token, int limitSize, string serviceNowAppId, ServiceCache serviceCache = null, IRestClient restClient = null)
         {
             this.baseUrl = url + $"/api/{serviceNowAppId}";
             this.client = restClient ?? new RestClient(this.baseUrl);
             this.token = token;
         }
 
+        // Calls ServiceNow Scripted REST API to programmatically create business rules
         public async Task<HttpStatusCode> CreateNewRestMessage(string callBackName, string postName)
         {
             try
             {
-                // TODO get namespace id: 47562 from appsettings or write an API
                 var url = this.baseUrl + $"/createnewrestmessage?name={callBackName}&postFunctionName={postName}";
 
                 var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
@@ -51,6 +54,7 @@ namespace ITSMSkill.Services.ServiceNow
             }
         }
 
+        // Calls ServiceNow Scripted REST API to programmatically create new rest messages
         public async Task<HttpStatusCode> CreateSubscriptionBusinessRule(string filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
         {
             try

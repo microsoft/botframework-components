@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace ITSMSkill.Models.ServiceNow
 {
+    /// <summary>
+    /// ServiceNowBusinessRuleSubscription class to get user input.
+    /// </summary>
     public class ServiceNowSubscription
     {
         public string FilterName { get; set; }

@@ -10,6 +10,6 @@ namespace ITSMSkill.Services
     {
         IITServiceManagement CreateManagement(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null);
 
-        IServiceNowSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null);
+        IServiceNowBusinessRuleSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null);
     }
 }

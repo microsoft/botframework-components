@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using ITSMSkill.Dialogs.Teams.SubscriptionTaskModule;
+using ITSMSkill.Dialogs.Teams.TicketTaskModule;
+using ITSMSkill.Extensions.Teams;
+using Microsoft.Bot.Schema.Teams;
+
+
 namespace ITSMSkill.TeamsChannels.Invoke
 {
-    using System;
-    using System.Collections.Generic;
-    using ITSMSkill.Dialogs.Teams.SubscriptionTaskModule;
-    using ITSMSkill.Dialogs.Teams.TicketTaskModule;
-    using ITSMSkill.Extensions.Teams;
-    using Microsoft.Bot.Schema.Teams;
 
     /// <summary>
     /// ITSMTeamsInvokeActivityhandler Factory Class for TaskModules

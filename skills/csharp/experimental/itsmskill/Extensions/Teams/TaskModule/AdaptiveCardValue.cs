@@ -6,7 +6,7 @@ namespace ITSMSkill.Extensions.Teams.TaskModule
     using Newtonsoft.Json;
 
     /// <summary>
-    /// DataContract on AdaptieCardValue
+    /// DataContract on AdaptieCardValue.
     /// </summary>
     public class AdaptiveCardValue<T>
     {

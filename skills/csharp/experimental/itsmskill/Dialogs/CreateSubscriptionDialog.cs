@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
@@ -14,6 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Creating BusinessRule Subscription.
+    /// </summary>
     public class CreateSubscriptionDialog : SkillDialogBase
     {
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;

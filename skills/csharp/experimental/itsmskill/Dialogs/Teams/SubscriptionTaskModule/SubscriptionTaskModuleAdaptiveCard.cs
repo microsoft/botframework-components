@@ -1,9 +1,9 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AdaptiveCards;
-using ITSMSkill.Dialogs.Teams.Resources.Subscription;
 using ITSMSkill.Extensions.Teams;
 using ITSMSkill.Extensions.Teams.TaskModule;
 using ITSMSkill.Models.ServiceNow;
@@ -11,6 +11,9 @@ using ITSMSkill.Proactive.Subscription;
 
 namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 {
+    /// <summary>
+    /// class housing all subscription related adaptive cards.
+    /// </summary>
     public class SubscriptionTaskModuleAdaptiveCard
     {
         public static AdaptiveCard GetSubcriptionInputCard(string botId = null)

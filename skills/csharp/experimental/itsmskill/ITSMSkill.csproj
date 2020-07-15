@@ -4,6 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <Content Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <EmbeddedResource Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <None Remove="Services\ServiceNow\BusinessRuleM\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="Responses\Ticket\CreateTicketResponses.json" />
   </ItemGroup>
@@ -99,8 +106,5 @@
     <None Update="Content\TicketUpdateClose.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\ServiceNow\BusinessRuleM\" />
   </ItemGroup>
 </Project>

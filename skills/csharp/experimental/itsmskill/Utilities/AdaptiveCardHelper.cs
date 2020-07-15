@@ -1,9 +1,12 @@
-﻿namespace ITSMSkill.Utilities
-{
-    using System.IO;
-    using AdaptiveCards;
-    using Newtonsoft.Json;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
+using System.IO;
+using AdaptiveCards;
+using Newtonsoft.Json;
+
+namespace ITSMSkill.Utilities
+{
     public class AdaptiveCardHelper
     {
         // TODO: Replace with Cards.Lg

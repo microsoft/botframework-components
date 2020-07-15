@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITSMSkill.Services
 {
-    public interface IServiceNowSubscription
+    public interface IServiceNowBusinessRuleSubscription
     {
         Task<HttpStatusCode> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
 

@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
@@ -28,10 +25,12 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Extensions.DependencyInjection;
-using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog Base class.
+    /// </summary>
     public class SkillDialogBase : ComponentDialog
     {
         public SkillDialogBase(

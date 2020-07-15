@@ -24,7 +24,7 @@ namespace ITSMSkill.Tests.Flow.Fakes
             }
         }
 
-        public IServiceNowSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null)
+        public IServiceNowBusinessRuleSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null)
         {
             throw new System.NotImplementedException();
         }
