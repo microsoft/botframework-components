@@ -37,7 +37,7 @@ namespace ITSMSkill.Services.ServiceNow
             {
                 var url = this.baseUrl + $"/createnewrestmessage?name={callBackName}&postFunctionName={postName}";
 
-                var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
+                var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
 
                 // Post RestMessage
                 var postBusinessRule = new Dictionary<string, string>();
@@ -61,7 +61,7 @@ namespace ITSMSkill.Services.ServiceNow
             {
                 // TODO: build filterCondition from userinput instead of hardcoding
                 var url = this.baseUrl + $"/createnewbusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
-                var request = ServiceNowHelper.CreateRequest(url, "Bearer " + token);
+                var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
                 notificationNameSpace = "'" + notificationNameSpace + "'";
                 postNotificationAPIName = "'" + postNotificationAPIName + "'";
 

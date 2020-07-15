@@ -14,13 +14,7 @@
 - Sorry I didn't understand that. Would you like me to send a message to guest services?
 
 # GuestServicesConfirm.Text(Data)
-- ${GuestServicesConfirmTextAndSpeak1(Data)}
-
-# GuestServicesConfirmTextAndSpeak1(Data)
-[Activity
-    Text = Ok! I have forwarded your specific request to guest services. You should hear from them within the next hour.
-    Speak = Ok! I have forwarded your specific request to guest services. You should hear from them within the next hour
-]
+- Ok! I have forwarded your specific request to guest services. You should hear from them within the next hour.
 
 # ItemsRequested.Text(Data)
 - These items will be brought to your room shortly.

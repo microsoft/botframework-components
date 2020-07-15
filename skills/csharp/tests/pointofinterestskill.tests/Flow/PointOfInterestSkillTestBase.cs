@@ -110,6 +110,10 @@ namespace PointOfInterestSkill.Tests.Flow
         {
             var sp = Services.BuildServiceProvider();
             var adapter = sp.GetService<TestAdapter>();
+            adapter.OnTurnError = (context, error) =>
+            {
+                return Task.CompletedTask;
+            };
 
             var testFlow = new TestFlow(adapter, async (context, token) =>
             {
@@ -175,7 +179,8 @@ namespace PointOfInterestSkill.Tests.Flow
                 }
                 else
                 {
-                    CollectionAssert.Contains(ParseReplies(response, new Dictionary<string, object>()), messageActivity.Text);
+                    var replies = ParseReplies(response, new Dictionary<string, object>());
+                    CollectionAssert.Contains(replies, messageActivity.Text);
                 }
 
                 AssertSameId(messageActivity, cardIds);

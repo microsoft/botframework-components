@@ -911,6 +911,36 @@ namespace ITSMSkill.Dialogs
             }
         }
 
+        protected async Task<DialogTurnResult> HandleAPIUnauthorizedError(WaterfallStepContext sc, TicketsResult ticketsResult, CancellationToken cancellationToken)
+        {
+            // Check if the error is UnAuthorized
+            if (ticketsResult.Reason.Equals("Unauthorized"))
+            {
+                // Logout User
+                var botAdapter = (BotFrameworkAdapter)sc.Context.Adapter;
+                await botAdapter.SignOutUserAsync(sc.Context, Settings.OAuthConnections.FirstOrDefault().Name, null, cancellationToken);
+
+                // Send Signout Message
+                return await SignOutUser(sc);
+            }
+            else
+            {
+                return await SendServiceErrorAndCancel(sc, ticketsResult);
+            }
+        }
+
+        protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed), cancellationToken);
+            return await sc.CancelAllDialogsAsync();
+        }
+
+        protected async Task<DialogTurnResult> SignOutUser(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.SignOut), cancellationToken);
+            return await sc.EndDialogAsync();
+        }
+
         protected async Task<DialogTurnResult> IfKnowledgeHelpAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             var intent = (GeneralLuis.Intent)sc.Result;

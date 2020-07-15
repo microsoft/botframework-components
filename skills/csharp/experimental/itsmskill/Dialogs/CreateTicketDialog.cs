@@ -17,6 +17,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ITSMSkill.Dialogs
@@ -153,7 +154,8 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
+                // Check if Error is UnAuthorized and logout user
+                return await HandleAPIUnauthorizedError(sc, result, cancellationToken);
             }
 
             var card = GetTicketCard(sc.Context, state, result.Tickets[0]);

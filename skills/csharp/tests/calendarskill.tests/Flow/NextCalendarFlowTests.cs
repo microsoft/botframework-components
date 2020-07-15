@@ -42,8 +42,7 @@ namespace CalendarSkill.Test.Flow
                 .Send(string.Empty)
                 .AssertReplyOneOf(GetTemplates(CalendarMainResponses.FirstPromptMessage))
                 .Send(FindMeetingTestUtterances.BaseNextMeeting)
-                .AssertReplyOneOf(this.NextMeetingPrompt())
-                .AssertReply(this.ShowCalendarList())
+                .AssertReply(this.ReadOneEvent())
                 .StartTestAsync();
         }
 
@@ -56,8 +55,7 @@ namespace CalendarSkill.Test.Flow
                 .Send(FindMeetingTestUtterances.HowLongNextMeetingMeeting)
                 .AssertReplyOneOf(this.BeforeShowEventDetailsPrompt())
                 .AssertReplyOneOf(this.ReadDurationPrompt())
-                .AssertReplyOneOf(this.NextMeetingPrompt())
-                .AssertReply(this.ShowCalendarList())
+                .AssertReply(this.ReadOneEvent())
                 .StartTestAsync();
         }
 
@@ -70,8 +68,7 @@ namespace CalendarSkill.Test.Flow
                 .Send(FindMeetingTestUtterances.WhereNextMeetingMeeting)
                 .AssertReplyOneOf(this.BeforeShowEventDetailsPrompt())
                 .AssertReplyOneOf(this.ReadLocationPrompt())
-                .AssertReplyOneOf(this.NextMeetingPrompt())
-                .AssertReply(this.ShowCalendarList())
+                .AssertReply(this.ReadOneEvent())
                 .StartTestAsync();
         }
 
@@ -84,8 +81,7 @@ namespace CalendarSkill.Test.Flow
                 .Send(FindMeetingTestUtterances.WhenNextMeetingMeeting)
                 .AssertReplyOneOf(this.BeforeShowEventDetailsPrompt())
                 .AssertReplyOneOf(this.ReadTimePrompt())
-                .AssertReplyOneOf(this.NextMeetingPrompt())
-                .AssertReply(this.ShowCalendarList())
+                .AssertReply(this.ReadOneEvent())
                 .StartTestAsync();
         }
 
@@ -167,11 +163,13 @@ namespace CalendarSkill.Test.Flow
             return GetTemplates(SummaryResponses.ShowNoMeetingMessage);
         }
 
-        private Action<IActivity> ActionEndMessage()
+        private Action<IActivity> ReadOneEvent(string suffix = "")
         {
             return activity =>
             {
-                Assert.AreEqual(activity.Type, ActivityTypes.EndOfConversation);
+                var messageActivity = activity.AsMessageActivity();
+                CollectionAssert.Contains(GetTemplates(SummaryResponses.ShowNextMeetingMessage), messageActivity.Text);
+                Assert.AreEqual(messageActivity.Attachments.Count, 1);
             };
         }
     }
