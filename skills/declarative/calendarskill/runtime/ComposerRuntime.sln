@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Composer.Functions", "azurefunctions\Microsoft.BotFramework.Composer.Functions.csproj", "{9FC308C1-F0EC-41BE-90FD-9DC00DA7B80B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Solutions.Extensions", "..\..\extensions\Microsoft.Bot.Solutions.Extensions\Microsoft.Bot.Solutions.Extensions.csproj", "{3FFED07D-FDCC-4A77-8ABA-3360306C8EFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Composer.CustomAction", "customaction\Microsoft.BotFramework.Composer.CustomAction.csproj", "{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Solutions.Extensions", "..\..\extensions\Microsoft.Bot.Solutions.Extensions\Microsoft.Bot.Solutions.Extensions.csproj", "{551C9B7B-45FD-4389-9AE0-0EFD0CFEDB59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +36,14 @@ Global
 		{9FC308C1-F0EC-41BE-90FD-9DC00DA7B80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FC308C1-F0EC-41BE-90FD-9DC00DA7B80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FC308C1-F0EC-41BE-90FD-9DC00DA7B80B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FFED07D-FDCC-4A77-8ABA-3360306C8EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FFED07D-FDCC-4A77-8ABA-3360306C8EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FFED07D-FDCC-4A77-8ABA-3360306C8EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FFED07D-FDCC-4A77-8ABA-3360306C8EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551C9B7B-45FD-4389-9AE0-0EFD0CFEDB59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551C9B7B-45FD-4389-9AE0-0EFD0CFEDB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551C9B7B-45FD-4389-9AE0-0EFD0CFEDB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551C9B7B-45FD-4389-9AE0-0EFD0CFEDB59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
