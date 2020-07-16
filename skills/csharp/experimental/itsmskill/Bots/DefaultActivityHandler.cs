@@ -117,36 +117,49 @@ namespace ITSMSkill.Bots
                     {
                         var eventData = JsonConvert.DeserializeObject<ServiceNowNotification>(turnContext.Activity.Value.ToString());
 
-                        var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
-
-                        // Get conversation reference mapping to BusinessRuleName
-                        var conversationReference = proactiveModel[eventData.BusinessRuleName].Conversation;
-
-                        var proactiveConversationReferenceMap = await _proactiveStateConversationReferenceMapAccessor.GetAsync(
-                                                turnContext,
-                                                () => new ConversationReferenceMap(),
-                                                cancellationToken)
-                                            .ConfigureAwait(false);
-
-                        // Get all conversation references matching Rulename
-                        proactiveConversationReferenceMap.TryGetValue(eventData.BusinessRuleName, out var listOfConversationReferences);
-                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
-                        //await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
-                        //    turnContext,
-                        //    activityReference,
-                        //    eventData.ToAdaptiveCard(),
-                        //    cancellationToken);
-
                         var proactiveSubscriptions = await _subscriptionManager.GetSubscriptionByKey(turnContext, eventData.BusinessRuleName, cancellationToken);
 
                         // Get list of Conversations to update from SubscriptionManager
                         if (proactiveSubscriptions != null)
                         {
-                            foreach (var conversation in proactiveSubscriptions.ConversationReferences)
+                            foreach (var proactiveSubscription in proactiveSubscriptions.ConversationReferences)
                             {
-                                await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversation, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                                // Return Added Incident Envelope
+                                // Get saved Activity Reference mapping to conversation Id
+                                activityReferenceMap.TryGetValue(proactiveSubscription.Conversation.Id, out var activityReference);
+
+                                if (activityReference == null)
+                                {
+                                    // Get ActivityId for purpose of mapping
+                                    ResourceResponse resourceResponse = await turnContext.SendActivityAsync(turnContext.ServiceNowNotificationToReplyActivity(eventData), cancellationToken);
+
+                                    // Store Activity and Thread Id
+                                    activityReferenceMap[turnContext.Activity.Conversation.Id] = new ActivityReference
+                                    {
+                                        ActivityId = resourceResponse.Id,
+                                        ThreadId = turnContext.Activity.Conversation.Id,
+                                    };
+                                }
+                                else
+                                {
+                                    // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                                    await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
+                                        turnContext,
+                                        activityReference,
+                                        eventData.ToAdaptiveCard(),
+                                        cancellationToken);
+                                }
+
+                                await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, proactiveSubscription, ContinueConversationCallback(turnContext, eventData), cancellationToken);
                             }
                         }
+
+                        // Save activity reference map state
+                        await _activityReferenceMapAccessor.SetAsync(turnContext, activityReferenceMap).ConfigureAwait(false);
+
+                        // Save Conversation State
+                        await _conversationState
+                            .SaveChangesAsync(turnContext);
 
                         break;
                     }

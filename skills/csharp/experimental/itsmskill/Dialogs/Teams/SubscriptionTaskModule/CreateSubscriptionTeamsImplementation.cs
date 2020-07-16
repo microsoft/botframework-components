@@ -147,13 +147,6 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 }
 
                 // Create ProactiveModel
-                var proactiveModel = await _proactiveStateAccessor.GetAsync(context, () => new ProactiveModel()).ConfigureAwait(false);
-
-                proactiveModel[filterName.Value<string>()] = new ProactiveModel.ProactiveData
-                {
-                    Conversation = context.Activity.GetConversationReference()
-                };
-
                 // Get Conversation from Activity
                 var conversation = context.Activity.GetConversationReference();
 
@@ -179,7 +172,6 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 
                 // Save ActivityReference and ProactiveState Accessor
                 await _proactiveStateConversationReferenceMapAccessor.SetAsync(context, proactiveConversationReferenceMap).ConfigureAwait(false);
-                await _proactiveStateAccessor.SetAsync(context, proactiveModel).ConfigureAwait(false);
 
                 // Save Conversation State
                 await _proactiveState.SaveChangesAsync(context, false, cancellationToken);
