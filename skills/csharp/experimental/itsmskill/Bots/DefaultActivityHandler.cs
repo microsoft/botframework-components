@@ -130,8 +130,20 @@ namespace ITSMSkill.Bots
 
                                 if (activityReference == null)
                                 {
+                                    var reply = new Activity
+                                    {
+                                        Type = ActivityTypes.Message,
+                                        Text = "Incident Update",
+                                        Attachments = new List<Attachment>()
+                                        {
+                                            new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = eventData.ToAdaptiveCard() }
+                                        }
+                                    };
+
                                     // Get ActivityId for purpose of mapping
-                                    ResourceResponse resourceResponse = await turnContext.SendActivityAsync(turnContext.ServiceNowNotificationToReplyActivity(eventData), cancellationToken);
+                                    ResourceResponse resourceResponse = await turnContext.SendActivityAsync(reply, cancellationToken);
+
+                                    // Get ActivityId for purpose of mapping
 
                                     // Store Activity and Thread Id
                                     activityReferenceMap[turnContext.Activity.Conversation.Id] = new ActivityReference
