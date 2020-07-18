@@ -54,7 +54,6 @@ namespace ITSMSkill.Bots
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
         private readonly IStatePropertyAccessor<ConversationReferenceMap> _proactiveStateConversationReferenceMapAccessor;
         private readonly SubscriptionManager _subscriptionManager;
-        private readonly IConnectorClient _connectorClient;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -72,7 +71,6 @@ namespace ITSMSkill.Bots
             _serviceProvider = serviceProvider;
             _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
             _subscriptionManager = serviceProvider.GetService<SubscriptionManager>();
-            _connectorClient = serviceProvider.GetService<IConnectorClient>();
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -106,6 +104,12 @@ namespace ITSMSkill.Bots
         {
             var ev = turnContext.Activity.AsEventActivity();
             var value = ev.Value?.ToString();
+
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+            turnContext,
+            () => new ActivityReferenceMap(),
+            cancellationToken)
+            .ConfigureAwait(false);
 
             switch (ev.Name)
             {
