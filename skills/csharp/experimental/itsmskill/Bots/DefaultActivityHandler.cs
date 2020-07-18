@@ -7,10 +7,13 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
+using ITSMSkill.Dialogs.Teams;
 using ITSMSkill.Extensions;
 using ITSMSkill.Extensions.Teams.TaskModule;
 using ITSMSkill.Models.ServiceNow;
+using ITSMSkill.Models.UpdateActivity;
 using ITSMSkill.Proactive;
+using ITSMSkill.Proactive.Subscription;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Services;
 using ITSMSkill.TeamsChannels.Invoke;
@@ -39,15 +42,18 @@ namespace ITSMSkill.Bots
         private readonly BotState _conversationState;
         private readonly BotState _userState;
         private readonly ProactiveState _proactiveState;
-        private readonly MicrosoftAppCredentials _appCredentials;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
         private readonly IStatePropertyAccessor<ProactiveModel> _proactiveStateAccessor;
+        private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly LocaleTemplateManager _templateManager;
         private readonly BotSettings _botSettings;
         private readonly BotServices _botServices;
         private readonly IServiceManager _serviceManager;
         private readonly BotTelemetryClient _botTelemetryClient;
         private readonly IServiceProvider _serviceProvider;
+        private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
+        private readonly IStatePropertyAccessor<ConversationReferenceMap> _proactiveStateConversationReferenceMapAccessor;
+        private readonly SubscriptionManager _subscriptionManager;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -58,9 +64,13 @@ namespace ITSMSkill.Bots
             _proactiveState = serviceProvider.GetService<ProactiveState>();
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
             _proactiveStateAccessor = _proactiveState.CreateProperty<ProactiveModel>(nameof(ProactiveModel));
-            _appCredentials = serviceProvider.GetService<MicrosoftAppCredentials>();
+            _activityReferenceMapAccessor = _proactiveState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+            _proactiveStateConversationReferenceMapAccessor = _proactiveState.CreateProperty<ConversationReferenceMap>(nameof(ConversationReferenceMap));
+            _botSettings = serviceProvider.GetService<BotSettings>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
             _serviceProvider = serviceProvider;
+            _teamsTicketUpdateActivity = serviceProvider.GetService<ITeamsActivity<AdaptiveCard>>();
+            _subscriptionManager = serviceProvider.GetService<SubscriptionManager>();
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -95,6 +105,12 @@ namespace ITSMSkill.Bots
             var ev = turnContext.Activity.AsEventActivity();
             var value = ev.Value?.ToString();
 
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+            turnContext,
+            () => new ActivityReferenceMap(),
+            cancellationToken)
+            .ConfigureAwait(false);
+
             switch (ev.Name)
             {
                 case ServiceNowEvents.Proactive:
@@ -103,10 +119,35 @@ namespace ITSMSkill.Bots
 
                         var proactiveModel = await _proactiveStateAccessor.GetAsync(turnContext, () => new ProactiveModel());
 
-                        // TODO: Implement a proactive subscription manager for mapping Notification to ConversationReference
-                        var conversationReference = proactiveModel["Key"].Conversation;
+                        // Get conversation reference mapping to BusinessRuleName
+                        var conversationReference = proactiveModel[eventData.BusinessRuleName].Conversation;
 
-                        await turnContext.Adapter.ContinueConversationAsync(_appCredentials.MicrosoftAppId, conversationReference, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                        var proactiveConversationReferenceMap = await _proactiveStateConversationReferenceMapAccessor.GetAsync(
+                                                turnContext,
+                                                () => new ConversationReferenceMap(),
+                                                cancellationToken)
+                                            .ConfigureAwait(false);
+
+                        // Get all conversation references matching Rulename
+                        proactiveConversationReferenceMap.TryGetValue(eventData.BusinessRuleName, out var listOfConversationReferences);
+                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                        //await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
+                        //    turnContext,
+                        //    activityReference,
+                        //    eventData.ToAdaptiveCard(),
+                        //    cancellationToken);
+
+                        var proactiveSubscriptions = await _subscriptionManager.GetSubscriptionByKey(turnContext, eventData.BusinessRuleName, cancellationToken);
+
+                        // Get list of Conversations to update from SubscriptionManager
+                        if (proactiveSubscriptions != null)
+                        {
+                            foreach (var conversation in proactiveSubscriptions.ConversationReferences)
+                            {
+                                await turnContext.Adapter.ContinueConversationAsync(_botSettings.MicrosoftAppId, conversation, ContinueConversationCallback(turnContext, eventData), cancellationToken);
+                            }
+                        }
+
                         break;
                     }
 
@@ -162,11 +203,11 @@ namespace ITSMSkill.Bots
         /// <param name="context">Turn context.</param>
         /// <param name="message">Activity text.</param>
         /// <returns>Bot Callback Handler.</returns>
-        private BotCallbackHandler ContinueConversationCallback(ITurnContext context, ServiceNowNotification notification)
+        private BotCallbackHandler ContinueConversationCallback(ITurnContext turnContext, ServiceNowNotification notification)
         {
             return async (turnContext, cancellationToken) =>
             {
-                var activity = context.Activity.CreateReply();
+                var activity = turnContext.Activity.CreateReply();
                 activity.Attachments = new List<Attachment>
                 {
                     new Attachment

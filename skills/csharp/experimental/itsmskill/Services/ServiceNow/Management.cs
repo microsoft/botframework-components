@@ -78,13 +78,13 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketResource);
+                var request = ServiceNowRestClientHelper.CreateRequest(TicketResource, token);
                 var body = new CreateTicketRequest()
                 {
                     caller_id = userId,
                     short_description = title,
                     description = description,
-                    urgency = ServiceNowHelper.UrgencyToString[urgency]
+                    urgency = ServiceNowRestClientHelper.UrgencyToString[urgency]
                 };
                 request.AddJsonBody(body);
                 var response = await client.ExecuteTaskAsync(request, CancellationToken.None, Method.POST);
@@ -106,7 +106,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketResource);
+                var request = ServiceNowRestClientHelper.CreateRequest(TicketResource, token);
 
                 var sysparmQuery = await CreateTicketSearchQuery(query: query, urgencies: urgencies, id: id, states: states, number: number);
 
@@ -137,7 +137,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(TicketCount);
+                var request = ServiceNowRestClientHelper.CreateRequest(TicketCount, token);
 
                 var sysparmQuery = await CreateTicketSearchQuery(query: query, urgencies: urgencies, id: id, states: states, number: number);
 
@@ -162,12 +162,12 @@ namespace ITSMSkill.Services.ServiceNow
 
         public async Task<TicketsResult> UpdateTicket(string id, string title = null, string description = null, UrgencyLevel urgency = UrgencyLevel.None)
         {
-            var request = CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true");
+            var request = ServiceNowRestClientHelper.CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true", token);
             var body = new CreateTicketRequest()
             {
                 short_description = title,
                 description = description,
-                urgency = urgency == UrgencyLevel.None ? null : ServiceNowHelper.UrgencyToString[urgency]
+                urgency = urgency == UrgencyLevel.None ? null : ServiceNowRestClientHelper.UrgencyToString[urgency]
             };
             request.JsonSerializer = new JsonNoNull();
             request.AddJsonBody(body);
@@ -193,7 +193,7 @@ namespace ITSMSkill.Services.ServiceNow
             try
             {
                 // minimum field required: https://community.servicenow.com/community?id=community_question&sys_id=84ceb6a5db58dbc01dcaf3231f9619e9
-                var request = CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true");
+                var request = ServiceNowRestClientHelper.CreateRequest($"{TicketResource}/{id}?sysparm_exclude_ref_link=true", token);
                 var body = new
                 {
                     close_code = "Closed/Resolved by Caller",
@@ -223,7 +223,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(KnowledgeResource);
+                var request = ServiceNowRestClientHelper.CreateRequest(KnowledgeResource, token);
 
                 var sysparmQuery = await CreateKnowledgeSearchQuery(query: query);
 
@@ -254,7 +254,7 @@ namespace ITSMSkill.Services.ServiceNow
         {
             try
             {
-                var request = CreateRequest(KnowledgeCount);
+                var request = ServiceNowRestClientHelper.CreateRequest(KnowledgeCount, token);
 
                 var sysparmQuery = await CreateKnowledgeSearchQuery(query: query);
 
@@ -295,7 +295,7 @@ namespace ITSMSkill.Services.ServiceNow
 
             if (urgencies != null && urgencies.Count > 0)
             {
-                sysparmQuery.Add($"urgencyIN{string.Join(',', urgencies.Select(urgency => ServiceNowHelper.UrgencyToString[urgency]))}");
+                sysparmQuery.Add($"urgencyIN{string.Join(',', urgencies.Select(urgency => ServiceNowRestClientHelper.UrgencyToString[urgency]))}");
             }
 
             if (!string.IsNullOrEmpty(id))
@@ -305,7 +305,7 @@ namespace ITSMSkill.Services.ServiceNow
 
             if (states != null && states.Count > 0)
             {
-                sysparmQuery.Add($"stateIN{string.Join(',', states.Select(state => ServiceNowHelper.TicketStateToString[state]))}");
+                sysparmQuery.Add($"stateIN{string.Join(',', states.Select(state => ServiceNowRestClientHelper.TicketStateToString[state]))}");
             }
 
             if (!string.IsNullOrEmpty(number))
@@ -329,7 +329,7 @@ namespace ITSMSkill.Services.ServiceNow
 
         private async Task<string> GetUserId()
         {
-            var request = CreateRequest(getUserIdResource);
+            var request = ServiceNowRestClientHelper.CreateRequest(getUserIdResource, token);
             var userId = await client.GetAsync<GetUserIdResponse>(request);
             if (userId == null || string.IsNullOrEmpty(userId.result))
             {
@@ -346,11 +346,11 @@ namespace ITSMSkill.Services.ServiceNow
                 Id = ticketResponse.sys_id,
                 Title = ticketResponse.short_description,
                 Description = ticketResponse.description,
-                Urgency = ServiceNowHelper.StringToUrgency[ticketResponse.urgency],
-                State = ServiceNowHelper.StringToTicketState[ticketResponse.state],
+                Urgency = ServiceNowRestClientHelper.StringToUrgency[ticketResponse.urgency],
+                State = ServiceNowRestClientHelper.StringToTicketState[ticketResponse.state],
                 OpenedTime = DateTime.Parse(ticketResponse.opened_at),
                 Number = ticketResponse.number,
-                Provider = ServiceNowHelper.Provider,
+                Provider = ServiceNowRestClientHelper.Provider,
             };
 
             if (!string.IsNullOrEmpty(ticketResponse.close_code))
@@ -381,7 +381,7 @@ namespace ITSMSkill.Services.ServiceNow
                 UpdatedTime = DateTime.Parse(knowledgeResponse.sys_updated_on),
                 Number = knowledgeResponse.number,
                 Url = string.Format(knowledgeUrl, knowledgeResponse.number),
-                Provider = ServiceNowHelper.Provider,
+                Provider = ServiceNowRestClientHelper.Provider,
             };
             if (!string.IsNullOrEmpty(knowledgeResponse.text))
             {
@@ -397,14 +397,14 @@ namespace ITSMSkill.Services.ServiceNow
             return knowledge;
         }
 
-        private RestRequest CreateRequest(string resource)
-        {
-            var request = new RestRequest(resource);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", $"Bearer {token}");
-            return request;
-        }
+        //private RestRequest CreateRequest(string resource)
+        //{
+        //    var request = new RestRequest(resource);
+        //    request.AddHeader("Accept", "application/json");
+        //    request.AddHeader("Content-Type", "application/json");
+        //    request.AddHeader("Authorization", $"Bearer {token}");
+        //    return request;
+        //}
 
         private class JsonNoNull : ISerializer
         {

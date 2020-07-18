@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json;
+
 namespace ITSMSkill.Extensions.Teams.TaskModule
 {
-    using Microsoft.Bot.Schema;
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// TaskInfo class
+    /// TaskInfo class.
     /// </summary>
     public class TaskInfo
     {

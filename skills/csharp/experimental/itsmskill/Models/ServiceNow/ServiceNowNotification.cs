@@ -11,6 +11,9 @@ namespace ITSMSkill.Models.ServiceNow
     public class ServiceNowNotification
     {
         [JsonProperty]
+        public string BusinessRuleName { get; set; }
+
+        [JsonProperty]
         public string Id { get; set; }
 
         [JsonProperty]

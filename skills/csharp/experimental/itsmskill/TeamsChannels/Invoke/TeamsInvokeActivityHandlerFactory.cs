@@ -13,15 +13,14 @@ namespace ITSMSkill.TeamsChannels.Invoke
     using Microsoft.Bot.Schema;
     using Microsoft.Bot.Schema.Teams;
 
+    /// <summary>
+    /// class for for getting Invoke Handler.
+    /// </summary>
     public abstract class TeamsInvokeActivityHandlerFactory
     {
         protected IDictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>>> TaskModuleFetchSubmitMap { get; set; }
             = new Dictionary<string, Func<ITeamsTaskModuleHandler<TaskModuleContinueResponse>>>();
 
-        /// <summary>
-        /// Router for getting Invoke Handler.
-        /// </summary>
-        /// <returns>TaskResponse</returns>
         public async Task<TaskModuleContinueResponse> HandleTaskModuleActivity(ITurnContext context, CancellationToken cancellationToken)
         {
             if (context.Activity.IsTaskModuleFetchActivity() || context.Activity.IsExtensionActionActivity())

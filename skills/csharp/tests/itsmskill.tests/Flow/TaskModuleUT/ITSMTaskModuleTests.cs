@@ -43,7 +43,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
 
-            Assert.AreEqual("ImpactTracker", response.Value.Title);
+            Assert.AreEqual("Create Incident", response.Value.Title);
             var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
@@ -81,12 +81,12 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
-            Assert.AreEqual("Incident Added", response.Value.Title);
+            Assert.AreEqual("Incident Created", response.Value.Title);
             var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
             Assert.IsNotNull(adaptiveCard);
-            Assert.AreEqual(adaptiveCard.Id, "ResponseCard");
+            Assert.AreEqual(adaptiveCard.Id, "IncidentResponseCard");
 
             // TODO: Add more validation steps on AdaptiveCard
         }
@@ -115,7 +115,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
 
-            Assert.AreEqual("Please Update The Card Below", response.Value.Title);
+            Assert.AreEqual("Update Incident", response.Value.Title);
             var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
@@ -158,7 +158,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
             Assert.IsNotNull(adaptiveCard);
-            Assert.AreEqual(adaptiveCard.Id, "ResponseCard");
+            Assert.AreEqual(adaptiveCard.Id, "IncidentResponseCard");
 
             // TODO: Add more validation steps on AdaptiveCard
         }
@@ -188,7 +188,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
 
-            Assert.AreEqual("DeleteTicket", response.Value.Title);
+            Assert.AreEqual("DeleteIncident", response.Value.Title);
             var attachment = response.Value.Card;
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
@@ -233,7 +233,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             Assert.IsNotNull(attachment);
             var adaptiveCard = (AdaptiveCard)attachment.Content;
             Assert.IsNotNull(adaptiveCard);
-            Assert.AreEqual(adaptiveCard.Id, "ResponseCard");
+            Assert.AreEqual(adaptiveCard.Id, "IncidentResponseCard");
 
             // TODO: Add more validation steps on AdaptiveCard
         }

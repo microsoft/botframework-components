@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace ITSMSkill.Extensions.Teams
 {
@@ -18,21 +17,21 @@ namespace ITSMSkill.Extensions.Teams
         CreateSubscription_Form,
 
         /// <summary>
-        /// Task Module will display create subscription
+        /// Task Module will display create form
         /// </summary>
         [EnumMember(Value = "createticket_form")]
         CreateTicket_Form,
 
         /// <summary>
-        /// Task Module will display create subscription
+        /// Task Module will display update ticket form
         /// </summary>
         [EnumMember(Value = "updateticket_form")]
         UpdateTicket_Form,
 
         /// <summary>
-        /// Task Module will display create subscription
+        /// Task Module will display delete ticket form
         /// </summary>
         [EnumMember(Value = "deleteticket_form")]
-        DeleteTicket_Form,
+        DeleteTicket_Form
     }
 }

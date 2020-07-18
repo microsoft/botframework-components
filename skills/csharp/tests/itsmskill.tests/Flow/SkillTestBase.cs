@@ -77,6 +77,7 @@ namespace ITSMSkill.Tests.Flow
             settings.LimitSize = MockData.LimitSize;
             settings.ServiceNowUrl = MockData.ServiceNowUrl;
             settings.ServiceNowGetUserId = MockData.ServiceNowGetUserId;
+            settings.ServiceNowNamespaceId = MockData.ServiceNowNamespaceId;
             settings.MicrosoftAppId = MockData.MicrosoftAppId;
             settings.MicrosoftAppPassword = MockData.MicrosoftAppPassword;
             Services.AddSingleton(settings);
@@ -151,6 +152,7 @@ namespace ITSMSkill.Tests.Flow
             Services.AddTransient<ShowTicketDialog>();
             Services.AddTransient<CloseTicketDialog>();
             Services.AddTransient<ShowKnowledgeDialog>();
+            Services.AddTransient<CreateSubscriptionDialog>();
             Services.AddTransient<MainDialog>();
 
             // Configure adapters

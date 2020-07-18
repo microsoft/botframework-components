@@ -21,7 +21,7 @@ namespace ITSMSkill.Dialogs.Teams
     /// </summary>
     public class TicketDialogHelper
     {
-        public static AdaptiveCard CreateIncidentAdaptiveCard()
+        public static AdaptiveCard CreateIncidentAdaptiveCard(string botId = null)
         {
             // Json Card for creating incident
             // TODO: Replace with Cards.Lg and responses
@@ -34,6 +34,7 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
                         Submit = true
                     }
@@ -43,7 +44,7 @@ namespace ITSMSkill.Dialogs.Teams
             return adaptiveCard;
         }
 
-        public static AdaptiveCard UpdateIncidentCard(Ticket details)
+        public static AdaptiveCard UpdateIncidentCard(Ticket details, string botId = null)
         {
             var card = new AdaptiveCard("1.0")
             {
@@ -64,6 +65,7 @@ namespace ITSMSkill.Dialogs.Teams
                                         {
                                             new AdaptiveTextBlock
                                             {
+                                                // Get Title
                                                 Text = $"Title: {details.Title}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
@@ -71,7 +73,7 @@ namespace ITSMSkill.Dialogs.Teams
                                             },
                                             new AdaptiveTextBlock
                                             {
-                                                // Incase of IcmForwarder, Triggers do not have incidentUrl hence being explicit here
+                                                // Get Urgency
                                                 Text = $"Urgency: {details.Urgency}",
                                                 Color = AdaptiveTextColor.Good,
                                                 MaxLines = 1,
@@ -80,6 +82,7 @@ namespace ITSMSkill.Dialogs.Teams
                                             },
                                             new AdaptiveTextBlock
                                             {
+                                                // Get Description
                                                 Text = $"Description: {details.Description}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
@@ -101,6 +104,7 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
                         Submit = true
                     }
@@ -112,7 +116,7 @@ namespace ITSMSkill.Dialogs.Teams
         }
 
         // <returns> Adaptive Card.</returns>
-        public static AdaptiveCard GetUserInputIncidentCard()
+        public static AdaptiveCard GetUserInputIncidentCard(string botId = null)
         {
             var card = new AdaptiveCard("1.0");
 
@@ -154,6 +158,7 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
                     }
                 }
@@ -166,9 +171,8 @@ namespace ITSMSkill.Dialogs.Teams
         /// Returns Card to GetIncident Id from User.
         /// </summary>
         /// <returns> Adaptive Card.</returns>
-        public static AdaptiveCard GetDeleteConfirmationCard(string ticketId)
+        public static AdaptiveCard GetDeleteConfirmationCard(string ticketId, string botId = null)
         {
-
             var card = new AdaptiveCard("1.0");
             var columns = new List<AdaptiveColumn>
             {
@@ -223,6 +227,7 @@ namespace ITSMSkill.Dialogs.Teams
                 {
                     Data = new TaskModuleMetadata()
                     {
+                        SkillId = botId,
                         TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
                         FlowData = new Dictionary<string, object>
                         {

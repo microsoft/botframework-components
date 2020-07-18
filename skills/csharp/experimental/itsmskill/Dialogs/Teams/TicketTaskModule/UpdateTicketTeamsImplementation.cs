@@ -68,13 +68,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             {
                 Value = new TaskModuleTaskInfo()
                 {
-                    Title = "Please Update The Card Below",
+                    Title = "Update Incident",
                     Height = "medium",
                     Width = 500,
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails)
+                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails, _settings.MicrosoftAppId)
                     }
                 }
             };
@@ -132,7 +132,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
+                            ServiceNowIncidentTaskModuleAdaptiveCardHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                             cancellationToken);
 
                         // Return Added Incident Envelope
@@ -147,7 +147,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                                 Card = new Attachment
                                 {
                                     ContentType = AdaptiveCard.ContentType,
-                                    Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Updated")
+                                    Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been Updated")
                                 }
                             }
                         };
@@ -167,7 +167,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Update Failed")
+                        Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident Update Failed")
                     }
                 }
             };

@@ -1,18 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Newtonsoft.Json;
-using RestSharp;
 using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace ITSMSkill.Services.ServiceNow
 {
-    public static class ServiceNowHelper
+    /// <summary>
+    /// Helper to create RestRequest
+    /// </summary>
+    public static class ServiceNowRestClientHelper
     {
         public static readonly Dictionary<UrgencyLevel, string> UrgencyToString = new Dictionary<UrgencyLevel, string>()
         {
@@ -126,6 +129,15 @@ namespace ITSMSkill.Services.ServiceNow
             }
 
             return ticket;
+        }
+
+        public static RestRequest CreateRequest(string resource, string token)
+        {
+            var request = new RestRequest(resource);
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", $"Bearer {token}");
+            return request;
         }
     }
 }

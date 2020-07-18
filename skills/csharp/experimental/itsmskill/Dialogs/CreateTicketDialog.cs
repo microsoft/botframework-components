@@ -3,25 +3,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
 using ITSMSkill.Dialogs.Teams;
 using ITSMSkill.Models;
-using ITSMSkill.Models.Actions;
 using ITSMSkill.Models.UpdateActivity;
-using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Knowledge;
-using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
 using ITSMSkill.Services;
 using ITSMSkill.Utilities;
-using Luis;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
@@ -29,10 +22,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Creating Ticket.
+    /// </summary>
     public class CreateTicketDialog : SkillDialogBase
     {
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
         private readonly ConversationState _conversationState;
+        private readonly BotSettings _settings;
 
         public CreateTicketDialog(
              IServiceProvider serviceProvider)
@@ -40,6 +37,7 @@ namespace ITSMSkill.Dialogs
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _activityReferenceMapAccessor = _conversationState.CreateProperty<ActivityReferenceMap>(nameof(ActivityReferenceMap));
+            _settings = serviceProvider.GetService<BotSettings>();
 
             var createTicket = new WaterfallStep[]
             {
@@ -106,7 +104,7 @@ namespace ITSMSkill.Dialogs
             var reply = sc.Context.Activity.CreateReply();
             reply.Attachments = new List<Attachment>()
             {
-                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = TicketDialogHelper.GetUserInputIncidentCard() }
+                new Microsoft.Bot.Schema.Attachment() { ContentType = AdaptiveCard.ContentType, Content = TicketDialogHelper.GetUserInputIncidentCard(_settings.MicrosoftAppId) }
             };
 
             // Get ActivityId for purpose of mapping

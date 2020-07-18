@@ -67,13 +67,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             {
                 Value = new TaskModuleTaskInfo()
                 {
-                    Title = "DeleteTicket",
+                    Title = "DeleteIncident",
                     Height = "medium",
                     Width = 500,
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.GetDeleteConfirmationCard(incidentId)
+                        Content = TicketDialogHelper.GetDeleteConfirmationCard(incidentId, _settings.MicrosoftAppId)
                     }
                 }
             };
@@ -125,7 +125,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            RenderCreateIncidentHelper.CloseTicketCard(result.Tickets[0]),
+                            ServiceNowIncidentTaskModuleAdaptiveCardHelper.CloseIncidentCard(result.Tickets[0]),
                             cancellationToken);
 
                         // Return Closed Incident Envelope
@@ -140,7 +140,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                                 Card = new Attachment
                                 {
                                     ContentType = AdaptiveCard.ContentType,
-                                    Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been Deleted")
+                                    Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been Deleted")
                                 }
                             }
                         };
@@ -160,7 +160,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Delete Failed")
+                        Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident Delete Failed")
                     }
                 }
             };

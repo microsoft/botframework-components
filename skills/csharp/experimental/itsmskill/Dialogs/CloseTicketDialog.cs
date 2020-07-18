@@ -2,25 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
-using ITSMSkill.Prompts;
-using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
-using ITSMSkill.Services;
 using ITSMSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Solutions.Responses;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Closing Ticket.
+    /// </summary>
     public class CloseTicketDialog : SkillDialogBase
     {
         public CloseTicketDialog(

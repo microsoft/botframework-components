@@ -6,7 +6,7 @@ namespace ITSMSkill.Extensions.Teams.TaskModule
     using Newtonsoft.Json;
 
     /// <summary>
-    /// TaskProperty
+    /// TaskProperty.
     /// </summary>
     public class TaskProperty
     {

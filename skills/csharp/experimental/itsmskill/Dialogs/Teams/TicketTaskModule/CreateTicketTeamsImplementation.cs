@@ -1,28 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AdaptiveCards;
+using ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView;
+using ITSMSkill.Extensions.Teams;
+using ITSMSkill.Models;
+using ITSMSkill.Models.UpdateActivity;
+using ITSMSkill.Services;
+using ITSMSkill.TeamsChannels;
+using ITSMSkill.TeamsChannels.Invoke;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Schema;
+using Microsoft.Bot.Schema.Teams;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AdaptiveCards;
-    using ITSMSkill.Dialogs.Teams.CreateTicketTaskModuleView;
-    using ITSMSkill.Extensions.Teams;
-    using ITSMSkill.Models;
-    using ITSMSkill.Models.UpdateActivity;
-    using ITSMSkill.Services;
-    using ITSMSkill.TeamsChannels;
-    using ITSMSkill.TeamsChannels.Invoke;
-    using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Connector;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-    using Microsoft.Bot.Schema.Teams;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json.Linq;
-    using Attachment = Microsoft.Bot.Schema.Attachment;
-    using System.Linq;
-
     /// <summary>
     /// CreateTicketTeamsImplementation Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
@@ -58,13 +56,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
             {
                 Value = new TaskModuleTaskInfo()
                 {
-                    Title = "ImpactTracker",
+                    Title = "Create Incident",
                     Height = "medium",
                     Width = 500,
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.CreateIncidentAdaptiveCard()
+                        Content = TicketDialogHelper.CreateIncidentAdaptiveCard(_settings.MicrosoftAppId)
                     }
                 }
             };
@@ -74,7 +72,6 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
-            var accessToken = state.AccessTokenResponse.Token;
 
             ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
                 context,
@@ -114,7 +111,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                         context,
                         activityReference,
-                        RenderCreateIncidentHelper.BuildTicketCard(result.Tickets.FirstOrDefault()),
+                        ServiceNowIncidentTaskModuleAdaptiveCardHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                         cancellationToken);
 
                     return new TaskModuleContinueResponse()
@@ -122,13 +119,13 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                         Type = "continue",
                         Value = new TaskModuleTaskInfo()
                         {
-                            Title = "Incident Added",
+                            Title = "Incident Created",
                             Height = "medium",
                             Width = 500,
                             Card = new Attachment
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident has been created")
+                                Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been created")
                             }
                         }
                     };
@@ -147,7 +144,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = RenderCreateIncidentHelper.ImpactTrackerResponseCard("Incident Create Failed")
+                        Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident Create Failed")
                     }
                 }
             };
