@@ -177,8 +177,8 @@ namespace ITSMSkill.Bots
         /// <summary>
         /// Continue the conversation callback.
         /// </summary>
-        /// <param name="context">Turn context.</param>
-        /// <param name="message">Activity text.</param>
+        /// <param name="turnContext">Turn context.</param>
+        /// <param name="notification">Activity text.</param>
         /// <returns>Bot Callback Handler.</returns>
         private BotCallbackHandler ContinueConversationCallback(ITurnContext turnContext, ServiceNowNotification notification, ConversationReference conversationReference)
         {
@@ -196,46 +196,54 @@ namespace ITSMSkill.Bots
                 };
                 EnsureActivity(activity);
 
-                // Get Activity ReferenceMap from Proactive State
-                ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                if (turnContext.Activity.ChannelId == Microsoft.Bot.Connector.Channels.Msteams)
+                {
+                    // Get Activity ReferenceMap from Proactive State
+                    ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
                 turnContext,
                 () => new ActivityReferenceMap(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
-                // Return Added Incident Envelope
-                // Get saved Activity Reference mapping to conversation Id
-                activityReferenceMap.TryGetValue(conversationReference.Conversation.Id, out var activityReference);
+                    // Return Added Incident Envelope
+                    // Get saved Activity Reference mapping to conversation Id
+                    activityReferenceMap.TryGetValue(conversationReference.Conversation.Id + notification.Id, out var activityReference);
 
-                // if there is no activity mapping to conversation reference
-                // then send a new activity and save activity to activityReferenceMap
-                if (activityReference == null)
-                {
-                    var resourceResponse = await turnContext.SendActivityAsync(activity);
-
-                    // Store Activity and Thread Id
-                    activityReferenceMap[conversationReference.Conversation.Id] = new ActivityReference
+                    // if there is no activity mapping to conversation reference
+                    // then send a new activity and save activity to activityReferenceMap
+                    if (activityReference == null)
                     {
-                        ActivityId = resourceResponse.Id,
-                        ThreadId = conversationReference.Conversation.Id,
-                    };
+                        var resourceResponse = await turnContext.SendActivityAsync(activity);
+
+                        // Store Activity and Thread Id mapping to ConversationReference and TicketId from eventData
+                        activityReferenceMap[conversationReference.Conversation.Id + notification.Id] = new ActivityReference
+                        {
+                            ActivityId = resourceResponse.Id,
+                            ThreadId = conversationReference.Conversation.Id,
+                        };
+                    }
+                    else
+                    {
+                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
+                        await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
+                            turnContext,
+                            activityReference,
+                            notification.ToAdaptiveCard(),
+                            cancellationToken);
+                    }
+
+                    // Save activity reference map state
+                    await _activityReferenceMapAccessor.SetAsync(turnContext, activityReferenceMap).ConfigureAwait(false);
+
+                    // Save Conversation State
+                    await _proactiveState
+                        .SaveChangesAsync(turnContext).ConfigureAwait(false);
                 }
                 else
                 {
-                    // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
-                    await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
-                        turnContext,
-                        activityReference,
-                        notification.ToAdaptiveCard(),
-                        cancellationToken);
+                    // Not a TeamsChannel just send a conversation update
+                    await turnContext.SendActivityAsync(activity);
                 }
-
-                // Save activity reference map state
-                await _activityReferenceMapAccessor.SetAsync(turnContext, activityReferenceMap).ConfigureAwait(false);
-
-                // Save Conversation State
-                await _proactiveState
-                    .SaveChangesAsync(turnContext).ConfigureAwait(false);
             };
         }
 
