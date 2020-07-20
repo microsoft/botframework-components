@@ -13,33 +13,6 @@
 
 
 
-# SendActivity_pJjVKc()
--${MultiSearchResult(conversation.luisResult.keyword)}
-
-
-# SendActivity_ldvWHq()
-- ${NoSearchResult(conversation.luisResult.keyword)}
 
 
 
-
-
-# TextInput_Prompt_OcDGsF()
-[Activity
-    Attachments = ${json(CardForList(conversation.allPersons))}
-    InputHint = acceptingInput
-]
-
-# SendActivity_rS3g2d()
-- ${WhoIs(conversation.chosenPerson)}
-
-# SendActivity_cAEsY2()
-[Activity
-    Attachments = ${json(CardForActionItem(conversation.person))}
-    InputHint = acceptingInput
-]
-
-
-
-# SendActivity_NKIsTO()
-- ${NoKeyword()}

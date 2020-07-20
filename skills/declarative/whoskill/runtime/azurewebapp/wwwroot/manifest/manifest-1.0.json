@@ -26,17 +26,6 @@
     "message": {
       "type": "message",
       "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
-    },
-    "whois": {
-      "description": "Search a user's profile",
-      "type": "event",
-      "name": "Whois",
-      "value": {
-        "$ref": "#/definitions/input"
-      },
-      "resultValue": {
-        "$ref": "#/definitions/actionResult"
-      }
     }
   },
   "definitions": {

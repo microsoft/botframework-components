@@ -75,21 +75,11 @@
       "event": "JobTitle",
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "VJOSi6"
-          },
-          "activityProcessed": true,
-          "dialog": "FormatPersonModel",
-          "resultProperty": "conversation.chosenPerson",
-          "options": "=setProperty({}, \"person\", conversation.chosenPerson)"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "RvzEBK"
           },
-          "condition": "conversation.chosenPerson.JobTitle != \" \"",
+          "condition": "conversation.chosenPerson.JobTitle != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -138,21 +128,11 @@
       "event": "EmailFind",
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "M4PVio"
-          },
-          "activityProcessed": true,
-          "dialog": "FormatPersonModel",
-          "options": "=setProperty({}, \"person\", conversation.chosenPerson)",
-          "resultProperty": "conversation.chosenPerson"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "gP1Ftn"
           },
-          "condition": "conversation.chosenPerson.Mail != \" \"",
+          "condition": "conversation.chosenPerson.Mail != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -201,21 +181,11 @@
       "event": "Location",
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "2cOk5N"
-          },
-          "activityProcessed": true,
-          "dialog": "FormatPersonModel",
-          "options": "=setProperty({}, \"person\", conversation.chosenPerson)",
-          "resultProperty": "conversation.chosenPerson"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "ON0jjI"
           },
-          "condition": "conversation.chosenPerson.OfficeLocation != \" \"",
+          "condition": "conversation.chosenPerson.OfficeLocation != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -264,21 +234,11 @@
       "event": "Department",
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "KAqskP"
-          },
-          "activityProcessed": true,
-          "dialog": "FormatPersonModel",
-          "options": "=setProperty({}, \"person\", conversation.chosenPerson)",
-          "resultProperty": "conversation.chosenPerson"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "WmQPeq"
           },
-          "condition": "conversation.chosenPerson.Department != \" \"",
+          "condition": "conversation.chosenPerson.Department != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -327,28 +287,11 @@
       "event": "PhoneNumber",
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "997WUO"
-          },
-          "activityProcessed": true,
-          "dialog": "FormatPersonModel",
-          "options": "=setProperty({}, \"person\", conversation.chosenPerson)",
-          "resultProperty": "conversation.chosenPerson"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "pqlACk"
-          },
-          "activity": "${SendActivity_pqlACk()}"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "MTLzJ8"
           },
-          "condition": "conversation.chosenPerson.BusinessPhones != \" \" && conversation.chosenPerson.MobilePhone != \" \"",
+          "condition": "count(conversation.chosenPerson.BusinessPhones) > 0 && conversation.chosenPerson.MobilePhone != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -364,7 +307,7 @@
               "$designer": {
                 "id": "Z03GXh"
               },
-              "condition": "conversation.chosenPerson.BusinessPhones != \" \"",
+              "condition": "count(conversation.chosenPerson.BusinessPhones) > 0",
               "actions": [
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -380,7 +323,7 @@
                   "$designer": {
                     "id": "0l03YL"
                   },
-                  "condition": "conversation.chosenPerson.MobliePhone != \" \"",
+                  "condition": "conversation.chosenPerson.MobliePhone != null",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",

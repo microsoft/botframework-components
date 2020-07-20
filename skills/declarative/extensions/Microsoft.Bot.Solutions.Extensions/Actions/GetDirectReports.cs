@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             var idProperty = this.IdProperty.GetValue(dcState);
 
             var graphClient = GraphClient.GetAuthenticatedClient(token);
-            IUserDirectReportsCollectionWithReferencesPage result;
+            IUserDirectReportsCollectionWithReferencesPage result = null;
             try
             {
                 result = await graphClient.Users[idProperty]
@@ -53,17 +54,26 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
             }
             catch (ServiceException ex)
             {
-                if (ex.StatusCode == HttpStatusCode.NotFound)
-                {
-                    result = null;
-                }
-                else
+                // If a user doesn't have directReports, it will return a NotFound error. So we only need to throw other exception.
+                if (ex.StatusCode != HttpStatusCode.NotFound)
                 {
                     throw GraphClient.HandleGraphAPIException(ex);
                 }
             }
 
-            if (result == null)
+            var directReports = new List<WhoSkillUserModel>();
+            foreach (var user in result)
+            {
+                try
+                {
+                    directReports.Add(new WhoSkillUserModel(user as User));
+                }
+                catch
+                {
+                }
+            }
+
+            if (directReports.Count == 0)
             {
                 if (this.ResultProperty != null)
                 {
@@ -71,12 +81,6 @@ namespace Microsoft.Bot.Solutions.Extensions.Actions
                 }
 
                 return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken);
-            }
-
-            var directReports = new List<WhoSkillUserModel>();
-            foreach (var user in result)
-            {
-                directReports.Add(new WhoSkillUserModel(user as User));
             }
 
             // Write Trace Activity for the http request and response values
