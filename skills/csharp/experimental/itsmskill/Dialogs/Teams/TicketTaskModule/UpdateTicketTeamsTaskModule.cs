@@ -30,7 +30,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// UpdateTicket Handler for Updating Ticket OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.UpdateTicket_Form))]
-    public class UpdateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
+    public class UpdateTicketTeamsTaskModule : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly ConversationState _conversationState;
@@ -41,7 +41,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly IConnectorClient _connectorClient;
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
 
-        public UpdateTicketTeamsImplementation(IServiceProvider serviceProvider)
+        public UpdateTicketTeamsTaskModule(IServiceProvider serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _settings = serviceProvider.GetService<BotSettings>();
@@ -74,7 +74,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = TicketDialogHelper.UpdateIncidentCard(incidentDetails, _settings.MicrosoftAppId)
+                        Content = TicketDialogHelper.GetIncidentCard(incidentDetails, _settings.MicrosoftAppId)
                     }
                 }
             };
@@ -82,77 +82,122 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
 
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
+            bool hasPropertyChanged = false;
+
+            ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
+                context,
+                () => new ActivityReferenceMap(),
+                cancellationToken)
+            .ConfigureAwait(false);
+
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
 
-            var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
+            var activityValueObject = JObject.FromObject(context.Activity.Value);
 
+            var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
             var ticketDetails = taskModuleMetadata.FlowData != null ?
-                JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
-                .GetValueOrDefault("IncidentDetails") : null;
+        JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
+        .GetValueOrDefault("IncidentDetails") : null;
 
             // Convert JObject to Ticket
             Ticket incidentDetails = JsonConvert.DeserializeObject<Ticket>(ticketDetails.ToString());
 
-            // If ticket is valid go ahead and update
-            if (incidentDetails != null)
+            var isDataObject = activityValueObject.TryGetValue("data", StringComparison.InvariantCultureIgnoreCase, out JToken dataValue);
+            JObject dataObject = null;
+
+            if (isDataObject)
             {
-                ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
-                    context,
-                    () => new ActivityReferenceMap(),
-                    cancellationToken)
-                .ConfigureAwait(false);
+                dataObject = dataValue as JObject;
 
-                // Get Activity Id from ActivityReferenceMap
-                activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
+                // Updated Properties
+                string title = string.Empty;
+                string description = string.Empty;
+                UrgencyLevel urgency;
 
-                // Get User Input from AdatptiveCard
-                var activityValueObject = JObject.FromObject(context.Activity.Value);
-
-                var isDataObject = activityValueObject.TryGetValue("data", StringComparison.InvariantCultureIgnoreCase, out JToken dataValue);
-                JObject dataObject = null;
-                if (isDataObject)
+                if (dataObject.GetValue("IncidentTitle").Value<string>().Equals(string.Empty))
                 {
-                    dataObject = dataValue as JObject;
+                    title = incidentDetails.Title;
+                }
+                else
+                {
+                    title = dataObject.GetValue("IncidentTitle").Value<string>();
+                    hasPropertyChanged = true;
+                }
 
-                    // Get Title
-                    var title = dataObject.GetValue("IncidentTitle");
+                if (dataObject.GetValue("IncidentDescription").Value<string>().Equals(string.Empty))
+                {
+                    description = incidentDetails.Description;
+                }
+                else
+                {
+                    description = dataObject.GetValue("IncidentDescription").Value<string>();
+                    hasPropertyChanged = true;
+                }
 
-                    // Get Description
-                    var description = dataObject.GetValue("IncidentDescription");
+                if (dataObject.GetValue("IncidentUrgency").Value<string>().Equals(string.Empty))
+                {
+                    urgency = incidentDetails.Urgency;
+                }
+                else
+                {
+                    urgency = (UrgencyLevel)Enum.Parse(typeof(UrgencyLevel), dataObject.GetValue("IncidentUrgency").Value<string>(), true);
+                    hasPropertyChanged = true;
+                }
 
-                    // Get Urgency
-                    var urgency = dataObject.GetValue("IncidentUrgency");
-
-                    // Create Managemenet object
+                //Create Managemenet object
+                if (hasPropertyChanged)
+                {
                     var management = _serviceManager.CreateManagement(_settings, state.AccessTokenResponse, state.ServiceCache);
-                    var result = await management.UpdateTicket(incidentDetails.Id, title.Value<string>(), description.Value<string>(), (UrgencyLevel)Enum.Parse(typeof(UrgencyLevel), urgency.Value<string>()));
+
+                    // Create Ticket
+                    var result = await management.UpdateTicket(incidentDetails.Id, title, description, urgency);
 
                     if (result.Success)
                     {
+                        // Return Added Incident Envelope
+                        // Get saved Activity Reference mapping to conversation Id
+                        activityReferenceMap.TryGetValue(context.Activity.Conversation.Id, out var activityReference);
+
+                        // Update Create Ticket Button with another Adaptive card to Update/Delete Ticket
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
                             ServiceNowIncidentTaskModuleAdaptiveCardHelper.BuildIncidentCard(result.Tickets.FirstOrDefault(), _settings.MicrosoftAppId),
                             cancellationToken);
 
-                        // Return Added Incident Envelope
                         return new TaskModuleContinueResponse()
                         {
                             Type = "continue",
                             Value = new TaskModuleTaskInfo()
                             {
-                                Title = "Incident Updated",
-                                Height = "small",
-                                Width = 300,
+                                Title = "Incident Update",
+                                Height = "medium",
+                                Width = 500,
                                 Card = new Attachment
                                 {
                                     ContentType = AdaptiveCard.ContentType,
-                                    Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been Updated")
+                                    Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("Incident has been updated")
                                 }
                             }
                         };
                     }
                 }
+
+                return new TaskModuleContinueResponse()
+                {
+                    Type = "continue",
+                    Value = new TaskModuleTaskInfo()
+                    {
+                        Title = "Incident Update",
+                        Height = "medium",
+                        Width = 500,
+                        Card = new Attachment
+                        {
+                            ContentType = AdaptiveCard.ContentType,
+                            Content = ServiceNowIncidentTaskModuleAdaptiveCardHelper.IncidentResponseCard("No Change Detected")
+                        }
+                    }
+                };
             }
 
             // Failed to update incident

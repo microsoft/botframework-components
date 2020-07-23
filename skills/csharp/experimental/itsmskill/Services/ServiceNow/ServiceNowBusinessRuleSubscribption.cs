@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
+using ITSMSkill.Proactive.Subscription;
 using RestSharp;
 
 namespace ITSMSkill.Services.ServiceNow
@@ -55,12 +58,61 @@ namespace ITSMSkill.Services.ServiceNow
         }
 
         // Calls ServiceNow Scripted REST API to programmatically create new rest messages
-        public async Task<HttpStatusCode> CreateSubscriptionBusinessRule(string filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
+        public async Task<HttpStatusCode> CreateSubscriptionBusinessRule(ICollection<string> filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
         {
+            StringBuilder businessRuleCondition = new StringBuilder();
+            int count = filterCondition.Count;
+
+            foreach (var condition in filterCondition)
+            {
+                if (IncidentSubscriptionStrings.FilterConditions.Contains(condition))
+                {
+                    --count;
+                    if (count > 1)
+                    {
+                        businessRuleCondition.Append(condition + "VALCHANGES^OR");
+                    }
+                    else
+                    {
+                        businessRuleCondition.Append("VALCHANGES^EQ&advance=true");
+                    }
+                }
+            }
+
             try
             {
                 // TODO: build filterCondition from userinput instead of hardcoding
                 var url = this.baseUrl + $"/createnewbusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
+                var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
+                notificationNameSpace = "'" + notificationNameSpace + "'";
+                postNotificationAPIName = "'" + postNotificationAPIName + "'";
+
+                // Create BusinessRule to execute when 
+                var postBusinessRule = new Dictionary<string, string>();
+                postBusinessRule["script"] = "(function executeRule(current, previous /*null when async*/) {var strBody = \"{\"; strBody += \"'BusinessRuleName': '" + filterName + "', \"; strBody += \"'Id': '\" + current.number.toString() + \"', \"; strBody += \"'Title': '\" + current.short_description.toString() + \"', \"; strBody += \"'Description': '\" + current.description.toString() + \"', \"; strBody += \"'Category': '\" + current.category.toString() + \"', \"; strBody += \"'Impact': '\" + current.impact.toString() + \"',\"; strBody += \"'Urgency': '\" + current.urgency.toString() + \"'\"; strBody += \"}\"; var request = new sn_ws.RESTMessageV2(" + notificationNameSpace + ", " + postNotificationAPIName + "); request.setRequestBody(JSON.stringify(strBody)); var response = request.execute(); var responseBody = response.getBody(); var httpStatus = response.getStatusCode();})(current, previous);";
+
+                // Send Request to ServiceNow
+                request.AddJsonBody(postBusinessRule);
+
+                // Post BusinessRule
+                var response = await client.PostAsync<Dictionary<string, string>>(request);
+                var val = response["result"];
+
+                return val.ToLower().Contains("successfully") ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        // Calls ServiceNow Scripted REST API to programmatically create new rest messages
+        public async Task<HttpStatusCode> UpdateSubscriptionBusinessRule(string filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null)
+        {
+            try
+            {
+                // TODO: build filterCondition from userinput instead of hardcoding
+                var url = this.baseUrl + $"/updatebusinessrule?name={filterName}&whenToRun=after&tableName=incident&action=action_insert&filterCondition=urgencyVALCHANGES^ORdescriptionVALCHANGES^ORpriorityVALCHANGES^ORdescriptionVALCHANGES^ORassigned_toVALCHANGES^EQ&advance=true";
                 var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
                 notificationNameSpace = "'" + notificationNameSpace + "'";
                 postNotificationAPIName = "'" + postNotificationAPIName + "'";
@@ -89,14 +141,73 @@ namespace ITSMSkill.Services.ServiceNow
             throw new NotImplementedException();
         }
 
-        public Task RemoveSubscriptionBusinessRule(string subscriptionId)
+        public async Task<HttpStatusCode> RemoveSubscriptionBusinessRule(string filterName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // TODO: build filterCondition from userinput instead of hardcoding
+                var url = this.baseUrl + $"/deletebusinessrule?name={filterName}";
+                var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
+
+                // Create BusinessRule to execute when 
+
+                // Post BusinessRule
+                var response = await client.PostAsync<Dictionary<string, string>>(request);
+                var val = response["result"];
+
+                return val.ToLower().Contains("successfully") ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Task RemoveSubscriptionRestMessage(string messageName)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<HttpStatusCode> UpdateSubscriptionBusinessRule(ICollection<string> filterCondition, string filterName)
+        {
+            StringBuilder businessRuleCondition = new StringBuilder();
+            int count = filterCondition.Count;
+
+            foreach (var condition in filterCondition)
+            {
+                if (IncidentSubscriptionStrings.FilterConditions.Contains(condition))
+                {
+                    --count;
+                    businessRuleCondition.Append(condition + "VALCHANGES^OR");
+                    if (count > 1)
+                    {
+                        businessRuleCondition.Append("VALCHANGES^OR");
+                    }
+                    else
+                    {
+                        businessRuleCondition.Append("VALCHANGES^EQ&advance=true");
+                    }
+                }
+            }
+
+            try
+            {
+                // TODO: build filterCondition from userinput instead of hardcoding
+                var url = this.baseUrl + $"/updatebusinessrule?name={filterName}&filterCondition={filterCondition}";
+                var request = ServiceNowRestClientHelper.CreateRequest(url, "Bearer " + token);
+
+                // Create BusinessRule to execute when 
+
+                // Post BusinessRule
+                var response = await client.PostAsync<Dictionary<string, string>>(request);
+                var val = response["result"];
+
+                return val.ToLower().Contains("successfully") ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// CreateTicketTeamsImplementation Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.CreateTicket_Form))]
-    public class CreateTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
+    public class CreateTicketTeamsTaskModule : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
@@ -36,7 +36,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly IConnectorClient _connectorClient;
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
 
-        public CreateTicketTeamsImplementation(
+        public CreateTicketTeamsTaskModule(
              IServiceProvider serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();

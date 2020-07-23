@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveCards;
+using ITSMSkill.Extensions;
 using ITSMSkill.Extensions.Teams;
+using ITSMSkill.Extensions.Teams.TaskModule;
 using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Models.UpdateActivity;
@@ -20,15 +23,16 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Microsoft.Bot.Solutions.Proactive;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 {
     /// <summary>
-    /// CreateTicketTeamsImplementation Handles OnFetch and OnSumbit Activity for TaskModules
+    /// UpdateSubscriptionTaskModule Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
-    [TeamsInvoke(FlowType = nameof(TeamsFlowType.CreateSubscription_Form))]
-    public class CreateSubscriptionTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
+    [TeamsInvoke(FlowType = nameof(TeamsFlowType.UpdateSubscription_Form))]
+    public class UpdateSubscriptionTeamsTaskModule : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly IStatePropertyAccessor<ActivityReferenceMap> _activityReferenceMapAccessor;
@@ -44,8 +48,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
         private readonly ProactiveState _proactiveState;
         private readonly SubscriptionManager _subscriptionManager;
 
-        public CreateSubscriptionTeamsImplementation(
-             IServiceProvider serviceProvider)
+        public UpdateSubscriptionTeamsTaskModule(IServiceProvider serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _settings = serviceProvider.GetService<BotSettings>();
@@ -64,6 +67,15 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleFetchAsync(ITurnContext context, CancellationToken cancellationToken)
         {
+            var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
+
+            var details = taskModuleMetadata.FlowData != null ?
+                    JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
+                    .GetValueOrDefault("SubscriptionDetails") : null;
+
+            // Convert JObject to Ticket
+            var subscription = JsonConvert.DeserializeObject<ServiceNowSubscription>(details.ToString());
+
             return new TaskModuleContinueResponse()
             {
                 Value = new TaskModuleTaskInfo()
@@ -74,7 +86,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = SubscriptionTaskModuleAdaptiveCard.GetSubscriptionAdaptiveCard(_settings.MicrosoftAppId)
+                        Content = SubscriptionTaskModuleAdaptiveCard.PresentSubscriptionAdaptiveCard(subscription, _settings.MicrosoftAppId)
                     }
                 }
             };
@@ -82,50 +94,81 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
 
         public async Task<TaskModuleContinueResponse> OnTeamsTaskModuleSubmitAsync(ITurnContext context, CancellationToken cancellationToken)
         {
+            bool hasPropertyChanged = false;
+
             var state = await _stateAccessor.GetAsync(context, () => new SkillState());
 
             var activityValueObject = JObject.FromObject(context.Activity.Value);
 
+            var taskModuleMetadata = context.Activity.GetTaskModuleMetadata<TaskModuleMetadata>();
+            var details = taskModuleMetadata.FlowData != null ?
+            JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(taskModuleMetadata.FlowData))
+            .GetValueOrDefault("SubscriptionDetails") : null;
+
+            var subscriptionDetails = JsonConvert.DeserializeObject<ServiceNowSubscription>(details.ToString());
+
+            string filterName = subscriptionDetails.FilterName;
+
             var isDataObject = activityValueObject.TryGetValue("data", StringComparison.InvariantCultureIgnoreCase, out JToken dataValue);
             JObject dataObject = null;
+
             if (isDataObject)
             {
                 dataObject = dataValue as JObject;
 
-                // Get filterUrgency
-                var filterUrgency = dataObject.GetValue("UrgencyFilter");
+                string filterCondition = string.Empty;
+                if (dataObject.GetValue("FilterCondition").Value<string>().Equals(string.Empty))
+                {
+                    filterCondition = subscriptionDetails.FilterCondition;
+                }
+                else
+                {
+                    filterCondition = dataObject.GetValue("FilterCondition").Value<string>();
+                    hasPropertyChanged = true;
+                }
 
-                // Get filterName
-                var filterName = dataObject.GetValue("FilterName");
+                // Create FilterList from JTOKEN
+                var conditions = IncidentSubscriptionStrings.FilterConditions.ToList<string>();
 
-                //// Get NotificationNamespace name
-                var notificationNameSpace = dataObject.GetValue("NotificationNameSpace");
+                ICollection<string> filterList = new List<string>();
 
-                //// Get filterName
-                var postNotificationAPIName = dataObject.GetValue("PostNotificationAPIName");
+                if (filterCondition.Contains("1"))
+                {
+                    filterList.Add(conditions[0]);
+                }
 
-                // Check if this BusinessRule is already created if not create proactivesubscription
-                var isNewSubscription = await _subscriptionManager.AddSubscription(context, filterName.Value<string>(), context.Activity.GetConversationReference(), cancellationToken);
+                if (filterCondition.Contains("2"))
+                {
+                    filterList.Add(conditions[1]);
+                }
 
-                // Create Managemenet object
-                if (isNewSubscription)
+                if (filterCondition.Contains("3"))
+                {
+                    filterList.Add(conditions[2]);
+                }
+
+                if (filterCondition.Contains("4"))
+                {
+                    filterList.Add(conditions[3]);
+                }
+
+                if (hasPropertyChanged)
                 {
                     var management = _serviceManager.CreateManagementForSubscription(_settings, state.AccessTokenResponse, state.ServiceCache);
 
                     // Create Subscription New RESTAPI for callback from ServiceNow
-                    var response = await management.CreateNewRestMessage(notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
 
                     // Create Subscription BusinessRule
-                    var result = await management.CreateSubscriptionBusinessRule(filterUrgency.Value<string>(), filterName.Value<string>(), notificationNameSpace.Value<string>(), postNotificationAPIName.Value<string>());
+                    var result = await management.UpdateSubscriptionBusinessRule(filterList, subscriptionDetails.FilterName);
 
                     if (result == System.Net.HttpStatusCode.OK)
                     {
                         var serviceNowSub = new ServiceNowSubscription
                         {
-                            FilterName = filterName.Value<string>(),
-                            FilterCondition = "UrgencyChanges, DescriptionChanges, PriorityChanges, AssignedToChanges",
-                            NotificationNameSpace = notificationNameSpace.Value<string>(),
-                            NotificationApiName = postNotificationAPIName.Value<string>(),
+                            FilterName = subscriptionDetails.FilterName,
+                            FilterCondition = filterCondition,
+                            NotificationNameSpace = subscriptionDetails.NotificationNameSpace,
+                            NotificationApiName = subscriptionDetails.NotificationApiName,
                         };
                         ActivityReferenceMap activityReferenceMap = await _activityReferenceMapAccessor.GetAsync(
                             context,
@@ -141,56 +184,25 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                         await _teamsTicketUpdateActivity.UpdateTaskModuleActivityAsync(
                             context,
                             activityReference,
-                            SubscriptionTaskModuleAdaptiveCard.BuildSubscriptionCard(serviceNowSub, _settings.MicrosoftAppId),
+                            SubscriptionTaskModuleAdaptiveCard.BuildSubscriptionAdaptiveCard(serviceNowSub, _settings.MicrosoftAppId),
                             cancellationToken);
-                    }
-                }
 
-                // Create ProactiveModel
-                // Get Conversation from Activity
-                var conversation = context.Activity.GetConversationReference();
-
-                // ProactiveConversationReferenceMap to save list of conversation
-                var proactiveConversationReferenceMap = await _proactiveStateConversationReferenceMapAccessor.GetAsync(
-                                        context,
-                                        () => new ConversationReferenceMap(),
-                                        cancellationToken)
-                                    .ConfigureAwait(false);
-
-                // Get Conversations from map
-                proactiveConversationReferenceMap.TryGetValue(filterName.Value<string>(), out var listOfConversationReferences);
-
-                if (listOfConversationReferences == null)
-                {
-                    proactiveConversationReferenceMap[filterName.Value<string>()] = new List<ConversationReference> { conversation };
-                }
-                else if (!listOfConversationReferences.Contains(conversation))
-                {
-                    listOfConversationReferences.Add(conversation);
-                    proactiveConversationReferenceMap[filterName.Value<string>()] = listOfConversationReferences;
-                }
-
-                // Save ActivityReference and ProactiveState Accessor
-                await _proactiveStateConversationReferenceMapAccessor.SetAsync(context, proactiveConversationReferenceMap).ConfigureAwait(false);
-
-                // Save Conversation State
-                await _proactiveState.SaveChangesAsync(context, false, cancellationToken);
-                await _conversationState.SaveChangesAsync(context, false, cancellationToken);
-
-                return new TaskModuleContinueResponse()
-                {
-                    Value = new TaskModuleTaskInfo()
-                    {
-                        Title = "Subscription",
-                        Height = "medium",
-                        Width = 500,
-                        Card = new Attachment
+                        return new TaskModuleContinueResponse()
                         {
-                            ContentType = AdaptiveCard.ContentType,
-                            Content = SubscriptionTaskModuleAdaptiveCard.SubscriptionResponseCard($"Created Subscription With Business RuleName: {filterName} in ServiceNow")
-                        }
+                            Value = new TaskModuleTaskInfo()
+                            {
+                                Title = "Subscription",
+                                Height = "medium",
+                                Width = 500,
+                                Card = new Attachment
+                                {
+                                    ContentType = AdaptiveCard.ContentType,
+                                    Content = SubscriptionTaskModuleAdaptiveCard.SubscriptionResponseCard($"Updated Business RuleName: {filterName} in ServiceNow")
+                                }
+                            }
+                        };
                     }
-                };
+                }
             }
 
             return new TaskModuleContinueResponse()
@@ -203,7 +215,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                     Card = new Attachment
                     {
                         ContentType = AdaptiveCard.ContentType,
-                        Content = SubscriptionTaskModuleAdaptiveCard.SubscriptionResponseCard("Failed To Create Subscription")
+                        Content = SubscriptionTaskModuleAdaptiveCard.SubscriptionResponseCard($"Failed to update Business RuleName: {filterName} in ServiceNow")
                     }
                 }
             };

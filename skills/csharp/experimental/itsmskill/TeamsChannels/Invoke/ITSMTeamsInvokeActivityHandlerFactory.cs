@@ -23,19 +23,27 @@ namespace ITSMSkill.TeamsChannels.Invoke
             {
                 {
                     $"{TeamsFlowType.CreateTicket_Form}",
-                    () => new CreateTicketTeamsImplementation(serviceProvider)
+                    () => new CreateTicketTeamsTaskModule(serviceProvider)
                 },
                 {
                     $"{TeamsFlowType.UpdateTicket_Form}",
-                    () => new UpdateTicketTeamsImplementation(serviceProvider)
+                    () => new UpdateTicketTeamsTaskModule(serviceProvider)
                 },
                 {
                     $"{TeamsFlowType.DeleteTicket_Form}",
-                    () => new DeleteTicketTeamsImplementation(serviceProvider)
+                    () => new DeleteTicketTeamsTaskModule(serviceProvider)
                 },
                 {
                     $"{TeamsFlowType.CreateSubscription_Form}",
-                    () => new CreateSubscriptionTeamsImplementation(serviceProvider)
+                    () => new CreateSubscriptionTeamsTaskModule(serviceProvider)
+                },
+                {
+                    $"{TeamsFlowType.UpdateSubscription_Form}",
+                    () => new UpdateSubscriptionTeamsTaskModule(serviceProvider)
+                },
+                {
+                    $"{TeamsFlowType.DeleteSubscription_Form}",
+                    () => new DeleteSubscriptionTeamsTaskModule(serviceProvider)
                 }
             };
         }

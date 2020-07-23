@@ -8,9 +8,11 @@ namespace ITSMSkill.Services
 {
     public interface IServiceNowBusinessRuleSubscription
     {
-        Task<HttpStatusCode> CreateSubscriptionBusinessRule(string urgencyFilter, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
+        Task<HttpStatusCode> CreateSubscriptionBusinessRule(ICollection<string> filterCondition, string filterName, string notificationNameSpace = null, string postNotificationAPIName = null);
 
-        Task RemoveSubscriptionBusinessRule(string subscriptionId);
+        Task<HttpStatusCode> UpdateSubscriptionBusinessRule(ICollection<string> filterCondition, string filterName);
+
+        Task<HttpStatusCode> RemoveSubscriptionBusinessRule(string subscriptionId);
 
         Task CreateSubscriptionRestMessages(string messageName, string url);
 

@@ -29,7 +29,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
     /// DeleteTicketTeamsImplementation for Deleting a Ticket Handles OnFetch and OnSumbit Activity for TaskModules
     /// </summary>
     [TeamsInvoke(FlowType = nameof(TeamsFlowType.DeleteTicket_Form))]
-    public class DeleteTicketTeamsImplementation : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
+    public class DeleteTicketTeamsTaskModule : ITeamsTaskModuleHandler<TaskModuleContinueResponse>
     {
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
         private readonly ConversationState _conversationState;
@@ -40,7 +40,7 @@ namespace ITSMSkill.Dialogs.Teams.TicketTaskModule
         private readonly IConnectorClient _connectorClient;
         private readonly ITeamsActivity<AdaptiveCard> _teamsTicketUpdateActivity;
 
-        public DeleteTicketTeamsImplementation(IServiceProvider serviceProvider)
+        public DeleteTicketTeamsTaskModule(IServiceProvider serviceProvider)
         {
             _conversationState = serviceProvider.GetService<ConversationState>();
             _settings = serviceProvider.GetService<BotSettings>();

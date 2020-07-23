@@ -16,6 +16,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
     /// </summary>
     public class SubscriptionTaskModuleAdaptiveCard
     {
+        // Use this adaptive card to get Subscription Details from User
         public static AdaptiveCard GetSubcriptionInputCard(string botId = null)
         {
             var card = new AdaptiveCard("1.0");
@@ -67,6 +68,7 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             return card;
         }
 
+        // Use this adaptive card when we want to update existing subscription
         public static AdaptiveCard GetSubscriptionAdaptiveCard(string botId)
         {
             int filterCondition = 0;
@@ -74,14 +76,14 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
             {
                 Body = new List<AdaptiveElement>
                 {
-                     new AdaptiveTextBlock
+                    new AdaptiveTextBlock
                     {
                         Text = IncidentSubscriptionStrings.FilterName,
                         Size = AdaptiveTextSize.Medium,
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder
                     },
-                     new AdaptiveTextInput
+                    new AdaptiveTextInput
                     {
                         Id = "FilterName",
                         Placeholder = IncidentSubscriptionStrings.FilterName,
@@ -95,40 +97,40 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder
                     },
-                     new AdaptiveTextInput
+                    new AdaptiveTextInput
                     {
                         Id = "NotificationNameSpace",
                         Placeholder = IncidentSubscriptionStrings.PostNotificationAPIName,
                         Spacing = AdaptiveSpacing.Small,
                         IsMultiline = true
                     },
-                     new AdaptiveTextBlock
+                    new AdaptiveTextBlock
                     {
                         Text = IncidentSubscriptionStrings.PostNotificationAPIName,
                         Size = AdaptiveTextSize.Medium,
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder
                     },
-                     new AdaptiveTextInput
+                    new AdaptiveTextInput
                     {
                         Id = "PostNotificationAPIName",
                         Placeholder = IncidentSubscriptionStrings.PostNotificationAPIName,
                         Spacing = AdaptiveSpacing.Small,
                         IsMultiline = true
                     },
-                     new AdaptiveTextBlock
+                    new AdaptiveTextBlock
                     {
                         Text = IncidentSubscriptionStrings.SeverityTextBlock,
                         Size = AdaptiveTextSize.Medium,
                         IsSubtle = true,
                         Weight = AdaptiveTextWeight.Bolder
                     },
-                     new AdaptiveChoiceSetInput
+                    new AdaptiveChoiceSetInput
                     {
-                        Id = "UrgencyFilter",
+                        Id = "FilterCondition",
                         Style = AdaptiveChoiceInputStyle.Compact,
                         IsMultiSelect = true,
-                        Value = "UrgencyFilter",
+                        Value = "FilterCondition",
                         Choices = IncidentSubscriptionStrings.FilterConditions.Select(it => new AdaptiveChoice
                         {
                             Title = $"{it}",
@@ -152,6 +154,174 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                             }
                         }
                     }
+            };
+
+            return card;
+        }
+
+        // Use this adaptive card when we have Subscription Details from User
+        public static AdaptiveCard BuildSubscriptionAdaptiveCard(ServiceNowSubscription serviceNowSubscription, string botId)
+        {
+            int filterCondition = 0;
+
+            var card = new AdaptiveCard("1.0")
+            {
+                Id = "BuildSubscriptionCard",
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveContainer
+                    {
+                        Items = new List<AdaptiveElement>
+                        {
+                            new AdaptiveColumnSet
+                            {
+                                Columns = new List<AdaptiveColumn>
+                                {
+                                    new AdaptiveColumn
+                                    {
+                                        Width = AdaptiveColumnWidth.Stretch,
+                                        Items = new List<AdaptiveElement>
+                                        {
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"FilterName: {serviceNowSubscription.FilterName}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"NotificationNameSpace: {serviceNowSubscription.NotificationNameSpace}",
+                                                Color = AdaptiveTextColor.Good,
+                                                MaxLines = 1,
+                                                Weight = AdaptiveTextWeight.Bolder,
+                                                Size = AdaptiveTextSize.Large
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"NotificationApiName: {serviceNowSubscription.NotificationApiName}",
+                                                Color = AdaptiveTextColor.Good,
+                                                MaxLines = 1,
+                                                Weight = AdaptiveTextWeight.Bolder,
+                                                Size = AdaptiveTextSize.Large
+                                            },
+                                            new AdaptiveChoiceSetInput
+                                            {
+                                                Id = "FilterCondition",
+                                                Style = AdaptiveChoiceInputStyle.Compact,
+                                                IsMultiSelect = true,
+                                                Value = serviceNowSubscription.FilterCondition,
+                                                Choices = IncidentSubscriptionStrings.FilterConditions.Select(it => new AdaptiveChoice
+                                                {
+                                                    Title = $"{it}",
+                                                    Value = filterCondition++.ToString()
+                                                }).ToList()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            card.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "Update Subscription",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        SkillId = botId,
+                        TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
+                        FlowData = new Dictionary<string, object>
+                        {
+                            { "SubscriptionDetails", serviceNowSubscription }
+                        },
+                    }
+                }
+            });
+
+            card.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "Delete Subscription",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        SkillId = botId,
+                        TaskModuleFlowType = TeamsFlowType.DeleteTicket_Form.ToString(),
+                        FlowData = new Dictionary<string, object>
+                        {
+                            { "SubscriptionDetails", serviceNowSubscription }
+                        },
+                        Submit = true
+                    }
+                }
+            });
+
+            return card;
+        }
+
+        // Use this adaptive card when creating a adaptive card with Existing SubscriptionDetails
+        public static AdaptiveCard PresentSubscriptionAdaptiveCard(ServiceNowSubscription serviceNowSubscription, string botId)
+        {
+            int filterCondition = 0;
+            var card = new AdaptiveCard("1.0")
+            {
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.FilterName + $": {serviceNowSubscription.FilterName}",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.NotificationNameSpace + $": {serviceNowSubscription.NotificationNameSpace}",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = IncidentSubscriptionStrings.PostNotificationAPIName + $": {serviceNowSubscription.NotificationApiName}",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveChoiceSetInput
+                    {
+                        Id = "FilterCondition",
+                        Style = AdaptiveChoiceInputStyle.Compact,
+                        IsMultiSelect = true,
+                        Value = serviceNowSubscription.FilterCondition,
+                        Choices = IncidentSubscriptionStrings.FilterConditions.Select(it => new AdaptiveChoice
+                        {
+                            Title = $"{it}",
+                            Value = filterCondition++.ToString()
+                        }).ToList()
+                    }
+                },
+                Actions = new List<AdaptiveAction>
+                {
+                    new AdaptiveSubmitAction
+                    {
+                        Title = "Submit",
+                        Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                        {
+                            Data = new TaskModuleMetadata()
+                            {
+                                SkillId = botId,
+                                TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
+                                Submit = true,
+                            }
+                        }
+                    }
+                }
             };
 
             return card;
@@ -182,94 +352,6 @@ namespace ITSMSkill.Dialogs.Teams.SubscriptionTaskModule
                 }
             };
 
-            return card;
-        }
-
-        /// <returns>Adaptive Card.</returns>
-        public static AdaptiveCard ThankYouForSubscribing(string response)
-        {
-            var card = new AdaptiveCard("1.0");
-            card.Id = "ThankYouCard";
-
-            var columns = new List<AdaptiveColumn>
-            {
-                new AdaptiveColumn
-                {
-                    VerticalContentAlignment = AdaptiveVerticalContentAlignment.Center,
-                    Items = new List<AdaptiveElement>
-                        {
-                            new AdaptiveTextBlock
-                            {
-                                Text = response,
-                                Size = AdaptiveTextSize.Small,
-                                Weight = AdaptiveTextWeight.Bolder,
-                                Color = AdaptiveTextColor.Accent,
-                                Wrap = true
-                            }
-                        }
-                }
-            };
-
-            return card;
-        }
-
-        public static AdaptiveCard BuildSubscriptionCard(ServiceNowSubscription sub, string botId)
-        {
-            var card = new AdaptiveCard("1.0")
-            {
-                Id = "BuildIncidentCard",
-                Body = new List<AdaptiveElement>
-                {
-                    new AdaptiveContainer
-                    {
-                        Items = new List<AdaptiveElement>
-                        {
-                            new AdaptiveColumnSet
-                            {
-                                Columns = new List<AdaptiveColumn>
-                                {
-                                    new AdaptiveColumn
-                                    {
-                                        Width = AdaptiveColumnWidth.Stretch,
-                                        Items = new List<AdaptiveElement>
-                                        {
-                                            new AdaptiveTextBlock
-                                            {
-                                                Text = $"FilterName: {sub.FilterName}",
-                                                Wrap = true,
-                                                Spacing = AdaptiveSpacing.Small,
-                                                Weight = AdaptiveTextWeight.Bolder
-                                            },
-                                            new AdaptiveTextBlock
-                                            {
-                                                Text = $"FilterCondition: {sub.FilterCondition}",
-                                                Color = AdaptiveTextColor.Good,
-                                                MaxLines = 1,
-                                                Weight = AdaptiveTextWeight.Bolder,
-                                                Size = AdaptiveTextSize.Large
-                                            },
-                                            new AdaptiveTextBlock
-                                            {
-                                                Text = $"NotificationNameSpace: {sub.NotificationNameSpace}",
-                                                Wrap = true,
-                                                Spacing = AdaptiveSpacing.Small,
-                                                Weight = AdaptiveTextWeight.Bolder
-                                            },
-                                            new AdaptiveTextBlock
-                                            {
-                                                Text = $"NotificationApiNane: {sub.NotificationApiName}",
-                                                Wrap = true,
-                                                Spacing = AdaptiveSpacing.Small,
-                                                Weight = AdaptiveTextWeight.Bolder
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
             return card;
         }
     }

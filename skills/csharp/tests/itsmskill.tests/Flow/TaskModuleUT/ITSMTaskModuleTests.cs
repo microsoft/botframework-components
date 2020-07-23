@@ -38,7 +38,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var turnContext = new TurnContext(adapter, activity);
 
-            var teamsImplementation = new CreateTicketTeamsImplementation(sp);
+            var teamsImplementation = new CreateTicketTeamsTaskModule(sp);
 
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
@@ -77,7 +77,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             var turnContext = new TurnContext(adapter, activity);
             await stateAccessor.SetAsync(turnContext, skillState, CancellationToken.None);
 
-            var teamsImplementation = new CreateTicketTeamsImplementation(sp);
+            var teamsImplementation = new CreateTicketTeamsTaskModule(sp);
 
             var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
@@ -110,7 +110,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var turnContext = new TurnContext(adapter, activity);
 
-            var teamsImplementation = new UpdateTicketTeamsImplementation(sp);
+            var teamsImplementation = new UpdateTicketTeamsTaskModule(sp);
 
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
@@ -149,7 +149,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             var turnContext = new TurnContext(adapter, activity);
             await stateAccessor.SetAsync(turnContext, skillState, CancellationToken.None);
 
-            var teamsImplementation = new UpdateTicketTeamsImplementation(sp);
+            var teamsImplementation = new UpdateTicketTeamsTaskModule(sp);
 
             var response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
@@ -183,7 +183,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
 
             var turnContext = new TurnContext(adapter, activity);
 
-            var teamsImplementation = new DeleteTicketTeamsImplementation(sp);
+            var teamsImplementation = new DeleteTicketTeamsTaskModule(sp);
 
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleFetchAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);
@@ -223,7 +223,7 @@ namespace ITSMSkill.Tests.Flow.TaskModuleUT
             var turnContext = new TurnContext(adapter, activity);
             await stateAccessor.SetAsync(turnContext, skillState, CancellationToken.None);
 
-            var teamsImplementation = new DeleteTicketTeamsImplementation(sp);
+            var teamsImplementation = new DeleteTicketTeamsTaskModule(sp);
 
             TaskModuleContinueResponse response = await teamsImplementation.OnTeamsTaskModuleSubmitAsync(turnContext, CancellationToken.None);
             Assert.IsNotNull(response);

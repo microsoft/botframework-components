@@ -17,6 +17,18 @@ namespace ITSMSkill.Extensions.Teams
         CreateSubscription_Form,
 
         /// <summary>
+        /// Task Module will display update subscription
+        /// </summary>
+        [EnumMember(Value = "updatesubscription_form")]
+        UpdateSubscription_Form,
+
+        /// <summary>
+        /// Task Module will display delete subscription
+        /// </summary>
+        [EnumMember(Value = "deletesubscription_form")]
+        DeleteSubscription_Form,
+
+        /// <summary>
         /// Task Module will display create form
         /// </summary>
         [EnumMember(Value = "createticket_form")]

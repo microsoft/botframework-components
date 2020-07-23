@@ -44,6 +44,111 @@ namespace ITSMSkill.Dialogs.Teams
             return adaptiveCard;
         }
 
+        public static AdaptiveCard UpdateIncidentCard(string botId = null)
+        {
+            // Json Card for creating incident
+            // TODO: Replace with Cards.Lg and responses
+            AdaptiveCard adaptiveCard = AdaptiveCardHelper.GetCardFromJson("Dialogs/Teams/Resources/CreateIncident.json");
+            adaptiveCard.Id = "GetUserInput";
+            adaptiveCard.Actions.Add(new AdaptiveSubmitAction()
+            {
+                Title = "SubmitIncident",
+                Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                {
+                    Data = new TaskModuleMetadata()
+                    {
+                        SkillId = botId,
+                        TaskModuleFlowType = TeamsFlowType.CreateTicket_Form.ToString(),
+                        Submit = true
+                    }
+                }
+            });
+
+            return adaptiveCard;
+        }
+
+        public static AdaptiveCard GetIncidentCard(Ticket details, string botId)
+        {
+            var card = new AdaptiveCard("1.0")
+            {
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveTextBlock
+                    {
+                        Id = "TicketId",
+                        Text = $"TicketId: {details.Id}",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = "Title",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextInput
+                    {
+                        Id = "IncidentTitle",
+                        Placeholder = details.Title,
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = "Description",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextInput
+                    {
+                        Id = "IncidentDescription",
+                        Placeholder = details.Description,
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    },
+                    new AdaptiveTextBlock
+                    {
+                        Text = "Urgency",
+                        Size = AdaptiveTextSize.Medium,
+                        IsSubtle = true,
+                        Weight = AdaptiveTextWeight.Bolder
+                    },
+                    new AdaptiveTextInput
+                    {
+                        Id = "IncidentUrgency",
+                        Placeholder = details.Urgency.ToString(),
+                        Spacing = AdaptiveSpacing.Small,
+                        IsMultiline = true
+                    }
+                },
+                Actions = new List<AdaptiveAction>
+                    {
+                        new AdaptiveSubmitAction
+                        {
+                            Title = "Submit",
+                            Data = new AdaptiveCardValue<TaskModuleMetadata>()
+                            {
+                                Data = new TaskModuleMetadata()
+                                {
+                                    SkillId = botId,
+                                    TaskModuleFlowType = TeamsFlowType.UpdateTicket_Form.ToString(),
+                                    FlowData = new Dictionary<string, object>
+                                    {
+                                        { "IncidentDetails", details }
+                                    },
+                                    Submit = true
+                                }
+                            }
+                        }
+                    }
+            };
+
+            return card;
+        }
+
         public static AdaptiveCard UpdateIncidentCard(Ticket details, string botId = null)
         {
             var card = new AdaptiveCard("1.0")
