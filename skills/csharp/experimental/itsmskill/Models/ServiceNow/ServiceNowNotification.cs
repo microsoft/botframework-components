@@ -30,5 +30,8 @@ namespace ITSMSkill.Models.ServiceNow
 
         [JsonProperty]
         public string Urgency { get; set; }
+
+        [JsonProperty]
+        public string UpdatedBy { get; set; }
     }
 }
