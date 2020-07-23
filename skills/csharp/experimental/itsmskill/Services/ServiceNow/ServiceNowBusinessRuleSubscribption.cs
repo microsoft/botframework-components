@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ITSMSkill.Extensions;
 using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Proactive.Subscription;
@@ -21,6 +22,7 @@ namespace ITSMSkill.Services.ServiceNow
     {
         private const string TestNameSpace = "Test";
         private const string TestAPIName = "TestApiName";
+        private static readonly string SecretKey = "YourSecretKey";
         private readonly string token;
         private readonly IRestClient client;
         private readonly string baseUrl;
@@ -44,7 +46,8 @@ namespace ITSMSkill.Services.ServiceNow
 
                 // Post RestMessage
                 var postBusinessRule = new Dictionary<string, string>();
-                postBusinessRule["endPtName"] = this.callBackUrl + "/api/servicenow/incidents";
+                var endPtName = this.GenerateSasUrl(this.callBackUrl + "/api/servicenow/incidents");
+                postBusinessRule["endPtName"] = endPtName;
 
                 request.AddJsonBody(postBusinessRule);
                 var response = await client.PostAsync<Dictionary<string, string>>(request);
@@ -208,6 +211,27 @@ namespace ITSMSkill.Services.ServiceNow
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private string GenerateSasUrl(string callbackUrl, string filterName = null)
+        {
+            if (string.IsNullOrEmpty(callbackUrl))
+            {
+                throw new ArgumentNullException("callbackUrl cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(filterName))
+            {
+                throw new ArgumentNullException("filterName cannot be null or empty");
+            }
+
+            var endPoint = new StringBuilder(string.Empty);
+            endPoint.Append(callbackUrl);
+
+            // encrypt the channelID.
+            endPoint.Append("?filterName=" + filterName);
+
+            return endPoint.ToString().GenerateSasUri(SecretKey);
         }
     }
 }

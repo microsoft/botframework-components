@@ -5,6 +5,7 @@ namespace ITSMSkill.Controllers.ServiceNow
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using ITSMSkill.Authorization;
     using ITSMSkill.Models.ServiceNow;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Bot.Builder;
@@ -17,6 +18,7 @@ namespace ITSMSkill.Controllers.ServiceNow
     /// </summary>
     [Route("api/servicenow/incidents")]
     [ApiController]
+    [AuthorizationProcessor]
     public class ServiceNowController : ServiceNowControllerBase
     {
         /// <summary>
