@@ -369,7 +369,7 @@ namespace CalendarSkill.Models
                             msftEventData.Start.DateTime = msftEventData.Start.DateTime + "Z";
                         }
 
-                        var start = DateTime.Parse(msftEventData.Start.DateTime);
+                        var start = new DateTime(DateTime.Parse(msftEventData.Start.DateTime).Ticks, DateTimeKind.Unspecified);
 
                         if (this.TimeZone.Id != "UTC")
                         {
@@ -433,7 +433,7 @@ namespace CalendarSkill.Models
                             msftEventData.End.DateTime = msftEventData.End.DateTime + "Z";
                         }
 
-                        var end = DateTime.Parse(msftEventData.End.DateTime);
+                        var end = new DateTime(DateTime.Parse(msftEventData.End.DateTime).Ticks, DateTimeKind.Unspecified);
 
                         if (this.TimeZone.Id != "UTC")
                         {
