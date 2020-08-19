@@ -617,9 +617,9 @@ namespace CalendarSkill.Dialogs
                     Title = state.MeetingInfo.Title,
                     Content = state.MeetingInfo.Content,
                     Attendees = state.MeetingInfo.ContactInfor.Contacts,
-                    StartTime = (DateTime)state.MeetingInfo.StartDateTime,
-                    EndTime = (DateTime)state.MeetingInfo.EndDateTime,
-                    TimeZone = TimeZoneInfo.Utc,
+                    StartTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()),
+                    EndTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.EndDateTime, state.GetUserTimeZone()),
+                    TimeZone = state.GetUserTimeZone(),
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
                     IsOnlineMeeting = true
                 };
@@ -627,7 +627,8 @@ namespace CalendarSkill.Dialogs
                 var status = false;
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
-                if (await calendarService.CreateEventAsync(newEvent) != null)
+                var createdEvent = await calendarService.CreateEventAsync(newEvent);
+                if (createdEvent != null)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
                     await sc.Context.SendActivityAsync(activity, cancellationToken);
