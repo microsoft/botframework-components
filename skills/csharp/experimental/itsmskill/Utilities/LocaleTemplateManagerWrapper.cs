@@ -105,7 +105,7 @@ namespace ITSMSkill.Utilities
                 Data = data
             };
 
-            return manager.ExpandTemplate(name + ".Text", input).ToArray();
+            return manager.ExpandTemplate(name + ".Text", input).Cast<string>().ToArray();
         }
 
         public static Templates CreateTemplates()

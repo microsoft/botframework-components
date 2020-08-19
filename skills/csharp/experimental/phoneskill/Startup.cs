@@ -114,7 +114,7 @@ namespace PhoneSkill
             services.AddTransient<OutgoingCallDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure bot
             services.AddTransient<MainDialog>();

@@ -91,7 +91,7 @@ namespace PointOfInterestSkill.Utilities
             };
 
             // Not use .Text in case text and speak are different
-            var list = manager.ExpandTemplate(name, input);
+            var list = manager.ExpandTemplate(name, input).Cast<string>();
             var result = list.Select(value =>
             {
                 return JObject.Parse(value)["text"].ToString();

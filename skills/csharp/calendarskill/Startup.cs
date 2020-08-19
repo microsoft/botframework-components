@@ -152,7 +152,7 @@ namespace CalendarSkill
             services.AddTransient<BookMeetingRoomDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure bot
             services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();

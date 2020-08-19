@@ -93,7 +93,7 @@ namespace BingSearchSkill.Utilities
                 Data = data
             };
 
-            return manager.ExpandTemplate(name + ".Text", input).ToArray();
+            return manager.ExpandTemplate(name + ".Text", input).Cast<string>().ToArray();
         }
 
         public static CardExt Convert(Card card, string suffix = ".json", IEnumerable<Card> containerItems = null)
