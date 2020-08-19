@@ -134,7 +134,7 @@ namespace ToDoSkill
             services.AddTransient<ShowToDoItemDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure HttpContext required for path resolution
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
