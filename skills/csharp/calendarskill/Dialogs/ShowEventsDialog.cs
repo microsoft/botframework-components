@@ -361,27 +361,28 @@ namespace CalendarSkill.Dialogs
                         Location = state.ShowMeetingInfo.ShowingMeetings[0].Location ?? string.Empty
                     };
 
+                    string responseTemplateId = null;
                     if (string.IsNullOrEmpty(state.ShowMeetingInfo.ShowingMeetings[0].Location))
                     {
-                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingNoLocationMessage, speakParams);
-                        await sc.Context.SendActivityAsync(activity, cancellationToken);
+                        responseTemplateId = SummaryResponses.ShowNextMeetingNoLocationMessage;
                     }
                     else
                     {
-                        var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowNextMeetingMessage, speakParams);
-                        await sc.Context.SendActivityAsync(activity, cancellationToken);
+                        responseTemplateId = SummaryResponses.ShowNextMeetingMessage;
                     }
+
+                    var replyMessage = await GetDetailMeetingResponseAsync(sc, state.ShowMeetingInfo.ShowingMeetings.FirstOrDefault(), responseTemplateId, speakParams, cancellationToken);
+                    await sc.Context.SendActivityAsync(replyMessage, cancellationToken);
                 }
                 else
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(SummaryResponses.ShowMultipleNextMeetingMessage);
                     await sc.Context.SendActivityAsync(activity, cancellationToken);
+                    state.ShowMeetingInfo.ShowingCardTitle = CalendarCommonStrings.UpcommingMeeting;
+                    var reply = await GetGeneralMeetingListResponseAsync(sc, state, true, cancellationToken: cancellationToken);
+                    await sc.Context.SendActivityAsync(reply, cancellationToken);
                 }
 
-                state.ShowMeetingInfo.ShowingCardTitle = CalendarCommonStrings.UpcommingMeeting;
-                var reply = await GetGeneralMeetingListResponseAsync(sc, state, true, cancellationToken: cancellationToken);
-
-                await sc.Context.SendActivityAsync(reply, cancellationToken);
                 var eventItem = state.ShowMeetingInfo.ShowingMeetings.FirstOrDefault();
 
                 if (state.IsAction)
@@ -410,6 +411,8 @@ namespace CalendarSkill.Dialogs
             {
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = sc.Options as ShowMeetingsDialogOptions;
+                string responseTemplateId = string.Empty;
+
                 if (options.Reason == ShowMeetingReason.ShowOverviewAfterPageTurning)
                 {
                     // show first meeting detail in response
@@ -422,7 +425,7 @@ namespace CalendarSkill.Dialogs
                         EventTime1 = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime(state.ShowMeetingInfo.ShowingMeetings[0].StartTime, state.GetUserTimeZone()), state.ShowMeetingInfo.ShowingMeetings[0].IsAllDay == true),
                         Participants1 = DisplayHelper.ToDisplayParticipantsStringSummary(state.ShowMeetingInfo.ShowingMeetings[0].Attendees, 1)
                     };
-                    string responseTemplateId = SummaryResponses.ShowMeetingSummaryNotFirstPageMessage;
+                    responseTemplateId = SummaryResponses.ShowMeetingSummaryNotFirstPageMessage;
 
                     await sc.Context.SendActivityAsync(await GetOverviewMeetingListResponseAsync(sc, responseTemplateId, responseParams, cancellationToken), cancellationToken);
                 }
@@ -441,7 +444,7 @@ namespace CalendarSkill.Dialogs
                         EventTime2 = SpeakHelper.ToSpeechMeetingTime(TimeConverter.ConvertUtcToUserTime(state.ShowMeetingInfo.ShowingMeetings[state.ShowMeetingInfo.ShowingMeetings.Count - 1].StartTime, state.GetUserTimeZone()), state.ShowMeetingInfo.ShowingMeetings[state.ShowMeetingInfo.ShowingMeetings.Count - 1].IsAllDay == true),
                         Participants2 = DisplayHelper.ToDisplayParticipantsStringSummary(state.ShowMeetingInfo.ShowingMeetings[state.ShowMeetingInfo.ShowingMeetings.Count - 1].Attendees, 1)
                     };
-                    string responseTemplateId = string.Empty;
+
                     if (state.ShowMeetingInfo.Condition == CalendarSkillState.ShowMeetingInfomation.SearchMeetingCondition.Time)
                     {
                         responseTemplateId = SummaryResponses.ShowMultipleMeetingSummaryMessage;

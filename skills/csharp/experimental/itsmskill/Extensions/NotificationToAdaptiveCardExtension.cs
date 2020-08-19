@@ -1,4 +1,7 @@
-﻿namespace ITSMSkill.Extensions
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace ITSMSkill.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +9,10 @@
     using System.Threading.Tasks;
     using AdaptiveCards;
     using ITSMSkill.Models.ServiceNow;
+    using Microsoft.Bot.Builder;
+    using Microsoft.Bot.Schema;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Newtonsoft.Json;
 
     public static class NotificationToAdaptiveCardExtension
     {
@@ -35,6 +42,13 @@
                                         {
                                             new AdaptiveTextBlock
                                             {
+                                                Text = $"Incident Number: {serviceNowNotification.Id}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
                                                 Text = $"Title: {serviceNowNotification.Title}",
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
@@ -43,7 +57,7 @@
                                             new AdaptiveTextBlock
                                             {
                                                 Text = $"Urgency: {serviceNowNotification.Urgency}",
-                                                Color = AdaptiveTextColor.Good,
+                                                Color = serviceNowNotification.Urgency.Equals("1") ? AdaptiveTextColor.Attention : serviceNowNotification.Urgency.Equals("2") ? AdaptiveTextColor.Warning : AdaptiveTextColor.Good,
                                                 MaxLines = 1,
                                                 Weight = AdaptiveTextWeight.Bolder,
                                                 Size = AdaptiveTextSize.Large
@@ -58,6 +72,20 @@
                                             new AdaptiveTextBlock
                                             {
                                                 Text = $"Impact: {serviceNowNotification.Impact}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = $"Updated By: {serviceNowNotification.UpdatedBy}",
+                                                Wrap = true,
+                                                Spacing = AdaptiveSpacing.Small,
+                                                Weight = AdaptiveTextWeight.Bolder
+                                            },
+                                            new AdaptiveTextBlock
+                                            {
+                                                Text = "Updated Time: " + string.Format("{0:HH:mm:ss tt}", DateTime.Now),
                                                 Wrap = true,
                                                 Spacing = AdaptiveSpacing.Small,
                                                 Weight = AdaptiveTextWeight.Bolder

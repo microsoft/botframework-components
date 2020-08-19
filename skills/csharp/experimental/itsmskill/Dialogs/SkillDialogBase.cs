@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
@@ -28,10 +25,12 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Extensions.DependencyInjection;
-using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog Base class.
+    /// </summary>
     public class SkillDialogBase : ComponentDialog
     {
         public SkillDialogBase(
@@ -229,6 +228,8 @@ namespace ITSMSkill.Dialogs
                 // When the token is cached we get a TokenResponse object.
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
+                    // Save TokenResponse to State
+                    state.AccessTokenResponse = providerTokenResponse.TokenResponse;
                     return await sc.NextAsync(providerTokenResponse.TokenResponse, cancellationToken);
                 }
                 else
@@ -910,6 +911,36 @@ namespace ITSMSkill.Dialogs
             }
         }
 
+        protected async Task<DialogTurnResult> HandleAPIUnauthorizedError(WaterfallStepContext sc, TicketsResult ticketsResult, CancellationToken cancellationToken)
+        {
+            // Check if the error is UnAuthorized
+            if (ticketsResult.Reason.Equals("Unauthorized"))
+            {
+                // Logout User
+                var botAdapter = (BotFrameworkAdapter)sc.Context.Adapter;
+                await botAdapter.SignOutUserAsync(sc.Context, Settings.OAuthConnections.FirstOrDefault().Name, null, cancellationToken);
+
+                // Send Signout Message
+                return await SignOutUser(sc);
+            }
+            else
+            {
+                return await SendServiceErrorAndCancel(sc, ticketsResult);
+            }
+        }
+
+        protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed), cancellationToken);
+            return await sc.CancelAllDialogsAsync();
+        }
+
+        protected async Task<DialogTurnResult> SignOutUser(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.SignOut), cancellationToken);
+            return await sc.EndDialogAsync();
+        }
+
         protected async Task<DialogTurnResult> IfKnowledgeHelpAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
             var intent = (GeneralLuis.Intent)sc.Result;
@@ -1192,6 +1223,9 @@ namespace ITSMSkill.Dialogs
 
             public const string ShowKnowledge = "ShowKnowledge";
             public const string ShowKnowledgeLoop = "ShowKnowledgeLoop";
+
+            public const string CreateTicketTeamsTaskModule = "CreateTickTeamsTaskModule";
+            public const string CreateSubscriptionTaskModule = "CreateSubscriptionTaskModule";
         }
     }
 }

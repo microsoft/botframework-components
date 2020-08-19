@@ -4,7 +4,3 @@
 [import](../SendEmail/SendEmailActivities.fr-fr.lg)
 [import](../Shared/SharedActivities.fr-fr.lg)
 [import](../ShowEmail/ShowEmailActivities.fr-fr.lg)
-[import](../Cards/EmailDetailCard.lg)
-[import](../Cards/EmailWithOutButtonCard.lg)
-[import](../Cards/EmailOverviewCard.lg)
-

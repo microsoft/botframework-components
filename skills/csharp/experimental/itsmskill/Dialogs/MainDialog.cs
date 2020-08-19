@@ -62,6 +62,7 @@ namespace ITSMSkill.Dialogs
             AddDialog(serviceProvider.GetService<ShowTicketDialog>());
             AddDialog(serviceProvider.GetService<CloseTicketDialog>());
             AddDialog(serviceProvider.GetService<ShowKnowledgeDialog>());
+            AddDialog(serviceProvider.GetService<CreateSubscriptionDialog>());
         }
 
         // Runs when the dialog is started.
@@ -270,6 +271,11 @@ namespace ITSMSkill.Dialogs
                         case ITSMLuis.Intent.KnowledgeShow:
                             {
                                 return await stepContext.BeginDialogAsync(nameof(ShowKnowledgeDialog), cancellationToken: cancellationToken);
+                            }
+
+                        case ITSMLuis.Intent.CreateSubscription:
+                            {
+                                return await stepContext.BeginDialogAsync(nameof(CreateSubscriptionDialog), cancellationToken: cancellationToken);
                             }
 
                         case ITSMLuis.Intent.None:

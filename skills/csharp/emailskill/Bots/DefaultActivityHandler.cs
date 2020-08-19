@@ -11,6 +11,7 @@ using EmailSkill.Services.AzureMapsAPI;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -53,6 +54,13 @@ namespace EmailSkill.Bots
 
         protected override Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            // directline speech occasionally sends empty message activities that should be ignored
+            var activity = turnContext.Activity;
+            if (activity.ChannelId == Channels.DirectlineSpeech && activity.Type == ActivityTypes.Message && string.IsNullOrEmpty(activity.Text))
+            {
+                return Task.CompletedTask;
+            }
+
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 

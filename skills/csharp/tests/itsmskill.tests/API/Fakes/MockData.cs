@@ -17,6 +17,8 @@ namespace ITSMSkill.Tests.API.Fakes
 
         public const string ServiceNowGetUserId = "MockServiceNowGetUserId";
 
+        public const string ServiceNowNamespaceId = "MockServiceNowNamespaceId";
+
         public const int TicketCount = 1;
 
         public const string CreateTicketTitle = "MockCreateTicketTitle";

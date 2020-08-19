@@ -26,6 +26,7 @@ namespace Luis
             TicketUpdate,
             TicketShow,
             TicketClose,
+            CreateSubscription,
             KnowledgeShow
         };
         [JsonProperty("intents")]

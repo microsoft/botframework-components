@@ -84,6 +84,8 @@ namespace NewsSkill
             services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
 
             // Configure bot state
+            // Uncomment the following line for local development without Cosmos Db
+            // services.AddSingleton<IStorage>(new MemoryStorage());
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
