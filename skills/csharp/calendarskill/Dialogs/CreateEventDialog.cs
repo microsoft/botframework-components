@@ -612,14 +612,15 @@ namespace CalendarSkill.Dialogs
                     });
                 }
 
+                var userTimezone = state.GetUserTimeZone();
                 var newEvent = new EventModel(source)
                 {
                     Title = state.MeetingInfo.Title,
                     Content = state.MeetingInfo.Content,
                     Attendees = state.MeetingInfo.ContactInfor.Contacts,
-                    StartTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, state.GetUserTimeZone()),
-                    EndTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.EndDateTime, state.GetUserTimeZone()),
-                    TimeZone = state.GetUserTimeZone(),
+                    StartTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, userTimezone),
+                    EndTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.EndDateTime, userTimezone),
+                    TimeZone = userTimezone,
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
                     IsOnlineMeeting = true
                 };

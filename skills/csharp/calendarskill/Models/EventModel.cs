@@ -371,7 +371,7 @@ namespace CalendarSkill.Models
 
                         var start = new DateTime(DateTime.Parse(msftEventData.Start.DateTime).Ticks, DateTimeKind.Unspecified);
 
-                        if (this.TimeZone.Id != "UTC")
+                        if (this.TimeZone.Id != CalendarCommonUtil.UTCTimeZone)
                         {
                             return TimeZoneInfo.ConvertTimeToUtc(start, this.TimeZone).ToUniversalTime();
                         }
@@ -435,7 +435,7 @@ namespace CalendarSkill.Models
 
                         var end = new DateTime(DateTime.Parse(msftEventData.End.DateTime).Ticks, DateTimeKind.Unspecified);
 
-                        if (this.TimeZone.Id != "UTC")
+                        if (this.TimeZone.Id != CalendarCommonUtil.UTCTimeZone)
                         {
                             TimeZoneInfo.ConvertTimeToUtc(end, this.TimeZone).ToUniversalTime();
                         }
