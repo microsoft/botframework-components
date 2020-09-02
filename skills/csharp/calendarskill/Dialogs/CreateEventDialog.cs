@@ -612,14 +612,15 @@ namespace CalendarSkill.Dialogs
                     });
                 }
 
+                var userTimezone = state.GetUserTimeZone();
                 var newEvent = new EventModel(source)
                 {
                     Title = state.MeetingInfo.Title,
                     Content = state.MeetingInfo.Content,
                     Attendees = state.MeetingInfo.ContactInfor.Contacts,
-                    StartTime = (DateTime)state.MeetingInfo.StartDateTime,
-                    EndTime = (DateTime)state.MeetingInfo.EndDateTime,
-                    TimeZone = TimeZoneInfo.Utc,
+                    StartTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.StartDateTime, userTimezone),
+                    EndTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.MeetingInfo.EndDateTime, userTimezone),
+                    TimeZone = userTimezone,
                     Location = state.MeetingInfo.MeetingRoom == null ? state.MeetingInfo.Location : null,
                     IsOnlineMeeting = true
                 };
@@ -627,7 +628,8 @@ namespace CalendarSkill.Dialogs
                 var status = false;
                 sc.Context.TurnState.TryGetValue(StateProperties.APITokenKey, out var token);
                 var calendarService = ServiceManager.InitCalendarService(token as string, state.EventSource);
-                if (await calendarService.CreateEventAsync(newEvent) != null)
+                var createdEvent = await calendarService.CreateEventAsync(newEvent);
+                if (createdEvent != null)
                 {
                     var activity = TemplateManager.GenerateActivityForLocale(CreateEventResponses.MeetingBooked);
                     await sc.Context.SendActivityAsync(activity, cancellationToken);
