@@ -1,0 +1,15 @@
+[import](common.lg)
+
+# SendActivity_gKWYRF()
+- ${WelcomeUser()}
+
+# SendActivity_IrC8MR()
+- You're signed out!
+
+# SendActivity_ynnpFX()
+- Sorry, that feature is not supported yet.
+
+# SendActivity_veFrrp()
+[Activity
+    attachments = ${json(EventContentCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
+]

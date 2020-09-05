@@ -1,0 +1,42 @@
+[import](common.lg)
+
+
+# ScheduleResponseText(date, events)
+- IF: ${ events == null || count(events) == 0 }
+    - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}.
+- ELSEIF: ${ count(events) == 1 }
+    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${events[0].Attendees[0].EmailAddress.Name}, and ${count(events[0].Attendees) - 1} more. 
+- ELSEIF: ${ count(events) == 2 }
+    - I see 2 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
+- ELSEIF: ${ count(events) == 3 }
+    - I found 3 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject}, at ${formatDateTime(events[2].start.datetime, 'h:mm tt')}.
+- ELSEIF: ${ count(events) == 4 }
+    - I found 4 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}.
+- ELSE:
+    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
+
+# SendActivity_9dvG0B()
+[Activity
+    text = ${ScheduleResponseText(dialog.start, createArray())}
+    attachments = ${json(ScheduleCard(dialog.start, createArray()))}
+]
+
+# SendActivity_jofZAc()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
+    attachments = ${foreach(conversation.events, x, json(ScheduleCard(x.date, x.events)))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_g8woIC()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
+]
+# SendActivity_Mdxy9M()
+- Sorry, that feature is not supported yet.
+# SendActivity_Zdwh8l()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
+]

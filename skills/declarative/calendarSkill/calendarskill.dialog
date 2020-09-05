@@ -1,0 +1,172 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "calendarSkill",
+      "id": "sJt0wA"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "RvRTf5"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "gKWYRF",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_gKWYRF()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mI9k6Z"
+      },
+      "intent": "SignOut",
+      "actions": [
+        {
+          "$kind": "Microsoft.SignOutUser",
+          "$designer": {
+            "id": "anTaur"
+          },
+          "connectionName": "=settings.oauthConnectionName"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IrC8MR"
+          },
+          "activity": "${SendActivity_IrC8MR()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "HatKBy"
+      },
+      "intent": "GetEventsByDate",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "7pTfRc"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cMoBuB"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "427wNJ"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "gViiE0"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsByDateDialog",
+          "options": {
+            "datetime": "=dialog.datetime"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "ZKwWgr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "QnQ2KK"
+          },
+          "condition": "turn.activity.value.intent",
+          "cases": [
+            {
+              "value": "ShowEventContent",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "XMki1S"
+                  },
+                  "condition": "conversation.events != null && count(conversation.events) > 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.TraceActivity",
+                      "$designer": {
+                        "id": "zQFSXa"
+                      }
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "veFrrp"
+                      },
+                      "activity": "${SendActivity_veFrrp()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ynnpFX"
+              },
+              "activity": "${SendActivity_ynnpFX()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "calendarskill.lg",
+  "recognizer": "calendarskill.lu"
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Graph - Sort Events",
+  "description": "Sort calendar events into previous and upcoming based on the current datetime.",
+  "type": "object",
+  "required": [
+    "token",
+    "inputProperty",
+    "timeZoneProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result Property",
+      "description": "Result Property (named location to store information).",
+      "examples": []
+    },
+    "inputProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Input",
+      "description": "List of events to sort.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Time zone.",
+      "examples": []
+    }
+  }
+}
