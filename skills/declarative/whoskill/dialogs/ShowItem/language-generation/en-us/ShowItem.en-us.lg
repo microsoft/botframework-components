@@ -1,6 +1,0 @@
-[import](common.lg)
-
-# SendActivity_537435()
-- ${ShowItem(conversation.person)}
-
-
