@@ -1,7 +1,0 @@
-[import](common.lg)
-
-# SendActivity_208645()
-- ${NoSearchResult(conversation.keyword)}
-
-# SendActivity_317794()
--${MultiSearchResult(conversation.keyword)}
