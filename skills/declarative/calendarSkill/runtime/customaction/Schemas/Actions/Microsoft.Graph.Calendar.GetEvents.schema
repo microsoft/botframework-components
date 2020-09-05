@@ -1,0 +1,74 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Graph - Get Events",
+  "description": "Lookup events from Microsoft Graph API.",
+  "type": "object",
+  "required": [
+    "token",
+    "startProperty",
+    "endProperty",
+    "timeZoneProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result Property",
+      "description": "Result Property (named location to store information).",
+      "examples": []
+    },
+    "token": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph API authentication token.",
+      "examples": []
+    },
+    "titleProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Title",
+      "description": "Event title.",
+      "examples": []
+    },
+    "locationProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Location",
+      "description": "Event location.",
+      "examples": []
+    },
+    "attendeesProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Attendees",
+      "description": "Event attendees.",
+      "examples": []
+    },
+    "startProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Start",
+      "description": "Event range start.",
+      "examples": []
+    },
+    "endProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "End",
+      "description": "Event range end.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
+      "examples": []
+    },
+    "isFutureProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Future Events Only",
+      "description": "Future Events Only",
+      "examples": []
+    }
+  }
+}

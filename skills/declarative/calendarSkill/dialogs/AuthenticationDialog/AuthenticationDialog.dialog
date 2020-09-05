@@ -1,0 +1,43 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "aZc9SE",
+    "name": "AuthenticationDialog",
+    "description": "Authenticates user through AAD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "MnLHqD"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "m7gWCJ"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.oauthConnectionName",
+          "property": "user.token",
+          "title": "Sign in",
+          "text": "Sign in to your Microsoft account to access your calendar."
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetSettings",
+          "$designer": {
+            "id": "h42Irt"
+          },
+          "token": "=user.token.token",
+          "resultProperty": "user.settings"
+        }
+      ]
+    }
+  ],
+  "generator": "AuthenticationDialog.lg"
+}

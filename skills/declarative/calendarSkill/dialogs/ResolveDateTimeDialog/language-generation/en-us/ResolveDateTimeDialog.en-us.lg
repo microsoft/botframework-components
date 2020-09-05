@@ -1,0 +1,22 @@
+[import](common.lg)
+
+
+
+
+# ChoiceInput_Prompt_G3sioC()
+- Which date and time?
+# ChoiceInput_Prompt_L1xuO9()
+- Which time?
+# ChoiceInput_Prompt_IdcoY8()
+- Which dates?
+# ChoiceInput_Prompt_VOj1Xv()
+- Which dates and times?
+# ChoiceInput_Prompt_OfAzSu()
+- Which times?
+
+
+# SendActivity_JrfC1C()
+- Sorry, I didn't understand that date and/or time.
+
+# ChoiceInput_Prompt_wA2sUD()
+- Which date?

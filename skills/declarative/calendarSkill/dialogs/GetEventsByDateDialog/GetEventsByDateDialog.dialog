@@ -1,0 +1,149 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "r8sL2r",
+    "name": "GetEventsByDateDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "id": "uXme2B"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "NFcdXO"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), \"yyyy-MM-dd\"))"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=coalesce(dialog.datetime.End, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "AHoOll"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEvents",
+          "options": {
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "futureEventsOnly": true
+          },
+          "resultProperty": "dialog.searchResults"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1gmZ1j"
+          },
+          "condition": "dialog.searchResults != null && count(dialog.searchResults) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9dvG0B"
+              },
+              "activity": "${SendActivity_9dvG0B()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.SortEvents",
+              "$designer": {
+                "id": "MYGsai"
+              },
+              "resultProperty": "conversation.events",
+              "inputProperty": "=dialog.searchResults",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "lEQRqq"
+              },
+              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "jofZAc"
+                  },
+                  "activity": "${SendActivity_jofZAc()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "g8woIC"
+                  },
+                  "activity": "${SendActivity_g8woIC()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "Vyod98"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "lLeuP0"
+          },
+          "condition": "turn.activity.value.intent",
+          "cases": [
+            {
+              "value": "ShowEventContent",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "y7VhbX"
+                  },
+                  "condition": "conversation.events != null && count(conversation.events) > 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "Zdwh8l"
+                      },
+                      "activity": "${SendActivity_Zdwh8l()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Mdxy9M"
+              },
+              "activity": "${SendActivity_Mdxy9M()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetEventsByDateDialog.lg"
+}

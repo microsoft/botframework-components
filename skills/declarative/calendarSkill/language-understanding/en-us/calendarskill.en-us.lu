@@ -1,0 +1,28 @@
+
+# SignOut
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+- logout
+- sign me out
+- sign out
+- forget me
+- log out
+
+# GetEventsByDate
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+-	What's on my calendar today?
+-	Read me my calendar.
+-	Do I have an event tomorrow?
+-	What's on my agenda this weekend?
+-	List all events for August 20th
+
+@ prebuilt datetimeV2

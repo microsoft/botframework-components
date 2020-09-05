@@ -1,0 +1,282 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UrfxdD",
+    "name": "ResolveDateTimeDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "42clMH"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "kxvYi4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=coalesce(dialog.query, turn.activity.text)"
+            },
+            {
+              "property": "dialog.isFutureOnly",
+              "value": "=coalesce(dialog.isFutureOnly, false)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Bot.Solutions.RecognizeDateTime",
+          "$designer": {
+            "id": "SZKf8v"
+          },
+          "queryProperty": "=dialog.query",
+          "resultProperty": "dialog.recognitionResults",
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ksIN1t"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.recognitionResults",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "wUbrlv"
+              },
+              "condition": "count(dialog.foreach.value.Resolution.values) == 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cPoVPR"
+                  },
+                  "property": "dialog.datetimeResolution",
+                  "value": "=dialog.foreach.value.Resolution.values[0]"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "DJ1t9J"
+                  },
+                  "name": "DateTimeResolution",
+                  "value": "=dialog.datetimeResolution"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "4Hbqwg"
+                  },
+                  "value": "=dialog.datetimeResolution"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "v3P9w2"
+                  },
+                  "cases": [
+                    {
+                      "value": "date",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "wA2sUD"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_wA2sUD()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy\"))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetime",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "G3sioC"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_G3sioC()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy h:mm tt\"))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "daterange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "IdcoY8"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_IdcoY8()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy\")))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetimerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "VOj1Xv"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_VOj1Xv()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy h:mm tt\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy h:mm tt\")))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "time",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "L1xuO9"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_L1xuO9()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"h:mm tt\"))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "timerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.ChoiceInput",
+                          "$designer": {
+                            "id": "OfAzSu"
+                          },
+                          "defaultLocale": "en-us",
+                          "disabled": false,
+                          "maxTurnCount": 3,
+                          "alwaysPrompt": false,
+                          "allowInterruptions": false,
+                          "prompt": "${ChoiceInput_Prompt_OfAzSu()}",
+                          "choiceOptions": {
+                            "includeNumbers": true,
+                            "inlineOrMore": ", or ",
+                            "inlineOr": " or ",
+                            "inlineSeparator": ", "
+                          },
+                          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"y h:mm tt\"), ' - ', formatDateTime(x.end, \"h:mm tt\")))",
+                          "property": "dialog.selected",
+                          "style": "heroCard"
+                        }
+                      ]
+                    }
+                  ],
+                  "condition": "dialog.foreach.value.Resolution.values[0].type",
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "JrfC1C"
+                      },
+                      "activity": "${SendActivity_JrfC1C()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "SsC8fk"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "Ejtr7m"
+                  },
+                  "activityProcessed": true,
+                  "allowLoop": true,
+                  "options": {
+                    "query": "=dialog.selected"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ResolveDateTimeDialog.lg"
+}

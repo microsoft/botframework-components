@@ -1,0 +1,85 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "BqREUB",
+    "name": "SearchEvents",
+    "description": "Performs a search on the MS Graph calendar events for the user based on provided parameters in dialog options."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "0UiJAi"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "DQRQqt"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=dialog.start"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=dialog.end"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=coalesce(dialog.title, @title)"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=coalesce(dialog.location, @location)"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "=coalesce(dialog.ordinal, @ordinal)"
+            },
+            {
+              "property": "dialog.isSelection",
+              "value": "=coalesce(dialog.isSelection, false)"
+            },
+            {
+              "property": "dialog.futureEventsOnly",
+              "value": "=coalesce(dialog.futureEventsOnly, false)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$designer": {
+            "id": "XKaMzg"
+          },
+          "resultProperty": "dialog.events",
+          "token": "=user.token.token",
+          "titleProperty": "=coalesce(dialog.title, null)",
+          "locationProperty": "=coalesce(dialog.location, null)",
+          "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
+          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+          "endProperty": "=coalesce(dialog.end, null)",
+          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
+          "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "PpWLTf"
+          },
+          "value": "=dialog.events"
+        }
+      ]
+    }
+  ],
+  "generator": "SearchEvents.lg"
+}
