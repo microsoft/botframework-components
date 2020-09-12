@@ -13,9 +13,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction
         public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
         {
             // Actions
-            yield return new DeclarativeType<GetSettings>(GetSettings.DeclarativeType);
+            yield return new DeclarativeType<GetProfile>(GetProfile.DeclarativeType);
             yield return new DeclarativeType<GetEvents>(GetEvents.DeclarativeType);
             yield return new DeclarativeType<SortEvents>(SortEvents.DeclarativeType);
+            yield return new DeclarativeType<GetWorkingHours>(GetWorkingHours.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

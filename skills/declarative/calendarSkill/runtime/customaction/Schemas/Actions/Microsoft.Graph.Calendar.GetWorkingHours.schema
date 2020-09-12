@@ -1,11 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "Microsoft Graph - Get User Settings",
-  "description": "Get user settings from the Microsoft Graph API.",
+  "title": "Microsoft Graph - Get Working Hours",
+  "description": "Get user working hours from the Microsoft Graph API.",
   "type": "object",
   "required": [
-    "token"
+    "token",
+    "addressProperty"
   ],
   "properties": {
     "id": {
@@ -23,6 +24,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
+      "examples": []
+    },
+    "addressProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Address",
+      "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
       "examples": []
     }
   }

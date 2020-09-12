@@ -29,9 +29,6 @@
 			"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.Bot.Solutions.ParseTimex"
-		},
-		{
 			"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
 		},
 		{
@@ -125,10 +122,13 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.Graph.User.GetSettings"
+			"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -1210,60 +1210,6 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Bot.Solutions.GotToAction"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Bot.Solutions.ParseTimex": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Microsoft Bot Solutions - Parse Timex",
-			"description": "Lookup events from Microsoft Graph API.",
-			"type": "object",
-			"required": [
-				"timexProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Result Property",
-					"description": "Result Property (named location to store information).",
-					"examples": []
-				},
-				"timexProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "Timex",
-					"description": "Timex string to resolve.",
-					"examples": []
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "Timezone",
-					"description": "Timezone for resolutions.",
-					"examples": []
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Bot.Solutions.ParseTimex"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3562,6 +3508,61 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.GetWorkingHours": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Get Working Hours",
+			"description": "Get user working hours from the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"addressProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"addressProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Address",
+					"description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.GetWorkingHours"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.SortEvents": {
 			"$role": "implements(Microsoft.IDialog)",
 			"title": "Microsoft Graph - Sort Events",
@@ -3618,10 +3619,10 @@
 				}
 			}
 		},
-		"Microsoft.Graph.User.GetSettings": {
+		"Microsoft.Graph.User.GetProfile": {
 			"$role": "implements(Microsoft.IDialog)",
-			"title": "Microsoft Graph - Get User Settings",
-			"description": "Get user settings from the Microsoft Graph API.",
+			"title": "Microsoft Graph - Get User Profile",
+			"description": "Get user profile from the Microsoft Graph API.",
 			"type": "object",
 			"required": [
 				"token",
@@ -3657,7 +3658,7 @@
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Graph.User.GetSettings"
+					"const": "Microsoft.Graph.User.GetProfile"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -4511,19 +4512,19 @@
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Bot.Solutions.ParseTimex"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Graph.User.GetSettings"
+					"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
 				}
 			]
 		},
