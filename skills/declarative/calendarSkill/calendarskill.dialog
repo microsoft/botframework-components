@@ -64,6 +64,13 @@
       "intent": "GetEventsByDate",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "EThcyH"
+          },
+          "name": "GetEventByDate"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "7pTfRc"
@@ -164,9 +171,57 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "1SSdmB"
+      },
+      "intent": "GetEventTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "povOkC"
+          },
+          "name": "GetEventTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "p5hdqN"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9n2omv"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FDBgy9"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventTitleDialog",
+          "options": {
+            "query": "=turn.activity.text"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "calendarskill.lg",
-  "recognizer": "calendarskill.lu"
+  "recognizer": "calendarskill.lu.qna",
+  "id": "calendarskill"
 }

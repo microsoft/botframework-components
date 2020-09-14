@@ -29,9 +29,6 @@
 			"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
 		},
 		{
-			"$ref": "#/definitions/Microsoft.Bot.Solutions.ParseTimex"
-		},
-		{
 			"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
 		},
 		{
@@ -1210,60 +1207,6 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Bot.Solutions.GotToAction"
-				},
-				"$designer": {
-					"title": "Designer information",
-					"type": "object",
-					"description": "Extra information for the Bot Framework Composer."
-				}
-			}
-		},
-		"Microsoft.Bot.Solutions.ParseTimex": {
-			"$role": "implements(Microsoft.IDialog)",
-			"title": "Microsoft Bot Solutions - Parse Timex",
-			"description": "Lookup events from Microsoft Graph API.",
-			"type": "object",
-			"required": [
-				"timexProperty",
-				"$kind"
-			],
-			"additionalProperties": false,
-			"patternProperties": {
-				"^\\$": {
-					"title": "Tooling property",
-					"description": "Open ended property for tooling."
-				}
-			},
-			"properties": {
-				"id": {
-					"type": "string",
-					"title": "Id",
-					"description": "Optional id for the dialog"
-				},
-				"resultProperty": {
-					"$ref": "#/definitions/stringExpression",
-					"title": "Result Property",
-					"description": "Result Property (named location to store information).",
-					"examples": []
-				},
-				"timexProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "Timex",
-					"description": "Timex string to resolve.",
-					"examples": []
-				},
-				"timeZoneProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "Timezone",
-					"description": "Timezone for resolutions.",
-					"examples": []
-				},
-				"$kind": {
-					"title": "Kind of dialog object",
-					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-					"type": "string",
-					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-					"const": "Microsoft.Bot.Solutions.ParseTimex"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3536,6 +3479,12 @@
 					"description": "Event range end.",
 					"examples": []
 				},
+				"dateTimeTypeProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "DateTimeType",
+					"description": "Datetime type, e.g. date, datetime.",
+					"examples": []
+				},
 				"timeZoneProperty": {
 					"$ref": "#/definitions/valueExpression",
 					"title": "TimeZone",
@@ -4509,9 +4458,6 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.Bot.Solutions.ParseTimex"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"

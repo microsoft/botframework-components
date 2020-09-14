@@ -26,3 +26,21 @@
 -	List all events for August 20th
 
 @ prebuilt datetimeV2
+
+# GetEventTitle
+- Do I have an event at 1pm on Friday?
+- What meeting do I have at 1pm?
+- 1pm on Friday, what do I have?
+- Am I busy at 1pm on Friday?"
+- find a meeting about {Title=group meeting}
+- find a meeting about {Title=plan}
+- find a meeting at 7pm from melissa
+- find a meeting from darren about {Title=status update}
+- find a meeting from deborah about {Title=team session}
+- find a meeting from donna
+- find a meeting Title {Title=daily meeting}
+- find a meeting with Title {Title=weekly report}
+- find a meeting with title {Title=second lesson} from amanda
+- find a meeting with title {Title=sharing} from steven
+
+@ prebuilt personName
