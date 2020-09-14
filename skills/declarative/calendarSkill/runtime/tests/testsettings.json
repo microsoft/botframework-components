@@ -1,0 +1,8 @@
+﻿{
+  "botFilePath": "fake.bot",
+  "botFileSecret": "",
+  "ApplicationInsights": {
+    "InstrumentationKey": "00000000-0000-0000-0000-000000000000"
+  },
+  "oauthConnectionName": "Outlook"
+}

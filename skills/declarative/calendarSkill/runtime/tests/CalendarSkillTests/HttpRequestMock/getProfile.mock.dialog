@@ -1,0 +1,27 @@
+﻿{
+  "$schema": "../../app.schema",
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "method": "GET",
+  "url": "https://graph.microsoft.com:443/v1.0/me",
+  "responses": [
+    {
+      "content-type": "application/json",
+      "content": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+          "+1 412 555 0109"
+        ],
+        "displayName": "Megan Bowen",
+        "givenName": "Megan",
+        "jobTitle": "Marketing Manager",
+        "mail": "MeganB@VAContoso.OnMicrosoft.com",
+        "mobilePhone": null,
+        "officeLocation": "12/1110",
+        "preferredLanguage": "en-US",
+        "surname": "Bowen",
+        "userPrincipalName": "MeganB@VAContoso.OnMicrosoft.com",
+        "id": "d4478b21-9085-4f61-88c9-15e3ee77ddf5"
+      }
+    }
+  ]
+}
