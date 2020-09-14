@@ -68,7 +68,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var workingHours = schedule.First().WorkingHours;
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(GetEvents), workingHours, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(GetWorkingHours), workingHours, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
