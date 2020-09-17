@@ -29,12 +29,21 @@
           "text": "Sign in to your Microsoft account to access your calendar."
         },
         {
-          "$kind": "Microsoft.Graph.User.GetSettings",
+          "$kind": "Microsoft.Graph.User.GetProfile",
           "$designer": {
-            "id": "h42Irt"
+            "id": "VvX38E"
+          },
+          "resultProperty": "user.profile",
+          "token": "=user.token.token"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
+          "$designer": {
+            "id": "xkrfzQ"
           },
           "token": "=user.token.token",
-          "resultProperty": "user.settings"
+          "addressProperty": "=user.profile.userPrincipalName",
+          "resultProperty": "user.workingHours"
         }
       ]
     }
