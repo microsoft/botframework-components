@@ -54,9 +54,11 @@
 # TextInput_Prompt_a8RIpz()
 - ${AskforMeetingParameters(dialog.repeat)}
 # TextInput_InvalidPrompt_a8RIpz()
-- Sorry, invalid input, please retry
+- I didn't understand the start time, title or attendees you provided, can you try again?
 # TextInput_UnrecognizedPrompt_a8RIpz()
-- Unrecognized input
+- Sorry, I didn't understand.
+
+
 
 # SendActivity_hxgxuN()
 - Something seems to be going wrong. I can tell you more about your meetings today... 

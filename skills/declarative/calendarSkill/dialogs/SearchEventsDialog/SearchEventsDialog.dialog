@@ -32,8 +32,7 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "wYIwoN"
-          },
-          "name": "SearchEventIn2"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -118,10 +117,22 @@
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
           "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
           "endProperty": "=coalesce(dialog.end, null)",
-          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
           "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "KMnuIE"
+          },
+          "assignments": [
+            {
+              "property": "turn.recognized",
+              "value": "= null"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -206,7 +217,7 @@
               },
               "resultProperty": "conversation.events",
               "inputProperty": "=dialog.events",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+              "timeZoneProperty": "=user.workingHours.timeZone.name"
             },
             {
               "$kind": "Microsoft.TraceActivity",

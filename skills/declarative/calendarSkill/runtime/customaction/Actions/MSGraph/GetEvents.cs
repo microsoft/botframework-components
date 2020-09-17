@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -167,7 +168,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             // Filter results by datetime if dateTimeType is a specific datetime
             if (dateTimeTypeProperty != null && dateTimeTypeProperty.Contains("time"))
             {
-                results = results.Where(r => r.Start.ToDateTime() == startProperty).ToList();
+                results = results.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
             }
 
             // Filter results by title
