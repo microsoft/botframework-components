@@ -19,10 +19,17 @@
 
 > entity definitions:
 > @ ml city
--	What's on my calendar today?
--	Read me my calendar.
--	Do I have an event tomorrow?
--	What's on my agenda this weekend?
--	List all events for August 20th
+- What's on my calendar today?
+- Read me my calendar
+- What is on for today?
+- Show my calendar
+- What do I have planned for tomorrow?
+- Do I have an event tomorrow?
+- List all events for August 20th
+- What meetings do I need to attend today?
+- What meetings do I have this weekend?
+- What is up next month?
+- What is my agenda for this weekend?
+- Tell me what my next month is like
 
 @ prebuilt datetimeV2

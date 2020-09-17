@@ -1,14 +1,12 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.BotFramework.Composer.CustomAction;
 using Microsoft.Graph;
-using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -106,8 +104,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 endProperty = startProperty.Value.Date.AddHours(23).AddMinutes(59);
             }
 
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token);
-
+            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
+            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
             var results = new List<Event>();
 
             // Define the time span for the calendar view.
@@ -133,8 +131,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var ev in events)
                 {
-                    var startTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.Start.ToDateTime(), timeZone);
-                    var endTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.End.ToDateTime(), timeZone);
+                    var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
+                    var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
 
                     ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
                     ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
@@ -150,8 +148,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        var startTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.Start.ToDateTime(), timeZone);
-                        var endTZ = TimeZoneInfo.ConvertTimeFromUtc(ev.End.ToDateTime(), timeZone);
+                        var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
+                        var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
 
                         ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
                         ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);

@@ -377,3 +377,5 @@ ASALocalRun/
 /.project
 *.luis
 experimental/generator-dotnet-yeoman/node_modules
+/skills/declarative/calendarSkill/generated
+/skills/declarative/calendarSkill/runtime/azurewebapp/appsettings.Deployment.json
