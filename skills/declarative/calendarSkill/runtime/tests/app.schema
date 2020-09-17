@@ -1,5 +1,5 @@
 {
-	"$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+	"$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
 	"type": "object",
 	"title": "Component kinds",
 	"description": "These are all of the kinds that can be created by the loader.",
@@ -197,6 +197,9 @@
 			"$ref": "#/definitions/Microsoft.OnCondition"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.OnContinueConversation"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.OnConversationUpdateActivity"
 		},
 		{
@@ -302,10 +305,55 @@
 			"$ref": "#/definitions/Microsoft.SwitchCondition"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.TemperatureEntityRecognizer"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.TemplateEngineLanguageGenerator"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.AssertCondition"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.AssertReply"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.AssertReplyActivity"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.AssertReplyOneOf"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.CustomEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.HttpRequestSequenceMock"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.PropertiesMock"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.Script"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserActivity"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserConversationUpdate"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserDelay"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserSays"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserTokenBasicMock"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Test.UserTyping"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.TextInput"
@@ -384,7 +432,7 @@
 					"description": "Optional dialog ID."
 				},
 				"autoEndDialog": {
-					"type": "boolean",
+					"$ref": "#/definitions/booleanExpression",
 					"title": "Auto end dialog",
 					"description": "If set to true the dialog will automatically end when there are no further actions.  If set to false, remember to manually end the dialog using EndDialog action.",
 					"default": true
@@ -737,7 +785,6 @@
 					"$ref": "#/definitions/arrayExpression",
 					"title": "Expected Properties",
 					"description": "Properties expected from the user.",
-					"type": "array",
 					"examples": [
 						[
 							"age",
@@ -755,7 +802,8 @@
 					"title": "Default Operation",
 					"description": "Sets the default operation that will be used when no operation is recognized in the response to this Ask.",
 					"examples": [
-						"add"
+						"Add()",
+						"Remove()"
 					]
 				},
 				"id": {
@@ -817,7 +865,8 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/Microsoft.IActivityTemplate/oneOf/1/properties/attachments/items",
-							"title": "Object"
+							"title": "Object",
+							"description": "Attachment object."
 						},
 						{
 							"$ref": "#/definitions/equalsExpression"
@@ -831,7 +880,8 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/Microsoft.IActivityTemplate/oneOf/1/properties/attachments/items",
-							"title": "Object"
+							"title": "Object",
+							"description": "Attachment object."
 						},
 						{
 							"$ref": "#/definitions/equalsExpression"
@@ -1154,6 +1204,16 @@
 					"title": "Activity",
 					"description": "The activity to send to the skill.",
 					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"allowInterruptions": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Allow Interruptions",
+					"description": "A boolean expression that determines whether the parent should be allowed to interrupt the skill.",
+					"default": true,
+					"examples": [
+						true,
+						"=user.xyz"
+					]
 				},
 				"$kind": {
 					"title": "Kind of dialog object",
@@ -2344,7 +2404,7 @@
 					]
 				},
 				"outputFormat": {
-					"$ref": "#/definitions/stringExpression",
+					"$ref": "#/definitions/expression",
 					"title": "Output format",
 					"description": "Expression to use for formatting the output.",
 					"examples": [
@@ -3482,12 +3542,6 @@
 					"description": "Event range end.",
 					"examples": []
 				},
-				"dateTimeTypeProperty": {
-					"$ref": "#/definitions/valueExpression",
-					"title": "DateTimeType",
-					"description": "Datetime type, e.g. date, datetime.",
-					"examples": []
-				},
 				"timeZoneProperty": {
 					"$ref": "#/definitions/valueExpression",
 					"title": "TimeZone",
@@ -3797,7 +3851,7 @@
 				"resultProperty": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
 					"examples": [
 						"dialog.contosodata"
 					]
@@ -3832,7 +3886,8 @@
 								"none",
 								"json",
 								"activity",
-								"activities"
+								"activities",
+								"binary"
 							],
 							"default": "json"
 						},
@@ -4389,9 +4444,6 @@
 					"type": "string"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.QnAMakerDialog"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
@@ -4485,6 +4537,9 @@
 					"$ref": "#/definitions/Microsoft.SwitchCondition"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.TraceActivity"
 				},
 				{
@@ -4513,6 +4568,12 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.AssertCondition"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.QnAMakerDialog"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
@@ -4626,12 +4687,6 @@
 					"type": "string"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.LuisRecognizer"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.QnAMakerRecognizer"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.CrossTrainedRecognizerSet"
 				},
 				{
@@ -4642,6 +4697,12 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.RegexRecognizer"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.LuisRecognizer"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.QnAMakerRecognizer"
 				}
 			]
 		},
@@ -4691,6 +4752,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OnCondition"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OnContinueConversation"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OnConversationUpdateActivity"
@@ -5133,6 +5197,11 @@
 					"title": "LUIS Application ID",
 					"description": "Application ID for your model from the LUIS service."
 				},
+				"version": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "LUIS Version",
+					"description": "Optional version to target.  If null then predictionOptions.Slot is used."
+				},
 				"endpoint": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "LUIS Endpoint",
@@ -5199,34 +5268,29 @@
 					"description": "Options to control LUIS prediction behavior.",
 					"properties": {
 						"includeAllIntents": {
-							"type": "boolean",
+							"$ref": "#/definitions/booleanExpression",
 							"title": "Include all intents",
 							"description": "True for all intents, false for only top intent."
 						},
 						"includeInstanceData": {
-							"type": "boolean",
+							"$ref": "#/definitions/booleanExpression",
 							"title": "Include $instance",
 							"description": "True to include $instance metadata in the LUIS response."
 						},
 						"log": {
-							"type": "boolean",
+							"$ref": "#/definitions/booleanExpression",
 							"title": "Log utterances",
 							"description": "True to log utterances on LUIS service."
 						},
 						"preferExternalEntities": {
-							"type": "boolean",
+							"$ref": "#/definitions/booleanExpression",
 							"title": "Prefer External Entities",
 							"description": "True to prefer external entities to those generated by LUIS models."
 						},
 						"slot": {
-							"type": "string",
+							"$ref": "#/definitions/stringExpression",
 							"title": "Slot",
 							"description": "Slot to use for talking to LUIS service like production or staging."
-						},
-						"version": {
-							"type": "string",
-							"title": "Version",
-							"description": "LUIS application version to use."
 						}
 					}
 				},
@@ -5941,11 +6005,15 @@
 			}
 		},
 		"Microsoft.OnCancelDialog": {
-			"$role": "implements(Microsoft.ITrigger)",
+			"$role": [
+				"implements(Microsoft.ITrigger)",
+				"extends(Microsoft.OnCondition)"
+			],
 			"title": "On cancel dialog",
 			"description": "Actions to perform on cancel dialog event.",
 			"type": "object",
 			"required": [
+				"actions",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -5956,6 +6024,37 @@
 				}
 			},
 			"properties": {
+				"condition": {
+					"$ref": "#/definitions/condition",
+					"title": "Condition",
+					"description": "Condition (expression).",
+					"examples": [
+						"user.vip == true"
+					]
+				},
+				"actions": {
+					"type": "array",
+					"title": "Actions",
+					"description": "Sequence of actions to execute.",
+					"items": {
+						"$kind": "Microsoft.IDialog",
+						"$ref": "#/definitions/Microsoft.IDialog"
+					}
+				},
+				"priority": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Priority",
+					"description": "Priority for trigger with 0 being the highest and < 0 ignored."
+				},
+				"runOnce": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Run Once",
+					"description": "True if rule should run once per unique conditions",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
 				"$kind": {
 					"title": "Kind of dialog object",
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -6264,6 +6363,71 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.OnCondition"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.OnContinueConversation": {
+			"$role": [
+				"implements(Microsoft.ITrigger)",
+				"extends(Microsoft.OnCondition)"
+			],
+			"title": "On Continue Conversation",
+			"description": "Actions to perform when a conversation is started up again from a ContinueConversationLater action.",
+			"type": "object",
+			"required": [
+				"actions",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"condition": {
+					"$ref": "#/definitions/condition",
+					"title": "Condition",
+					"description": "Condition (expression).",
+					"examples": [
+						"user.vip == true"
+					]
+				},
+				"actions": {
+					"type": "array",
+					"title": "Actions",
+					"description": "Sequence of actions to execute.",
+					"items": {
+						"$kind": "Microsoft.IDialog",
+						"$ref": "#/definitions/Microsoft.IDialog"
+					}
+				},
+				"priority": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Priority",
+					"description": "Priority for trigger with 0 being the highest and < 0 ignored."
+				},
+				"runOnce": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Run Once",
+					"description": "True if rule should run once per unique conditions",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.OnContinueConversation"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -7339,7 +7503,7 @@
 				"extends(Microsoft.OnCondition)"
 			],
 			"title": "On unknown intent",
-			"description": "Action to perform when user input is unrecognized and if none of the 'on intent recognition' triggers match recognized intent.",
+			"description": "Action to perform when user input is unrecognized or if none of the 'on intent recognition' triggers match recognized intent.",
 			"type": "object",
 			"required": [
 				"actions",
@@ -8385,11 +8549,9 @@
 				},
 				"userId": {
 					"$ref": "#/definitions/stringExpression",
-					"title": "ActivityId",
-					"description": "expression to an activityId to get the members. If none is defined then the current activity id will be used.",
-					"examples": [
-						"=$lastActivity"
-					]
+					"title": "UserId",
+					"description": "Expression to an user to signout. Default is user.id.",
+					"default": "=user.id"
 				},
 				"connectionName": {
 					"$ref": "#/definitions/stringExpression",
@@ -8560,6 +8722,68 @@
 				}
 			}
 		},
+		"Microsoft.TelemetryTrackEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Telemetry - Track Event",
+			"description": "Track a custom event using the registered Telemetry Client.",
+			"required": [
+				"url",
+				"method",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						"user.age > 3"
+					]
+				},
+				"eventName": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Event Name",
+					"description": "The name of the event to track.",
+					"examples": [
+						"MyEventStarted",
+						"MyEventCompleted"
+					]
+				},
+				"properties": {
+					"type": "object",
+					"title": "Properties",
+					"description": "One or more properties to attach to the event being tracked.",
+					"additionalProperties": {
+						"$ref": "#/definitions/stringExpression"
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.TelemetryTrackEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.TemperatureEntityRecognizer": {
 			"$role": "implements(Microsoft.IEntityRecognizer)",
 			"title": "Temperature Recognizer",
@@ -8617,6 +8841,1020 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.TemplateEngineLanguageGenerator"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.AssertCondition": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Assert Condition",
+			"description": "Assert condition is true.",
+			"type": "object",
+			"required": [
+				"condition",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"condition": {
+					"$ref": "#/definitions/condition",
+					"title": "Condition",
+					"description": "Expression to evalute",
+					"examples": [
+						"user.age > 10"
+					]
+				},
+				"description": {
+					"type": "string",
+					"title": "Description",
+					"description": "Description of what the condition is testing"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.AssertCondition"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.AssertReply": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Assert Reply",
+			"description": "Asserts that a reply text is valid.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"text": {
+					"type": "string",
+					"title": "Reply Text",
+					"description": "Expected reply text"
+				},
+				"exact": {
+					"type": "boolean",
+					"title": "Exact Match",
+					"description": "If true then an exact match must happen, if false then the reply activity.text must contain the reply text. [Default:false]"
+				},
+				"description": {
+					"type": "string",
+					"title": "Description",
+					"description": "The description of what the assertion is testing"
+				},
+				"timeout": {
+					"type": "number",
+					"title": "Timeout",
+					"description": "The amount of time in milliseconds to wait for a reply (default is 3000)"
+				},
+				"assertions": {
+					"type": "array",
+					"title": "Assertions to perform to validate Activity that is sent by the dialog",
+					"description": "Sequence of expressions which must evaluate to true.",
+					"items": {
+						"$ref": "#/definitions/condition",
+						"title": "Assertion",
+						"description": "Assertion as an expression, which must evaluate to true or it will fail the test script.",
+						"examples": [
+							"user.vip == true"
+						]
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.AssertReply"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.AssertReplyActivity": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Assert Reply Activity",
+			"description": "Asserts that a reply activity is valid.",
+			"type": "object",
+			"required": [
+				"assertions",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"description": {
+					"type": "string",
+					"title": "Description",
+					"description": "The description of what the assertion is testing"
+				},
+				"timeout": {
+					"type": "number",
+					"title": "Timeout",
+					"description": "The amount of time in milliseconds to wait for a reply (default is 3000)"
+				},
+				"assertions": {
+					"type": "array",
+					"title": "Assertions to perform to validate Activity that is sent by the dialog",
+					"description": "Sequence of expressions which must evaluate to true.",
+					"items": {
+						"$ref": "#/definitions/condition",
+						"title": "Assertion",
+						"description": "Assertion as an expression, which must evaluate to true or it will fail the test script.",
+						"examples": [
+							"user.vip == true"
+						]
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.AssertReplyActivity"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.AssertReplyOneOf": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Assert Reply OneOf",
+			"description": "Asserts that a reply text is one of multiple optional responses.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"text": {
+					"type": "array",
+					"title": "Replies",
+					"description": "Expected replies (one of which must match).",
+					"items": {
+						"type": "string",
+						"title": "Expected reply",
+						"description": "Expected reply."
+					}
+				},
+				"exact": {
+					"type": "boolean",
+					"title": "Exact Match",
+					"description": "If true then an exact match must happen, if false then the reply activity.text must contain the reply text. [Default:false]"
+				},
+				"description": {
+					"type": "string",
+					"title": "Description",
+					"description": "The description of what the assertion is testing"
+				},
+				"timeout": {
+					"type": "number",
+					"title": "Timeout",
+					"description": "The amount of time in milliseconds to wait for a reply (default is 3000)"
+				},
+				"assertions": {
+					"type": "array",
+					"title": "Assertions to perform to validate Activity that is sent by the dialog",
+					"description": "Sequence of expressions which must evaluate to true.",
+					"items": {
+						"$ref": "#/definitions/condition",
+						"title": "Assertion",
+						"description": "Assertion as an expression, which must evaluate to true or it will fail the test script.",
+						"examples": [
+							"user.vip == true"
+						]
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.AssertReplyOneOf"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.CustomEvent": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "User Event",
+			"description": "Sends event to the bot from the user.",
+			"type": "object",
+			"required": [
+				"name",
+				"value",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"name": {
+					"type": "string",
+					"title": "Event Name",
+					"description": "Event name to send to the bot."
+				},
+				"value": {
+					"type": "object",
+					"title": "Event value",
+					"description": "Event value to send to the bot."
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.CustomEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.HttpRequestSequenceMock": {
+			"$role": "implements(Microsoft.Test.IHttpRequestMock)",
+			"title": "HttpRequest Sequence Mock",
+			"description": "Mock HttpRequest in sequence order.",
+			"type": "object",
+			"required": [
+				"url",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"method": {
+					"type": "string",
+					"title": "HTTP method",
+					"description": "HTTP method to match. If null, match to any method.",
+					"enum": [
+						"GET",
+						"POST",
+						"PATCH",
+						"PUT",
+						"DELETE"
+					],
+					"examples": [
+						"GET",
+						"POST"
+					]
+				},
+				"url": {
+					"type": "string",
+					"title": "Url",
+					"description": "URL to match. Absolute or relative, may contain * wildcards.",
+					"examples": [
+						"https://contoso.com"
+					]
+				},
+				"matchType": {
+					"type": "string",
+					"title": "Body Match Type",
+					"description": "The match type for body.",
+					"enum": [
+						"Exact",
+						"Partial"
+					],
+					"examples": [
+						"Exact",
+						"Partial"
+					],
+					"default": "Partial"
+				},
+				"body": {
+					"type": "string",
+					"title": "Body",
+					"description": "The body to match against request's body.",
+					"examples": [
+						"content"
+					]
+				},
+				"responses": {
+					"type": "array",
+					"title": "Responses",
+					"description": "Sequence of responses to reply. The last one will be repeated.",
+					"items": {
+						"type": "object",
+						"title": "HttpResponseMock",
+						"description": "Mocked http response.",
+						"properties": {
+							"statusCode": {
+								"title": "Status Code",
+								"description": "The status code. Default is OK(200).",
+								"oneOf": [
+									{
+										"type": "string",
+										"title": "String Status Code",
+										"description": "Use string as status code.",
+										"enum": [
+											"Continue",
+											"SwitchingProtocols",
+											"OK",
+											"Created",
+											"Accepted",
+											"NonAuthoritativeInformation",
+											"NoContent",
+											"ResetContent",
+											"PartialContent",
+											"Ambiguous",
+											"MultipleChoices",
+											"Moved",
+											"MovedPermanently",
+											"Found",
+											"Redirect",
+											"RedirectMethod",
+											"SeeOther",
+											"NotModified",
+											"UseProxy",
+											"Unused",
+											"RedirectKeepVerb",
+											"TemporaryRedirect",
+											"BadRequest",
+											"Unauthorized",
+											"PaymentRequired",
+											"Forbidden",
+											"NotFound",
+											"MethodNotAllowed",
+											"NotAcceptable",
+											"ProxyAuthenticationRequired",
+											"RequestTimeout",
+											"Conflict",
+											"Gone",
+											"LengthRequired",
+											"PreconditionFailed",
+											"RequestEntityTooLarge",
+											"RequestUriTooLong",
+											"UnsupportedMediaType",
+											"RequestedRangeNotSatisfiable",
+											"ExpectationFailed",
+											"UpgradeRequired",
+											"InternalServerError",
+											"NotImplemented",
+											"BadGateway",
+											"ServiceUnavailable",
+											"GatewayTimeout",
+											"HttpVersionNotSupported"
+										],
+										"examples": [
+											"OK"
+										]
+									},
+									{
+										"type": "number",
+										"title": "Number Status Code",
+										"description": "Use number as status code.",
+										"examples": [
+											200
+										]
+									}
+								],
+								"default": "OK"
+							},
+							"reasonPhrase": {
+								"type": "string",
+								"title": "Reason Phrase",
+								"description": "The reason phrase.",
+								"examples": [
+									"Server is stolen."
+								]
+							},
+							"contentType": {
+								"type": "string",
+								"title": "ContentType",
+								"description": "Content type of response.",
+								"enum": [
+									"String",
+									"ByteArray"
+								],
+								"examples": [
+									"String"
+								],
+								"default": "String"
+							},
+							"content": {
+								"title": "Content",
+								"description": "Content of response.",
+								"oneOf": [
+									{
+										"type": "string",
+										"title": "String content",
+										"description": "Use string as content.",
+										"examples": [
+											"string response"
+										]
+									},
+									{
+										"type": "object",
+										"title": "Object content",
+										"description": "Use object as content. It will be serialized to string.",
+										"examples": [
+											{
+												"data": "object response"
+											}
+										]
+									}
+								]
+							}
+						}
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.HttpRequestSequenceMock"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.IHttpRequestMock": {
+			"title": "Microsoft Test IHttpRequestMock",
+			"description": "Components which derive from HttpRequestMock class",
+			"$role": "interface",
+			"oneOf": [
+				{
+					"type": "string",
+					"title": "Reference to Microsoft.Test.IHttpRequestMock",
+					"description": "Reference to Microsoft.Test.IHttpRequestMock .dialog file."
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.HttpRequestSequenceMock"
+				}
+			]
+		},
+		"Microsoft.Test.IPropertyMock": {
+			"title": "Microsoft Test IPropertyMock",
+			"description": "Components which derive from PropertyMock class",
+			"$role": "interface",
+			"oneOf": [
+				{
+					"type": "string",
+					"title": "Reference to Microsoft.Test.IPropertyMock",
+					"description": "Reference to Microsoft.Test.IPropertyMock .dialog file."
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.PropertiesMock"
+				}
+			]
+		},
+		"Microsoft.Test.ITestAction": {
+			"title": "Microsoft Test ITestAction",
+			"description": "Components which derive from TestAction class",
+			"$role": "interface",
+			"oneOf": [
+				{
+					"type": "string",
+					"title": "Reference to Microsoft.Test.ITestAction",
+					"description": "Reference to Microsoft.Test.ITestAction .dialog file."
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.AssertReply"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.AssertReplyActivity"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.AssertReplyOneOf"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.CustomEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserActivity"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserConversationUpdate"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserDelay"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserSays"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserTyping"
+				}
+			]
+		},
+		"Microsoft.Test.IUserTokenMock": {
+			"title": "Microsoft Test IUserTokenMock",
+			"description": "Components which derive from UserTokenMock class",
+			"$role": "interface",
+			"oneOf": [
+				{
+					"type": "string",
+					"title": "Reference to Microsoft.Test.IUserTokenMock",
+					"description": "Reference to Microsoft.Test.IUserTokenMock .dialog file."
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Test.UserTokenBasicMock"
+				}
+			]
+		},
+		"Microsoft.Test.PropertiesMock": {
+			"$role": "implements(Microsoft.Test.IPropertyMock)",
+			"title": "Mock Properties",
+			"description": "Mock one or more property values.",
+			"type": "object",
+			"required": [
+				"assignments",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"assignments": {
+					"type": "array",
+					"title": "Assignments",
+					"description": "Property assignments as property=value pairs. In first match first use order.",
+					"items": {
+						"type": "object",
+						"title": "Property Assignment",
+						"description": "Property Assignment (used in PropertiesMock).",
+						"properties": {
+							"property": {
+								"type": "string",
+								"title": "Property",
+								"description": "A property path.",
+								"examples": [
+									"settings.connectionName",
+									"user.name",
+									"conversation.destination"
+								]
+							},
+							"value": {
+								"title": "Value",
+								"description": "The value. In settings, it could only be string.",
+								"oneOf": [
+									{
+										"type": "string",
+										"title": "String value",
+										"description": "Use string as value.",
+										"examples": [
+											"Graph"
+										]
+									},
+									{
+										"type": "number",
+										"title": "Number value",
+										"description": "Use number as value.",
+										"examples": [
+											1,
+											2
+										]
+									},
+									{
+										"type": "object",
+										"title": "Object value",
+										"description": "Use object as value.",
+										"examples": [
+											{
+												"city": "Seattle"
+											}
+										]
+									}
+								]
+							}
+						}
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.PropertiesMock"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.Script": {
+			"$role": [],
+			"title": "Test Script",
+			"description": "Defines a sequence of test actions to perform to validate the behavior of dialogs.",
+			"type": "object",
+			"required": [
+				"dialog",
+				"script",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"dialog": {
+					"$kind": "Microsoft.IDialog",
+					"title": "Dialog",
+					"description": "The root dialog to execute the test script against.",
+					"$ref": "#/definitions/Microsoft.IDialog"
+				},
+				"description": {
+					"type": "string",
+					"title": "Description",
+					"description": "Description of the test script"
+				},
+				"httpRequestMocks": {
+					"type": "array",
+					"title": "Http Request Mocks",
+					"description": "Mock data for Microsoft.HttpRequest.",
+					"items": {
+						"$kind": "Microsoft.Test.IHttpRequestMock",
+						"$ref": "#/definitions/Microsoft.Test.IHttpRequestMock"
+					}
+				},
+				"userTokenMocks": {
+					"type": "array",
+					"title": "User Token Mocks",
+					"description": "Mock data for Microsoft.OAuthInput.",
+					"items": {
+						"$kind": "Microsoft.Test.IUserTokenMock",
+						"$ref": "#/definitions/Microsoft.Test.IUserTokenMock"
+					}
+				},
+				"propertyMocks": {
+					"type": "array",
+					"title": "Property Mocks",
+					"description": "A list of property mocks. In first match first use order.",
+					"items": {
+						"$kind": "Microsoft.Test.IPropertyMock",
+						"$ref": "#/definitions/Microsoft.Test.IPropertyMock"
+					}
+				},
+				"script": {
+					"type": "array",
+					"title": "Test actions",
+					"description": "Sequence of test actions to execute.",
+					"items": {
+						"$kind": "Microsoft.Test.ITestAction",
+						"$ref": "#/definitions/Microsoft.Test.ITestAction"
+					}
+				},
+				"locale": {
+					"type": "string",
+					"title": "Locale",
+					"description": "Set the locale for the user utterances in the script.",
+					"default": "en-us"
+				},
+				"enableTrace": {
+					"type": "boolean",
+					"title": "Enable Trace Activity",
+					"description": "Enable trace activities in the unit test (default is false)",
+					"default": false
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.Script"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserActivity": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Send Activity",
+			"description": "Sends activity to the bot.",
+			"type": "object",
+			"required": [
+				"activity",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"activity": {
+					"type": "object",
+					"title": "Activity",
+					"description": "Activity to send to bot.",
+					"additionalProperties": true
+				},
+				"user": {
+					"type": "string",
+					"title": "User Name",
+					"description": "The activity.from.id and activity.from.name will be this if specified."
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserActivity"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserConversationUpdate": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Send ConversationUpdate",
+			"description": "Sends ConversationUpdate activity to the bot.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"membersAdded": {
+					"type": "array",
+					"title": "Members Added",
+					"description": "Names of the members to add",
+					"items": {
+						"type": "string",
+						"title": "Name",
+						"description": "Name of member to add."
+					}
+				},
+				"membersRemoved": {
+					"type": "array",
+					"title": "Members Removed",
+					"description": "Names of the members to remove",
+					"items": {
+						"type": "string",
+						"title": "Name",
+						"description": "Name of member to remove."
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserConversationUpdate"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserDelay": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Delay Execution",
+			"description": "Delays text script for time period.",
+			"type": "object",
+			"required": [
+				"timespan",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"timespan": {
+					"type": "number",
+					"title": "Timespan",
+					"description": "The amount of time in milliseconds to delay the execution of the test script"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserDelay"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserSays": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "User Text",
+			"description": "Sends text to the bot from the user.",
+			"type": "object",
+			"required": [
+				"text",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"text": {
+					"type": "string",
+					"title": "Text",
+					"description": "Text to send to the bot."
+				},
+				"user": {
+					"type": "string",
+					"title": "User Name",
+					"description": "The activity.from.id and activity.from.name will be this if specified."
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserSays"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserTokenBasicMock": {
+			"$role": "implements(Microsoft.Test.IUserTokenMock)",
+			"title": "Microsoft Test UserTokenBasicMock",
+			"description": "Mock Basic UserToken",
+			"type": "object",
+			"required": [
+				"connectionName",
+				"token",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"connectionName": {
+					"type": "string",
+					"title": "Connection Name",
+					"description": "The connection name.",
+					"examples": [
+						"graph"
+					]
+				},
+				"channelId": {
+					"type": "string",
+					"title": "Channel ID",
+					"description": "The channel ID. If empty, same as adapter.Conversation.ChannelId.",
+					"examples": [
+						"test"
+					]
+				},
+				"userId": {
+					"type": "string",
+					"title": "User ID",
+					"description": "The user ID. If empty, same as adapter.Conversation.User.Id.",
+					"examples": [
+						"user1"
+					]
+				},
+				"token": {
+					"type": "string",
+					"title": "Token",
+					"description": "The token to store.",
+					"examples": [
+						"token"
+					]
+				},
+				"magicCode": {
+					"type": "string",
+					"title": "Magic Code",
+					"description": "The optional magic code to associate with this token.",
+					"examples": [
+						"000000"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserTokenBasicMock"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Test.UserTyping": {
+			"$role": "implements(Microsoft.Test.ITestAction)",
+			"title": "Send Typing",
+			"description": "Sends typing activity to the bot.",
+			"type": "object",
+			"required": [
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"user": {
+					"type": "string",
+					"title": "User Name",
+					"description": "The activity.from.id and activity.from.name will be this if specified."
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Test.UserTyping"
 				},
 				"$designer": {
 					"title": "Designer information",

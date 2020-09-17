@@ -37,7 +37,7 @@
           },
           "queryProperty": "=dialog.query",
           "resultProperty": "dialog.recognitionResults",
-          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+          "timeZoneProperty": "=user.workingHours.timeZone.name"
         },
         {
           "$kind": "Microsoft.Foreach",

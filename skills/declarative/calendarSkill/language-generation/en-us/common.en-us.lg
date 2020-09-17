@@ -1,6 +1,6 @@
 # WelcomeUser
-- IF: ${user.settings.displayName != null}
-    - Hi, ${user.settings.displayName}! How can I help you today?
+- IF: ${user.profile.displayName != null}
+    - Hi, ${user.profile.displayName}! How can I help you today?
 - ELSE: 
     - Hi there! How can I help you today?
 

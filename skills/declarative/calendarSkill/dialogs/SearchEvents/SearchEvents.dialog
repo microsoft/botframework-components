@@ -71,7 +71,7 @@
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
           "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
           "endProperty": "=coalesce(dialog.end, null)",
-          "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+          "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
           "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")"
