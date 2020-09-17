@@ -391,22 +391,162 @@
 }
 ```
 
-# BuildEventDetailsActions(event)
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Show content",
-            "data": {
-                "intent": "ShowEventContent",
-                "eventId": "${event.Id}"
+# BuildShowContentActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Show content",
+                "data": {
+                    "intent": "ShowEventContent",
+                    "eventId": "${event.Id}"
+                }
             }
-        }
-    ]
-}
 ```
+# BuildAddParticipantActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add participant",
+                "data": {
+                    "intent": "AddParticipant",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildUpdateEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Update event",
+                "data": {
+                    "intent": "UpdateEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildAcceptEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Accept event",
+                "data": {
+                    "intent": "AcceptEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildDeclineEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Decline event",
+                "data": {
+                    "intent": "DeclineEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildAddTeamsLinkActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add Teams link",
+                "data": {
+                    "intent": "AddTeamsLink",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildAddLocationActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add location",
+                "data": {
+                    "intent": "AddLocation",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# BuildUpdateLocationActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Update location",
+                "data": {
+                    "intent": "UpdateLocation",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+
+# BuildEventDetailsActions(event)
+- IF: ${event.Response == 'organizer' && event.Location != null && event.Location != '' && event.isOnlineMeeting == false}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+           ${BuildShowContentActions(event)},
+           ${BuildAddParticipantActions(event)},
+           ${BuildUpdateEventActions(event)},
+           ${BuildAddTeamsLinkActions(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location == null || event.Location == '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${BuildShowContentActions(event)},
+            ${BuildAddParticipantActions(event)},
+            ${BuildUpdateEventActions(event)},
+            ${BuildAddLocationActions(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location != null && event.Location != '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${BuildShowContentActions(event)},
+            ${BuildAddParticipantActions(event)},
+            ${BuildUpdateEventActions(event)},
+            ${BuildUpdateLocationActions(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${BuildShowContentActions(event)},
+            ${BuildDeclineEventActions(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' || event.Response == 'notResponded' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${BuildShowContentActions(event)},
+            ${BuildAcceptEventActions(event)},
+            ${BuildDeclineEventActions(event)}
+        ]
+    }
+    ```
+- ELSE:
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${BuildShowContentActions(event)},
+        ]
+    }
+    ```
 
 # BuildLocationContainer(event)
 - IF: ${ event.location != '' || event.isOnlineMeeting == true }

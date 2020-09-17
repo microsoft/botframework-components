@@ -278,5 +278,6 @@
       ]
     }
   ],
-  "generator": "ResolveDateTimeDialog.lg"
+  "generator": "ResolveDateTimeDialog.lg",
+  "id": "ResolveDateTimeDialog"
 }

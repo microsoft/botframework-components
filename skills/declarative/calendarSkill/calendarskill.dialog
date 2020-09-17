@@ -180,13 +180,6 @@
       "intent": "GetEventTitle",
       "actions": [
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "povOkC"
-          },
-          "name": "GetEventTitle"
-        },
-        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "p5hdqN"
@@ -212,9 +205,144 @@
             "id": "FDBgy9"
           },
           "activityProcessed": true,
-          "dialog": "GetEventTitleDialog",
+          "dialog": "SearchEventsDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "repeat": 0,
+            "query": "=turn.activity.text",
+            "futureEventsOnly": true,
+            "from": "GetEventTitle"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qSbfg2",
+        "name": "GetEventAttendees"
+      },
+      "intent": "GetEventAttendees",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "ruSQ4H"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Xd3Uog"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "s4ODsq"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "repeat": 0,
+            "query": "=turn.activity.text",
+            "futureEventsOnly": true,
+            "from": "GetEventAttendees"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "TErDXM",
+        "name": "GetEventTime"
+      },
+      "intent": "GetEventTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "KD8l8V"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "UlD3pi"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "pengBM"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "repeat": 0,
+            "query": "=turn.activity.text",
+            "futureEventsOnly": true,
+            "from": "GetEventTime"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Iqk2tV",
+        "name": "GetEventLocation"
+      },
+      "intent": "GetEventLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "qLKnDH"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "RsoCUU"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FwABct"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "repeat": 0,
+            "query": "=turn.activity.text",
+            "futureEventsOnly": true,
+            "from": "GetEventLocation"
           }
         }
       ]

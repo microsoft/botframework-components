@@ -39,5 +39,7 @@
       ]
     }
   ],
-  "generator": "AuthenticationDialog.lg"
+  "generator": "AuthenticationDialog.lg",
+  "id": "AuthenticationDialog",
+  "recognizer": "AuthenticationDialog.lu.qna"
 }

@@ -1,10 +1,10 @@
 [import](common.lg)
 
-# ScheduleResponseText(date, events)
+# ScheduleResponseText(date, events, from)
 - IF: ${ events == null || count(events) == 0 }
     - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}.
 - ELSEIF: ${ count(events) == 1 }
-    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${events[0].Attendees[0].EmailAddress.Name}, and ${count(events[0].Attendees) - 1} more. 
+    - ${ScheduleSingleEventResponseText(date, events, from)}
 - ELSEIF: ${ count(events) == 2 }
     - I see 2 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
 - ELSEIF: ${ count(events) == 3 }
@@ -14,23 +14,73 @@
 - ELSE:
     - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
 
+# ScheduleSingleEventResponseText(date, events, from)
+- IF: ${from == "GetEventTitle" }
+    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
+- ELSEIF: ${ from == "GetEventTime" }
+    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}, at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
+- ELSEIF: ${ from == "GetEventAttendees" }
+    - You have a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 3)} 
+- ELSEIF: ${ "GetEventLocation" }
+    - ${BuildLocation(events[0])} The meeting is on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
+- ELSE:
+    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
 
-# SendActivity_0VLb7K()
-[Activity
-    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
-    attachments = ${foreach(conversation.events, x, json(ScheduleCard(x.date, x.events)))}
-    attachmentLayout = carousel
-]
-# TextInput_Prompt_Yww4l6()
-- I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?
-# SendActivity_EYHo6f()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
+# BuildLocation(event)
+- IF: ${event.Location == null || event.Location == ""}
+    - No location provided.
+- ELSEIF: ${event.isOnlineMeeting}
+    - The meeting is in ${event.Location} and contains a Teams link.
+- ELSE:
+    - The meeting is in ${event.Location}.
+
+# BuildAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - No attendees.
+- ELSEIF: ${count(event.Attendees) == 1}
+    - The attendee is ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
+
 
 # AskforMeetingParameters(repeat)
-- IF: ${ repeat == false }
+- IF: ${ repeat == 0 }
     - I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?
 - ELSE:
     - I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?
 
-# TextInput_Prompt_SQ4uMM()
+# TextInput_Prompt_a8RIpz()
 - ${AskforMeetingParameters(dialog.repeat)}
+# TextInput_InvalidPrompt_a8RIpz()
+- Sorry, invalid input, please retry
+# TextInput_UnrecognizedPrompt_a8RIpz()
+- Unrecognized input
+
+# SendActivity_hxgxuN()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
+
+
+# SendActivity_bmgyjL()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events, dialog.from)}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
+]
+# SendActivity_xlkX1G()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events, dialog.from)}
+    attachments = ${foreach(conversation.events, x, json(ScheduleCard(x.date, x.events)))}
+    attachmentLayout = carousel
+]
+
+
+
+# SendActivity_yXwMbP()
+[Activity
+    text = ${ScheduleResponseText(dialog.start, createArray(), dialog.from)}
+    attachments = ${json(ScheduleCard(dialog.start, createArray()))}
+]
+
+# SendActivity_dByH00()
+- Sure.

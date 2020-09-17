@@ -22,87 +22,18 @@
           "name": "SearchEventIn"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "tT12Hb"
+            "id": "ET8AYy"
           },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query"
-          },
-          "resultProperty": "dialog.datetime"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "HuUtcu"
-          },
-          "assignments": [
-            {
-              "property": "dialog.start",
-              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), \"yyyy-MM-dd\"))"
-            },
-            {
-              "property": "dialog.end",
-              "value": "=coalesce(dialog.datetime.End, null)"
-            },
-            {
-              "property": "dialog.type",
-              "value": "= dialog.datetime.type"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "DCMYtg"
-          },
-          "assignments": [
-            {
-              "property": "dialog.start",
-              "value": "=dialog.start"
-            },
-            {
-              "property": "dialog.end",
-              "value": "=dialog.end"
-            },
-            {
-              "property": "dialog.title",
-              "value": "=coalesce(dialog.title, @title)"
-            },
-            {
-              "property": "dialog.location",
-              "value": "=coalesce(dialog.location, @location)"
-            },
-            {
-              "property": "dialog.personNameArray",
-              "value": "=coalesce(dialog.personName, @@personName)"
-            },
-            {
-              "property": "dialog.ordinal",
-              "value": "=coalesce(dialog.ordinal, @ordinal)"
-            },
-            {
-              "property": "dialog.isSelection",
-              "value": "=coalesce(dialog.isSelection, false)"
-            },
-            {
-              "property": "dialog.futureEventsOnly",
-              "value": "=coalesce(dialog.futureEventsOnly, false)"
-            },
-            {
-              "property": "dialog.type",
-              "value": "= dialog.type"
-            }
-          ]
+          "eventName": "CollectOptions"
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "meZF2o"
+            "id": "wYIwoN"
           },
-          "name": "SearchEvent"
+          "name": "SearchEventIn2"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -112,13 +43,68 @@
           "condition": "dialog.start == null && dialog.title == null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
           "actions": [
             {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "1eO2VL"
+              },
+              "name": "CollectOption"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperties",
+              "$designer": {
+                "id": "7HgKDy"
+              },
+              "properties": [
+                "dialog.query"
+              ]
+            },
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "a8RIpz"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_a8RIpz()}",
+              "invalidPrompt": "${TextInput_InvalidPrompt_a8RIpz()}",
+              "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_a8RIpz()}",
+              "property": "dialog.query",
+              "validations": [
+                "@datetime!=null || @title!=null || @personName!=null || #no != null"
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "F1YODj"
+              },
+              "condition": "#No != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "dByH00"
+                  },
+                  "activity": "${SendActivity_dByH00()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "ZQ3PBY"
+                  }
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "3zypGj"
+                "id": "B9EWPt"
               },
               "eventName": "CollectOptions"
             }
-          ]
+          ],
+          "elseActions": []
         },
         {
           "$kind": "Microsoft.Graph.Calendar.GetEvents",
@@ -142,94 +128,125 @@
           "$designer": {
             "id": "wRHP3J"
           },
-          "condition": "dialog.events!= null && count(dialog.events) > 0",
-          "elseActions": [
+          "condition": "dialog.events== null || count(dialog.events) == 0",
+          "elseActions": [],
+          "actions": [
             {
-              "$kind": "Microsoft.IfCondition",
+              "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-                "id": "sRe9KP"
+                "id": "nDa3yW"
               },
-              "condition": "dialog.repeat == true",
-              "actions": [
+              "condition": "dialog.repeat",
+              "cases": [
                 {
-                  "$kind": "Microsoft.TextInput",
-                  "$designer": {
-                    "id": "Yww4l6"
-                  },
-                  "disabled": false,
-                  "maxTurnCount": 3,
-                  "alwaysPrompt": false,
-                  "allowInterruptions": false,
-                  "prompt": "${TextInput_Prompt_Yww4l6()}"
+                  "value": "0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "HTFnuM"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "repeat": 1,
+                        "query": "repeat",
+                        "from": "=dialog.from"
+                      }
+                    }
+                  ]
                 },
                 {
-                  "$kind": "Microsoft.RepeatDialog",
-                  "$designer": {
-                    "id": "bbR7TC"
-                  },
-                  "activityProcessed": true
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "EYHo6f"
-                  },
-                  "activity": "${SendActivity_EYHo6f()}"
-                },
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "KpHm2w"
-                  },
-                  "activityProcessed": true,
-                  "dialog": "GetEventsByDateDialog"
-                },
-                {
-                  "$kind": "Microsoft.EndDialog",
-                  "$designer": {
-                    "id": "ZqqCTj"
-                  }
+                  "value": "1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "hxgxuN"
+                      },
+                      "activity": "${SendActivity_hxgxuN()}"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "gfYgY5"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "repeat": 2,
+                        "query": "today",
+                        "from": "=dialog.from"
+                      }
+                    }
+                  ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hmq2AT"
+          },
+          "condition": "dialog.events != null && count(dialog.events) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yXwMbP"
+              },
+              "activity": "${SendActivity_yXwMbP()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.Graph.Calendar.SortEvents",
               "$designer": {
-                "id": "0HyyAY"
+                "id": "qiDvqB"
               },
               "resultProperty": "conversation.events",
               "inputProperty": "=dialog.events",
               "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
             },
             {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "PzalaP"
+              },
+              "name": "AfterSort"
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "s0uERN"
+                "id": "MxjdGC"
               },
               "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "0VLb7K"
+                    "id": "xlkX1G"
                   },
-                  "activity": "${SendActivity_0VLb7K()}"
+                  "activity": "${SendActivity_xlkX1G()}"
                 }
               ],
               "actions": [
                 {
-                  "$kind": "Microsoft.EndDialog",
+                  "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "iRgQ9K"
-                  }
+                    "id": "bmgyjL"
+                  },
+                  "activity": "${SendActivity_bmgyjL()}"
                 }
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "14CQ3F"
+          }
         }
       ]
     },
@@ -242,41 +259,37 @@
       "event": "CollectOptions",
       "actions": [
         {
-          "$kind": "Microsoft.TextInput",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "SQ4uMM"
+            "id": "XFUAEh"
           },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${TextInput_Prompt_SQ4uMM()}"
+          "name": "CollectOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "gyw1xQ"
+            "id": "tduApA"
           },
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "query": "=dialog.query"
           },
           "resultProperty": "dialog.datetime"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "dIXcuC"
+            "id": "yLJRjf"
           },
           "assignments": [
             {
               "property": "dialog.start",
-              "value": "=dialog.start"
+              "value": "=coalesce(dialog.start, dialog.datetime.Start, dialog.datetime.Value)"
             },
             {
               "property": "dialog.end",
-              "value": "=dialog.end"
+              "value": "=coalesce(dialog.datetime.End, null)"
             },
             {
               "property": "dialog.title",
@@ -304,7 +317,7 @@
             },
             {
               "property": "dialog.type",
-              "value": "= dialog.type"
+              "value": "= dialog.datetime.type"
             }
           ]
         }
@@ -312,5 +325,6 @@
     }
   ],
   "generator": "SearchEventsDialog.lg",
-  "id": "SearchEventsDialog"
+  "id": "SearchEventsDialog",
+  "recognizer": "SearchEventsDialog.lu.qna"
 }

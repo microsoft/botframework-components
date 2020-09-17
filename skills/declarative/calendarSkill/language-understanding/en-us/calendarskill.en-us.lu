@@ -44,3 +44,39 @@
 - find a meeting with title {Title=sharing} from steven
 
 @ prebuilt personName
+
+# GetEventAttendees
+- Who am I meeting at 11 today?
+- Who else is in my 2pm meeting?
+- Who is coming to [name of meeting]?
+- Who all is attending the 4pm meeting?
+- who am i meeting at 10 am tomorrow
+- who am i meeting for {Title=dinner}
+- who else is going to the 2pm meeting tomorrow
+- who else will be in {Title=banking meeting}
+- who is attending 2 pm meeting tomorrow
+- who is attending the meeting
+- who is attending the meeting on wednesday
+- who is going to attend the meeting tomorrow at 2 pm
+
+# GetEventTime
+- When is my meeting with John?
+- What time am I meeting with Emma?
+- What time is my {Title=team meeting} today?
+- When do I meet with Stephanie next?
+- when am i {Title=watching england}
+- when do i have {Title=exam}
+- when do i meet with charles
+- 
+# GetEventLocation
+- Where is my meeting this afternoon?
+- Is my 11 o'clock meeting in building 35?
+- Where am I going for [name of meeting]?
+- Can you tell me what conference room my next meeting is in?
+- What is the location of the all-hands meeting?
+- where is the meeting at 11 am tomorrow
+- where is the {Title=performance review meeting}
+- where is tomorrow ' s 11 am meeting
+- where is tomorrow meeting at 11 am
+- where is tomorrow 's event
+- where's my next meeting

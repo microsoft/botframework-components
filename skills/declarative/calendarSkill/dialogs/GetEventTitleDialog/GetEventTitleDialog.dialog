@@ -29,6 +29,7 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
+            "repeat": 0,
             "query": "=dialog.query",
             "futureEventsOnly": true
           },
