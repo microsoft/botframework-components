@@ -64,36 +64,14 @@
               },
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${TextInput_Prompt_a8RIpz()}",
               "invalidPrompt": "${TextInput_InvalidPrompt_a8RIpz()}",
               "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_a8RIpz()}",
               "property": "dialog.query",
               "validations": [
                 "@datetime!=null || @title!=null || @personName!=null || #no != null"
-              ]
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "F1YODj"
-              },
-              "condition": "#No != null",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "dByH00"
-                  },
-                  "activity": "${SendActivity_dByH00()}"
-                },
-                {
-                  "$kind": "Microsoft.EndDialog",
-                  "$designer": {
-                    "id": "ZQ3PBY"
-                  }
-                }
-              ]
+              ],
+              "allowInterruptions": "=#No!= null && turn.recognized.score > 0.8"
             },
             {
               "$kind": "Microsoft.EmitEvent",
@@ -137,17 +115,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "wRHP3J"
+            "id": "hmq2AT"
           },
-          "condition": "dialog.events== null || count(dialog.events) == 0",
-          "elseActions": [],
-          "actions": [
+          "condition": "dialog.events != null && count(dialog.events) > 0",
+          "elseActions": [
             {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-                "id": "nDa3yW"
+                "id": "YTg9fk"
               },
-              "condition": "dialog.repeat",
+              "condition": "dialog.turnCount",
               "cases": [
                 {
                   "value": "0",
@@ -155,13 +132,13 @@
                     {
                       "$kind": "Microsoft.RepeatDialog",
                       "$designer": {
-                        "id": "HTFnuM"
+                        "id": "mz6WpY"
                       },
                       "activityProcessed": true,
                       "options": {
-                        "repeat": 1,
+                        "turnCount": 1,
                         "query": "repeat",
-                        "from": "=dialog.from"
+                        "intent": "=dialog.intent"
                       }
                     }
                   ]
@@ -172,41 +149,34 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "hxgxuN"
+                        "id": "wyiHTF"
                       },
-                      "activity": "${SendActivity_hxgxuN()}"
+                      "activity": "${SendActivity_wyiHTF()}"
                     },
                     {
                       "$kind": "Microsoft.RepeatDialog",
                       "$designer": {
-                        "id": "gfYgY5"
+                        "id": "8AwLVe"
                       },
                       "activityProcessed": true,
                       "options": {
-                        "repeat": 2,
+                        "turnCount": 2,
                         "query": "today",
-                        "from": "=dialog.from"
+                        "intent": "=dialog.intent"
                       }
                     }
                   ]
                 }
+              ],
+              "default": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "vOa1jo"
+                  },
+                  "activity": "${SendActivity_vOa1jo()}"
+                }
               ]
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "hmq2AT"
-          },
-          "condition": "dialog.events != null && count(dialog.events) > 0",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "yXwMbP"
-              },
-              "activity": "${SendActivity_yXwMbP()}"
             }
           ],
           "actions": [
@@ -331,6 +301,29 @@
               "value": "= dialog.datetime.type"
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "V9wSJO",
+        "name": "No"
+      },
+      "intent": "No",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "TMEgrc"
+          },
+          "activity": "${SendActivity_TMEgrc()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "nMNpbf"
+          }
         }
       ]
     }

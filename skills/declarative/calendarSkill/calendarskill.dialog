@@ -207,10 +207,10 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "repeat": 0,
+            "turnCount": 0,
             "query": "=turn.activity.text",
             "futureEventsOnly": true,
-            "from": "GetEventTitle"
+            "intent": "GetEventTitle"
           }
         }
       ]
@@ -251,10 +251,10 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "repeat": 0,
+            "turnCount": 0,
             "query": "=turn.activity.text",
             "futureEventsOnly": true,
-            "from": "GetEventAttendees"
+            "intent": "GetEventAttendees"
           }
         }
       ]
@@ -295,10 +295,10 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "repeat": 0,
+            "turnCount": 0,
             "query": "=turn.activity.text",
             "futureEventsOnly": true,
-            "from": "GetEventTime"
+            "intent": "GetEventTime"
           }
         }
       ]
@@ -339,10 +339,10 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "repeat": 0,
+            "turnCount": 0,
             "query": "=turn.activity.text",
             "futureEventsOnly": true,
-            "from": "GetEventLocation"
+            "intent": "GetEventLocation"
           }
         }
       ]

@@ -1,10 +1,4 @@
 
-# No
-- no
-- skip
-- nope
-- ignore it
-
 # TextInput_Response_a8RIpz
 - find a meeting about {Title=group meeting}
 - find a meeting about {Title=plan}
@@ -18,3 +12,32 @@
 - find a meeting with title {Title=sharing} from steven
 @ prebuilt datetimeV2
 @ prebuilt personName
+
+# No
+- no
+- skip
+- skip it
+- nope
+- ignore it
+- no i don't want that
+- no later
+- no leave it
+- no more no
+- no no
+- no no no
+- no no thank you
+- no not that one
+- no reject it
+- no thank you
+- no thanks
+- no way
+- no wrong
+- not
+- not at all
+- not even close
+- not exactly
+- not now
+- not quite
+- not right now
+- not that
+- oh no

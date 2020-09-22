@@ -297,11 +297,6 @@
                                     "size": "large",
                                     "text": "${event.Subject}",
                                     "type": "TextBlock"
-                                },
-                                {
-                                    "spacing": "None",
-                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}",
-                                    "type": "TextBlock"
                                 }
                             ]
                         }
@@ -332,7 +327,7 @@
                         },
                         {
                             "type": "Column",
-                            "width": 85,
+                            "width": 33,
                             "verticalContentAlignment": "Center",
                             "items": [
                                 {
@@ -340,6 +335,18 @@
                                     "text": "${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')}",
                                     "size": "Medium",
                                     "weight": "bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": 60,
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "spacing": "None",
+                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMM d')}",
+                                    "type": "TextBlock"
                                 }
                             ]
                         },
@@ -585,7 +592,7 @@
     -  
 
 # BuildAttendeeContainer(event)
-- IF: ${ event.Attendees != null && count(event.Attendees) - 1 > 1 }
+- IF: ${ event.Attendees != null && count(event.Attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
@@ -620,7 +627,7 @@
         ]
     },
     ```
-- ELSEIF: ${ event.Attendees != null && count(event.Attendees) - 1 == 1}
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
     -  ```
     {
         "type": "ColumnSet",

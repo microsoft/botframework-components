@@ -60,10 +60,6 @@
 
 
 
-# SendActivity_hxgxuN()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
-
-
 # SendActivity_bmgyjL()
 [Activity
     text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events, dialog.from)}
@@ -78,11 +74,14 @@
 
 
 
-# SendActivity_yXwMbP()
+# SendActivity_TMEgrc()
+- Sure.
+# SendActivity_wyiHTF()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
+
+
+# SendActivity_vOa1jo()
 [Activity
     text = ${ScheduleResponseText(dialog.start, createArray(), dialog.from)}
     attachments = ${json(ScheduleCard(dialog.start, createArray()))}
 ]
-
-# SendActivity_dByH00()
-- Sure.
