@@ -1,6 +1,7 @@
 ---
 name: "Documentation Issue"
 about: Create a report to help us improve our documentation
+labels: "needs-triage, Area: Docs"
 ---
 
 **Please describe your request**
