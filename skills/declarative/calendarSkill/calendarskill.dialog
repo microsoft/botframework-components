@@ -168,5 +168,6 @@
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "calendarskill.lg",
-  "recognizer": "calendarskill.lu"
+  "recognizer": "calendarskill.lu.qna",
+  "id": "calendarskill"
 }
