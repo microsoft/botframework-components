@@ -1,10 +1,16 @@
 [import](common.lg)
 
-# ScheduleResponseText(date, events, from)
+# BuildDate(date)
+- ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}
+
+# BuildTime(time)
+- ${formatDateTime(time, 'h:mm tt')}
+
+# ScheduleResponseText(date, events, intent)
 - IF: ${ events == null || count(events) == 0 }
     - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}.
 - ELSEIF: ${ count(events) == 1 }
-    - ${ScheduleSingleEventResponseText(date, events, from)}
+    - ${ScheduleSingleEventResponseText(date, events[0], intent)}
 - ELSEIF: ${ count(events) == 2 }
     - I see 2 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
 - ELSEIF: ${ count(events) == 3 }
@@ -14,17 +20,17 @@
 - ELSE:
     - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
 
-# ScheduleSingleEventResponseText(date, events, from)
-- IF: ${from == "GetEventTitle" }
-    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
-- ELSEIF: ${ from == "GetEventTime" }
-    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}, at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
-- ELSEIF: ${ from == "GetEventAttendees" }
-    - You have a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 3)} 
+# ScheduleSingleEventResponseText(date, event, intent)
+- IF: ${intent == "GetEventTitle" }
+    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+- ELSEIF: ${ intent == "GetEventTime" }
+    - I found a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}, at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+- ELSEIF: ${ intent == "GetEventAttendees" }
+    - You have a meeting on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 3)} 
 - ELSEIF: ${ "GetEventLocation" }
-    - ${BuildLocation(events[0])} The meeting is on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
+    - ${BuildLocation(event)} The meeting is on ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 1)} 
 - ELSE:
-    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. ${BuildAttendees(events[0], 1)} 
+    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 1)} 
 
 # BuildLocation(event)
 - IF: ${event.Location == null || event.Location == ""}
@@ -45,32 +51,18 @@
     - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
 
 
-# AskforMeetingParameters(repeat)
-- IF: ${ repeat == 0 }
+# AskforMeetingParameters(turnCount)
+- IF: ${ turnCount == 0 }
     - I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?
 - ELSE:
     - I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?
 
 # TextInput_Prompt_a8RIpz()
-- ${AskforMeetingParameters(dialog.repeat)}
+- ${AskforMeetingParameters(dialog.turnCount)}
 # TextInput_InvalidPrompt_a8RIpz()
 - I didn't understand the start time, title or attendees you provided, can you try again?
 # TextInput_UnrecognizedPrompt_a8RIpz()
 - Sorry, I didn't understand.
-
-
-
-# SendActivity_bmgyjL()
-[Activity
-    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events, dialog.from)}
-    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
-]
-# SendActivity_xlkX1G()
-[Activity
-    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events, dialog.from)}
-    attachments = ${foreach(conversation.events, x, json(ScheduleCard(x.date, x.events)))}
-    attachmentLayout = carousel
-]
 
 
 
@@ -82,6 +74,264 @@
 
 # SendActivity_vOa1jo()
 [Activity
-    text = ${ScheduleResponseText(dialog.start, createArray(), dialog.from)}
+    text = ${ScheduleResponseText(dialog.start, createArray(), dialog.intent)}
     attachments = ${json(ScheduleCard(dialog.start, createArray()))}
+]
+
+# FindMeetingCard(events)
+- ```
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "body": [
+        {
+            "items": [
+                {
+                    "columns": [
+                        {
+                            "bleed": true,
+                            "items": [
+                                {
+                                    "altText": "calendar icon",
+                                    "type": "Image",
+                                    "url": "data:image/svg+xml,%3Csvg width='30' height='29' viewBox='0 0 30 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24.375 7.5H28.125V30H3.75V7.5H7.5V5.625H9.375V7.5H22.5V5.625H24.375V7.5ZM26.25 9.375H24.375V11.25H26.25V9.375ZM22.5 9.375H9.375V11.25H22.5V9.375ZM7.5 9.375H5.625V11.25H7.5V9.375ZM5.625 28.125H26.25V13.125H5.625V28.125ZM3.75 5.625V3.75H1.875V24.375H0V1.875H3.75V0H5.625V1.875H18.75V0H20.625V1.875H24.375V3.75H20.625V5.625H18.75V3.75H5.625V5.625H3.75ZM9.375 20.625V18.75H11.25V20.625H9.375ZM13.125 20.625V18.75H15V20.625H13.125ZM16.875 20.625V18.75H18.75V20.625H16.875ZM20.625 20.625V18.75H22.5V20.625H20.625ZM9.375 24.375V22.5H11.25V24.375H9.375ZM13.125 24.375V22.5H15V24.375H13.125ZM16.875 24.375V22.5H18.75V24.375H16.875ZM13.125 16.875V15H15V16.875H13.125ZM16.875 16.875V15H18.75V16.875H16.875ZM20.625 16.875V15H22.5V16.875H20.625Z' fill='%23201F1E'/%3E%3C/svg%3E%0A",
+                                    "width": "30px"
+                                }
+                            ],
+                            "type": "Column",
+                            "verticalContentAlignment": "Top",
+                            "width": 5
+                        },
+                        {
+                            "items": [
+                                {
+                                    "size": "Large",
+                                    "text": "Find Meeting",
+                                    "type": "TextBlock",
+                                    "weight": "Bolder"
+                                }
+                            ],
+                            "type": "Column",
+                            "width": "60"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "30",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${count(events)} event${if(count(events) != 1, 's', '')}",
+                                    "horizontalAlignment": "Right"
+                                }
+                            ],
+                            "verticalContentAlignment": "Bottom"
+                        }
+                    ],
+                    "type": "ColumnSet"
+                }
+            ],
+            "type": "Container"
+        },
+        ${BuildEventList2(events)},
+        ${BuildScheduleActions2(events)}
+    ],
+    "type": "AdaptiveCard",
+    "version": "1.2"
+}
+```
+
+# BuildEventList2(events)
+- IF: ${ events == null || count(events) == 0 }
+    - ```
+    {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "You have no meetings, congrats!",
+                    "spacing": "Large"
+                }
+            ],
+            "spacing": "Large",
+            "separator": true,
+            "verticalContentAlignment": "Center"
+    }
+    ```
+- ELSEIF: ${ count(events) <= 5 }
+    - ```
+    {
+        "type": "Container",
+        "separator": true,
+        "spacing": "medium",
+        "items": [
+            ${join(foreach(events, x, BuildEventItem2(x)), ',')}
+        ]
+    }
+    ```
+- ELSE:
+    - ${BuildCollapsedEventList2(events)}
+
+
+# BuildCollapsedEventList2(events)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "items": [
+        ${join(foreach(take(events, 5), x, BuildEventItem2(x)), ',')}
+    ]
+},
+{
+    "type": "Container",
+    "id": "additionalElementsContainer",
+    "separator": true,
+    "items": [
+        ${join(foreach(skip(events, 5), x, BuildEventItem2(x)), ',')}
+    ],
+    "isVisible": false
+},
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "id": "toggleElementsContainer",
+    "items": [
+        {
+            "id": "chevronDown",
+            "type": "Image",
+            "url": "data:image/svg+xml,%3Csvg width='16' height='9' viewBox='0 0 16 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 8.94531L0.195312 1.14062L1.14062 0.195312L8 7.05469L14.8594 0.195313L15.8047 1.14063L8 8.94531Z' fill='%236264A7'/%3E%3C/svg%3E%0A",
+            "selectAction": {
+                "type": "Action.ToggleVisibility",
+                "targetElements": [
+                    "additionalElementsContainer",
+                    "chevronDown",
+                    "chevronUp"
+                ],
+                "title": "collapse"
+            },
+            "altText": "collapsed",
+            "width": "20px",
+            "horizontalAlignment": "center",
+            "separator": true
+        },
+        {
+            "id": "chevronUp",
+            "type": "Image",
+            "url": "data:image/svg+xml,%3Csvg width='16' height='9' viewBox='0 0 16 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0.0546868L15.8047 7.85937L14.8594 8.80469L8 1.94531L1.14063 8.80469L0.195313 7.85937L8 0.0546868Z' fill='%236264A7'/%3E%3C/svg%3E%0A",
+            "selectAction": {
+                "type": "Action.ToggleVisibility",
+                "targetElements": [
+                    "additionalElementsContainer",
+                    "chevronDown",
+                    "chevronUp"
+                ],
+                "title": "collapse"
+            },
+            "altText": "collapsed",
+            "width": "20px",
+            "isVisible": false,
+            "horizontalAlignment": "center"
+        }
+    ]
+}
+```
+
+# BuildEventItem2(event)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "selectAction": {
+        "title": "collapse",
+        "type": "Action.ToggleVisibility",
+        "targetElements": [
+            "eventDetail${event.Id}"
+        ]
+    },
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(event.start.dateTime, 'dddd, MMM d')}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${BuildTitleContainer(event)}
+        {
+            "type": "Container",
+            "spacing": "Small",
+            "items": [
+                ${BuildAttendeeContainer(event)}
+                ${BuildLocationContainer(event)}
+                ${BuildResponseContainer(event)}
+                ${BuildContentContainer(event)}
+            ],
+            "isVisible": false,
+            "id": "eventDetail${event.id}"
+        } 
+    ]
+}
+```
+
+
+# BuildScheduleActions2(events)
+- IF: ${ events == null || count(events) == 0 }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "Create new meeting"
+            },
+                        {
+                "type": "Action.Submit",
+                "title": "Show next day"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "What's on today"
+            },
+            {
+                "type": "Action.Submit",
+                "title": "Create new meeting"
+            }
+        ]
+    }
+    ```
+
+# SendActivity_8TDLuc()
+[Activity
+    text = ${ScheduleSingleEventResponseText(dialog.choosenEvent.start.datetime, dialog.choosenEvent, dialog.intent)}
+    attachments = ${json(EventDetailCard(dialog.choosenEvent))}
 ]

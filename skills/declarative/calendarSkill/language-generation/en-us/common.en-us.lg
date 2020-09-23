@@ -554,6 +554,41 @@
         ]
     }
     ```
+# BuildTitleContainer(event)
+-  ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 5,
+            "items": [
+                {
+                        "type": "Image",
+                        "url": "data:image/svg+xml,%3Csvg width='8' height='12' viewBox='0 0 28 35' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24.375 1.875H30V28.125H0V1.875H5.625V0H7.5V1.875H22.5V0H24.375V1.875ZM5.625 3.75H1.875V7.5H28.125V3.75H24.375V5.625H22.5V3.75H7.5V5.625H5.625V3.75ZM1.875 26.25H28.125V9.375H1.875V26.25Z' fill='%23333333'/%3E%3C/svg%3E ",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 95,
+            "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Subject}"
+                    }
+            ]
+        }
+    ]
+},
+```
 
 # BuildLocationContainer(event)
 - IF: ${ event.location != '' || event.isOnlineMeeting == true }

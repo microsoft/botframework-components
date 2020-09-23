@@ -181,15 +181,6 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.SortEvents",
-              "$designer": {
-                "id": "qiDvqB"
-              },
-              "resultProperty": "conversation.events",
-              "inputProperty": "=dialog.events",
-              "timeZoneProperty": "=user.workingHours.timeZone.name"
-            },
-            {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
                 "id": "PzalaP"
@@ -197,31 +188,79 @@
               "name": "AfterSort"
             },
             {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "JFoghi"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "dialog.events",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "M5nVxN"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.events[dialog.foreach.index].Location",
+                      "value": "= dialog.events[dialog.foreach.index].Location.DisplayName"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "MxjdGC"
               },
-              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
+              "condition": "count(dialog.events) == 1",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "xlkX1G"
+                    "id": "lBVVWu"
                   },
-                  "activity": "${SendActivity_xlkX1G()}"
+                  "activityProcessed": true,
+                  "dialog": "ChooseEventDialog",
+                  "options": {
+                    "start": 0,
+                    "target": 0,
+                    "events": "=dialog.events"
+                  },
+                  "resultProperty": "dialog.choosenEvent"
                 }
               ],
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "bmgyjL"
+                    "id": "eDbngk"
                   },
-                  "activity": "${SendActivity_bmgyjL()}"
+                  "assignments": [
+                    {
+                      "property": "dialog.choosenEvent",
+                      "value": "= dialog.events[0]"
+                    }
+                  ]
                 }
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "TMm0Gj"
+          }
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "8TDLuc"
+          },
+          "activity": "${SendActivity_8TDLuc()}"
         },
         {
           "$kind": "Microsoft.EndDialog",

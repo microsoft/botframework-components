@@ -1,0 +1,27 @@
+[import](common.lg)
+[import](SearchEventsDialog.lg)
+
+# ChooseResponseText(event)
+- Oke, I’ve found multiple events that match your question. Which one would you like to choose?
+
+# ChooseResponseTextBK(event)
+- Oke, I’ve found multiple events that match your question. First event is on  ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 3)} Want to take action on this event?
+
+# TextInput_Prompt_8RC4Wm()
+[Activity
+    text = ${ChooseResponseText(dialog.page[0])}
+    attachments = ${json(FindMeetingCard(dialog.page))}
+    attachmentLayout = carousel
+]
+
+
+
+
+# SendActivity_4K1cBW()
+- Sure.
+# TextInput_UnrecognizedPrompt_8RC4Wm()
+- Sorry, I didn't understand.
+
+
+# TextInput_InvalidPrompt_8RC4Wm()
+- I didn't understand the start time, title or attendees you provided, can you try again?
