@@ -1,6 +1,6 @@
 ---
-name: ".NET SDK Feature request"
-about: Suggest a feature for the Bot Builder .NET SDK
+name: "Feature request"
+about: Suggest a feature for the Bot Framework Skills projects
 title: ""
 labels: "needs-triage, feature-request"
 assignees: ""
