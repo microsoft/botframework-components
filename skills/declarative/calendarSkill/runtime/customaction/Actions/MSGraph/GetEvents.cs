@@ -96,11 +96,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // if start date is not provided, default to DateTime.Now
+            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
             if (startProperty == null
                 || startProperty.Value == DateTime.MinValue
-                || (startProperty <= DateTime.UtcNow && isFuture))
+                || (startProperty <= now && isFuture))
             {
-                startProperty = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+                startProperty = now;
             }
 
             // if end date is not provided, default to end of the current day

@@ -18,20 +18,6 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "SapBYc"
-          },
-          "name": "SearchEventIn"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "ET8AYy"
-          },
-          "eventName": "CollectOptions"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "wYIwoN"
           }
         },
         {
@@ -49,21 +35,12 @@
               "name": "CollectOption"
             },
             {
-              "$kind": "Microsoft.DeleteProperties",
-              "$designer": {
-                "id": "7HgKDy"
-              },
-              "properties": [
-                "dialog.query"
-              ]
-            },
-            {
               "$kind": "Microsoft.TextInput",
               "$designer": {
                 "id": "a8RIpz"
               },
               "maxTurnCount": 3,
-              "alwaysPrompt": false,
+              "alwaysPrompt": true,
               "prompt": "${TextInput_Prompt_a8RIpz()}",
               "invalidPrompt": "${TextInput_InvalidPrompt_a8RIpz()}",
               "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_a8RIpz()}",
@@ -74,11 +51,44 @@
               "allowInterruptions": "=#No!= null && turn.recognized.score > 0.8"
             },
             {
-              "$kind": "Microsoft.EmitEvent",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "B9EWPt"
+                "id": "A8DKWG"
               },
-              "eventName": "CollectOptions"
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=dialog.query"
+              },
+              "resultProperty": "dialog.datetime"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "zWg5ma"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.start",
+                  "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)"
+                },
+                {
+                  "property": "dialog.end",
+                  "value": "=dialog.datetime.End"
+                },
+                {
+                  "property": "dialog.title",
+                  "value": "=@title"
+                },
+                {
+                  "property": "dialog.personNameArray",
+                  "value": "=@@personName"
+                },
+                {
+                  "property": "dialog.type",
+                  "value": "= dialog.datetime.type"
+                }
+              ]
             }
           ],
           "elseActions": []
@@ -93,24 +103,12 @@
           "titleProperty": "=coalesce(dialog.title, null)",
           "locationProperty": "=coalesce(dialog.location, null)",
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
           "endProperty": "=coalesce(dialog.end, null)",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
-          "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "KMnuIE"
-          },
-          "assignments": [
-            {
-              "property": "turn.recognized",
-              "value": "= null"
-            }
-          ]
+          "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")",
+          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -120,73 +118,36 @@
           "condition": "dialog.events != null && count(dialog.events) > 0",
           "elseActions": [
             {
-              "$kind": "Microsoft.SwitchCondition",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "YTg9fk"
+                "id": "l8Fufv"
               },
-              "condition": "dialog.turnCount",
-              "cases": [
+              "condition": "dialog.turnCount == 0",
+              "actions": [
                 {
-                  "value": "0",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.RepeatDialog",
-                      "$designer": {
-                        "id": "mz6WpY"
-                      },
-                      "activityProcessed": true,
-                      "options": {
-                        "turnCount": 1,
-                        "query": "repeat",
-                        "intent": "=dialog.intent"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "value": "1",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "wyiHTF"
-                      },
-                      "activity": "${SendActivity_wyiHTF()}"
-                    },
-                    {
-                      "$kind": "Microsoft.RepeatDialog",
-                      "$designer": {
-                        "id": "8AwLVe"
-                      },
-                      "activityProcessed": true,
-                      "options": {
-                        "turnCount": 2,
-                        "query": "today",
-                        "intent": "=dialog.intent"
-                      }
-                    }
-                  ]
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "jOlhgq"
+                  },
+                  "activityProcessed": true,
+                  "options": {
+                    "doSelection": true,
+                    "futureEventsOnly": true,
+                    "turnCount": 1
+                  }
                 }
               ],
-              "default": [
+              "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "vOa1jo"
-                  },
-                  "activity": "${SendActivity_vOa1jo()}"
+                    "id": "KDD3hl"
+                  }
                 }
               ]
             }
           ],
           "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "PzalaP"
-              },
-              "name": "AfterSort"
-            },
             {
               "$kind": "Microsoft.Foreach",
               "$designer": {
@@ -209,18 +170,27 @@
                   ]
                 }
               ]
-            },
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "3GqiZS"
+          },
+          "condition": "dialog.doSelection",
+          "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "MxjdGC"
+                "id": "wrcxNC"
               },
               "condition": "count(dialog.events) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "lBVVWu"
+                    "id": "cGLQXk"
                   },
                   "activityProcessed": true,
                   "dialog": "ChooseEventDialog",
@@ -236,7 +206,7 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "eDbngk"
+                    "id": "s7xr4E"
                   },
                   "assignments": [
                     {
@@ -246,98 +216,22 @@
                   ]
                 }
               ]
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "TkwOJk"
+              },
+              "value": "= dialog.choosenEvent"
             }
-          ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "TMm0Gj"
-          }
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "8TDLuc"
-          },
-          "activity": "${SendActivity_8TDLuc()}"
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "14CQ3F"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "NRpJVE",
-        "name": "CollectOptions"
-      },
-      "event": "CollectOptions",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "XFUAEh"
-          },
-          "name": "CollectOptions"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "tduApA"
-          },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query"
-          },
-          "resultProperty": "dialog.datetime"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "yLJRjf"
-          },
-          "assignments": [
+          ],
+          "elseActions": [
             {
-              "property": "dialog.start",
-              "value": "=coalesce(dialog.start, dialog.datetime.Start, dialog.datetime.Value)"
-            },
-            {
-              "property": "dialog.end",
-              "value": "=coalesce(dialog.datetime.End, null)"
-            },
-            {
-              "property": "dialog.title",
-              "value": "=coalesce(dialog.title, @title)"
-            },
-            {
-              "property": "dialog.location",
-              "value": "=coalesce(dialog.location, @location)"
-            },
-            {
-              "property": "dialog.personNameArray",
-              "value": "=coalesce(dialog.personName, @@personName)"
-            },
-            {
-              "property": "dialog.ordinal",
-              "value": "=coalesce(dialog.ordinal, @ordinal)"
-            },
-            {
-              "property": "dialog.isSelection",
-              "value": "=coalesce(dialog.isSelection, false)"
-            },
-            {
-              "property": "dialog.futureEventsOnly",
-              "value": "=coalesce(dialog.futureEventsOnly, false)"
-            },
-            {
-              "property": "dialog.type",
-              "value": "= dialog.datetime.type"
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "0bjfGb"
+              },
+              "value": "= dialog.events"
             }
           ]
         }

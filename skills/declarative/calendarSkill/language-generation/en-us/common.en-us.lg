@@ -1035,3 +1035,28 @@
     - rd
 - ELSE:
     - th
+
+# BuildDate(date)
+- ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}
+
+# BuildTime(time)
+- ${formatDateTime(time, 'h:mm tt')}
+
+
+# BuildLocation(event)
+- IF: ${event.Location == null || event.Location == ""}
+    - No location provided.
+- ELSEIF: ${event.isOnlineMeeting}
+    - The meeting is in ${event.Location} and contains a Teams link.
+- ELSE:
+    - The meeting is in ${event.Location}.
+
+# BuildAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - No attendees.
+- ELSEIF: ${count(event.Attendees) == 1}
+    - The attendee is ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.

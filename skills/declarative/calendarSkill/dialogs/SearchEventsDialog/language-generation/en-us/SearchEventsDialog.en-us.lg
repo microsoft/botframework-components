@@ -1,11 +1,5 @@
 [import](common.lg)
 
-# BuildDate(date)
-- ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}
-
-# BuildTime(time)
-- ${formatDateTime(time, 'h:mm tt')}
-
 # ScheduleResponseText(date, events, intent)
 - IF: ${ events == null || count(events) == 0 }
     - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}.
@@ -32,25 +26,6 @@
 - ELSE:
     - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(event.start.datetime, 'h:mm tt')}, ${event.Subject}. ${BuildAttendees(event, 1)} 
 
-# BuildLocation(event)
-- IF: ${event.Location == null || event.Location == ""}
-    - No location provided.
-- ELSEIF: ${event.isOnlineMeeting}
-    - The meeting is in ${event.Location} and contains a Teams link.
-- ELSE:
-    - The meeting is in ${event.Location}.
-
-# BuildAttendees(event, maxShow)
-- IF: ${event.Attendees==null || count(event.Attendees)==0}
-    - No attendees.
-- ELSEIF: ${count(event.Attendees) == 1}
-    - The attendee is ${event.Attendees[0].EmailAddress.Name}.
-- ELSEIF: ${count(event.Attendees) <= maxShow}
-    - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
-- ELSE:
-    - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
-
-
 # AskforMeetingParameters(turnCount)
 - IF: ${ turnCount == 0 }
     - I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?
@@ -68,16 +43,6 @@
 
 # SendActivity_TMEgrc()
 - Sure.
-# SendActivity_wyiHTF()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
-
-
-# SendActivity_vOa1jo()
-[Activity
-    text = ${ScheduleResponseText(dialog.start, createArray(), dialog.intent)}
-    attachments = ${json(ScheduleCard(dialog.start, createArray()))}
-]
-
 # FindMeetingCard(events)
 - ```
 {
@@ -329,9 +294,3 @@
         ]
     }
     ```
-
-# SendActivity_8TDLuc()
-[Activity
-    text = ${ScheduleSingleEventResponseText(dialog.choosenEvent.start.datetime, dialog.choosenEvent, dialog.intent)}
-    attachments = ${json(EventDetailCard(dialog.choosenEvent))}
-]
