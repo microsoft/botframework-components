@@ -17,6 +17,7 @@
     },
     "ITSMSkill": {
       "commandName": "Project",
+      "WEBSITE_SITE_NAME": "localhost.ngrok.io",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

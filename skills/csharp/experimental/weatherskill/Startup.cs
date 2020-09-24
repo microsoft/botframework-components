@@ -3,6 +3,7 @@
 
 using System.Linq;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -80,6 +81,8 @@ namespace WeatherSkill
             services.AddSingleton(new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword));
 
             // Configure storage
+            // Uncomment the following line for local development without Cosmos Db
+            // services.AddSingleton<IStorage>(new MemoryStorage());
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
@@ -92,9 +95,11 @@ namespace WeatherSkill
 
             // Configure telemetry
             services.AddApplicationInsightsTelemetry();
-            var telemetryClient = new BotTelemetryClient(new TelemetryClient());
-            services.AddSingleton<IBotTelemetryClient>(telemetryClient);
-            services.AddBotApplicationInsights(telemetryClient);
+            services.AddSingleton<IBotTelemetryClient, BotTelemetryClient>();
+            services.AddSingleton<ITelemetryInitializer, OperationCorrelationTelemetryInitializer>();
+            services.AddSingleton<ITelemetryInitializer, TelemetryBotIdInitializer>();
+            services.AddSingleton<TelemetryInitializerMiddleware>();
+            services.AddSingleton<TelemetryLoggerMiddleware>();
 
             // Configure bot services
             services.AddSingleton<BotServices>();
@@ -114,7 +119,7 @@ namespace WeatherSkill
             services.AddTransient<ForecastDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure HttpContext required for path resolution
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

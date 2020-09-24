@@ -7,9 +7,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Threading.Tasks;
+using AdaptiveCards;
 using ITSMSkill.Bots;
 using ITSMSkill.Dialogs;
+using ITSMSkill.Dialogs.Teams;
+using ITSMSkill.Models;
 using ITSMSkill.Models.Actions;
+using ITSMSkill.Models.UpdateActivity;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
@@ -20,10 +25,12 @@ using ITSMSkill.Tests.Flow.Fakes;
 using ITSMSkill.Tests.Flow.Utterances;
 using ITSMSkill.Utilities;
 using Luis;
+using Microsoft.Azure.Documents;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions;
@@ -34,6 +41,7 @@ using Microsoft.Bot.Solutions.TaskExtensions;
 using Microsoft.Bot.Solutions.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Newtonsoft.Json.Linq;
 
 namespace ITSMSkill.Tests.Flow
@@ -69,12 +77,20 @@ namespace ITSMSkill.Tests.Flow
             settings.LimitSize = MockData.LimitSize;
             settings.ServiceNowUrl = MockData.ServiceNowUrl;
             settings.ServiceNowGetUserId = MockData.ServiceNowGetUserId;
+            settings.ServiceNowNamespaceId = MockData.ServiceNowNamespaceId;
             settings.MicrosoftAppId = MockData.MicrosoftAppId;
             settings.MicrosoftAppPassword = MockData.MicrosoftAppPassword;
             Services.AddSingleton(settings);
             Services.AddSingleton<BotSettingsBase>(settings);
 
-            // Configure credentials
+            // Configure TeamsUpdateActivity
+            var mockTeamsUpdateActivity = new Mock<ITeamsActivity<AdaptiveCard>>();
+            mockTeamsUpdateActivity.Setup(x => x.UpdateTaskModuleActivityAsync(
+                It.IsAny<ITurnContext>(),
+                It.IsAny<ActivityReference>(),
+                It.IsAny<AdaptiveCard>(),
+                It.IsAny<CancellationToken>())).Returns(Task.FromResult(new ResourceResponse { Id = "1" }));
+            Services.AddSingleton<ITeamsActivity<AdaptiveCard>>(mockTeamsUpdateActivity.Object);
 
             // Configure telemetry
             Services.AddSingleton<IBotTelemetryClient, NullBotTelemetryClient>();
@@ -136,6 +152,7 @@ namespace ITSMSkill.Tests.Flow
             Services.AddTransient<ShowTicketDialog>();
             Services.AddTransient<CloseTicketDialog>();
             Services.AddTransient<ShowKnowledgeDialog>();
+            Services.AddTransient<CreateSubscriptionDialog>();
             Services.AddTransient<MainDialog>();
 
             // Configure adapters

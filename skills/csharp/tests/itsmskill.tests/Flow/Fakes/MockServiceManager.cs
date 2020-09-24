@@ -23,5 +23,10 @@ namespace ITSMSkill.Tests.Flow.Fakes
                 return null;
             }
         }
+
+        public IServiceNowBusinessRuleSubscription CreateManagementForSubscription(BotSettings botSettings, TokenResponse tokenResponse, ServiceCache serviceCache = null)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

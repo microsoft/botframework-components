@@ -30,11 +30,6 @@ namespace EmailSkill.Utilities
         {
             var contactItems = EmailCommonStrings.ContactSeparator.Split(EmailCommonStrings.Split);
 
-            for (int i = 0; i < contactItems.Count(); i++)
-            {
-                contactItems[i] = contactItems[i].Trim();
-            }
-
             return contactItems;
         }
     }

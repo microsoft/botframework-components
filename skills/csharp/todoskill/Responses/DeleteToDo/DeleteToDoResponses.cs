@@ -20,5 +20,6 @@ namespace ToDoSkill.Responses.DeleteToDo
         public const string AskTaskIndexRetryForDelete = "AskTaskIndexRetryForDelete";
         public const string DeleteAnotherTaskPrompt = "DeleteAnotherTaskPrompt";
         public const string DeleteAnotherTaskConfirmFailed = "DeleteAnotherTaskConfirmFailed";
+        public const string TaskDeleted = "TaskDeleted";
     }
 }

@@ -25,6 +25,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Recognizers.Text;
 using ToDoSkill.Dialogs.Shared.Resources;
 using ToDoSkill.Models;
+using ToDoSkill.Responses.AddToDo;
+using ToDoSkill.Responses.DeleteToDo;
 using ToDoSkill.Responses.Shared;
 using ToDoSkill.Services;
 using ToDoSkill.Utilities;
@@ -461,7 +463,7 @@ namespace ToDoSkill.Dialogs
         {
             bool useFile = Channel.GetChannelId(turnContext) == Channels.Msteams;
 
-            var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.AfterTaskAdded, new
+            var activity = TemplateManager.GenerateActivityForLocale(AddToDoResponses.AfterTaskAdded, new
             {
                 TaskContent = taskContent,
                 ListType = listType,
@@ -511,7 +513,7 @@ namespace ToDoSkill.Dialogs
         {
             bool useFile = Channel.GetChannelId(turnContext) == Channels.Msteams;
 
-            var activity = TemplateManager.GenerateActivityForLocale(ToDoSharedResponses.TaskDeleted, new
+            var activity = TemplateManager.GenerateActivityForLocale(DeleteToDoResponses.TaskDeleted, new
             {
                 IsDeleteAll = isDeleteAll,
                 ListType = listType,

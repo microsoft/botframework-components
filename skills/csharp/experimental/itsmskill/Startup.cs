@@ -1,12 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
+using AdaptiveCards;
 using ITSMSkill.Adapters;
 using ITSMSkill.Bots;
 using ITSMSkill.Controllers.ServiceNow;
 using ITSMSkill.Dialogs;
+using ITSMSkill.Dialogs.Teams;
+using ITSMSkill.Models;
 using ITSMSkill.Models.ServiceNow;
+using ITSMSkill.Proactive.Subscription;
 using ITSMSkill.Responses.Knowledge;
 using ITSMSkill.Responses.Main;
 using ITSMSkill.Responses.Shared;
@@ -23,6 +28,7 @@ using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.BotFramework;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Solutions;
 using Microsoft.Bot.Solutions.Proactive;
@@ -97,8 +103,9 @@ namespace ITSMSkill
 
             // Configure storage
             // Uncomment the following line for local development without Cosmos Db
-            // services.AddSingleton<IStorage, MemoryStorage>();
+            // services.AddSingleton<IStorage>(new MemoryStorage());
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
+            services.AddSingleton<SubscriptionManager>();
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton(sp =>
@@ -120,16 +127,24 @@ namespace ITSMSkill
             // Configure service
             services.AddSingleton<IServiceManager>(new ServiceManager());
 
+            // Configure TeamsConnectorClient
+            ///// TODO: Check the ConnectorClient from TurnState
+            services.AddSingleton<IConnectorClient>(new ConnectorClient(new Uri(Configuration["TeamsTrustedUrl"]), new MicrosoftAppCredentials(settings.MicrosoftAppId, settings.MicrosoftAppPassword)));
+
+            // Configure TeamsUpdateActivity
+            services.AddSingleton<ITeamsActivity<AdaptiveCard>, TeamsUpdateAdaptiveCardActivity>();
+
             // Register dialogs
             services.AddTransient<CreateTicketDialog>();
             services.AddTransient<UpdateTicketDialog>();
             services.AddTransient<ShowTicketDialog>();
             services.AddTransient<CloseTicketDialog>();
             services.AddTransient<ShowKnowledgeDialog>();
+            services.AddTransient<CreateSubscriptionDialog>();
             services.AddTransient<MainDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure bot
             services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
