@@ -148,7 +148,7 @@
                       "$designer": {
                         "id": "VzAyWQ"
                       },
-                      "condition": "dialog.itemIndex + 1 < count(dialog.currentCandidates)",
+                      "condition": "dialog.itemIndex + 1 < min(count(dialog.currentCandidates), 5)",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
