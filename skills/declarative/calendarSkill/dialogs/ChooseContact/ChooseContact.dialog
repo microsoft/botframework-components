@@ -1,0 +1,593 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "p3EtNV",
+    "name": "ChooseContact",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "87FPxF"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "UlB5G0"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "3Indvn"
+          },
+          "condition": "dialog.pageIndex == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "WdoN7y"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.pageIndex",
+                  "value": "=0"
+                },
+                {
+                  "property": "dialog.itemIndex",
+                  "value": "=0"
+                },
+                {
+                  "property": "dialog.showCard",
+                  "value": "=true"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "l8gSz3"
+          },
+          "assignments": [
+            {
+              "property": "dialog.currentCandidates",
+              "value": "=subArray(dialog.contactsCandidate, dialog.pageIndex*5, min(dialog.pageIndex*5+10, count(dialog.contactsCandidate)))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "lcHmPx"
+          },
+          "condition": "dialog.showCard==true",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hC4qn6"
+              },
+              "activity": "${SendActivity_hC4qn6()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "dc3Yqo"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "alwaysPrompt": false,
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "select(dialog.currentCandidates, x, x.name + ': ' + x.email)",
+          "property": "dialog.attendeeChoice",
+          "outputFormat": "index",
+          "prompt": "${ChoiceInput_Prompt_dc3Yqo()}",
+          "style": "none",
+          "maxTurnCount": "=if(turn.interruptReason != null, 1, 3)",
+          "recognizerOptions": {
+            "recognizeOrdinals": true,
+            "recognizeNumbers": true
+          },
+          "allowInterruptions": "#ConfirmYes.Score>0.7 || #Next.Score>0.7 || #Previous.Score>0.7 || #Skip.Score>0.7 || #ShowMore.Score>0.7"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "cy14kJ"
+          },
+          "condition": "turn.interruptReason",
+          "cases": [
+            {
+              "value": "confirmYes",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "dkYP2v"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.newAttendeeItem.Name",
+                      "value": "=dialog.currentCandidates[dialog.itemIndex].name"
+                    },
+                    {
+                      "property": "dialog.newAttendeeItem.EmailAddresses",
+                      "value": "=json('[\"' + dialog.currentCandidates[dialog.itemIndex].email + '\"]')"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "next",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "JE6Hje"
+                  },
+                  "condition": "dialog.itemIndex + 1 < min(count(dialog.currentCandidates), 5) || dialog.pageIndex + 1 <= (count(dialog.contactsCandidate) - 1) / 5",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "VzAyWQ"
+                      },
+                      "condition": "dialog.itemIndex + 1 < count(dialog.currentCandidates)",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "P8db9B"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.itemIndex",
+                              "value": "=dialog.itemIndex+1"
+                            },
+                            {
+                              "property": "dialog.showCard",
+                              "value": "=false"
+                            }
+                          ]
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "NBSDex"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.pageIndex",
+                              "value": "=dialog.pageIndex+1"
+                            },
+                            {
+                              "property": "dialog.itemIndex",
+                              "value": "=0"
+                            },
+                            {
+                              "property": "dialog.showCard",
+                              "value": "=true"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "wsKyVb"
+                      },
+                      "assignments": [
+                        {
+                          "property": "turn.interruptReason",
+                          "value": "=null"
+                        },
+                        {
+                          "property": "dialog.showCard",
+                          "value": "=false"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "ZGbECG"
+                      },
+                      "activity": "${SendActivity_ZGbECG()}"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "1MoDRV"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "contactsCandidate": "=dialog.contactsCandidate",
+                        "pageIndex": "=dialog.pageIndex",
+                        "itemIndex": "=dialog.itemIndex",
+                        "showCard": "=dialog.showCard",
+                        "showPromptReason": "=dialog.showPromptReason",
+                        "attendeeName": "=dialog.attendeeName"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "previous",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "d97rjQ"
+                  },
+                  "condition": "dialog.itemIndex > 0 || dialog.pageIndex > 0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "YSvwH1"
+                      },
+                      "condition": "dialog.itemIndex > 0",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "n2NTGm"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.itemIndex",
+                              "value": "=dialog.itemIndex-1"
+                            },
+                            {
+                              "property": "dialog.showCard",
+                              "value": "=false"
+                            }
+                          ]
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "PgUM3l"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.pageIndex",
+                              "value": "=dialog.pageIndex-1"
+                            },
+                            {
+                              "property": "dialog.itemIndex",
+                              "value": "=4"
+                            },
+                            {
+                              "property": "dialog.showCard",
+                              "value": "=true"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "RENDJ9"
+                      },
+                      "assignments": [
+                        {
+                          "property": "turn.interruptReason",
+                          "value": "=null"
+                        },
+                        {
+                          "property": "dialog.showCard",
+                          "value": "=false"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "kgswlA"
+                      },
+                      "activity": "${SendActivity_kgswlA()}"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "DTJkmh"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "contactsCandidate": "=dialog.contactsCandidate",
+                        "pageIndex": "=dialog.pageIndex",
+                        "itemIndex": "=dialog.itemIndex",
+                        "showCard": "=dialog.showCard",
+                        "showPromptReason": "=dialog.showPromptReason",
+                        "attendeeName": "=dialog.attendeeName"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "skip",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "9YLIKL"
+                  },
+                  "value": "=null"
+                }
+              ]
+            },
+            {
+              "value": "showMore",
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "5ZzTP9"
+                  },
+                  "condition": "dialog.pageIndex + 1 <= (count(dialog.contactsCandidate) - 1) / 5",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "SZvapW"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.pageIndex",
+                          "value": "=dialog.pageIndex+1"
+                        },
+                        {
+                          "property": "dialog.itemIndex",
+                          "value": "=0"
+                        }
+                      ]
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "y4t1NS"
+                      },
+                      "property": "turn.interruptReason",
+                      "value": "=null"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "BlzeaR"
+                      },
+                      "activity": "${SendActivity_BlzeaR()}"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "HDwGz2"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "contactsCandidate": "=dialog.contactsCandidate",
+                        "pageIndex": "=dialog.pageIndex",
+                        "itemIndex": "=dialog.itemIndex",
+                        "showCard": "=dialog.showCard",
+                        "showPromptReason": "=dialog.showPromptReason",
+                        "attendeeName": "=dialog.attendeeName"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JqTRFz"
+              },
+              "condition": "dialog.attendeeChoice != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "54yugo"
+                  },
+                  "activity": "${SendActivity_54yugo()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "qk8RRv"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.newAttendeeItem.Name",
+                      "value": "=dialog.currentCandidates[dialog.attendeeChoice].name"
+                    },
+                    {
+                      "property": "dialog.newAttendeeItem.EmailAddresses",
+                      "value": "=json('[\"' + dialog.currentCandidates[dialog.attendeeChoice].email + '\"]')"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Pnus7M"
+          },
+          "condition": "dialog.newAttendeeItem!=null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "d1quHK"
+              },
+              "value": "=dialog.newAttendeeItem"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "tmeFDE"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.showPromptReason",
+                  "value": "=turn.interruptReason"
+                },
+                {
+                  "property": "turn.interruptReason",
+                  "value": "=null"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "FuT3Dr"
+              },
+              "activityProcessed": true,
+              "options": {
+                "contactsCandidate": "=dialog.contactsCandidate",
+                "pageIndex": "=dialog.pageIndex",
+                "itemIndex": "=dialog.itemIndex",
+                "showCard": "=dialog.showCard",
+                "showPromptReason": "=dialog.showPromptReason",
+                "attendeeName": "=dialog.attendeeName"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gGMQga",
+        "name": "ConfirmYes"
+      },
+      "intent": "ConfirmYes",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Dfe8xK"
+          },
+          "property": "turn.interruptReason",
+          "value": "confirmYes"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "VOQmLF",
+        "name": "Next"
+      },
+      "intent": "Next",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "cuatsB"
+          },
+          "property": "turn.interruptReason",
+          "value": "next"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "vvcHVX",
+        "name": "Skip"
+      },
+      "intent": "Skip",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "DmeGT9"
+          },
+          "property": "turn.interruptReason",
+          "value": "skip"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "N66BW0",
+        "name": "Previous"
+      },
+      "intent": "Previous",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "toILtc"
+          },
+          "property": "turn.interruptReason",
+          "value": "previous"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "vYhEc7",
+        "name": "ShowMore"
+      },
+      "intent": "ShowMore",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "qwRAZJ"
+          },
+          "property": "turn.interruptReason",
+          "value": "showMore"
+        }
+      ]
+    }
+  ],
+  "generator": "ChooseContact.lg",
+  "recognizer": "ChooseContact.lu.qna",
+  "id": "ChooseContact"
+}
