@@ -64,6 +64,25 @@
           ]
         },
         {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "JHGQWV"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.currentCandidates",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lrFTZz"
+              },
+              "property": "dialog.currentCandidates[dialog.foreach.index].index",
+              "value": "=dialog.foreach.index+1"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "lcHmPx"
