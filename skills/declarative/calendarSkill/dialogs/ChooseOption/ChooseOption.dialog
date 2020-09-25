@@ -122,7 +122,7 @@
             "recognizeOrdinals": true,
             "recognizeNumbers": true
           },
-          "allowInterruptions": "#ConfirmYes.Score>0.7 || #Next.Score>0.7 || #Previous.Score>0.7 || #Skip.Score>0.7 || #ShowMore.Score>0.7"
+          "allowInterruptions": "#ConfirmYes.Score>0.7 || #Next.Score>0.7 || #Previous.Score>0.7 || #Skip.Score>0.7 || #ShowMore.Score>0.7 || #_Interruption.Score >= 0.7"
         },
         {
           "$kind": "Microsoft.IfCondition",
