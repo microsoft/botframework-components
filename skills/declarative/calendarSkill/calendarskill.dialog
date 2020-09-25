@@ -180,6 +180,14 @@
       "intent": "GetEventTitle",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "pisqts"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "9n2omv"
@@ -195,7 +203,7 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "query": "=dialog.query"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -265,6 +273,14 @@
       "intent": "GetEventAttendees",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "28KIFQ"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "hUatMN"
@@ -280,7 +296,7 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "query": "=dialog.query"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -350,6 +366,14 @@
       "intent": "GetEventTime",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "cSbhTU"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "coTHgu"
@@ -365,7 +389,7 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "query": "=dialog.query"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -435,6 +459,14 @@
       "intent": "GetEventLocation",
       "actions": [
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "bZQs2Q"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "qQpGas"
@@ -450,7 +482,7 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=turn.activity.text"
+            "query": "=dialog.query"
           },
           "resultProperty": "dialog.datetime"
         },

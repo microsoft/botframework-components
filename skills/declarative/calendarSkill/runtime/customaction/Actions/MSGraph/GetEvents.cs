@@ -205,5 +205,49 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
         }
+
+        private List<object> ParseEvents(DateTime currentDateTime, List<Event> events)
+        {
+            var eventsList = new List<object>();
+            var i = 0;
+
+            foreach (var ev in events)
+            {
+                var start = DateTime.Parse(ev.Start.DateTime);
+                var end = DateTime.Parse(ev.End.DateTime);
+                var duration = end.Subtract(start);
+                var isCurrentEvent = false;
+
+                if (start <= currentDateTime && currentDateTime <= end
+                    || start.AddMinutes(-30) <= currentDateTime && currentDateTime <= start)
+                {
+                    // If event is currently ongoing, or will start in the next 30 minutes
+                    isCurrentEvent = true;
+                }
+
+                eventsList.Add(new
+                {
+                    Id = i++,
+                    ev.Subject,
+                    ev.Start,
+                    ev.End,
+                    ev.Attendees,
+                    ev.IsOnlineMeeting,
+                    ev.OnlineMeeting,
+                    Description = ev.BodyPreview,
+                    Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
+                    DurationDays = duration.Days,
+                    DurationHours = duration.Hours,
+                    DurationMinutes = duration.Minutes,
+                    isRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false,
+                    isCurrentEvent,
+                    ev.IsOrganizer,
+                    ev.ResponseStatus.Response,
+                    ev.Organizer
+                });
+            }
+
+            return eventsList;
+        }
     }
 }

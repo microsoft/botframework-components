@@ -2,10 +2,10 @@
 [import](SearchEventsDialog.lg)
 
 # ChooseResponseText(event)
-- Oke, I’ve found multiple events that match your question. Which one would you like to choose?
+- Ok, I’ve found multiple events that match your question. Which one would you like to choose?
 
 # ChooseResponseTextBK(event)
-- Oke, I’ve found multiple events that match your question. First event is on  ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 3)} Want to take action on this event?
+- Ok, I’ve found multiple events that match your question. First event is on  ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 3)} Want to take action on this event?
 
 # TextInput_Prompt_8RC4Wm()
 [Activity
@@ -13,9 +13,6 @@
     attachments = ${json(FindMeetingCard(dialog.page))}
     attachmentLayout = carousel
 ]
-
-
-
 
 # SendActivity_4K1cBW()
 - Sure.

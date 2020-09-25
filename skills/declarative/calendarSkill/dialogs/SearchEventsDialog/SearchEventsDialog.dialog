@@ -115,19 +115,20 @@
           "$designer": {
             "id": "hmq2AT"
           },
-          "condition": "dialog.events != null && count(dialog.events) > 0",
-          "elseActions": [
+          "condition": "dialog.events == null || count(dialog.events) == 0",
+          "elseActions": [],
+          "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "l8Fufv"
+                "id": "hs2oIq"
               },
               "condition": "dialog.turnCount == 0",
               "actions": [
                 {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
-                    "id": "jOlhgq"
+                    "id": "mbfULO"
                   },
                   "activityProcessed": true,
                   "options": {
@@ -141,37 +142,28 @@
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "KDD3hl"
+                    "id": "wzzeob"
                   }
                 }
               ]
             }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.Foreach",
-              "$designer": {
-                "id": "JFoghi"
-              },
-              "index": "dialog.foreach.index",
-              "value": "dialog.foreach.value",
-              "itemsProperty": "dialog.events",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "M5nVxN"
-                  },
-                  "assignments": [
-                    {
-                      "property": "dialog.events[dialog.foreach.index].Location",
-                      "value": "= dialog.events[dialog.foreach.index].Location.DisplayName"
-                    }
-                  ]
-                }
-              ]
-            }
           ]
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.SortEvents",
+          "$designer": {
+            "id": "touMj7"
+          },
+          "timeZoneProperty": "=user.workingHours.timeZone.name",
+          "groupByDateProperty": false,
+          "resultProperty": "dialog.events",
+          "inputProperty": "= dialog.events"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "bFk1RU"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",

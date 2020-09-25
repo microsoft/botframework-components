@@ -7,7 +7,8 @@
   "required": [
     "token",
     "inputProperty",
-    "timeZoneProperty"
+    "timeZoneProperty",
+    "groupProperty"
   ],
   "properties": {
     "id": {
@@ -31,6 +32,12 @@
       "$ref": "schema:#/definitions/valueExpression",
       "title": "TimeZone",
       "description": "Time zone.",
+      "examples": []
+    },
+    "groupByDateProperty": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Group by date property",
+      "description": "Group the results by date or not.",
       "examples": []
     }
   }
