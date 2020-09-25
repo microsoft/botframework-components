@@ -16,7 +16,7 @@
 
 # SendActivity_hC4qn6()
 [Activity
-	attachments = ${json(CandidatesListCard(dialog.currentCandidates, dialog.options.cardHeader, dialog.options.cardIcon, dialog.options.itemCardTemplate))}
+	attachments = ${json(CandidatesListCard(dialog.currentCandidates, dialog.options.cardHeader, dialog.options.cardIcon, dialog.options.itemCardTemplate, dialog.options.cardActionTemplate))}
 ]
 # ConfirmInput_Prompt_iPEfzT()
 - That was it, you are at the end of the list. Do you want to start a new search for a contact?
