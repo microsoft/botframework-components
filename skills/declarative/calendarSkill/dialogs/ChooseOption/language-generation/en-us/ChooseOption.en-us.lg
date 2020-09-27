@@ -1,4 +1,5 @@
 [import](common.lg)
+[import](GetContactDialog.lg)
 
 # ChoiceInput_Prompt_dc3Yqo()
 - SWITCH: ${ dialog.showPromptReason }
@@ -24,30 +25,3 @@
 - Sure, I'll continue with the ${addOrdinal(dialog.choiceResult+1)} option.
 - Got it. I'll move forward with the ${addOrdinal(dialog.choiceResult+1)}  one.
 - OK. The ${addOrdinal(dialog.choiceResult+1)}  option. I'll use that one.
-
-
-
-# MultipleContactsPrompt()
-- I’ve found multiple ${dialog.options.attendeeName}’s. The first is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Would you like to select this contact?
-- There are multiple ${dialog.options.attendeeName}'s. The first on the list is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right contact?
-- I found more than one ${dialog.options.attendeeName}'s. Do you want to invite ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}?
-- Uh oh. I've found multiple ${dialog.options.attendeeName}'s. The first I see is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right attendee?
-- There seem to be a few ${dialog.options.attendeeName}'s. Is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email} correct?
-
-# MultipleContactsReromptNext()
-- OK. The next contact is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right contact?
-- Another contact is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}, want to include this contact in the invite?
-- How about ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email} - Would you like to invite them?
-- No problem. The next ${dialog.options.attendeeName} is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the correct attendee?
-
-# MultipleContactsReromptPrevious()
-- Sure. The previous option is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Do you want to select this contact?
-- My last suggestion was ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Is that correct?
-- ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Do you want to continue with this contact?
-
-# MultipleContactsReromptShowMore()
-- I found more options. The first is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Do you like to select this contact?
-- I found additional contacts. The next suggestion is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Should I continue with this contact?
-- OK. The next person I found is ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Is this correct?
-- What about ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email} - Are they the correct person?
-- Sure. Next up, I see ${dialog.currentCandidates[dialog.itemIndex].name}, ${dialog.currentCandidates[dialog.itemIndex].email}. Are the who you're looking for?
