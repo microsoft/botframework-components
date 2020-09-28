@@ -1,0 +1,901 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "rVuaqp",
+    "name": "CreateEventDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "0s9SeX"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "lmcSBc"
+          },
+          "name": "CreateEventDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Q13iry"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots.personName",
+              "value": "=coalesce(if(@personName != null, json('[\"' + @personName + '\"]'), null), $slots.personName)"
+            },
+            {
+              "property": "dialog.slots.title",
+              "value": "=coalesce(@Title, $slots.title)"
+            },
+            {
+              "property": "dialog.slots.dateTime",
+              "value": "=coalesce(@datetime, $slots.DateTime)"
+            },
+            {
+              "property": "dialog.slots.location",
+              "value": "=coalesce(@Location, $slots.Location)"
+            },
+            {
+              "property": "dialog.slots.duration",
+              "value": "=coalesce(@Duration, $slots.Duration)"
+            },
+            {
+              "property": "dialog.slots.email",
+              "value": "=coalesce(if(@email != null, json('[\"' +@email + '\"]'), null), $slots.email)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "nilKKC"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "NjXYF2"
+          },
+          "condition": "dialog.slots.dateTime != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "2efDSo"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=turn.activity.text"
+              },
+              "resultProperty": "dialog.resolveDateTimeResult"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "L2c2hK"
+              },
+              "condition": "dialog.resolveDateTimeResult.type=='duration'",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "FLAIWp"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.slots.duration",
+                      "value": "=int(dialog.resolveDateTimeResult.value)/60"
+                    },
+                    {
+                      "property": "dialog.resolveDateTimeResult",
+                      "value": "=null"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3AJeXK"
+          }
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "8FlYLk"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_8FlYLk()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "dialog.slots.title",
+          "outputFormat": "=coalesce(@Title, this.value)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cMK8xO"
+          },
+          "condition": "dialog.slots.attendees==null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "UVPL3Z"
+              },
+              "activityProcessed": true,
+              "options": {
+                "emailArray": "=dialog.slots.email",
+                "personNameArray": "=dialog.slots.personName"
+              },
+              "dialog": "GetContactDialog",
+              "resultProperty": "dialog.slots.attendees"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Cap22q"
+          },
+          "name": "after get contact"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "gP9mXD"
+          },
+          "condition": "dialog.resolveDateTimeResult == null && count(dialog.slots.attendees) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
+              "$designer": {
+                "id": "GvPzkT"
+              },
+              "resultProperty": "dialog.findMeetingTimesResult",
+              "token": "=user.token.token",
+              "attendeesProperty": "=dialog.slots.attendees",
+              "durationProperty": "=int(coalesce(dialog.slots.duration, settings.defaultValue.duration))",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "mqhO6z"
+              },
+              "value": "=dialog.findMeetingTimesResult"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "eBRWDd"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "dialog.findMeetingTimesResult",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "aGp49i"
+                  },
+                  "property": "dialog.findMeetingTimesResult[dialog.foreach.index].index",
+                  "value": "=dialog.foreach.index+1"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "s2ahRy"
+              }
+            },
+            {
+              "$kind": "Microsoft.SwitchCondition",
+              "$designer": {
+                "id": "CdaTcM"
+              },
+              "condition": "count(dialog.findMeetingTimesResult)",
+              "cases": [
+                {
+                  "value": "0"
+                },
+                {
+                  "value": "1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "wFWmPX"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": false,
+                      "prompt": "${ConfirmInput_Prompt_wFWmPX()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "choiceOptions": {
+                        "includeNumbers": true
+                      },
+                      "property": "dialog.timeSuggestionConfirm"
+                    }
+                  ]
+                },
+                {
+                  "value": "2",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ChoiceInput",
+                      "$designer": {
+                        "id": "0FImIx"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": false,
+                      "prompt": "${ChoiceInput_Prompt_0FImIx()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "property": "dialog.timeSuggestionChoice",
+                      "choices": "dialog.findMeetingTimesResult"
+                    }
+                  ]
+                }
+              ],
+              "default": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "GlIvod"
+                  },
+                  "activity": "${SendActivity_GlIvod()}"
+                },
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "fqtk4h"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "alwaysPrompt": false,
+                  "prompt": "${ChoiceInput_Prompt_fqtk4h()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "property": "dialog.timeSuggestionChoice",
+                  "choices": "select(dialog.findMeetingTimesResult, x, x.Start)",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true,
+                    "recognizeNumbers": true
+                  },
+                  "maxTurnCount": "=if(turn.skip!=true, 3, 1)",
+                  "style": "none",
+                  "outputFormat": "index",
+                  "allowInterruptions": "=#SkipSlot.Score>0.7 || #ChangeDuration.Score>0.7"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "bMrUBx"
+              },
+              "name": "after time suggestion choice"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "4s7yq3"
+              },
+              "condition": "dialog.timeSuggestionChoice != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "IceJis"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.slots.startDateTime",
+                      "value": "=dialog.findMeetingTimesResult[dialog.timeSuggestionChoice].Start"
+                    },
+                    {
+                      "property": "dialog.slots.endDateTime",
+                      "value": "=dialog.findMeetingTimesResult[dialog.timeSuggestionChoice].End"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "lWCXDJ"
+          },
+          "condition": "dialog.slots.startDateTime == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "OFaiiP"
+              },
+              "condition": "dialog.resolveDateTimeResult==null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DateTimeInput",
+                  "$designer": {
+                    "id": "sHR6f0"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${DateTimeInput_Prompt_sHR6f0()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "dialog.slots.dateTime",
+                  "validations": []
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "6Sd0on"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ResolveDateTimeDialog",
+                  "options": {
+                    "query": "=turn.activity.text"
+                  },
+                  "resultProperty": "dialog.resolveDateTimeResult"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SwitchCondition",
+              "$designer": {
+                "id": "i7Cs4I"
+              },
+              "condition": "dialog.resolveDateTimeResult.type",
+              "cases": [
+                {
+                  "value": "date",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.DateTimeInput",
+                      "$designer": {
+                        "id": "E1Ybcg"
+                      },
+                      "disabled": false,
+                      "maxTurnCount": 3,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": false,
+                      "prompt": "${DateTimeInput_Prompt_E1Ybcg()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "property": "dialog.time"
+                    },
+                    {
+                      "$kind": "Microsoft.BeginDialog",
+                      "$designer": {
+                        "id": "HxBSRx"
+                      },
+                      "activityProcessed": true,
+                      "dialog": "ResolveDateTimeDialog",
+                      "options": {
+                        "query": "=turn.activity.text"
+                      },
+                      "resultProperty": "dialog.resolveTimeResult"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "oVpesI"
+                      },
+                      "property": "dialog.slots.startDateTime",
+                      "value": "=formatTicks(ticks(startOfDay(formatDateTime(dialog.resolveDateTimeResult.value)))+(ticks(formatDateTime(dialog.resolveTimeResult.value))-ticks(startOfDay(formatDateTime(dialog.resolveTimeResult.value))))) "
+                    }
+                  ]
+                },
+                {
+                  "value": "time",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "h1WCRF"
+                      },
+                      "property": "dialog.slots.startDateTime",
+                      "value": "=formatDateTime(dialog.resolveDateTimeResult.value)"
+                    }
+                  ]
+                },
+                {
+                  "value": "datetime",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "Lcqznk"
+                      },
+                      "property": "dialog.slots.startDateTime",
+                      "value": "=formatDateTime(dialog.resolveDateTimeResult.value)"
+                    }
+                  ]
+                },
+                {
+                  "value": "daterange",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "1BNhBM"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.slots.startDateTime",
+                          "value": "=formatDateTime(dialog.resolveDateTimeResult.start)"
+                        },
+                        {
+                          "property": "dialog.slots.endDateTime",
+                          "value": "=addDays(formatDateTime(dialog.resolveDateTimeResult.end), 1)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "timerange",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "2s9KCQ"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.slots.startDateTime",
+                          "value": "=formatDateTime(dialog.resolveDateTimeResult.start)"
+                        },
+                        {
+                          "property": "dialog.slots.endDateTime",
+                          "value": "=formatDateTime(dialog.resolveDateTimeResult.end)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "datetimerange",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "NLSXoU"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.slots.startDateTime",
+                          "value": "=formatDateTime(dialog.resolveDateTimeResult.start)"
+                        },
+                        {
+                          "property": "dialog.slots.endDateTime",
+                          "value": "=formatDateTime(dialog.resolveDateTimeResult.end)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "default": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "4uGxR9"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zVdMLY"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OSPzAL"
+          },
+          "condition": "dialog.slots.endDateTime == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "UumPxM"
+              },
+              "property": "dialog.slots.endDateTime",
+              "value": "=addMinutes(formatDateTime(dialog.slots.startDateTime), int(settings.defaultValue.duration))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2zLqCD"
+          },
+          "condition": "count(dialog.slots.attendees) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "jrArsI"
+              },
+              "property": "dialog.slots.isTeamsMeeting",
+              "value": "=true"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Nd5hYw"
+              },
+              "activity": "${SendActivity_Nd5hYw()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "71EXys"
+          },
+          "condition": "dialog.slots.noLocation!=true && dialog.slots.location == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "pVUn2o"
+              },
+              "disabled": false,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_pVUn2o()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.slots.location",
+              "allowInterruptions": "=#SkipSlot.Score>0.7",
+              "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Htr5uH"
+              },
+              "condition": "turn.skip == true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "rge2qN"
+                  },
+                  "property": "dialog.slots.noLocation",
+                  "value": "=true"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "aB3980"
+              },
+              "condition": "dialog.slots.noLocation == true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ConfirmInput",
+                  "$designer": {
+                    "id": "O439cC"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ConfirmInput_Prompt_O439cC()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or "
+                  },
+                  "property": "dialog.noLocationConfirm"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "WcyqPR"
+                  },
+                  "condition": "dialog.noLocationConfirm == false",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "tz78bO"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "slots": "=dialog.slots"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "elseActions": []
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "yw07CI"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "e6RUQo"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newEvent.subject",
+              "value": "=dialog.slots.title"
+            },
+            {
+              "property": "dialog.newEvent.start.dateTime",
+              "value": "=dialog.slots.startDateTime"
+            },
+            {
+              "property": "dialog.newEvent.start.timeZone",
+              "value": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "property": "dialog.newEvent.end.dateTime",
+              "value": "=dialog.slots.endDateTime"
+            },
+            {
+              "property": "dialog.newEvent.end.timeZone",
+              "value": "=user.settings.mailboxSettings.timeZone"
+            },
+            {
+              "property": "dialog.newEvent.attendees",
+              "value": "=dialog.slots.attendees"
+            },
+            {
+              "property": "dialog.newEvent.isOnlineMeeting",
+              "value": "=dialog.slots.isTeamsMeeting"
+            },
+            {
+              "property": "dialog.newEvent.location",
+              "value": "=if(dialog.slots.noLocation == true, '', dialog.slots.location)"
+            },
+            {
+              "property": "dialog.newEvent.response",
+              "value": "organizer"
+            },
+            {
+              "property": "dialog.newEvent.description",
+              "value": "dialog.slots.desciption"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ACIMpA"
+          }
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "eaLZYE"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_eaLZYE()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true
+          },
+          "property": "dialog.createConfirmResult"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "rbSpDd"
+          },
+          "condition": "dialog.createConfirmResult == true",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.CreateEvent",
+              "$designer": {
+                "id": "J3nxXM"
+              },
+              "resultProperty": "dialog.createEventResult",
+              "token": "=user.token.token",
+              "titleProperty": "=dialog.slots.title",
+              "descriptionProperty": "=dialog.slots.desciption",
+              "startProperty": "=dialog.slots.startDateTime",
+              "endProperty": "=dialog.slots.endDateTime",
+              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "locationProperty": "=dialog.slots.location",
+              "attendeesProperty": "=dialog.slots.attendees",
+              "isOnlineMeetingProperty": "=dialog.slots.isTeamsMeeting"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "4DvAjt"
+              },
+              "activity": "${SendActivity_4DvAjt()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "V1zuna"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "AEkwfF"
+          },
+          "condition": "dialog.createEventResult!=null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "zmBQxY"
+              },
+              "activity": "${SendActivity_zmBQxY()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "3BjjI8"
+              },
+              "activity": "${SendActivity_3BjjI8()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "DPpb4X",
+        "name": "SkipSlot"
+      },
+      "intent": "SkipSlot",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "XiLZBh"
+          },
+          "property": "turn.skip",
+          "value": "=true"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "96c544",
+        "name": "ChangeDuration"
+      },
+      "intent": "ChangeDuration",
+      "actions": [
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "gfBnA8"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${DateTimeInput_Prompt_gfBnA8()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "dialog.newDuration",
+          "value": "= turn.activity.text",
+          "outputFormat": "= this.value[0].Value"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Gh0GYg"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "2mEmR0"
+          },
+          "property": "dialog.slots.duration",
+          "value": "=int(dialog.newDuration)/60"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8O7SdX"
+          }
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "1NS8NE"
+          },
+          "activityProcessed": true,
+          "options": {
+            "slots": "=dialog.slots"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "CreateEventDialog.lg",
+  "recognizer": "CreateEventDialog.lu.qna",
+  "id": "CreateEventDialog"
+}

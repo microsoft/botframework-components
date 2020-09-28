@@ -81,5 +81,6 @@
       ]
     }
   ],
-  "generator": "SearchEvents.lg"
+  "generator": "SearchEvents.lg",
+  "id": "SearchEvents"
 }

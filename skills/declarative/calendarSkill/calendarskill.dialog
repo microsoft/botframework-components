@@ -164,9 +164,34 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yG4sCr"
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xPczf1"
+          },
+          "name": "CreateEventTrigger"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "oD8szu"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "calendarskill.lg",
-  "recognizer": "calendarskill.lu"
+  "recognizer": "calendarskill.lu.qna",
+  "id": "calendarskill"
 }

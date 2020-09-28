@@ -145,5 +145,7 @@
       ]
     }
   ],
-  "generator": "GetEventsByDateDialog.lg"
+  "generator": "GetEventsByDateDialog.lg",
+  "id": "GetEventsByDateDialog",
+  "recognizer": "GetEventsByDateDialog.lu.qna"
 }

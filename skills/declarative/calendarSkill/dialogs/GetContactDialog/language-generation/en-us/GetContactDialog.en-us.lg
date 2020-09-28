@@ -1,0 +1,87 @@
+[import](common.lg)
+> !# @Namespace = GetContact
+> !# @Exports = CardHeader, CardIcon, MultipleContactsPrompt, MultipleContactsReromptNext, MultipleContactsReromptPrevious, MultipleContactsReromptShowMore
+
+# CardHeader()
+- Attendees
+
+# CardIcon()
+- data:image/svg+xml,%3Csvg width='28' height='29' viewBox='0 0 28 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22.9648 10.1514C23.5996 10.4736 24.1709 10.874 24.6787 11.3525C25.1963 11.8213 25.6357 12.3486 25.9971 12.9346C26.3584 13.5107 26.6367 14.1357 26.832 14.8096C27.0273 15.4736 27.125 16.1621 27.125 16.875H25.25C25.25 16.1035 25.0986 15.376 24.7959 14.6924C24.5029 14.0088 24.1025 13.4131 23.5947 12.9053C23.0869 12.3975 22.4912 11.9971 21.8076 11.7041C21.124 11.4014 20.3965 11.25 19.625 11.25C18.8535 11.25 18.126 11.4014 17.4424 11.7041C16.7588 11.9971 16.1631 12.3975 15.6553 12.9053C15.1475 13.4131 14.7422 14.0088 14.4395 14.6924C14.1465 15.376 14 16.1035 14 16.875C14 17.7637 13.7949 18.6084 13.3848 19.4092C12.9844 20.21 12.4277 20.874 11.7148 21.4014C12.3496 21.7236 12.9209 22.124 13.4287 22.6025C13.9463 23.0713 14.3857 23.5986 14.7471 24.1846C15.1084 24.7607 15.3867 25.3857 15.582 26.0596C15.7773 26.7236 15.875 27.4121 15.875 28.125H14C14 27.3535 13.8486 26.626 13.5459 25.9424C13.2529 25.2588 12.8525 24.6631 12.3447 24.1553C11.8369 23.6475 11.2412 23.2471 10.5576 22.9541C9.87402 22.6514 9.14648 22.5 8.375 22.5C7.60352 22.5 6.87598 22.6514 6.19238 22.9541C5.50879 23.2471 4.91309 23.6475 4.40527 24.1553C3.89746 24.6631 3.49219 25.2588 3.18945 25.9424C2.89648 26.626 2.75 27.3535 2.75 28.125H0.875C0.875 27.4121 0.972656 26.7236 1.16797 26.0596C1.36328 25.3857 1.6416 24.7607 2.00293 24.1846C2.36426 23.5986 2.79883 23.0713 3.30664 22.6025C3.82422 22.124 4.40039 21.7236 5.03516 21.4014C4.32227 20.874 3.76074 20.21 3.35059 19.4092C2.9502 18.6084 2.75 17.7637 2.75 16.875C2.75 16.1035 2.89648 15.376 3.18945 14.6924C3.49219 14.0088 3.89746 13.4131 4.40527 12.9053C4.91309 12.3975 5.50879 11.9971 6.19238 11.7041C6.87598 11.4014 7.60352 11.25 8.375 11.25C9.26367 11.25 10.1084 11.4551 10.9092 11.8652C11.71 12.2656 12.374 12.8223 12.9014 13.5352C13.2725 12.8027 13.7461 12.1484 14.3223 11.5723C14.8984 10.9961 15.5527 10.5225 16.2852 10.1514C15.5723 9.62402 15.0107 8.95996 14.6006 8.15918C14.2002 7.3584 14 6.51367 14 5.625C14 4.85352 14.1465 4.12598 14.4395 3.44238C14.7422 2.75879 15.1475 2.16309 15.6553 1.65527C16.1631 1.14746 16.7588 0.74707 17.4424 0.454102C18.126 0.151367 18.8535 0 19.625 0C20.3965 0 21.124 0.151367 21.8076 0.454102C22.4912 0.74707 23.0869 1.14746 23.5947 1.65527C24.1025 2.16309 24.5029 2.75879 24.7959 3.44238C25.0986 4.12598 25.25 4.85352 25.25 5.625C25.25 6.51367 25.0449 7.3584 24.6348 8.15918C24.2344 8.95996 23.6777 9.62402 22.9648 10.1514ZM8.375 20.625C8.88281 20.625 9.36621 20.5273 9.8252 20.332C10.2842 20.127 10.6797 19.8584 11.0117 19.5264C11.3535 19.1846 11.6221 18.7891 11.8174 18.3398C12.0225 17.8809 12.125 17.3926 12.125 16.875C12.125 16.3672 12.0225 15.8838 11.8174 15.4248C11.6221 14.9658 11.3535 14.5703 11.0117 14.2383C10.6797 13.8965 10.2842 13.6279 9.8252 13.4326C9.36621 13.2275 8.88281 13.125 8.375 13.125C7.85742 13.125 7.36914 13.2275 6.91016 13.4326C6.46094 13.6279 6.06543 13.8965 5.72363 14.2383C5.3916 14.5703 5.12305 14.9658 4.91797 15.4248C4.72266 15.8838 4.625 16.3672 4.625 16.875C4.625 17.3926 4.72266 17.8809 4.91797 18.3398C5.12305 18.7891 5.3916 19.1846 5.72363 19.5264C6.06543 19.8584 6.46094 20.127 6.91016 20.332C7.36914 20.5273 7.85742 20.625 8.375 20.625ZM15.875 5.625C15.875 6.14258 15.9727 6.63086 16.168 7.08984C16.373 7.53906 16.6416 7.93457 16.9736 8.27637C17.3154 8.6084 17.7109 8.87695 18.1602 9.08203C18.6191 9.27734 19.1074 9.375 19.625 9.375C20.1328 9.375 20.6162 9.27734 21.0752 9.08203C21.5342 8.87695 21.9297 8.6084 22.2617 8.27637C22.6035 7.93457 22.8721 7.53906 23.0674 7.08984C23.2725 6.63086 23.375 6.14258 23.375 5.625C23.375 5.11719 23.2725 4.63379 23.0674 4.1748C22.8721 3.71582 22.6035 3.32031 22.2617 2.98828C21.9297 2.64648 21.5342 2.37793 21.0752 2.18262C20.6162 1.97754 20.1328 1.875 19.625 1.875C19.1074 1.875 18.6191 1.97754 18.1602 2.18262C17.7109 2.37793 17.3154 2.64648 16.9736 2.98828C16.6416 3.32031 16.373 3.71582 16.168 4.1748C15.9727 4.63379 15.875 5.11719 15.875 5.625Z' fill='%23333333'/%3E%3C/svg%3E%0A
+
+# SendActivity_UrRzOu()
+[Activity
+    text = I could not find the exact attendee you were looking for.
+    attachments = ${json(NoAttendeeCard())}
+]
+
+# SendActivity_uh2hJU()
+- If you want to try again, just call out the firstname and or surname again.
+# TextInput_Prompt_wIEu2k()
+- Who will join?
+- Who do you want to invite?
+- What attendees do you want to add?
+# SendActivity_vCzsEJ()
+- Sure, I'll continue with ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]}.
+- Got it. I'll move forward with ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]}.
+- OK. I'll include ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]} as attendee.
+
+# SendActivity_mD3TcZ()
+- If you want to try again, just call out the firstname and or surname again.
+# SendActivity_hdAS3R()
+-IF: ${ count(dialog.attendees) <= 3 }
+    - Your attendees have been added: ${ShowContact1()}.
+    - ${ShowContact3()} were added.
+    - Sure, ${ShowContact2()} will be invited.
+- ELSE:
+    - Your attendees have been added: ${ShowContact1()}.
+    - Sure, ${ShowContact2()} will be invited.
+
+# ShowContact1()
+- IF: ${ count(dialog.attendees) <= 3 }
+    - ${join(select(dialog.attendees, x, x.name), ', ')}
+- ELSE:
+    - ${join(select(dialog.attendees, x, x.name), ', ')} and ${count(dialog.attendees) - 3} more
+
+ # ShowContact2()
+- IF: ${ count(dialog.attendees) <= 2 }
+    - ${join(select(dialog.attendees, x, x.name + ' ' + x.emailAddresses[0]), ', ')}
+- ELSE:
+    - ${join(select(dialog.attendees, x, x.name + ' ' + x.emailAddresses[0]), ', ')} and ${count(dialog.attendees) - 2} othters
+    
+ # ShowContact3()
+- IF: ${ count(dialog.attendees) == 2 }
+    - ${dialog.attendees[0].name} at ${dialog.attendees[0].emailAddresses[0]} and ${dialog.attendees[1].name} at ${dialog.attendees[1].emailAddresses[0]}
+- ELSE:
+    - ${dialog.attendees[0].name} at ${dialog.attendees[0].emailAddresses[0]}, ${dialog.attendees[1].name} at ${dialog.attendees[1].emailAddresses[0]}, and ${dialog.attendees[2].name} at ${dialog.attendees[2].emailAddresses[0]}
+# ConfirmInput_Prompt_eQMqZH()
+- Want to include anyone else?
+- Want to add another attendee?
+- Should I add anyone else?
+- Any other attendees?
+- Is that everyone you'd like to invite?
+
+# MultipleContactsPrompt()
+- I’ve found multiple ${dialog.options.attendeeName}’s. The first is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Would you like to select this contact?
+- There are multiple ${dialog.options.attendeeName}'s. The first on the list is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right contact?
+- I found more than one ${dialog.options.attendeeName}'s. Do you want to invite ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}?
+- Uh oh. I've found multiple ${dialog.options.attendeeName}'s. The first I see is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right attendee?
+- There seem to be a few ${dialog.options.attendeeName}'s. Is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email} correct?
+
+# MultipleContactsReromptNext()
+- OK. The next contact is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the right contact?
+- Another contact is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}, want to include this contact in the invite?
+- How about ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email} - Would you like to invite them?
+- No problem. The next ${dialog.attendeeName} is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this the correct attendee?
+
+# MultipleContactsReromptPrevious()
+- Sure. The previous option is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Do you want to select this contact?
+- My last suggestion was ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is that correct?
+- ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Do you want to continue with this contact?
+
+# MultipleContactsReromptShowMore()
+- I found more options. The first is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Do you like to select this contact?
+- I found additional contacts. The next suggestion is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Should I continue with this contact?
+- OK. The next person I found is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Is this correct?
+- What about ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email} - Are they the correct person?
+- Sure. Next up, I see ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Are the who you're looking for?
+
