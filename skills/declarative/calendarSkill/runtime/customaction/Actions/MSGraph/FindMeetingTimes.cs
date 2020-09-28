@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Microsoft.Bot.Builder.TraceExtensions;
+using System.Net.Http;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -60,7 +61,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             });
 
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token);
+            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
+            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
             MeetingTimeSuggestionsResult meetingTimesResult;
 
             try

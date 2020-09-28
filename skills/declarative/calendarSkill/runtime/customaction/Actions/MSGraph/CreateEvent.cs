@@ -110,7 +110,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             newEvent.Attendees = attendeesList;
 
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token);
+            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
+            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
             Event result = null;
             try

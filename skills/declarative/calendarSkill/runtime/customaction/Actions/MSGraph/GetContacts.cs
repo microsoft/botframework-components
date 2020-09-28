@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,7 +42,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var name = this.NameProperty.GetValue(dcState);
             var token = this.Token.GetValue(dcState);
 
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token);
+            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
+            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
             var results = new List<CalendarSkillUserModel>();
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));

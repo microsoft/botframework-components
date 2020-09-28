@@ -4772,6 +4772,8 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
 				},
 				{

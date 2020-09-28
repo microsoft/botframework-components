@@ -172,7 +172,7 @@
               "token": "=user.token.token",
               "attendeesProperty": "=dialog.slots.attendees",
               "durationProperty": "=int(coalesce(dialog.slots.duration, settings.defaultValue.duration))",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+              "timeZoneProperty": "=user.workingHours.timeZone.name"
             },
             {
               "$kind": "Microsoft.TraceActivity",
@@ -695,7 +695,7 @@
             },
             {
               "property": "dialog.newEvent.start.timeZone",
-              "value": "=user.settings.mailboxSettings.timeZone"
+              "value": "=user.workingHours.timeZone.name"
             },
             {
               "property": "dialog.newEvent.end.dateTime",
@@ -703,7 +703,7 @@
             },
             {
               "property": "dialog.newEvent.end.timeZone",
-              "value": "=user.settings.mailboxSettings.timeZone"
+              "value": "=user.workingHours.timeZone.name"
             },
             {
               "property": "dialog.newEvent.attendees",
@@ -770,7 +770,7 @@
               "descriptionProperty": "=dialog.slots.desciption",
               "startProperty": "=dialog.slots.startDateTime",
               "endProperty": "=dialog.slots.endDateTime",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone",
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
               "locationProperty": "=dialog.slots.location",
               "attendeesProperty": "=dialog.slots.attendees",
               "isOnlineMeetingProperty": "=dialog.slots.isTeamsMeeting"
