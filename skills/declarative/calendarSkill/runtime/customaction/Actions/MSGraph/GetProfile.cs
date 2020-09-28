@@ -3,6 +3,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +14,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// This action gets user settings from MS Graph. \
     /// These include the user's display name and mailboxSettings (which includes timezone).
     /// </summary>
-    public class GetSettings : Dialog
+    public class GetProfile : Dialog
     {
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.User.GetSettings";
+        public const string DeclarativeType = "Microsoft.Graph.User.GetProfile";
 
         [JsonConstructor]
-        public GetSettings([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
+        public GetProfile([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base()
         {
             this.RegisterSourceLocation(callerPath, callerLine);
@@ -35,19 +36,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         {
             var dcState = dc.State;
             var token = this.Token.GetValue(dcState);
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token);
+            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
+            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
             User result = null;
             try
             {
-                result = await graphClient.Me
-                    .Request()
-                    .Select(u => new
-                    {
-                        u.DisplayName,
-                        u.MailboxSettings
-                    })
-                    .GetAsync();
+                result = await graphClient.Me.Request().GetAsync();
             }
             catch (ServiceException ex)
             {
@@ -55,7 +50,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(GetSettings), result, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(GetProfile), result, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {

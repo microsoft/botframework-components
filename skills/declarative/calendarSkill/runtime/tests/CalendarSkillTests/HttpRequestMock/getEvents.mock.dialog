@@ -1,0 +1,118 @@
+﻿{
+  "$schema": "../../app.schema",
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "method": "GET",
+  "url": "https://graph.microsoft.com/v1.0/me/calendarView?startDateTime=2020-09-11T16:00:00.0000000Z&endDateTime=2020-09-12T00:00:00.0000000Z&$orderBy=start/dateTime",
+  "responses": [
+    {
+      "content-type": "application/json",
+      "content": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('d4478b21-9085-4f61-88c9-15e3ee77ddf5')/calendar/calendarView",
+        "value": [
+          {
+            "@odata.etag": "00000000-0000-0000-0000-000000000000",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "createdDateTime": "2020-05-01T13:37:32.1630335Z",
+            "lastModifiedDateTime": "2020-09-03T18:23:35.5118183Z",
+            "changeKey": "00000",
+            "categories": [],
+            "transactionId": "00000000-0000-0000-0000-000000000000",
+            "originalStartTimeZone": "Pacific Standard Time",
+            "originalEndTimeZone": "Pacific Standard Time",
+            "iCalUId": "00000000-0000-0000-0000-000000000000",
+            "reminderMinutesBeforeStart": 15,
+            "isReminderOn": true,
+            "hasAttachments": false,
+            "subject": "Project Review",
+            "bodyPreview": "Project X review meeting\r\n________________________________________________________________________________\r\nJoin Microsoft Teams Meeting\r\n+1 469-998-6046   United States, Dallas (Toll)\r\nConference ID: 975 953 738#\r\nLocal numbers | Reset PIN | Learn more a",
+            "importance": "normal",
+            "sensitivity": "normal",
+            "isAllDay": false,
+            "isCancelled": false,
+            "isOrganizer": true,
+            "responseRequested": true,
+            "seriesMasterId": "00000000-0000-0000-0000-000000000000",
+            "showAs": "busy",
+            "type": "occurrence",
+            "webLink": "https://outlook.office365.com/owa/?itemid=AAMkADRjN2QyZmY4LTg3YmEtNGVlNS05NGQyLTliOWQ4NzdlOTFmMgFRAAgI2FXloGiAAEYAAAAABrJ%2BlaqVDECymBZKzjQYrwcA2O6Fdf1HV0KTeYPl7Hk%2BgAAAAAABDQAA2O6Fdf1HV0KTeYPl7Hk%2BgAAAFE0DTAAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "onlineMeetingUrl": null,
+            "isOnlineMeeting": true,
+            "onlineMeetingProvider": "teamsForBusiness",
+            "allowNewTimeProposals": true,
+            "recurrence": null,
+            "responseStatus": {
+              "response": "organizer",
+              "time": "0001-01-01T00:00:00Z"
+            },
+            "body": {
+              "contentType": "html",
+              "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=us-ascii\">\r\n</head>\r\n<body>\r\n<div>Project X review meeting</div>\r\n<div style=\"width:100%; height:20px\"><span style=\"white-space:nowrap; color:gray; opacity:.36\">________________________________________________________________________________</span>\r\n</div>\r\n<div class=\"me-email-text\" style=\"color:#252424; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">\r\n<div style=\"margin-top:24px; margin-bottom:10px\"><a class=\"me-email-headline\" href=\"https://teams.microsoft.com/l/meetup-join/19%3ameeting_YzRkYTcyYTMtYjMyNC00ODlhLWFhNTUtZjhjMTAwYTZlZjk0%40thread.v2/0?context=%7b%22Tid%22%3a%228f79d575-1d78-429d-9da1-e29737610be7%22%2c%22Oid%22%3a%22d4478b21-9085-4f61-88c9-15e3ee77ddf5%22%7d\" target=\"_blank\" rel=\"noreferrer noopener\" style=\"font-size:18px; font-family:'Segoe UI Semibold','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif; text-decoration:underline; color:#6264a7\">Join\r\n Microsoft Teams Meeting</a> </div>\r\n<div>\r\n<div><a class=\"me-email-link\" href=\"tel:+1 469-998-6046,,975953738# \" target=\"_blank\" rel=\"noreferrer noopener\" style=\"font-size:14px; text-decoration:none; color:#6264a7\">+1 469-998-6046</a>\r\n<span style=\"font-size:12px\">&nbsp; United States, Dallas (Toll) </span></div>\r\n</div>\r\n<div style=\"margin-top:10px; margin-bottom:20px\"><span style=\"font-size:12px\">Conference ID:\r\n</span><span style=\"font-size:14px\">975 953 738# </span></div>\r\n<a class=\"me-email-link\" target=\"_blank\" href=\"https://dialin.teams.microsoft.com/0b5894f4-a3f7-499a-9c3f-ad3288a10237?id=975953738\" rel=\"noreferrer noopener\" style=\"font-size:12px; text-decoration:none; color:#6264a7\">Local numbers</a> |\r\n<a class=\"me-email-link\" target=\"_blank\" href=\"https://mysettings.lync.com/pstnconferencing\" rel=\"noreferrer noopener\" style=\"font-size:12px; text-decoration:none; color:#6264a7\">\r\nReset PIN</a> | <a class=\"me-email-link\" target=\"_blank\" href=\"https://aka.ms/JoinTeamsMeeting\" rel=\"noreferrer noopener\" style=\"font-size:12px; text-decoration:none; color:#6264a7\">\r\nLearn more about Teams</a> | <a class=\"me-email-link\" target=\"_blank\" href=\"https://teams.microsoft.com/meetingOptions/?organizerId=d4478b21-9085-4f61-88c9-15e3ee77ddf5&amp;tenantId=8f79d575-1d78-429d-9da1-e29737610be7&amp;threadId=19_meeting_YzRkYTcyYTMtYjMyNC00ODlhLWFhNTUtZjhjMTAwYTZlZjk0@thread.v2&amp;messageId=0&amp;language=en-US\" rel=\"noreferrer noopener\" style=\"font-size:12px; text-decoration:none; color:#6264a7\">\r\nMeeting options</a>\r\n<div style=\"font-size:14px; margin-bottom:4px\"></div>\r\n<div style=\"font-size:12px\"></div>\r\n</div>\r\n<div style=\"width:100%; height:20px\"><span style=\"white-space:nowrap; color:gray; opacity:.36\">________________________________________________________________________________</span>\r\n</div>\r\n</body>\r\n</html>\r\n"
+            },
+            "start": {
+              "dateTime": "2020-09-11T17:00:00.0000000",
+              "timeZone": "UTC"
+            },
+            "end": {
+              "dateTime": "2020-09-11T18:00:00.0000000",
+              "timeZone": "UTC"
+            },
+            "location": {
+              "displayName": "",
+              "locationType": "default",
+              "uniqueIdType": "unknown",
+              "address": {},
+              "coordinates": {}
+            },
+            "locations": [],
+            "attendees": [
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Allan Deyoung",
+                  "address": "AllanD@VAContoso.OnMicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Patti Fernandez",
+                  "address": "PattiF@VAContoso.OnMicrosoft.com"
+                }
+              },
+              {
+                "type": "required",
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00Z"
+                },
+                "emailAddress": {
+                  "name": "Alex Wilber",
+                  "address": "AlexW@VAContoso.OnMicrosoft.com"
+                }
+              }
+            ],
+            "organizer": {
+              "emailAddress": {
+                "name": "Megan Bowen",
+                "address": "MeganB@VAContoso.OnMicrosoft.com"
+              }
+            },
+            "onlineMeeting": {
+              "joinUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_YzRkYTcyYTMtYjMyNC00ODlhLWFhNTUtZjhjMTAwYTZlZjk0%40thread.v2/0?context=%7b%22Tid%22%3a%228f79d575-1d78-429d-9da1-e29737610be7%22%2c%22Oid%22%3a%22d4478b21-9085-4f61-88c9-15e3ee77ddf5%22%7d",
+              "conferenceId": "975953738",
+              "tollNumber": "+1 469-998-6046"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

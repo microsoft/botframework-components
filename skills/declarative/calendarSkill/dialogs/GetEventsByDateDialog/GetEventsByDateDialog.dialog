@@ -66,7 +66,7 @@
               },
               "resultProperty": "conversation.events",
               "inputProperty": "=dialog.searchResults",
-              "timeZoneProperty": "=user.settings.mailboxSettings.timeZone"
+              "timeZoneProperty": "=user.workingHours.timeZone.name"
             },
             {
               "$kind": "Microsoft.IfCondition",
