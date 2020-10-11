@@ -1,0 +1,300 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "mOMYnb",
+    "name": "TestDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "prcRtz"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "0KeNo3"
+          },
+          "property": "dialog.choices",
+          "value": {
+            "contacts": [
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Megan Bowen",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Natasha Jones",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Bob Anderson",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Sharon White",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Susan Vance",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Chris Moore",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Gary Thompson",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Tim Ford",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Robin Green",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Christian Pierce",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "William Frost",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Jane Austen",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Fred Miller",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              },
+              {
+                "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+                "businessPhones": [
+                  "+1 412 555 0109"
+                ],
+                "name": "Mike Richards",
+                "givenName": "Megan",
+                "jobTitle": "Auditor",
+                "email": "MeganB@M365x214355.onmicrosoft.com",
+                "mobilePhone": null,
+                "officeLocation": "12/1110",
+                "preferredLanguage": "en-US",
+                "surname": "Bowen",
+                "userPrincipalName": "MeganB@M365x214355.onmicrosoft.com",
+                "id": "48d31887-5fad-4d73-a9f5-3c356e68a038"
+              }
+            ]
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "C2hPyR"
+          },
+          "activityProcessed": true,
+          "dialog": "ListDialog",
+          "options": {
+            "items": "=dialog.choices.contacts",
+            "actionTitleProperty": "name",
+            "activePrompt": "ContactListPrompt",
+            "templates": {
+              "icon": "ContactIconUrl",
+              "title": "ContactListTitle",
+              "item": "ContactListItem",
+              "actions": "ContactListActions",
+              "initialPrompt": "ContactListPrompt",
+              "showMorePrompt": "ContactListShowMorePrompt",
+              "skipResponse": "ContactListSkipResponse",
+              "defaultValueResponse": "ContactListDefaultValueResponse"
+            }
+          },
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "oI74um"
+          },
+          "condition": "dialog.result != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "tSha8y"
+              },
+              "activity": "${SendActivity_tSha8y()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "TestDialog.lg",
+  "recognizer": "TestDialog.lu.qna",
+  "id": "TestDialog"
+}

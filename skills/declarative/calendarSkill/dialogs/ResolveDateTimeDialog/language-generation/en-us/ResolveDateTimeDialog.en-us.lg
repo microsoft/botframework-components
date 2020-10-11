@@ -1,8 +1,5 @@
 [import](common.lg)
 
-
-
-
 # ChoiceInput_Prompt_G3sioC()
 - Which date and time?
 # ChoiceInput_Prompt_L1xuO9()
@@ -13,7 +10,6 @@
 - Which dates and times?
 # ChoiceInput_Prompt_OfAzSu()
 - Which times?
-
 
 # SendActivity_JrfC1C()
 - Sorry, I didn't understand that date and/or time.
