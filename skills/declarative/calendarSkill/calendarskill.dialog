@@ -126,7 +126,7 @@
           "condition": "turn.activity.value.intent",
           "cases": [
             {
-              "value": "ShowEventContent",
+              "value": "ShowEvent",
               "actions": [
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -135,12 +135,6 @@
                   },
                   "condition": "conversation.events != null && count(conversation.events) > 0",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.TraceActivity",
-                      "$designer": {
-                        "id": "zQFSXa"
-                      }
-                    },
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {

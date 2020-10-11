@@ -65,11 +65,12 @@
     "separator": true,
     "spacing": "medium",
     "selectAction": {
-        "title": "collapse",
-        "type": "Action.ToggleVisibility",
-        "targetElements": [
-            "eventDetail${item.Id}"
-        ]
+        "type": "Action.Submit",
+        "title": "Show event",
+        "data": {
+            "intent": "ShowEvent",
+            "eventId": "${item.Id}"
+        }
     },
     "items": [
         {
@@ -77,19 +78,18 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "auto",
+                    "width": "25",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
-                            "horizontalAlignment": "Right",
                             "weight": "Bolder"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": "stretch",
+                    "width": "75",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -99,18 +99,6 @@
                     ]
                 }
             ]
-        },
-        ${if((item.location != null && item.location != '') || item.isOnlineMeeting, EventLocationContainer(item), '')}
-        {
-            "type": "Container",
-            "spacing": "Small",
-            "items": [
-                ${EventAttendeeContainer(item)}
-                ${EventResponseContainer(item)}
-                ${EventContentContainer(item)}
-            ],
-            "isVisible": false,
-            "id": "eventDetail${item.id}"
         }
     ]
 }

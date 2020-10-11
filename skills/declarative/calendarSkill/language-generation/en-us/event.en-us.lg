@@ -28,11 +28,16 @@
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "Show content",
+            "title": "Decline event",
             "data": {
-                "intent": "ShowEventContent",
+                "intent": "DeclineEvent",
                 "eventId": "${event.Id}"
             }
+        },
+        {
+            "type": "Action.OpenUrl",
+            "title": "Show in calendar",
+            "url": "${event.WebLink}"
         }
     ]
 }
@@ -82,6 +87,7 @@
         {
             "type": "Column",
             "width": 5,
+            "isVisible": "${event.isRecurring}",
             "items": [
                 {
                     "type": "Image",
@@ -427,8 +433,10 @@
     - ```
     {
         "type": "Container",
+        "id": "eventContentContainer",
         "separator": true,
         "spacing": "medium",
+        "isVisible": "false",
         "items": [
             {
                 "type":"TextBlock",
@@ -436,57 +444,8 @@
                 "wrap": true
             }
         ]
-    }
+    },
+    ${ToggleButtonContainer('eventContentContainer')}
     ```
 - ELSE:
     -
-
-# EventContentCard(event)
-- ```
-{
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.2",
-    "body": [
-        {
-            "type": "Container",
-            "items": [
-                {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "verticalContentAlignment": "Center",
-                            "items": [
-                                {
-                                    "size": "large",
-                                    "text": "${event.Subject}",
-                                    "type": "TextBlock",
-                                    "weight": "Bolder"
-                                },
-                                {
-                                    "spacing": "Small",
-                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')} | ${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')}",
-                                    "type": "TextBlock"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "Container",
-            "separator": true,
-            "spacing": "medium",
-            "items": [
-               {
-                    "type":"TextBlock",
-                    "text":"${event.description}",
-                    "wrap": true
-               }
-            ]
-        }
-    ]
-}
-```

@@ -12,5 +12,5 @@
 
 # SendActivity_veFrrp()
 [Activity
-    attachments = ${json(EventContentCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
 ]
