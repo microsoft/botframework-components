@@ -91,6 +91,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
               .UseStorage(storage)
               .UseBotState(userState, conversationState)
               .Use(new RegisterClassMiddleware<IConfiguration>(Configuration))
+              .Use(new SendActivityPlusMiddleware(settings.MicrosoftAppId, settings.MicrosoftAppPassword))
               .Use(telemetryInitializerMiddleware);
 
             // Configure Middlewares

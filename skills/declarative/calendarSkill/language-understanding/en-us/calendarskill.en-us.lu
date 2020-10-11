@@ -33,3 +33,17 @@
 - Tell me what my next month is like
 
 @ prebuilt datetimeV2
+
+# Test
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+
+- test
+- test dialog
+- run the test
+- this is a test
+- test test test

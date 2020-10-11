@@ -1,0 +1,5 @@
+# Pluralize(count, singular, plural) 
+- IF: ${ count == 1}
+    - ${ singular }
+- ELSE:
+ - ${ plural }
