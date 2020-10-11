@@ -1,0 +1,67 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Send Activity+",
+  "description": "Respond with an activity that can be updated.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "activity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Activity",
+      "description": "Activity to send. Specify this or 'Activity Property'."
+    },
+    "activityProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Activity Property",
+      "description": "Property path for a dynamically generated activity to send."
+    },
+    "operationType": {
+      "title": "Type of operation",
+      "description": "Type of update operation to perform.",
+      "default": "send",
+      "oneOf": [
+        {
+          "type": "string",
+          "title": "Enum",
+          "description": "Standard operation type.",
+          "enum": [
+            "send",
+            "update",
+            "replace",
+            "delete",
+            "whisper"
+          ]
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ]
+    },
+    "activityIdProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Activity ID Property",
+      "description": "Optional name of the property used to remember the ID of the sent activity.",
+      "default": "turn.activity.replyToId"
+    },
+    "whisperToProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Whisper To Property",
+      "description": "The Channel Account info of the user that should be whispered to.",
+      "default": "turn.activity.from"
+    }
+  },
+  "required": [ "operationType" ]
+}

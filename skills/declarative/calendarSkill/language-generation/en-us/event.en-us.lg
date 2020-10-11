@@ -1,0 +1,492 @@
+[import](common.lg)
+
+# EventDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventDetailActions(event))}
+
+# EventDetailHeader(event)
+- ${CardHeader(EventIconUrl(), event.Subject, "", "")}
+
+# EventDetailBody(event)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "items": [
+        ${EventDateTimeContainer(event)}
+        ${EventResponseContainer(event)}
+        ${EventAttendeeContainer(event)}
+        ${EventLocationContainer(event)}
+        ${EventContentContainer(event)}
+    ]
+}
+```
+
+# EventDetailActions(event)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Show content",
+            "data": {
+                "intent": "ShowEventContent",
+                "eventId": "${event.Id}"
+            }
+        }
+    ]
+}
+```
+
+# EventDateTimeContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 5,
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${DateTimeIconUrl()}",
+                    "horizontalAlignment": "Center",
+                    "height": "15px",
+                    "width": "15px"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 85,
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')} ",
+                            "size": "Medium",
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": 5,
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${RecurringIconUrl()}",
+                    "horizontalAlignment": "Right"
+                }
+            ]
+        }
+    ]
+},
+```
+
+# EventResponseContainer(event)
+- IF: ${ event.Response == 'organizer' }    
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You are the organizer"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Accepted, owned by ${event.organizer.emailAddress.name}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${TentativeIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Tentative"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'declined' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${DeclinedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Declined"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'notResponded' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${NoResponseIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You have not responded"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    -
+
+# EventAttendeeContainer(event)
+- IF: ${ event.Attendees != null && count(event.Attendees) - 1 > 1 }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Attendees[0].EmailAddress.Name}, +${count(event.Attendees) - 1} more"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) - 1 == 1}
+    -  ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Attendees[0].EmailAddress.Name}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    - 
+
+# EventLocationContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 5,
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${LocationIconUrl()} ",
+                    "height": "15px",
+                    "width": "15px",
+                    "spacing": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "95",
+            "items": [
+                ${EventLocationItems(event)}
+            ]
+        }
+    ]
+},
+```
+
+# EventLocationItems(event)
+- IF: ${ event.location != null && event.location != '' && event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' && event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting"
+    }
+    ```
+- ELSE: 
+    -```
+    {
+        "type": "TextBlock",
+        "text": "No location provided."
+    }
+    ```
+
+# EventContentContainer(event)
+- IF: ${ event.Description != null && event.Description != '' }
+    - ```
+    {
+        "type": "Container",
+        "separator": true,
+        "spacing": "medium",
+        "items": [
+            {
+                "type":"TextBlock",
+                "text":"${event.description}",
+                "wrap": true
+            }
+        ]
+    }
+    ```
+- ELSE:
+    -
+
+# EventContentCard(event)
+- ```
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "size": "large",
+                                    "text": "${event.Subject}",
+                                    "type": "TextBlock",
+                                    "weight": "Bolder"
+                                },
+                                {
+                                    "spacing": "Small",
+                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')} | ${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')}",
+                                    "type": "TextBlock"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "separator": true,
+            "spacing": "medium",
+            "items": [
+               {
+                    "type":"TextBlock",
+                    "text":"${event.description}",
+                    "wrap": true
+               }
+            ]
+        }
+    ]
+}
+```
