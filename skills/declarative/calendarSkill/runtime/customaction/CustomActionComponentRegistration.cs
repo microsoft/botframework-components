@@ -16,6 +16,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction
             // Actions
             yield return new DeclarativeType<GotoAction>(GotoAction.DeclarativeType);
             yield return new DeclarativeType<RecognizeDateTime>(RecognizeDateTime.DeclarativeType);
+            yield return new DeclarativeType<SendActivityPlus>(SendActivityPlus.Kind);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)
