@@ -1,30 +1,30 @@
 [import](common.lg)
-
+[import](event.lg)
 
 # ScheduleResponseText(date, events)
 - IF: ${ events == null || count(events) == 0 }
-    - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}.
+    - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}.
 - ELSEIF: ${ count(events) == 1 }
-    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${events[0].Attendees[0].EmailAddress.Name}, and ${count(events[0].Attendees) - 1} more. 
+    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${events[0].Attendees[0].EmailAddress.Name}, and ${count(events[0].Attendees) - 1} more. 
 - ELSEIF: ${ count(events) == 2 }
-    - I see 2 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
+    - I see 2 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
 - ELSEIF: ${ count(events) == 3 }
-    - I found 3 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject}, at ${formatDateTime(events[2].start.datetime, 'h:mm tt')}.
+    - I found 3 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject}, at ${formatDateTime(events[2].start.datetime, 'h:mm tt')}.
 - ELSEIF: ${ count(events) == 4 }
-    - I found 4 events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}.
+    - I found 4 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}.
 - ELSE:
-    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM d')}${GetDaySuffix(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
+    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
 
 # SendActivity_9dvG0B()
 [Activity
     text = ${ScheduleResponseText(dialog.start, createArray())}
-    attachments = ${json(ScheduleCard(dialog.start, createArray()))}
+    attachments = ${json(ScheduleNoResults(dialog.start))}
 ]
 
 # SendActivity_jofZAc()
 [Activity
     text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
-    attachments = ${foreach(conversation.events, x, json(ScheduleCard(x.date, x.events)))}
+    attachments = ${foreach(conversation.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions())))}
     attachmentLayout = carousel
 ]
 
@@ -33,10 +33,139 @@
     text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
     attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
 ]
-# SendActivity_Mdxy9M()
-- Sorry, that feature is not supported yet.
+
 # SendActivity_Zdwh8l()
 [Activity
     text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
     attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
 ]
+
+# SendActivity_Mdxy9M()
+- Sorry, that feature is not supported yet.
+
+# ScheduleHeader(date, events)
+- ${CardHeader(CalendarIconUrl(), ScheduleTitle(), ScheduleSubtitle(date), ScheduleCounter(events))}
+
+# ScheduleTitle
+- Calendar
+
+# ScheduleSubtitle(date)
+- ${formatDateTime(date, 'dddd, MMMM d')}
+
+# ScheduleCounter(events)
+- ${count(events)} ${Pluralize(count(events), 'event', 'events')}
+
+# ScheduleList(items)
+- ${ExpandableListCardBody(foreach(items, item, ScheduleItem(item)), 5)}
+
+# ScheduleItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "selectAction": {
+        "title": "collapse",
+        "type": "Action.ToggleVisibility",
+        "targetElements": [
+            "eventDetail${item.Id}"
+        ]
+    },
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.Subject}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${if((item.location != null && item.location != '') || item.isOnlineMeeting, EventLocationContainer(item), '')}
+        {
+            "type": "Container",
+            "spacing": "Small",
+            "items": [
+                ${EventAttendeeContainer(item)}
+                ${EventResponseContainer(item)}
+                ${EventContentContainer(item)}
+            ],
+            "isVisible": false,
+            "id": "eventDetail${item.id}"
+        }
+    ]
+}
+```
+
+# ScheduleActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Show tomorrow"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "New meeting"
+        }
+    ]
+}
+```
+
+# ScheduleNoResults(date)
+- ${CardTemplate(ScheduleHeader(date, createArray()), ScheduleNoResultsBody(), ScheduleNoResultsActions())}
+
+# ScheduleNoResultsBody
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "You have no meetings, congrats!",
+            "spacing": "Large"
+        }
+    ],
+    "spacing": "Large",
+    "separator": true,
+    "verticalContentAlignment": "Center"
+}
+```
+
+# ScheduleNoResultsActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Create new meeting"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Show next day"
+        }
+    ]
+}
+```

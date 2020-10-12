@@ -1,0 +1,63 @@
+[import](cards.lg)
+
+# ContactListPrompt()
+- I've found multiple results.
+- There are multiple results.
+- I found more than one result.
+- Uh oh. I've found multiple results.
+- There seem to be a few results.
+
+# ContactListShowMorePrompt()
+- I found more options.
+- I found additional contacts.
+
+# ContactListSkipResponse()
+- Got it, none of these contacts.
+- Sure. Let's move on.
+- OK, you can invite attendees to this meeting later on.
+
+# ContactListDefaultValueResponse()
+- OK, let's move on without attendees. 
+
+# ContactListTitle
+- Contacts
+
+# ContactListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${item.name}",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${item.email}",
+            "spacing": "Small"
+        }
+    ],
+    "selectAction": {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": ${BuildCardActionData(item.name)}
+    }
+}
+```
+
+# ContactListActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Try Again",
+            "data": "Try again."
+        }
+    ]
+}
+```

@@ -188,6 +188,24 @@
           "dialog": "CreateEventDialog"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "8efAwj",
+        "name": "Test"
+      },
+      "intent": "Test",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xR5nUs"
+          },
+          "activityProcessed": true,
+          "dialog": "TestDialog"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

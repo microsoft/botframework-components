@@ -26,6 +26,9 @@
 			"$ref": "#/definitions/Microsoft.BeginSkill"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Bot.SendActivityPlus"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
 		},
 		{
@@ -1170,6 +1173,95 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.BeginSkill"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Bot.SendActivityPlus": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Send Activity+",
+			"description": "Respond with an activity that can be updated.",
+			"type": "object",
+			"required": [
+				"operationType",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						"user.age > 3"
+					]
+				},
+				"activity": {
+					"$kind": "Microsoft.IActivityTemplate",
+					"title": "Activity",
+					"description": "Activity to send. Specify this or 'Activity Property'.",
+					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"activityProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Activity Property",
+					"description": "Property path for a dynamically generated activity to send."
+				},
+				"operationType": {
+					"title": "Type of operation",
+					"description": "Type of update operation to perform.",
+					"default": "send",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "Enum",
+							"description": "Standard operation type.",
+							"enum": [
+								"send",
+								"update",
+								"replace",
+								"delete",
+								"whisper"
+							]
+						},
+						{
+							"$ref": "#/definitions/equalsExpression"
+						}
+					]
+				},
+				"activityIdProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Activity ID Property",
+					"description": "Optional name of the property used to remember the ID of the sent activity.",
+					"default": "turn.activity.replyToId"
+				},
+				"whisperToProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Whisper To Property",
+					"description": "The Channel Account info of the user that should be whispered to.",
+					"default": "turn.activity.from"
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Bot.SendActivityPlus"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -4766,6 +4858,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Bot.SendActivityPlus"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
