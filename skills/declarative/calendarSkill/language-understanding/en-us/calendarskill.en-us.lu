@@ -88,3 +88,16 @@
 - where is tomorrow meeting at 11 am
 - where is tomorrow 's event
 - where's my next meeting
+# Test
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+
+> entity definitions:
+> @ ml city
+
+- test
+- test dialog
+- run the test
+- this is a test
+- test test test

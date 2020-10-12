@@ -1,4 +1,5 @@
 [import](common.lg)
+[import](event.lg)
 
 # SendActivity_gKWYRF()
 - ${WelcomeUser()}

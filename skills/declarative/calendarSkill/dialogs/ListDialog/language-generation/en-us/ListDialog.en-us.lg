@@ -1,0 +1,37 @@
+[import](common.lg)
+[import](contactList.lg)
+
+# ChoiceInput_Prompt_dc3QNs()
+[Activity
+    text = ${template(dialog.activePrompt)}
+    attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
+]
+
+# RepromptChoicePrompt()
+[Activity
+    deliveryMode = replace
+    id = ${turn.lastresult.id}
+    text = ${template(dialog.prompts.showMorePrompt)}
+    attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
+]
+
+# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount)
+- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount), template(actionsTemplate))}
+
+# ListCardHeader(icon, title, totalItemCount)
+- ${CardHeader(template(icon), template(title), "", concat(totalItemCount, " results"))}
+
+# ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount)
+- ${PaginatedListCardBody(totalItemCount, pageSize, foreach(pageItems, item, template(itemTemplate, item)), pageIndex, pageCount)}
+
+# SendActivity_BDsmtE()
+- ${template(dialog.templates.skipResponse)}
+
+# SendActivity_2LMTaY()
+- That's the beginning of the list.
+
+# SendActivity_D6gEbV()
+- That's the end of the list.
+
+# ChoiceInput_DefaultValueResponse_dc3QNs()
+- OK, let's move on.

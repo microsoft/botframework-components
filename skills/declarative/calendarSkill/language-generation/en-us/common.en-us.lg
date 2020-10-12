@@ -1,3 +1,7 @@
+[import](icons.lg)
+[import](functions.lg)
+[import](cards.lg)
+
 # WelcomeUser
 - IF: ${user.profile.displayName != null}
     - Hi, ${user.profile.displayName}! How can I help you today?
