@@ -21,23 +21,6 @@
 }
 ```
 
-# EventDetailActions(event)
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Show content",
-            "data": {
-                "intent": "ShowEventContent",
-                "eventId": "${event.Id}"
-            }
-        }
-    ]
-}
-```
-
 # EventDateTimeContainer(event)
 - ```
 {
@@ -490,3 +473,222 @@
     ]
 }
 ```
+
+# EventTitleContainer(event)
+-  ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 5,
+            "items": [
+                {
+                        "type": "Image",
+                        "url": "${TitleIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 95,
+            "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Subject}"
+                    }
+            ]
+        }
+    ]
+},
+```
+
+
+# ShowContentActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Show content",
+                "data": {
+                    "intent": "ShowEventContent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# AddParticipantActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add participant",
+                "data": {
+                    "intent": "AddParticipant",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# UpdateEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Update event",
+                "data": {
+                    "intent": "UpdateEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# AcceptEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Accept event",
+                "data": {
+                    "intent": "AcceptEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# DeclineEventActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Decline event",
+                "data": {
+                    "intent": "DeclineEvent",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# AddTeamsLinkActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add Teams link",
+                "data": {
+                    "intent": "AddTeamsLink",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# AddLocationActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Add location",
+                "data": {
+                    "intent": "AddLocation",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+# UpdateLocationActions(event)
+-```
+            {
+                "type": "Action.Submit",
+                "title": "Update location",
+                "data": {
+                    "intent": "UpdateLocation",
+                    "eventId": "${event.Id}"
+                }
+            }
+```
+
+# EventDetailActions(event)
+- IF: ${event.Response == 'organizer' && event.Location != null && event.Location != '' && event.isOnlineMeeting == false}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+           ${ShowContentActions(event)},
+           ${AddParticipantActions(event)},
+           ${UpdateEventActions(event)},
+           ${AddTeamsLinkActions(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location == null || event.Location == '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${ShowContentActions(event)},
+            ${AddParticipantActions(event)},
+            ${UpdateEventActions(event)},
+            ${AddLocationActions(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location != null && event.Location != '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${ShowContentActions(event)},
+            ${AddParticipantActions(event)},
+            ${UpdateEventActions(event)},
+            ${UpdateLocationActions(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${ShowContentActions(event)},
+            ${DeclineEventActions(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' || event.Response == 'notResponded' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${ShowContentActions(event)},
+            ${AcceptEventActions(event)},
+            ${DeclineEventActions(event)}
+        ]
+    }
+    ```
+- ELSE:
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${ShowContentActions(event)}
+        ]
+    }
+    ```
+
+
+# BuildDate(date)
+- ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+
+# BuildTime(time)
+- ${formatDateTime(time, 'h:mm tt')}
+
+# BuildLocation(event)
+- IF: ${event.Location == null || event.Location == ""}
+    - No location provided.
+- ELSEIF: ${event.isOnlineMeeting}
+    - The meeting is in ${event.Location} and contains a Teams link.
+- ELSE:
+    - The meeting is in ${event.Location}.
+
+# BuildAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - No attendees.
+- ELSEIF: ${count(event.Attendees) == 1}
+    - The attendee is ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.

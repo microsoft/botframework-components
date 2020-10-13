@@ -103,7 +103,7 @@
           "titleProperty": "=coalesce(dialog.title, null)",
           "locationProperty": "=coalesce(dialog.location, null)",
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-          "endProperty": "=coalesce(dialog.end, null)",
+          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, formatDateTime(addDays(utcNow(),28), 'yyyy-MM-dd'), null))",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
@@ -160,12 +160,6 @@
           "inputProperty": "= dialog.events"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "bFk1RU"
-          }
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "3GqiZS"
@@ -182,16 +176,42 @@
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "cGLQXk"
+                    "id": "zrV04G"
                   },
                   "activityProcessed": true,
-                  "dialog": "ChooseEventDialog",
+                  "dialog": "ListDialog",
                   "options": {
-                    "start": 0,
-                    "target": 0,
-                    "events": "=dialog.events"
+                    "items": "=dialog.events",
+                    "actionTitleProperty": "name",
+                    "activePrompt": "EventListPrompt",
+                    "templates": {
+                      "icon": "EventListIconUrl",
+                      "title": "EventListTitle",
+                      "item": "EventListItem",
+                      "actions": "EventListActions",
+                      "initialPrompt": "EventListPrompt",
+                      "showMorePrompt": "EventListShowMorePrompt",
+                      "skipResponse": "EventListSkipResponse",
+                      "defaultValueResponse": "EventListDefaultValueResponse"
+                    }
                   },
                   "resultProperty": "dialog.choosenEvent"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "iKK2ex"
+                  },
+                  "condition": "dialog.choosenEvent == null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.CancelAllDialogs",
+                      "$designer": {
+                        "id": "GKzWQk"
+                      },
+                      "activityProcessed": true
+                    }
+                  ]
                 }
               ],
               "actions": [
@@ -208,6 +228,12 @@
                   ]
                 }
               ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "E5mFtW"
+              }
             },
             {
               "$kind": "Microsoft.EndDialog",
