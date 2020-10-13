@@ -132,7 +132,8 @@
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.showMorePrompt"
+                "activePrompt": "=dialog.templates.showMorePrompt",
+                "additionalOptions": "=dialog.additionalOptions"
               }
             }
           ],
@@ -197,7 +198,8 @@
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.initialPrompt"
+                "activePrompt": "=dialog.templates.initialPrompt",
+                "additionalOptions": "=dialog.additionalOptions"
               }
             }
           ],

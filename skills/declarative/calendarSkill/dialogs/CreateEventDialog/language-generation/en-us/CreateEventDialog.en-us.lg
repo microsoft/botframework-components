@@ -1,5 +1,6 @@
 [import](common.lg)
-
+[import](event.lg)
+[import](timeSuggestionList.lg)
 
 
 # SendActivity_Nd5hYw()
@@ -10,20 +11,11 @@
 # ConfirmInput_Prompt_wFWmPX()
 - I’ve found the following times when all participants can join, the first option is ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}. Would you like to book that time?
 - I’ve found the following times when all participants can join, the first option is ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}. Should I continue with this time?
-# ChoiceInput_Prompt_fqtk4h()
-[Activity
-    attachments = ${json(TimeSuggestionCard(dialog.findMeetingTimesResult))}
-]
-
 # ChoiceInput_Prompt_0FImIx()
 - All attendees are free at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)} or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}. Which do you prefer?
 - All attendees are free at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)} or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}. Do you prefer the first or second option?
 # TimeSuggestionFormat(time)
 - ${formatDateTime(time, 'h:mm tt on d/M')}
-# SendActivity_GlIvod()
-- Everyone can attend at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}, ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}, or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[2].Start)}. What option do you want to select? 
-- Everyone can attend at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}, ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}, or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[2].Start)}. Will any of these work?
-
 # ConfirmInput_Prompt_O439cC()
 - Are you sure you want to send this without a location?
 - This meeting doesn't have a location. Is that OK?
@@ -112,3 +104,53 @@
 - What is the title?
 - What is the meeting about?
 - What do you want to add as a title?
+
+# SendActivity_xNLmAo()
+- I couldn't find a relevant suggestions that works for all attendees. Want to select your own date and time?
+- I don't see any options that will work for everyone. What date and time do you want to use?
+- There's aren't any relevant suggestions. You can select your own date and time. Want to do that?
+# ConfirmInput_Prompt_b8n3M4()
+[Activity
+    attachments = ${json(NoTimeSuggestionCard())}
+]
+
+# NoTimeSuggestionCard
+- ${CardTemplate(NoTimeSuggestionHeader(), NoTimeSuggestionBody(), NoTimeSuggestionActions())}
+
+# NoTimeSuggestionHeader
+- ${CardHeader(TimeSuggestionIconUrl(), TimeSuggestionListTitle(), "", "")}
+
+# NoTimeSuggestionBody
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "Unfortunately, I could not find relevant suggestions. Please choose your own date an time.",
+            "wrap": true
+        }
+    ]
+}
+```
+
+# NoTimeSuggestionActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Choose own date and time",
+            "data": "Choose own date and time"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Change duration",
+            "data": "Change duration"
+        }
+    ]
+}
+```

@@ -1,0 +1,118 @@
+[import](cards.lg)
+
+# TimeSuggestionListPrompt()
+- I have found multiple suggestions:
+- There are multiple suggestions:
+- I found more than one suggestion: 
+- Uh oh. I've found multiple suggestions: 
+- There seem to be a few suggestions:
+
+# TimeSuggestionListShowMorePrompt()
+- How about these new suggestions:
+- What about these new suggestions:
+- Sure, new relevant sugggestions are: 
+
+# TimeSuggestionListSkipResponse()
+- 
+
+# TimeSuggestionListDefaultValueResponse()
+- 
+
+# TimeSuggestionListTitle
+- Suggested times
+
+# TimeSuggestionListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.Start, 'h:mm')} - ${formatDateTime(item.End, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "verticalContentAlignment": "Center",
+                    "width": 5,
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${AttendeeIconUrl()}",
+                            "height": "15px",
+                            "width": "15px",
+                            "spacing": "Small",
+                            "horizontalAlignment": "Center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "verticalContentAlignment": "Center",
+                    "width": 95,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "All participants can attend",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "selectAction": {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": ${BuildCardActionData(item.index)}
+    }
+}
+```
+
+# TimeSuggestionListActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Choose your own date and time",
+            "data": "Choose your own date and time"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Change duration",
+            "data": "Change duration"
+        }
+    ]
+}
+```

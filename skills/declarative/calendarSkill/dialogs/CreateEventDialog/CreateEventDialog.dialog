@@ -214,7 +214,54 @@
               "condition": "count(dialog.findMeetingTimesResult)",
               "cases": [
                 {
-                  "value": "0"
+                  "value": "0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "xNLmAo"
+                      },
+                      "activity": "${SendActivity_xNLmAo()}"
+                    },
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "b8n3M4"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "alwaysPrompt": false,
+                      "prompt": "${ConfirmInput_Prompt_b8n3M4()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "defaultValueResponse": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "property": "dialog.skipTimeSuggestion",
+                      "outputFormat": "",
+                      "allowInterruptions": "=#ChangeDuration.Score>0.7 || #ChooseOwnDateTime.Score>0.7 || #ChangeDuration.Score>0.7",
+                      "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "se0OPb"
+                      },
+                      "condition": "dialog.skipTimeSuggestion || turn.skip",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.EndDialog",
+                          "$designer": {
+                            "id": "xlgN6X"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "value": "1",
@@ -226,17 +273,37 @@
                       },
                       "defaultLocale": "en-us",
                       "disabled": false,
-                      "maxTurnCount": 3,
                       "alwaysPrompt": false,
-                      "allowInterruptions": false,
                       "prompt": "${ConfirmInput_Prompt_wFWmPX()}",
                       "unrecognizedPrompt": "",
                       "invalidPrompt": "",
                       "defaultValueResponse": "",
                       "choiceOptions": {
-                        "includeNumbers": true
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
                       },
-                      "property": "dialog.timeSuggestionConfirm"
+                      "property": "dialog.timeSuggestionConfirm",
+                      "allowInterruptions": "=#ChangeDuration.Score>0.7 || #ChooseOwnDateTime.Score>0.7 || #ChangeDuration.Score>0.7",
+                      "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "FHatcP"
+                      },
+                      "condition": "dialog.timeSuggestionConfirm",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "yqjmm8"
+                          },
+                          "value": "=dialog.findMeetingTimesResult[0]",
+                          "property": "dialog.timeSuggestionChoice"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -250,9 +317,7 @@
                       },
                       "defaultLocale": "en-us",
                       "disabled": false,
-                      "maxTurnCount": 3,
                       "alwaysPrompt": false,
-                      "allowInterruptions": false,
                       "prompt": "${ChoiceInput_Prompt_0FImIx()}",
                       "unrecognizedPrompt": "",
                       "invalidPrompt": "",
@@ -264,47 +329,41 @@
                         "inlineSeparator": ", "
                       },
                       "property": "dialog.timeSuggestionChoice",
-                      "choices": "dialog.findMeetingTimesResult"
+                      "choices": "dialog.findMeetingTimesResult",
+                      "recognizerOptions": {
+                        "recognizeOrdinals": true,
+                        "recognizeNumbers": true
+                      },
+                      "allowInterruptions": "=#ChangeDuration.Score>0.7 || #ChooseOwnDateTime.Score>0.7 || #ChangeDuration.Score>0.7",
+                      "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
                     }
                   ]
                 }
               ],
               "default": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "GlIvod"
+                    "id": "41ApEf"
                   },
-                  "activity": "${SendActivity_GlIvod()}"
-                },
-                {
-                  "$kind": "Microsoft.ChoiceInput",
-                  "$designer": {
-                    "id": "fqtk4h"
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "options": {
+                    "items": "=dialog.findMeetingTimesResult",
+                    "actionTitleProperty": "name",
+                    "activePrompt": "TimeSuggestionListPrompt",
+                    "templates": {
+                      "icon": "TimeSuggestionIconUrl",
+                      "title": "TimeSuggestionListTitle",
+                      "item": "TimeSuggestionListItem",
+                      "actions": "TimeSuggestionListActions",
+                      "initialPrompt": "TimeSuggestionListPrompt",
+                      "showMorePrompt": "TimeSuggestionListShowMorePrompt",
+                      "skipResponse": "TimeSuggestionListSkipResponse",
+                      "defaultValueResponse": "TimeSuggestionListDefaultValueResponse"
+                    }
                   },
-                  "defaultLocale": "en-us",
-                  "disabled": false,
-                  "alwaysPrompt": false,
-                  "prompt": "${ChoiceInput_Prompt_fqtk4h()}",
-                  "unrecognizedPrompt": "",
-                  "invalidPrompt": "",
-                  "defaultValueResponse": "",
-                  "choiceOptions": {
-                    "includeNumbers": true,
-                    "inlineOrMore": ", or ",
-                    "inlineOr": " or ",
-                    "inlineSeparator": ", "
-                  },
-                  "property": "dialog.timeSuggestionChoice",
-                  "choices": "select(dialog.findMeetingTimesResult, x, x.Start)",
-                  "recognizerOptions": {
-                    "recognizeOrdinals": true,
-                    "recognizeNumbers": true
-                  },
-                  "maxTurnCount": "=if(turn.skip!=true, 3, 1)",
-                  "style": "none",
-                  "outputFormat": "index",
-                  "allowInterruptions": "=#SkipSlot.Score>0.7 || #ChangeDuration.Score>0.7"
+                  "resultProperty": "dialog.timeSuggestionChoice"
                 }
               ]
             },
@@ -330,11 +389,11 @@
                   "assignments": [
                     {
                       "property": "dialog.slots.startDateTime",
-                      "value": "=dialog.findMeetingTimesResult[dialog.timeSuggestionChoice].Start"
+                      "value": "=dialog.timeSuggestionChoice.Start"
                     },
                     {
                       "property": "dialog.slots.endDateTime",
-                      "value": "=dialog.findMeetingTimesResult[dialog.timeSuggestionChoice].End"
+                      "value": "=dialog.timeSuggestionChoice.End"
                     }
                   ]
                 }
@@ -891,6 +950,24 @@
           "options": {
             "slots": "=dialog.slots"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Mg1IAK",
+        "name": "ChooseOwnDateTime"
+      },
+      "intent": "ChooseOwnDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "wmDZp1"
+          },
+          "property": "turn.skip",
+          "value": "=true"
         }
       ]
     }

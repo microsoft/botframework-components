@@ -217,21 +217,27 @@
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "vxHnsR"
+                    "id": "im2f6E"
                   },
                   "activityProcessed": true,
-                  "dialog": "ChooseOption",
+                  "dialog": "ListDialog",
                   "options": {
-                    "options.attendeeName": "=dialog.foreach.value",
-                    "options.candidatesList": "=dialog.contactsCandidate",
-                    "options.cardHeader": "=GetContact.CardHeader()",
-                    "options.cardIcon": "=GetContact.CardIcon()",
-                    "options.itemCardTemplate": "AttendeesListItem",
-                    "options.promptTemplate": "MultipleContactsPrompt",
-                    "options.repromptNextTemplate": "MultipleContactsReromptNext",
-                    "options.repromptPreviousTemplate": "MultipleContactsReromptPrevious",
-                    "options.repromptShowMoreTemplate": "MultipleContactsReromptShowMore",
-                    "options.cardActionTemplate": "AttendeesListAction"
+                    "items": "=dialog.contactsCandidate",
+                    "actionTitleProperty": "name",
+                    "activePrompt": "ContactListPrompt",
+                    "templates": {
+                      "icon": "ContactIconUrl",
+                      "title": "ContactListTitle",
+                      "item": "ContactListItem",
+                      "actions": "ContactListActions",
+                      "initialPrompt": "ContactListPrompt",
+                      "showMorePrompt": "ContactListShowMorePrompt",
+                      "skipResponse": "ContactListSkipResponse",
+                      "defaultValueResponse": "ContactListDefaultValueResponse"
+                    },
+                    "additionalOptions": {
+                      "contactName": "=dialog.foreach.value"
+                    }
                   },
                   "resultProperty": "dialog.attendeeChoiceResult"
                 },
@@ -239,7 +245,8 @@
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "gZNxIp"
-                  }
+                  },
+                  "name": "after list dialog"
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
