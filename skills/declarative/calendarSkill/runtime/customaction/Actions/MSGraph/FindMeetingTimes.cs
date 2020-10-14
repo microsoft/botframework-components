@@ -35,7 +35,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public StringExpression Token { get; set; }
 
         [JsonProperty("attendeesProperty")]
-        public ObjectExpression<List<CalendarSkillUserModel>> AttendeesProperty { get; set; }
+        public ObjectExpression<List<Attendee>> AttendeesProperty { get; set; }
 
         [JsonProperty("durationProperty")]
         public IntExpression DurationProperty { get; set; }
@@ -51,15 +51,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var duration = this.DurationProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
-
-            var attendees = attendeesProperty.Select(x => new AttendeeBase()
-            {
-                EmailAddress = new EmailAddress()
-                {
-                    Name = x.Name,
-                    Address = x.EmailAddresses.FirstOrDefault()
-                }
-            });
+            var attendees = attendeesProperty;
 
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);

@@ -14,9 +14,9 @@
 - Who do you want to invite?
 - What attendees do you want to add?
 # SendActivity_vCzsEJ()
-- Sure, I'll continue with ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]}.
-- Got it. I'll move forward with ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]}.
-- OK. I'll include ${dialog.attendees[0].name}, ${dialog.attendees[0].emailAddresses[0]} as attendee.
+- Sure, I'll continue with ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address}.
+- Got it. I'll move forward with ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address}.
+- OK. I'll include ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address} as attendee.
 
 # SendActivity_mD3TcZ()
 - If you want to try again, just call out the firstname and or surname again.
@@ -31,27 +31,26 @@
 
 # ShowContact1()
 - IF: ${ count(dialog.attendees) <= 3 }
-    - ${join(select(dialog.attendees, x, x.name), ', ')}
+    - ${join(select(dialog.attendees, x, x.emailAddress.name), ', ')}
 - ELSE:
-    - ${join(select(dialog.attendees, x, x.name), ', ')} and ${count(dialog.attendees) - 3} more
+    - ${join(select(dialog.attendees, x, x.emailAddress.name), ', ')} and ${count(dialog.attendees) - 3} more
 
  # ShowContact2()
 - IF: ${ count(dialog.attendees) <= 2 }
-    - ${join(select(dialog.attendees, x, x.name + ' ' + x.emailAddresses[0]), ', ')}
+    - ${join(select(dialog.attendees, x, x.emailAddress.name + ' ' + x.emailAddress.address), ', ')}
 - ELSE:
-    - ${join(select(dialog.attendees, x, x.name + ' ' + x.emailAddresses[0]), ', ')} and ${count(dialog.attendees) - 2} othters
+    - ${join(select(dialog.attendees, x, x.emailAddress.name + ' ' + x.emailAddress.address), ', ')} and ${count(dialog.attendees) - 2} othters
     
  # ShowContact3()
 - IF: ${ count(dialog.attendees) == 2 }
-    - ${dialog.attendees[0].name} at ${dialog.attendees[0].emailAddresses[0]} and ${dialog.attendees[1].name} at ${dialog.attendees[1].emailAddresses[0]}
+    - ${dialog.attendees[0].emailAddress.name} at ${dialog.attendees[0].emailAddress.address} and ${dialog.attendees[1].emailAddress.name} at ${dialog.attendees[1].emailAddress.address}
 - ELSE:
-    - ${dialog.attendees[0].name} at ${dialog.attendees[0].emailAddresses[0]}, ${dialog.attendees[1].name} at ${dialog.attendees[1].emailAddresses[0]}, and ${dialog.attendees[2].name} at ${dialog.attendees[2].emailAddresses[0]}
+    - ${dialog.attendees[0].emailAddress.name} at ${dialog.attendees[0].emailAddress.address}, ${dialog.attendees[1].emailAddress.name} at ${dialog.attendees[1].emailAddress.address}, and ${dialog.attendees[2].emailAddress.name} at ${dialog.attendees[2].emailAddress.address}
 # ConfirmInput_Prompt_eQMqZH()
 - Want to include anyone else?
 - Want to add another attendee?
 - Should I add anyone else?
 - Any other attendees?
-- Is that everyone you'd like to invite?
 
 # MultipleContactsPrompt()
 - I’ve found multiple ${dialog.options.attendeeName}’s. The first is ${dialog.currentCandidates[dialog.itemIndex].name} ${dialog.currentCandidates[dialog.itemIndex].email}. Would you like to select this contact?

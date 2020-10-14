@@ -782,7 +782,7 @@
             },
             {
               "property": "dialog.newEvent.description",
-              "value": "dialog.slots.desciption"
+              "value": "=dialog.slots.desciption"
             }
           ]
         },

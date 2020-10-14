@@ -252,7 +252,7 @@
     -
 
 # EventAttendeeContainer(event)
-- IF: ${ event.Attendees != null && count(event.Attendees) - 1 > 1 }
+- IF: ${ event.Attendees != null && count(event.Attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
@@ -286,7 +286,7 @@
         ]
     },
     ```
-- ELSEIF: ${ event.Attendees != null && count(event.Attendees) - 1 == 1}
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
     -  ```
     {
         "type": "ColumnSet",

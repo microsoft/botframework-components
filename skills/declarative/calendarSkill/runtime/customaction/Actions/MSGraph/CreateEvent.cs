@@ -52,7 +52,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public StringExpression LocationProperty { get; set; }
 
         [JsonProperty("attendeesProperty")]
-        public ArrayExpression<CalendarSkillUserModel> AttendeesProperty { get; set; }
+        public ArrayExpression<Attendee> AttendeesProperty { get; set; }
 
         [JsonProperty("isOnlineMeetingProperty")]
         public BoolExpression IsOnlineMeetingProperty { get; set; }
@@ -91,24 +91,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     DateTime = endProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty
                 },
+                Attendees = attendeesProperty,
                 IsOnlineMeeting = isOnlineMeetingProperty,
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
             };
-
-            // Set event attendees
-            var attendeesList = new List<Attendee>();
-            foreach (var attendee in attendeesProperty)
-            {
-                attendeesList.Add(new Attendee()
-                {
-                    EmailAddress = new EmailAddress()
-                    {
-                        Address = attendee.EmailAddresses.FirstOrDefault()
-                    }
-                });
-            }
-
-            newEvent.Attendees = attendeesList;
 
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
