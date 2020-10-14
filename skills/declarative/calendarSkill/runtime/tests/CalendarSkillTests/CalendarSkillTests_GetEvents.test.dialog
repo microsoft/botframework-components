@@ -18,7 +18,8 @@
             "isFutureProperty": "=false",
             "startProperty": "='2020-09-11T09:00:00'",
             "endProperty": "='2020-09-11T17:00:00'",
-            "timezoneProperty": "='Pacific Standard Time'"
+            "timezoneProperty": "='Pacific Standard Time'",
+            "dateTimeTypeProperty": "='date'"
           },
           {
             "$kind": "Microsoft.SendActivity",
