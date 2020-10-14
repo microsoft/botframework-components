@@ -217,13 +217,6 @@
                   "value": "0",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "xNLmAo"
-                      },
-                      "activity": "${SendActivity_xNLmAo()}"
-                    },
-                    {
                       "$kind": "Microsoft.ConfirmInput",
                       "$designer": {
                         "id": "b8n3M4"

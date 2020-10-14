@@ -81,7 +81,7 @@
 # ConfirmInput_Prompt_eaLZYE()
 [Activity
     text=${ConfirmCreatePrompt()}
-    attachments=${json(EventDetailCard(dialog.newEvent))}
+    attachments=${json(EventCreateDetailCard(dialog.newEvent))}
 ]
 
 # SendActivity_4DvAjt()
@@ -105,12 +105,14 @@
 - What is the meeting about?
 - What do you want to add as a title?
 
-# SendActivity_xNLmAo()
+# NoSuggestionTimeConfirm
 - I couldn't find a relevant suggestions that works for all attendees. Want to select your own date and time?
 - I don't see any options that will work for everyone. What date and time do you want to use?
 - There's aren't any relevant suggestions. You can select your own date and time. Want to do that?
+
 # ConfirmInput_Prompt_b8n3M4()
 [Activity
+    text = ${NoSuggestionTimeConfirm()}
     attachments = ${json(NoTimeSuggestionCard())}
 ]
 
