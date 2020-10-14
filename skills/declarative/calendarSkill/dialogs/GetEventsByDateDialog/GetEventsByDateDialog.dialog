@@ -44,6 +44,12 @@
           "resultProperty": "dialog.searchResults"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HelLKa"
+          }
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "1gmZ1j"
@@ -66,7 +72,8 @@
               },
               "resultProperty": "conversation.events",
               "inputProperty": "=dialog.searchResults",
-              "timeZoneProperty": "=user.workingHours.timeZone.name"
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
+              "groupByDateProperty": true
             },
             {
               "$kind": "Microsoft.IfCondition",

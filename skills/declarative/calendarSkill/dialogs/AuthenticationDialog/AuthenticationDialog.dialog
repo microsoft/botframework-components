@@ -48,5 +48,6 @@
       ]
     }
   ],
-  "generator": "AuthenticationDialog.lg"
+  "generator": "AuthenticationDialog.lg",
+  "id": "AuthenticationDialog"
 }

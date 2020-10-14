@@ -14,3 +14,47 @@
 [Activity
     attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
 ]
+
+# SendActivity_Yrs4gn()
+[Activity
+    text = ${GetEventTitleResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_GGU1vZ()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
+
+# GetEventTitleResponseText(event)
+- I found a meeting on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+
+# GetEventTimeResponseText(event)
+- I found a meeting on ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+
+# GetEventAttendeesResponseText(event)
+- You have a meeting on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 3)} 
+
+# GetEventLocationResponseText(event)
+- ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+
+# SendActivity_3j3wUV()
+[Activity
+    text = ${GetEventAttendeesResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_MvzrwE()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
+
+# SendActivity_kaOafR()
+[Activity
+    text = ${GetEventTimeResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_pJwod2()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
+
+# SendActivity_g7immX()
+[Activity
+    text = ${GetEventLocationResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_1we69i()
+- Something seems to be going wrong. I can tell you more about your meetings today... 
