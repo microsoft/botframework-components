@@ -279,5 +279,6 @@
     }
   ],
   "generator": "ResolveDateTimeDialog.lg",
-  "id": "ResolveDateTimeDialog"
+  "id": "ResolveDateTimeDialog",
+  "recognizer": "ResolveDateTimeDialog.lu.qna"
 }
