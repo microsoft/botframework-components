@@ -119,7 +119,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     isCurrentEvent,
                     ev.IsOrganizer,
                     ev.ResponseStatus.Response,
-                    ev.Organizer
+                    ev.Organizer,
+                    ev.WebLink
                 });
             }
 
