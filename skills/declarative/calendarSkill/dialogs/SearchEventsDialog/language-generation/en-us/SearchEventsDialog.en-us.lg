@@ -1,0 +1,18 @@
+[import](common.lg)
+[import](event.lg)
+
+# AskforMeetingParameters(turnCount)
+- IF: ${ turnCount == 0 }
+    - I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?
+- ELSE:
+    - I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?
+
+# TextInput_Prompt_a8RIpz()
+- ${AskforMeetingParameters(dialog.turnCount)}
+# TextInput_InvalidPrompt_a8RIpz()
+- I didn't understand the start time, title or attendees you provided, can you try again?
+# TextInput_UnrecognizedPrompt_a8RIpz()
+- Sorry, I didn't understand.
+
+# SendActivity_TMEgrc()
+- Sure.

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -53,6 +54,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime?> EndProperty { get; set; }
 
+        [JsonProperty("dateTimeTypeProperty")]
+        public StringExpression DateTimeTypeProperty { get; set; }
+
         /// <summary>
         /// Signifies that only future events should be included in the search results.
         /// </summary>
@@ -70,6 +74,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
+            var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = IsFutureProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
@@ -91,11 +96,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // if start date is not provided, default to DateTime.Now
+            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
             if (startProperty == null
                 || startProperty.Value == DateTime.MinValue
-                || (startProperty <= DateTime.UtcNow && isFuture))
+                || (startProperty <= now && isFuture))
             {
-                startProperty = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+                startProperty = now;
             }
 
             // if end date is not provided, default to end of the current day
@@ -160,27 +166,33 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // These filters will be completed for the Search Events work item and are not currently being used. Notes here are for future implementation.
+            // Filter results by datetime if dateTimeType is a specific datetime
+            if (dateTimeTypeProperty != null && dateTimeTypeProperty.Contains("time"))
+            {
+                results = results.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
+            }
+
             // Filter results by title
-            //if (titleProperty != null)
-            //{
-            //    var title = titleProperty as string;
-            //    results = results.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
-            //}
+            if (titleProperty != null)
+            {
+                var title = titleProperty;
+                results = results.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
+            }
 
             //// Filter results by location
-            //if (locationProperty != null)
-            //{
-            //    var location = locationProperty as string;
-            //    results = results.Where(r => r.Location.DisplayName.ToLower().Contains(location.ToLower())).ToList();
-            //}
+            if (locationProperty != null)
+            {
+                var location = locationProperty;
+                results = results.Where(r => r.Location.DisplayName.ToLower().Contains(location.ToLower())).ToList();
+            }
 
             //// Filter results by attendees
-            //if (attendeesProperty != null)
-            //{
-            //    // TODO: update to use contacts from graph rather than string matching
-            //    var attendees = attendeesProperty as List<string>;
-            //    results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
-            //}
+            if (attendeesProperty != null)
+            {
+                // TODO: update to use contacts from graph rather than string matching
+                var attendees = attendeesProperty;
+                results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
+            }
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(GetEvents), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
@@ -192,6 +204,50 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+        }
+
+        private List<object> ParseEvents(DateTime currentDateTime, List<Event> events)
+        {
+            var eventsList = new List<object>();
+            var i = 0;
+
+            foreach (var ev in events)
+            {
+                var start = DateTime.Parse(ev.Start.DateTime);
+                var end = DateTime.Parse(ev.End.DateTime);
+                var duration = end.Subtract(start);
+                var isCurrentEvent = false;
+
+                if (start <= currentDateTime && currentDateTime <= end
+                    || start.AddMinutes(-30) <= currentDateTime && currentDateTime <= start)
+                {
+                    // If event is currently ongoing, or will start in the next 30 minutes
+                    isCurrentEvent = true;
+                }
+
+                eventsList.Add(new
+                {
+                    Id = i++,
+                    ev.Subject,
+                    ev.Start,
+                    ev.End,
+                    ev.Attendees,
+                    ev.IsOnlineMeeting,
+                    ev.OnlineMeeting,
+                    Description = ev.BodyPreview,
+                    Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
+                    DurationDays = duration.Days,
+                    DurationHours = duration.Hours,
+                    DurationMinutes = duration.Minutes,
+                    isRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false,
+                    isCurrentEvent,
+                    ev.IsOrganizer,
+                    ev.ResponseStatus.Response,
+                    ev.Organizer
+                });
+            }
+
+            return eventsList;
         }
     }
 }

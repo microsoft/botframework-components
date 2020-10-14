@@ -1,5 +1,6 @@
 [import](common.lg)
 [import](contactList.lg)
+[import](eventList.lg)
 [import](timeSuggestionList.en-us.lg)
 
 # ChoiceInput_Prompt_dc3QNs()

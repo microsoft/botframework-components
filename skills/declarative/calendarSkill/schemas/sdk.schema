@@ -3809,6 +3809,12 @@
 					"description": "Event range end.",
 					"examples": []
 				},
+				"dateTimeTypeProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "DateTimeType",
+					"description": "Datetime type, e.g. date, datetime.",
+					"examples": []
+				},
 				"timeZoneProperty": {
 					"$ref": "#/definitions/valueExpression",
 					"title": "TimeZone",
@@ -3899,6 +3905,7 @@
 				"token",
 				"inputProperty",
 				"timeZoneProperty",
+				"groupProperty",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -3930,6 +3937,12 @@
 					"$ref": "#/definitions/valueExpression",
 					"title": "TimeZone",
 					"description": "Time zone.",
+					"examples": []
+				},
+				"groupByDateProperty": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Group by date property",
+					"description": "Group the results by date or not.",
 					"examples": []
 				},
 				"$kind": {
