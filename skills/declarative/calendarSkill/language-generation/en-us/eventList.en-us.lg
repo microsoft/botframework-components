@@ -1,0 +1,125 @@
+[import](common.lg)
+[import](event.lg)
+[import](cards.lg)
+
+# EventListPrompt()
+- IF: ${ dialog.items == null || count(dialog.items) <= 1 }
+    - Something must be wrong.
+- ELSEIF: ${ count(dialog.items) == 2 }
+    - I found 2 events that match your search. First is on ${BuildDate(dialog.items[0].start.datetime)}, at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. Second event is on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. Which event do you want to select? 
+- ELSEIF: ${ count(dialog.items) == 3 }
+    - I found 3 events as a result. First event is on ${BuildDate(dialog.items[0].start.datetime)}, at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. After that on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. And then, ${dialog.items[2].Subject}, on ${BuildDate(dialog.items[2].start.datetime)}, at ${BuildTime(dialog.items[2].start.datetime)}. What event do you want to know more about?
+- ELSEIF: ${ count(dialog.items) == 4 }
+    - I found 4 different events. First option is on ${BuildDate(dialog.items[0].start.datetime)} at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. After that on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. And then, ${dialog.items[2].Subject} and ${dialog.items[3].Subject}. Which event do you want to select?
+- ELSE:
+    - I've found ${count(dialog.items)} events that match your request.
+
+# EventListShowMorePrompt()
+- How about these options:
+- What about these options:
+- Sure, relevant options are: 
+
+# EventListSkipResponse()
+- Sure. Let's move on.
+
+# EventListDefaultValueResponse()
+- OK, let's move on. 
+
+# EventListTitle
+- Find Event
+
+
+# EventListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "selectAction": {
+        "title": "collapse",
+        "type": "Action.ToggleVisibility",
+        "targetElements": [
+            "eventDetail${item.Id}"
+        ]
+    },
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${EventTitleContainer(item)}
+        {
+            "type": "Container",
+            "spacing": "Small",
+            "items": [
+                ${EventAttendeeContainer(item)}
+                ${if((item.location != null && item.location != '') || item.isOnlineMeeting, EventLocationContainer(item), '')}
+                ${EventResponseContainer(item)}
+                ${EventContentContainer(item)}
+            ],
+            "isVisible": false,
+            "id": "eventDetail${item.id}"
+        } 
+    ]
+}
+```
+
+
+# EventListActions()
+- IF: ${ dialog.items == null || count(dialog.items) == 0 }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "Create new meeting"
+            },
+                        {
+                "type": "Action.Submit",
+                "title": "Show next day"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "What's on today"
+            },
+            {
+                "type": "Action.Submit",
+                "title": "Create new meeting"
+            }
+        ]
+    }
+    ```
+

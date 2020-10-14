@@ -58,6 +58,12 @@
       "description": "Event range end.",
       "examples": []
     },
+    "dateTimeTypeProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "DateTimeType",
+      "description": "Datetime type, e.g. date, datetime.",
+      "examples": []
+    },
     "timeZoneProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "TimeZone",

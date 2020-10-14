@@ -52,6 +52,10 @@
             {
               "property": "dialog.futureEventsOnly",
               "value": "=coalesce(dialog.futureEventsOnly, false)"
+            },
+            {
+              "property": "dialog.type",
+              "value": "= dialog.type"
             }
           ]
         },
@@ -69,7 +73,8 @@
           "endProperty": "=coalesce(dialog.end, null)",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
-          "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly"
+          "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
+          "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")"
         },
         {
           "$kind": "Microsoft.EndDialog",
