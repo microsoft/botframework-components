@@ -58,3 +58,16 @@
 ]
 # SendActivity_1we69i()
 - Something seems to be going wrong. I can tell you more about your meetings today... 
+
+# SendActivity_QaDvyy()
+[HeroCard
+   text = Let us know what you think!
+   buttons = ${OpenSurveyAction()}
+]
+
+# OpenSurveyAction()
+[CardAction
+    type = openUrl
+	title = Launch survey
+    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+]
