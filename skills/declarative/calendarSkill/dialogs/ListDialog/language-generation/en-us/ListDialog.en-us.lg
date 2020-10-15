@@ -37,3 +37,5 @@
 
 # ChoiceInput_DefaultValueResponse_dc3QNs()
 - OK, let's move on.
+# SendActivity_2ZoUxH()
+- ${template(dialog.templates.numericalChoiceResponse)}

@@ -233,7 +233,8 @@
                       "initialPrompt": "ContactListPrompt",
                       "showMorePrompt": "ContactListShowMorePrompt",
                       "skipResponse": "ContactListSkipResponse",
-                      "defaultValueResponse": "ContactListDefaultValueResponse"
+                      "defaultValueResponse": "ContactListDefaultValueResponse",
+                      "numericalChoiceResponse": "ContactListNumericalChoiceResponse"
                     },
                     "additionalOptions": {
                       "contactName": "=dialog.foreach.value"

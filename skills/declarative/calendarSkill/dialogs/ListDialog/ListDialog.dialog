@@ -71,6 +71,22 @@
               },
               "property": "dialog.selection",
               "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "LGVsAM"
+              },
+              "condition": "dialog.templates.numericalChoiceResponse != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "2ZoUxH"
+                  },
+                  "activity": "${SendActivity_2ZoUxH()}"
+                }
+              ]
             }
           ]
         },

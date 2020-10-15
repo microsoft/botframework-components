@@ -353,7 +353,8 @@
                       "initialPrompt": "TimeSuggestionListPrompt",
                       "showMorePrompt": "TimeSuggestionListShowMorePrompt",
                       "skipResponse": "TimeSuggestionListSkipResponse",
-                      "defaultValueResponse": "TimeSuggestionListDefaultValueResponse"
+                      "defaultValueResponse": "TimeSuggestionListDefaultValueResponse",
+                      "numericalChoiceResponse": "TimeSuggestionNumericalChoiceResponse"
                     }
                   },
                   "resultProperty": "dialog.timeSuggestionChoice"
