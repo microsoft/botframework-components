@@ -1,11 +1,16 @@
 [import](cards.lg)
 
 # TimeSuggestionListPrompt()
-- I have found multiple suggestions:
-- There are multiple suggestions:
-- I found more than one suggestion: 
-- Uh oh. I've found multiple suggestions: 
-- There seem to be a few suggestions:
+- IF: ${count(dialog.additionalOptions.attendees) == 1}
+    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found the following time when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+- ELSE:
+    - I have found multiple suggestions:
+    - There are multiple suggestions:
+    - I found more than one suggestion: 
+    - Uh oh. I've found multiple suggestions: 
+    - There seem to be a few suggestions:
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:

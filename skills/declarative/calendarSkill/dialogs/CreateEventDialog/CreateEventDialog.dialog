@@ -355,6 +355,9 @@
                       "skipResponse": "TimeSuggestionListSkipResponse",
                       "defaultValueResponse": "TimeSuggestionListDefaultValueResponse",
                       "numericalChoiceResponse": "TimeSuggestionNumericalChoiceResponse"
+                    },
+                    "additionalOptions": {
+                      "attendees": "=dialog.slots.attendees"
                     }
                   },
                   "resultProperty": "dialog.timeSuggestionChoice"
