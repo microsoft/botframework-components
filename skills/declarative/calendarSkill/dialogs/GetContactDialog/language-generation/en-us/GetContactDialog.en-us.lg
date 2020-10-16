@@ -13,11 +13,6 @@
 - Who will join?
 - Who do you want to invite?
 - What attendees do you want to add?
-# SendActivity_vCzsEJ()
-- Sure, I'll continue with ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address}.
-- Got it. I'll move forward with ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address}.
-- OK. I'll include ${dialog.attendees[0].emailAddress.name}, ${dialog.attendees[0].emailAddress.address} as attendee.
-
 # SendActivity_mD3TcZ()
 - If you want to try again, just call out the firstname and or surname again.
 # SendActivity_hdAS3R()

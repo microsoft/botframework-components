@@ -40,8 +40,8 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.contactName",
-              "maxTurnCount": "=if(turn.noAttendees==true, 1, 3)",
-              "allowInterruptions": "#NoAttendees.Score>0.9"
+              "allowInterruptions": "#NoAttendees.Score>0.9",
+              "maxTurnCount": 3
             },
             {
               "$kind": "Microsoft.EmitEvent",
@@ -69,28 +69,12 @@
           ]
         },
         {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "DUHsr4"
-          },
-          "condition": "turn.noAttendees == true",
-          "actions": [
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "1HH5Uw"
-              },
-              "value": "=dialog.attendees"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "Lh56Nn"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.contactIndex",
+          "value": "dialog.foreach.contactValue",
           "itemsProperty": "dialog.contactNameArray",
           "actions": [
             {
@@ -100,7 +84,7 @@
               },
               "resultProperty": "dialog.getContactsResult",
               "token": "=user.token.token",
-              "nameProperty": "=dialog.foreach.value"
+              "nameProperty": "=dialog.foreach.contactValue"
             },
             {
               "$kind": "Microsoft.TraceActivity",
@@ -109,20 +93,12 @@
               }
             },
             {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "HgRYkr"
-              },
-              "property": "dialog.contactsCandidate",
-              "value": "=[]"
-            },
-            {
               "$kind": "Microsoft.Foreach",
               "$designer": {
                 "id": "c7rQ0w"
               },
-              "index": "dialog.foreach.index2",
-              "value": "dialog.foreach.value2",
+              "index": "dialog.foreach.contactResultIndex",
+              "value": "dialog.foreach.contactResultValue",
               "itemsProperty": "dialog.getContactsResult",
               "actions": [
                 {
@@ -130,9 +106,9 @@
                   "$designer": {
                     "id": "UI5y1M"
                   },
-                  "index": "dialog.foreach.index3",
-                  "value": "dialog.foreach.value3",
-                  "itemsProperty": "dialog.foreach.value2.EmailAddresses",
+                  "index": "dialog.foreach.emailAddressIndex",
+                  "value": "dialog.foreach.emailAddressValue",
+                  "itemsProperty": "dialog.foreach.contactResultValue.EmailAddresses",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperties",
@@ -142,11 +118,11 @@
                       "assignments": [
                         {
                           "property": "dialog.contactsCandidateItem.email",
-                          "value": "=dialog.foreach.value3"
+                          "value": "=dialog.foreach.emailAddressValue"
                         },
                         {
                           "property": "dialog.contactsCandidateItem.name",
-                          "value": "=dialog.foreach.value2.Name"
+                          "value": "=dialog.foreach.contactResultValue.Name"
                         }
                       ]
                     },
@@ -237,7 +213,7 @@
                       "numericalChoiceResponse": "ContactListNumericalChoiceResponse"
                     },
                     "additionalOptions": {
-                      "contactName": "=dialog.foreach.value"
+                      "contactName": "=dialog.foreach.contactValue"
                     }
                   },
                   "resultProperty": "dialog.attendeeChoiceResult"
@@ -321,13 +297,6 @@
             {
               "value": "1",
               "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "vCzsEJ"
-                  },
-                  "activity": "${SendActivity_vCzsEJ()}"
-                },
                 {
                   "$kind": "Microsoft.ConfirmInput",
                   "$designer": {
@@ -468,12 +437,11 @@
       "intent": "NoAttendees",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "gK4RfH"
+            "id": "KAJZNt"
           },
-          "property": "turn.noAttendees",
-          "value": "=true"
+          "value": "=dialog.attendees"
         }
       ]
     },
@@ -500,11 +468,11 @@
           "assignments": [
             {
               "property": "dialog.emailArray",
-              "value": "=if(@email != null, json('[\"' +@email + '\"]'), null)"
+              "value": "=@@email"
             },
             {
               "property": "dialog.personNameArray",
-              "value": "=if(@personName != null, json('[\"' + @personName + '\"]'), null)"
+              "value": "=@@personname"
             }
           ]
         },
