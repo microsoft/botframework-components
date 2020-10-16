@@ -231,7 +231,7 @@
                     "actionTitleProperty": "name",
                     "activePrompt": "TimeSuggestionListPrompt",
                     "templates": {
-                      "icon": "TimeSuggestionIconUrl",
+                      "icon": "TimeSlotIconUrl",
                       "title": "TimeSuggestionListTitle",
                       "item": "TimeSuggestionListItem",
                       "actions": "TimeSuggestionListActions",

@@ -78,7 +78,7 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "${AttendeeIconUrl()}",
+                            "url": "${ContactIconUrl()}",
                             "height": "15px",
                             "width": "15px",
                             "spacing": "Small",
