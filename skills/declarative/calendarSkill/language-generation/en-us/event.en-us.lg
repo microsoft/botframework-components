@@ -68,6 +68,7 @@
         {
             "type": "Column",
             "width": 5,
+            "isVisible": "${event.isRecurring}",
             "items": [
                 {
                     "type": "Image",
@@ -413,8 +414,10 @@
     - ```
     {
         "type": "Container",
+        "id": "eventContentContainer",
         "separator": true,
         "spacing": "medium",
+        "isVisible": "false",
         "items": [
             {
                 "type":"TextBlock",
@@ -422,60 +425,12 @@
                 "wrap": true
             }
         ]
-    }
+    },
+    ${ToggleButtonContainer('eventContentContainer')}
     ```
 - ELSE:
     -
 
-# EventContentCard(event)
-- ```
-{
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.2",
-    "body": [
-        {
-            "type": "Container",
-            "items": [
-                {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "verticalContentAlignment": "Center",
-                            "items": [
-                                {
-                                    "size": "large",
-                                    "text": "${event.Subject}",
-                                    "type": "TextBlock",
-                                    "weight": "Bolder"
-                                },
-                                {
-                                    "spacing": "Small",
-                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')} | ${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')}",
-                                    "type": "TextBlock"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "Container",
-            "separator": true,
-            "spacing": "medium",
-            "items": [
-               {
-                    "type":"TextBlock",
-                    "text":"${event.description}",
-                    "wrap": true
-               }
-            ]
-        }
-    ]
-}
-```
 
 # EventTitleContainer(event)
 -  ```
@@ -513,94 +468,100 @@
 },
 ```
 
+# ShowContentAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Show content",
+    "data": {
+        "intent": "ShowEventContent",
+        "eventId": "${event.Id}"
+    }
+}
+```
 
-# ShowContentActions(event)
+# AddParticipantAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Show content",
-                "data": {
-                    "intent": "ShowEventContent",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Add participant",
+    "data": {
+        "intent": "AddParticipant",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# AddParticipantActions(event)
+
+# UpdateEventAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Add participant",
-                "data": {
-                    "intent": "AddParticipant",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Update event",
+    "data": {
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# UpdateEventActions(event)
+
+# AcceptEventAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Update event",
-                "data": {
-                    "intent": "UpdateEvent",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Accept event",
+    "data": {
+        "intent": "AcceptEvent",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# AcceptEventActions(event)
+
+# DeclineEventAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Accept event",
-                "data": {
-                    "intent": "AcceptEvent",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Decline event",
+    "data": {
+        "intent": "DeclineEvent",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# DeclineEventActions(event)
+
+# AddTeamsLinkAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Decline event",
-                "data": {
-                    "intent": "DeclineEvent",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Add Teams link",
+    "data": {
+        "intent": "AddTeamsLink",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# AddTeamsLinkActions(event)
+
+# AddLocationAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Add Teams link",
-                "data": {
-                    "intent": "AddTeamsLink",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Add location",
+    "data": {
+        "intent": "AddLocation",
+        "eventId": "${event.Id}"
+    }
+}
 ```
-# AddLocationActions(event)
+
+# UpdateLocationAction(event)
 -```
-            {
-                "type": "Action.Submit",
-                "title": "Add location",
-                "data": {
-                    "intent": "AddLocation",
-                    "eventId": "${event.Id}"
-                }
-            }
-```
-# UpdateLocationActions(event)
--```
-            {
-                "type": "Action.Submit",
-                "title": "Update location",
-                "data": {
-                    "intent": "UpdateLocation",
-                    "eventId": "${event.Id}"
-                }
-            }
+{
+    "type": "Action.Submit",
+    "title": "Update location",
+    "data": {
+        "intent": "UpdateLocation",
+        "eventId": "${event.Id}"
+    }
+}
 ```
 
 # EventDetailActions(event)
@@ -609,10 +570,10 @@
     {
         "type": "ActionSet",
         "actions": [
-           ${ShowContentActions(event)},
-           ${AddParticipantActions(event)},
-           ${UpdateEventActions(event)},
-           ${AddTeamsLinkActions(event)}
+           ${ShowContentAction(event)},
+           ${AddParticipantAction(event)},
+           ${UpdateEventAction(event)},
+           ${AddTeamsLinkAction(event)}
         ]
     }
     ```
@@ -621,10 +582,10 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentActions(event)},
-            ${AddParticipantActions(event)},
-            ${UpdateEventActions(event)},
-            ${AddLocationActions(event)}
+            ${ShowContentAction(event)},
+            ${AddParticipantAction(event)},
+            ${UpdateEventAction(event)},
+            ${AddLocationAction(event)}
         ]
     }
     ```
@@ -633,10 +594,10 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentActions(event)},
-            ${AddParticipantActions(event)},
-            ${UpdateEventActions(event)},
-            ${UpdateLocationActions(event)}
+            ${ShowContentAction(event)},
+            ${AddParticipantAction(event)},
+            ${UpdateEventAction(event)},
+            ${UpdateLocationAction(event)}
         ]
     }
     ```
@@ -645,8 +606,8 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentActions(event)},
-            ${DeclineEventActions(event)}
+            ${ShowContentAction(event)},
+            ${DeclineEventAction(event)}
         ]
     }
     ```
@@ -655,9 +616,9 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentActions(event)},
-            ${AcceptEventActions(event)},
-            ${DeclineEventActions(event)}
+            ${ShowContentAction(event)},
+            ${AcceptEventAction(event)},
+            ${DeclineEventAction(event)}
         ]
     }
     ```
@@ -666,7 +627,7 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentActions(event)}
+            ${ShowContentAction(event)}
         ]
     }
     ```

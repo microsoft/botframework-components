@@ -116,6 +116,13 @@
           "options": {
             "datetime": "=dialog.datetime"
           }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "o5FhLg"
+          },
+          "eventName": "collectFeedback"
         }
       ]
     },
@@ -133,7 +140,7 @@
           "condition": "turn.activity.value.intent",
           "cases": [
             {
-              "value": "ShowEventContent",
+              "value": "ShowEvent",
               "actions": [
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -142,12 +149,6 @@
                   },
                   "condition": "conversation.events != null && count(conversation.events) > 0",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.TraceActivity",
-                      "$designer": {
-                        "id": "zQFSXa"
-                      }
-                    },
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
@@ -261,6 +262,13 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "xA1ZRX"
+          },
+          "eventName": "collectFeedback"
         }
       ]
     },
@@ -354,6 +362,13 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Zl0tb7"
+          },
+          "eventName": "collectFeedback"
         }
       ]
     },
@@ -447,6 +462,13 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "TCXgXo"
+          },
+          "eventName": "collectFeedback"
         }
       ]
     },
@@ -540,6 +562,13 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "y6MzZ9"
+          },
+          "eventName": "collectFeedback"
         }
       ]
     },
@@ -602,6 +631,23 @@
           },
           "activityProcessed": true,
           "dialog": "TestDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "UW3KVm",
+        "name": "OnCollectFeedbackEvent"
+      },
+      "event": "collectFeedback",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "QaDvyy"
+          },
+          "activity": "${SendActivity_QaDvyy()}"
         }
       ]
     }

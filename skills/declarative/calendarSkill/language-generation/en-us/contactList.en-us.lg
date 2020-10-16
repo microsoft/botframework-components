@@ -1,4 +1,4 @@
-[import](cards.lg)
+[import](common.lg)
 
 # ContactListPrompt()
 - I've found multiple ${dialog.additionalOptions.contactName}'s:

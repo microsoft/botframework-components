@@ -126,11 +126,17 @@
     "type": "Container",
     "id": "additionalItemsContainer",
     "separator": true,
+    "spacing": "medium",
     "isVisible": false,
     "items": [
         ${join(skip(itemElements, pageSize), ',')}
     ]
 },
+${ToggleButtonContainer('additionalItemsContainer')}
+```
+
+# ToggleButtonContainer(target)
+- ```
 {
     "type": "Container",
     "separator": true,
@@ -144,7 +150,7 @@
             "selectAction": {
                 "type": "Action.ToggleVisibility",
                 "targetElements": [
-                    "additionalItemsContainer",
+                    "${target}",
                     "chevronDown",
                     "chevronUp"
                 ],
@@ -162,7 +168,7 @@
             "selectAction": {
                 "type": "Action.ToggleVisibility",
                 "targetElements": [
-                    "additionalItemsContainer",
+                    "${target}",
                     "chevronDown",
                     "chevronUp"
                 ],
