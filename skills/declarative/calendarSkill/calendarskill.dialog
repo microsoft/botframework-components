@@ -560,19 +560,19 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Ynt6v9"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "fNofTM"
+            "id": "x2xZwq"
           },
           "activityProcessed": true,
           "dialog": "ResolveCreateEventInput",
           "resultProperty": "dialog.slots"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ynt6v9"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
