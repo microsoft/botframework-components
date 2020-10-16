@@ -4,5 +4,16 @@
   "ApplicationInsights": {
     "InstrumentationKey": "00000000-0000-0000-0000-000000000000"
   },
-  "oauthConnectionName": "Outlook"
+  "oauthConnectionName": "Outlook",
+  "luis": {
+    "name": "",
+    "authoringKey": "",
+    "endpointKey": "00000000-0000-0000-0000-000000000000",
+    "authoringRegion": "westus",
+    "defaultLanguage": "en-us",
+    "environment": "composer",
+    "endpoint": "",
+    "authoringEndpoint": ""
+  },
+  "environment": "composer"
 }

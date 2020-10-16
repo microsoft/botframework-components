@@ -1,5 +1,8 @@
 ﻿using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.Bot.Builder.AI.Luis.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
 {
     [TestClass]
-    public class CalendarSkillTests
+    public class DialogTests
     {
         public static ResourceExplorer ResourceExplorer { get; set; }
 
@@ -18,47 +21,38 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            ResourceExplorer = new ResourceExplorer()
-           .AddFolder(Path.Combine(TestUtils.GetProjectPath(), nameof(CalendarSkillTests)), monitorChanges: false)
-           .AddFolder(Path.Combine(TestUtils.GetProjectPath(), @"..\..\"));
-
+            var rootFolder = Path.Combine(TestUtils.GetProjectPath(), @"..\..\");
+            var testFolder = Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(DialogTests));
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
+                .AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { "root", rootFolder},
+                        { "luis:resources", testFolder },
+                    })
+                .UseLuisSettings()
                 .Build();
+
+            ResourceExplorer = new ResourceExplorer()
+           .AddFolder(rootFolder, monitorChanges: false)
+           .AddFolder(testFolder)
+           .RegisterType(LuisAdaptiveRecognizer.Kind, typeof(MockLuisRecognizer), new MockLuisLoader(Configuration));
         }
 
         [TestMethod]
-        public async Task CalendarSkillTests_Greeting()
+        public async Task Greeting()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CalendarSkillTests_GetProfile()
+        public async Task GetEventTitleByAttendees()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CalendarSkillTests_GetEvents()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CalendarSkillTests_SortEvents()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CalendarSkillTests_GetWorkingHours()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CalendarSkillTests_SettingsTest()
+        public async Task Test()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }

@@ -49,7 +49,7 @@
 - find a meeting with Title {Title=weekly report}
 - find a meeting with title {Title=second lesson} from amanda
 - find a meeting with title {Title=sharing} from steven
-
+- find my meeting with lidia
 @ prebuilt personName
 
 # GetEventAttendees
