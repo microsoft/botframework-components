@@ -106,8 +106,8 @@
                   "$designer": {
                     "id": "UI5y1M"
                   },
-                  "index": "dialog.foreach.emailAddressIndex",
-                  "value": "dialog.foreach.emailAddressValue",
+                  "index": "dialog.foreach.EmailAddressIndex",
+                  "value": "dialog.foreach.EmailAddressValue",
                   "itemsProperty": "dialog.foreach.contactResultValue.EmailAddresses",
                   "actions": [
                     {
@@ -118,7 +118,7 @@
                       "assignments": [
                         {
                           "property": "dialog.contactsCandidateItem.email",
-                          "value": "=dialog.foreach.emailAddressValue"
+                          "value": "=dialog.foreach.EmailAddressValue"
                         },
                         {
                           "property": "dialog.contactsCandidateItem.name",
@@ -185,6 +185,13 @@
                       "changeType": "push",
                       "itemsProperty": "dialog.attendees",
                       "value": "=dialog.newAttendeeItem"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "6d2pAI"
+                      },
+                      "activity": "${SendActivity_6d2pAI()}"
                     }
                   ]
                 }
@@ -232,25 +239,6 @@
                   },
                   "condition": "dialog.attendeeChoiceResult != null",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "2usixK"
-                      },
-                      "condition": "dialog.attendeeChoiceResult == 'retry'",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.RepeatDialog",
-                          "$designer": {
-                            "id": "pROwky"
-                          },
-                          "activityProcessed": true,
-                          "options": {
-                            "attendees": "=dialog.attendees"
-                          }
-                        }
-                      ]
-                    },
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
@@ -333,26 +321,28 @@
                       },
                       "value": "=dialog.attendees"
                     }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.EmitEvent",
+                      "$designer": {
+                        "id": "IVrCRh"
+                      },
+                      "eventName": "ResolveContactName"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "htgnUd"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "attendees": "=dialog.attendees",
+                        "emailArray": "=dialog.emailArray",
+                        "personNameArray": "=dialog.personNameArray"
+                      }
+                    }
                   ]
-                },
-                {
-                  "$kind": "Microsoft.EmitEvent",
-                  "$designer": {
-                    "id": "uuzb8v"
-                  },
-                  "eventName": "ResolveContactName"
-                },
-                {
-                  "$kind": "Microsoft.RepeatDialog",
-                  "$designer": {
-                    "id": "6G6k1K"
-                  },
-                  "activityProcessed": true,
-                  "options": {
-                    "attendees": "=dialog.attendees",
-                    "emailArray": "=dialog.emailArray",
-                    "personNameArray": "=dialog.personNameArray"
-                  }
                 }
               ]
             },
@@ -384,43 +374,11 @@
                 "id": "hdAS3R"
               },
               "activity": "${SendActivity_hdAS3R()}"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "anCdsX"
-          },
-          "condition": "count(dialog.attendees) == 0",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "uh2hJU"
-              },
-              "activity": "${SendActivity_uh2hJU()}"
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "QmERwn"
-              },
-              "activityProcessed": true
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "mHMEji"
-              },
-              "name": "end of getcontact"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "cuUmSx"
+                "id": "u6V7lI"
               },
               "value": "=dialog.attendees"
             }

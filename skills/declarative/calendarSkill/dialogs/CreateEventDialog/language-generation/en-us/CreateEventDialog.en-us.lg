@@ -8,12 +8,6 @@
 - OK, I’ll also include a Teams link.
 - Got it. A Teams link will be added to your meeting.
 - Great. I've gone ahead and added Teams to this meeting.
-# ConfirmInput_Prompt_wFWmPX()
-- I’ve found the following times when all participants can join, the first option is ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}. Would you like to book that time?
-- I’ve found the following times when all participants can join, the first option is ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)}. Should I continue with this time?
-# ChoiceInput_Prompt_0FImIx()
-- All attendees are free at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)} or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}. Which do you prefer?
-- All attendees are free at ${TimeSuggestionFormat(dialog.findMeetingTimesResult[0].Start)} or ${TimeSuggestionFormat(dialog.findMeetingTimesResult[1].Start)}. Do you prefer the first or second option?
 # TimeSuggestionFormat(time)
 - ${formatDateTime(time, 'h:mm tt on d/M')}
 # ConfirmInput_Prompt_O439cC()
