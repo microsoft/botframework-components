@@ -107,15 +107,85 @@
           "resultProperty": "dialog.datetime"
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "ZKtspD"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), \"yyyy-MM-dd\"))"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=coalesce(dialog.datetime.End, null)"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "gViiE0"
+            "id": "UI793B"
           },
           "activityProcessed": true,
-          "dialog": "GetEventsByDateDialog",
+          "dialog": "SearchEventsDialog",
           "options": {
             "datetime": "=dialog.datetime"
-          }
+          },
+          "resultProperty": "dialog.searchResults"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "YMzsRM"
+          },
+          "condition": "dialog.searchResults != null && count(dialog.searchResults) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "rS3tH3"
+              },
+              "activity": "${SendActivity_rS3tH3()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.SortEvents",
+              "$designer": {
+                "id": "FJrf64"
+              },
+              "resultProperty": "conversation.events",
+              "inputProperty": "=dialog.searchResults",
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
+              "groupByDateProperty": true
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "7Vp9Pt"
+              },
+              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "CVSKqO"
+                  },
+                  "activity": "${SendActivity_CVSKqO()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "AQR6NN"
+                  },
+                  "activity": "${SendActivity_AQR6NN()}"
+                }
+              ]
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
