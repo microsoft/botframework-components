@@ -587,13 +587,36 @@
           "name": "CreateEventTrigger"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "x2xZwq"
+            "id": "zgwt1E"
           },
-          "activityProcessed": true,
-          "dialog": "ResolveCreateEventInput",
-          "resultProperty": "dialog.slots"
+          "assignments": [
+            {
+              "property": "dialog.slots.personName",
+              "value": "=coalesce(if(@personName != null, json('[\"' + @personName + '\"]'), null), $slots.personName)"
+            },
+            {
+              "property": "dialog.slots.title",
+              "value": "=coalesce(@Title, $slots.title)"
+            },
+            {
+              "property": "dialog.slots.dateTime",
+              "value": "=coalesce(@datetime, $slots.DateTime)"
+            },
+            {
+              "property": "dialog.slots.location",
+              "value": "=coalesce(@Location, $slots.Location)"
+            },
+            {
+              "property": "dialog.slots.duration",
+              "value": "=coalesce(@Duration, $slots.Duration)"
+            },
+            {
+              "property": "dialog.slots.email",
+              "value": "=coalesce(if(@email != null, json('[\"' +@email + '\"]'), null), $slots.email)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
