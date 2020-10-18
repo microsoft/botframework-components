@@ -645,6 +645,73 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
+        "id": "yG4sCr"
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xPczf1"
+          },
+          "name": "CreateEventTrigger"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "zgwt1E"
+          },
+          "assignments": [
+            {
+              "property": "dialog.slots.personName",
+              "value": "=coalesce(if(@personName != null, json('[\"' + @personName + '\"]'), null), $slots.personName)"
+            },
+            {
+              "property": "dialog.slots.title",
+              "value": "=coalesce(@Title, $slots.title)"
+            },
+            {
+              "property": "dialog.slots.dateTime",
+              "value": "=coalesce(@datetime, $slots.DateTime)"
+            },
+            {
+              "property": "dialog.slots.location",
+              "value": "=coalesce(@Location, $slots.Location)"
+            },
+            {
+              "property": "dialog.slots.duration",
+              "value": "=coalesce(@Duration, $slots.Duration)"
+            },
+            {
+              "property": "dialog.slots.email",
+              "value": "=coalesce(if(@email != null, json('[\"' +@email + '\"]'), null), $slots.email)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ynt6v9"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "oD8szu"
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog",
+          "options": {
+            "slots": "=dialog.slots"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
         "id": "8efAwj",
         "name": "Test"
       },

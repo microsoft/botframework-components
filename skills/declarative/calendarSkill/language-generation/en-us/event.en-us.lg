@@ -3,6 +3,9 @@
 # EventDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventDetailActions(event))}
 
+# EventCreateDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventCreateAction())}
+
 # EventDetailHeader(event)
 - ${CardHeader(EventIconUrl(), event.Subject, "", "")}
 
@@ -253,7 +256,7 @@
     -
 
 # EventAttendeeContainer(event)
-- IF: ${ event.Attendees != null && count(event.Attendees) - 1 > 1 }
+- IF: ${ event.Attendees != null && count(event.Attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
@@ -287,7 +290,7 @@
         ]
     },
     ```
-- ELSEIF: ${ event.Attendees != null && count(event.Attendees) - 1 == 1}
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
     -  ```
     {
         "type": "ColumnSet",
@@ -628,6 +631,30 @@
         ]
     }
     ```
+
+# EventCreateAction
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Confirm",
+            "data": "Yes."
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Update event",
+            "data": "Update event."
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Change duration",
+            "data": "Change duration."
+        }
+    ]
+}
+```
 
 # BuildDate(date)
 - ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}

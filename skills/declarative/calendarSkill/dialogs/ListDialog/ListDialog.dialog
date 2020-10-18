@@ -71,6 +71,22 @@
               },
               "property": "dialog.selection",
               "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "LGVsAM"
+              },
+              "condition": "dialog.templates.numericalChoiceResponse != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "2ZoUxH"
+                  },
+                  "activity": "${SendActivity_2ZoUxH()}"
+                }
+              ]
             }
           ]
         },
@@ -132,7 +148,8 @@
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.showMorePrompt"
+                "activePrompt": "=dialog.templates.showMorePrompt",
+                "additionalOptions": "=dialog.additionalOptions"
               }
             }
           ],
@@ -197,7 +214,8 @@
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.initialPrompt"
+                "activePrompt": "=dialog.templates.initialPrompt",
+                "additionalOptions": "=dialog.additionalOptions"
               }
             }
           ],

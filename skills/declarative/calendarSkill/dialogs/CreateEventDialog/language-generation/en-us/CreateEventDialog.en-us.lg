@@ -1,0 +1,152 @@
+[import](common.lg)
+[import](event.lg)
+[import](timeSuggestionList.lg)
+
+
+# SendActivity_Nd5hYw()
+- Sure, I’ve added a Teams link for you as well.
+- OK, I’ll also include a Teams link.
+- Got it. A Teams link will be added to your meeting.
+- Great. I've gone ahead and added Teams to this meeting.
+# TimeSuggestionFormat(time)
+- ${formatDateTime(time, 'h:mm tt on d/M')}
+# ConfirmInput_Prompt_O439cC()
+- Are you sure you want to send this without a location?
+- This meeting doesn't have a location. Is that OK?
+- You haven't included a location. Is that alright?
+
+# ConfirmCreatePrompt()
+- IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation != true}
+    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location} with a Teams link. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location} with a Teams link included. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location} with a Teams link included, and you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+- ELSE IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation == true}
+    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and the meeting will contain a Teams link. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and a Teams link will be included. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. You've invited ${count(dialog.slots.attendees)} people, and a Teams link is included. Is all of that correct?
+- ELSE IF: ${dialog.slots.isTeamsMeeting != true && dialog.slots.noLocation != true}
+    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location}. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location}. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location}, and you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+- ELSE:
+    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+
+
+# ContactConfirmWithOne(attendees)
+- IF: ${ count(attendees) == 0 }
+    - no attendees
+- ELSE IF: ${ count(attendees) == 1 }
+    - ${attendees[0].name}
+- ELSE:
+    - ${attendees[0].name} and ${count(attendees) - 1}
+
+# ContactConfirmWithTwo(attendees)
+- IF: ${ count(attendees) == 0 }
+    - no attendees
+- ELSE IF: ${ count(attendees) <= 2 }
+    - ${join(select(attendees, x, x.name), ', ')}
+- ELSE:
+    - ${attendees[0].name}, ${attendees[1].name} and ${count(attendees) - 2}
+
+# DateConfirm(startDateTime)
+- on ${formatDateTime(startDateTime, 'MMMM d')}, at ${formatDateTime(startDateTime, 'h:mm tt')}
+
+# FormatDateTimeDuration(startTime, endTime)
+- ${FormatDuration((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)}
+
+# FormatDuration(seconds)
+- IF: ${seconds < 3600}
+	- ${seconds / 60}m
+- ELSEIF: ${seconds % 3600 / 60 != 0}
+	- ${concat(string(seconds / 3600), 'h', string(seconds % 3600 / 60), 'm')}
+- ELSE:
+	- ${seconds / 3600}h
+# SendActivity_zmBQxY()
+- Your event has been created. 
+- Your meeting is on your calendar. 
+- The event has been created
+# SendActivity_3BjjI8()
+- Event creation failed
+# TextInput_Prompt_pVUn2o()
+- Please let me know what location you would like to include?
+- If you want to include a physical location, please call out what I should include for you?
+# ConfirmInput_Prompt_eaLZYE()
+[Activity
+    text=${ConfirmCreatePrompt()}
+    attachments=${json(EventCreateDetailCard(dialog.newEvent))}
+]
+
+# SendActivity_4DvAjt()
+- Event creation failed
+
+# DateTimeInput_Prompt_E1Ybcg()
+- At what time?
+- What time works best?
+- And at what time?
+- Got it, and when do you want it to start?
+# DateTimeInput_Prompt_sHR6f0()
+- Got it, when is the event?
+- Sure, when should I schedule this event?
+- And when do you want this meeting?
+# DateTimeInput_Prompt_gfBnA8()
+- OK, how long would you like this meeting to be?
+- OK, what is your preferred meeting duration?
+# TextInput_Prompt_8FlYLk()
+- What is the title of the meeting?
+- What is the title?
+- What is the meeting about?
+- What do you want to add as a title?
+
+# NoSuggestionTimeConfirm
+- I couldn't find a relevant suggestions that works for all attendees. Want to select your own date and time?
+- I don't see any options that will work for everyone. What date and time do you want to use?
+- There's aren't any relevant suggestions. You can select your own date and time. Want to do that?
+
+# ConfirmInput_Prompt_b8n3M4()
+[Activity
+    text = ${NoSuggestionTimeConfirm()}
+    attachments = ${json(NoTimeSuggestionCard())}
+]
+
+# NoTimeSuggestionCard
+- ${CardTemplate(NoTimeSuggestionHeader(), NoTimeSuggestionBody(), NoTimeSuggestionActions())}
+
+# NoTimeSuggestionHeader
+- ${CardHeader(TimeSlotIconUrl(), TimeSuggestionListTitle(), "", "")}
+
+# NoTimeSuggestionBody
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "Unfortunately, I could not find relevant suggestions. Please choose your own date an time.",
+            "wrap": true
+        }
+    ]
+}
+```
+
+# NoTimeSuggestionActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Choose own date and time",
+            "data": "Choose own date and time"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Change duration",
+            "data": "Change duration"
+        }
+    ]
+}
+```
