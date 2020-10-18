@@ -1,15 +1,16 @@
 [import](common.lg)
 
 # ContactListPrompt()
-- I've found multiple results.
-- There are multiple results.
-- I found more than one result.
-- Uh oh. I've found multiple results.
-- There seem to be a few results.
+- I've found multiple ${dialog.additionalOptions.contactName}'s:
+- There are multiple ${dialog.additionalOptions.contactName}'s:
+- I found more than one ${dialog.additionalOptions.contactName}'s: 
+- Uh oh. I've found multiple ${dialog.additionalOptions.contactName}'s: 
+- There seem to be a few ${dialog.additionalOptions.contactName}'s:
 
 # ContactListShowMorePrompt()
-- I found more options.
-- I found additional contacts.
+- How about these contacts:
+- What about these contacts:
+- Sure, relevant contacts are: 
 
 # ContactListSkipResponse()
 - Got it, none of these contacts.
@@ -18,6 +19,11 @@
 
 # ContactListDefaultValueResponse()
 - OK, let's move on without attendees. 
+
+# ContactListNumericalChoiceResponse()
+- Sure, I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
+- Got it. I'll move forward with the ${addOrdinal(int(dialog.selectedIndex))} one.
+- OK. The ${addOrdinal(int(dialog.selectedIndex))} option. I'll use that one.
 
 # ContactListTitle
 - Contacts

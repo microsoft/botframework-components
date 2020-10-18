@@ -1,0 +1,494 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "gZraKc",
+    "name": "GetContactDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "WsErqP"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "di4iCc"
+          },
+          "name": "GetContactDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "oFaNSG"
+          },
+          "condition": "(dialog.emailArray == null) && (dialog.personNameArray == null)",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "wIEu2k"
+              },
+              "disabled": false,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_wIEu2k()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.contactName",
+              "allowInterruptions": "#NoAttendees.Score>0.9",
+              "maxTurnCount": 3
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "Z5VGW5"
+              },
+              "eventName": "ResolveContactName"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Wcv4ha"
+          },
+          "assignments": [
+            {
+              "property": "dialog.contactNameArray",
+              "value": "=dialog.personNameArray"
+            },
+            {
+              "property": "dialog.attendees",
+              "value": "=coalesce(dialog.attendees, [])"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Lh56Nn"
+          },
+          "index": "dialog.foreach.contactIndex",
+          "value": "dialog.foreach.contactValue",
+          "itemsProperty": "dialog.contactNameArray",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetContacts",
+              "$designer": {
+                "id": "6ogdPb"
+              },
+              "resultProperty": "dialog.getContactsResult",
+              "token": "=user.token.token",
+              "nameProperty": "=dialog.foreach.contactValue"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "R3ZKVn"
+              }
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "c7rQ0w"
+              },
+              "index": "dialog.foreach.contactResultIndex",
+              "value": "dialog.foreach.contactResultValue",
+              "itemsProperty": "dialog.getContactsResult",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "UI5y1M"
+                  },
+                  "index": "dialog.foreach.EmailAddressIndex",
+                  "value": "dialog.foreach.EmailAddressValue",
+                  "itemsProperty": "dialog.foreach.contactResultValue.EmailAddresses",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "p5NBku"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.contactsCandidateItem.email",
+                          "value": "=dialog.foreach.EmailAddressValue"
+                        },
+                        {
+                          "property": "dialog.contactsCandidateItem.name",
+                          "value": "=dialog.foreach.contactResultValue.Name"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "KVry4c"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.contactsCandidate",
+                      "value": "=dialog.contactsCandidateItem"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SwitchCondition",
+              "$designer": {
+                "id": "xFw8td"
+              },
+              "condition": "count(dialog.contactsCandidate)",
+              "cases": [
+                {
+                  "value": "0",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "UrRzOu"
+                      },
+                      "activity": "${SendActivity_UrRzOu()}"
+                    }
+                  ]
+                },
+                {
+                  "value": "1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "W5iQOq"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.newAttendeeItem.EmailAddress.Name",
+                          "value": "=dialog.contactsCandidate[0].name"
+                        },
+                        {
+                          "property": "dialog.newAttendeeItem.EmailAddress.Address",
+                          "value": "=dialog.contactsCandidate[0].email"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "u4oosr"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.attendees",
+                      "value": "=dialog.newAttendeeItem"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "6d2pAI"
+                      },
+                      "activity": "${SendActivity_6d2pAI()}"
+                    }
+                  ]
+                }
+              ],
+              "default": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "im2f6E"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "options": {
+                    "items": "=dialog.contactsCandidate",
+                    "actionTitleProperty": "name",
+                    "activePrompt": "ContactListPrompt",
+                    "templates": {
+                      "icon": "ContactIconUrl",
+                      "title": "ContactListTitle",
+                      "item": "ContactListItem",
+                      "actions": "ContactListActions",
+                      "initialPrompt": "ContactListPrompt",
+                      "showMorePrompt": "ContactListShowMorePrompt",
+                      "skipResponse": "ContactListSkipResponse",
+                      "defaultValueResponse": "ContactListDefaultValueResponse",
+                      "numericalChoiceResponse": "ContactListNumericalChoiceResponse"
+                    },
+                    "additionalOptions": {
+                      "contactName": "=dialog.foreach.contactValue"
+                    }
+                  },
+                  "resultProperty": "dialog.attendeeChoiceResult"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "gZNxIp"
+                  },
+                  "name": "after list dialog"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "92iT86"
+                  },
+                  "condition": "dialog.attendeeChoiceResult != null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "4kZDOL"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.newAttendeeItem.EmailAddress.Name",
+                          "value": "=dialog.attendeeChoiceResult.name"
+                        },
+                        {
+                          "property": "dialog.newAttendeeItem.EmailAddress.Address",
+                          "value": "=dialog.attendeeChoiceResult.email"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "H7olm0"
+                      },
+                      "changeType": "push",
+                      "itemsProperty": "dialog.attendees",
+                      "value": "=dialog.newAttendeeItem"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5MSSOQ"
+          }
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "pVwdCj"
+          },
+          "cases": [
+            {
+              "value": "1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ConfirmInput",
+                  "$designer": {
+                    "id": "eQMqZH"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ConfirmInput_Prompt_eQMqZH()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "maxTurnCount": "=if(@personName != null || @email != null, 1, 3)",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "property": "dialog.addMoreConfirm"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "W8gOnn"
+                  },
+                  "condition": "dialog.addMoreConfirm == false",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "Mkt2SB"
+                      },
+                      "value": "=dialog.attendees"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.EmitEvent",
+                      "$designer": {
+                        "id": "IVrCRh"
+                      },
+                      "eventName": "ResolveContactName"
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "htgnUd"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "attendees": "=dialog.attendees",
+                        "emailArray": "=dialog.emailArray",
+                        "personNameArray": "=dialog.personNameArray"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "mD3TcZ"
+                  },
+                  "activity": "${SendActivity_mD3TcZ()}"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "Gpxevl"
+                  },
+                  "activityProcessed": true
+                }
+              ]
+            }
+          ],
+          "condition": "count(dialog.attendees)",
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hdAS3R"
+              },
+              "activity": "${SendActivity_hdAS3R()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "u6V7lI"
+              },
+              "value": "=dialog.attendees"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "DR5TyW",
+        "name": "NoAttendees"
+      },
+      "intent": "NoAttendees",
+      "actions": [
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "KAJZNt"
+          },
+          "value": "=dialog.attendees"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "gqQD7D",
+        "name": "ResolveContactName"
+      },
+      "event": "ResolveContactName",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "X6Ny0F"
+          },
+          "name": "after input name"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "07oaFU"
+          },
+          "assignments": [
+            {
+              "property": "dialog.emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "=@@personname"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uXvQ6A"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "pVNcMO"
+          },
+          "condition": "(dialog.emailArray == null) && (dialog.personNameArray == null) && (dialog.contactName != null)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Meoy1F"
+              },
+              "property": "dialog.personNameArray",
+              "value": "=json(concat('[\"', dialog.contactName, '\"]'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "dLUvU0"
+          },
+          "property": "dialog.contactName",
+          "value": "=null"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "iyA4As",
+        "name": "TryAgain"
+      },
+      "intent": "TryAgain",
+      "actions": [
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "RKDuw1"
+          },
+          "activityProcessed": true,
+          "options": {
+            "attendees": "=dialog.attendees"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetContactDialog.lg",
+  "id": "GetContactDialog",
+  "recognizer": "GetContactDialog.lu.qna"
+}
