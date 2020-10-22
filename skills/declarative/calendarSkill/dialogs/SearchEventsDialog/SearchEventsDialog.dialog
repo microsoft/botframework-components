@@ -25,7 +25,7 @@
           "$designer": {
             "id": "ekNrAH"
           },
-          "condition": "dialog.start == null && dialog.title == null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
+          "condition": "dialog.start == null && dialog.title == null && dialog.order==null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
@@ -87,6 +87,10 @@
                 {
                   "property": "dialog.type",
                   "value": "= dialog.datetime.type"
+                },
+                {
+                  "property": "dialog.order",
+                  "value": "=@order"
                 }
               ]
             }
@@ -108,7 +112,8 @@
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
           "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")",
-          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))"
+          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+          "orderProperty": "= dialog.order"
         },
         {
           "$kind": "Microsoft.IfCondition",

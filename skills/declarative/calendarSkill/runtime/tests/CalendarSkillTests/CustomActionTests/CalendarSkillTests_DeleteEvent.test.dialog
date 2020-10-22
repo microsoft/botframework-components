@@ -1,9 +1,9 @@
 ﻿{
   "$schema": "../app.schema",
   "$kind": "Microsoft.Test.Script",
-  "description": "Test MS Graph - Get Events",
+  "description": "Test MS Graph - Delete Event",
   "httpRequestMocks": [
-    "getEvents.mock"
+    "deleteEvent.mock"
   ],
   "dialog": {
     "$kind": "Microsoft.AdaptiveDialog",
@@ -12,19 +12,14 @@
         "$kind": "Microsoft.OnBeginDialog",
         "actions": [
           {
-            "$kind": "Microsoft.Graph.Calendar.GetEvents",
+            "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "isFutureProperty": "=false",
-            "startProperty": "='2020-09-11T09:00:00'",
-            "endProperty": "='2020-09-11T17:00:00'",
-            "timezoneProperty": "='Pacific Standard Time'",
-            "dateTimeTypeProperty": "='date'",
-            "orderProperty": "=null"
+            "eventId": "=0000000000"
           },
           {
             "$kind": "Microsoft.SendActivity",
-            "activity": "${dialog.result[0].subject}"
+            "activity": "${dialog.result}"
           }
         ]
       }
@@ -37,7 +32,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Project Review"
+      "text": "True"
     }
   ]
 }

@@ -64,6 +64,12 @@
       "description": "Datetime type, e.g. date, datetime.",
       "examples": []
     },
+    "orderProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "OrderProperty",
+      "description": "Order property, e.g. next.",
+      "examples": []
+    },
     "timeZoneProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "TimeZone",

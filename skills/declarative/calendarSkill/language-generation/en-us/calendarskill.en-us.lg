@@ -21,8 +21,12 @@
     text = ${GetEventTitleResponseText(dialog.event)}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
-# SendActivity_GGU1vZ()
+
+# ErrorMessage()
 - Something seems to be going wrong. I can tell you more about your meetings today... 
+
+# SendActivity_GGU1vZ()
+- ${ErrorMessage()}
 
 # GetEventTitleResponseText(event)
 - I found a meeting on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
@@ -36,13 +40,15 @@
 # GetEventLocationResponseText(event)
 - ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
 
+# RespondEventResponseText(action, event)
+- Alright, I’ve ${action} the meeting named ${event.Subject}.
 # SendActivity_3j3wUV()
 [Activity
     text = ${GetEventAttendeesResponseText(dialog.event)}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_MvzrwE()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
+- ${ErrorMessage()}
 
 # SendActivity_kaOafR()
 [Activity
@@ -50,7 +56,7 @@
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_pJwod2()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
+- ${ErrorMessage()}
 
 # SendActivity_g7immX()
 [Activity
@@ -58,8 +64,7 @@
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_1we69i()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
-
+- ${ErrorMessage()}
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
@@ -90,3 +95,31 @@
     text = ${ScheduleResponseText(dialog.start, createArray())}
     attachments = ${json(ScheduleNoResults(dialog.start))}
 ]
+
+# SendActivity_w8uwiZ()
+- ${ErrorMessage()}
+
+# SendActivity_HYIRYe()
+- ${ErrorMessage()}
+
+# SendActivity_BAjl1j()
+[Activity
+    Text = ${RespondEventResponseText("accepted", dialog.event)}
+    SuggestedActions = Open my Calendar | New Event
+]
+# SendActivity_sDHQlJ()
+[Activity
+    Text = ${RespondEventResponseText("declined", dialog.event)}
+    SuggestedActions = My Calendar | New Event
+]
+
+# SendActivity_22WNkk()
+- ${ErrorMessage()}
+
+# SendActivity_Np8fjo()
+[Activity
+    Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
+    SuggestedActions = Open my Calendar | New Event
+]
+# SendActivity_eMsYu3()
+- ${ErrorMessage()}

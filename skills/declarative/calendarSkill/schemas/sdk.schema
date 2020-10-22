@@ -1,5 +1,5 @@
 {
-	"$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+	"$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
 	"type": "object",
 	"title": "Component kinds",
 	"description": "These are all of the kinds that can be created by the loader.",
@@ -122,7 +122,16 @@
 			"$ref": "#/definitions/Microsoft.GotoAction"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
@@ -138,6 +147,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
@@ -207,6 +219,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.OnCondition"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.OnContinueConversation"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.OnConversationUpdateActivity"
@@ -314,6 +329,9 @@
 			"$ref": "#/definitions/Microsoft.SwitchCondition"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.TemperatureEntityRecognizer"
 		},
 		{
@@ -396,7 +414,7 @@
 					"description": "Optional dialog ID."
 				},
 				"autoEndDialog": {
-					"type": "boolean",
+					"$ref": "#/definitions/booleanExpression",
 					"title": "Auto end dialog",
 					"description": "If set to true the dialog will automatically end when there are no further actions.  If set to false, remember to manually end the dialog using EndDialog action.",
 					"default": true
@@ -749,7 +767,6 @@
 					"$ref": "#/definitions/arrayExpression",
 					"title": "Expected Properties",
 					"description": "Properties expected from the user.",
-					"type": "array",
 					"examples": [
 						[
 							"age",
@@ -767,7 +784,8 @@
 					"title": "Default Operation",
 					"description": "Sets the default operation that will be used when no operation is recognized in the response to this Ask.",
 					"examples": [
-						"add"
+						"Add()",
+						"Remove()"
 					]
 				},
 				"id": {
@@ -829,7 +847,8 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/Microsoft.IActivityTemplate/oneOf/1/properties/attachments/items",
-							"title": "Object"
+							"title": "Object",
+							"description": "Attachment object."
 						},
 						{
 							"$ref": "#/definitions/equalsExpression"
@@ -843,7 +862,8 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/Microsoft.IActivityTemplate/oneOf/1/properties/attachments/items",
-							"title": "Object"
+							"title": "Object",
+							"description": "Attachment object."
 						},
 						{
 							"$ref": "#/definitions/equalsExpression"
@@ -1166,6 +1186,16 @@
 					"title": "Activity",
 					"description": "The activity to send to the skill.",
 					"$ref": "#/definitions/Microsoft.IActivityTemplate"
+				},
+				"allowInterruptions": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Allow Interruptions",
+					"description": "A boolean expression that determines whether the parent should be allowed to interrupt the skill.",
+					"default": true,
+					"examples": [
+						true,
+						"=user.xyz"
+					]
 				},
 				"$kind": {
 					"title": "Kind of dialog object",
@@ -2445,7 +2475,7 @@
 					]
 				},
 				"outputFormat": {
-					"$ref": "#/definitions/stringExpression",
+					"$ref": "#/definitions/expression",
 					"title": "Output format",
 					"description": "Expression to use for formatting the output.",
 					"examples": [
@@ -3516,6 +3546,124 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.AcceptEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Accept Event",
+			"description": "Accept a event using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"eventId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token/oneOf/5",
+							"examples": [
+								"=concat('x','y','z')"
+							]
+						}
+					]
+				},
+				"token": {
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					],
+					"$role": "expression",
+					"oneOf": [
+						{
+							"type": "object",
+							"title": "Object"
+						},
+						{
+							"type": "array",
+							"title": "Array"
+						},
+						{
+							"type": "string",
+							"title": "String",
+							"pattern": "^(?!(=)).*",
+							"examples": [
+								"Hello ${user.name}"
+							]
+						},
+						{
+							"type": "boolean",
+							"title": "Boolean",
+							"examples": [
+								false
+							]
+						},
+						{
+							"type": "number",
+							"title": "Number",
+							"examples": [
+								15.5
+							]
+						},
+						{
+							"examples": [
+								"=..."
+							],
+							"$role": "expression",
+							"type": "string",
+							"title": "Expression",
+							"pattern": "^=.*\\S.*"
+						}
+					]
+				},
+				"eventId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "EventId",
+					"description": "Id of event",
+					"examples": [
+						"dialog.event.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.CreateEvent": {
 			"$role": "implements(Microsoft.IDialog)",
 			"title": "Microsoft Graph - Create Event",
@@ -3611,6 +3759,128 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.CreateEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeclineEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Decline Event",
+			"description": "Decline a event using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"eventId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"eventId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "EventId",
+					"description": "Id of event",
+					"examples": [
+						"dialog.event.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.DeleteEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - Delete Event",
+			"description": "Delete a event using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"eventId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"eventId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "EventId",
+					"description": "Id of event",
+					"examples": [
+						"dialog.event.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.DeleteEvent"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -3815,6 +4085,12 @@
 					"description": "Datetime type, e.g. date, datetime.",
 					"examples": []
 				},
+				"orderProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "OrderProperty",
+					"description": "Order property, e.g. next.",
+					"examples": []
+				},
 				"timeZoneProperty": {
 					"$ref": "#/definitions/valueExpression",
 					"title": "TimeZone",
@@ -3951,6 +4227,67 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.SortEvents"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.TentativelyAcceptEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Microsoft Graph - TentativelyAccept Event",
+			"description": "Tentatively Accept a event using the Microsoft Graph API.",
+			"required": [
+				"token",
+				"eventId",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/resultProperty",
+					"title": "Result property",
+					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"examples": [
+						"dialog.contosodata"
+					]
+				},
+				"token": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "Token",
+					"description": "Microsoft Graph Authentication Token",
+					"examples": [
+						"user.token.token"
+					]
+				},
+				"eventId": {
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent/properties/token",
+					"title": "EventId",
+					"description": "Id of event",
+					"examples": [
+						"dialog.event.id"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.TentativelyAcceptEvent"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -4131,7 +4468,7 @@
 				"resultProperty": {
 					"$ref": "#/definitions/stringExpression",
 					"title": "Result property",
-					"description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+					"description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
 					"examples": [
 						"dialog.contosodata"
 					]
@@ -4166,7 +4503,8 @@
 								"none",
 								"json",
 								"activity",
-								"activities"
+								"activities",
+								"binary"
 							],
 							"default": "json"
 						},
@@ -4729,30 +5067,6 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -4843,19 +5157,22 @@
 					"$ref": "#/definitions/Microsoft.SwitchCondition"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.TraceActivity"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
+					"$ref": "#/definitions/Microsoft.Ask"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.ConfirmInput"
@@ -4882,6 +5199,18 @@
 					"$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeclineEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
 				},
 				{
@@ -4895,6 +5224,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.SortEvents"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
@@ -5058,6 +5390,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OnCondition"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OnContinueConversation"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.OnConversationUpdateActivity"
@@ -6308,11 +6643,15 @@
 			}
 		},
 		"Microsoft.OnCancelDialog": {
-			"$role": "implements(Microsoft.ITrigger)",
+			"$role": [
+				"implements(Microsoft.ITrigger)",
+				"extends(Microsoft.OnCondition)"
+			],
 			"title": "On cancel dialog",
 			"description": "Actions to perform on cancel dialog event.",
 			"type": "object",
 			"required": [
+				"actions",
 				"$kind"
 			],
 			"additionalProperties": false,
@@ -6323,6 +6662,37 @@
 				}
 			},
 			"properties": {
+				"condition": {
+					"$ref": "#/definitions/condition",
+					"title": "Condition",
+					"description": "Condition (expression).",
+					"examples": [
+						"user.vip == true"
+					]
+				},
+				"actions": {
+					"type": "array",
+					"title": "Actions",
+					"description": "Sequence of actions to execute.",
+					"items": {
+						"$kind": "Microsoft.IDialog",
+						"$ref": "#/definitions/Microsoft.IDialog"
+					}
+				},
+				"priority": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Priority",
+					"description": "Priority for trigger with 0 being the highest and < 0 ignored."
+				},
+				"runOnce": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Run Once",
+					"description": "True if rule should run once per unique conditions",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
 				"$kind": {
 					"title": "Kind of dialog object",
 					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -6631,6 +7001,71 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.OnCondition"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.OnContinueConversation": {
+			"$role": [
+				"implements(Microsoft.ITrigger)",
+				"extends(Microsoft.OnCondition)"
+			],
+			"title": "On Continue Conversation",
+			"description": "Actions to perform when a conversation is started up again from a ContinueConversationLater action.",
+			"type": "object",
+			"required": [
+				"actions",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"condition": {
+					"$ref": "#/definitions/condition",
+					"title": "Condition",
+					"description": "Condition (expression).",
+					"examples": [
+						"user.vip == true"
+					]
+				},
+				"actions": {
+					"type": "array",
+					"title": "Actions",
+					"description": "Sequence of actions to execute.",
+					"items": {
+						"$kind": "Microsoft.IDialog",
+						"$ref": "#/definitions/Microsoft.IDialog"
+					}
+				},
+				"priority": {
+					"$ref": "#/definitions/integerExpression",
+					"title": "Priority",
+					"description": "Priority for trigger with 0 being the highest and < 0 ignored."
+				},
+				"runOnce": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Run Once",
+					"description": "True if rule should run once per unique conditions",
+					"examples": [
+						true,
+						"=f(x)"
+					]
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.OnContinueConversation"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -7706,7 +8141,7 @@
 				"extends(Microsoft.OnCondition)"
 			],
 			"title": "On unknown intent",
-			"description": "Action to perform when user input is unrecognized and if none of the 'on intent recognition' triggers match recognized intent.",
+			"description": "Action to perform when user input is unrecognized or if none of the 'on intent recognition' triggers match recognized intent.",
 			"type": "object",
 			"required": [
 				"actions",
@@ -8752,11 +9187,9 @@
 				},
 				"userId": {
 					"$ref": "#/definitions/stringExpression",
-					"title": "ActivityId",
-					"description": "expression to an activityId to get the members. If none is defined then the current activity id will be used.",
-					"examples": [
-						"=$lastActivity"
-					]
+					"title": "UserId",
+					"description": "Expression to an user to signout. Default is user.id.",
+					"default": "=user.id"
 				},
 				"connectionName": {
 					"$ref": "#/definitions/stringExpression",
@@ -8919,6 +9352,68 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.SwitchCondition"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.TelemetryTrackEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"type": "object",
+			"title": "Telemetry - Track Event",
+			"description": "Track a custom event using the registered Telemetry Client.",
+			"required": [
+				"url",
+				"method",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"disabled": {
+					"$ref": "#/definitions/booleanExpression",
+					"title": "Disabled",
+					"description": "Optional condition which if true will disable this action.",
+					"examples": [
+						"user.age > 3"
+					]
+				},
+				"eventName": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Event Name",
+					"description": "The name of the event to track.",
+					"examples": [
+						"MyEventStarted",
+						"MyEventCompleted"
+					]
+				},
+				"properties": {
+					"type": "object",
+					"title": "Properties",
+					"description": "One or more properties to attach to the event being tracked.",
+					"additionalProperties": {
+						"$ref": "#/definitions/stringExpression"
+					}
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.TelemetryTrackEvent"
 				},
 				"$designer": {
 					"title": "Designer information",

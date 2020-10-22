@@ -1,0 +1,34 @@
+[import](common.lg)
+[import](event.lg)
+[import](calendarskill.lg)
+
+# ConfirmInput_Prompt_bbFHND()
+[Activity
+    text = ${CancelEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+
+# CancelEventResponseText(event)
+- OK. Are you sure you want to cancel the event on ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)},  ${event.Subject}?
+# SendActivity_cJ2cuN()
+- I’ve cancelled the event for you and attendees will be notified.
+# ConfirmInput_Prompt_AyheDs()
+[Activity
+    text = ${AskForDecline()}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+
+# AskForDecline 
+- I see you are not the owner of the meeting, would you like to decline the meeting?
+# SendActivity_jZarIU()
+- ${RespondEventResponseText("declined", dialog.event)}
+
+
+
+
+
+
+# SendActivity_JCItAO()
+- Sure.
+# SendActivity_iPUM6m()
+- Sure.

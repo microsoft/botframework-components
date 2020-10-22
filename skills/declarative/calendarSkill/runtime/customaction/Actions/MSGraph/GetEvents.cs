@@ -63,8 +63,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("isFutureProperty")]
         public BoolExpression IsFutureProperty { get; set; }
 
+        [JsonProperty("orderProperty")]
+        public StringExpression OrderProperty { get; set; }
+
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
+        
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -73,6 +77,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var startProperty = StartProperty.GetValue(dcState);
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
+            var orderProperty = OrderProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = IsFutureProperty.GetValue(dcState);
@@ -192,6 +197,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 // TODO: update to use contacts from graph rather than string matching
                 var attendees = attendeesProperty;
                 results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
+            }
+
+            //// Get result by order
+            if (results.Any() && orderProperty == "next")
+            {
+                // TODO: extend only 'next' to more general format
+                results = new List<Event>() { results.First() };
             }
 
             // Write Trace Activity for the http request and response values
