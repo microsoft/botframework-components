@@ -117,3 +117,32 @@
 - run the test
 - this is a test
 - test test test
+
+
+# UpdateEvent
+- Can you {@EntityOperation={@Add=add}} Rachel
+- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
+- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
+- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
+- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
+- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
+- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- Update meeting
+
+@ prebuilt personName
+@ prebuilt email
+@ prebuilt datetimeV2
+
+@ ml EntityName
+    - @ ml EventTitle
+    - @ ml EventDateTime
+    - @ ml EventAttendee
+    - @ ml EventLocation
+    - @ ml EventDuration
+    - @ ml TeamsLink
+
+
+@ ml EntityOperation
+    - @ ml Add
+    - @ ml Remove
+    - @ ml Change

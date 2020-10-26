@@ -743,6 +743,81 @@
           "activity": "${SendActivity_QaDvyy()}"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "48qkfh",
+        "name": "UpdateEvent"
+      },
+      "intent": "UpdateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "e0VZv9"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.entityNameResult",
+              "value": "=@@EntityName"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@Title"
+            },
+            {
+              "property": "dialog.personName",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.email",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@Location"
+            },
+            {
+              "property": "dialog.entityOperationResult",
+              "value": "=@@EntityOperation"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wKqlcK"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1hhoVh"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "entityNameResult": "=dialog.entityNameResult",
+            "title": "=dialog.title",
+            "personName": "=dialog.personName",
+            "email": "=dialog.email",
+            "location": "=dialog.location",
+            "entityOperationResult": "=dialog.entityOperationResult"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
