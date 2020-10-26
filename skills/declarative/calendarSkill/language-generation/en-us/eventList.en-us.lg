@@ -36,11 +36,9 @@
     "separator": true,
     "spacing": "medium",
     "selectAction": {
-        "title": "collapse",
-        "type": "Action.ToggleVisibility",
-        "targetElements": [
-            "eventDetail${item.Id}"
-        ]
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": ${BuildCardActionData(item.index)}
     },
     "items": [
         {
@@ -72,18 +70,6 @@
             ]
         },
         ${EventTitleContainer(item)}
-        {
-            "type": "Container",
-            "spacing": "Small",
-            "items": [
-                ${EventAttendeeContainer(item)}
-                ${if((item.location != null && item.location != '') || item.isOnlineMeeting, EventLocationContainer(item), '')}
-                ${EventResponseContainer(item)}
-                ${EventContentContainer(item)}
-            ],
-            "isVisible": false,
-            "id": "eventDetail${item.id}"
-        } 
     ]
 }
 ```
