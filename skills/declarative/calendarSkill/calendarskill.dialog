@@ -130,16 +130,26 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "datetime": "=dialog.datetime"
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "doSelection": "=false",
+            "groupResults": "=true"
           },
-          "resultProperty": "dialog.searchResults"
+          "resultProperty": "conversation.events"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "4U8jh7"
+          },
+          "name": "AfterGetEvents"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "YMzsRM"
           },
-          "condition": "dialog.searchResults != null && count(dialog.searchResults) > 0",
+          "condition": "conversation.events != null && count(conversation.events) > 0",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -150,16 +160,6 @@
             }
           ],
           "actions": [
-            {
-              "$kind": "Microsoft.Graph.Calendar.SortEvents",
-              "$designer": {
-                "id": "FJrf64"
-              },
-              "resultProperty": "conversation.events",
-              "inputProperty": "=dialog.searchResults",
-              "timeZoneProperty": "=user.workingHours.timeZone.name",
-              "groupByDateProperty": true
-            },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
@@ -710,24 +710,13 @@
           "options": {
             "slots": "=dialog.slots"
           }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "8efAwj",
-        "name": "Test"
-      },
-      "intent": "Test",
-      "actions": [
+        },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "xR5nUs"
+            "id": "lqswVn"
           },
-          "activityProcessed": true,
-          "dialog": "TestDialog"
+          "eventName": "collectFeedback"
         }
       ]
     },

@@ -73,7 +73,7 @@
 # GetEventAttendees
 - Who am I meeting at 11 today?
 - Who else is in my 2pm meeting?
-- Who is coming to [name of meeting]?
+- Who is coming to the {title=project review} tomorrow?
 - Who all is attending the 4pm meeting?
 - who am i meeting at 10 am tomorrow
 - who am i meeting for {Title=dinner}

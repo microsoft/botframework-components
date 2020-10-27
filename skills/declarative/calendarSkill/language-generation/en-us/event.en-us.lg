@@ -471,18 +471,6 @@
 },
 ```
 
-# ShowContentAction(event)
--```
-{
-    "type": "Action.Submit",
-    "title": "Show content",
-    "data": {
-        "intent": "ShowEventContent",
-        "eventId": "${event.Id}"
-    }
-}
-```
-
 # AddParticipantAction(event)
 -```
 {
@@ -596,7 +584,6 @@
     {
         "type": "ActionSet",
         "actions": [
-           ${ShowContentAction(event)},
            ${AddParticipantAction(event)},
            ${UpdateEventAction(event)},
            ${AddTeamsLinkAction(event)}
@@ -608,7 +595,6 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentAction(event)},
             ${AddParticipantAction(event)},
             ${UpdateEventAction(event)},
             ${AddLocationAction(event)}
@@ -620,7 +606,6 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentAction(event)},
             ${AddParticipantAction(event)},
             ${UpdateEventAction(event)},
             ${UpdateLocationAction(event)}
@@ -632,7 +617,6 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentAction(event)},
             ${DeclineEventAction(event)}
         ]
     }
@@ -642,7 +626,6 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentAction(event)},
             ${AcceptEventAction(event)},
             ${DeclineEventAction(event)}
         ]
@@ -653,7 +636,6 @@
     {
         "type": "ActionSet",
         "actions": [
-            ${ShowContentAction(event)}
         ]
     }
     ```
