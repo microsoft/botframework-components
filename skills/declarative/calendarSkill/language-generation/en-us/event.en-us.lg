@@ -6,6 +6,9 @@
 # EventCreateDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventCreateAction())}
 
+# EventRespondDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventRespondAction())}
+
 # EventDetailHeader(event)
 - ${CardHeader(EventIconUrl(), event.Subject, "", "")}
 
@@ -564,6 +567,29 @@
 }
 ```
 
+# ShowCalendarAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "My Calendar",
+    "data": {
+        "intent": "MyCalendar",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# NewEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "New Event",
+    "data": {
+        "intent": "NewEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```
 # EventDetailActions(event)
 - IF: ${event.Response == 'organizer' && event.Location != null && event.Location != '' && event.isOnlineMeeting == false}
     -```
@@ -652,6 +678,17 @@
             "title": "Change duration",
             "data": "Change duration."
         }
+    ]
+}
+```
+
+# EventRespondAction
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${ShowCalendarAction(event)},
+        ${NewEventAction(event)}
     ]
 }
 ```

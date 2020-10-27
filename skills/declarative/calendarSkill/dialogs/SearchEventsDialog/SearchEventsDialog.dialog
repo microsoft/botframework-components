@@ -112,7 +112,7 @@
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
           "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")",
-          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+          "startProperty": "=coalesce(dialog.start, formatDateTime(addDays(utcNow(),-1), 'yyyy-MM-dd'))",
           "orderProperty": "= dialog.order"
         },
         {

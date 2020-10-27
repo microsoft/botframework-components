@@ -105,21 +105,18 @@
 # SendActivity_BAjl1j()
 [Activity
     Text = ${RespondEventResponseText("accepted", dialog.event)}
-    SuggestedActions = Open my Calendar | New Event
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
 # SendActivity_sDHQlJ()
 [Activity
     Text = ${RespondEventResponseText("declined", dialog.event)}
-    SuggestedActions = My Calendar | New Event
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
-
-# SendActivity_22WNkk()
-- ${ErrorMessage()}
-
 # SendActivity_Np8fjo()
 [Activity
     Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
-    SuggestedActions = Open my Calendar | New Event
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
+
 # SendActivity_eMsYu3()
 - ${ErrorMessage()}

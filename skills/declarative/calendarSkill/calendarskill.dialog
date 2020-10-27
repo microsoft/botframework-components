@@ -902,6 +902,14 @@
               "eventId": "=dialog.event.id"
             },
             {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "q02E9f"
+              },
+              "property": "dialog.event.Response",
+              "value": "= 'accepted'"
+            },
+            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "BAjl1j"
@@ -1005,6 +1013,14 @@
               "eventId": "= dialog.event.id"
             },
             {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "NQeXor"
+              },
+              "property": "dialog.event.Response",
+              "value": "= 'declined'"
+            },
+            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "sDHQlJ"
@@ -1106,6 +1122,14 @@
               "resultProperty": "dialog.result",
               "token": "= user.token.token",
               "eventId": "=dialog.event.id"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "BraV45"
+              },
+              "property": "dialog.event.Response",
+              "value": "= 'tentativelyAccepted'"
             },
             {
               "$kind": "Microsoft.SendActivity",
