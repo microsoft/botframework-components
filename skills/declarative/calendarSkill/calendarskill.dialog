@@ -1305,12 +1305,31 @@
       "intent": "FirstEvent",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "50ybIf"
+            "id": "KLOeiV"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": {
+                "Offset": 1,
+                "RelativeTo": "start"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1340,15 +1359,15 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
+            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "first"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -1406,12 +1425,31 @@
       "intent": "LastEvent",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "i9w8Zs"
+            "id": "PG47UC"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": {
+                "Offset": 0,
+                "RelativeTo": "end"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1441,15 +1479,15 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
+            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "last"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -1507,12 +1545,28 @@
       "intent": "OwnAvailability",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "hDXsTm"
+            "id": "Hd0pcn"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1545,11 +1599,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": false,
             "turnCount": 0,
             "futureEventsOnly": true,
-            "type": "=dialog.datetime.type"
+            "type": "=dialog.datetime.type",
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.events"
         },
