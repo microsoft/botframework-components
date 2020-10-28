@@ -64,10 +64,10 @@
       "description": "Datetime type, e.g. date, datetime.",
       "examples": []
     },
-    "orderProperty": {
+    "ordinalProperty": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "OrderProperty",
-      "description": "Order property, e.g. next.",
+      "title": "OrdinalderProperty",
+      "description": "Ordinal property",
       "examples": []
     },
     "timeZoneProperty": {

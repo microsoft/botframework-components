@@ -151,13 +151,6 @@
 - Make the meeting at 9 tentative
 - Make the 1:1 meeting with Susan tentative
 
-@ list order=
-	- next :
-		-   upcoming
-	- last:
-		-   previous
-
-
 # FirstEvent
 - What time does my day start?
 - When is my first meeting?
@@ -196,3 +189,4 @@
 - Tell me when my next break is
 - Tell me when I can step away from my computer
 - How long till my next break?
+@ prebuilt ordinalV2
