@@ -42,8 +42,4 @@
 - not that
 - oh no
 
-@ list order=
-	- next :
-		-   upcoming
-	- last:
-		-   previous
+@ prebuilt ordinalV2

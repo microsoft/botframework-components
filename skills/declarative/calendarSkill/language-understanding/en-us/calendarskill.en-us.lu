@@ -31,6 +31,7 @@
 - What is up next month?
 - What is my agenda for this weekend?
 - Tell me what my next month is like
+- What meetings do I have on Thursday?
 
 @ prebuilt datetimeV2
 
@@ -106,20 +107,6 @@
 - where is tomorrow meeting at 11 am
 - where is tomorrow 's event
 - where's my next meeting
-# Test
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-
-- test
-- test dialog
-- run the test
-- this is a test
-- test test test
-
 
 # CancelEvent
 - Cancel my next meeting
@@ -152,3 +139,31 @@
 - Make the 1:1 meeting with Susan tentative
 
 @ prebuilt ordinalV2
+
+# UpdateEvent
+- Can you {@EntityOperation={@Add=add}} Rachel
+- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
+- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
+- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
+- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
+- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
+- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- Update meeting
+
+@ prebuilt personName
+@ prebuilt email
+@ prebuilt datetimeV2
+
+@ ml EntityName
+    - @ ml EventTitle
+    - @ ml EventDateTime
+    - @ ml EventAttendee
+    - @ ml EventLocation
+    - @ ml EventDuration
+    - @ ml TeamsLink
+
+
+@ ml EntityOperation
+    - @ ml Add
+    - @ ml Remove
+    - @ ml Change

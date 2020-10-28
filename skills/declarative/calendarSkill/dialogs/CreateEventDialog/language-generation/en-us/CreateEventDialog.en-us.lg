@@ -90,9 +90,6 @@
 - Got it, when is the event?
 - Sure, when should I schedule this event?
 - And when do you want this meeting?
-# DateTimeInput_Prompt_gfBnA8()
-- OK, how long would you like this meeting to be?
-- OK, what is your preferred meeting duration?
 # TextInput_Prompt_8FlYLk()
 - What is the title of the meeting?
 - What is the title?
@@ -150,3 +147,5 @@
     ]
 }
 ```
+# SendActivity_mHeeSb()
+- I can't update this event.

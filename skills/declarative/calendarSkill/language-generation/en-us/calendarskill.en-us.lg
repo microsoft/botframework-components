@@ -2,9 +2,6 @@
 [import](event.lg)
 [import](schedule.lg)
 
-# SendActivity_gKWYRF()
-- ${WelcomeUser()}
-
 # SendActivity_IrC8MR()
 - You're signed out!
 
@@ -121,3 +118,5 @@
 
 # SendActivity_eMsYu3()
 - ${ErrorMessage()}
+# SendActivity_Er6JaO()
+- ${WelcomeUser()}

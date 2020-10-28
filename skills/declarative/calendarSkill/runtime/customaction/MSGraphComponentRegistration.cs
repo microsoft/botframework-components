@@ -24,6 +24,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction
             yield return new DeclarativeType<TentativelyAcceptEvent>(TentativelyAcceptEvent.DeclarativeType);
             yield return new DeclarativeType<DeclineEvent>(DeclineEvent.DeclarativeType);
             yield return new DeclarativeType<DeleteEvent>(DeleteEvent.DeclarativeType);
+            yield return new DeclarativeType<UpdateEvent>(UpdateEvent.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

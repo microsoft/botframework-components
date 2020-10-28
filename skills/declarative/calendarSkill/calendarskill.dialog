@@ -18,7 +18,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "RvRTf5"
+            "id": "1mEsBR"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -26,10 +26,10 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "gKWYRF",
+            "id": "Er6JaO",
             "name": "Send a response"
           },
-          "activity": "${SendActivity_gKWYRF()}"
+          "activity": "${SendActivity_Er6JaO()}"
         }
       ]
     },
@@ -102,7 +102,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -1293,6 +1294,81 @@
             "id": "QaDvyy"
           },
           "activity": "${SendActivity_QaDvyy()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "48qkfh",
+        "name": "UpdateEvent"
+      },
+      "intent": "UpdateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "e0VZv9"
+          },
+          "assignments": [
+            {
+              "property": "dialog.datetime",
+              "value": "=@datetime"
+            },
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.entityNameResult",
+              "value": "=@@EntityName"
+            },
+            {
+              "property": "dialog.title",
+              "value": "=@Title"
+            },
+            {
+              "property": "dialog.personName",
+              "value": "=@@personName"
+            },
+            {
+              "property": "dialog.email",
+              "value": "=@@email"
+            },
+            {
+              "property": "dialog.location",
+              "value": "=@Location"
+            },
+            {
+              "property": "dialog.entityOperationResult",
+              "value": "=@@EntityOperation"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wKqlcK"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1hhoVh"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "entityNameResult": "=dialog.entityNameResult",
+            "title": "=dialog.title",
+            "personName": "=dialog.personName",
+            "email": "=dialog.email",
+            "location": "=dialog.location",
+            "entityOperationResult": "=dialog.entityOperationResult"
+          }
         }
       ]
     }

@@ -62,7 +62,7 @@
         {
             "type": "Action.Submit",
             "title": "Try Again",
-            "data": "Try again."
+            "data": ${BuildCardActionData('Try again')}
         }
     ]
 }
