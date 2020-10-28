@@ -1,6 +1,7 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -63,8 +64,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("isFutureProperty")]
         public BoolExpression IsFutureProperty { get; set; }
 
-        [JsonProperty("orderProperty")]
-        public StringExpression OrderProperty { get; set; }
+        [JsonProperty("ordinalProperty")]
+        public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
 
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
@@ -77,7 +78,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var startProperty = StartProperty.GetValue(dcState);
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
-            var orderProperty = OrderProperty.GetValue(dcState);
+            var ordinalProperty = OrdinalProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = IsFutureProperty.GetValue(dcState);
@@ -200,10 +201,22 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             //// Get result by order
-            if (results.Any() && orderProperty == "next")
+            if (results.Any() && ordinalProperty != null)
             {
-                // TODO: extend only 'next' to more general format
-                results = new List<Event>() { results.First() };
+                long offset = -1;
+                if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
+                {
+                    offset = ordinalProperty.Offset - 1;
+                }
+                else if (ordinalProperty.RelativeTo == "end")
+                {
+                    offset = results.Count - ordinalProperty.Offset - 1;
+                }
+
+                if (offset >= 0 && offset < results.Count)
+                {
+                    results = new List<Event>() { results[(int)offset] };
+                }
             }
 
             // Write Trace Activity for the http request and response values

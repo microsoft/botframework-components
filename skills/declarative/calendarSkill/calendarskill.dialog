@@ -251,12 +251,28 @@
       "intent": "GetEventTitle",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "pisqts"
+            "id": "8Y6v0I"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -289,12 +305,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -352,12 +368,28 @@
       "intent": "GetEventAttendees",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "28KIFQ"
+            "id": "1Met06"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -390,12 +422,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -453,12 +485,28 @@
       "intent": "GetEventTime",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "cSbhTU"
+            "id": "0l7jwc"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -491,12 +539,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -554,12 +602,28 @@
       "intent": "GetEventLocation",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "bZQs2Q"
+            "id": "wI3ZSM"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -592,12 +656,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -729,12 +793,28 @@
       "intent": "CancelEvent",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "VmYp4l"
+            "id": "Zv0NeQ"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -767,12 +847,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -827,12 +907,28 @@
       "intent": "AcceptEvent",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "y0vwUj"
+            "id": "gLxSXs"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -865,12 +961,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -938,12 +1034,28 @@
       "intent": "DeclineEvent",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "j2WfuB"
+            "id": "LYmZJ0"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -976,12 +1088,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },
@@ -1049,12 +1161,28 @@
       "intent": "TentativelyAccept",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "WiJNrf"
+            "id": "oz5opg"
           },
-          "property": "dialog.query",
-          "value": "=turn.activity.text"
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=turn.activity.text"
+            },
+            {
+              "property": "dialog.title",
+              "value": "= @Title"
+            },
+            {
+              "property": "dialog.personNameArray",
+              "value": "= @@personName"
+            },
+            {
+              "property": "dialog.ordinal",
+              "value": "= @ordinalV2"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1087,12 +1215,12 @@
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
-            "personNameArray": "=@@personName",
+            "personNameArray": "=dialog.personNameArray",
             "doSelection": true,
             "turnCount": 0,
             "futureEventsOnly": true,
             "type": "=dialog.datetime.type",
-            "order": "=@Order"
+            "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.event"
         },

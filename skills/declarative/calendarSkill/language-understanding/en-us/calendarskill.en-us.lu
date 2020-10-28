@@ -151,8 +151,4 @@
 - Make the meeting at 9 tentative
 - Make the 1:1 meeting with Susan tentative
 
-@ list order=
-	- next :
-		-   upcoming
-	- last:
-		-   previous
+@ prebuilt ordinalV2
