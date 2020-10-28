@@ -155,9 +155,9 @@
             "id": "touMj7"
           },
           "timeZoneProperty": "=user.workingHours.timeZone.name",
-          "groupByDateProperty": false,
           "resultProperty": "dialog.events",
-          "inputProperty": "= dialog.events"
+          "inputProperty": "= dialog.events",
+          "groupByDateProperty": "=coalesce(dialog.groupResults, false)"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -249,7 +249,7 @@
               "$designer": {
                 "id": "0bjfGb"
               },
-              "value": "= dialog.events"
+              "value": "=dialog.events"
             }
           ]
         }

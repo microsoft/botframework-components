@@ -24,6 +24,7 @@
             "$kind": "Microsoft.Graph.Calendar.SortEvents",
             "resultProperty": "dialog.sortResult",
             "inputProperty": "=dialog.result",
+            "groupByDateProperty": "=true",
             "timezoneProperty": "='Pacific Standard Time'"
           },
           {

@@ -111,11 +111,13 @@
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "Show tomorrow"
+            "title": "Show tomorrow",
+            "data": "Show tomorrow"
         },
         {
             "type": "Action.Submit",
-            "title": "New meeting"
+            "title": "New meeting",
+            "data": "New meeting"
         }
     ]
 }

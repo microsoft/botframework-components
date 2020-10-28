@@ -65,13 +65,13 @@
 - find a meeting with Title {Title=weekly report}
 - find a meeting with title {Title=second lesson} from amanda
 - find a meeting with title {Title=sharing} from steven
-
+- find my meeting with lidia
 @ prebuilt personName
 
 # GetEventAttendees
 - Who am I meeting at 11 today?
 - Who else is in my 2pm meeting?
-- Who is coming to [name of meeting]?
+- Who is coming to the {title=project review} tomorrow?
 - Who all is attending the 4pm meeting?
 - who am i meeting at 10 am tomorrow
 - who am i meeting for {Title=dinner}
@@ -104,20 +104,6 @@
 - where is tomorrow meeting at 11 am
 - where is tomorrow 's event
 - where's my next meeting
-# Test
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-
-- test
-- test dialog
-- run the test
-- this is a test
-- test test test
-
 
 # UpdateEvent
 - Can you {@EntityOperation={@Add=add}} Rachel

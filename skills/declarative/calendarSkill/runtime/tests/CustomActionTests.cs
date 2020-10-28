@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
 {
     [TestClass]
-    public class CalendarSkillTests
+    public class CustomActionTests
     {
         public static ResourceExplorer ResourceExplorer { get; set; }
 
@@ -19,18 +19,12 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         public static void ClassInitialize(TestContext context)
         {
             ResourceExplorer = new ResourceExplorer()
-           .AddFolder(Path.Combine(TestUtils.GetProjectPath(), nameof(CalendarSkillTests)), monitorChanges: false)
+           .AddFolder(Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(CustomActionTests)), monitorChanges: false)
            .AddFolder(Path.Combine(TestUtils.GetProjectPath(), @"..\..\"));
 
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
                 .Build();
-        }
-
-        [TestMethod]
-        public async Task CalendarSkillTests_Greeting()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
