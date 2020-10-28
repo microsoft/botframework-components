@@ -1,34 +1,5 @@
 
-# SkipSlot
-- skip
-- skip that
-- nothing
-- none
-# ChangeDuration
-- I want to set up a meeting for 1 hr with Anna
-- Change the duration to 2,5 hrs
-- I want the meeting to last for 45 minutes
-- Change duration
-
-@ prebuilt datetimeV2
-
-# TextInput_Response_8FlYLk
-- It's a {Title=1:1} with Mary
-- Planning for {Title=end of year}
-- Call it {Title=editorial meeting}
-- Please title it {Title=content review}
-- How about {Title=team check-in}
-- Title it {Title=Happy Hour}
-
-# ChooseOwnDateTime
-- Choose own date and time
-- Choose my own date and time
-
-# ChangeTitle
-- change titile
-- update title
-
-# ChangeSlots
+# TextInput_Response_gZ1tbS
 - Can you {@EntityOperation={@Add=add}} Rachel
 - Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
 - Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
@@ -36,7 +7,6 @@
 - Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
 - Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
 - I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
-- change {@EntityName={@EventDuration=duration}}
 
 @ prebuilt personName
 @ prebuilt email
@@ -55,3 +25,27 @@
     - @ ml Add
     - @ ml Remove
     - @ ml Change
+# TextInput_Response_gtOavc
+- It's a {Title=1:1} with Mary
+- Planning for {Title=end of year}
+- Call it {Title=editorial meeting}
+- Please title it {Title=content review}
+- How about {Title=team check-in}
+- Title it {Title=Happy Hour}
+
+
+# TextInput_Response_NdRLDG
+- It holds at {Location=cafe}
+
+# AddAttendee
+- add megan
+- add alex
+
+@ prebuilt personName
+@ prebuilt email
+
+# RemoveAttendee
+- remove megan
+- remove alex
+
+@ prebuilt personName

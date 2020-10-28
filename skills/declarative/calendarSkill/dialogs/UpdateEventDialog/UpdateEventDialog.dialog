@@ -1,0 +1,354 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "BOzq73",
+    "name": "UpdateEventDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "QA66gf"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PHu5K1"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3WSt5L"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "doSelection": "true"
+          },
+          "resultProperty": "dialog.searchResults"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "vlq5NG"
+          },
+          "name": "after search event"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "d6a7NN"
+          },
+          "condition": "dialog.searchResults.IsOrganizer != true",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "riAa5o"
+              },
+              "activity": "${SendActivity_riAa5o()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "b8BT1W"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7NednG"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateSlots",
+          "resultProperty": "dialog.updateResult",
+          "options": {
+            "datetime": "=dialog.datetime",
+            "entityNameResult": "=dialog.entityNameResult",
+            "title": "=dialog.title",
+            "personName": "=dialog.personName",
+            "email": "=dialog.email",
+            "location": "=dialog.location",
+            "entityOperationResult": "=dialog.entityOperationResult"
+          }
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "dX67kC"
+          },
+          "condition": "dialog.updateResult.updateType",
+          "cases": [
+            {
+              "value": "title",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "Mjq4vC"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.subject",
+                      "value": "=dialog.updateResult.newValue"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "datetime",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "45abUj"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.meetingDuration",
+                      "value": "=(ticks(formatDateTime(dialog.searchResults.End.datetime)) - ticks(formatDateTime(dialog.searchResults.Start.datetime))) / 10000000"
+                    },
+                    {
+                      "property": "dialog.searchResults.Start.datetime",
+                      "value": "=coalesce(dialog.datetime.Start, dialog.updateResult.newValue.Value)"
+                    },
+                    {
+                      "value": "=coalesce(dialog.datetime.End, addSeconds(formatDateTime(dialog.searchResults.Start.datetime), dialog.meetingDuration))",
+                      "property": "dialog.searchResults.End.datetime"
+                    },
+                    {
+                      "property": "dialog.searchResults.Start.timezone",
+                      "value": "=user.workingHours.timezone.name"
+                    },
+                    {
+                      "property": "dialog.searchResults.End.timezone",
+                      "value": "=user.workingHours.timezone.name"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "duration",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "FnW3lJ"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.End.datetime",
+                      "value": "=addSeconds(formatDateTime(dialog.searchResults.End.datetime), int(dialog.updateResult.newValue))"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "location",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "q5I2hH"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.Location",
+                      "value": "=dialog.updateResult.newValue"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "addAttendee",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "H2hjQi"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.Attendees",
+                      "value": "=union(dialog.searchResults.Attendees, dialog.updateResult.newValue)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "removeAttendee",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "wme4oZ"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.foreach.value",
+                  "itemsProperty": "dialog.searchResults.Attendees",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "22FTeK"
+                      },
+                      "condition": "contains(dialog.foreach.value.emailAddress.name, dialog.updateResult.newValue) || contains(dialog.foreach.value.emailAddress.address, dialog.updateResult.newValue)",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.EditArray",
+                          "$designer": {
+                            "id": "LjrGnW"
+                          },
+                          "changeType": "push",
+                          "itemsProperty": "dialog.newAttendeeList",
+                          "value": "=dialog.foreach.value"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "b3VqT8"
+                  },
+                  "property": "dialog.searchResults.Attendees",
+                  "value": "=dialog.newAttendeeList"
+                }
+              ]
+            },
+            {
+              "value": "addTeamsLink",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "K7zAVM"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.IsOnlineMeeting",
+                      "value": "=true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "removeTeamsLink",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "p0p7a3"
+                  },
+                  "assignments": [
+                    {
+                      "property": "dialog.searchResults.IsOnlineMeeting",
+                      "value": "=false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ehvCtJ"
+              },
+              "activity": "${SendActivity_ehvCtJ()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "BbwK3a"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SQXzle"
+          }
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "UoeZDh"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_UoeZDh()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true
+          },
+          "property": "dialog.confirmUpdate"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ulqVOb"
+          },
+          "condition": "dialog.confirmUpdate == true",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "XV5eP5"
+              }
+            },
+            {
+              "$kind": "Microsoft.Graph.Calendar.UpdateEvent",
+              "$designer": {
+                "id": "9Uompb"
+              },
+              "token": "=user.token.token",
+              "resultProperty": "dialog.updatedEvent",
+              "newEventProperty": "=dialog.searchResults"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mRrjQN"
+              },
+              "activity": "${SendActivity_mRrjQN()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "UpdateEventDialog.lg",
+  "recognizer": "UpdateEventDialog.lu.qna",
+  "id": "UpdateEventDialog"
+}

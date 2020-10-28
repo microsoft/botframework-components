@@ -103,7 +103,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
                 eventsList.Add(new
                 {
-                    Id = i++,
+                    Index = i++,
+                    ev.Id,
                     ev.Subject,
                     ev.Start,
                     ev.End,
