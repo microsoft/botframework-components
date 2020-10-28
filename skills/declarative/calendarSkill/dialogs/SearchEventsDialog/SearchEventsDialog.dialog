@@ -107,7 +107,7 @@
           "titleProperty": "=coalesce(dialog.title, null)",
           "locationProperty": "=coalesce(dialog.location, null)",
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, formatDateTime(addDays(utcNow(),28), 'yyyy-MM-dd'), null))",
+          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null&&dialog.order==null, formatDateTime(addDays(utcNow(),28), 'yyyy-MM-dd'), null))",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",

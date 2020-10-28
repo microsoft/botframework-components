@@ -18,7 +18,7 @@
 
 # SendActivity_Yrs4gn()
 [Activity
-    text = ${GetEventTitleResponseText(dialog.event)}
+    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
@@ -42,9 +42,19 @@
 
 # RespondEventResponseText(action, event)
 - Alright, I’ve ${action} the meeting named ${event.Subject}.
+
+# FirstEventResponseText(event)
+- You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
+
+# LastEventResponseText(event)
+- Your day ends at ${BuildTime(event.start.datetime)}, ${event.Subject}.
+
+# NextEventResponseText(event)
+- Here’s what’s next: ${event.Subject}, ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)} ${WithLocation(event)}${WithAttendees(event, 1)}
+
 # SendActivity_3j3wUV()
 [Activity
-    text = ${GetEventAttendeesResponseText(dialog.event)}
+    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_MvzrwE()
@@ -52,7 +62,7 @@
 
 # SendActivity_kaOafR()
 [Activity
-    text = ${GetEventTimeResponseText(dialog.event)}
+    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_pJwod2()
@@ -60,7 +70,7 @@
 
 # SendActivity_g7immX()
 [Activity
-    text = ${GetEventLocationResponseText(dialog.event)}
+    text =${if(@order=='next', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_1we69i()
@@ -120,4 +130,28 @@
 ]
 
 # SendActivity_eMsYu3()
+- ${ErrorMessage()}
+
+# SendActivity_ZaUzSz()
+[Activity
+    text = ${FirstEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_q9fyxf()
+- ${ErrorMessage()}
+
+# SendActivity_BwA02G()
+[Activity
+    text = ${LastEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_nZMR82()
+- ${ErrorMessage()}
+
+# SendActivity_miomuC()
+[Activity
+    text = ${LastEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_xEwmVF()
 - ${ErrorMessage()}

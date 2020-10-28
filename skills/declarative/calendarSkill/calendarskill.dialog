@@ -1167,6 +1167,315 @@
           "activity": "${SendActivity_QaDvyy()}"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ajpe3a",
+        "name": "FirstEvent"
+      },
+      "intent": "FirstEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "50ybIf"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "f4j9un"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "25FwTB"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Lvuw2P"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
+            "end": "=dialog.datetime.End",
+            "title": "=dialog.title",
+            "personNameArray": "=@@personName",
+            "doSelection": true,
+            "turnCount": 0,
+            "futureEventsOnly": true,
+            "type": "=dialog.datetime.type",
+            "order": "first"
+          },
+          "resultProperty": "dialog.event"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "eaTVns"
+          },
+          "condition": "dialog.event != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ZaUzSz"
+              },
+              "activity": "${SendActivity_ZaUzSz()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "q9fyxf"
+              },
+              "activity": "${SendActivity_q9fyxf()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "b3vmjG"
+              },
+              "activityProcessed": true,
+              "dialog": "GetEventsByDateDialog",
+              "options": {
+                "query": "today"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "QIEMRt"
+          },
+          "eventName": "collectFeedback"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "e6MuTA",
+        "name": "LastEvent"
+      },
+      "intent": "LastEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "i9w8Zs"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "GHIuMa"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1mR6PH"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "vOn4WB"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
+            "end": "=dialog.datetime.End",
+            "title": "=dialog.title",
+            "personNameArray": "=@@personName",
+            "doSelection": true,
+            "turnCount": 0,
+            "futureEventsOnly": true,
+            "type": "=dialog.datetime.type",
+            "order": "last"
+          },
+          "resultProperty": "dialog.event"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Au3SAD"
+          },
+          "condition": "dialog.event != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "BwA02G"
+              },
+              "activity": "${SendActivity_BwA02G()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "nZMR82"
+              },
+              "activity": "${SendActivity_nZMR82()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "dgIUF6"
+              },
+              "activityProcessed": true,
+              "dialog": "GetEventsByDateDialog",
+              "options": {
+                "query": "today"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "KEyT0B"
+          },
+          "eventName": "collectFeedback"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "CltGex",
+        "name": "OwnAvailability"
+      },
+      "intent": "OwnAvailability",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hDXsTm"
+          },
+          "property": "dialog.query",
+          "value": "=turn.activity.text"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "D9M2ok"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "aT02Zm"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "x5L9JP"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+            "end": "=dialog.datetime.End",
+            "title": "=dialog.title",
+            "personNameArray": "=@@personName",
+            "doSelection": false,
+            "turnCount": 0,
+            "futureEventsOnly": true,
+            "type": "=dialog.datetime.type"
+          },
+          "resultProperty": "dialog.events"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uBFhQc"
+          },
+          "name": "Available"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "tw7OY5"
+          },
+          "condition": "dialog.event != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "miomuC"
+              },
+              "activity": "${SendActivity_miomuC()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xEwmVF"
+              },
+              "activity": "${SendActivity_xEwmVF()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "DdVXfm"
+              },
+              "activityProcessed": true,
+              "dialog": "GetEventsByDateDialog",
+              "options": {
+                "query": "today"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "cyJ8Lf"
+          },
+          "eventName": "collectFeedback"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

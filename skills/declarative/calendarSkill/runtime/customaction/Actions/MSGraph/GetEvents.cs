@@ -200,10 +200,17 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             //// Get result by order
-            if (results.Any() && orderProperty == "next")
+            if (results.Any() && orderProperty != null)
             {
-                // TODO: extend only 'next' to more general format
-                results = new List<Event>() { results.First() };
+                if (orderProperty == "next" || orderProperty == "first")
+                {
+                    // TODO: extend only 'next' to more general format
+                    results = new List<Event>() { results.First() };
+                }
+                else if (orderProperty == "last")
+                {
+                    results = new List<Event>() { results.Last() };
+                }
             }
 
             // Write Trace Activity for the http request and response values
