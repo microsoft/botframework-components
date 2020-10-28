@@ -2,9 +2,6 @@
 [import](event.lg)
 [import](schedule.lg)
 
-# SendActivity_gKWYRF()
-- ${WelcomeUser()}
-
 # SendActivity_IrC8MR()
 - You're signed out!
 
@@ -91,3 +88,6 @@
     text = ${ScheduleResponseText(dialog.start, createArray())}
     attachments = ${json(ScheduleNoResults(dialog.start))}
 ]
+
+# SendActivity_Er6JaO()
+- ${WelcomeUser()}

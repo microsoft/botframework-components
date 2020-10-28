@@ -112,12 +112,12 @@
         {
             "type": "Action.Submit",
             "title": "Show tomorrow",
-            "data": "Show tomorrow"
+            "data": ${BuildCardActionData('Show tomorrow')}
         },
         {
             "type": "Action.Submit",
             "title": "New meeting",
-            "data": "New meeting"
+            "data": ${BuildCardActionData('New meeting')}
         }
     ]
 }
@@ -150,11 +150,12 @@
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "Create new meeting"
+            "title": "Create new meeting",
+            "data": ${BuildCardActionData('New meeting')}
         },
         {
             "type": "Action.Submit",
-            "title": "Show next day"
+            "title": ${BuildCardActionData('Show next day')}
         }
     ]
 }

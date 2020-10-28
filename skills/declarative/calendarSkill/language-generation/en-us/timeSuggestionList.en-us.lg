@@ -117,12 +117,12 @@
         {
             "type": "Action.Submit",
             "title": "Choose your own date and time",
-            "data": "Choose my own date and time."
+            "data": ${BuildCardActionData('Choose my own date and time')}
         },
         {
             "type": "Action.Submit",
             "title": "Change duration",
-            "data": "Change duration."
+            "data": ${BuildCardActionData('Change duration')}
         }
     ]
 }

@@ -269,6 +269,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         }
     }
     ```
+    
 # BuildCardActionData(text)
 - IF: ${turn.activity.channelId == 'msteams'}
     - ```

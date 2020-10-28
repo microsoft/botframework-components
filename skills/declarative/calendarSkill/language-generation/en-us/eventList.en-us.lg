@@ -28,7 +28,6 @@
 # EventListTitle
 - Find Event
 
-
 # EventListItem(item)
 - ```
 {
@@ -83,11 +82,13 @@
         "actions": [
             {
                 "type": "Action.Submit",
-                "title": "Create new meeting"
+                "title": "Create new meeting",
+                "data": ${BuildCardActionData('New meeting')}
             },
-                        {
+            {
                 "type": "Action.Submit",
-                "title": "Show next day"
+                "title": "Show next day", 
+                "data": ${BuildCardActionData('Show next day')}
             }
         ]
     }
@@ -99,11 +100,13 @@
         "actions": [
             {
                 "type": "Action.Submit",
-                "title": "What's on today"
+                "title": "What's on today",
+                "data": ${BuildCardActionData('What meetings do I have today?')}
             },
             {
                 "type": "Action.Submit",
-                "title": "Create new meeting"
+                "title": "Create new meeting",
+                "data": ${BuildCardActionData('New meeting')}
             }
         ]
     }
