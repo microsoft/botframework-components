@@ -18,7 +18,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "RvRTf5"
+            "id": "1mEsBR"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -26,10 +26,10 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "gKWYRF",
+            "id": "Er6JaO",
             "name": "Send a response"
           },
-          "activity": "${SendActivity_gKWYRF()}"
+          "activity": "${SendActivity_Er6JaO()}"
         }
       ]
     },
@@ -102,7 +102,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },

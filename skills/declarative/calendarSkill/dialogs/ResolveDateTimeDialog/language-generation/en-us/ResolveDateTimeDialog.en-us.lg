@@ -1,18 +1,18 @@
 [import](common.lg)
 
-# ChoiceInput_Prompt_G3sioC()
-- Which date and time?
-# ChoiceInput_Prompt_L1xuO9()
-- Which time?
-# ChoiceInput_Prompt_IdcoY8()
-- Which dates?
-# ChoiceInput_Prompt_VOj1Xv()
-- Which dates and times?
-# ChoiceInput_Prompt_OfAzSu()
-- Which times?
-
 # SendActivity_JrfC1C()
 - Sorry, I didn't understand that date and/or time.
 
-# ChoiceInput_Prompt_wA2sUD()
+# ChoiceInput_Prompt_uWSsSr()
+- Which date and time?
+# ChoiceInput_Prompt_JSRnlP()
+- Which time?
+# ChoiceInput_Prompt_fPlHqj()
+- Which dates?
+# ChoiceInput_Prompt_C9JApX()
+- Which dates and times?
+# ChoiceInput_Prompt_14rIwk()
+- Which times?
+
+# ChoiceInput_Prompt_9Eu5D3()
 - Which date?

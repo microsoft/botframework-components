@@ -458,10 +458,10 @@
             "verticalContentAlignment": "center",
             "width": 95,
             "items": [
-                    {
-                        "type": "TextBlock",
-                        "text": "${event.Subject}"
-                    }
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}"
+                }
             ]
         }
     ]
@@ -609,8 +609,7 @@
     -```
     {
         "type": "ActionSet",
-        "actions": [
-        ]
+        "actions": []
     }
     ```
 
@@ -622,17 +621,17 @@
         {
             "type": "Action.Submit",
             "title": "Confirm",
-            "data": "Yes."
+            "data": ${BuildCardActionData('Yes')}
         },
         {
             "type": "Action.Submit",
             "title": "Update event",
-            "data": "Update event."
+            "data": ${BuildCardActionData('Update event')}
         },
         {
             "type": "Action.Submit",
             "title": "Change duration",
-            "data": "Change duration."
+            "data": ${BuildCardActionData('Change duration')}
         }
     ]
 }
