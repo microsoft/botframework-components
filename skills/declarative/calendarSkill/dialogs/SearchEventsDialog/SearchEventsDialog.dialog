@@ -25,7 +25,7 @@
           "$designer": {
             "id": "ekNrAH"
           },
-          "condition": "dialog.start == null && dialog.title == null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
+          "condition": "dialog.start == null && dialog.title == null && dialog.ordinal==null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
@@ -87,6 +87,10 @@
                 {
                   "property": "dialog.type",
                   "value": "= dialog.datetime.type"
+                },
+                {
+                  "property": "dialog.ordinal",
+                  "value": "=@ordinal"
                 }
               ]
             }
@@ -103,12 +107,13 @@
           "titleProperty": "=coalesce(dialog.title, null)",
           "locationProperty": "=coalesce(dialog.location, null)",
           "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, formatDateTime(addDays(utcNow(),28), 'yyyy-MM-dd'), null))",
+          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, convertFromUTC(addDays(utcNow(),28), user.workingHours.timeZone.name, 'yyyy-MM-dd'), null))",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "isFutureProperty": "=coalesce(dialog.futureEventsOnly, false)",
           "isFutureEventsOnlyProperty": "=dialog.futureEventsOnly",
           "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")",
-          "startProperty": "=coalesce(dialog.start, formatDateTime(utcNow(), 'yyyy-MM-dd'))"
+          "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+          "ordinalProperty": "= dialog.ordinal"
         },
         {
           "$kind": "Microsoft.IfCondition",

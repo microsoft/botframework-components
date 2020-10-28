@@ -1,6 +1,7 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -63,8 +64,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("isFutureProperty")]
         public BoolExpression IsFutureProperty { get; set; }
 
+        [JsonProperty("ordinalProperty")]
+        public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
+
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
+        
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -73,6 +78,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var startProperty = StartProperty.GetValue(dcState);
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
+            var ordinalProperty = OrdinalProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = IsFutureProperty.GetValue(dcState);
@@ -192,6 +198,25 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 // TODO: update to use contacts from graph rather than string matching
                 var attendees = attendeesProperty;
                 results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
+            }
+
+            //// Get result by order
+            if (results.Any() && ordinalProperty != null)
+            {
+                long offset = -1;
+                if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
+                {
+                    offset = ordinalProperty.Offset - 1;
+                }
+                else if (ordinalProperty.RelativeTo == "end")
+                {
+                    offset = results.Count - ordinalProperty.Offset - 1;
+                }
+
+                if (offset >= 0 && offset < results.Count)
+                {
+                    results = new List<Event>() { results[(int)offset] };
+                }
             }
 
             // Write Trace Activity for the http request and response values

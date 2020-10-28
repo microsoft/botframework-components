@@ -52,7 +52,7 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
-        public async Task GetEventTitleWithoutContition()
+        public async Task GetEventTitleWithoutCondition()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
@@ -65,6 +65,37 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
 
         [TestMethod]
         public async Task GetEventTitleNoResult()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task AcceptEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task TentativelyAcceptEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+
+        [TestMethod]
+        public async Task DeclineEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CancelEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CancelEventNotOrganizer()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }

@@ -1,0 +1,1 @@
+{"query":"accept my meeting with lidia","prediction":{"topIntent":"AcceptEvent","intents":{"AcceptEvent":{"score":0.3647368}},"entities":{"personName":["lidia"]}}}
