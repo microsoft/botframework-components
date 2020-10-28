@@ -18,10 +18,9 @@
 
 # SendActivity_Yrs4gn()
 [Activity
-    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
-
 # ErrorMessage()
 - Something seems to be going wrong. I can tell you more about your meetings today... 
 
@@ -54,7 +53,7 @@
 
 # SendActivity_3j3wUV()
 [Activity
-    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_MvzrwE()
@@ -62,7 +61,7 @@
 
 # SendActivity_kaOafR()
 [Activity
-    text = ${if(@order=='next', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_pJwod2()
@@ -70,7 +69,7 @@
 
 # SendActivity_g7immX()
 [Activity
-    text =${if(@order=='next', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
+    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_1we69i()
