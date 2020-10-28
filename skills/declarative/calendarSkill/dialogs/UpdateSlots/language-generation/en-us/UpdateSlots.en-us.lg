@@ -1,0 +1,26 @@
+[import](common.lg)
+
+# TextInput_Prompt_gZ1tbS()
+- What do you want to update?
+- What can I update for you?
+- What do you want to change about the event?
+- Tell me what you'd like to update.
+# TextInput_Prompt_gtOavc()
+- What is the new title of meeting
+
+# DateTimeInput_Prompt_a700t3()
+- OK, how long would you like this meeting to be?
+- OK, what is your preferred meeting duration?
+# TextInput_Prompt_NdRLDG()
+- What is the new location of meeting
+
+
+
+
+# TextInput_Prompt_WotQE1()
+- Who do you want to remove?
+# DateTimeInput_Prompt_SSWMA3()
+- OK, how long would you like this meeting to be?
+- OK, what is your preferred meeting duration?
+# DateTimeInput_Prompt_fKknY3()
+- What is the new time?
