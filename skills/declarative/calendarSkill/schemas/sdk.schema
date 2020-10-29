@@ -164,6 +164,9 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
 		},
 		{
@@ -3796,7 +3799,6 @@
 			"description": "Check one's availability.",
 			"type": "object",
 			"required": [
-				"token",
 				"inputProperty",
 				"startProperty",
 				"$kind"
@@ -4077,7 +4079,6 @@
 			"description": "Check one's available time.",
 			"type": "object",
 			"required": [
-				"token",
 				"inputProperty",
 				"startProperty",
 				"workingHourStartProperty",
@@ -4540,6 +4541,61 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.TentativelyAcceptEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.UpdateEvent": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Update Event",
+			"description": "Update a calendar event using the Microsoft Graph API.",
+			"type": "object",
+			"required": [
+				"token",
+				"newEventProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"token": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Token",
+					"description": "Microsoft Graph API authentication token.",
+					"examples": []
+				},
+				"newEventProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "New Event",
+					"description": "New event.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.UpdateEvent"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -5497,6 +5553,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.User.GetProfile"

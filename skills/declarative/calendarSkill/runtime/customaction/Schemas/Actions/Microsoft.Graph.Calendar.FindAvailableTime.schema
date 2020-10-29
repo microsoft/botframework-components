@@ -5,7 +5,6 @@
   "description": "Check one's available time.",
   "type": "object",
   "required": [
-    "token",
     "inputProperty",
     "startProperty",
     "workingHourStartProperty",
