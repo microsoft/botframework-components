@@ -52,6 +52,29 @@
 # NextEventResponseText(event)
 - Here’s what’s next: ${event.Subject}, ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)} ${WithLocation(event)}${WithAttendees(event, 1)}
 
+# TimeTillNextMeetingResponseText(diff)
+- You have ${MakeDiffTime(diff)} till your next meeting starts.
+
+# MakeDiffTime(diff)
+- IF: ${ diff < 60 }
+    - ${MakeMinute(diff)}
+- ELSEIF: ${ mod(diff, 60) == 0}
+    - ${MakeHour(diff)}
+- ELSE:
+    - ${MakeHour(diff)} and ${MakeMinute(diff)}
+    
+# MakeMinute(diff)
+- IF: ${ mod(diff, 60) == 1 }
+    - ${mod(diff, 60)} minute
+- ELSE:
+    - ${mod(diff, 60)} minutes
+
+# MakeHour(diff)
+- IF: ${ div(diff, 60) == 1 }
+    - ${div(diff, 60)} hour
+- ELSE:
+    - ${div(diff, 60)} hours
+
 # SendActivity_3j3wUV()
 [Activity
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
@@ -173,7 +196,16 @@
     attachmentLayout = carousel
 ]
 
+# SendActivity_1Mdyfv()
+- ${ErrorMessage()}
 
-
-
-
+# SendActivity_mBdBjm()
+[Activity
+    text = ${TimeTillNextMeetingResponseText(dialog.timediff)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_tjRpuP()
+[Activity
+    text = You are still in a meeting now.
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
