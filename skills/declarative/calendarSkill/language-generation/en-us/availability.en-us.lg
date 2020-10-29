@@ -1,0 +1,71 @@
+[import](common.lg)
+[import](event.lg)
+[import](schedule.lg)
+
+# CheckAvailabilityBusyResponseText(events, time)
+- I’ve found ${count(events)} events for you at ${BuildTime(time)}:
+
+# CheckAvailabilityFreeResponseText(time)
+- You have no event scheduled at ${BuildTime(time)}. Want to block this time?
+
+# FoundAvailableTimeResponseText(time)
+- I found a break in you schedule at ${BuildTime(time)}. Want to block this time?
+
+# FoundNoAvailableTimeResponseText()
+- During working hours I see you have no breaks for today.
+
+# AvailabilityList(items)
+- ${ExpandableListCardBody(foreach(items, item, if(item.isFreeTime==true, AvailabilityItem(item), ScheduleItem(item))), 5)}
+
+# AvailabilityItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "25",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start, 'h:mm')} - ${formatDateTime(item.end, 'h:mm tt')}",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "75",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "[Available]",
+                            "spacing": "Small",
+                            "color": "Good"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# AvailabilityActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "New event",
+            "data": "New event"
+        }
+    ]
+}
+```

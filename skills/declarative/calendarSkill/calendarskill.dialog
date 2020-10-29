@@ -1596,14 +1596,14 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+            "start": "=formatDateTime(coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), 'yyyy-MM-dd')",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",
             "personNameArray": "=dialog.personNameArray",
             "doSelection": false,
             "turnCount": 0,
-            "futureEventsOnly": true,
-            "type": "=dialog.datetime.type",
+            "futureEventsOnly": false,
+            "type": "=date",
             "ordinal": "=dialog.ordinal"
           },
           "resultProperty": "dialog.events"
@@ -1611,43 +1611,154 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "uBFhQc"
+            "id": "erD3KB"
           },
           "name": "Available"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "tw7OY5"
+            "id": "1ZHBkR"
           },
-          "condition": "dialog.event != null",
+          "condition": "dialog.datetime.type == 'time' || dialog.datetime.type == 'datetime'",
           "actions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.Graph.Calendar.CheckAvailability",
               "$designer": {
-                "id": "miomuC"
+                "id": "iU3Fp9"
               },
-              "activity": "${SendActivity_miomuC()}"
+              "resultProperty": "dialog.result",
+              "inputProperty": "= dialog.events",
+              "startProperty": "= coalesce(dialog.datetime.Start, dialog.datetime.Value)"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "jdVVSZ"
+              },
+              "name": "Available"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "9IUlyq"
+              },
+              "condition": "count(dialog.result.conflictEvents) == 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "85mkZM"
+                  },
+                  "assignments": [
+                    {
+                      "value": {
+                        "start": "= coalesce(dialog.result.previousEvent.end.datetime, '00:00:00')",
+                        "end": "= coalesce(dialog.result.nextEvent.start.datetime, '23:59:59')",
+                        "isFreeTime": true
+                      },
+                      "property": "dialog.freeTime"
+                    },
+                    {
+                      "property": "dialog.availabilityList",
+                      "value": "= where(createArray(dialog.result.previousEvent, dialog.freeTime, dialog.result.nextEvent), x, x!= null)"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Tb2nNU"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "U7NzFC"
+                  },
+                  "activity": "${SendActivity_U7NzFC()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "CjDfqM"
+                  },
+                  "activity": "${SendActivity_CjDfqM()}"
+                }
+              ]
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.Graph.Calendar.FindAvailableTime",
               "$designer": {
-                "id": "xEwmVF"
+                "id": "4VSPdh"
               },
-              "activity": "${SendActivity_xEwmVF()}"
+              "resultProperty": "dialog.result",
+              "inputProperty": "= dialog.events",
+              "startProperty": "= coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+              "workingHourStartProperty": "= user.workingHours.startTime",
+              "workingHourEndProperty": "= user.workingHours.endTime"
             },
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.TraceActivity",
               "$designer": {
-                "id": "DdVXfm"
+                "id": "gURfgn"
               },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "name": "Available"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "UaToIW"
+              },
+              "condition": "dialog.result.availableTimeLength > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "gJZrue"
+                  },
+                  "assignments": [
+                    {
+                      "value": {
+                        "start": "= dialog.result.availableTimeStart",
+                        "end": "= dialog.result.availableTimeEnd",
+                        "isFreeTime": true
+                      },
+                      "property": "dialog.freeTime"
+                    },
+                    {
+                      "property": "dialog.availabilityList",
+                      "value": "= where(createArray(dialog.result.previousEvent, dialog.freeTime, dialog.result.nextEvent), x, x!= null)"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "J8bx0v"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "HcaLIY"
+                  },
+                  "activity": "${SendActivity_HcaLIY()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "QAdvjq"
+                  },
+                  "activity": "${SendActivity_QAdvjq()}"
+                }
+              ]
             }
           ]
         },
@@ -1657,6 +1768,12 @@
             "id": "cyJ8Lf"
           },
           "eventName": "collectFeedback"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "WPi8eB"
+          }
         }
       ]
     }

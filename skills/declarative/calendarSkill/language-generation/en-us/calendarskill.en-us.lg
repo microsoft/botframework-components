@@ -1,6 +1,7 @@
 [import](common.lg)
 [import](event.lg)
 [import](schedule.lg)
+[import](availability.lg)
 
 # SendActivity_gKWYRF()
 - ${WelcomeUser()}
@@ -147,10 +148,32 @@
 # SendActivity_nZMR82()
 - ${ErrorMessage()}
 
-# SendActivity_miomuC()
+# SendActivity_CjDfqM()
 [Activity
-    text = ${LastEventResponseText(dialog.event)}
-    attachments = ${json(EventDetailCard(dialog.event))}
+    text = ${CheckAvailabilityBusyResponseText(dialog.result.conflictEvents, dialog.datetime.value)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.result.conflictEvents[0].start.datetime, dialog.result.conflictEvents), ScheduleList(dialog.result.conflictEvents), AvailabilityActions()))}
+    attachmentLayout = carousel
 ]
-# SendActivity_xEwmVF()
-- ${ErrorMessage()}
+# SendActivity_U7NzFC()
+[Activity
+    text = ${CheckAvailabilityFreeResponseText(dialog.datetime.value)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.datetime.value, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+# SendActivity_HcaLIY()
+[Activity
+    text = ${FoundAvailableTimeResponseText(dialog.freeTime.start)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.freeTime.start, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+# SendActivity_QAdvjq()
+[Activity
+    text = ${FoundNoAvailableTimeResponseText()}
+    attachments = ${json(CardTemplate(ScheduleHeader(coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), dialog.events), ScheduleList(dialog.even), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+
+
+
+

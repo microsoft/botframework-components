@@ -125,6 +125,9 @@
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
 		},
 		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.CheckAvailability"
+		},
+		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
 		},
 		{
@@ -132,6 +135,9 @@
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
+		},
+		{
+			"$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
 		},
 		{
 			"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
@@ -3664,6 +3670,62 @@
 				}
 			}
 		},
+		"Microsoft.Graph.Calendar.CheckAvailability": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Check Availability",
+			"description": "Check one's availability.",
+			"type": "object",
+			"required": [
+				"token",
+				"inputProperty",
+				"startProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"inputProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Input",
+					"description": "List of events to sort.",
+					"examples": []
+				},
+				"startProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Start",
+					"description": "Event range start.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.CheckAvailability"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
 		"Microsoft.Graph.Calendar.CreateEvent": {
 			"$role": "implements(Microsoft.IDialog)",
 			"title": "Microsoft Graph - Create Event",
@@ -3881,6 +3943,76 @@
 					"type": "string",
 					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
 					"const": "Microsoft.Graph.Calendar.DeleteEvent"
+				},
+				"$designer": {
+					"title": "Designer information",
+					"type": "object",
+					"description": "Extra information for the Bot Framework Composer."
+				}
+			}
+		},
+		"Microsoft.Graph.Calendar.FindAvailableTime": {
+			"$role": "implements(Microsoft.IDialog)",
+			"title": "Microsoft Graph - Find Available Time",
+			"description": "Check one's available time.",
+			"type": "object",
+			"required": [
+				"token",
+				"inputProperty",
+				"startProperty",
+				"workingHourStartProperty",
+				"workingHourEndProperty",
+				"$kind"
+			],
+			"additionalProperties": false,
+			"patternProperties": {
+				"^\\$": {
+					"title": "Tooling property",
+					"description": "Open ended property for tooling."
+				}
+			},
+			"properties": {
+				"id": {
+					"type": "string",
+					"title": "Id",
+					"description": "Optional id for the dialog"
+				},
+				"resultProperty": {
+					"$ref": "#/definitions/stringExpression",
+					"title": "Result Property",
+					"description": "Result Property (named location to store information).",
+					"examples": []
+				},
+				"inputProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Input",
+					"description": "List of events to sort.",
+					"examples": []
+				},
+				"workingHourStartProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "WorkingHourStart",
+					"description": "Start time of work in a day.",
+					"examples": []
+				},
+				"workingHourEndProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "WorkingHourEnd",
+					"description": "End time of work in a day.",
+					"examples": []
+				},
+				"startProperty": {
+					"$ref": "#/definitions/valueExpression",
+					"title": "Start",
+					"description": "Event range start.",
+					"examples": []
+				},
+				"$kind": {
+					"title": "Kind of dialog object",
+					"description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+					"type": "string",
+					"pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+					"const": "Microsoft.Graph.Calendar.FindAvailableTime"
 				},
 				"$designer": {
 					"title": "Designer information",
@@ -5067,6 +5199,30 @@
 					"$ref": "#/definitions/Microsoft.AdaptiveDialog"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Ask"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.AttachmentInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ChoiceInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.ConfirmInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.DateTimeInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.NumberInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.OAuthInput"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.TextInput"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.BeginDialog"
 				},
 				{
@@ -5166,30 +5322,6 @@
 					"$ref": "#/definitions/Microsoft.UpdateActivity"
 				},
 				{
-					"$ref": "#/definitions/Microsoft.Ask"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.AttachmentInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ChoiceInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.ConfirmInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.DateTimeInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.NumberInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.OAuthInput"
-				},
-				{
-					"$ref": "#/definitions/Microsoft.TextInput"
-				},
-				{
 					"$ref": "#/definitions/Microsoft.Bot.SendActivityPlus"
 				},
 				{
@@ -5202,6 +5334,9 @@
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
 				},
 				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.CheckAvailability"
+				},
+				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
 				},
 				{
@@ -5209,6 +5344,9 @@
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
+				},
+				{
+					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
 				},
 				{
 					"$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
