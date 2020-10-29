@@ -34,6 +34,31 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        public async Task CalendarSkillTests_AcceptEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CalendarSkillTests_TentativelyAcceptEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+
+        [TestMethod]
+        public async Task CalendarSkillTests_DeclineEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CalendarSkillTests_DeleteEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
         public async Task CalendarSkillTests_GetEvents()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
