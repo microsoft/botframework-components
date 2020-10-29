@@ -1,12 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "Microsoft Graph - Update Event",
-  "description": "Update a calendar event using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Check Availability",
+  "description": "Check one's availability.",
   "type": "object",
   "required": [
     "token",
-    "newEventProperty"
+    "inputProperty",
+    "startProperty"
   ],
   "properties": {
     "id": {
@@ -20,16 +21,16 @@
       "description": "Result Property (named location to store information).",
       "examples": []
     },
-    "token": {
+    "inputProperty": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "Token",
-      "description": "Microsoft Graph API authentication token.",
+      "title": "Input",
+      "description": "List of events to sort.",
       "examples": []
     },
-    "newEventProperty": {
+    "startProperty": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "New Event",
-      "description": "New event.",
+      "title": "Start",
+      "description": "Event range start.",
       "examples": []
     }
   }

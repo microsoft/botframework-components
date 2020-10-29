@@ -1,6 +1,7 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Microsoft.Graph.Extensions;
 using Newtonsoft.Json;
@@ -89,40 +90,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             foreach (var ev in events)
             {
-                var start = DateTime.Parse(ev.Start.DateTime);
-                var end = DateTime.Parse(ev.End.DateTime);
-                var duration = end.Subtract(start);
-                var isCurrentEvent = false;
-
-                if(start <= currentDateTime && currentDateTime <= end
-                    || start.AddMinutes(-30) <= currentDateTime && currentDateTime <= start)
-                {
-                    // If event is currently ongoing, or will start in the next 30 minutes
-                    isCurrentEvent = true;
-                }
-
-                eventsList.Add(new
-                {
-                    Index = i++,
-                    ev.Id,
-                    ev.Subject,
-                    ev.Start,
-                    ev.End,
-                    ev.Attendees,
-                    ev.IsOnlineMeeting,
-                    ev.OnlineMeeting,
-                    Description = ev.BodyPreview,
-                    Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
-                    DurationDays = duration.Days,
-                    DurationHours = duration.Hours,
-                    DurationMinutes = duration.Minutes,
-                    isRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false,
-                    isCurrentEvent,
-                    ev.IsOrganizer,
-                    ev.ResponseStatus.Response,
-                    ev.Organizer,
-                    ev.WebLink
-                });
+                eventsList.Add(new CalendarSkillEventModel(ev, currentDateTime, i));
             }
 
             return eventsList;

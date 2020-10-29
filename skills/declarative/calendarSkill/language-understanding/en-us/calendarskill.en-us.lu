@@ -31,7 +31,6 @@
 - What is up next month?
 - What is my agenda for this weekend?
 - Tell me what my next month is like
-- What meetings do I have on Thursday?
 
 @ prebuilt datetimeV2
 
@@ -150,20 +149,96 @@
 - I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
 - Update meeting
 
-@ prebuilt personName
-@ prebuilt email
-@ prebuilt datetimeV2
+# Test
+> add some example phrases to trigger this intent:
+> - please tell me the weather
+> - what is the weather like in {city=Seattle}
+> entity definitions:
+> @ ml city
 
-@ ml EntityName
-    - @ ml EventTitle
-    - @ ml EventDateTime
-    - @ ml EventAttendee
-    - @ ml EventLocation
-    - @ ml EventDuration
-    - @ ml TeamsLink
+- test
+- test dialog
+- run the test
+- this is a test
+- test test test
+
+
+# CancelEvent
+- Cancel my next meeting
+- Cancel my meeting with Andrew today.
+- Cancel my 4 PM meeting
+- Cancel my meeting with lidia
+- Cancel my meeting with title {Title=daily meeting}
+- Cancel my 4 PM meeting with title {Title=weekly report}
+
+# AcceptEvent
+- Accept the meeting with John
+- Accept the meeting at 9
+- Accept the 1:1 with Susan
+
+# DeclineEvent
+- Decline the meeting with John
+- Decline the meeting at 9
+- Decline the 1:1 with Susan
+- Decline my meeting with lidia
+- Decline my meeting with title {Title=daily meeting}
+- Decline my 4 PM meeting with title {Title=weekly report}
+
+
+# TentativelyAccept
+- Tentatively accept the meeting with John
+- Tentatively accept the meeting at 9
+- Tentatively accept  the 1:1 with Susan
+- Make the meeting with John tentative
+- Make the meeting at 9 tentative
+- Make the 1:1 meeting with Susan tentative
+
+# FirstEvent
+- What time does my day start?
+- When is my first meeting?
+- When is my first meeting tomorrow?
+- What is my first meeting today?
+- What is my first meeting tomorrow?
+- What is first on my agenda?
+- Tell me what my first meeting is
+- Tell me what time my meetings start
+
+# LastEvent
+- What time does my day end?
+- When am I finished for today?
+- When does my day end?
+- When am I done today?
+- When am I done for the day?
+- How long is my last meeting?
+- What time does my last meeting end?
+- When is my day over?
+- Tell me when my day ends
+- Tell me my last meeting for today
+- Tell me when I'll be done with meetings today
+
+# OwnAvailability
+- What time am I available again
+- when will I be available today
+- Am I free at 4:30 PM
+- When do I have a break?
+- Do I have time to breathe today?
+- When is my break?
+- When is my next break?
+- When is my next gap in meetings?
+- Do I have a break today?
+- When can I take a break?
+- Can I take a break today?
+- Tell me when my next break is
+- Tell me when I can step away from my computer
+- How long till my next break?
+@ prebuilt ordinalV2
 
 
 @ ml EntityOperation
     - @ ml Add
     - @ ml Remove
     - @ ml Change
+# TimeTillNextMeeting
+- How long till my next meeting
+- How long is my break for
+- How much time do I have till my next meeting
