@@ -236,11 +236,6 @@ namespace ToDoSkill.Dialogs
                 Prompt = stepContext.Options as Activity ?? _templateManager.GenerateActivityForLocale(ToDoMainResponses.FirstPromptMessage)
             };
 
-            if (stepContext.Context.Activity.Type == ActivityTypes.ConversationUpdate)
-            {
-                promptOptions.Prompt = _templateManager.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage);
-            }
-
             return await stepContext.PromptAsync(nameof(TextPrompt), promptOptions, cancellationToken);
         }
 
