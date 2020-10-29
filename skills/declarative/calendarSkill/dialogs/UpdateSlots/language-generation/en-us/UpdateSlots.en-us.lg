@@ -6,14 +6,19 @@
 - What do you want to change about the event?
 - Tell me what you'd like to update.
 # TextInput_Prompt_gtOavc()
-- What is the new title of meeting
+- ${AskForNewValue('title')}
+
+# AskForNewValue(entity)
+- OK, I'll update the ${entity}. What should it be instead?
+- I can do that. What should the ${entity} be instead?
+- OK, for ${entity} what can I update it to?
+- Sure. What should I change the ${entity} to?
+
 
 # DateTimeInput_Prompt_a700t3()
-- OK, how long would you like this meeting to be?
-- OK, what is your preferred meeting duration?
+- ${AskForNewValue('duration')}
 # TextInput_Prompt_NdRLDG()
-- What is the new location of meeting
-
+- ${AskForNewValue('location')}
 
 
 
@@ -23,4 +28,4 @@
 - OK, how long would you like this meeting to be?
 - OK, what is your preferred meeting duration?
 # DateTimeInput_Prompt_fKknY3()
-- What is the new time?
+- ${AskForNewValue('date time')}
