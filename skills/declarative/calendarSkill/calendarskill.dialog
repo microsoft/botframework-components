@@ -54,7 +54,8 @@
           },
           "activity": "${SendActivity_IrC8MR()}"
         }
-      ]
+      ],
+      "condition": "turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
