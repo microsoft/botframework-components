@@ -4,11 +4,6 @@
 - skip that
 - nothing
 - none
-# ChangeDuration
-- I want to set up a meeting for 1 hr with Anna
-- Change the duration to 2,5 hrs
-- I want the meeting to last for 45 minutes
-- Change duration
 
 @ prebuilt datetimeV2
 
@@ -23,10 +18,6 @@
 # ChooseOwnDateTime
 - Choose own date and time
 - Choose my own date and time
-
-# ChangeTitle
-- change titile
-- update title
 
 # ChangeSlots
 - Can you {@EntityOperation={@Add=add}} Rachel

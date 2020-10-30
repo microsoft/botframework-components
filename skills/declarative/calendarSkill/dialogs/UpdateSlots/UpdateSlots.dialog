@@ -641,56 +641,6 @@
           "value": "=dialog.newSlotsResult"
         }
       ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "YyIGgF",
-        "name": "UpdateEventDuration"
-      },
-      "event": "UpdateEventDuration",
-      "actions": [
-        {
-          "$kind": "Microsoft.DateTimeInput",
-          "$designer": {
-            "id": "SSWMA3"
-          },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${DateTimeInput_Prompt_SSWMA3()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
-          "property": "dialog.newDuration",
-          "value": "= turn.activity.text",
-          "outputFormat": "= this.value[0].Value"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "WcoD0K"
-          },
-          "assignments": [
-            {
-              "property": "dialog.newSlotsResult.updateType",
-              "value": "duration"
-            },
-            {
-              "property": "dialog.newSlotsResult.newValue",
-              "value": "=dialog.newDuration"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "jXjVqh"
-          },
-          "value": "=dialog.newSlotsResult"
-        }
-      ]
     }
   ],
   "generator": "UpdateSlots.lg",
