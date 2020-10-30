@@ -108,7 +108,7 @@
 # OpenSurveyAction()
 [CardAction
     type = openUrl
-	title = Launch survey
+	title = Provide feedback
     value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
 ]
 
@@ -212,3 +212,8 @@
     text = You are still in a meeting now.
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
+# SendActivity_AlS4sI()
+- I can help you manage your calendar. Try saying *what meetings do I have today?* or *new meeting* to get started.
+# SendActivity_klrCg4()
+- Sure, let me know if I can help you with something else.
