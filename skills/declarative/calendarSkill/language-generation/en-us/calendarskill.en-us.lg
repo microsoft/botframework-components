@@ -1,6 +1,10 @@
 [import](common.lg)
 [import](event.lg)
 [import](schedule.lg)
+[import](availability.lg)
+
+# SendActivity_gKWYRF()
+- ${WelcomeUser()}
 
 # SendActivity_IrC8MR()
 - You're signed out!
@@ -15,7 +19,7 @@
 
 # SendActivity_Yrs4gn()
 [Activity
-    text = ${GetEventTitleResponseText(dialog.event)}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
@@ -39,9 +43,42 @@
 
 # RespondEventResponseText(action, event)
 - Alright, I’ve ${action} the meeting named ${event.Subject}.
+
+# FirstEventResponseText(event)
+- You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
+
+# LastEventResponseText(event)
+- Your day ends at ${BuildTime(event.start.datetime)}, ${event.Subject}.
+
+# NextEventResponseText(event)
+- Here’s what’s next: ${event.Subject}, ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)} ${WithLocation(event)}${WithAttendees(event, 1)}
+
+# TimeTillNextMeetingResponseText(diff)
+- You have ${MakeDiffTime(diff)} till your next meeting starts.
+
+# MakeDiffTime(diff)
+- IF: ${ diff < 60 }
+    - ${MakeMinute(diff)}
+- ELSEIF: ${ mod(diff, 60) == 0}
+    - ${MakeHour(diff)}
+- ELSE:
+    - ${MakeHour(diff)} and ${MakeMinute(diff)}
+    
+# MakeMinute(diff)
+- IF: ${ mod(diff, 60) == 1 }
+    - ${mod(diff, 60)} minute
+- ELSE:
+    - ${mod(diff, 60)} minutes
+
+# MakeHour(diff)
+- IF: ${ div(diff, 60) == 1 }
+    - ${div(diff, 60)} hour
+- ELSE:
+    - ${div(diff, 60)} hours
+
 # SendActivity_3j3wUV()
 [Activity
-    text = ${GetEventAttendeesResponseText(dialog.event)}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_MvzrwE()
@@ -49,7 +86,7 @@
 
 # SendActivity_kaOafR()
 [Activity
-    text = ${GetEventTimeResponseText(dialog.event)}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_pJwod2()
@@ -57,7 +94,7 @@
 
 # SendActivity_g7immX()
 [Activity
-    text = ${GetEventLocationResponseText(dialog.event)}
+    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 # SendActivity_1we69i()
@@ -120,3 +157,58 @@
 - ${ErrorMessage()}
 # SendActivity_Er6JaO()
 - ${WelcomeUser()}
+
+# SendActivity_ZaUzSz()
+[Activity
+    text = ${FirstEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_q9fyxf()
+- ${ErrorMessage()}
+
+# SendActivity_BwA02G()
+[Activity
+    text = ${LastEventResponseText(dialog.event)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_nZMR82()
+- ${ErrorMessage()}
+
+# SendActivity_CjDfqM()
+[Activity
+    text = ${CheckAvailabilityBusyResponseText(dialog.result.conflictEvents, dialog.datetime.value)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.result.conflictEvents[0].start.datetime, dialog.result.conflictEvents), ScheduleList(dialog.result.conflictEvents), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+# SendActivity_U7NzFC()
+[Activity
+    text = ${CheckAvailabilityFreeResponseText(dialog.datetime.value)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.datetime.value, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+# SendActivity_HcaLIY()
+[Activity
+    text = ${FoundAvailableTimeResponseText(dialog.freeTime.start)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.freeTime.start, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+# SendActivity_QAdvjq()
+[Activity
+    text = ${FoundNoAvailableTimeResponseText()}
+    attachments = ${json(CardTemplate(ScheduleHeader(coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), dialog.events), ScheduleList(dialog.even), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_1Mdyfv()
+- ${ErrorMessage()}
+
+# SendActivity_mBdBjm()
+[Activity
+    text = ${TimeTillNextMeetingResponseText(dialog.timediff)}
+    attachments = ${json(EventDetailCard(dialog.event))}
+]
+# SendActivity_tjRpuP()
+[Activity
+    text = You are still in a meeting now.
+    attachments = ${json(EventDetailCard(dialog.event))}
+]

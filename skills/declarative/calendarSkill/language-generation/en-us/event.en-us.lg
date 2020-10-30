@@ -688,6 +688,14 @@
 - ELSE:
     - The meeting is in ${event.Location}.
 
+# WithLocation(event)
+- IF: ${event.Location == null || event.Location == "" || event.Location == "Online Meeting"}
+    - on Microsoft Teams.
+- ELSEIF: ${event.isOnlineMeeting}
+    - in ${event.Location} and on Microsoft Teams.
+- ELSE:
+    - in ${event.Location}.
+
 # BuildAttendees(event, maxShow)
 - IF: ${event.Attendees==null || count(event.Attendees)==0}
     - No attendees.
@@ -697,3 +705,13 @@
     - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
 - ELSE:
     - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
+
+# WithAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - .
+- ELSEIF: ${count(event.Attendees) == 1}
+    - , with ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - , with ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - , with ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.

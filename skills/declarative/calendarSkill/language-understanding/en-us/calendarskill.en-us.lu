@@ -1,4 +1,3 @@
-
 # SignOut
 > add some example phrases to trigger this intent:
 > - please tell me the weather
@@ -167,3 +166,47 @@
     - @ ml Add
     - @ ml Remove
     - @ ml Change
+
+# FirstEvent
+- What time does my day start?
+- When is my first meeting?
+- When is my first meeting tomorrow?
+- What is my first meeting today?
+- What is my first meeting tomorrow?
+- What is first on my agenda?
+- Tell me what my first meeting is
+- Tell me what time my meetings start
+
+# LastEvent
+- What time does my day end?
+- When am I finished for today?
+- When does my day end?
+- When am I done today?
+- When am I done for the day?
+- How long is my last meeting?
+- What time does my last meeting end?
+- When is my day over?
+- Tell me when my day ends
+- Tell me my last meeting for today
+- Tell me when I'll be done with meetings today
+
+# OwnAvailability
+- What time am I available again
+- when will I be available today
+- Am I free at 4:30 PM
+- When do I have a break?
+- Do I have time to breathe today?
+- When is my break?
+- When is my next break?
+- When is my next gap in meetings?
+- Do I have a break today?
+- When can I take a break?
+- Can I take a break today?
+- Tell me when my next break is
+- Tell me when I can step away from my computer
+- How long till my next break?
+
+# TimeTillNextMeeting
+- How long till my next meeting
+- How long is my break for
+- How much time do I have till my next meeting

@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs.Debugging;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
+using Microsoft.BotFramework.Composer.CustomAction.Actions;
 using Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction
             yield return new DeclarativeType<DeclineEvent>(DeclineEvent.DeclarativeType);
             yield return new DeclarativeType<DeleteEvent>(DeleteEvent.DeclarativeType);
             yield return new DeclarativeType<UpdateEvent>(UpdateEvent.DeclarativeType);
+            yield return new DeclarativeType<CheckAvailability>(CheckAvailability.DeclarativeType);
+            yield return new DeclarativeType<FindAvailableTime>(FindAvailableTime.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)
