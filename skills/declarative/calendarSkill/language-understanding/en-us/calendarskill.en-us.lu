@@ -1,38 +1,23 @@
-# SignOut
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
+# Cancel
+- cancel
+- cancel this
+- stop
+- stop this
+- please stop doing that
 
-> entity definitions:
-> @ ml city
+# Help
+- help
+- help me
+- can you help me?
+- what can you do
+- I don't know what to do
+
+# SignOut
 - logout
 - sign me out
 - sign out
 - forget me
 - log out
-
-# GetEventsByDate
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-- What's on my calendar today?
-- Read me my calendar
-- What is on for today?
-- Show my calendar
-- What do I have planned for tomorrow?
-- Do I have an event tomorrow?
-- List all events for August 20th
-- What meetings do I need to attend today?
-- What meetings do I have this weekend?
-- What is up next month?
-- What is my agenda for this weekend?
-- Tell me what my next month is like
-- What meetings do I have on Thursday?
-
-@ prebuilt datetimeV2
 
 # CreateEvent
 - Add a meeting to my calendar
@@ -49,26 +34,20 @@
 - Schedule a meeting with Stephanie tomorrow afternoon
 - new meeting
 
-@ prebuilt datetimeV2
-@ prebuilt personName
-
-# GetEventTitle
-- Do I have an event at 1pm on Friday?
-- What meeting do I have at 1pm?
-- 1pm on Friday, what do I have?
-- Am I busy at 1pm on Friday?"
-- find a meeting about {Title=group meeting}
-- find a meeting about {Title=plan}
-- find a meeting at 7pm from melissa
-- find a meeting from darren about {Title=status update}
-- find a meeting from deborah about {Title=team session}
-- find a meeting from donna
-- find a meeting Title {Title=daily meeting}
-- find a meeting with Title {Title=weekly report}
-- find a meeting with title {Title=second lesson} from amanda
-- find a meeting with title {Title=sharing} from steven
-- find my meeting with lidia
-@ prebuilt personName
+# GetEvents
+- What's on my calendar today?
+- Read me my calendar
+- What is on for today?
+- Show my calendar
+- What do I have planned for tomorrow?
+- Do I have an event tomorrow?
+- List all events for August 20th
+- What meetings do I need to attend today?
+- What meetings do I have this weekend?
+- What is up next month?
+- What is my agenda for this weekend?
+- Tell me what my next month is like
+- What meetings do I have on Thursday?
 
 # GetEventAttendees
 - Who am I meeting at 11 today?
@@ -84,15 +63,6 @@
 - who is attending the meeting on wednesday
 - who is going to attend the meeting tomorrow at 2 pm
 
-# GetEventTime
-- When is my meeting with John?
-- What time am I meeting with Emma?
-- What time is my {Title=team meeting} today?
-- When do I meet with Stephanie next?
-- when am i {Title=watching england}
-- when do i have {Title=exam}
-- when do i meet with charles
-- 
 # GetEventLocation
 - Where is my meeting this afternoon?
 - Is my 11 o'clock meeting in building 35?
@@ -107,67 +77,33 @@
 - where is tomorrow 's event
 - where's my next meeting
 
-# CancelEvent
-- Cancel my next meeting
-- Cancel my meeting with Andrew today.
-- Cancel my 4 PM meeting
-- Cancel my meeting with lidia
-- Cancel my meeting with title {Title=daily meeting}
-- Cancel my 4 PM meeting with title {Title=weekly report}
+# GetEventTime
+- When is my meeting with John?
+- What time am I meeting with Emma?
+- What time is my {Title=team meeting} today?
+- When do I meet with Stephanie next?
+- when am i {Title=watching england}
+- when do i have {Title=exam}
+- when do i meet with charles
 
-# AcceptEvent
-- Accept the meeting with John
-- Accept the meeting at 9
-- Accept the 1:1 with Susan
+# GetEventTitle
+- Do I have an event at 1pm on Friday?
+- What meeting do I have at 1pm?
+- 1pm on Friday, what do I have?
+- Am I busy at 1pm on Friday?
+- find a meeting about {Title=group meeting}
+- find a meeting about {Title=plan}
+- find a meeting at 7pm from melissa
+- find a meeting from darren about {Title=status update}
+- find a meeting from deborah about {Title=team session}
+- find a meeting from donna
+- find a meeting Title {Title=daily meeting}
+- find a meeting with Title {Title=weekly report}
+- find a meeting with title {Title=second lesson} from amanda
+- find a meeting with title {Title=sharing} from steven
+- find my meeting with lydia
 
-# DeclineEvent
-- Decline the meeting with John
-- Decline the meeting at 9
-- Decline the 1:1 with Susan
-- Decline my meeting with lidia
-- Decline my meeting with title {Title=daily meeting}
-- Decline my 4 PM meeting with title {Title=weekly report}
-
-
-# TentativelyAccept
-- Tentatively accept the meeting with John
-- Tentatively accept the meeting at 9
-- Tentatively accept  the 1:1 with Susan
-- Make the meeting with John tentative
-- Make the meeting at 9 tentative
-- Make the 1:1 meeting with Susan tentative
-
-@ prebuilt ordinalV2
-
-# UpdateEvent
-- Can you {@EntityOperation={@Add=add}} Rachel
-- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
-- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
-- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
-- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
-- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
-- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
-- Update meeting
-
-@ prebuilt personName
-@ prebuilt email
-@ prebuilt datetimeV2
-
-@ ml EntityName
-    - @ ml EventTitle
-    - @ ml EventDateTime
-    - @ ml EventAttendee
-    - @ ml EventLocation
-    - @ ml EventDuration
-    - @ ml TeamsLink
-
-
-@ ml EntityOperation
-    - @ ml Add
-    - @ ml Remove
-    - @ ml Change
-
-# FirstEvent
+# GetFirstEvent
 - What time does my day start?
 - When is my first meeting?
 - When is my first meeting tomorrow?
@@ -177,7 +113,7 @@
 - Tell me what my first meeting is
 - Tell me what time my meetings start
 
-# LastEvent
+# GetLastEvent
 - What time does my day end?
 - When am I finished for today?
 - When does my day end?
@@ -190,7 +126,7 @@
 - Tell me my last meeting for today
 - Tell me when I'll be done with meetings today
 
-# OwnAvailability
+# GetMyAvailability
 - What time am I available again
 - when will I be available today
 - Am I free at 4:30 PM
@@ -206,7 +142,64 @@
 - Tell me when I can step away from my computer
 - How long till my next break?
 
-# TimeTillNextMeeting
+# GetTimeUntilNextMeeting
 - How long till my next meeting
 - How long is my break for
 - How much time do I have till my next meeting
+
+# AcceptEvent
+- Accept the meeting with John
+- Accept the meeting at 9
+- Accept the 1:1 with Susan
+
+# CancelEvent
+- Cancel my next meeting
+- Cancel my meeting with Andrew today.
+- Cancel my 4 PM meeting
+- Cancel my meeting with lydia
+- Cancel my meeting with title {Title=daily meeting}
+- Cancel my 4 PM meeting with title {Title=weekly report}
+
+# DeclineEvent
+- Decline the meeting with John
+- Decline the meeting at 9
+- Decline the 1:1 with Susan
+- Decline my meeting with lydia
+- Decline my meeting with title {Title=daily meeting}
+- Decline my 4 PM meeting with title {Title=weekly report}
+
+# TentativelyAcceptEvent
+- Tentatively accept the meeting with John
+- Tentatively accept the meeting at 9
+- Tentatively accept  the 1:1 with Susan
+- Make the meeting with John tentative
+- Make the meeting at 9 tentative
+- Make the 1:1 meeting with Susan tentative
+
+# UpdateEvent
+- Can you {@EntityOperation={@Add=add}} Rachel
+- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
+- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
+- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
+- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
+- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
+- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- Update meeting
+
+@ ml EntityName
+    - @ ml EventTitle
+    - @ ml EventDateTime
+    - @ ml EventAttendee
+    - @ ml EventLocation
+    - @ ml EventDuration
+    - @ ml TeamsLink
+
+@ ml EntityOperation
+    - @ ml Add
+    - @ ml Remove
+    - @ ml Change
+
+@ prebuilt datetimeV2
+@ prebuilt email
+@ prebuilt personName
+@ prebuilt ordinalV2
