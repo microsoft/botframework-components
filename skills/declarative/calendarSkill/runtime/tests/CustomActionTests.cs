@@ -65,12 +65,6 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
-        public async Task CalendarSkillTests_SortEvents()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
         public async Task CalendarSkillTests_GetWorkingHours()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
