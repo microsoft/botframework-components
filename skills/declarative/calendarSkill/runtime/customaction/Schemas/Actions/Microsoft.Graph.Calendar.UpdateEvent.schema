@@ -6,7 +6,7 @@
   "type": "object",
   "required": [
     "token",
-    "newEventProperty"
+    "eventToUpdateProperty"
   ],
   "properties": {
     "id": {
@@ -26,10 +26,10 @@
       "description": "Microsoft Graph API authentication token.",
       "examples": []
     },
-    "newEventProperty": {
+    "eventToUpdateProperty": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "New Event",
-      "description": "New event.",
+      "title": "Updated event",
+      "description": "Updated event to post to MS Graph API.",
       "examples": []
     }
   }

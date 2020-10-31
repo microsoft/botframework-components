@@ -45,12 +45,11 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         {
             var dcState = dc.State;
             var events = InputProperty.GetValue(dcState);
-            var startProperty = StartProperty.GetValue(dcState);
-            var culture = GetCulture(dc);
-            
+            var startProperty = StartProperty.GetValue(dcState);            
             List<CalendarSkillEventModel> conflictEvents = new List<CalendarSkillEventModel>();
             CalendarSkillEventModel previousEvent = null;
             CalendarSkillEventModel nextEvent = null;
+
             if (events != null)
             {
                 foreach (var ev in events)
@@ -90,16 +89,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
-        }
-
-        private string GetCulture(DialogContext dc)
-        {
-            if (!string.IsNullOrEmpty(dc.Context.Activity.Locale))
-            {
-                return dc.Context.Activity.Locale;
-            }
-
-            return Microsoft.Recognizers.Text.Culture.English;
         }
     }
 }

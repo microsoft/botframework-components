@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -58,18 +59,17 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("dateTimeTypeProperty")]
         public StringExpression DateTimeTypeProperty { get; set; }
 
-        /// <summary>
-        /// Signifies that only future events should be included in the search results.
-        /// </summary>
-        [JsonProperty("isFutureProperty")]
-        public BoolExpression IsFutureProperty { get; set; }
-
         [JsonProperty("ordinalProperty")]
         public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
 
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
-        
+
+        [JsonProperty("futureEventsOnlyProperty")]
+        public BoolExpression FutureEventsOnlyProperty { get; set; }
+
+        [JsonProperty("groupByDateProperty")]
+        public BoolExpression GroupByDateProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -81,7 +81,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var ordinalProperty = OrdinalProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
-            var isFuture = IsFutureProperty.GetValue(dcState);
+            var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
+            var groupByDateProperty = GroupByDateProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -118,7 +119,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-            var results = new List<Event>();
+            var parsedEvents = new List<CalendarSkillEventModel>();
 
             // Define the time span for the calendar view.
             var queryOptions = new List<QueryOption>
@@ -143,13 +144,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var ev in events)
                 {
-                    var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
-                    var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
-
-                    ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
-                    ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
-
-                    results.Add(ev);
+                    parsedEvents.Add(ParseEvent(ev, timeZone));
                 }
             }
 
@@ -160,13 +155,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
-                        var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
-
-                        ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
-                        ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
-
-                        results.Add(ev);
+                        parsedEvents.Add(ParseEvent(ev, timeZone));
                     }
                 }
             }
@@ -175,33 +164,33 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             // Filter results by datetime if dateTimeType is a specific datetime
             if (dateTimeTypeProperty != null && dateTimeTypeProperty.Contains("time"))
             {
-                results = results.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
+                parsedEvents = parsedEvents.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
             }
 
             // Filter results by title
             if (titleProperty != null)
             {
                 var title = titleProperty;
-                results = results.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
+                parsedEvents = parsedEvents.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
             }
 
-            //// Filter results by location
+            // Filter results by location
             if (locationProperty != null)
             {
                 var location = locationProperty;
-                results = results.Where(r => r.Location.DisplayName.ToLower().Contains(location.ToLower())).ToList();
+                parsedEvents = parsedEvents.Where(r => r.Location.ToLower().Contains(location.ToLower())).ToList();
             }
 
-            //// Filter results by attendees
+            // Filter results by attendees
             if (attendeesProperty != null)
             {
                 // TODO: update to use contacts from graph rather than string matching
                 var attendees = attendeesProperty;
-                results = results.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
+                parsedEvents = parsedEvents.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
             }
 
-            //// Get result by order
-            if (results.Any() && ordinalProperty != null)
+            // Get result by order
+            if (parsedEvents.Any() && ordinalProperty != null)
             {
                 long offset = -1;
                 if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
@@ -210,69 +199,66 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
                 else if (ordinalProperty.RelativeTo == "end")
                 {
-                    offset = results.Count - ordinalProperty.Offset - 1;
+                    offset = parsedEvents.Count - ordinalProperty.Offset - 1;
                 }
 
-                if (offset >= 0 && offset < results.Count)
+                if (offset >= 0 && offset < parsedEvents.Count)
                 {
-                    results = new List<Event>() { results[(int)offset] };
+                    parsedEvents = new List<CalendarSkillEventModel>() { parsedEvents[(int)offset] };
                 }
             }
 
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(GetEvents), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
+            // Sort events by date
+            if (groupByDateProperty)
             {
-                dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(results));
-            }
+                var groupedEvents = parsedEvents
+                    .Where(ev => ev.IsAllDay == false)
+                    .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                    .GroupBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                    .Select(g => new { date = g.Key, events = g.ToList() })
+                    .ToList();
 
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+                // Write Trace Activity for the http request and response values
+                await dc.Context.TraceActivityAsync(nameof(GetEvents), groupedEvents, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+
+                if (this.ResultProperty != null)
+                {
+                    dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(groupedEvents));
+                }
+
+                // return the actionResult as the result of this operation
+                return await dc.EndDialogAsync(result: groupedEvents, cancellationToken: cancellationToken);
+            }
+            else
+            {
+                parsedEvents = parsedEvents
+                    .Where(ev => ev.IsAllDay == false)
+                    .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                    .ToList();
+
+                // Write Trace Activity for the http request and response values
+                await dc.Context.TraceActivityAsync(nameof(GetEvents), parsedEvents, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+
+                if (this.ResultProperty != null)
+                {
+                    dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(parsedEvents));
+                }
+
+                // return the actionResult as the result of this operation
+                return await dc.EndDialogAsync(result: parsedEvents, cancellationToken: cancellationToken);
+            }
         }
 
-        private List<object> ParseEvents(DateTime currentDateTime, List<Event> events)
+        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone)
         {
-            var eventsList = new List<object>();
-            var i = 0;
+            var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
+            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
+            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
 
-            foreach (var ev in events)
-            {
-                var start = DateTime.Parse(ev.Start.DateTime);
-                var end = DateTime.Parse(ev.End.DateTime);
-                var duration = end.Subtract(start);
-                var isCurrentEvent = false;
+            ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
+            ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
-                if (start <= currentDateTime && currentDateTime <= end
-                    || start.AddMinutes(-30) <= currentDateTime && currentDateTime <= start)
-                {
-                    // If event is currently ongoing, or will start in the next 30 minutes
-                    isCurrentEvent = true;
-                }
-
-                eventsList.Add(new
-                {
-                    Id = i++,
-                    ev.Subject,
-                    ev.Start,
-                    ev.End,
-                    ev.Attendees,
-                    ev.IsOnlineMeeting,
-                    ev.OnlineMeeting,
-                    Description = ev.BodyPreview,
-                    Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty,
-                    DurationDays = duration.Days,
-                    DurationHours = duration.Hours,
-                    DurationMinutes = duration.Minutes,
-                    isRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false,
-                    isCurrentEvent,
-                    ev.IsOrganizer,
-                    ev.ResponseStatus.Response,
-                    ev.Organizer
-                });
-            }
-
-            return eventsList;
+            return new CalendarSkillEventModel(ev, currentDateTime);
         }
     }
 }

@@ -76,10 +76,16 @@
       "description": "Timezone.",
       "examples": []
     },
-    "isFutureProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "futureEventsOnlyProperty": {
+      "$ref": "schema:#/definitions/booleanExpression",
       "title": "Future Events Only",
       "description": "Future Events Only",
+      "examples": []
+    },
+    "groupByDateProperty": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Group events by date",
+      "description": "Group events by date",
       "examples": []
     }
   }

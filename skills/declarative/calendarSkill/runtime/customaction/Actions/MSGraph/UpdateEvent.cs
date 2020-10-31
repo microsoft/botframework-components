@@ -33,36 +33,36 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("token")]
         public StringExpression Token { get; set; }
 
-        [JsonProperty("newEventProperty")]
-        public ObjectExpression<CalendarSkillEventModel> NewEventProperty { get; set; }
+        [JsonProperty("eventToUpdateProperty")]
+        public ObjectExpression<CalendarSkillEventModel> EventToUpdateProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
             var token = this.Token.GetValue(dcState);
-            var newEventProperty = this.NewEventProperty.GetValue(dcState);
-
+            var eventToUpdateProperty = this.EventToUpdateProperty.GetValue(dcState);
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
-            Event result = null;
-            var updateEvent = new Event()
+            var eventToUpdate = new Event()
             {
-                Id = newEventProperty.Id,
-                Subject = newEventProperty.Subject,
-                Start = newEventProperty.Start,
-                End = newEventProperty.End,
-                Attendees = newEventProperty.Attendees,
+                Id = eventToUpdateProperty.Id,
+                Subject = eventToUpdateProperty.Subject,
+                Start = eventToUpdateProperty.Start,
+                End = eventToUpdateProperty.End,
+                Attendees = eventToUpdateProperty.Attendees,
                 Location = new Location() 
                 { 
-                    DisplayName = newEventProperty.Location
+                    DisplayName = eventToUpdateProperty.Location
                 },
-                IsOnlineMeeting = newEventProperty.IsOnlineMeeting,
+                IsOnlineMeeting = eventToUpdateProperty.IsOnlineMeeting,
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
             };
+
+            Event result = null;
             try
             {
-                result = await graphClient.Me.Events[updateEvent.Id].Request().UpdateAsync(updateEvent);
+                result = await graphClient.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate);
             }
             catch (ServiceException ex)
             {

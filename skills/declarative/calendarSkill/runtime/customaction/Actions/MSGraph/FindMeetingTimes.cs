@@ -52,11 +52,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var attendees = attendeesProperty;
-
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-            MeetingTimeSuggestionsResult meetingTimesResult;
 
+            MeetingTimeSuggestionsResult meetingTimesResult;
             try
             {
                 meetingTimesResult = await graphClient.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0))).Request().PostAsync();
@@ -66,14 +65,14 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 throw MSGraphClient.HandleGraphAPIException(ex);
             }
 
-            var results = new List<CalendarSkillMeetingTimeSlotModel>();
+            var results = new List<CalendarSkillTimeSlotModel>();
             foreach (var timeSlot in meetingTimesResult.MeetingTimeSuggestions)
             {
                 if (timeSlot.Confidence >= 1)
                 {
                     var start = DateTime.Parse(timeSlot.MeetingTimeSlot.Start.DateTime);
                     var end = DateTime.Parse(timeSlot.MeetingTimeSlot.End.DateTime);
-                    results.Add(new CalendarSkillMeetingTimeSlotModel()
+                    results.Add(new CalendarSkillTimeSlotModel()
                     {
                         Start = TimeZoneInfo.ConvertTimeFromUtc(start, timeZone),
                         End = TimeZoneInfo.ConvertTimeFromUtc(end, timeZone)

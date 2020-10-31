@@ -54,14 +54,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var startProperty = StartProperty.GetValue(dcState);
             var workingHourStartProperty = WorkingHourStartProperty.GetValue(dcState);
             var workingHourEndProperty = WorkingHourEndProperty.GetValue(dcState);
-            var culture = GetCulture(dc);
-
             DateTime workingTimeStart = startProperty.Value.Date + workingHourStartProperty.Value.TimeOfDay;
             DateTime workingTimeEnd = startProperty.Value.Date + workingHourEndProperty.Value.TimeOfDay;
             DateTime availableTimeStart = startProperty.Value > workingTimeStart ? startProperty.Value : workingTimeStart;
             DateTime availableTimeEnd = workingTimeEnd;
             CalendarSkillEventModel previousEvent = null;
             CalendarSkillEventModel nextEvent = null;
+
             if (events != null)
             {
                 foreach (var ev in events)
@@ -101,16 +100,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             // return the actionResult as the result of this operation
             return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
-        }
-
-        private string GetCulture(DialogContext dc)
-        {
-            if (!string.IsNullOrEmpty(dc.Context.Activity.Locale))
-            {
-                return dc.Context.Activity.Locale;
-            }
-
-            return Microsoft.Recognizers.Text.Culture.English;
         }
     }
 }
