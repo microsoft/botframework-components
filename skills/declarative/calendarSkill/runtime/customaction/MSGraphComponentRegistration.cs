@@ -16,7 +16,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction
             // Actions
             yield return new DeclarativeType<GetProfile>(GetProfile.DeclarativeType);
             yield return new DeclarativeType<GetEvents>(GetEvents.DeclarativeType);
-            yield return new DeclarativeType<SortEvents>(SortEvents.DeclarativeType);
             yield return new DeclarativeType<GetWorkingHours>(GetWorkingHours.DeclarativeType);
             yield return new DeclarativeType<GetContacts>(GetContacts.DeclarativeType);
             yield return new DeclarativeType<FindMeetingTimes>(FindMeetingTimes.DeclarativeType);

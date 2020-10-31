@@ -38,9 +38,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var dcState = dc.State;
             var token = Token.GetValue(dcState);
             var eventId = EventId.GetValue(dcState);
-
-            var httpHandler = dc.Context.TurnState.Get<HttpMessageHandler>();
-
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 

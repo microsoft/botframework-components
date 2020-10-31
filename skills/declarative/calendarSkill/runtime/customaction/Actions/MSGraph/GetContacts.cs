@@ -41,10 +41,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var dcState = dc.State;
             var name = this.NameProperty.GetValue(dcState);
             var token = this.Token.GetValue(dcState);
-
             var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
             var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-            var results = new List<CalendarSkillUserModel>();
+            var results = new List<CalendarSkillContactModel>();
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
 
@@ -59,7 +58,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 throw MSGraphClient.HandleGraphAPIException(ex);
             }
 
-            var contactsResult = new List<CalendarSkillUserModel>();
+            var contactsResult = new List<CalendarSkillContactModel>();
             if (contacts?.Count > 0)
             {
                 foreach (var contact in contacts)
@@ -75,7 +74,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     }
 
                     // Get user properties.
-                    contactsResult.Add(new CalendarSkillUserModel
+                    contactsResult.Add(new CalendarSkillContactModel
                     {
                         Name = contact.DisplayName,
                         EmailAddresses = emailAddresses,
@@ -84,7 +83,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
-            // Get the current user's profile.
             IUserPeopleCollectionPage people = null;
             try
             {
@@ -95,36 +93,25 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 throw MSGraphClient.HandleGraphAPIException(ex);
             }
 
-            // var users = await _graphClient.Users.Request(optionList).GetAsync();
             if (people?.Count > 0)
             {
                 foreach (var person in people)
                 {
                     var emailAddresses = new List<string>();
 
-                    var isDup = false;
-
                     foreach (var email in person.ScoredEmailAddresses)
                     {
-                        emailAddresses.Add(email.Address);
-
-                        if (!isDup)
+                        // If the email address isn't already included in the contacts list, add it
+                        if (!contactsResult.SelectMany(c => c.EmailAddresses).Contains(email.Address))
                         {
-                            foreach (var contact in contactsResult)
-                            {
-                                if (contact.EmailAddresses.Contains(email.Address, StringComparer.CurrentCultureIgnoreCase))
-                                {
-                                    isDup = true;
-                                    break;
-                                }
-                            }
+                            emailAddresses.Add(email.Address);
                         }
                     }
 
                     // Get user properties.
-                    if (!isDup)
+                    if (emailAddresses.Any())
                     {
-                        results.Add(new CalendarSkillUserModel
+                        results.Add(new CalendarSkillContactModel
                         {
                             Name = person.DisplayName,
                             EmailAddresses = emailAddresses,
@@ -133,6 +120,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     }
                 }
             }
+
             results.AddRange(contactsResult);
 
             // Write Trace Activity for the http request and response values

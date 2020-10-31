@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Models
 {
-    public class CalendarSkillMeetingTimeSlotModel
+    public class CalendarSkillTimeSlotModel
     {
         public DateTime Start { get; set; }
 

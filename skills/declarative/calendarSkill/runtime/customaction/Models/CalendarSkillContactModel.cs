@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Models
 {
-    public class CalendarSkillUserModel
+    public class CalendarSkillContactModel
     {
         public string Name { get; set; }
 

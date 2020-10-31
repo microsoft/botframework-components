@@ -40,6 +40,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
             IsRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false;
             IsCurrentEvent = isCurrentEvent;
             IsOrganizer = ev.IsOrganizer;
+            IsAllDay = ev.IsAllDay;
             Response = ev.ResponseStatus.Response;
             Organizer = ev.Organizer;
             WebLink = ev.WebLink;
@@ -92,6 +93,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "isOrganizer", Required = Required.Default)]
         public bool? IsOrganizer { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "isAllDay", Required = Required.Default)]
+        public bool? IsAllDay { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "response", Required = Required.Default)]
         public ResponseType? Response { get; set; }
