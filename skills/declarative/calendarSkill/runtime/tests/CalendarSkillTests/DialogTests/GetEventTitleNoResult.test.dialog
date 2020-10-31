@@ -45,7 +45,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Something seems to be going wrong. I can tell you more about your meetings today..."
+      "text": "Something seems to be going wrong. I can tell you more about your meetings today."
     },
     {
       "$kind": "Microsoft.Test.AssertReply",

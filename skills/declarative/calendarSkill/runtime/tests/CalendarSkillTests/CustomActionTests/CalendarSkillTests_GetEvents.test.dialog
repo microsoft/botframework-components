@@ -15,7 +15,8 @@
             "$kind": "Microsoft.Graph.Calendar.GetEvents",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "isFutureProperty": "=false",
+            "futureEventsOnlyProperty": "=false",
+            "groupByDateProperty": "=false",
             "startProperty": "='2020-09-11T09:00:00'",
             "endProperty": "='2020-09-11T17:00:00'",
             "timezoneProperty": "='Pacific Standard Time'",
@@ -24,7 +25,7 @@
           },
           {
             "$kind": "Microsoft.SendActivity",
-            "activity": "${dialog.result[0].subject}"
+            "activity": "${dialog.result[0].Subject}"
           }
         ]
       }

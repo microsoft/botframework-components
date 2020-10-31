@@ -1,1 +1,1 @@
-{"query":"tentatively accept my meeting with lidia","prediction":{"topIntent":"TentativelyAccept","intents":{"TentativelyAccept":{"score":0.676984549}},"entities":{"personName":["lidia"]}}}
+{"query":"tentatively accept my meeting with lidia","prediction":{"topIntent":"TentativelyAcceptEvent","intents":{"TentativelyAcceptEvent":{"score":0.676984549}},"entities":{"personName":["lidia"]}}}
