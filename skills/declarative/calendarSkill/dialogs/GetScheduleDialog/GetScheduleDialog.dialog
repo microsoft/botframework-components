@@ -1,0 +1,100 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "C6HI3d",
+    "name": "GetScheduleDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "agSqj6"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "NBRENG"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(convertFromUTC(utcNow(), user.workingHours.timeZone.name), \"yyyy-MM-dd\"))"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=coalesce(dialog.datetime.End, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "V4IYIL"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "doSelection": "=false",
+            "futureOnly": "=true",
+            "groupEvents": "=true"
+          },
+          "resultProperty": "conversation.events"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "N02RSE"
+          },
+          "condition": "conversation.events != null && count(conversation.events) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hDknHb"
+              },
+              "activity": "${SendActivity_hDknHb()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "J8Jgea"
+              },
+              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "i89xW0"
+                  },
+                  "activity": "${SendActivity_i89xW0()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "eSN2lu"
+                  },
+                  "activity": "${SendActivity_eSN2lu()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetScheduleDialog.lg",
+  "recognizer": "GetScheduleDialog.lu.qna",
+  "id": "GetScheduleDialog"
+}

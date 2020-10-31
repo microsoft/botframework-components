@@ -24,7 +24,7 @@
 ]
 
 # ErrorMessage()
-- Something seems to be going wrong. I can tell you more about your meetings today... 
+- Something seems to be going wrong. I can tell you more about your meetings today.
 
 # SendActivity_GGU1vZ()
 - ${ErrorMessage()}
@@ -89,16 +89,11 @@
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
-# SendActivity_pJwod2()
-- ${ErrorMessage()}
-
 # SendActivity_g7immX()
 [Activity
     text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
-# SendActivity_1we69i()
-- ${ErrorMessage()}
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
@@ -111,31 +106,6 @@
 	title = Provide feedback
     value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
 ]
-
-# SendActivity_AQR6NN()
-[Activity
-    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
-    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
-]
-
-# SendActivity_CVSKqO()
-[Activity
-    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
-    attachments = ${foreach(conversation.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions())))}
-    attachmentLayout = carousel
-]
-
-# SendActivity_rS3tH3()
-[Activity
-    text = ${ScheduleResponseText(dialog.start, createArray())}
-    attachments = ${json(ScheduleNoResults(dialog.start))}
-]
-
-# SendActivity_w8uwiZ()
-- ${ErrorMessage()}
-
-# SendActivity_HYIRYe()
-- ${ErrorMessage()}
 
 # SendActivity_BAjl1j()
 [Activity
@@ -153,8 +123,6 @@
     attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
 
-# SendActivity_eMsYu3()
-- ${ErrorMessage()}
 # SendActivity_Er6JaO()
 - ${WelcomeUser()}
 
@@ -171,9 +139,6 @@
     text = ${LastEventResponseText(dialog.event)}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
-# SendActivity_nZMR82()
-- ${ErrorMessage()}
-
 # SendActivity_CjDfqM()
 [Activity
     text = ${CheckAvailabilityBusyResponseText(dialog.result.conflictEvents, dialog.datetime.value)}
@@ -199,9 +164,6 @@
     attachmentLayout = carousel
 ]
 
-# SendActivity_1Mdyfv()
-- ${ErrorMessage()}
-
 # SendActivity_mBdBjm()
 [Activity
     text = ${TimeTillNextMeetingResponseText(dialog.timediff)}
@@ -217,3 +179,5 @@
 - I can help you manage your calendar. Try saying *what meetings do I have today?* or *new meeting* to get started.
 # SendActivity_klrCg4()
 - Sure, let me know if I can help you with something else.
+# SendActivity_KWePCs()
+- ${ErrorMessage()}

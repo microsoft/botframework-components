@@ -1,0 +1,22 @@
+[import](common.lg)
+[import](event.lg)
+[import](schedule.lg)
+
+# SendActivity_eSN2lu()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[0]))}
+]
+
+# SendActivity_i89xW0()
+[Activity
+    text = ${ScheduleResponseText(conversation.events[0].date, conversation.events[0].events)}
+    attachments = ${foreach(conversation.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions())))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_hDknHb()
+[Activity
+    text = ${ScheduleResponseText(dialog.start, createArray())}
+    attachments = ${json(ScheduleNoResults(dialog.start))}
+]

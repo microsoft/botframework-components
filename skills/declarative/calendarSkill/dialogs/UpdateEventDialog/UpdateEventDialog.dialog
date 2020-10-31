@@ -502,7 +502,7 @@
               },
               "token": "=user.token.token",
               "resultProperty": "dialog.updatedEvent",
-              "newEventProperty": "=dialog.searchResults"
+              "eventToUpdateProperty": "=dialog.searchResults"
             },
             {
               "$kind": "Microsoft.SendActivity",

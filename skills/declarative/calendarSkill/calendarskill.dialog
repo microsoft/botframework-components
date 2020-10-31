@@ -227,85 +227,15 @@
           "resultProperty": "dialog.datetime"
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "ZKtspD"
-          },
-          "assignments": [
-            {
-              "property": "dialog.start",
-              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(utcNow(), \"yyyy-MM-dd\"))"
-            },
-            {
-              "property": "dialog.end",
-              "value": "=coalesce(dialog.datetime.End, null)"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "UI793B"
+            "id": "RDCDYu"
           },
           "activityProcessed": true,
-          "dialog": "SearchEventsDialog",
+          "dialog": "GetScheduleDialog",
           "options": {
-            "start": "=dialog.start",
-            "end": "=dialog.end",
-            "doSelection": "=false",
-            "groupResults": "=true"
-          },
-          "resultProperty": "conversation.events"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "4U8jh7"
-          },
-          "name": "AfterGetEvents"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "YMzsRM"
-          },
-          "condition": "conversation.events != null && count(conversation.events) > 0",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "rS3tH3"
-              },
-              "activity": "${SendActivity_rS3tH3()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "7Vp9Pt"
-              },
-              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "CVSKqO"
-                  },
-                  "activity": "${SendActivity_CVSKqO()}"
-                }
-              ],
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "AQR6NN"
-                  },
-                  "activity": "${SendActivity_AQR6NN()}"
-                }
-              ]
-            }
-          ]
+            "datetime": "=dialog.datetime"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -405,22 +335,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "MvzrwE"
+                "id": "4aXGyB"
               },
-              "activity": "${SendActivity_MvzrwE()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "mRN2Gt"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -522,22 +441,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "1we69i"
+                "id": "ki6G8a"
               },
-              "activity": "${SendActivity_1we69i()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "8XSZ3S"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -639,22 +547,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "pJwod2"
+                "id": "jNzbmc"
               },
-              "activity": "${SendActivity_pJwod2()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "qQ8kEa"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -755,22 +652,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "GGU1vZ"
+                "id": "AQUdLe"
               },
-              "activity": "${SendActivity_GGU1vZ()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "w9j7Lp"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -875,22 +761,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "q9fyxf"
+                "id": "YozwAS"
               },
-              "activity": "${SendActivity_q9fyxf()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "b3vmjG"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -995,22 +870,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "nZMR82"
+                "id": "iGLw9a"
               },
-              "activity": "${SendActivity_nZMR82()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "dgIUF6"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -1388,22 +1252,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "1Mdyfv"
+                "id": "XSCT97"
               },
-              "activity": "${SendActivity_1Mdyfv()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "4M9Z6N"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -1509,22 +1362,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "w8uwiZ"
+                "id": "sCykKB"
               },
-              "activity": "${SendActivity_w8uwiZ()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "CsTA7N"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -1643,22 +1485,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "HYIRYe"
+                "id": "GldAKT"
               },
-              "activity": "${SendActivity_HYIRYe()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "SJnnlM"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -1777,22 +1608,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "22WNkk"
+                "id": "azYNsB"
               },
-              "activity": "${SendActivity_22WNkk()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "PymnTe"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -1911,22 +1731,11 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "eMsYu3"
+                "id": "5bA3ct"
               },
-              "activity": "${SendActivity_eMsYu3()}"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "YuVneJ"
-              },
-              "activityProcessed": true,
-              "dialog": "GetEventsByDateDialog",
-              "options": {
-                "query": "today"
-              }
+              "eventName": "noResults"
             }
           ]
         },
@@ -2052,7 +1861,7 @@
             "id": "QCM3um"
           },
           "property": "conversation.dialogCount",
-          "value": "= conversation.dialogCount + 1"
+          "value": "= coalesce(conversation.dialogCount, 0) + 1"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -2125,6 +1934,31 @@
               "activity": "${SendActivity_ynnpFX()}"
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "xhUm7Y",
+        "name": "OnNoResultsEvent"
+      },
+      "event": "noResults",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "KWePCs"
+          },
+          "activity": "${SendActivity_KWePCs()}"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "KfKyLy"
+          },
+          "activityProcessed": true,
+          "dialog": "GetScheduleDialog"
         }
       ]
     }
