@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Y9c7T3"
+          },
+          "name": "RespondToEventDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
             "id": "T4tAUA"
@@ -33,7 +40,7 @@
                   },
                   "resultProperty": "dialog.result",
                   "token": "=user.token.token",
-                  "eventId": "=dialog.event.id"
+                  "eventId": "=dialog.event.Id"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -62,7 +69,7 @@
                   },
                   "resultProperty": "dialog.result",
                   "token": "=user.token.token",
-                  "eventId": "=dialog.event.id"
+                  "eventId": "=dialog.event.Id"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -91,7 +98,7 @@
                   },
                   "resultProperty": "dialog.result",
                   "token": "=user.token.token",
-                  "eventId": "=dialog.event.id"
+                  "eventId": "=dialog.event.Id"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",

@@ -20,7 +20,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "i6ahnZ"
-          }
+          },
+          "name": "ListDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.EmitEvent",

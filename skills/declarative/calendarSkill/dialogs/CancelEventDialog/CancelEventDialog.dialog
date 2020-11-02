@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "j6CfN9"
+          },
+          "name": "CancelEventDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "itkIrW"

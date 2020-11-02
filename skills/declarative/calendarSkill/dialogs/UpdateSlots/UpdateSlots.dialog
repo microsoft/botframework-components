@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HHN9Ue"
+          },
+          "name": "UpdateSlots.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "1ZQTb7"
@@ -38,12 +45,6 @@
           },
           "value": "=coalesce(dialog.entityName, dialog.resolveUpdateEntityResult.entityName)",
           "property": "dialog.entityName"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "XsJvUW"
-          }
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -84,12 +85,6 @@
               },
               "property": "dialog.entityName",
               "value": "=toLower(coalesce(dialog.resolveUpdateEntityResult.entityName, dialog.entityName))"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "DJAbs9"
-              }
             }
           ]
         },
@@ -431,12 +426,6 @@
           "property": "dialog.newDuration",
           "value": "= turn.activity.text",
           "outputFormat": "= this.value[0].Value"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "9yIVql"
-          }
         },
         {
           "$kind": "Microsoft.SetProperties",

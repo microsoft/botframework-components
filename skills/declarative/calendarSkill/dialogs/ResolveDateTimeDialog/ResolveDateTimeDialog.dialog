@@ -19,7 +19,7 @@
           "$designer": {
             "id": "OwPzzJ"
           },
-          "name": "ResolveDT"
+          "name": "ResolveDateTimeDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.SetProperties",
