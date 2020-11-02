@@ -286,7 +286,7 @@
             },
             {
               "property": "dialog.pageItems",
-              "value": "=subArray($items, $startIndex, min($startIndex + $pageSize, count($items) - 1))"
+              "value": "=subArray($items, $startIndex, min($startIndex + $pageSize, count($items)))"
             },
             {
               "property": "dialog.pageCount",
