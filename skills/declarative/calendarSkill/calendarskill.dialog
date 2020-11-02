@@ -1459,28 +1459,16 @@
           "condition": "dialog.event != null",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "NzZMnN"
+                "id": "SnMEkZ"
               },
-              "resultProperty": "dialog.result",
-              "token": "= user.token.token",
-              "eventId": "=dialog.event.id"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "q02E9f"
-              },
-              "property": "dialog.event.Response",
-              "value": "= 'accepted'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "BAjl1j"
-              },
-              "activity": "${SendActivity_BAjl1j()}"
+              "activityProcessed": true,
+              "dialog": "RespondToEventDialog",
+              "options": {
+                "response": "='accepted'",
+                "eventId": "=dialog.event.id"
+              }
             }
           ],
           "elseActions": [
@@ -1582,28 +1570,16 @@
           "condition": "dialog.event != null",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "jGOrEB"
+                "id": "yeoMbi"
               },
-              "resultProperty": "dialog.result",
-              "token": "= user.token.token",
-              "eventId": "= dialog.event.id"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "NQeXor"
-              },
-              "property": "dialog.event.Response",
-              "value": "= 'declined'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "sDHQlJ"
-              },
-              "activity": "${SendActivity_sDHQlJ()}"
+              "activityProcessed": true,
+              "dialog": "RespondToEventDialog",
+              "options": {
+                "response": "='declined'",
+                "eventId": "=dialog.event.id"
+              }
             }
           ],
           "elseActions": [
@@ -1705,28 +1681,16 @@
           "condition": "dialog.event != null",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "HMLy7g"
+                "id": "eyZRZ1"
               },
-              "resultProperty": "dialog.result",
-              "token": "= user.token.token",
-              "eventId": "=dialog.event.id"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "BraV45"
-              },
-              "property": "dialog.event.Response",
-              "value": "= 'tentativelyAccepted'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "Np8fjo"
-              },
-              "activity": "${SendActivity_Np8fjo()}"
+              "activityProcessed": true,
+              "dialog": "RespondToEventDialog",
+              "options": {
+                "response": "='tentativelyAccepted'",
+                "eventId": "=dialog.event.id"
+              }
             }
           ],
           "elseActions": [
@@ -1897,6 +1861,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ELy3CT"
+          },
+          "name": "UnknownIntent"
+        },
+        {
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
             "id": "QnQ2KK"
@@ -1921,6 +1892,57 @@
                       "activity": "${SendActivity_veFrrp()}"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "value": "AcceptEvent",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "LMJFiC"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='accepted'",
+                    "eventId": "=turn.activity.value.eventId"
+                  }
+                }
+              ]
+            },
+            {
+              "value": "DeclineEvent",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "ghaLHU"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='declined'",
+                    "eventId": "=turn.activity.value.eventId"
+                  }
+                }
+              ]
+            },
+            {
+              "value": "TentativelyAcceptEvent",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "pDVXAc"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='tentativelyAccepted'",
+                    "eventId": "=turn.activity.value.eventId"
+                  }
                 }
               ]
             }

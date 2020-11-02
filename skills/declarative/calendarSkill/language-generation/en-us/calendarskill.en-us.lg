@@ -14,7 +14,7 @@
 
 # SendActivity_veFrrp()
 [Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
+    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
 ]
 
 # SendActivity_Yrs4gn()
@@ -40,9 +40,6 @@
 
 # GetEventLocationResponseText(event)
 - ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
-
-# RespondEventResponseText(action, event)
-- Alright, I’ve ${action} the meeting named ${event.Subject}.
 
 # FirstEventResponseText(event)
 - You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
@@ -105,22 +102,6 @@
     type = openUrl
 	title = Provide feedback
     value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
-]
-
-# SendActivity_BAjl1j()
-[Activity
-    Text = ${RespondEventResponseText("accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_sDHQlJ()
-[Activity
-    Text = ${RespondEventResponseText("declined", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_Np8fjo()
-[Activity
-    Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
 
 # SendActivity_Er6JaO()

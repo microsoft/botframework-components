@@ -165,28 +165,16 @@
                   "value": "Accept",
                   "actions": [
                     {
-                      "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+                      "$kind": "Microsoft.BeginDialog",
                       "$designer": {
-                        "id": "dN52m5"
+                        "id": "PooQZp"
                       },
-                      "resultProperty": "dialog.acceptResult",
-                      "token": "=user.token.token",
-                      "eventId": "=dialog.searchResults.Id"
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "0hCUh3"
-                      },
-                      "property": "dialog.searchResults.Response",
-                      "value": "= 'accepted'"
-                    },
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "gGtguW"
-                      },
-                      "activity": "${SendActivity_gGtguW()}"
+                      "activityProcessed": true,
+                      "dialog": "RespondToEventDialog",
+                      "options": {
+                        "response": "='accepted'",
+                        "eventId": "=dialog.event.id"
+                      }
                     }
                   ]
                 },
@@ -194,28 +182,16 @@
                   "value": "Decline",
                   "actions": [
                     {
-                      "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+                      "$kind": "Microsoft.BeginDialog",
                       "$designer": {
-                        "id": "VTZXlp"
+                        "id": "m9j00g"
                       },
-                      "resultProperty": "dialog.declineResult",
-                      "token": "=user.token.token",
-                      "eventId": "=dialog.searchResults.Id"
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "c6cjsb"
-                      },
-                      "property": "dialog.searchResults.Response",
-                      "value": "= 'declined'"
-                    },
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "KK42Jp"
-                      },
-                      "activity": "${SendActivity_KK42Jp()}"
+                      "activityProcessed": true,
+                      "dialog": "RespondToEventDialog",
+                      "options": {
+                        "response": "='declined'",
+                        "eventId": "=dialog.event.id"
+                      }
                     }
                   ]
                 }

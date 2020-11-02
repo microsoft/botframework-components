@@ -20,14 +20,6 @@
 
 # AskForDecline 
 - I see you are not the owner of the meeting, would you like to decline the meeting?
-# SendActivity_jZarIU()
-- ${RespondEventResponseText("declined", dialog.event)}
-
-
-
-
-
-
 # SendActivity_JCItAO()
 - Sure.
 # SendActivity_iPUM6m()
