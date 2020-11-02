@@ -16,6 +16,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "T2hOJH"
+          },
+          "name": "AuthenticationDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
             "id": "m7gWCJ"

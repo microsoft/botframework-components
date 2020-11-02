@@ -17,8 +17,9 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "nilKKC"
-          }
+            "id": "XI2Cxp"
+          },
+          "name": "CreateEventDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",

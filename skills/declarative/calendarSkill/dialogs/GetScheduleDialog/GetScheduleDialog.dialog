@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "yROg7H"
+          },
+          "name": "GetScheduleDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "NBRENG"
