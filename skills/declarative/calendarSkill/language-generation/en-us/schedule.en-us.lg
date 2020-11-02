@@ -41,7 +41,7 @@
         "title": "Show event",
         "data": {
             "intent": "ShowEvent",
-            "eventId": "${item.Id}"
+            "eventIndex": "${item.Index}"
         }
     },
     "items": [

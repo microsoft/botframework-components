@@ -109,20 +109,16 @@
               "condition": "dialog.confirmation",
               "actions": [
                 {
-                  "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "8nHOj0"
+                    "id": "aUBh6U"
                   },
-                  "resultProperty": "dialog.result",
-                  "token": "= user.token.token",
-                  "eventId": "= dialog.event.id"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "jZarIU"
-                  },
-                  "activity": "${SendActivity_jZarIU()}"
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='declined'",
+                    "eventId": "=dialog.event.id"
+                  }
                 }
               ],
               "elseActions": [

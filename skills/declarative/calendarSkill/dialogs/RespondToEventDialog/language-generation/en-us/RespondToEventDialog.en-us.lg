@@ -1,0 +1,21 @@
+[import](common.lg)
+[import](event.lg)
+
+# SendActivity_FJHk6U()
+[Activity
+    Text = ${RespondEventResponseText("accepted", dialog.event)}
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
+]
+# SendActivity_VOrXqP()
+[Activity
+    Text = ${RespondEventResponseText("declined", dialog.event)}
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
+]
+# SendActivity_ss6d3v()
+[Activity
+    Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
+    attachments = ${json(EventRespondDetailCard(dialog.event))}
+]
+
+# RespondEventResponseText(action, event)
+- Alright, I’ve ${action} the meeting named ${event.Subject}.
