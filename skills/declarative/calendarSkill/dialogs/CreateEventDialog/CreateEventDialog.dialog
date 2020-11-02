@@ -168,22 +168,16 @@
               }
             },
             {
-              "$kind": "Microsoft.SwitchCondition",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "CdaTcM"
+                "id": "wABFR2"
               },
-              "condition": "count(dialog.findMeetingTimesResult)",
-              "cases": [
-                {
-                  "value": "0",
-                  "actions": []
-                }
-              ],
-              "default": [
+              "condition": "count(dialog.findMeetingTimesResult) > 0",
+              "actions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "41ApEf"
+                    "id": "1gz5m1"
                   },
                   "activityProcessed": true,
                   "dialog": "ListDialog",
