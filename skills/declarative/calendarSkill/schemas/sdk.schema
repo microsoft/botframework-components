@@ -385,7 +385,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -421,7 +421,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -518,7 +518,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -555,7 +555,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -635,7 +635,7 @@
       "description": "Collect information - Ask for a file or image.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "type": "object",
       "required": [
@@ -825,7 +825,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -919,7 +919,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -1231,7 +1231,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -1275,7 +1275,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -1339,7 +1339,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -1405,7 +1405,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -1442,7 +1442,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -1796,7 +1796,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -1843,7 +1843,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2140,7 +2140,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2179,7 +2179,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2239,7 +2239,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2287,7 +2287,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2335,7 +2335,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2372,7 +2372,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2415,7 +2415,7 @@
       },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2580,7 +2580,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2631,7 +2631,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2687,7 +2687,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2745,7 +2745,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2797,7 +2797,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -2836,7 +2836,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2914,7 +2914,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3002,7 +3002,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3040,7 +3040,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3129,7 +3129,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3185,7 +3185,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3232,7 +3232,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3271,7 +3271,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3349,7 +3349,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3428,7 +3428,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3491,7 +3491,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -3550,7 +3550,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3721,6 +3721,7 @@
         "endProperty",
         "timeZoneProperty",
         "locationProperty",
+        "attendeesProperty",
         "isOnlineMeetingProperty",
         "$kind"
       ],
@@ -4465,7 +4466,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -4502,7 +4503,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -4541,7 +4542,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -4679,7 +4680,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       }
     },
     "Microsoft.IDialog": {
@@ -4743,6 +4744,30 @@
         },
         {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Ask"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.AttachmentInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.ChoiceInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.ConfirmInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.DateTimeInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.NumberInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.OAuthInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.TextInput"
         },
         {
           "$ref": "#/definitions/Microsoft.BeginDialog"
@@ -4848,35 +4873,11 @@
         },
         {
           "$ref": "#/definitions/Microsoft.UpdateActivity"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Ask"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.AttachmentInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.ChoiceInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.ConfirmInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.DateTimeInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.NumberInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.OAuthInput"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.TextInput"
         }
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       }
     },
     "Microsoft.IEntityRecognizer": {
@@ -4886,7 +4887,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "oneOf": [
         {
@@ -4967,7 +4968,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       }
     },
     "Microsoft.IRecognizer": {
@@ -5056,7 +5057,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       }
     },
     "Microsoft.ITextTemplate": {
@@ -5073,7 +5074,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       }
     },
     "Microsoft.ITrigger": {
@@ -5082,7 +5083,7 @@
       "description": "Components which derive from OnCondition class.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "oneOf": [
         {
@@ -5179,7 +5180,7 @@
       "description": "Components which derive from TriggerSelector class.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "oneOf": [
         {
@@ -5216,7 +5217,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -5284,7 +5285,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5426,7 +5427,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5459,7 +5460,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5506,7 +5507,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -5572,7 +5573,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.Luis",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -5713,7 +5714,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5747,7 +5748,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5789,7 +5790,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -5844,7 +5845,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -5881,7 +5882,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -6056,7 +6057,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -6094,7 +6095,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6235,7 +6236,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6305,7 +6306,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -6389,7 +6390,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -6458,7 +6459,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -6527,7 +6528,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -6610,7 +6611,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6685,7 +6686,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -6780,7 +6781,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6849,7 +6850,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6918,7 +6919,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6988,7 +6989,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7057,7 +7058,7 @@
       "description": "Actions to take when there are no more actions in the current dialog.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "type": "object",
       "required": [
@@ -7131,7 +7132,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7196,7 +7197,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -7269,7 +7270,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7338,7 +7339,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7407,7 +7408,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7476,7 +7477,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7560,7 +7561,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7629,7 +7630,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7698,7 +7699,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7767,7 +7768,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7836,7 +7837,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7905,7 +7906,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7970,7 +7971,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "actions",
@@ -8043,7 +8044,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8112,7 +8113,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8177,7 +8178,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8214,7 +8215,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8251,7 +8252,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8291,7 +8292,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.QnA",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8456,7 +8457,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.QnA",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8639,7 +8640,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8682,7 +8683,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8735,7 +8736,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8776,7 +8777,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8846,7 +8847,7 @@
       "description": "Repeat current dialog.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8917,7 +8918,7 @@
       "description": "Replace current dialog with another dialog.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -8998,7 +8999,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9048,7 +9049,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9105,7 +9106,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9185,7 +9186,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9248,7 +9249,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9311,7 +9312,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9354,7 +9355,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9461,7 +9462,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9525,7 +9526,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9559,7 +9560,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9601,7 +9602,7 @@
       "description": "Collection information - Ask for a word or sentence.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9773,7 +9774,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9813,7 +9814,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9862,7 +9863,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9930,7 +9931,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -9964,7 +9965,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"
@@ -10029,7 +10030,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.0-rc0"
+        "version": "4.11.0-rc1"
       },
       "required": [
         "$kind"

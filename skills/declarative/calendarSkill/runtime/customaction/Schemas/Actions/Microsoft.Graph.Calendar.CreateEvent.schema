@@ -12,6 +12,7 @@
     "endProperty",
     "timeZoneProperty",
     "locationProperty",
+    "attendeesProperty",
     "isOnlineMeetingProperty"
   ],
   "properties": {
