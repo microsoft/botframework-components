@@ -9,14 +9,6 @@
 # SendActivity_IrC8MR()
 - You're signed out!
 
-# SendActivity_ynnpFX()
-- Sorry, that feature is not supported yet.
-
-# SendActivity_veFrrp()
-[Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
-]
-
 # SendActivity_Yrs4gn()
 [Activity
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
@@ -162,3 +154,11 @@
 - Sure, let me know if I can help you with something else.
 # SendActivity_KWePCs()
 - ${ErrorMessage()}
+
+# SendActivity_F3GXHj()
+- Sorry, that feature is not supported yet.
+
+# SendActivity_CWxwVM()
+[Activity
+    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
+]

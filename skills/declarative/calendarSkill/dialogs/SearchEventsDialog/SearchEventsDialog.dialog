@@ -18,22 +18,16 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "SapBYc"
-          }
+          },
+          "name": "SearchEventsDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "ekNrAH"
           },
-          "condition": "dialog.start == null && dialog.title == null && dialog.ordinal==null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
+          "condition": "dialog.eventId == null && dialog.start == null && dialog.title == null && dialog.ordinal == null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
           "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "1eO2VL"
-              },
-              "name": "CollectOption"
-            },
             {
               "$kind": "Microsoft.TextInput",
               "$designer": {
@@ -98,22 +92,51 @@
           "elseActions": []
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "QXHo4q"
+            "id": "80CHa6"
           },
-          "resultProperty": "dialog.events",
-          "token": "=user.token.token",
-          "titleProperty": "=coalesce(dialog.title, null)",
-          "locationProperty": "=coalesce(dialog.location, null)",
-          "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-          "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, convertFromUTC(addDays(utcNow(),28), user.workingHours.timeZone.name, 'yyyy-MM-dd'), null))",
-          "timeZoneProperty": "=user.workingHours.timeZone.name",
-          "dateTimeTypeProperty": "= coalesce(dialog.type, \"date\")",
-          "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
-          "ordinalProperty": "= dialog.ordinal",
-          "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)",
-          "groupByDateProperty": "=coalesce(dialog.groupEvents, false)"
+          "condition": "dialog.eventId != null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetEvents",
+              "$designer": {
+                "id": "aCs8G1"
+              },
+              "resultProperty": "dialog.events",
+              "token": "=user.token.token",
+              "titleProperty": "=coalesce(dialog.title, null)",
+              "locationProperty": "=coalesce(dialog.location, null)",
+              "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
+              "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, convertFromUTC(addDays(utcNow(),28), user.workingHours.timeZone.name, 'yyyy-MM-dd'), null))",
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
+              "dateTimeTypeProperty": "=coalesce(dialog.type, \"date\")",
+              "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+              "ordinalProperty": "=dialog.ordinal",
+              "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)",
+              "groupByDateProperty": "=coalesce(dialog.groupEvents, false)"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetEventById",
+              "$designer": {
+                "id": "rvnP4R"
+              },
+              "resultProperty": "dialog.event",
+              "token": "=user.token.token",
+              "eventIdProperty": "=dialog.eventId",
+              "timeZoneProperty": "=user.workingHours.timeZone.name"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "X68FlC"
+              },
+              "property": "dialog.events",
+              "value": "=createArray(dialog.event)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
