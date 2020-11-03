@@ -561,8 +561,7 @@
     "type": "Action.Submit",
     "title": "My Calendar",
     "data": {
-        "intent": "MyCalendar",
-        "eventId": "${event.Id}"
+        "intent": "GetEvents"
     }
 }
 ```
@@ -573,8 +572,7 @@
     "type": "Action.Submit",
     "title": "New Event",
     "data": {
-        "intent": "NewEvent",
-        "eventId": "${event.Id}"
+        "intent": "CreateEvent"
     }
 }
 ```

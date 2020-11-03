@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Get Event By ID",
+  "description": "Lookup event the Microsoft Graph API by its Event Id.",
+  "required": [
+    "token",
+    "eventIdProperty",
+    "timeZoneProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "token": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "eventIdProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "EventId",
+      "description": "Id of event",
+      "examples": [
+        "dialog.event.id"
+      ]
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "User's time zone.",
+      "examples": [
+        "user.timeZone"
+      ]
+    }
+  }
+}
