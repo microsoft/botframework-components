@@ -36,7 +36,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": 60,
+                    "width": ${if(counter != '', 60, 90)},
                     "spacing":"small",
                     "items": [
                         {
@@ -54,7 +54,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "30",
+                    "width": ${if(counter != '', 30, 0)},
                     "verticalContentAlignment": "Bottom",
                     "items": [
                         {

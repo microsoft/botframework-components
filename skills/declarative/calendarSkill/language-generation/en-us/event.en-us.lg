@@ -48,7 +48,7 @@
         },
         {
             "type": "Column",
-            "width": 85,
+            "width": ${if(event.isRecurring, 90, 95)},
             "verticalContentAlignment": "Center",
             "items": [
                 {
@@ -70,7 +70,7 @@
         },
         {
             "type": "Column",
-            "width": 5,
+            "width": ${if(event.isRecurring, 5, 0)},
             "isVisible": "${event.isRecurring}",
             "items": [
                 {
