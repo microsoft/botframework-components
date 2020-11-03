@@ -55,7 +55,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
-                            "weight": "Bolder"
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Right"
                         }
                     ]
                 },
