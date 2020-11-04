@@ -679,7 +679,9 @@
 - ${formatDateTime(time, 'h:mm tt')}
 
 # BuildLocation(event)
-- IF: ${event.Location == null || event.Location == ""}
+- IF: ${(event.Location == null || event.Location == "") && event.isOnlineMeeting }
+    - It's on Teams.
+- ELSEIF: ${event.Location == null || event.Location == ""}
     - No location provided.
 - ELSEIF: ${event.isOnlineMeeting}
     - The meeting is in ${event.Location} and contains a Teams link.
