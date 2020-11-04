@@ -8,12 +8,8 @@
     - I found 1 event for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${events[0].Attendees[0].EmailAddress.Name}, and ${count(events[0].Attendees) - 1} more. 
 - ELSEIF: ${ count(events) == 2 }
     - I see 2 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
-- ELSEIF: ${ count(events) == 3 }
-    - I found 3 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject}, at ${formatDateTime(events[2].start.datetime, 'h:mm tt')}.
-- ELSEIF: ${ count(events) == 4 }
-    - I found 4 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}.
 - ELSE:
-    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. After that at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}. And then, ${events[2].Subject} and ${events[3].Subject}. ${if(count(events) - 4 == 1, "You have 1 additional event", concat("You have ", count(events) - 4, " more"))}.
+    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}.
 
 # ScheduleHeader(date, events)
 - ${CardHeader(CalendarIconUrl(), ScheduleTitle(), ScheduleSubtitle(date), ScheduleCounter(events))}
@@ -41,7 +37,7 @@
         "title": "Show event",
         "data": {
             "intent": "ShowEvent",
-            "eventId": "${item.Id}"
+            "eventIndex": "${item.Index}"
         }
     },
     "items": [
@@ -50,18 +46,19 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "25",
+                    "width": "30",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
-                            "weight": "Bolder"
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Right"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": "75",
+                    "width": "70",
                     "items": [
                         {
                             "type": "TextBlock",

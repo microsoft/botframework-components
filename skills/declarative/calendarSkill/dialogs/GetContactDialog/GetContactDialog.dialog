@@ -19,7 +19,7 @@
           "$designer": {
             "id": "di4iCc"
           },
-          "name": "GetContactDialog"
+          "name": "GetContactDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",

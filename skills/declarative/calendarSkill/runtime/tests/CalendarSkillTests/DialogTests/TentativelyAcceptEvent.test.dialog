@@ -30,6 +30,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
       "text": "Alright, I’ve tentatively accepted the meeting named Test Meeting.",
       "description": "Response to input 1"
     }

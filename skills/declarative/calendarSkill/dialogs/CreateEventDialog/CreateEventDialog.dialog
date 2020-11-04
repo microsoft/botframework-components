@@ -17,8 +17,9 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "nilKKC"
-          }
+            "id": "XI2Cxp"
+          },
+          "name": "CreateEventDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -86,7 +87,7 @@
           "defaultValueResponse": "",
           "property": "dialog.slots.title",
           "outputFormat": "=coalesce(@Title, this.value)",
-          "allowInterruptions": "=#ChangeSlots.Score>0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -168,61 +169,16 @@
               }
             },
             {
-              "$kind": "Microsoft.SwitchCondition",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "CdaTcM"
+                "id": "wABFR2"
               },
-              "condition": "count(dialog.findMeetingTimesResult)",
-              "cases": [
-                {
-                  "value": "0",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.ConfirmInput",
-                      "$designer": {
-                        "id": "b8n3M4"
-                      },
-                      "defaultLocale": "en-us",
-                      "disabled": false,
-                      "alwaysPrompt": false,
-                      "prompt": "${ConfirmInput_Prompt_b8n3M4()}",
-                      "unrecognizedPrompt": "",
-                      "invalidPrompt": "",
-                      "defaultValueResponse": "",
-                      "choiceOptions": {
-                        "includeNumbers": true,
-                        "inlineOrMore": ", or ",
-                        "inlineOr": " or ",
-                        "inlineSeparator": ", "
-                      },
-                      "property": "dialog.skipTimeSuggestion",
-                      "outputFormat": "",
-                      "allowInterruptions": "=#ChangeDuration.Score>0.7 || #ChooseOwnDateTime.Score>0.7 || #ChangeSlots.Score>0.7",
-                      "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "se0OPb"
-                      },
-                      "condition": "dialog.skipTimeSuggestion || turn.skip",
-                      "elseActions": [
-                        {
-                          "$kind": "Microsoft.EndDialog",
-                          "$designer": {
-                            "id": "xlgN6X"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "default": [
+              "condition": "count(dialog.findMeetingTimesResult) > 0",
+              "actions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "41ApEf"
+                    "id": "1gz5m1"
                   },
                   "activityProcessed": true,
                   "dialog": "ListDialog",
@@ -311,7 +267,7 @@
                   "defaultValueResponse": "",
                   "property": "dialog.slots.dateTime",
                   "validations": [],
-                  "allowInterruptions": "=#ChangeSlots.Score>0.7"
+                  "allowInterruptions": "=turn.recognized.score > 0.7"
                 },
                 {
                   "$kind": "Microsoft.BeginDialog",
@@ -350,7 +306,7 @@
                       "invalidPrompt": "",
                       "defaultValueResponse": "",
                       "property": "dialog.time",
-                      "allowInterruptions": "=#ChangeSlots.Score>0.7"
+                      "allowInterruptions": "=turn.recognized.score > 0.7"
                     },
                     {
                       "$kind": "Microsoft.BeginDialog",
@@ -542,7 +498,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.slots.location",
-              "allowInterruptions": "=#SkipSlot.Score>0.7 || #ChangeSlots.Score>0.7",
+              "allowInterruptions": "=turn.recognized.score > 0.7",
               "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
             },
             {
@@ -561,56 +517,6 @@
                   "value": "=true"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "aB3980"
-              },
-              "condition": "dialog.slots.noLocation == true",
-              "actions": [
-                {
-                  "$kind": "Microsoft.ConfirmInput",
-                  "$designer": {
-                    "id": "O439cC"
-                  },
-                  "defaultLocale": "en-us",
-                  "disabled": false,
-                  "maxTurnCount": 3,
-                  "alwaysPrompt": false,
-                  "prompt": "${ConfirmInput_Prompt_O439cC()}",
-                  "unrecognizedPrompt": "",
-                  "invalidPrompt": "",
-                  "defaultValueResponse": "",
-                  "choiceOptions": {
-                    "includeNumbers": true,
-                    "inlineOrMore": ", or ",
-                    "inlineOr": " or "
-                  },
-                  "property": "dialog.noLocationConfirm",
-                  "allowInterruptions": "=#ChangeSlots.Score>0.7"
-                },
-                {
-                  "$kind": "Microsoft.IfCondition",
-                  "$designer": {
-                    "id": "WcyqPR"
-                  },
-                  "condition": "dialog.noLocationConfirm == false",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.RepeatDialog",
-                      "$designer": {
-                        "id": "tz78bO"
-                      },
-                      "activityProcessed": true,
-                      "options": {
-                        "slots": "=dialog.slots"
-                      }
-                    }
-                  ]
-                }
-              ],
-              "elseActions": []
             }
           ]
         },
@@ -691,7 +597,7 @@
             "includeNumbers": true
           },
           "property": "dialog.createConfirmResult",
-          "allowInterruptions": "=#ChangeSlots.Score>0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7"
         },
         {
           "$kind": "Microsoft.IfCondition",

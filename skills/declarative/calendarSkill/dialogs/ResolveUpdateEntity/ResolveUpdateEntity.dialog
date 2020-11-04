@@ -20,7 +20,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "2bix37"
-          }
+          },
+          "name": "ResolveUpdateEntity.BeginDialog"
         },
         {
           "$kind": "Microsoft.SetProperties",

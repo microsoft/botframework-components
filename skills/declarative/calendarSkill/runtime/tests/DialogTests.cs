@@ -70,6 +70,18 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        public async Task GetEventLocationByAttendees()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEventLocationOnlineMeeting()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
         public async Task AcceptEvent()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);

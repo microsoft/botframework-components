@@ -4,18 +4,13 @@
 [import](availability.lg)
 
 # SendActivity_gKWYRF()
-- ${WelcomeUser()}
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = New meeting | Show schedule
+]
 
 # SendActivity_IrC8MR()
 - You're signed out!
-
-# SendActivity_ynnpFX()
-- Sorry, that feature is not supported yet.
-
-# SendActivity_veFrrp()
-[Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventId)]))}
-]
 
 # SendActivity_Yrs4gn()
 [Activity
@@ -40,9 +35,6 @@
 
 # GetEventLocationResponseText(event)
 - ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
-
-# RespondEventResponseText(action, event)
-- Alright, I’ve ${action} the meeting named ${event.Subject}.
 
 # FirstEventResponseText(event)
 - You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
@@ -81,6 +73,7 @@
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_MvzrwE()
 - ${ErrorMessage()}
 
@@ -89,11 +82,13 @@
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_g7immX()
 [Activity
     text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
@@ -105,22 +100,6 @@
     type = openUrl
 	title = Provide feedback
     value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
-]
-
-# SendActivity_BAjl1j()
-[Activity
-    Text = ${RespondEventResponseText("accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_sDHQlJ()
-[Activity
-    Text = ${RespondEventResponseText("declined", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_Np8fjo()
-[Activity
-    Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
 ]
 
 # SendActivity_Er6JaO()
@@ -176,8 +155,22 @@
 ]
 
 # SendActivity_AlS4sI()
-- I can help you manage your calendar. Try saying *what meetings do I have today?* or *new meeting* to get started.
+[Activity
+    text= ${HelpMessage()}
+    SuggestedActions =  New meeting | Show schedule
+]
+
 # SendActivity_klrCg4()
-- Sure, let me know if I can help you with something else.
+- OK, no problem I know I'm not perfect yet. Let me know if I can help with something else.
+
 # SendActivity_KWePCs()
 - ${ErrorMessage()}
+
+# SendActivity_F3GXHj()
+- Sorry, that feature is not supported yet.
+
+# SendActivity_CWxwVM()
+[Activity
+    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
+]
+

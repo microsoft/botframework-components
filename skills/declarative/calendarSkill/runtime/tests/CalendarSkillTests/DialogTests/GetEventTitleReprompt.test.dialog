@@ -37,11 +37,19 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
       "text": "I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
       "text": "with lidia"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",

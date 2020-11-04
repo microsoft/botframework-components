@@ -152,6 +152,9 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.GetContacts"
     },
     {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.GetEventById"
+    },
+    {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
     },
     {
@@ -3616,7 +3619,7 @@
           "description": "Optional id for the dialog"
         },
         "resultProperty": {
-          "$ref": "#/definitions/definitions.schema/definitions/stringExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
           "examples": [
@@ -3624,7 +3627,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph Authentication Token",
           "examples": [
@@ -3632,7 +3635,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "EventId",
           "description": "Id of event",
           "examples": [
@@ -3836,7 +3839,7 @@
           "description": "Optional id for the dialog"
         },
         "resultProperty": {
-          "$ref": "#/definitions/definitions.schema/definitions/stringExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
           "examples": [
@@ -3844,7 +3847,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph Authentication Token",
           "examples": [
@@ -3852,7 +3855,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "EventId",
           "description": "Id of event",
           "examples": [
@@ -3897,7 +3900,7 @@
           "description": "Optional id for the dialog"
         },
         "resultProperty": {
-          "$ref": "#/definitions/definitions.schema/definitions/stringExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
           "examples": [
@@ -3905,7 +3908,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph Authentication Token",
           "examples": [
@@ -3913,7 +3916,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "EventId",
           "description": "Id of event",
           "examples": [
@@ -4126,6 +4129,76 @@
         }
       }
     },
+    "Microsoft.Graph.Calendar.GetEventById": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get Event By ID",
+      "description": "Lookup event the Microsoft Graph API by its Event Id.",
+      "required": [
+        "token",
+        "eventIdProperty",
+        "timeZoneProperty",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "eventIdProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "EventId",
+          "description": "Id of event",
+          "examples": [
+            "dialog.event.id"
+          ]
+        },
+        "timeZoneProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "TimeZone",
+          "description": "User's time zone.",
+          "examples": [
+            "user.timeZone"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.GetEventById"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.Graph.Calendar.GetEvents": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "Microsoft Graph - Get Events",
@@ -4316,7 +4389,7 @@
           "description": "Optional id for the dialog"
         },
         "resultProperty": {
-          "$ref": "#/definitions/definitions.schema/definitions/stringExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
           "examples": [
@@ -4324,7 +4397,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph Authentication Token",
           "examples": [
@@ -4332,7 +4405,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/definitions.schema/definitions/valueExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "EventId",
           "description": "Id of event",
           "examples": [
@@ -4723,6 +4796,9 @@
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.GetContacts"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.GetEventById"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.GetEvents"
@@ -11074,82 +11150,6 @@
               "title": "semanticAction"
             }
           }
-        }
-      }
-    },
-    "definitions.schema": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "JSON Schema definition for dialog schemas.",
-      "description": "In order to create a component for Bot Framework .dialog files you need to create a schema file describing your configuration that meets this definition.  This extends http://json-schema.org/draft-07/schema#.",
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Expression",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/definitions.schema/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        },
-        "valueExpression": {
-          "$role": "expression",
-          "oneOf": [
-            {
-              "type": "object",
-              "title": "Object"
-            },
-            {
-              "type": "array",
-              "title": "Array"
-            },
-            {
-              "type": "string",
-              "title": "String",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "type": "boolean",
-              "title": "Boolean",
-              "examples": [
-                false
-              ]
-            },
-            {
-              "type": "number",
-              "title": "Number",
-              "examples": [
-                15.5
-              ]
-            },
-            {
-              "$ref": "#/definitions/definitions.schema/definitions/equalsExpression",
-              "examples": [
-                "=..."
-              ]
-            }
-          ]
         }
       }
     }

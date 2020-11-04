@@ -4,14 +4,15 @@
 - stop
 - stop this
 - please stop doing that
-
+- nevermind
 # Help
 - help
 - help me
 - can you help me?
 - what can you do
 - I don't know what to do
-
+- hi
+- hi there
 # SignOut
 - logout
 - sign me out
@@ -48,6 +49,8 @@
 - What is my agenda for this weekend?
 - Tell me what my next month is like
 - What meetings do I have on Thursday?
+- what meetings do i have today
+- show schedule
 
 # GetEventAttendees
 - Who am I meeting at 11 today?

@@ -4,6 +4,27 @@
 
 # WelcomeUser
 - IF: ${user.profile.displayName != null}
-    - Hi, ${user.profile.displayName}! How can I help you today?
+- ```
+Hi ${user.profile.displayName} 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill! 
+
+You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```
 - ELSE: 
-    - Hi there! How can I help you today?
+- ```
+Hi there 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill! 
+    
+You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```
+
+# HelpMessage
+- Hi there, I can help you with questions about your day.
+- Hello, I'm here for you to help with planning your day.
+- I'm here to help with your calendar.
+
+# EndMessage
+- You've made it to the end 👏, thank you for helping us out!
+
+# GeneralErrorMessage
+- I can tell there is something wrong here, can you please try again?
+- Oops, I'm stuck, can you try to ask me differently?
+- Please help me out here, can you ask again but in a different way?

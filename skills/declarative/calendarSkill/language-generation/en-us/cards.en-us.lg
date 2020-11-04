@@ -26,6 +26,7 @@
                     "type": "Column",
                     "width": 10,
                     "spacing":"none",
+                    "verticalContentAlignment": "center",
                     "items": [
                         {
                             "type": "Image",
@@ -36,8 +37,9 @@
                 },
                 {
                     "type": "Column",
-                    "width": 60,
+                    "width": ${if(counter != '', 60, 90)},
                     "spacing":"small",
+                    "verticalContentAlignment": "center",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -54,7 +56,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "30",
+                    "width": ${if(counter != '', 30, 0)},
                     "verticalContentAlignment": "Bottom",
                     "items": [
                         {

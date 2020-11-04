@@ -16,6 +16,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "T2hOJH"
+          },
+          "name": "AuthenticationDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
             "id": "m7gWCJ"
@@ -26,7 +33,7 @@
           "connectionName": "=settings.oauthConnectionName",
           "property": "user.token",
           "title": "Sign in",
-          "text": "Sign in to your Microsoft account to access your calendar."
+          "text": "Time to sign in to your Microsoft account to access your calendar, and try out our new Skill 💯"
         },
         {
           "$kind": "Microsoft.Graph.User.GetProfile",

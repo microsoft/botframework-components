@@ -10,11 +10,6 @@
 - Great. I've gone ahead and added Teams to this meeting.
 # TimeSuggestionFormat(time)
 - ${formatDateTime(time, 'h:mm tt on d/M')}
-# ConfirmInput_Prompt_O439cC()
-- Are you sure you want to send this without a location?
-- This meeting doesn't have a location. Is that OK?
-- You haven't included a location. Is that alright?
-
 # ConfirmCreatePrompt()
 - IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation != true}
     - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location} with a Teams link. Does that sound right?
@@ -87,65 +82,14 @@
 - And at what time?
 - Got it, and when do you want it to start?
 # DateTimeInput_Prompt_sHR6f0()
-- Got it, when is the event?
-- Sure, when should I schedule this event?
-- And when do you want this meeting?
+- What date and time did you have in mind?
+- When should the event start?
+- And what date?
 # TextInput_Prompt_8FlYLk()
 - What is the title of the meeting?
 - What is the title?
 - What is the meeting about?
 - What do you want to add as a title?
 
-# NoSuggestionTimeConfirm
-- I couldn't find a relevant suggestions that works for all attendees. Want to select your own date and time?
-- I don't see any options that will work for everyone. What date and time do you want to use?
-- There's aren't any relevant suggestions. You can select your own date and time. Want to do that?
-
-# ConfirmInput_Prompt_b8n3M4()
-[Activity
-    text = ${NoSuggestionTimeConfirm()}
-    attachments = ${json(NoTimeSuggestionCard())}
-]
-
-# NoTimeSuggestionCard
-- ${CardTemplate(NoTimeSuggestionHeader(), NoTimeSuggestionBody(), NoTimeSuggestionActions())}
-
-# NoTimeSuggestionHeader
-- ${CardHeader(TimeSlotIconUrl(), TimeSuggestionListTitle(), "", "")}
-
-# NoTimeSuggestionBody
-- ```
-{
-    "type": "Container",
-    "separator": true,
-    "spacing": "Medium",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "Unfortunately, I could not find relevant suggestions. Please choose your own date an time.",
-            "wrap": true
-        }
-    ]
-}
-```
-
-# NoTimeSuggestionActions
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Choose own date and time",
-            "data": "Choose own date and time"
-        },
-        {
-            "type": "Action.Submit",
-            "title": "Change duration",
-            "data": "Change duration"
-        }
-    ]
-}
-```
 # SendActivity_mHeeSb()
 - I can't update this event.

@@ -140,11 +140,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 throw MSGraphClient.HandleGraphAPIException(ex);
             }
 
+            int index = 0;
             if (events?.Count > 0)
             {
                 foreach (var ev in events)
                 {
-                    parsedEvents.Add(ParseEvent(ev, timeZone));
+                    parsedEvents.Add(ParseEvent(ev, timeZone, index++));
                 }
             }
 
@@ -155,7 +156,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        parsedEvents.Add(ParseEvent(ev, timeZone));
+                        parsedEvents.Add(ParseEvent(ev, timeZone, index++));
                     }
                 }
             }
@@ -249,7 +250,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
         }
 
-        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone)
+        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
@@ -258,7 +259,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
-            return new CalendarSkillEventModel(ev, currentDateTime);
+            return new CalendarSkillEventModel(ev, currentDateTime, index);
         }
     }
 }

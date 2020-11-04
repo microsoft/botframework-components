@@ -20,8 +20,6 @@
 # TextInput_Prompt_NdRLDG()
 - ${AskForNewValue('location')}
 
-
-
 # TextInput_Prompt_WotQE1()
 - Who do you want to remove?
 # DateTimeInput_Prompt_SSWMA3()

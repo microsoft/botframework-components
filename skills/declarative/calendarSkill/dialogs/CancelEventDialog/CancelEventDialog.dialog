@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "j6CfN9"
+          },
+          "name": "CancelEventDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "itkIrW"
@@ -109,20 +116,16 @@
               "condition": "dialog.confirmation",
               "actions": [
                 {
-                  "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "8nHOj0"
+                    "id": "aUBh6U"
                   },
-                  "resultProperty": "dialog.result",
-                  "token": "= user.token.token",
-                  "eventId": "= dialog.event.id"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "jZarIU"
-                  },
-                  "activity": "${SendActivity_jZarIU()}"
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='declined'",
+                    "event": "=dialog.event"
+                  }
                 }
               ],
               "elseActions": [

@@ -48,7 +48,7 @@
         },
         {
             "type": "Column",
-            "width": 85,
+            "width": ${if(event.isRecurring, 90, 95)},
             "verticalContentAlignment": "Center",
             "items": [
                 {
@@ -70,7 +70,7 @@
         },
         {
             "type": "Column",
-            "width": 5,
+            "width": ${if(event.isRecurring, 5, 0)},
             "isVisible": "${event.isRecurring}",
             "items": [
                 {
@@ -259,14 +259,14 @@
     -
 
 # EventAttendeeContainer(event)
-- IF: ${ event.Attendees != null && count(event.Attendees) > 1 }
+- IF: ${ event.attendees != null && count(event.attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
         "columns": [
             {
                 "type": "Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                 "width": 5,
                 "items": [
                     {
@@ -281,12 +281,13 @@
             },
             {
                 "type": "Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                 "width": 95,
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "${event.Attendees[0].EmailAddress.Name}, +${count(event.Attendees) - 1} more"
+                        "wrap": "True",
+                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}"
                     }
                 ]
             }
@@ -561,8 +562,7 @@
     "type": "Action.Submit",
     "title": "My Calendar",
     "data": {
-        "intent": "MyCalendar",
-        "eventId": "${event.Id}"
+        "intent": "GetEvents"
     }
 }
 ```
@@ -573,8 +573,7 @@
     "type": "Action.Submit",
     "title": "New Event",
     "data": {
-        "intent": "NewEvent",
-        "eventId": "${event.Id}"
+        "intent": "CreateEvent"
     }
 }
 ```
@@ -681,7 +680,9 @@
 - ${formatDateTime(time, 'h:mm tt')}
 
 # BuildLocation(event)
-- IF: ${event.Location == null || event.Location == ""}
+- IF: ${(event.Location == null || event.Location == "") && event.isOnlineMeeting }
+    - It's on Teams.
+- ELSEIF: ${event.Location == null || event.Location == ""}
     - No location provided.
 - ELSEIF: ${event.isOnlineMeeting}
     - The meeting is in ${event.Location} and contains a Teams link.
