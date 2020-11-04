@@ -70,7 +70,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(UpdateEvent), result, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(DeclarativeType, result, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
