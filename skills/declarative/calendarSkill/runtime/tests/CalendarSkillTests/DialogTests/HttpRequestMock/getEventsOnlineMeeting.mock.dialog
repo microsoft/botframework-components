@@ -1,0 +1,152 @@
+﻿{
+  "$schema": "../../app.schema",
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "method": "GET",
+  "url": "https://graph.microsoft.com/v1.0/me/calendarView*",
+  "responses": [
+    {
+      "content-type": "application/json",
+      "content": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('d4478b21-9085-4f61-88c9-15e3ee77ddf5')/calendar/calendarView",
+        "value": [
+          {
+            "allowNewTimeProposals": true,
+            "attendees": [
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "LidiaH@M365x320864.OnMicrosoft.com",
+                  "name": "Lidia Holloway",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              },
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "AdeleV@M365x320864.OnMicrosoft.com",
+                  "name": "Adele Vance",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              },
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "LynneR@M365x320864.OnMicrosoft.com",
+                  "name": "Lynne Robbins",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              },
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "IsaiahL@M365x320864.OnMicrosoft.com",
+                  "name": "Isaiah Langer",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              },
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "ChristieC@M365x320864.OnMicrosoft.com",
+                  "name": "Christie Cline",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              }
+            ],
+            "body": {
+              "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+              "contentType": "html",
+              "@odata.type": "microsoft.graph.itemBody"
+            },
+            "bodyPreview": "",
+            "end": {
+              "dateTime": "2020-10-15T16:30:00.0000000",
+              "timeZone": "UTC",
+              "@odata.type": "microsoft.graph.dateTimeTimeZone"
+            },
+            "hasAttachments": false,
+            "iCalUId": "040000008200E00074C5B7101A82E00807E40A0FD01F2D3CC5E5CC01000000000000000010000000030BAE4F822B074994774824E41D49AF",
+            "importance": "normal",
+            "isAllDay": false,
+            "isCancelled": false,
+            "isOnlineMeeting": true,
+            "isOrganizer": true,
+            "isReminderOn": false,
+            "location": {
+              "displayName": ""
+            },
+            "locations": [
+            ],
+            "onlineMeetingProvider": "unknown",
+            "organizer": {
+              "emailAddress": {
+                "address": "MeganB@M365x320864.OnMicrosoft.com",
+                "name": "Megan Bowen",
+                "@odata.type": "microsoft.graph.emailAddress"
+              },
+              "@odata.type": "microsoft.graph.recipient"
+            },
+            "originalEndTimeZone": "Pacific Standard Time",
+            "originalStartTimeZone": "tzone://Microsoft/Custom",
+            "reminderMinutesBeforeStart": 0,
+            "responseRequested": true,
+            "responseStatus": {
+              "response": "organizer",
+              "time": "0001-01-01T00:00:00+00:00",
+              "@odata.type": "microsoft.graph.responseStatus"
+            },
+            "sensitivity": "normal",
+            "seriesMasterId": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQBGAAAAAADoe4Tuth0XSai2z9sEhsTuBwBN8odIGmZQQalnLh3DCfMfAAAAAAENAABN8odIGmZQQalnLh3DCfMfAAABsRynAAA=",
+            "showAs": "busy",
+            "start": {
+              "dateTime": "2020-10-15T15:00:00.0000000",
+              "timeZone": "UTC",
+              "@odata.type": "microsoft.graph.dateTimeTimeZone"
+            },
+            "subject": "Project Team Meeting",
+            "type": "occurrence",
+            "webLink": "https://outlook.office365.com/owa/?itemid=AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQFRAAgI2HCdQnQAAEYAAAAA6HuE7rYdF0mots%2FbBIbE7gcATfKHSBpmUEGpZy4dwwnzHwAAAAABDQAATfKHSBpmUEGpZy4dwwnzHwAAAbEcpwAAEA%3D%3D&exvsurl=1&path=/calendar/item",
+            "categories": [],
+            "changeKey": "TfKHSBpmUEGpZy4dwwnzHwAAPzyPlQ==",
+            "createdDateTime": "2020-07-12T09:01:02.5649204+00:00",
+            "lastModifiedDateTime": "2020-10-14T23:44:24.3036609+00:00",
+            "id": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQFRAAgI2HCdQnQAAEYAAAAA6HuE7rYdF0mots-bBIbE7gcATfKHSBpmUEGpZy4dwwnzHwAAAAABDQAATfKHSBpmUEGpZy4dwwnzHwAAAbEcpwAAEA==",
+            "@odata.type": "microsoft.graph.event",
+            "@odata.etag": "W/\"TfKHSBpmUEGpZy4dwwnzHwAAPzyPlQ==\"",
+            "isDraft": false
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"query":"where is my meeting with lidia","prediction":{"topIntent":"GetEventLocation","intents":{"GetEventLocation":{"score":0.1135989}},"entities":{"personName":["lidia"]}}}
