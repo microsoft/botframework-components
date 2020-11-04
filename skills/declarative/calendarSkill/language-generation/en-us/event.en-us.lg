@@ -571,12 +571,13 @@
 -```
 {
     "type": "Action.Submit",
-    "title": "New Event",
+    "title": "New event",
     "data": {
         "intent": "CreateEvent"
     }
 }
 ```
+
 # EventDetailActions(event)
 - IF: ${event.Response == 'organizer' && event.Location != null && event.Location != '' && event.isOnlineMeeting == false}
     -```

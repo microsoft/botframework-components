@@ -7,10 +7,11 @@
     text = ${if(dialog.eventId == null, ScheduleResponseText(dialog.events[0].start.dateTime, dialog.events),  null)}
     attachments = ${json(EventDetailCard(dialog.events[0]))}
 ]
+
 # SendActivity_i89xW0()
 [Activity
     text = ${ScheduleResponseText(dialog.events[0].date, dialog.events[0].events)}
-    attachments = ${foreach(dialog.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions())))}
+    attachments = ${foreach(dialog.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
     attachmentLayout = carousel
 ]
 

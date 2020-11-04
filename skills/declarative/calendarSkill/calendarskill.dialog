@@ -226,12 +226,8 @@
           },
           "assignments": [
             {
-              "property": "dialog.datetime",
-              "value": "=@datetime"
-            },
-            {
               "property": "dialog.query",
-              "value": "=turn.activity.text"
+              "value": "=coalesce(turn.activity.value.datetime, turn.activity.text, null)"
             },
             {
               "value": "=coalesce(turn.activity.value.eventId, null)",
