@@ -169,8 +169,3 @@
 # SendActivity_F3GXHj()
 - Sorry, that feature is not supported yet.
 
-# SendActivity_CWxwVM()
-[Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
-]
-

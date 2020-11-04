@@ -83,14 +83,6 @@
                   "value": "=dialog.foreach.value.Resolution.values[0]"
                 },
                 {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "DJ1t9J"
-                  },
-                  "name": "DateTimeResolution",
-                  "value": "=dialog.datetimeResolution"
-                },
-                {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
                     "id": "4Hbqwg"

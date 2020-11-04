@@ -232,6 +232,10 @@
             {
               "property": "dialog.query",
               "value": "=turn.activity.text"
+            },
+            {
+              "value": "=coalesce(turn.activity.value.eventId, null)",
+              "property": "dialog.eventId"
             }
           ]
         },
@@ -273,6 +277,7 @@
           "activityProcessed": true,
           "dialog": "GetScheduleDialog",
           "options": {
+            "eventId": "=dialog.eventId",
             "datetime": "=dialog.datetime"
           }
         },
@@ -2093,24 +2098,7 @@
           "cases": [
             {
               "value": "ShowEvent",
-              "actions": [
-                {
-                  "$kind": "Microsoft.IfCondition",
-                  "$designer": {
-                    "id": "67w6Pl"
-                  },
-                  "condition": "conversation.events != null && count(conversation.events) > 0",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "CWxwVM"
-                      },
-                      "activity": "${SendActivity_CWxwVM()}"
-                    }
-                  ]
-                }
-              ]
+              "actions": []
             }
           ],
           "default": [

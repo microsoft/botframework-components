@@ -36,8 +36,8 @@
         "type": "Action.Submit",
         "title": "Show event",
         "data": {
-            "intent": "ShowEvent",
-            "eventIndex": "${item.Index}"
+            "intent": "GetEvents",
+            "eventId": "${item.id}"
         }
     },
     "items": [
