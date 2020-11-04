@@ -124,7 +124,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             results.AddRange(contactsResult);
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(GetContacts), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(DeclarativeType, results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {
