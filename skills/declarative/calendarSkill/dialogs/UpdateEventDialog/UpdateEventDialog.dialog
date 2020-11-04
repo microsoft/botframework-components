@@ -37,7 +37,8 @@
           "dialog": "SearchEventsDialog",
           "options": {
             "datetime": "=dialog.datetime",
-            "doSelection": "true"
+            "doSelection": "true",
+            "turnCount": 0
           },
           "resultProperty": "dialog.searchResults"
         },

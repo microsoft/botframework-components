@@ -83,4 +83,4 @@
 # SendActivity_6d2pAI()
 - Sure, I'll continue with ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email}.
 - Got it. I'll move forward with ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email}.
-- OK. I'll include ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email}. as attendee.
+- OK. I'll include ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email} as attendee.

@@ -25,8 +25,8 @@
 
 # TimeSuggestionNumericalChoiceResponse()
 - Sure, let’s continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
-- OK. I'll continue with ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'hh:mm tt')}.
-- You got it! I'll schedule this meeting for ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'hh:mm tt')}.
+- OK. I'll continue with ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
+- You got it! I'll schedule this meeting for ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
 - OK. I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
 
 # TimeSuggestionListTitle

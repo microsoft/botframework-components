@@ -87,5 +87,17 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
+
+        [TestMethod]
+        public async Task CalendarSkillTests_GetContacts()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CalendarSkillTests_FindMeetingTimes()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
     }
 }

@@ -1,9 +1,9 @@
 ﻿{
   "$schema": "../app.schema",
   "$kind": "Microsoft.Test.Script",
-  "description": "Test MS Graph - Create Event",
+  "description": "Test MS Graph - Find Meeting Times",
   "httpRequestMocks": [
-    "createEvent.mock"
+    "findMeetingTimes.mock"
   ],
   "dialog": {
     "$kind": "Microsoft.AdaptiveDialog",
@@ -12,21 +12,16 @@
         "$kind": "Microsoft.OnBeginDialog",
         "actions": [
           {
-            "$kind": "Microsoft.Graph.Calendar.CreateEvent",
+            "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "titleProperty": "='My event'",
-            "descriptionProperty": "='test description'",
-            "startProperty": "='2020-11-02T16:00:00'",
-            "endProperty": "='2020-11-02T16:30:00'",
-            "timeZoneProperty": "='Pacific Standard Time'",
             "attendeesProperty": "=[{\"EmailAddress\": {\"Address\": \"test\", \"Name\": \"test\"}}]",
-            "locationProperty": "='test location'",
-            "isOnlineMeetingProperty": "='true'"
+            "durationProperty": "=30",
+            "timeZoneProperty": "='Pacific Standard Time'"
           },
           {
             "$kind": "Microsoft.SendActivity",
-            "activity": "${dialog.result.Subject}"
+            "activity": "${dialog.result.count}"
           }
         ]
       }
@@ -39,7 +34,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "My event"
+      "text": "5"
     }
   ]
 }

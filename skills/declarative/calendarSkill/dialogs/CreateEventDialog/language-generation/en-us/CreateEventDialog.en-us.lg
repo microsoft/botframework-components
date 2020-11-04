@@ -38,17 +38,17 @@
 - IF: ${ count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) == 1 }
-    - ${attendees[0].name}
+    - ${attendees[0].emailAddress.name}
 - ELSE:
-    - ${attendees[0].name} and ${count(attendees) - 1}
+    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1}
 
 # ContactConfirmWithTwo(attendees)
 - IF: ${ count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) <= 2 }
-    - ${join(select(attendees, x, x.name), ', ')}
+    - ${join(select(attendees, x, x.emailAddress.name), ', ')}
 - ELSE:
-    - ${attendees[0].name}, ${attendees[1].name} and ${count(attendees) - 2}
+    - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2}
 
 # DateConfirm(startDateTime)
 - on ${formatDateTime(startDateTime, 'MMMM d')}, at ${formatDateTime(startDateTime, 'h:mm tt')}
@@ -64,9 +64,9 @@
 - ELSE:
 	- ${seconds / 3600}h
 # SendActivity_zmBQxY()
-- Your event has been created. 
-- Your meeting is on your calendar. 
-- The event has been created
+- Your event has been created.
+- Your meeting is on your calendar.
+- The event has been created.
 # SendActivity_3BjjI8()
 - Event creation failed
 # TextInput_Prompt_pVUn2o()
