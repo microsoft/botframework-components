@@ -1825,7 +1825,7 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
-            "eventId": "dialog.eventId",
+            "eventId": "=dialog.eventId",
             "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
             "end": "=dialog.datetime.End",
             "title": "=dialog.title",

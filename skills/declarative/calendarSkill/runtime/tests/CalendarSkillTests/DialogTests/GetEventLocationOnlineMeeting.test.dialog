@@ -4,8 +4,7 @@
   "httpRequestMocks": [
     "getProfile.mock",
     "getWorkingHours.mock",
-    "getEvents.mock",
-    "deleteEvent.mock"
+    "getEventsOnlineMeeting.mock"
   ],
   "userTokenMocks": [
     "nomagiccode.mock"
@@ -26,7 +25,7 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "cancel my meeting with lidia"
+      "text": "where is my meeting with lidia"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
@@ -34,18 +33,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "OK. Are you sure you want to cancel the event on Thursday, October 15th, at 8:00 AM,  Project Team Meeting? (1) Yes or (2) No",
+      "text": "It's on Teams. The meeting is on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "yes"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I’ve cancelled the event for you and attendees will be notified.",
+      ],
       "description": "Response to input 1"
     }
   ]
