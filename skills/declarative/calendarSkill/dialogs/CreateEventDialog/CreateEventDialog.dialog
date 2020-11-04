@@ -87,7 +87,7 @@
           "defaultValueResponse": "",
           "property": "dialog.slots.title",
           "outputFormat": "=coalesce(@Title, this.value)",
-          "allowInterruptions": "=#ChangeSlots.Score>0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -267,7 +267,7 @@
                   "defaultValueResponse": "",
                   "property": "dialog.slots.dateTime",
                   "validations": [],
-                  "allowInterruptions": "=#ChangeSlots.Score>0.7"
+                  "allowInterruptions": "=turn.recognized.score > 0.7"
                 },
                 {
                   "$kind": "Microsoft.BeginDialog",
@@ -306,7 +306,7 @@
                       "invalidPrompt": "",
                       "defaultValueResponse": "",
                       "property": "dialog.time",
-                      "allowInterruptions": "=#ChangeSlots.Score>0.7"
+                      "allowInterruptions": "=turn.recognized.score > 0.7"
                     },
                     {
                       "$kind": "Microsoft.BeginDialog",
@@ -498,7 +498,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.slots.location",
-              "allowInterruptions": "=#SkipSlot.Score>0.7 || #ChangeSlots.Score>0.7",
+              "allowInterruptions": "=turn.recognized.score > 0.7",
               "maxTurnCount": "=if(turn.skip!=true, 3, 1)"
             },
             {
@@ -597,7 +597,7 @@
             "includeNumbers": true
           },
           "property": "dialog.createConfirmResult",
-          "allowInterruptions": "=#ChangeSlots.Score>0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7"
         },
         {
           "$kind": "Microsoft.IfCondition",

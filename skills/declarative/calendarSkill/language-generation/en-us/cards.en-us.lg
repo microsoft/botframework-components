@@ -26,6 +26,7 @@
                     "type": "Column",
                     "width": 10,
                     "spacing":"none",
+                    "verticalContentAlignment": "center",
                     "items": [
                         {
                             "type": "Image",
@@ -38,6 +39,7 @@
                     "type": "Column",
                     "width": ${if(counter != '', 60, 90)},
                     "spacing":"small",
+                    "verticalContentAlignment": "center",
                     "items": [
                         {
                             "type": "TextBlock",

@@ -202,8 +202,7 @@
           },
           "eventName": "collectFeedback"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -284,8 +283,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -398,8 +396,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -512,8 +509,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -626,8 +622,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -739,8 +734,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -856,8 +850,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -973,8 +966,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1216,8 +1208,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1371,8 +1362,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1489,8 +1479,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1622,8 +1611,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1755,8 +1743,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1888,8 +1875,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1978,8 +1964,7 @@
           },
           "eventName": "dialogCompleted"
         }
-      ],
-      "condition": "turn.recognized.score > 0.8"
+      ]
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
