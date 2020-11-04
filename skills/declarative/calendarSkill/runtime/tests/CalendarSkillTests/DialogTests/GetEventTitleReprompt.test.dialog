@@ -21,7 +21,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Hi, Megan Bowen! How can I help you today?"
+      "text": "\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
