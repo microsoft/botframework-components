@@ -92,6 +92,13 @@
           "elseActions": []
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "zabbKd"
+          },
+          "activity": "${SendActivity_zabbKd()}"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "80CHa6"
