@@ -37,6 +37,10 @@
       "text": "today"
     },
     {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec"
+    },
+    {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
         "What do you want to update?",
