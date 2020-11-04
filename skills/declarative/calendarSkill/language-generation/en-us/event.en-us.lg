@@ -259,14 +259,14 @@
     -
 
 # EventAttendeeContainer(event)
-- IF: ${ event.Attendees != null && count(event.Attendees) > 1 }
+- IF: ${ event.attendees != null && count(event.attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
         "columns": [
             {
                 "type": "Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                 "width": 5,
                 "items": [
                     {
@@ -281,12 +281,13 @@
             },
             {
                 "type": "Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                 "width": 95,
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "${event.Attendees[0].EmailAddress.Name}, +${count(event.Attendees) - 1} more"
+                        "wrap": "True",
+                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}"
                     }
                 ]
             }
