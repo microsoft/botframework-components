@@ -92,6 +92,13 @@
               "value": "tentativelyAccepted",
               "actions": [
                 {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "jdauNL"
+                  },
+                  "name": "Ten"
+                },
+                {
                   "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
                   "$designer": {
                     "id": "DrLdRq"

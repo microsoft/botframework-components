@@ -30,6 +30,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
       "text": "OK. Are you sure you want to cancel the event on Thursday, October 15th, at 8:00 AM,  Project Team Meeting? (1) Yes or (2) No",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
