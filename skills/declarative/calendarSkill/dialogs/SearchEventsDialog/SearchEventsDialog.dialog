@@ -289,10 +289,11 @@
           "activity": "${SendActivity_TMEgrc()}"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "nMNpbf"
-          }
+            "id": "jaPnEi"
+          },
+          "activityProcessed": true
         }
       ]
     }
