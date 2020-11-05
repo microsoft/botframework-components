@@ -362,7 +362,7 @@
 ```
 
 # EventLocationItems(event)
-- IF: ${ event.location != null && event.location != '' && event.isOnlineMeeting && event.isCurrentEvent }
+- IF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting && event.isCurrentEvent }
     - ```
     {
         "type": "TextBlock",
@@ -373,7 +373,7 @@
         "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
     }
     ```
-- ELSEIF: ${ event.location != null && event.location != '' && event.isOnlineMeeting }
+- ELSEIF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting }
     - ```
     {
         "type": "TextBlock",
