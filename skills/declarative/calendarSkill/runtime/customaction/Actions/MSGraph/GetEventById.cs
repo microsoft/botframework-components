@@ -53,6 +53,14 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             try
             {
                 var ev = await graphClient.Me.Events[eventId].Request().GetAsync();
+
+                var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
+                var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
+                var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
+
+                ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
+                ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
+
                 result = new CalendarSkillEventModel(ev, TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone));
             }
             catch (ServiceException ex)
