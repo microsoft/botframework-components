@@ -47,20 +47,21 @@
           "activityProcessed": true,
           "dialog": "SearchEventsDialog",
           "options": {
+            "eventId": "=dialog.eventId",
             "start": "=dialog.start",
             "end": "=dialog.end",
             "doSelection": "=false",
             "futureOnly": "=true",
             "groupEvents": "=true"
           },
-          "resultProperty": "conversation.events"
+          "resultProperty": "dialog.events"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "N02RSE"
           },
-          "condition": "conversation.events != null && count(conversation.events) > 0",
+          "condition": "dialog.events != null && count(dialog.events) > 0",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -76,8 +77,16 @@
               "$designer": {
                 "id": "J8Jgea"
               },
-              "condition": "count(conversation.events) == 1 && count(conversation.events[0].events) == 1",
+              "condition": "count(dialog.events) == 1",
               "elseActions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.GroupEventsByDate",
+                  "$designer": {
+                    "id": "RgCy25"
+                  },
+                  "resultProperty": "dialog.events",
+                  "eventsProperty": "=dialog.events"
+                },
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {

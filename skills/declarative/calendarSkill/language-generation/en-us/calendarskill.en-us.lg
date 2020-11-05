@@ -4,7 +4,10 @@
 [import](availability.lg)
 
 # SendActivity_gKWYRF()
-- ${WelcomeUser()}
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = New event | What's on today
+]
 
 # SendActivity_IrC8MR()
 - You're signed out!
@@ -70,6 +73,7 @@
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_MvzrwE()
 - ${ErrorMessage()}
 
@@ -78,11 +82,13 @@
     text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_g7immX()
 [Activity
     text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
+
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
@@ -149,16 +155,17 @@
 ]
 
 # SendActivity_AlS4sI()
-- I can help you manage your calendar. Try saying *what meetings do I have today?* or *new meeting* to get started.
+[Activity
+    text= ${HelpMessage()}
+    SuggestedActions = New event | What's on today
+]
+
 # SendActivity_klrCg4()
-- Sure, let me know if I can help you with something else.
+- OK, no problem I know I'm not perfect yet. Let me know if I can help with something else.
+
 # SendActivity_KWePCs()
 - ${ErrorMessage()}
 
 # SendActivity_F3GXHj()
 - Sorry, that feature is not supported yet.
 
-# SendActivity_CWxwVM()
-[Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
-]

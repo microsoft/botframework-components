@@ -33,7 +33,7 @@
           "connectionName": "=settings.oauthConnectionName",
           "property": "user.token",
           "title": "Sign in",
-          "text": "Sign in to your Microsoft account to access your calendar."
+          "text": "Time to sign in to your Microsoft account to access your calendar, and try out our new Skill 💯"
         },
         {
           "$kind": "Microsoft.Graph.User.GetProfile",

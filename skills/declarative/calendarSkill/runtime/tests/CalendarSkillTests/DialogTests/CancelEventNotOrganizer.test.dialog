@@ -31,6 +31,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
+      "text": "I'm searching your calendar, this might take a sec..."
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
       "text": "I see you are not the owner of the meeting, would you like to decline the meeting? (1) Yes or (2) No",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"

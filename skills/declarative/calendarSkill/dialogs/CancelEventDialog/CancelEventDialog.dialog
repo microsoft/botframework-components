@@ -124,7 +124,7 @@
                   "dialog": "RespondToEventDialog",
                   "options": {
                     "response": "='declined'",
-                    "eventId": "=dialog.event.id"
+                    "event": "=dialog.event"
                   }
                 }
               ],
