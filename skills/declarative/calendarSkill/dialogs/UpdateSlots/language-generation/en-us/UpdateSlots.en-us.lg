@@ -1,10 +1,22 @@
 [import](common.lg)
+[import](event.lg)
 
-# TextInput_Prompt_gZ1tbS()
+# AskForEntity()
 - What do you want to update?
 - What can I update for you?
 - What do you want to change about the event?
 - Tell me what you'd like to update.
+# AskForEntityWithEvent()
+[Activity
+    text = ${AskForEntity()}
+    attachments=${json(EventDetailCard(dialog.eventInfo))}
+]
+
+# TextInput_Prompt_gZ1tbS()
+- IF: ${dialog.eventInfo == null}
+    - ${AskForEntity()}
+- ELSE:
+    - ${AskForEntityWithEvent()}
 # TextInput_Prompt_gtOavc()
 - ${AskForNewValue('title')}
 
@@ -20,10 +32,10 @@
 # TextInput_Prompt_NdRLDG()
 - ${AskForNewValue('location')}
 
-# TextInput_Prompt_WotQE1()
-- Who do you want to remove?
 # DateTimeInput_Prompt_SSWMA3()
 - OK, how long would you like this meeting to be?
 - OK, what is your preferred meeting duration?
 # DateTimeInput_Prompt_fKknY3()
 - ${AskForNewValue('date time')}
+# TextInput_Prompt_kSb8sd()
+- Who do you want to remove?
