@@ -66,39 +66,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "type": "ColumnSet",
-            "spacing": "Small",
-            "columns": [
-                {
-                    "type": "Column",
-                    "verticalContentAlignment": "Center",
-                    "width": 5,
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${ContactIconUrl()}",
-                            "height": "15px",
-                            "width": "15px",
-                            "spacing": "Small",
-                            "horizontalAlignment": "Center"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "verticalContentAlignment": "Center",
-                    "width": 95,
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "All participants can attend",
-                            "spacing": "Small"
-                        }
-                    ]
-                }
-            ]
         }
     ],
     "selectAction": {

@@ -30,20 +30,20 @@
 
 
 # ContactConfirmWithOne(attendees)
-- IF: ${ count(attendees) == 0 }
+- IF: ${ attendees == null || count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) == 1 }
-    - ${attendees[0].name}
+    - ${attendees[0].emailAddress.name}
 - ELSE:
-    - ${attendees[0].name} and ${count(attendees) - 1}
+    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1}
 
 # ContactConfirmWithTwo(attendees)
-- IF: ${ count(attendees) == 0 }
+- IF: ${ attendees == null || count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) <= 2 }
-    - ${join(select(attendees, x, x.name), ', ')}
+    - ${join(select(attendees, x, x.emailAddress.name), ', ')}
 - ELSE:
-    - ${attendees[0].name}, ${attendees[1].name} and ${count(attendees) - 2}
+    - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2}
 
 # DateConfirm(startDateTime)
 - on ${formatDateTime(startDateTime, 'MMMM d')}, at ${formatDateTime(startDateTime, 'h:mm tt')}
@@ -59,11 +59,11 @@
 - ELSE:
 	- ${seconds / 3600}h
 # SendActivity_zmBQxY()
-- Your event has been created. 
-- Your meeting is on your calendar. 
-- The event has been created
+- Alright, your event has been created.
+- I've added the meeting on your calendar.
+- OK, the event has been created for you.
 # SendActivity_3BjjI8()
-- Event creation failed
+- Sorry, I can't create event for you now. Please try again later.
 # TextInput_Prompt_pVUn2o()
 - Please let me know what location you would like to include?
 - If you want to include a physical location, please call out what I should include for you?
@@ -74,7 +74,8 @@
 ]
 
 # SendActivity_4DvAjt()
-- Event creation failed
+- OK, I've not send out this event.
+- No problem, the event has not been created.
 
 # DateTimeInput_Prompt_E1Ybcg()
 - At what time?

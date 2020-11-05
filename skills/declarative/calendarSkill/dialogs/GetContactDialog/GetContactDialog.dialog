@@ -40,7 +40,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.contactName",
-              "allowInterruptions": "#NoAttendees.Score>0.9",
+              "allowInterruptions": "#NoAttendees.Score>0.8",
               "maxTurnCount": 3
             },
             {
@@ -60,11 +60,15 @@
           "assignments": [
             {
               "property": "dialog.contactNameArray",
-              "value": "=dialog.personNameArray"
+              "value": "=union(coalesce(dialog.personNameArray, []), coalesce(dialog.emailArray, []))"
             },
             {
               "property": "dialog.attendees",
               "value": "=coalesce(dialog.attendees, [])"
+            },
+            {
+              "property": "dialog.contactsCandidate",
+              "value": "=[]"
             }
           ]
         },
@@ -138,6 +142,12 @@
                   ]
                 }
               ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "YGwpEu"
+              }
             },
             {
               "$kind": "Microsoft.SwitchCondition",
