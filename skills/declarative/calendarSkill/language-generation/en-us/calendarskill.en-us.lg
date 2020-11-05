@@ -169,3 +169,8 @@
 # SendActivity_F3GXHj()
 - Sorry, that feature is not supported yet.
 
+
+# Bot.SendActivityPlus_Activity_b7uERT()
+- hello, I'm calendar skill
+# SendActivity_Sik2pV()
+- luis: ${turn.recognized}

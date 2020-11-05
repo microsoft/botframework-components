@@ -2108,6 +2108,26 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "fLFVwL",
+        "name": "whisper"
+      },
+      "intent": "whisper",
+      "actions": [
+        {
+          "$kind": "Microsoft.Bot.SendActivityPlus",
+          "$designer": {
+            "id": "b7uERT"
+          },
+          "operationType": "whisper",
+          "activityIdProperty": "turn.activity.replyToId",
+          "whisperToProperty": "turn.activity.from",
+          "activity": "${Bot.SendActivityPlus_Activity_b7uERT()}"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
