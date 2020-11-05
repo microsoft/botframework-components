@@ -1,10 +1,22 @@
 [import](common.lg)
+[import](event.lg)
 
-# TextInput_Prompt_gZ1tbS()
+# AskForEntity()
 - What do you want to update?
 - What can I update for you?
 - What do you want to change about the event?
 - Tell me what you'd like to update.
+# AskForEntityWithEvent()
+[Activity
+    text = ${AskForEntity()}
+    attachments=${json(EventDetailCard(dialog.eventInfo))}
+]
+
+# TextInput_Prompt_gZ1tbS()
+- IF: ${dialog.eventInfo == null}
+    - ${AskForEntity()}
+- ELSE:
+    - ${AskForEntityWithEvent()}
 # TextInput_Prompt_gtOavc()
 - ${AskForNewValue('title')}
 

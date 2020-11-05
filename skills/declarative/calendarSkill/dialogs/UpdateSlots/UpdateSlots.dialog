@@ -260,7 +260,10 @@
           "$designer": {
             "id": "g1MH3U"
           },
-          "activityProcessed": true
+          "activityProcessed": true,
+          "options": {
+            "eventInfo": "$eventInfo"
+          }
         }
       ]
     },

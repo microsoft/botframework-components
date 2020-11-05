@@ -44,7 +44,8 @@
           "dialog": "SearchEventsDialog",
           "options": {
             "datetime": "=dialog.datetime",
-            "doSelection": "true"
+            "doSelection": "true",
+            "turnCount": 0
           },
           "resultProperty": "dialog.searchResults"
         },
@@ -236,7 +237,8 @@
             "personName": "=dialog.personName",
             "email": "=dialog.email",
             "location": "=dialog.location",
-            "entityOperationResult": "=dialog.entityOperationResult"
+            "entityOperationResult": "=dialog.entityOperationResult",
+            "eventInfo": "=dialog.searchResults"
           }
         },
         {
