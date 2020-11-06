@@ -18,4 +18,4 @@
 ]
 
 # RespondEventResponseText(action, event)
-- Alright, I’ve ${action} the meeting named ${event.Subject}.
+- All right, I’ve ${action} the meeting named ${event.Subject}.

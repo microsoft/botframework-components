@@ -105,6 +105,8 @@
 - find a meeting with title {Title=second lesson} from amanda
 - find a meeting with title {Title=sharing} from steven
 - find my meeting with lydia
+- what do i have tomorrow at noon
+- am i busy tomorrow afternoon
 
 # GetFirstEvent
 - What time does my day start?
@@ -188,6 +190,9 @@
 - Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
 - I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
 - Update meeting
+- update my meeting with elaine
+- change my meeting tomorrow morning
+- edit my event tomorrow afternoon with thomas
 
 @ ml EntityName
     - @ ml EventTitle

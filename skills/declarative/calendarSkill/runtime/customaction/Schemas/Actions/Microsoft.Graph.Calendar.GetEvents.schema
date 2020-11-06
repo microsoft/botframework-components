@@ -81,6 +81,12 @@
       "title": "Future Events Only",
       "description": "Future Events Only",
       "examples": []
+    },
+    "maxResultsProperty": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Max Results",
+      "description": "Max number of results to return.",
+      "examples": []
     }
   }
 }

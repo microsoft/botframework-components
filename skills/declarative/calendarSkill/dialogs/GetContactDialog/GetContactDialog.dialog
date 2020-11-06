@@ -40,7 +40,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.contactName",
-              "allowInterruptions": "#NoAttendees.Score>0.8",
+              "allowInterruptions": "=#NoAttendees.score > 0.8 || #Cancel.score > 0.8",
               "maxTurnCount": 3
             },
             {
@@ -216,7 +216,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.contactsCandidate",
-                    "actionTitleProperty": "name",
+                    "actionTitleProperty": "email",
                     "activePrompt": "ContactListPrompt",
                     "templates": {
                       "icon": "ContactIconUrl",
@@ -494,6 +494,30 @@
           "options": {
             "attendees": "=dialog.attendees"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "0bel5K",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "r6WNXy"
+          },
+          "activity": "${SendActivity_r6WNXy()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "HiBNG3"
+          },
+          "activityProcessed": true
         }
       ]
     }
