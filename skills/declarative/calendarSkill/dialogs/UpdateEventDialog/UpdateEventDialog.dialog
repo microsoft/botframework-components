@@ -24,30 +24,66 @@
           "name": "UpdateEventDialog.BeginDialog"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "PHu5K1"
+            "id": "xumhR9"
           },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query"
-          },
-          "resultProperty": "dialog.datetime"
+          "condition": "$eventId!=null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "t72tAN"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=dialog.query"
+              },
+              "resultProperty": "dialog.datetime"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ZhueF5"
+              },
+              "activityProcessed": true,
+              "dialog": "SearchEventsDialog",
+              "options": {
+                "datetime": "=dialog.datetime",
+                "doSelection": "true",
+                "turnCount": 0
+              },
+              "resultProperty": "dialog.searchResults"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetEventById",
+              "$designer": {
+                "id": "25TCND"
+              },
+              "token": "=user.token.token",
+              "eventIdProperty": "=dialog.eventId",
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
+              "resultProperty": "dialog.searchResults"
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "3WSt5L"
+            "id": "PaLqVJ"
           },
-          "activityProcessed": true,
-          "dialog": "SearchEventsDialog",
-          "options": {
-            "datetime": "=dialog.datetime",
-            "doSelection": "true",
-            "turnCount": 0
-          },
-          "resultProperty": "dialog.searchResults"
+          "condition": "dialog.searchResults == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "4gUiFZ"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -463,9 +499,11 @@
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           },
-          "property": "dialog.confirmUpdate"
+          "property": "dialog.confirmUpdate",
+          "style": "none"
         },
         {
           "$kind": "Microsoft.IfCondition",

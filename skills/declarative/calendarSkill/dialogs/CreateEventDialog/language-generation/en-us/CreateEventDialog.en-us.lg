@@ -28,23 +28,6 @@
     - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited. Do you want to send it?
     - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 
-
-# ContactConfirmWithOne(attendees)
-- IF: ${ attendees == null || count(attendees) == 0 }
-    - no attendees
-- ELSE IF: ${ count(attendees) == 1 }
-    - ${attendees[0].emailAddress.name}
-- ELSE:
-    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1}
-
-# ContactConfirmWithTwo(attendees)
-- IF: ${ attendees == null || count(attendees) == 0 }
-    - no attendees
-- ELSE IF: ${ count(attendees) <= 2 }
-    - ${join(select(attendees, x, x.emailAddress.name), ', ')}
-- ELSE:
-    - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2}
-
 # DateConfirm(startDateTime)
 - on ${formatDateTime(startDateTime, 'MMMM d')}, at ${formatDateTime(startDateTime, 'h:mm tt')}
 

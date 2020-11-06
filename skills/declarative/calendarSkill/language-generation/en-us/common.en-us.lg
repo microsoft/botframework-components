@@ -28,3 +28,19 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - I can tell there is something wrong here, can you please try again?
 - Oops, I'm stuck, can you try to ask me differently?
 - Please help me out here, can you ask again but in a different way?
+
+# ContactConfirmWithOne(attendees)
+- IF: ${ attendees == null || count(attendees) == 0 }
+    - no attendees
+- ELSE IF: ${ count(attendees) == 1 }
+    - ${attendees[0].emailAddress.name}
+- ELSE:
+    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1} more
+
+# ContactConfirmWithTwo(attendees)
+- IF: ${ attendees == null || count(attendees) == 0 }
+    - no attendees
+- ELSE IF: ${ count(attendees) <= 2 }
+    - ${join(select(attendees, x, x.emailAddress.name), ', ')}
+- ELSE:
+    - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2} more

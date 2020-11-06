@@ -1949,6 +1949,7 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
+            "eventId": "=dialog.eventId",
             "datetime": "=dialog.datetime",
             "entityNameResult": "=dialog.entityNameResult",
             "title": "=dialog.title",

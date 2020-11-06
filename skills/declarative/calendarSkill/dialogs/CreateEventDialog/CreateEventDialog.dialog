@@ -599,10 +599,13 @@
           "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.createConfirmResult",
-          "allowInterruptions": "=turn.recognized.score > 0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7",
+          "style": "none"
         },
         {
           "$kind": "Microsoft.IfCondition",
