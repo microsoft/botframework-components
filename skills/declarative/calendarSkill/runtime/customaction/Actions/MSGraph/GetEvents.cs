@@ -68,6 +68,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("futureEventsOnlyProperty")]
         public BoolExpression FutureEventsOnlyProperty { get; set; }
 
+        [JsonProperty("maxResultsProperty")]
+        public IntExpression MaxResultsProperty { get; set; }
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
@@ -79,6 +82,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
+            var maxResults = MaxResultsProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -145,14 +149,17 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
-            while (events.NextPageRequest != null)
+            while (events.NextPageRequest != null && parsedEvents.Count() <= maxResults)
             {
                 events = await events.NextPageRequest.GetAsync();
                 if (events?.Count > 0)
                 {
                     foreach (var ev in events)
                     {
-                        parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                        if (parsedEvents.Count() <= maxResults)
+                        {
+                            parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                        }
                     }
                 }
             }

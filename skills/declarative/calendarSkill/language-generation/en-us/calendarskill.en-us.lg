@@ -19,19 +19,19 @@
 ]
 
 # ErrorMessage()
-- Something seems to be going wrong. I can tell you more about your meetings today.
+- Something seems to be going wrong. Here is your schedule for today:
 
 # SendActivity_GGU1vZ()
 - ${ErrorMessage()}
 
 # GetEventTitleResponseText(event)
-- I found a meeting on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 1)} 
 
 # GetEventTimeResponseText(event)
-- I found a meeting on ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
+- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 1)} 
 
 # GetEventAttendeesResponseText(event)
-- You have a meeting on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 3)} 
+- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 3)} 
 
 # GetEventLocationResponseText(event)
 - ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
@@ -40,13 +40,16 @@
 - You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
 
 # LastEventResponseText(event)
-- Your day ends at ${BuildTime(event.start.datetime)}, ${event.Subject}.
+- Your day ends at ${BuildTime(event.start.datetime)}. Your last meeting is ${event.Subject}.
 
 # NextEventResponseText(event)
-- Here’s what’s next: ${event.Subject}, ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)} ${WithLocation(event)}${WithAttendees(event, 1)}
+- Here’s what’s next:
+
+# EventResponseText(event)
+- Here's what I found:
 
 # TimeTillNextMeetingResponseText(diff)
-- You have ${MakeDiffTime(diff)} till your next meeting starts.
+- You have ${MakeDiffTime(diff)} until your next meeting starts.
 
 # MakeDiffTime(diff)
 - IF: ${ diff < 60 }
@@ -70,7 +73,7 @@
 
 # SendActivity_3j3wUV()
 [Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
@@ -79,13 +82,13 @@
 
 # SendActivity_kaOafR()
 [Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTimeResponseText(dialog.event))}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
 # SendActivity_g7immX()
 [Activity
-    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
+    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
@@ -161,11 +164,8 @@
 ]
 
 # SendActivity_klrCg4()
-- OK, no problem I know I'm not perfect yet. Let me know if I can help with something else.
+- OK, no problem, I know I'm not perfect yet. Let me know if I can help with something else.
 
 # SendActivity_KWePCs()
 - ${ErrorMessage()}
-
-# SendActivity_F3GXHj()
-- Sorry, that feature is not supported yet.
 

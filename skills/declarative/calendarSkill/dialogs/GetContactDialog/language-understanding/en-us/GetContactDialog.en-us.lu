@@ -3,17 +3,15 @@
 - none
 - no attendees
 - None work for me
-- Nothing fits
-- Nothing is good
-- Proceed without attendees
 - Nobody
 - No it's just me
-- no
-- skip
 
 # TextInput_Response_wIEu2k
 - megan
 - tom
+- pam
+- invite john
+- add ted
 
 @prebuilt personName
 @prebuilt email
@@ -22,3 +20,10 @@
 # TryAgain
 - try again
 - I want to try again
+
+# Cancel
+- cancel
+- cancel this
+- stop
+- stop this
+- exit

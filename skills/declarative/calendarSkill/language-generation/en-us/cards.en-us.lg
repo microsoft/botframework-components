@@ -189,6 +189,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
 - ```
 {
     "type": "Container",
+    "separator": true,
     "spacing": "medium",
     "items": [
         {
@@ -244,7 +245,9 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         "selectAction": {
             "type": "Action.Submit",
             "title": "previousPage",
-            "data": ${BuildCardActionData('previous page')}
+            "data": {
+                "intent": "Previous"
+            }        
         }
     }
     ```
@@ -267,7 +270,9 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         "selectAction": {
             "type": "Action.Submit",
             "title": "show more",
-            "data": ${BuildCardActionData('next page')}
+            "data": {
+                "intent": "Next"
+            }
         }
     }
     ```
@@ -278,8 +283,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     {
         "msteams": {
             "type": "messageBack",
-            "text": "${text}",
-            "displayText": "${text}"
+            "text": "${text}"
         }
     }
     ```

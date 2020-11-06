@@ -2,31 +2,31 @@
 [import](event.lg)
 [import](timeSuggestionList.lg)
 
-
 # SendActivity_Nd5hYw()
 - Sure, I’ve added a Teams link for you as well.
 - OK, I’ll also include a Teams link.
-- Got it. A Teams link will be added to your meeting.
-- Great. I've gone ahead and added Teams to this meeting.
+- Got it. I've also included a Teams meeting.
+
 # TimeSuggestionFormat(time)
 - ${formatDateTime(time, 'h:mm tt on d/M')}
+
 # ConfirmCreatePrompt()
 - IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation != true}
-    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location} with a Teams link. Does that sound right?
-    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location} with a Teams link included. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location} with a Teams link included, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
+    - Got it, I will create a meeting on ${DateString(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location} with a Teams link. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's on ${DateString(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location} with a Teams link included. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} on ${DateString(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location} with a Teams link included, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 - ELSE IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation == true}
-    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and the meeting will contain a Teams link. Does that sound right?
-    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and a Teams link will be included. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. You've invited ${ContactConfirmWithOne(dialog.slots.attendees)}, and a Teams link is included. Is all of that correct?
+    - Got it, I will create a meeting on ${DateString(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and the meeting will contain a Teams link. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's on ${DateString(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and a Teams link will be included. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} on ${DateString(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. You've invited ${ContactConfirmWithOne(dialog.slots.attendees)}, and a Teams link is included. Is all of that correct?
 - ELSE IF: ${dialog.slots.isTeamsMeeting != true && dialog.slots.noLocation != true}
-    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location}. Does that sound right?
-    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location}. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location}, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
+    - Got it, I will create a meeting on ${DateString(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location}. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's on ${DateString(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location}. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} on ${DateString(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location}, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 - ELSE:
-    - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited. Does that sound right?
-    - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
+    - Got it, I will create a meeting on ${DateString(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited. Does that sound right?
+    - OK, I want to confirm before saving this meeting. It's on ${DateString(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited. Do you want to send it?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} on ${DateString(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 
 
 # ContactConfirmWithOne(attendees)
@@ -45,8 +45,8 @@
 - ELSE:
     - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2}
 
-# DateConfirm(startDateTime)
-- on ${formatDateTime(startDateTime, 'MMMM d')}, at ${formatDateTime(startDateTime, 'h:mm tt')}
+# DateString(startDateTime)
+- ${formatDateTime(startDateTime, 'dddd, MMMM ')} ${addOrdinal(dayOfMonth(formatDateTime(startDateTime)))} at ${formatDateTime(startDateTime, 'h:mm tt')}
 
 # FormatDateTimeDuration(startTime, endTime)
 - ${FormatDuration((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)}
@@ -58,15 +58,20 @@
 	- ${concat(string(seconds / 3600), 'h', string(seconds % 3600 / 60), 'm')}
 - ELSE:
 	- ${seconds / 3600}h
+
 # SendActivity_zmBQxY()
-- Alright, your event has been created.
-- I've added the meeting on your calendar.
+- All right, your event has been created.
+- I've added the meeting to your calendar.
 - OK, the event has been created for you.
+
 # SendActivity_3BjjI8()
 - Sorry, I can't create event for you now. Please try again later.
+
 # TextInput_Prompt_pVUn2o()
-- Please let me know what location you would like to include?
-- If you want to include a physical location, please call out what I should include for you?
+- What location would you like to include?
+- What should I set the location to?
+- What is the location?
+
 # ConfirmInput_Prompt_eaLZYE()
 [Activity
     text=${ConfirmCreatePrompt()}
@@ -74,7 +79,7 @@
 ]
 
 # SendActivity_4DvAjt()
-- OK, I've not send out this event.
+- OK, I will not create the event.
 - No problem, the event has not been created.
 
 # DateTimeInput_Prompt_E1Ybcg()
@@ -82,15 +87,19 @@
 - What time works best?
 - And at what time?
 - Got it, and when do you want it to start?
+
 # DateTimeInput_Prompt_sHR6f0()
 - What date and time did you have in mind?
 - When should the event start?
 - And what date?
+
 # TextInput_Prompt_8FlYLk()
 - What is the title of the meeting?
 - What is the title?
 - What is the meeting about?
-- What do you want to add as a title?
 
 # SendActivity_mHeeSb()
 - I can't update this event.
+
+# SendActivity_44hcCm()
+- ${CancelMessage()}
