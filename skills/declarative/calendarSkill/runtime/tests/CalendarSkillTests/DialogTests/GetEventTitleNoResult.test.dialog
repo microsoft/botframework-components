@@ -37,7 +37,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec"
+      "text": "I'm searching your calendar, this might take a sec..."
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
@@ -49,7 +49,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec"
+      "text": "I'm searching your calendar, this might take a sec..."
     },
     {
       "$kind": "Microsoft.Test.AssertReply",

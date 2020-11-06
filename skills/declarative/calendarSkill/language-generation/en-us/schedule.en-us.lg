@@ -36,8 +36,8 @@
         "type": "Action.Submit",
         "title": "Show event",
         "data": {
-            "intent": "ShowEvent",
-            "eventIndex": "${item.Index}"
+            "intent": "GetEvents",
+            "eventId": "${item.id}"
         }
     },
     "items": [
@@ -73,27 +73,8 @@
 }
 ```
 
-# ScheduleActions
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Show tomorrow",
-            "data": ${BuildCardActionData('Show tomorrow')}
-        },
-        {
-            "type": "Action.Submit",
-            "title": "New meeting",
-            "data": ${BuildCardActionData('New meeting')}
-        }
-    ]
-}
-```
-
 # ScheduleNoResults(date)
-- ${CardTemplate(ScheduleHeader(date, createArray()), ScheduleNoResultsBody(), ScheduleNoResultsActions())}
+- ${CardTemplate(ScheduleHeader(date, createArray()), ScheduleNoResultsBody(), ScheduleActions(date))}
 
 # ScheduleNoResultsBody
 - ```
@@ -112,19 +93,25 @@
 }
 ```
 
-# ScheduleNoResultsActions
+# ScheduleActions(date)
 - ```
 {
     "type": "ActionSet",
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "Create new meeting",
-            "data": ${BuildCardActionData('New meeting')}
+            "title": "New event",
+            "data": {
+                "intent": "CreateEvent"
+            }
         },
         {
             "type": "Action.Submit",
-            "title": ${BuildCardActionData('Show next day')}
+            "title": "${if(date(formatDateTime(date)) == date(utcNow()), 'Show tomorrow', 'Next day')}",
+            "data": {
+                "intent": "GetEvents",
+                "datetime": "${addDays(formatDateTime(date), 1)}"
+            }
         }
     ]
 }

@@ -161,6 +161,9 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
     },
     {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.GroupEventsByDate"
+    },
+    {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
     },
     {
@@ -4290,12 +4293,6 @@
           "description": "Future Events Only",
           "examples": []
         },
-        "groupByDateProperty": {
-          "$ref": "#/definitions/booleanExpression",
-          "title": "Group events by date",
-          "description": "Group events by date",
-          "examples": []
-        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -4357,6 +4354,59 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.Graph.Calendar.GetWorkingHours"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.Calendar.GroupEventsByDate": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Group Events By Date",
+      "description": "Accept a event using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "events",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "eventsProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Events",
+          "description": "List of events to sort.",
+          "examples": [
+            "dialog.events"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.GroupEventsByDate"
         },
         "$designer": {
           "title": "Designer information",
@@ -4805,6 +4855,9 @@
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.GroupEventsByDate"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"

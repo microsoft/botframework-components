@@ -50,7 +50,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions
             var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, refTime: timeZoneNow);
 
             // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(nameof(RecognizeDateTime), results, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
+            await dc.Context.TraceActivityAsync(nameof(RecognizeDateTime), results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
 
             if (this.ResultProperty != null)
             {

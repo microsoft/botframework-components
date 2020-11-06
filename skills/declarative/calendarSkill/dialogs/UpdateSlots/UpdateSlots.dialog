@@ -135,37 +135,50 @@
               "value": "attendee",
               "actions": [
                 {
-                  "$kind": "Microsoft.IfCondition",
+                  "$kind": "Microsoft.TraceActivity",
                   "$designer": {
-                    "id": "LmZmpp"
+                    "id": "dmVprm"
                   },
-                  "condition": "dialog.resolveUpdateEntityResult.entityOperation == 'add'",
-                  "actions": [
+                  "name": "update attendee"
+                },
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "KjtB11"
+                  },
+                  "condition": "dialog.resolveUpdateEntityResult.entityOperation",
+                  "cases": [
                     {
-                      "$kind": "Microsoft.EmitEvent",
-                      "$designer": {
-                        "id": "bgEJ9E"
-                      },
-                      "eventName": "AddAttendee"
-                    }
-                  ],
-                  "elseActions": [
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "0wm1XG"
-                      },
-                      "condition": "dialog.resolveUpdateEntityResult.entityOperation == 'remove'",
+                      "value": "add",
                       "actions": [
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "oqrpUX"
+                            "id": "YP5tlj"
+                          },
+                          "eventName": "AddAttendee"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "remove",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "wpFsC7"
                           },
                           "eventName": "RemoveAttendee"
                         }
-                      ],
-                      "elseActions": []
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "4sAtOb"
+                      }
                     }
                   ]
                 }
@@ -175,44 +188,36 @@
               "value": "teamslink",
               "actions": [
                 {
-                  "$kind": "Microsoft.IfCondition",
+                  "$kind": "Microsoft.SwitchCondition",
                   "$designer": {
-                    "id": "d4HlMM"
+                    "id": "zbOr69"
                   },
-                  "condition": "dialog.resolveUpdateEntityResult.entityOperation == 'add'",
-                  "actions": [
+                  "condition": "dialog.resolveUpdateEntityResult.entityOperation",
+                  "cases": [
                     {
-                      "$kind": "Microsoft.SetProperties",
-                      "$designer": {
-                        "id": "FoP8NA"
-                      },
-                      "assignments": [
-                        {
-                          "property": "dialog.newSlotsResult.updateType",
-                          "value": "addTeamsLink"
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.EndDialog",
-                      "$designer": {
-                        "id": "tDk4jO"
-                      },
-                      "value": "=dialog.newSlotsResult"
-                    }
-                  ],
-                  "elseActions": [
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "LmkZXa"
-                      },
-                      "condition": "dialog.resolveUpdateEntityResult.entityOperation == 'remove'",
+                      "value": "add",
                       "actions": [
                         {
                           "$kind": "Microsoft.SetProperties",
                           "$designer": {
-                            "id": "VqD8zE"
+                            "id": "Yh1JXN"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.newSlotsResult.updateType",
+                              "value": "addTeamsLink"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "value": "remove",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "Kl8S2d"
                           },
                           "assignments": [
                             {
@@ -220,17 +225,18 @@
                               "value": "removeTeamsLink"
                             }
                           ]
-                        },
-                        {
-                          "$kind": "Microsoft.EndDialog",
-                          "$designer": {
-                            "id": "z0YZrS"
-                          },
-                          "value": "=dialog.newSlotsResult"
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "default": []
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "nliwDU"
+                  },
+                  "value": "=dialog.newSlotsResult"
                 }
               ]
             },
@@ -254,7 +260,10 @@
           "$designer": {
             "id": "g1MH3U"
           },
-          "activityProcessed": true
+          "activityProcessed": true,
+          "options": {
+            "eventInfo": "$eventInfo"
+          }
         }
       ]
     },
@@ -519,17 +528,17 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnIntent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "89wg0Z",
+        "id": "fgwsmR",
         "name": "AddAttendee"
       },
-      "intent": "AddAttendee",
+      "event": "AddAttendee",
       "actions": [
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "wMrl7s"
+            "id": "xrt3QE"
           },
           "activityProcessed": true,
           "dialog": "GetContactDialog",
@@ -542,7 +551,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "8rLZ37"
+            "id": "IKJYg8"
           },
           "assignments": [
             {
@@ -558,37 +567,37 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "BO2SnW"
+            "id": "aHxz3r"
           },
           "value": "=dialog.newSlotsResult"
         }
       ]
     },
     {
-      "$kind": "Microsoft.OnIntent",
+      "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "abqeeN",
+        "id": "HkRhi1",
         "name": "RemoveAttendee"
       },
-      "intent": "RemoveAttendee",
+      "event": "RemoveAttendee",
       "actions": [
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "tEsnj2"
+            "id": "86WcCk"
           },
           "condition": "@personName == null && @email == null",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
               "$designer": {
-                "id": "WotQE1"
+                "id": "kSb8sd"
               },
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
               "allowInterruptions": false,
-              "prompt": "${TextInput_Prompt_WotQE1()}",
+              "prompt": "${TextInput_Prompt_kSb8sd()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
@@ -599,7 +608,7 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "0sjudg"
+                "id": "SlvWsi"
               },
               "property": "dialog.removeAttendee",
               "value": "=coalesce(@personName, @email)"
@@ -609,7 +618,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "LMgVpy"
+            "id": "Q5umVs"
           },
           "assignments": [
             {
@@ -625,7 +634,7 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "rgZIUA"
+            "id": "Yijukm"
           },
           "value": "=dialog.newSlotsResult"
         }

@@ -68,9 +68,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("futureEventsOnlyProperty")]
         public BoolExpression FutureEventsOnlyProperty { get; set; }
 
-        [JsonProperty("groupByDateProperty")]
-        public BoolExpression GroupByDateProperty { get; set; }
-
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
@@ -82,7 +79,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
-            var groupByDateProperty = GroupByDateProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -209,45 +205,21 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
-            // Sort events by date
-            if (groupByDateProperty)
+            parsedEvents = parsedEvents
+                .Where(ev => ev.IsAllDay == false)
+                .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                .ToList();
+
+            // Write Trace Activity for the http request and response values
+            await dc.Context.TraceActivityAsync(DeclarativeType, parsedEvents, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
+
+            if (this.ResultProperty != null)
             {
-                var groupedEvents = parsedEvents
-                    .Where(ev => ev.IsAllDay == false)
-                    .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
-                    .GroupBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
-                    .Select(g => new { date = g.Key, events = g.ToList() })
-                    .ToList();
-
-                // Write Trace Activity for the http request and response values
-                await dc.Context.TraceActivityAsync(nameof(GetEvents), groupedEvents, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
-
-                if (this.ResultProperty != null)
-                {
-                    dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(groupedEvents));
-                }
-
-                // return the actionResult as the result of this operation
-                return await dc.EndDialogAsync(result: groupedEvents, cancellationToken: cancellationToken);
+                dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(parsedEvents));
             }
-            else
-            {
-                parsedEvents = parsedEvents
-                    .Where(ev => ev.IsAllDay == false)
-                    .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
-                    .ToList();
 
-                // Write Trace Activity for the http request and response values
-                await dc.Context.TraceActivityAsync(nameof(GetEvents), parsedEvents, valueType: DeclarativeType, label: this.Id).ConfigureAwait(false);
-
-                if (this.ResultProperty != null)
-                {
-                    dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(parsedEvents));
-                }
-
-                // return the actionResult as the result of this operation
-                return await dc.EndDialogAsync(result: parsedEvents, cancellationToken: cancellationToken);
-            }
+            // return the actionResult as the result of this operation
+            return await dc.EndDialogAsync(result: parsedEvents, cancellationToken: cancellationToken);
         }
 
         private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index)

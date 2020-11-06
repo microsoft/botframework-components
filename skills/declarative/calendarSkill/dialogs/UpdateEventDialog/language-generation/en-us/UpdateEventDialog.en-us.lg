@@ -18,6 +18,11 @@
 - Alright, here you go:
 - Ready to update:
 # ConfirmInput_Prompt_35TBWD()
+[Activity
+    text = ${ConfirmUpdateResponse()}
+    attachments=${json(EventDetailCard(dialog.searchResults))}
+]
+# ConfirmUpdateResponse()
 - I see you are not the owner of the meeting. Would you like to update your response? 
 - I cannot update the meeting since you are not the organizer. Do you want to update your attendance?
 - Because you aren't the organizer of this meeting, I cannot update this booking. Want to update your response instead?

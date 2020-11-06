@@ -237,7 +237,8 @@
             "personName": "=dialog.personName",
             "email": "=dialog.email",
             "location": "=dialog.location",
-            "entityOperationResult": "=dialog.entityOperationResult"
+            "entityOperationResult": "=dialog.entityOperationResult",
+            "eventInfo": "=dialog.searchResults"
           }
         },
         {

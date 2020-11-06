@@ -92,19 +92,19 @@
           "elseActions": []
         },
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "zabbKd"
-          },
-          "activity": "${SendActivity_zabbKd()}"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "80CHa6"
           },
           "condition": "dialog.eventId != null",
           "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "We6qfL"
+              },
+              "activity": "${SendActivity_We6qfL()}"
+            },
             {
               "$kind": "Microsoft.Graph.Calendar.GetEvents",
               "$designer": {
@@ -120,8 +120,7 @@
               "dateTimeTypeProperty": "=coalesce(dialog.type, \"date\")",
               "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
               "ordinalProperty": "=dialog.ordinal",
-              "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)",
-              "groupByDateProperty": "=coalesce(dialog.groupEvents, false)"
+              "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)"
             }
           ],
           "actions": [
@@ -290,10 +289,11 @@
           "activity": "${SendActivity_TMEgrc()}"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "nMNpbf"
-          }
+            "id": "jaPnEi"
+          },
+          "activityProcessed": true
         }
       ]
     }

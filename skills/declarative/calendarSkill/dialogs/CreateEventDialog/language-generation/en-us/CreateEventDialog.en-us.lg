@@ -14,23 +14,23 @@
 - IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation != true}
     - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location} with a Teams link. Does that sound right?
     - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location} with a Teams link included. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location} with a Teams link included, and you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location} with a Teams link included, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 - ELSE IF: ${ dialog.slots.isTeamsMeeting == true && dialog.slots.noLocation == true}
     - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and the meeting will contain a Teams link. Does that sound right?
     - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and a Teams link will be included. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. You've invited ${count(dialog.slots.attendees)} people, and a Teams link is included. Is all of that correct?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. You've invited ${ContactConfirmWithOne(dialog.slots.attendees)}, and a Teams link is included. Is all of that correct?
 - ELSE IF: ${dialog.slots.isTeamsMeeting != true && dialog.slots.noLocation != true}
     - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited, and it will take place at ${dialog.slots.location}. Does that sound right?
     - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited, and the location is ${dialog.slots.location}. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location}, and you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. It'll take place at ${dialog.slots.location}, and you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 - ELSE:
     - Got it, I will create a meeting ${DateConfirm(dialog.slots.startDateTime)}, ${dialog.slots.title}. ${ContactConfirmWithOne(dialog.slots.attendees)} will be invited. Does that sound right?
     - OK, I want to confirm before saving this meeting. It's ${DateConfirm(dialog.slots.startDateTime)}, called ${dialog.slots.title}. ${ContactConfirmWithTwo(dialog.slots.attendees)} will be invited. Do you want to send it?
-    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${count(dialog.slots.attendees)} people. Is all of that correct?
+    - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} ${DateConfirm(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 
 
 # ContactConfirmWithOne(attendees)
-- IF: ${ count(attendees) == 0 }
+- IF: ${ attendees == null || count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) == 1 }
     - ${attendees[0].emailAddress.name}
@@ -38,7 +38,7 @@
     - ${attendees[0].emailAddress.name} and ${count(attendees) - 1}
 
 # ContactConfirmWithTwo(attendees)
-- IF: ${ count(attendees) == 0 }
+- IF: ${ attendees == null || count(attendees) == 0 }
     - no attendees
 - ELSE IF: ${ count(attendees) <= 2 }
     - ${join(select(attendees, x, x.emailAddress.name), ', ')}
@@ -59,11 +59,11 @@
 - ELSE:
 	- ${seconds / 3600}h
 # SendActivity_zmBQxY()
-- Your event has been created.
-- Your meeting is on your calendar.
-- The event has been created.
+- Alright, your event has been created.
+- I've added the meeting on your calendar.
+- OK, the event has been created for you.
 # SendActivity_3BjjI8()
-- Event creation failed
+- Sorry, I can't create event for you now. Please try again later.
 # TextInput_Prompt_pVUn2o()
 - Please let me know what location you would like to include?
 - If you want to include a physical location, please call out what I should include for you?
@@ -74,7 +74,8 @@
 ]
 
 # SendActivity_4DvAjt()
-- Event creation failed
+- OK, I've not send out this event.
+- No problem, the event has not been created.
 
 # DateTimeInput_Prompt_E1Ybcg()
 - At what time?

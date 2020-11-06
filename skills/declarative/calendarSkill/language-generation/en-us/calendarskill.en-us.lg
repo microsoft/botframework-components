@@ -6,7 +6,7 @@
 # SendActivity_gKWYRF()
 [Activity
     text = ${WelcomeUser()}
-    SuggestedActions = New meeting | Show schedule
+    SuggestedActions = New event | What's on today
 ]
 
 # SendActivity_IrC8MR()
@@ -157,7 +157,7 @@
 # SendActivity_AlS4sI()
 [Activity
     text= ${HelpMessage()}
-    SuggestedActions =  New meeting | Show schedule
+    SuggestedActions = New event | What's on today
 ]
 
 # SendActivity_klrCg4()
@@ -168,9 +168,4 @@
 
 # SendActivity_F3GXHj()
 - Sorry, that feature is not supported yet.
-
-# SendActivity_CWxwVM()
-[Activity
-    attachments = ${json(EventDetailCard(conversation.events[0].events[int(turn.activity.value.eventIndex)]))}
-]
 

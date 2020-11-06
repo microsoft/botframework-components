@@ -123,7 +123,7 @@
           "$designer": {
             "id": "gP9mXD"
           },
-          "condition": "dialog.resolveDateTimeResult == null && count(dialog.slots.attendees) > 0",
+          "condition": "dialog.slots.startDateTime == null && dialog.resolveDateTimeResult == null && count(dialog.slots.attendees) > 0",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
@@ -451,7 +451,7 @@
                 "id": "UumPxM"
               },
               "property": "dialog.slots.endDateTime",
-              "value": "=addMinutes(formatDateTime(dialog.slots.startDateTime), int(settings.defaultValue.duration))"
+              "value": "=addMinutes(formatDateTime(dialog.slots.startDateTime), int(coalesce(dialog.slots.duration, settings.defaultValue.duration)))"
             }
           ]
         },
@@ -571,6 +571,10 @@
             {
               "property": "dialog.newEvent.description",
               "value": "=dialog.slots.desciption"
+            },
+            {
+              "property": "dialog.newEvent.isRecurring",
+              "value": "=false"
             }
           ]
         },
@@ -594,7 +598,8 @@
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           },
           "property": "dialog.createConfirmResult",
           "allowInterruptions": "=turn.recognized.score > 0.7"
@@ -750,9 +755,13 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "Uh1IF3"
+                    "id": "O5Mc5D"
                   },
                   "assignments": [
+                    {
+                      "property": "dialog.slots.endDateTime",
+                      "value": "=null"
+                    },
                     {
                       "property": "dialog.slots.startDateTime",
                       "value": "=dialog.updateResult.newValue.Value"
@@ -765,12 +774,20 @@
               "value": "duration",
               "actions": [
                 {
-                  "$kind": "Microsoft.SetProperty",
+                  "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "pei2gY"
+                    "id": "UhHgUm"
                   },
-                  "property": "dialog.slots.duration",
-                  "value": "=int(dialog.updateResult.newValue)/60"
+                  "assignments": [
+                    {
+                      "property": "dialog.slots.endDateTime",
+                      "value": "=null"
+                    },
+                    {
+                      "property": "dialog.slots.duration",
+                      "value": "=int(dialog.updateResult.newValue)"
+                    }
+                  ]
                 }
               ]
             },
