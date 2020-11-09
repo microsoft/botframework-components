@@ -1938,16 +1938,25 @@
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "5w9U0q"
+            "id": "kjf900"
           },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query"
-          },
-          "resultProperty": "dialog.datetime"
+          "condition": "dialog.query != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "VXUPRF"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=dialog.query"
+              },
+              "resultProperty": "dialog.datetime"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1957,7 +1966,7 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "eventId": "=dialog.eventId",
+            "eventId": "=turn.activity.value.eventId",
             "datetime": "=dialog.datetime",
             "entityNameResult": "=dialog.entityNameResult",
             "title": "=dialog.title",
@@ -2046,6 +2055,13 @@
               "eventName": "CollectFeedback"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "ePKk2p"
+          },
+          "activityProcessed": true
         }
       ]
     },
@@ -2093,6 +2109,82 @@
             "id": "6cuuag"
           },
           "name": "calendarSkill.UnknownIntent"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "l9OBdN",
+        "name": "AddParticipant"
+      },
+      "intent": "AddParticipant",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HUq2o9"
+          },
+          "name": "calendarSkill.AddParticipant"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "93QCG6"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "VcOErl"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "eventId": "=turn.activity.value.eventId",
+            "entityName": "attendee",
+            "operation": "add"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "YYRsK5",
+        "name": "AddTeamsLink"
+      },
+      "intent": "AddTeamsLink",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jXDQ76"
+          },
+          "name": "calendarSkill.AddTeamsLink"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zAlvNe"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "C2CI2J"
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "eventId": "=turn.activity.value.eventId",
+            "entityName": "teamslink",
+            "operation": "add"
+          }
         }
       ]
     }

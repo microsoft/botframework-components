@@ -8,7 +8,7 @@
 # ConfirmInput_Prompt_UoeZDh()
 [Activity
     text = ${ConfirmUpdate()}
-    attachments=${json(EventCreateDetailCard(dialog.searchResults))}
+    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
 ]
 
 # SendActivity_mRrjQN()
@@ -24,8 +24,9 @@
 # ConfirmInput_Prompt_35TBWD()
 [Activity
     text = ${ConfirmUpdateResponse()}
-    attachments=${json(EventDetailCard(dialog.searchResults))}
+    attachments=${json(EventDetailCard(dialog.selectedEvent))}
 ]
+
 
 # ConfirmUpdateResponse()
 - I see you are not the owner of the meeting. Would you like to update your response? 

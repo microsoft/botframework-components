@@ -54,7 +54,7 @@
                 "doSelection": "true",
                 "turnCount": 0
               },
-              "resultProperty": "dialog.searchResults"
+              "resultProperty": "dialog.selectedEvent"
             }
           ],
           "actions": [
@@ -66,7 +66,7 @@
               "token": "=user.token.token",
               "eventIdProperty": "=dialog.eventId",
               "timeZoneProperty": "=user.workingHours.timeZone.name",
-              "resultProperty": "dialog.searchResults"
+              "resultProperty": "dialog.selectedEvent"
             }
           ]
         },
@@ -75,7 +75,7 @@
           "$designer": {
             "id": "PaLqVJ"
           },
-          "condition": "dialog.searchResults == null",
+          "condition": "dialog.selectedEvent == null",
           "actions": [
             {
               "$kind": "Microsoft.EndDialog",
@@ -97,7 +97,7 @@
           "$designer": {
             "id": "d6a7NN"
           },
-          "condition": "dialog.searchResults.IsOrganizer != true",
+          "condition": "dialog.selectedEvent.IsOrganizer != true",
           "actions": [
             {
               "$kind": "Microsoft.ConfirmInput",
@@ -224,7 +224,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='accepted'",
-                        "eventId": "=dialog.searchResults.id"
+                        "eventId": "=dialog.selectedEvent.id"
                       }
                     }
                   ]
@@ -241,7 +241,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='declined'",
-                        "eventId": "=dialog.searchResults.id"
+                        "eventId": "=dialog.selectedEvent.id"
                       }
                     }
                   ]
@@ -268,7 +268,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "7NednG"
+            "id": "An48DN"
           },
           "activityProcessed": true,
           "dialog": "UpdateSlots",
@@ -281,7 +281,9 @@
             "email": "=dialog.email",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult",
-            "eventInfo": "=dialog.selectedEvent"
+            "eventInfo": "=dialog.selectedEvent",
+            "operation": "=dialog.operation",
+            "entityName": "=dialog.entityName"
           }
         },
         {
