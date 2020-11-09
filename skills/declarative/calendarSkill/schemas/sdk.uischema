@@ -129,6 +129,13 @@
       "subtitle": "Text Input"
     }
   },
+  "Microsoft.RegexRecognizer": {
+    "form": {
+      "hidden": [
+        "entities"
+      ]
+    }
+  },
   "Microsoft.BeginDialog": {
     "form": {
       "helpLink": "https://aka.ms/bfc-understanding-dialogs",
@@ -468,13 +475,6 @@
       "helpLink": "https://aka.ms/bfc-debugging-bots",
       "label": "Emit a trace event",
       "subtitle": "Trace Activity"
-    }
-  },
-  "Microsoft.RegexRecognizer": {
-    "form": {
-      "hidden": [
-        "entities"
-      ]
     }
   },
   "Microsoft.OnActivity": {

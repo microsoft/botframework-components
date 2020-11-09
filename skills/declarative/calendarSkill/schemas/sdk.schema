@@ -4293,6 +4293,12 @@
           "description": "Future Events Only",
           "examples": []
         },
+        "maxResultsProperty": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Results",
+          "description": "Max number of results to return.",
+          "examples": []
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",

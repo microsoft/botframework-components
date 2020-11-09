@@ -26,7 +26,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "NBRENG"
+            "id": "wzfgsr"
           },
           "assignments": [
             {
@@ -48,8 +48,7 @@
           "dialog": "SearchEventsDialog",
           "options": {
             "eventId": "=dialog.eventId",
-            "start": "=dialog.start",
-            "end": "=dialog.end",
+            "datetime": "=dialog.datetime",
             "doSelection": "=false",
             "futureOnly": "=true",
             "groupEvents": "=true"

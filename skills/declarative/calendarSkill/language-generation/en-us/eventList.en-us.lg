@@ -5,12 +5,6 @@
 # EventListPrompt()
 - IF: ${ dialog.items == null || count(dialog.items) <= 1 }
     - Something must be wrong.
-- ELSEIF: ${ count(dialog.items) == 2 }
-    - I found 2 events that match your search. First is on ${BuildDate(dialog.items[0].start.datetime)}, at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. Second event is on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. Which event do you want to select? 
-- ELSEIF: ${ count(dialog.items) == 3 }
-    - I found 3 events as a result. First event is on ${BuildDate(dialog.items[0].start.datetime)}, at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. After that on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. And then, ${dialog.items[2].Subject}, on ${BuildDate(dialog.items[2].start.datetime)}, at ${BuildTime(dialog.items[2].start.datetime)}. What event do you want to know more about?
-- ELSEIF: ${ count(dialog.items) == 4 }
-    - I found 4 different events. First option is on ${BuildDate(dialog.items[0].start.datetime)} at ${BuildTime(dialog.items[0].start.datetime)}, ${dialog.items[0].Subject}. After that on ${BuildDate(dialog.items[1].start.datetime)}, at ${BuildTime(dialog.items[1].start.datetime)}, ${dialog.items[1].Subject}. And then, ${dialog.items[2].Subject} and ${dialog.items[3].Subject}. Which event do you want to select?
 - ELSE:
     - I've found ${count(dialog.items)} events that match your request.
 

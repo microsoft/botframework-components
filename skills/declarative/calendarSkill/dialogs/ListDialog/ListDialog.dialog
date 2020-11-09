@@ -37,7 +37,6 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "prompt": "${ChoiceInput_Prompt_dc3QNs()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
@@ -53,10 +52,11 @@
           "choices": "=dialog.choices",
           "style": "none",
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8",
+          "allowInterruptions": "=#ChoiceInput_Response_dc3QNs == null && turn.recognized.score > 0.8",
           "defaultValue": "=null",
           "maxTurnCount": "=3",
-          "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_dc3QNs()}"
+          "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_dc3QNs()}",
+          "prompt": "${ChoiceInput_Prompt_dc3QNs()}"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -72,22 +72,6 @@
               },
               "property": "dialog.selection",
               "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "LGVsAM"
-              },
-              "condition": "dialog.templates.numericalChoiceResponse != null",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "2ZoUxH"
-                  },
-                  "activity": "${SendActivity_2ZoUxH()}"
-                }
-              ]
             }
           ]
         },
@@ -132,24 +116,17 @@
           "condition": "(dialog.pageIndex * dialog.pageSize) - count(dialog.Items) <= dialog.pageSize",
           "actions": [
             {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "63iyjg"
-              },
-              "eventName": "DeleteListCard"
-            },
-            {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
                 "id": "w9anuY"
               },
               "activityProcessed": true,
               "options": {
+                "isFirstTurn": false,
                 "items": "=dialog.items",
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.showMorePrompt",
                 "additionalOptions": "=dialog.additionalOptions"
               }
             }
@@ -198,24 +175,17 @@
           "condition": "dialog.pageIndex >= 0",
           "actions": [
             {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "HxtpAJ"
-              },
-              "eventName": "DeleteListCard"
-            },
-            {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
                 "id": "BC5bV1"
               },
               "activityProcessed": true,
               "options": {
+                "isFirstTurn": false,
                 "items": "=dialog.items",
                 "actionTitleProperty": "=dialog.actionTitleProperty",
                 "pageIndex": "=dialog.pageIndex",
                 "templates": "=dialog.templates",
-                "activePrompt": "=dialog.templates.initialPrompt",
                 "additionalOptions": "=dialog.additionalOptions"
               }
             }
@@ -292,6 +262,10 @@
             {
               "property": "dialog.pageCount",
               "value": "=if(count(dialog.items) % dialog.pageSize == 0, count(dialog.items) / dialog.pageSize, round(count(dialog.items) / dialog.pageSize) + 1)"
+            },
+            {
+              "property": "dialog.isFirstTurn",
+              "value": "=coalesce(dialog.isFirstTurn, true)"
             }
           ]
         },
@@ -330,35 +304,9 @@
               "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" } }'))"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "7eqiIK"
-          },
-          "name": "UpdatedChoices"
         }
       ],
       "event": "GetChoices"
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "Twt0st",
-        "name": "OnDeleteListCardEvent"
-      },
-      "event": "DeleteListCard",
-      "actions": [
-        {
-          "$kind": "Microsoft.Bot.SendActivityPlus",
-          "$designer": {
-            "id": "9sVeBr"
-          },
-          "operationType": "delete",
-          "activityIdProperty": "turn.activity.replyToId",
-          "whisperToProperty": "turn.activity.from"
-        }
-      ]
     }
   ],
   "generator": "ListDialog.lg",

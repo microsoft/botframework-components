@@ -11,8 +11,10 @@
 - Who will join?
 - Who do you want to invite?
 - What attendees do you want to add?
+
 # SendActivity_mD3TcZ()
-- If you want to try again, just call out the firstname and or surname again.
+- If you want to try again, just call out the first name and or surname again.
+
 # SendActivity_hdAS3R()
 -IF: ${ count(dialog.attendees) <= 3 }
     - Your attendees have been added: ${ShowContact1()}.
@@ -39,11 +41,11 @@
     - ${dialog.attendees[0].emailAddress.name} at ${dialog.attendees[0].emailAddress.address} and ${dialog.attendees[1].emailAddress.name} at ${dialog.attendees[1].emailAddress.address}
 - ELSE:
     - ${dialog.attendees[0].emailAddress.name} at ${dialog.attendees[0].emailAddress.address}, ${dialog.attendees[1].emailAddress.name} at ${dialog.attendees[1].emailAddress.address}, and ${dialog.attendees[2].emailAddress.name} at ${dialog.attendees[2].emailAddress.address}
+
 # ConfirmInput_Prompt_eQMqZH()
-- Want to include anyone else?
+- Want to invite anyone else?
 - Want to add another attendee?
 - Should I add anyone else?
-- Any other attendees?
 
 # NoContactsCard
 - ${CardTemplate(NoContactsHeader(), NoContactsBody(), NoContactsActions())}
@@ -81,6 +83,9 @@
 }
 ```
 # SendActivity_6d2pAI()
-- Sure, I'll continue with ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email}.
-- Got it. I'll move forward with ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email}.
-- OK. I'll include ${dialog.contactsCandidate[0].name}, ${dialog.contactsCandidate[0].email} as attendee.
+- Sure, I'll continue with ${dialog.contactsCandidate[0].name} (${dialog.contactsCandidate[0].email}).
+- Got it. I'll move forward with ${dialog.contactsCandidate[0].name} (${dialog.contactsCandidate[0].email}).
+- OK. I'll invite ${dialog.contactsCandidate[0].name} (${dialog.contactsCandidate[0].email}).
+
+# SendActivity_r6WNXy()
+- ${CancelMessage()}

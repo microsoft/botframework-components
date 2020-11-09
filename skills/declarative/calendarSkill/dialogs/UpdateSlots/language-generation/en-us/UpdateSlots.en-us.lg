@@ -6,6 +6,7 @@
 - What can I update for you?
 - What do you want to change about the event?
 - Tell me what you'd like to update.
+
 # AskForEntityWithEvent()
 [Activity
     text = ${AskForEntity()}
@@ -26,16 +27,21 @@
 - OK, for ${entity} what can I update it to?
 - Sure. What should I change the ${entity} to?
 
-
 # DateTimeInput_Prompt_a700t3()
 - ${AskForNewValue('duration')}
+
 # TextInput_Prompt_NdRLDG()
 - ${AskForNewValue('location')}
 
 # DateTimeInput_Prompt_SSWMA3()
 - OK, how long would you like this meeting to be?
-- OK, what is your preferred meeting duration?
+- OK, what should I set the duration to?
+
 # DateTimeInput_Prompt_fKknY3()
 - ${AskForNewValue('date time')}
+
 # TextInput_Prompt_kSb8sd()
 - Who do you want to remove?
+
+# SendActivity_xtl9sc()
+- ${CancelMessage()}
