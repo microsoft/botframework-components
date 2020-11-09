@@ -56,13 +56,13 @@
                     "inlines": [
                         {
                             "type": "TextRun",
-                            "text": "${formatDateTime(formatDateTime(event.start.dateTime), 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')} ",
+                            "text": "${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')} ",
                             "size": "Medium",
                             "weight": "Bolder"
                         },
                         {
                             "type": "TextRun",
-                            "text": "${formatDateTime(formatDateTime(event.start.dateTime), 'dddd, MMMM d')}"
+                            "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}"
                         }
                     ]
                 }

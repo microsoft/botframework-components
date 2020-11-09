@@ -97,7 +97,7 @@
           "$designer": {
             "id": "d6a7NN"
           },
-          "condition": "dialog.selectedEvent.IsOrganizer != true",
+          "condition": "dialog.searchResults.IsOrganizer != true",
           "actions": [
             {
               "$kind": "Microsoft.ConfirmInput",
@@ -224,7 +224,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='accepted'",
-                        "eventId": "=dialog.event.id"
+                        "eventId": "=dialog.searchResults.id"
                       }
                     }
                   ]
@@ -241,7 +241,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='declined'",
-                        "eventId": "=dialog.event.id"
+                        "eventId": "=dialog.searchResults.id"
                       }
                     }
                   ]

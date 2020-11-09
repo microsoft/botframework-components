@@ -24,7 +24,7 @@
 # ConfirmInput_Prompt_35TBWD()
 [Activity
     text = ${ConfirmUpdateResponse()}
-    attachments=${json(EventDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventDetailCard(dialog.searchResults))}
 ]
 
 # ConfirmUpdateResponse()
