@@ -1,0 +1,1 @@
+{"query":"today","prediction":{"topIntent":"_Interruption","intents":{"_Interruption":{"score":0.739935458}},"entities":{"datetimeV2":[{"type":"date","values":[{"timex":"2020-11-04","resolution":[{"value":"2020-11-04"}]}]}]}}}
