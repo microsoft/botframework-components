@@ -42,7 +42,7 @@
               "validations": [
                 "@datetime!=null || @title!=null || @personName!=null || #no != null"
               ],
-              "allowInterruptions": "=#No!= null && turn.recognized.score > 0.8"
+              "allowInterruptions": "=#No.score > 0.8"
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -99,13 +99,6 @@
           "condition": "dialog.eventId != null",
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "We6qfL"
-              },
-              "activity": "${SendActivity_We6qfL()}"
-            },
-            {
               "$kind": "Microsoft.Graph.Calendar.GetEvents",
               "$designer": {
                 "id": "aCs8G1"
@@ -115,12 +108,13 @@
               "titleProperty": "=coalesce(dialog.title, null)",
               "locationProperty": "=coalesce(dialog.location, null)",
               "attendeesProperty": "=coalesce(dialog.personNameArray, null)",
-              "endProperty": "=coalesce(dialog.end, if(dialog.start==null&&dialog.end==null, convertFromUTC(addDays(utcNow(),28), user.workingHours.timeZone.name, 'yyyy-MM-dd'), null))",
+              "endProperty": "=coalesce(dialog.end, if(dialog.start==null && dialog.end == null, convertFromUTC(addDays(utcNow(), 28), user.workingHours.timeZone.name, 'yyyy-MM-dd'), null))",
               "timeZoneProperty": "=user.workingHours.timeZone.name",
               "dateTimeTypeProperty": "=coalesce(dialog.type, \"date\")",
-              "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+              "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
               "ordinalProperty": "=dialog.ordinal",
-              "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)"
+              "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)",
+              "maxResultsProperty": 25
             }
           ],
           "actions": [
@@ -206,7 +200,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.events",
-                    "actionTitleProperty": "name",
+                    "actionTitleProperty": "Index",
                     "activePrompt": "EventListPrompt",
                     "templates": {
                       "icon": "EventListIconUrl",

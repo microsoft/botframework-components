@@ -1,13 +1,13 @@
 [import](common.lg)
 
 # EventDetailCard(event)
-- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventDetailActions(event))}
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventDetailActions(event))}
 
 # EventCreateDetailCard(event)
-- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventCreateAction())}
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventCreateAction(event))}
 
 # EventRespondDetailCard(event)
-- ${CardTemplate(EventDetailHeader(event), EventDetailBody(), EventRespondAction())}
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventRespondAction(event))}
 
 # EventDetailHeader(event)
 - ${CardHeader(EventIconUrl(), event.Subject, "", "")}
@@ -639,7 +639,7 @@
     }
     ```
 
-# EventCreateAction
+# EventCreateAction(event)
 -```
 {
     "type": "ActionSet",
@@ -663,7 +663,7 @@
 }
 ```
 
-# EventRespondAction
+# EventRespondAction(event)
 -```
 {
     "type": "ActionSet",
@@ -686,9 +686,9 @@
 - ELSEIF: ${event.Location == null || event.Location == ""}
     - No location provided.
 - ELSEIF: ${event.isOnlineMeeting}
-    - The meeting is in ${event.Location} and contains a Teams link.
+    - The meeting location is ${event.Location} and contains a Teams link.
 - ELSE:
-    - The meeting is in ${event.Location}.
+    - The meeting location is ${event.Location}.
 
 # WithLocation(event)
 - IF: ${event.Location == null || event.Location == "" || event.Location == "Online Meeting"}

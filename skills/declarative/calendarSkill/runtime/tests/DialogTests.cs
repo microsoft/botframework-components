@@ -111,5 +111,17 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
+
+        [TestMethod]
+        public async Task CreateEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task UpdateEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
     }
 }

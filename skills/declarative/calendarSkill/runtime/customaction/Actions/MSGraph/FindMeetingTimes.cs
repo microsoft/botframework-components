@@ -58,7 +58,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             MeetingTimeSuggestionsResult meetingTimesResult;
             try
             {
-                meetingTimesResult = await graphClient.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0))).Request().PostAsync();
+                meetingTimesResult = await graphClient.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10).Request().PostAsync();
             }
             catch (ServiceException ex)
             {

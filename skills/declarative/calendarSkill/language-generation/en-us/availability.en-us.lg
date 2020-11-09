@@ -3,16 +3,16 @@
 [import](schedule.lg)
 
 # CheckAvailabilityBusyResponseText(events, time)
-- I’ve found ${count(events)} events for you at ${BuildTime(time)}:
+- I've found ${count(events)} events for you at ${BuildTime(time)}:
 
 # CheckAvailabilityFreeResponseText(time)
-- You have no event scheduled at ${BuildTime(time)}. Want to block this time?
+- You don't have anything scheduled for ${BuildTime(time)}. Would you like to reserve this time?
 
 # FoundAvailableTimeResponseText(time)
-- I found a break in you schedule at ${BuildTime(time)}. Want to block this time?
+- I've found a break in your schedule at ${BuildTime(time)}. Would you like to reserve this time?
 
 # FoundNoAvailableTimeResponseText()
-- During working hours I see you have no breaks for today.
+- Looks like you don't have any breaks today during working hours.
 
 # AvailabilityList(items)
 - ${ExpandableListCardBody(foreach(items, item, if(item.isFreeTime==true, AvailabilityItem(item), ScheduleItem(item))), 5)}

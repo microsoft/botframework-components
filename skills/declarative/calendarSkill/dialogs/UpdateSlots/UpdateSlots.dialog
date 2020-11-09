@@ -61,12 +61,12 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${TextInput_Prompt_gZ1tbS()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
-              "property": "dialog.entityName"
+              "property": "dialog.entityName",
+              "allowInterruptions": "=turn.recognized.score > 0.8"
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -305,13 +305,13 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${TextInput_Prompt_gtOavc()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.newTitle",
-              "outputFormat": "=coalesce(@Title, this.value)"
+              "outputFormat": "=coalesce(@Title, this.value)",
+              "allowInterruptions": "=#Cancel.score > 0.8"
             }
           ]
         },
@@ -364,13 +364,13 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${DateTimeInput_Prompt_fKknY3()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.slots.dateTime",
-              "validations": []
+              "validations": [],
+              "allowInterruptions": "=turn.recognized.score > 0.8"
             }
           ]
         },
@@ -427,14 +427,14 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
           "prompt": "${DateTimeInput_Prompt_a700t3()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "property": "dialog.newDuration",
           "value": "= turn.activity.text",
-          "outputFormat": "= this.value[0].Value"
+          "outputFormat": "= this.value[0].Value",
+          "allowInterruptions": "=turn.recognized.score > 0.8"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -492,13 +492,13 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${TextInput_Prompt_NdRLDG()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.newLocation",
-              "outputFormat": "=coalesce(@Location, this.value)"
+              "outputFormat": "=coalesce(@Location, this.value)",
+              "allowInterruptions": "=turn.recognized.score > 0.8"
             }
           ]
         },
@@ -596,12 +596,12 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": false,
               "prompt": "${TextInput_Prompt_kSb8sd()}",
               "unrecognizedPrompt": "",
               "invalidPrompt": "",
               "defaultValueResponse": "",
-              "property": "dialog.removeAttendee"
+              "property": "dialog.removeAttendee",
+              "allowInterruptions": "=turn.recognized.score > 0.8"
             }
           ],
           "elseActions": [
@@ -637,6 +637,30 @@
             "id": "Yijukm"
           },
           "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ZL5bGY",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "xtl9sc"
+          },
+          "activity": "${SendActivity_xtl9sc()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "GYndux"
+          },
+          "activityProcessed": true
         }
       ]
     }

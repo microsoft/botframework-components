@@ -266,7 +266,7 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy h:mm tt\"))",
+          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))",
           "property": "dialog.selected",
           "style": "heroCard"
         }
@@ -359,7 +359,7 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy h:mm tt\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy h:mm tt\")))",
+          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\")))",
           "property": "dialog.selected",
           "style": "heroCard"
         }

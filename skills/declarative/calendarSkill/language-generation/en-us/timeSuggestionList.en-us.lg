@@ -2,15 +2,13 @@
 
 # TimeSuggestionListPrompt()
 - IF: ${count(dialog.additionalOptions.attendees) == 1}
-    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - I've found the following time when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found multiple time slots when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found multiple time slots when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found the following times when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
 - ELSE:
     - I have found multiple suggestions:
     - There are multiple suggestions:
-    - I found more than one suggestion: 
-    - Uh oh. I've found multiple suggestions: 
-    - There seem to be a few suggestions:
+    - Here are some suggestion: 
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:
@@ -25,8 +23,8 @@
 
 # TimeSuggestionNumericalChoiceResponse()
 - Sure, let’s continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
-- OK. I'll continue with ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'hh:mm tt')}.
-- You got it! I'll schedule this meeting for ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'hh:mm tt')}.
+- OK. I'll continue with ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
+- You got it! I'll schedule this meeting for ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
 - OK. I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
 
 # TimeSuggestionListTitle
