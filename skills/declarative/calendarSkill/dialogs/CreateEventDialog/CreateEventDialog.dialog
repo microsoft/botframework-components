@@ -87,7 +87,7 @@
           "defaultValueResponse": "",
           "property": "dialog.slots.title",
           "outputFormat": "=coalesce(@Title, this.value)",
-          "allowInterruptions": "=turn.recognized.score > 0.7"
+          "allowInterruptions": "=#Cancel.score > 0.8"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -123,7 +123,7 @@
           "$designer": {
             "id": "gP9mXD"
           },
-          "condition": "dialog.resolveDateTimeResult == null && count(dialog.slots.attendees) > 0",
+          "condition": "dialog.slots.startDateTime == null && dialog.resolveDateTimeResult == null && count(dialog.slots.attendees) > 0",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
@@ -135,13 +135,6 @@
               "attendeesProperty": "=dialog.slots.attendees",
               "durationProperty": "=int(coalesce(dialog.slots.duration, settings.defaultValue.duration))",
               "timeZoneProperty": "=user.workingHours.timeZone.name"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "mqhO6z"
-              },
-              "value": "=dialog.findMeetingTimesResult"
             },
             {
               "$kind": "Microsoft.Foreach",
@@ -161,12 +154,6 @@
                   "value": "=dialog.foreach.index+1"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "s2ahRy"
-              }
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -204,13 +191,6 @@
                   "resultProperty": "dialog.timeSuggestionChoice"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "bMrUBx"
-              },
-              "name": "after time suggestion choice"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -451,7 +431,7 @@
                 "id": "UumPxM"
               },
               "property": "dialog.slots.endDateTime",
-              "value": "=addMinutes(formatDateTime(dialog.slots.startDateTime), int(settings.defaultValue.duration))"
+              "value": "=addMinutes(formatDateTime(dialog.slots.startDateTime), int(coalesce(dialog.slots.duration, settings.defaultValue.duration)))"
             }
           ]
         },
@@ -521,12 +501,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "yw07CI"
-          }
-        },
-        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "e6RUQo"
@@ -571,14 +545,12 @@
             {
               "property": "dialog.newEvent.description",
               "value": "=dialog.slots.desciption"
+            },
+            {
+              "property": "dialog.newEvent.isRecurring",
+              "value": "=false"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "ACIMpA"
-          }
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -594,10 +566,13 @@
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           },
           "property": "dialog.createConfirmResult",
-          "allowInterruptions": "=turn.recognized.score > 0.7"
+          "allowInterruptions": "=turn.recognized.score > 0.7",
+          "style": "none"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -750,9 +725,13 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "Uh1IF3"
+                    "id": "O5Mc5D"
                   },
                   "assignments": [
+                    {
+                      "property": "dialog.slots.endDateTime",
+                      "value": "=null"
+                    },
                     {
                       "property": "dialog.slots.startDateTime",
                       "value": "=dialog.updateResult.newValue.Value"
@@ -765,12 +744,20 @@
               "value": "duration",
               "actions": [
                 {
-                  "$kind": "Microsoft.SetProperty",
+                  "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "pei2gY"
+                    "id": "UhHgUm"
                   },
-                  "property": "dialog.slots.duration",
-                  "value": "=int(dialog.updateResult.newValue)/60"
+                  "assignments": [
+                    {
+                      "property": "dialog.slots.endDateTime",
+                      "value": "=null"
+                    },
+                    {
+                      "property": "dialog.slots.duration",
+                      "value": "=int(dialog.updateResult.newValue)"
+                    }
+                  ]
                 }
               ]
             },
@@ -910,6 +897,30 @@
           "options": {
             "slots": "=dialog.slots"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "LfcMPv",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "44hcCm"
+          },
+          "activity": "${SendActivity_44hcCm()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "YjfIn7"
+          },
+          "activityProcessed": true
         }
       ]
     }

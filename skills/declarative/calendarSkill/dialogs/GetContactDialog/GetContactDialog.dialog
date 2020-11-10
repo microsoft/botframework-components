@@ -40,7 +40,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.contactName",
-              "allowInterruptions": "#NoAttendees.Score>0.9",
+              "allowInterruptions": "=#NoAttendees.score > 0.8 || #Cancel.score > 0.8",
               "maxTurnCount": 3
             },
             {
@@ -60,11 +60,15 @@
           "assignments": [
             {
               "property": "dialog.contactNameArray",
-              "value": "=dialog.personNameArray"
+              "value": "=union(coalesce(dialog.personNameArray, []), coalesce(dialog.emailArray, []))"
             },
             {
               "property": "dialog.attendees",
               "value": "=coalesce(dialog.attendees, [])"
+            },
+            {
+              "property": "dialog.contactsCandidate",
+              "value": "=[]"
             }
           ]
         },
@@ -140,6 +144,12 @@
               ]
             },
             {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "YGwpEu"
+              }
+            },
+            {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
                 "id": "xFw8td"
@@ -206,7 +216,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.contactsCandidate",
-                    "actionTitleProperty": "name",
+                    "actionTitleProperty": "email",
                     "activePrompt": "ContactListPrompt",
                     "templates": {
                       "icon": "ContactIconUrl",
@@ -484,6 +494,30 @@
           "options": {
             "attendees": "=dialog.attendees"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "0bel5K",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "r6WNXy"
+          },
+          "activity": "${SendActivity_r6WNXy()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "HiBNG3"
+          },
+          "activityProcessed": true
         }
       ]
     }

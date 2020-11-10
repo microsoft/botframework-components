@@ -4,35 +4,50 @@
 
 # SendActivity_ehvCtJ()
 - I can't update this event.
+
 # ConfirmInput_Prompt_UoeZDh()
 [Activity
     text = ${ConfirmUpdate()}
     attachments=${json(EventCreateDetailCard(dialog.searchResults))}
 ]
+
 # SendActivity_mRrjQN()
-- Alright, I've updated the event for you.
-- The event has been updated. 
+- All right, I've updated the event for you.
+- The event has been updated.
 - The event has been saved and updated. 
+
 # ConfirmUpdate()
 - Sure, you can update the event:
 - Alright, here you go:
 - Ready to update:
+
 # ConfirmInput_Prompt_35TBWD()
+[Activity
+    text = ${ConfirmUpdateResponse()}
+    attachments=${json(EventDetailCard(dialog.selectedEvent))}
+]
+
+# ConfirmUpdateResponse()
 - I see you are not the owner of the meeting. Would you like to update your response? 
-- I cannot update the meeting since you are not the organizer. Do you want to update your attendance?
+- I cannot update the meeting since you are not the organizer. Do you want to update your response?
 - Because you aren't the organizer of this meeting, I cannot update this booking. Want to update your response instead?
 
 # ConfirmInput_Prompt_ukUbCl()
 - OK, do you want to decline the event?
 - Sure, want to decline this event?
 - Would you like to decline this event?
+
 # ChoiceInput_Prompt_zl35Yb()
 - Alright, do you want to accept or decline the event?
 - OK, let me know if you want to accept or decline?
 - Would you like to accept or decline this event?
 - How would you like to answer - accept or decline?
+
 # SendActivity_nh9WQS()
 - No problem, I will leave the event as-is.
-- Alright, the event will remain the same.
+- All right, the event will remain the same.
 - OK, I won't change the event.
 - You got it. The event will remain as-is.
+
+# SendActivity_IzVDsv()
+- ${CancelMessage()}

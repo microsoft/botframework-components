@@ -5,13 +5,13 @@
 # WelcomeUser
 - IF: ${user.profile.displayName != null}
 - ```
-Hi ${user.profile.displayName} 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill! 
+Hi ${user.profile.displayName} 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!
 
 You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
 ```
 - ELSE: 
 - ```
-Hi there 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill! 
+Hi there 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!
     
 You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
 ```
@@ -28,3 +28,6 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - I can tell there is something wrong here, can you please try again?
 - Oops, I'm stuck, can you try to ask me differently?
 - Please help me out here, can you ask again but in a different way?
+
+# CancelMessage
+- OK, no problem I know I'm not perfect yet. Let me know if I can help with something else.

@@ -1900,10 +1900,6 @@
           },
           "assignments": [
             {
-              "property": "dialog.datetime",
-              "value": "=@datetime"
-            },
-            {
               "property": "dialog.query",
               "value": "=turn.activity.text"
             },
@@ -1916,11 +1912,11 @@
               "value": "=@Title"
             },
             {
-              "property": "dialog.personName",
+              "property": "dialog.personNameArray",
               "value": "=@@personName"
             },
             {
-              "property": "dialog.email",
+              "property": "dialog.emailArray",
               "value": "=@@email"
             },
             {
@@ -1944,6 +1940,18 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "5w9U0q"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=dialog.query"
+          },
+          "resultProperty": "dialog.datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "1hhoVh"
           },
           "activityProcessed": true,
@@ -1952,8 +1960,8 @@
             "datetime": "=dialog.datetime",
             "entityNameResult": "=dialog.entityNameResult",
             "title": "=dialog.title",
-            "personName": "=dialog.personName",
-            "email": "=dialog.email",
+            "personNameArray": "=dialog.personNameArray",
+            "emailArray": "=dialog.emailArray",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult"
           }
@@ -2019,7 +2027,7 @@
           "$designer": {
             "id": "NuS1r3"
           },
-          "condition": "conversation.dialogCount == 5",
+          "condition": "conversation.dialogCount == 3",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -2084,28 +2092,6 @@
             "id": "6cuuag"
           },
           "name": "calendarSkill.UnknownIntent"
-        },
-        {
-          "$kind": "Microsoft.SwitchCondition",
-          "$designer": {
-            "id": "hz5Kfo"
-          },
-          "condition": "turn.activity.value.intent",
-          "cases": [
-            {
-              "value": "ShowEvent",
-              "actions": []
-            }
-          ],
-          "default": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "F3GXHj"
-              },
-              "activity": "${SendActivity_F3GXHj()}"
-            }
-          ]
         }
       ]
     }

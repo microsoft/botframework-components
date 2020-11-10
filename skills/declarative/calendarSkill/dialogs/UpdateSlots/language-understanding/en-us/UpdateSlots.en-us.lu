@@ -37,15 +37,10 @@
 # TextInput_Response_NdRLDG
 - It holds at {Location=cafe}
 
-# AddAttendee
-- add megan
-- add alex
 
-@ prebuilt personName
-@ prebuilt email
-
-# RemoveAttendee
-- remove megan
-- remove alex
-
-@ prebuilt personName
+# Cancel
+- cancel
+- cancel this
+- stop
+- stop this
+- exit
