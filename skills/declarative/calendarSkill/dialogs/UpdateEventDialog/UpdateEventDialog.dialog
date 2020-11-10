@@ -53,6 +53,7 @@
             "personNameArray": "=dialog.personNameArray",
             "emailArray": "=dialog.emailArray",
             "location": "=dialog.location",
+            "type": "=dialog.datetime.type",
             "doSelection": "true",
             "turnCount": 0
           },
