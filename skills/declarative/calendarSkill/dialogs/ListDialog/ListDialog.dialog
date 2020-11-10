@@ -72,6 +72,22 @@
               },
               "property": "dialog.selection",
               "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "4yg5WV"
+              },
+              "condition": "dialog.templates.numericalChoiceResponse != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "Lz52od"
+                  },
+                  "activity": "${SendActivity_Lz52od()}"
+                }
+              ]
             }
           ]
         },
