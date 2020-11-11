@@ -72,22 +72,6 @@
               },
               "property": "dialog.selection",
               "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "4yg5WV"
-              },
-              "condition": "dialog.templates.numericalChoiceResponse != null",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "Lz52od"
-                  },
-                  "activity": "${SendActivity_Lz52od()}"
-                }
-              ]
             }
           ]
         },
@@ -311,39 +295,13 @@
               "value": "=dialog.pageItems[dialog.foreach.index][dialog.actionTitleProperty]"
             },
             {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "Ho4bLH"
-              },
-              "property": "dialog.choiceItem",
-              "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" } }'))"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "tBEwQY"
-              },
-              "condition": "dialog.synonymsProperty != null",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EditArray",
-                  "$designer": {
-                    "id": "KoZvlt"
-                  },
-                  "itemsProperty": "dialog.choiceItem.synonyms",
-                  "value": "=dialog.pageItems[dialog.foreach.index][dialog.synonymsProperty]",
-                  "changeType": "push"
-                }
-              ]
-            },
-            {
               "$kind": "Microsoft.EditArray",
               "$designer": {
                 "id": "L4FUUg"
               },
               "changeType": "push",
               "itemsProperty": "dialog.choices",
-              "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" }, \"synonyms\": [\"', dialog.actionTitle, '\", \"', toLower(dialog.actionTitle), '\" ] }'))"
+              "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" } }'))"
             }
           ]
         }
