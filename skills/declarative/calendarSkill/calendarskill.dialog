@@ -1926,6 +1926,18 @@
             {
               "property": "dialog.entityOperationResult",
               "value": "=@@EntityOperation"
+            },
+            {
+              "property": "dialog.entityName",
+              "value": "=coalesce(turn.activity.value.entityName, null)"
+            },
+            {
+              "property": "dialog.operation",
+              "value": "=coalesce(turn.activity.value.operation, null)"
+            },
+            {
+              "property": "dialog.eventId",
+              "value": "=coalesce(turn.activity.value.eventId, null)"
             }
           ]
         },
@@ -1966,14 +1978,16 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "eventId": "=turn.activity.value.eventId",
+            "eventId": "=dialog.eventId",
             "datetime": "=dialog.datetime",
-            "entityNameResult": "=dialog.entityNameResult",
             "title": "=dialog.title",
             "personNameArray": "=dialog.personNameArray",
             "emailArray": "=dialog.emailArray",
             "location": "=dialog.location",
-            "entityOperationResult": "=dialog.entityOperationResult"
+            "entityNameResult": "=dialog.entityNameResult",
+            "entityOperationResult": "=dialog.entityOperationResult",
+            "entityName": "=dialog.entityName",
+            "operation": "=dialog.operation"
           }
         },
         {
@@ -2109,82 +2123,6 @@
             "id": "6cuuag"
           },
           "name": "calendarSkill.UnknownIntent"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "l9OBdN",
-        "name": "AddParticipant"
-      },
-      "intent": "AddParticipant",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "HUq2o9"
-          },
-          "name": "calendarSkill.AddParticipant"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "93QCG6"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "VcOErl"
-          },
-          "activityProcessed": true,
-          "dialog": "UpdateEventDialog",
-          "options": {
-            "eventId": "=turn.activity.value.eventId",
-            "entityName": "attendee",
-            "operation": "add"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "YYRsK5",
-        "name": "AddTeamsLink"
-      },
-      "intent": "AddTeamsLink",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "jXDQ76"
-          },
-          "name": "calendarSkill.AddTeamsLink"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "zAlvNe"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "C2CI2J"
-          },
-          "activityProcessed": true,
-          "dialog": "UpdateEventDialog",
-          "options": {
-            "eventId": "=turn.activity.value.eventId",
-            "entityName": "teamslink",
-            "operation": "add"
-          }
         }
       ]
     }

@@ -200,7 +200,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.events",
-                    "actionTitleProperty": "Index",
+                    "actionTitleProperty": "index",
                     "activePrompt": "EventListPrompt",
                     "templates": {
                       "icon": "EventListIconUrl",
