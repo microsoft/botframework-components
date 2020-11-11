@@ -50,6 +50,3 @@
 [Activity
     attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
 ]
-
-# SendActivity_Lz52od()
-- ${template(dialog.templates.numericalChoiceResponse)}
