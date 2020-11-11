@@ -43,6 +43,22 @@
               "resultProperty": "dialog.datetime"
             },
             {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ciE3Xr"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.start",
+                  "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, null)"
+                },
+                {
+                  "property": "dialog.end",
+                  "value": "=coalesce(dialog.datetime.End, null)"
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "ZhueF5"
@@ -50,7 +66,13 @@
               "activityProcessed": true,
               "dialog": "SearchEventsDialog",
               "options": {
-                "datetime": "=dialog.datetime",
+                "start": "=dialog.start",
+                "end": "=dialog.end",
+                "title": "=dialog.title",
+                "personNameArray": "=dialog.personNameArray",
+                "emailArray": "=dialog.emailArray",
+                "location": "=dialog.location",
+                "type": "=dialog.datetime.type",
                 "doSelection": "true",
                 "turnCount": 0
               },
