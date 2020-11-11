@@ -104,6 +104,20 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             // if start date is not provided, default to DateTime.Now
             var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+
+            // if datetime field just contains time but no date, use date today at use's timezone
+            if (!dateTimeTypeProperty.Contains("date"))
+            {
+                if (startProperty != null)
+                {
+                    startProperty = now.Date + startProperty.Value.TimeOfDay;
+                }
+                if (endProperty != null)
+                {
+                    endProperty = now.Date + endProperty.Value.TimeOfDay;
+                }
+            }
+
             if (startProperty == null
                 || startProperty.Value == DateTime.MinValue
                 || (startProperty <= now && isFuture))
