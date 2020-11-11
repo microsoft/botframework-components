@@ -24,40 +24,95 @@
           "name": "UpdateEventDialog.BeginDialog"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "49A6Fn"
+            "id": "xumhR9"
           },
-          "assignments": [
+          "condition": "$eventId!=null",
+          "elseActions": [
             {
-              "property": "dialog.start",
-              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, null)"
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "t72tAN"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=dialog.query"
+              },
+              "resultProperty": "dialog.datetime"
             },
             {
-              "property": "dialog.end",
-              "value": "=coalesce(dialog.datetime.End, null)"
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ciE3Xr"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.start",
+                  "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, null)"
+                },
+                {
+                  "property": "dialog.end",
+                  "value": "=coalesce(dialog.datetime.End, null)"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ZhueF5"
+              },
+              "activityProcessed": true,
+              "dialog": "SearchEventsDialog",
+              "options": {
+                "start": "=dialog.start",
+                "end": "=dialog.end",
+                "title": "=dialog.title",
+                "personNameArray": "=dialog.personNameArray",
+                "emailArray": "=dialog.emailArray",
+                "location": "=dialog.location",
+                "type": "=dialog.datetime.type",
+                "doSelection": "true",
+                "turnCount": 0
+              },
+              "resultProperty": "dialog.selectedEvent"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetEventById",
+              "$designer": {
+                "id": "25TCND"
+              },
+              "token": "=user.token.token",
+              "eventIdProperty": "=dialog.eventId",
+              "timeZoneProperty": "=user.workingHours.timeZone.name",
+              "resultProperty": "dialog.selectedEvent"
             }
           ]
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "3WSt5L"
+            "id": "PaLqVJ"
           },
-          "activityProcessed": true,
-          "dialog": "SearchEventsDialog",
-          "options": {
-            "start": "=dialog.start",
-            "end": "=dialog.end",
-            "title": "=dialog.title",
-            "personNameArray": "=dialog.personNameArray",
-            "emailArray": "=dialog.emailArray",
-            "location": "=dialog.location",
-            "type": "=dialog.datetime.type",
-            "doSelection": "true",
-            "turnCount": 0
+          "condition": "dialog.selectedEvent == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "4gUiFZ"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "vlq5NG"
           },
-          "resultProperty": "dialog.selectedEvent"
+          "name": "after search event"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -191,7 +246,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='accepted'",
-                        "eventId": "=dialog.event.id"
+                        "eventId": "=dialog.selectedEvent.id"
                       }
                     }
                   ]
@@ -208,7 +263,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='declined'",
-                        "eventId": "=dialog.event.id"
+                        "eventId": "=dialog.selectedEvent.id"
                       }
                     }
                   ]
@@ -235,7 +290,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "7NednG"
+            "id": "An48DN"
           },
           "activityProcessed": true,
           "dialog": "UpdateSlots",
@@ -248,7 +303,9 @@
             "email": "=dialog.email",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult",
-            "eventInfo": "=dialog.selectedEvent"
+            "eventInfo": "=dialog.selectedEvent",
+            "operation": "=dialog.operation",
+            "entityName": "=dialog.entityName"
           }
         },
         {
@@ -472,10 +529,12 @@
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           },
           "property": "dialog.confirmUpdate",
-          "allowInterruptions": "=#Cancel.score > 0.8"
+          "allowInterruptions": "=#Cancel.score > 0.8",
+          "style": "none"
         },
         {
           "$kind": "Microsoft.IfCondition",

@@ -163,6 +163,14 @@
               "condition": "count(dialog.findMeetingTimesResult) > 0",
               "actions": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WRrAuV"
+                  },
+                  "value": "=subArray(dialog.findMeetingTimesResult, 0, min(25, count(dialog.findMeetingTimesResult)))",
+                  "property": "dialog.findMeetingTimesResult"
+                },
+                {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
                     "id": "1gz5m1"

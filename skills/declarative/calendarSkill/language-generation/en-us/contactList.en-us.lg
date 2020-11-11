@@ -20,9 +20,9 @@
 - OK, let's move on without attendees. 
 
 # ContactListNumericalChoiceResponse()
-- Sure, I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
-- Got it. I'll move forward with the ${addOrdinal(int(dialog.selectedIndex))} one.
-- OK. The ${addOrdinal(int(dialog.selectedIndex))} option. I'll use that one.
+- Sure, I'll continue with ${dialog.selection.name}, ${dialog.selection.email}.
+- Got it. I'll move forward with ${dialog.selection.name}, ${dialog.selection.email}.
+- OK. I'll include ${dialog.selection.name}, ${dialog.selection.email} as attendee.
 
 # ContactListTitle
 - Contacts

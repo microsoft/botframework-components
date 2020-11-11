@@ -2,13 +2,17 @@
 
 # TimeSuggestionListPrompt()
 - IF: ${count(dialog.additionalOptions.attendees) == 1}
-    - I've found multiple time slots when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - I've found multiple time slots when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - I've found the following times when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - I've found the following time when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - There are multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+    - Looks like there are several options when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
 - ELSE:
     - I have found multiple suggestions:
     - There are multiple suggestions:
-    - Here are some suggestion: 
+    - I found more than one suggestion:
+    - Hmm. I've found multiple suggestions:
+    - There seem to be a few suggestions:
+    - Looks like there are several suggestions:
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:

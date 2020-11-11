@@ -48,7 +48,8 @@
           "dialog": "SearchEventsDialog",
           "options": {
             "eventId": "=dialog.eventId",
-            "datetime": "=dialog.datetime",
+            "start": "=dialog.start",
+            "end": "=dialog.end",
             "doSelection": "=false",
             "futureOnly": "=true",
             "groupEvents": "=true"

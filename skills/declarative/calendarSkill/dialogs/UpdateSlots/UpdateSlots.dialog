@@ -146,7 +146,7 @@
                   "$designer": {
                     "id": "KjtB11"
                   },
-                  "condition": "dialog.resolveUpdateEntityResult.entityOperation",
+                  "condition": "coalesce(dialog.operation, dialog.resolveUpdateEntityResult.entityOperation)",
                   "cases": [
                     {
                       "value": "add",
@@ -192,7 +192,7 @@
                   "$designer": {
                     "id": "zbOr69"
                   },
-                  "condition": "dialog.resolveUpdateEntityResult.entityOperation",
+                  "condition": "coalesce(dialog.operation, dialog.resolveUpdateEntityResult.entityOperation)",
                   "cases": [
                     {
                       "value": "add",
