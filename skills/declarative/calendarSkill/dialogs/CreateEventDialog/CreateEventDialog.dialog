@@ -198,6 +198,16 @@
                   },
                   "resultProperty": "dialog.timeSuggestionChoice"
                 }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "MNiu22"
+                  },
+                  "property": "dialog.noSuggestion",
+                  "value": "= true"
+                }
               ]
             },
             {
