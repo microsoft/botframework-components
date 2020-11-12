@@ -114,7 +114,7 @@
               "startProperty": "=coalesce(dialog.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
               "ordinalProperty": "=dialog.ordinal",
               "futureEventsOnlyProperty": "=coalesce(dialog.futureOnly, true)",
-              "maxResultsProperty": 25
+              "maxResultsProperty": "=coalesce(dialog.maxResult, 25)"
             }
           ],
           "actions": [
