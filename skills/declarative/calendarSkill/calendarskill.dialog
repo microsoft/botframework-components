@@ -1926,6 +1926,18 @@
             {
               "property": "dialog.entityOperationResult",
               "value": "=@@EntityOperation"
+            },
+            {
+              "property": "dialog.entityName",
+              "value": "=coalesce(turn.activity.value.entityName, null)"
+            },
+            {
+              "property": "dialog.operation",
+              "value": "=coalesce(turn.activity.value.operation, null)"
+            },
+            {
+              "property": "dialog.eventId",
+              "value": "=coalesce(turn.activity.value.eventId, null)"
             }
           ]
         },
@@ -1938,16 +1950,25 @@
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "5w9U0q"
+            "id": "kjf900"
           },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query"
-          },
-          "resultProperty": "dialog.datetime"
+          "condition": "dialog.query != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "VXUPRF"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=dialog.query"
+              },
+              "resultProperty": "dialog.datetime"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -1957,13 +1978,16 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
+            "eventId": "=dialog.eventId",
             "datetime": "=dialog.datetime",
-            "entityNameResult": "=dialog.entityNameResult",
             "title": "=dialog.title",
             "personNameArray": "=dialog.personNameArray",
             "emailArray": "=dialog.emailArray",
             "location": "=dialog.location",
-            "entityOperationResult": "=dialog.entityOperationResult"
+            "entityNameResult": "=dialog.entityNameResult",
+            "entityOperationResult": "=dialog.entityOperationResult",
+            "entityName": "=dialog.entityName",
+            "operation": "=dialog.operation"
           }
         },
         {
@@ -2045,6 +2069,13 @@
               "eventName": "CollectFeedback"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "ePKk2p"
+          },
+          "activityProcessed": true
         }
       ]
     },

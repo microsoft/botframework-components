@@ -42,7 +42,7 @@
               "validations": [
                 "@datetime!=null || @title!=null || @personName!=null || #no != null"
               ],
-              "allowInterruptions": "=#No.score > 0.8"
+              "allowInterruptions": "=#TextInput_Response_a8RIpz == null && turn.recognized.score > 0.8"
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -200,7 +200,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.events",
-                    "actionTitleProperty": "Index",
+                    "actionTitleProperty": "index",
                     "activePrompt": "EventListPrompt",
                     "templates": {
                       "icon": "EventListIconUrl",

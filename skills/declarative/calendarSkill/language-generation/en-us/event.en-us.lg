@@ -478,8 +478,10 @@
     "type": "Action.Submit",
     "title": "Add participant",
     "data": {
-        "intent": "AddParticipant",
-        "eventId": "${event.Id}"
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}",
+        "entityName": "attendee",
+        "operation": "add"
     }
 }
 ```
@@ -526,8 +528,10 @@
     "type": "Action.Submit",
     "title": "Add Teams link",
     "data": {
-        "intent": "AddTeamsLink",
-        "eventId": "${event.Id}"
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}",
+        "entityName": "teamslink",
+        "operation": "add"
     }
 }
 ```
@@ -657,7 +661,12 @@
         {
             "type": "Action.Submit",
             "title": "Change duration",
-            "data": ${BuildCardActionData('Change duration')}
+            "data": {
+                "intent": "UpdateEvent",
+                "eventId": "${event.Id}",
+                "entityName": "duration",
+                "operation": "change"
+            }
         }
     ]
 }

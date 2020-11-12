@@ -208,6 +208,14 @@
               ],
               "default": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "hSazg1"
+                  },
+                  "property": "dialog.contactsCandidate",
+                  "value": "=subArray(dialog.contactsCandidate, 0, min(25, count(dialog.contactsCandidate)))"
+                },
+                {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
                     "id": "im2f6E"
@@ -216,7 +224,8 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.contactsCandidate",
-                    "actionTitleProperty": "email",
+                    "actionTitleProperty": "name",
+                    "synonymsProperty": "email",
                     "activePrompt": "ContactListPrompt",
                     "templates": {
                       "icon": "ContactIconUrl",
@@ -226,8 +235,7 @@
                       "initialPrompt": "ContactListPrompt",
                       "showMorePrompt": "ContactListShowMorePrompt",
                       "skipResponse": "ContactListSkipResponse",
-                      "defaultValueResponse": "ContactListDefaultValueResponse",
-                      "numericalChoiceResponse": "ContactListNumericalChoiceResponse"
+                      "defaultValueResponse": "ContactListDefaultValueResponse"
                     },
                     "additionalOptions": {
                       "contactName": "=dialog.foreach.contactValue"
@@ -249,6 +257,13 @@
                   },
                   "condition": "dialog.attendeeChoiceResult != null",
                   "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "qqaqwa"
+                      },
+                      "activity": "${SendActivity_qqaqwa()}"
+                    },
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {

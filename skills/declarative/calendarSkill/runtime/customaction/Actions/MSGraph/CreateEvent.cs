@@ -75,6 +75,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 Subject = titleProperty,
                 Body = new ItemBody()
                 {
+                    ContentType = BodyType.Html,
                     Content = descriptionProperty
                 },
                 Location = new Location()

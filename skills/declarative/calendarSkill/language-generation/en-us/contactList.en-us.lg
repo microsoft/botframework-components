@@ -17,12 +17,7 @@
 - OK, you can invite attendees to this meeting later on.
 
 # ContactListDefaultValueResponse()
-- OK, let's move on without attendees. 
-
-# ContactListNumericalChoiceResponse()
-- Sure, I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
-- Got it. I'll move forward with the ${addOrdinal(int(dialog.selectedIndex))} one.
-- OK. The ${addOrdinal(int(dialog.selectedIndex))} option. I'll use that one.
+- OK, let's move on without attendees.
 
 # ContactListTitle
 - Contacts

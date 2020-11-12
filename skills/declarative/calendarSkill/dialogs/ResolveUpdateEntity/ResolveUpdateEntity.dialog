@@ -243,7 +243,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "ghO4D6"
-          }
+          },
+          "name": "ResolveUpdateEntity.EndOfDialog"
         },
         {
           "$kind": "Microsoft.EndDialog",

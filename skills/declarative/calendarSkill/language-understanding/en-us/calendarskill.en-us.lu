@@ -36,13 +36,15 @@
 - new meeting
 
 # GetEvents
-- What's on my calendar today?
-- Read me my calendar
-- What is on for today?
-- Show my calendar
-- What do I have planned for tomorrow?
 - Do I have an event tomorrow?
+- What's on my calendar today?
+- What is on for today?
+- What's on for today
+- What's on today
+- Read me my calendar
+- Show my calendar
 - List all events for August 20th
+- What do I have planned for tomorrow?
 - What meetings do I need to attend today?
 - What meetings do I have this weekend?
 - What is up next month?
@@ -55,7 +57,7 @@
 # GetEventAttendees
 - Who am I meeting at 11 today?
 - Who else is in my 2pm meeting?
-- Who is coming to the {title=project review} tomorrow?
+- Who is coming to the {Title=project review} tomorrow?
 - Who all is attending the 4pm meeting?
 - who am i meeting at 10 am tomorrow
 - who am i meeting for {Title=dinner}
@@ -107,7 +109,6 @@
 - find my meeting with lydia
 - what do i have tomorrow at noon
 - am i busy tomorrow afternoon
-
 # GetFirstEvent
 - What time does my day start?
 - When is my first meeting?
@@ -207,6 +208,7 @@
     - @ ml Remove
     - @ ml Change
 
+@ ml Title
 @ prebuilt datetimeV2
 @ prebuilt email
 @ prebuilt personName
