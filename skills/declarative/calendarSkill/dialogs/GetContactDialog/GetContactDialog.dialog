@@ -235,8 +235,7 @@
                       "initialPrompt": "ContactListPrompt",
                       "showMorePrompt": "ContactListShowMorePrompt",
                       "skipResponse": "ContactListSkipResponse",
-                      "defaultValueResponse": "ContactListDefaultValueResponse",
-                      "numericalChoiceResponse": "ContactListNumericalChoiceResponse"
+                      "defaultValueResponse": "ContactListDefaultValueResponse"
                     },
                     "additionalOptions": {
                       "contactName": "=dialog.foreach.contactValue"
@@ -258,6 +257,13 @@
                   },
                   "condition": "dialog.attendeeChoiceResult != null",
                   "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "qqaqwa"
+                      },
+                      "activity": "${SendActivity_qqaqwa()}"
+                    },
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
