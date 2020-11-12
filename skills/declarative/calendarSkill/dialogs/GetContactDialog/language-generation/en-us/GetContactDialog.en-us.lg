@@ -89,3 +89,7 @@
 
 # SendActivity_r6WNXy()
 - ${CancelMessage()}
+# SendActivity_qqaqwa()
+- Sure, I'll continue with ${dialog.attendeeChoiceResult.name}, ${dialog.attendeeChoiceResult.email}.
+- Got it. I'll move forward with ${dialog.attendeeChoiceResult.name}, ${dialog.attendeeChoiceResult.email}.
+- OK. I'll include ${dialog.attendeeChoiceResult.name}, ${dialog.attendeeChoiceResult.email} as attendee.
