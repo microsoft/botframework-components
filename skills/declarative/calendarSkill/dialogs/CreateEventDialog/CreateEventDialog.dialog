@@ -255,7 +255,7 @@
                   "defaultValueResponse": "",
                   "property": "dialog.slots.dateTime",
                   "validations": [],
-                  "allowInterruptions": "=turn.recognized.score > 0.7"
+                  "allowInterruptions": "=turn.recognized.score > 0.7 && #None == null"
                 },
                 {
                   "$kind": "Microsoft.BeginDialog",
@@ -294,7 +294,7 @@
                       "invalidPrompt": "",
                       "defaultValueResponse": "",
                       "property": "dialog.time",
-                      "allowInterruptions": "=turn.recognized.score > 0.7"
+                      "allowInterruptions": "=turn.recognized.score > 0.7 && #None== null"
                     },
                     {
                       "$kind": "Microsoft.BeginDialog",
