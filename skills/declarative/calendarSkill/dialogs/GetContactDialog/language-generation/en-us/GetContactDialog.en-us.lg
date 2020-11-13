@@ -1,19 +1,22 @@
 [import](common.lg)
 [import](contactList.en-us.lg)
 
-# SendActivity_UrRzOu()
-[Activity
-    text = I could not find the exact attendee you were looking for.
-    attachments = ${json(NoContactsCard())}
-]
-
 # TextInput_Prompt_wIEu2k()
+- IF: ${ dialog.tryAgain == true }
+    - ${AskForAttendeeTryAgain()}
+- ELSE:
+    - ${AskForAttendee()}
+
+# AskForAttendee()
 - Who will join?
 - Who do you want to invite?
 - What attendees do you want to add?
 
-# SendActivity_mD3TcZ()
-- If you want to try again, just call out the first name and or surname again.
+# AskForAttendeeTryAgain()
+[Activity
+    text = I could not find the exact attendee you were looking for.
+    suggestedActions = Proceed without attendees
+]
 
 # SendActivity_hdAS3R()
 -IF: ${ count(dialog.attendees) <= 3 }
@@ -47,41 +50,6 @@
 - Want to add another attendee?
 - Should I add anyone else?
 
-# NoContactsCard
-- ${CardTemplate(NoContactsHeader(), NoContactsBody(), NoContactsActions())}
-
-# NoContactsHeader
-- ${CardHeader(ContactIconUrl(), ContactListTitle(), "", "")}
-
-# NoContactsBody
-- ```
-{
-    "type": "Container",
-    "separator": true,
-    "spacing": "Medium",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "Unfortunately, I could not find relevant contacts.",
-            "wrap": true
-        }
-    ]
-}
-```
-
-# NoContactsActions
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Proceed without attendees",
-            "data": "Proceed without attendees"
-        }
-    ]
-}
-```
 # SendActivity_6d2pAI()
 - Sure, I'll continue with ${dialog.contactsCandidate[0].name} (${dialog.contactsCandidate[0].email}).
 - Got it. I'll move forward with ${dialog.contactsCandidate[0].name} (${dialog.contactsCandidate[0].email}).

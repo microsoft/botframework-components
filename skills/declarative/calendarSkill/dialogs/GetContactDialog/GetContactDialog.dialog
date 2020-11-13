@@ -158,15 +158,7 @@
               "cases": [
                 {
                   "value": "0",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "UrRzOu"
-                      },
-                      "activity": "${SendActivity_UrRzOu()}"
-                    }
-                  ]
+                  "actions": []
                 },
                 {
                   "value": "1",
@@ -375,18 +367,14 @@
               "value": "0",
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "mD3TcZ"
-                  },
-                  "activity": "${SendActivity_mD3TcZ()}"
-                },
-                {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
                     "id": "Gpxevl"
                   },
-                  "activityProcessed": true
+                  "activityProcessed": true,
+                  "options": {
+                    "tryAgain": true
+                  }
                 }
               ]
             }

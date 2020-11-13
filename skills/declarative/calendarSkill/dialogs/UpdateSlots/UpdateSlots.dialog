@@ -66,7 +66,7 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "property": "dialog.entityName",
-              "allowInterruptions": "=turn.recognized.score > 0.8"
+              "allowInterruptions": "=turn.recognized.score > 0.8 && #TextInput_Response_gZ1tbS == null"
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -262,7 +262,7 @@
           },
           "activityProcessed": true,
           "options": {
-            "eventInfo": "$eventInfo"
+            "eventInfo": "=$eventInfo"
           }
         }
       ]
