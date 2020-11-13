@@ -29,6 +29,14 @@
           "condition": "dialog.eventId == null && dialog.start == null && dialog.title == null && dialog.ordinal == null && (dialog.personNameArray == null || count(dialog.personNameArray) == 0)",
           "actions": [
             {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Ls1aXh"
+              },
+              "property": "dialog.firstTimeAskForParameters",
+              "value": "= coalesce(dialog.firstTimeAskForParameters, true)"
+            },
+            {
               "$kind": "Microsoft.TextInput",
               "$designer": {
                 "id": "a8RIpz"
@@ -43,6 +51,14 @@
                 "@datetime!=null || @title!=null || @personName!=null || #no != null"
               ],
               "allowInterruptions": "=#TextInput_Response_a8RIpz == null && turn.recognized.score > 0.8"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "LUUOpC"
+              },
+              "property": "dialog.firstTimeAskForParameters",
+              "value": "= false"
             },
             {
               "$kind": "Microsoft.BeginDialog",
