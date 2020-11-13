@@ -2125,6 +2125,21 @@
           "name": "calendarSkill.UnknownIntent"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "X27oGH"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "j4ol8R"
+          },
+          "activity": "${SendActivity_j4ol8R()}"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
