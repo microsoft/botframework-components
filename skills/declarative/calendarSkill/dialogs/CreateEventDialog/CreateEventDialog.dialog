@@ -198,6 +198,16 @@
                   },
                   "resultProperty": "dialog.timeSuggestionChoice"
                 }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "MNiu22"
+                  },
+                  "property": "dialog.noSuggestion",
+                  "value": "= true"
+                }
               ]
             },
             {
@@ -567,7 +577,6 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
           "alwaysPrompt": false,
           "prompt": "${ConfirmInput_Prompt_eaLZYE()}",
           "unrecognizedPrompt": "",
@@ -580,14 +589,15 @@
           },
           "property": "dialog.createConfirmResult",
           "allowInterruptions": "=turn.recognized.score > 0.7",
-          "style": "none"
+          "style": "none",
+          "maxTurnCount": "=if(turn.confirmYes == true, 1, 3)"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "rbSpDd"
           },
-          "condition": "dialog.createConfirmResult == true",
+          "condition": "dialog.createConfirmResult == true || turn.confirmYes == true",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Calendar.CreateEvent",
@@ -929,6 +939,24 @@
             "id": "YjfIn7"
           },
           "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "VH0xOR",
+        "name": "ConfirmYes"
+      },
+      "intent": "ConfirmYes",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "woSxdR"
+          },
+          "property": "turn.confirmYes",
+          "value": "=true"
         }
       ]
     }

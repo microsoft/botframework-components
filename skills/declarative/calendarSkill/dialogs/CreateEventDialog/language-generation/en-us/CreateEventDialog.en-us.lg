@@ -71,10 +71,18 @@
 - And at what time?
 - Got it, and when do you want it to start?
 
+# AskForTimePrompt(noSuggestion)
+- IF: ${ noSuggestion == true }
+    - I can't suggest a time to meet, probably because there is no overlap in working hours. What day did you want to meet?
+    - I couldn't find relevant suggestions that work for all attendees. What day did you want to meet?
+    - I don't see any options that will work for everyone. What day did you have in mind?
+- ELSE:
+    - What date and time did you have in mind?
+    - When should the event start?
+    - And what date?
+    
 # DateTimeInput_Prompt_sHR6f0()
-- What date and time did you have in mind?
-- When should the event start?
-- And what date?
+- ${AskForTimePrompt(dialog.noSuggestion)}
 
 # TextInput_Prompt_8FlYLk()
 - What is the title of the meeting?

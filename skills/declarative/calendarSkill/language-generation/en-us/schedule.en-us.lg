@@ -3,13 +3,24 @@
 
 # ScheduleResponseText(date, events)
 - IF: ${ events == null || count(events) == 0 }
-    - You don't have anything scheduled for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}.
+    - You don't have anything scheduled for ${GetFormattedDateString(date)}.
 - ELSEIF: ${ count(events) == 1 }
-    - I found 1 event for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${ContactConfirmWithOne(events[0].Attendees)}. 
+    - I found 1 event for ${GetFormattedDateString(date)}. It’s at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. The attendees are ${ContactConfirmWithOne(events[0].Attendees)}. 
 - ELSEIF: ${ count(events) == 2 }
-    - I see 2 events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
+    - I see 2 events for ${GetFormattedDateString(date)}. First up at ${formatDateTime(events[0].start.datetime, 'h:mm tt')}, ${events[0].Subject}. And then at ${formatDateTime(events[1].start.datetime, 'h:mm tt')}, ${events[1].Subject}.
 - ELSE:
-    - I found ${count(events)} events for ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}.
+    - I found ${count(events)} events for ${GetFormattedDateString(date)}.
+
+# GetFormattedDateString(date)
+- IF: ${date(formatDateTime(date)) == date(convertFromUTC(utcNow(), user.workingHours.timeZone.name))}
+    - today, ${formatDateTime(date, 'MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+- ELSEIF: ${date(formatDateTime(date)) == date(addDays(convertFromUTC(utcNow(), user.workingHours.timeZone.name), 1))}
+    - tomorrow, ${formatDateTime(date, 'MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+- ELSE:
+    - ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+
+# ScheduleDateRangeResponseText(count, startDate, endDate, firstDate)
+- You have ${count} events planned from ${formatDateTime(startDate, 'MMM.d')} to ${formatDateTime(endDate, 'MMM.d')}. First up on ${formatDateTime(startDate, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(startDate)))}:
 
 # ScheduleHeader(date, events)
 - ${CardHeader(CalendarIconUrl(), ScheduleTitle(), ScheduleSubtitle(date), ScheduleCounter(events))}
@@ -18,7 +29,13 @@
 - Calendar
 
 # ScheduleSubtitle(date)
-- ${formatDateTime(date, 'dddd, MMMM d')}
+- IF: ${date(formatDateTime(date)) == date(convertFromUTC(utcNow(), user.workingHours.timeZone.name))}
+    - Today, ${formatDateTime(date, 'MMMM d')}
+- ELSEIF: ${date(formatDateTime(date)) == date(addDays(convertFromUTC(utcNow(), user.workingHours.timeZone.name), 1))}
+    - Tomorrow, ${formatDateTime(date, 'MMMM d')}
+- ELSE:
+    - ${formatDateTime(date, 'dddd, MMMM d')}
+
 
 # ScheduleCounter(events)
 - ${count(events)} ${Pluralize(count(events), 'event', 'events')}

@@ -163,17 +163,14 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
-            while (events.NextPageRequest != null && parsedEvents.Count() <= maxResults)
+            while (events.NextPageRequest != null)
             {
                 events = await events.NextPageRequest.GetAsync();
                 if (events?.Count > 0)
                 {
                     foreach (var ev in events)
                     {
-                        if (parsedEvents.Count() <= maxResults)
-                        {
-                            parsedEvents.Add(ParseEvent(ev, timeZone, index++));
-                        }
+                        parsedEvents.Add(ParseEvent(ev, timeZone, index++));
                     }
                 }
             }
@@ -229,6 +226,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             parsedEvents = parsedEvents
                 .Where(ev => ev.IsAllDay == false)
                 .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                .Take(maxResults)
                 .ToList();
 
             // Write Trace Activity for the http request and response values
