@@ -36,7 +36,8 @@
               "activityProcessed": true,
               "dialog": "ResolveDateTimeDialog",
               "options": {
-                "query": "=turn.activity.text"
+                "query": "=turn.activity.text",
+                "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
               },
               "resultProperty": "dialog.resolveDateTimeResult"
             },
