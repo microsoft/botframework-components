@@ -223,8 +223,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
+            // TODO: Support for events that last all day or span multiple days. Needs design
             parsedEvents = parsedEvents
-                .Where(ev => ev.IsAllDay == false)
+                .Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime).Date >= startProperty.Value.Date)
                 .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
                 .Take(maxResults)
                 .ToList();
