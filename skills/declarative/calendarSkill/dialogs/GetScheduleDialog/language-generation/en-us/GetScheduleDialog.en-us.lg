@@ -8,15 +8,21 @@
     attachments = ${json(EventDetailCard(dialog.events[0]))}
 ]
 
-# SendActivity_i89xW0()
-[Activity
-    text = ${ScheduleResponseText(dialog.events[0].date, dialog.events[0].events)}
-    attachments = ${foreach(dialog.events, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
-    attachmentLayout = carousel
-]
-
 # SendActivity_hDknHb()
 [Activity
     text = ${ScheduleResponseText(dialog.start, createArray())}
     attachments = ${json(ScheduleNoResults(dialog.start))}
+]
+
+# SendActivity_S1spP2()
+[Activity
+    text = ${ScheduleDateRangeResponseText(count(dialog.events), dialog.datetime.start, dialog.datetime.end, dialog.groupedEvents[0].date)}
+    attachments = ${json(CardTemplate(ScheduleHeader(dialog.groupedEvents[0].date, dialog.groupedEvents[0].events), ScheduleList(dialog.groupedEvents[0].events), ScheduleActions(dialog.groupedEvents[0].date)))}
+    attachmentLayout = carousel
+]
+# SendActivity_sVtgKf()
+[Activity
+    text = ${ScheduleResponseText(dialog.groupedEvents[0].date, dialog.groupedEvents[0].events)}
+    attachments = ${foreach(dialog.groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
+    attachmentLayout = carousel
 ]
