@@ -13,9 +13,9 @@
 - What attendees do you want to add?
 
 # AskForAttendeeTryAgain()
-[Activity
+[HeroCard
     text = I could not find the exact attendee you were looking for.
-    suggestedActions = Proceed without attendees
+    buttons = ${CardActionTemplate('postBack', 'Proceed without attendees', 'Proceed without attendees')}
 ]
 
 # SendActivity_hdAS3R()
