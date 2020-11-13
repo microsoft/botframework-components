@@ -74,8 +74,7 @@
 # AskForTimePrompt(noSuggestion)
 - IF: ${ noSuggestion == true }
     - I can't suggest a time to meet, probably because there is no overlap in working hours. What day did you want to meet?
-    - There's aren't any relevant suggestions, probably there is no overlap in working hours. What day did you have in mind?
-    - I couldn't find relevant suggestions that works for all attendees. What day did you want to meet?
+    - I couldn't find relevant suggestions that work for all attendees. What day did you want to meet?
     - I don't see any options that will work for everyone. What day did you have in mind?
 - ELSE:
     - What date and time did you have in mind?

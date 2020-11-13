@@ -84,7 +84,7 @@
                   "$designer": {
                     "id": "RgCy25"
                   },
-                  "resultProperty": "dialog.groups",
+                  "resultProperty": "dialog.groupedEvents ",
                   "eventsProperty": "=dialog.events"
                 },
                 {
