@@ -3,23 +3,26 @@
 # SendActivity_JrfC1C()
 - Sorry, I didn't understand that date and/or time.
 
-# ChoiceInput_Prompt_JSRnlP()
-- Which time?
-
-# ChoiceInput_Prompt_fPlHqj()
-- Which dates?
-
-# ChoiceInput_Prompt_C9JApX()
-- Which dates and times?
-
-# ChoiceInput_Prompt_14rIwk()
-- Which times?
-
 # ChoiceInput_Prompt_xntS1t()
 - Which date?
+
 # ChoiceInput_Prompt_RSIYeJ()
 - Which date and time?
+
 # SendActivity_22HYzp()
 - That date does not meet the minimum requirements. Proceeding with the default value of **${formatDateTime(date(dialog.minDate), "dddd, MMMM d, yyyy")}**.
+
 # SendActivity_9oQtz5()
 - That date and time do not meet the minimum requirements. Proceeding with the default value of **${formatDateTime(dialog.minDate, "dddd, MMMM d, yyyy 'at' h:mm tt")}**.
+
+# ChoiceInput_Prompt_yHRsbS()
+- Which time?
+
+# ChoiceInput_Prompt_kbCCbs()
+- Which dates?
+
+# ChoiceInput_Prompt_QkdpPG()
+- Which dates and times?
+
+# ChoiceInput_Prompt_pO5zQk()
+- Which times?

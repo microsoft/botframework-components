@@ -219,6 +219,13 @@
       "event": "RefineDate",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8IOu4o"
+          },
+          "name": "ResolveDateTimeDialog.RefineDate"
+        },
+        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "a43OOw"
@@ -276,7 +283,7 @@
                   },
                   "changeType": "push",
                   "itemsProperty": "dialog.choices",
-                  "value": "=dialog.formattedOption"
+                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
                 }
               ]
             }
@@ -362,6 +369,13 @@
       "event": "RefineDateTime",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "gXLQ6f"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTime"
+        },
+        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "b2a4gT"
@@ -419,7 +433,7 @@
                   },
                   "changeType": "push",
                   "itemsProperty": "dialog.choices",
-                  "value": "=dialog.formattedOption"
+                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
                 }
               ]
             }
@@ -505,23 +519,58 @@
       "event": "RefineTime",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IhxIE6"
+          },
+          "name": "ResolveDateTimeDialog.RefineTime"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "UtKCFb"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MmvPBY"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=formatDateTime(dialog.foreach.value.value, \"h:mm tt\")"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "S0x2ix"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "JSRnlP"
+            "id": "yHRsbS"
           },
           "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_JSRnlP()}",
+          "prompt": "${ChoiceInput_Prompt_yHRsbS()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"h:mm tt\"))",
+          "choices": "=dialog.choices",
           "property": "dialog.selected",
           "style": "heroCard"
         }
@@ -536,23 +585,58 @@
       "event": "RefineDateRange",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "okdggz"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ZAwl4T"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "PaDCIS"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "8kl6M0"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "fPlHqj"
+            "id": "kbCCbs"
           },
           "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_fPlHqj()}",
+          "prompt": "${ChoiceInput_Prompt_kbCCbs()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy\")))",
+          "choices": "=dialog.choices",
           "property": "dialog.selected",
           "style": "heroCard"
         }
@@ -567,23 +651,58 @@
       "event": "RefineDateTimeRange",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "v5ijYF"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTimeRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Mjqbll"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "xDRpmj"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "tHzvQU"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "C9JApX"
+            "id": "QkdpPG"
           },
           "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_C9JApX()}",
+          "prompt": "${ChoiceInput_Prompt_QkdpPG()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime(x.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\")))",
+          "choices": "=dialog.choices",
           "property": "dialog.selected",
           "style": "heroCard"
         }
@@ -598,23 +717,58 @@
       "event": "RefineTimeRange",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rV7e9v"
+          },
+          "name": "ResolveDateTimeDialog.RefineTimeRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "3eMz8z"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ifIblU"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"y h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "oSvcIN"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "14rIwk"
+            "id": "pO5zQk"
           },
           "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_14rIwk()}",
+          "prompt": "${ChoiceInput_Prompt_pO5zQk()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, concat(formatDateTime(x.start, \"y h:mm tt\"), ' - ', formatDateTime(x.end, \"h:mm tt\")))",
+          "choices": "=dialog.choices",
           "property": "dialog.selected",
           "style": "heroCard"
         }

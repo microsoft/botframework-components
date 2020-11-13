@@ -259,7 +259,7 @@
               "dialog": "ResolveDateTimeDialog",
               "options": {
                 "query": "=dialog.query",
-                "minDate": "=convertFromUtc(utcNow(), user.workingHours.timeZone.name)"
+                "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
               },
               "resultProperty": "dialog.datetime"
             }
