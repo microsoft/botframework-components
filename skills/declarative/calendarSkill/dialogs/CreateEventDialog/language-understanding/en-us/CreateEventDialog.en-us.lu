@@ -34,6 +34,7 @@
 - {@EntityOperation={@Add=add}} {@EntityName={@EventAttendee=attendee}}
 - change {@EntityName={@EventDateTime=time}}
 - change {@EntityName={@EventLocation=location}}
+- move my {@Title=lunch} meeting tomorrow to 12:30 pm
 
 @ prebuilt personName
 @ prebuilt email
@@ -64,3 +65,8 @@
 - yes
 - confirm
 - sure
+
+# None
+- tomorrow at 9 am
+- at 3
+- today
