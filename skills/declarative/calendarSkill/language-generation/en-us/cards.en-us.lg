@@ -289,3 +289,11 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     ```
 - ELSE: 
     - "${text}"
+
+
+# CardActionTemplate(type, title, value)
+[CardAction
+    type = ${type}
+	title = ${title}
+    value = ${value}
+]
