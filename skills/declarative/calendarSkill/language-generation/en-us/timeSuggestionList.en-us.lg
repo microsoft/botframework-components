@@ -86,7 +86,9 @@
         {
             "type": "Action.Submit",
             "title": "Choose your own date and time",
-            "data": ${BuildCardActionData('Choose my own date and time')}
+            "data": {
+                "intent": "Skip"
+            }
         },
         {
             "type": "Action.Submit",
