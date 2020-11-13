@@ -8,6 +8,10 @@
 - Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
 - I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
 - {@EntityOperation={@Change=change}} the {@EntityName=@{EventTitle=title}} to {@Title=Lunch}
+- {@EntityName={@EventDateTime=time}}
+- {@EntityName={@EventDateTime=date}}
+- {@EntityName={@EventDateTime=date time}}
+- {@EntityOperation={@Change=change}} {@EntityName={@EventDateTime=time}}
 @ prebuilt personName
 @ prebuilt email
 @ prebuilt datetimeV2
