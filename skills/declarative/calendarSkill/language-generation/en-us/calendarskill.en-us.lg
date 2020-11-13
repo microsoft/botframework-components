@@ -19,7 +19,8 @@
 ]
 
 # ErrorMessage()
-- Something seems to be going wrong. Here is your schedule for today:
+- Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today?
+- Something seems to be going wrong. I can tell you more about your meetings today if you like?
 
 # SendActivity_GGU1vZ()
 - ${ErrorMessage()}
@@ -166,8 +167,14 @@
 # SendActivity_klrCg4()
 - ${CancelMessage()}
 
-# SendActivity_KWePCs()
-- ${ErrorMessage()}
-
 # SendActivity_F3GXHj()
 - Sorry, that feature is not supported yet.
+
+
+# ConfirmInput_Prompt_Jo3V04()
+- ${ErrorMessage()}
+
+# SendActivity_vO6n9g()
+- OK, no problem.
+- OK, let me know if I can help you out with anything else.
+- OK, I'm here if you need me.

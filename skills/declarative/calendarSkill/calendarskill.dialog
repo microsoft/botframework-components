@@ -2095,19 +2095,59 @@
           "name": "calendarSkill.OnNoResultsEvent"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "KWePCs"
+            "id": "Jo3V04"
           },
-          "activity": "${SendActivity_KWePCs()}"
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_Jo3V04()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "dialog.getSchedule"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "KfKyLy"
+            "id": "zeWmBU"
           },
-          "activityProcessed": true,
-          "dialog": "GetScheduleDialog"
+          "condition": "dialog.getSchedule == true",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "VU8D4y"
+              },
+              "activityProcessed": true,
+              "dialog": "GetScheduleDialog"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "vO6n9g"
+              },
+              "activity": "${SendActivity_vO6n9g()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "wkPHZ4"
+          },
+          "activityProcessed": true
         }
       ]
     },
