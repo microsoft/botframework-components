@@ -52,7 +52,7 @@
             "end": "=dialog.end",
             "doSelection": "=false",
             "futureOnly": "=true",
-            "groupEvents": "=true"
+            "maxResult": 1000
           },
           "resultProperty": "dialog.events"
         },
@@ -84,15 +84,33 @@
                   "$designer": {
                     "id": "RgCy25"
                   },
-                  "resultProperty": "dialog.events",
+                  "resultProperty": "dialog.groupedEvents ",
                   "eventsProperty": "=dialog.events"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "i89xW0"
+                    "id": "goJIoD"
                   },
-                  "activity": "${SendActivity_i89xW0()}"
+                  "condition": "dialog.datetime.type == \"daterange\"",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "S1spP2"
+                      },
+                      "activity": "${SendActivity_S1spP2()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "sVtgKf"
+                      },
+                      "activity": "${SendActivity_sVtgKf()}"
+                    }
+                  ]
                 }
               ],
               "actions": [
