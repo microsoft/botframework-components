@@ -1,5 +1,5 @@
 ---
-name: "Bug"
+name: "Calendar Skill V2 Bug"
 about: Create a bug report for a bug you found in the Bot Framework Skills projects
 title: "[Calendar Skill V2] "
 labels: "needs-triage, bug, Area: Calendar Skill"
