@@ -341,7 +341,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -454,7 +455,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -567,7 +569,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -679,7 +682,8 @@
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
           "options": {
-            "query": "=dialog.query"
+            "query": "=dialog.query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "dialog.datetime"
         },
@@ -1964,7 +1968,8 @@
               "activityProcessed": true,
               "dialog": "ResolveDateTimeDialog",
               "options": {
-                "query": "=dialog.query"
+                "query": "=dialog.query",
+                "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
               },
               "resultProperty": "dialog.datetime"
             }
@@ -2163,6 +2168,29 @@
             "id": "6cuuag"
           },
           "name": "calendarSkill.UnknownIntent"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "Z3bvh7"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "U65idk"
+          },
+          "name": "Error",
+          "value": "=turn.dialogEvent.value"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ccWEyG"
+          },
+          "activity": "${SendActivity_ccWEyG()}"
         }
       ]
     }
