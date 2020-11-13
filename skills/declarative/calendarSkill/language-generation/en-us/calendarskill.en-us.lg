@@ -164,7 +164,7 @@
 ]
 
 # SendActivity_klrCg4()
-- OK, no problem, I know I'm not perfect yet. Let me know if I can help with something else.
+- ${CancelMessage()}
 
 # SendActivity_KWePCs()
 - ${ErrorMessage()}
