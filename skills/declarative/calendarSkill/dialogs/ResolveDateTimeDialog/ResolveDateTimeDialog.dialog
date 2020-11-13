@@ -219,25 +219,137 @@
       "event": "RefineDate",
       "actions": [
         {
-          "$kind": "Microsoft.ChoiceInput",
+          "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "9Eu5D3"
+            "id": "a43OOw"
           },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_9Eu5D3()}",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "IQInq1"
+              },
+              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(date(dialog.minDate)))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "GLkygU"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OlWE0O"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Xv3qc4"
+              },
+              "condition": "dialog.foreach.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uYrpos"
+                  },
+                  "property": "dialog.formattedOption",
+                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "z4uPIw"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.choices",
+                  "value": "=dialog.formattedOption"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Kxsxdt"
           },
-          "choices": "=select(turn.dialogEvent.Value, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy\"))",
-          "property": "dialog.selected",
-          "style": "heroCard"
+          "condition": "dialog.choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "rxH6X0"
+              },
+              "condition": "count(dialog.choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "xntS1t"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_xntS1t()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=dialog.choices",
+                  "property": "dialog.selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cTs1XM"
+                  },
+                  "property": "dialog.selected",
+                  "value": "=dialog.choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "22HYzp"
+              },
+              "activity": "${SendActivity_22HYzp()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "uNlLNa"
+              },
+              "property": "dialog.selected",
+              "value": "=formatDateTime(date(dialog.minDate), \"dddd, MMMM d, yyyy\")"
+            }
+          ]
         }
       ]
     },
@@ -250,25 +362,137 @@
       "event": "RefineDateTime",
       "actions": [
         {
-          "$kind": "Microsoft.ChoiceInput",
+          "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "uWSsSr"
+            "id": "b2a4gT"
           },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${ChoiceInput_Prompt_uWSsSr()}",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "4nSPCc"
+              },
+              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(dialog.minDate))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "DQfu8f"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OifsS5"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "bYsQ7q"
+              },
+              "condition": "dialog.foreach.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uCS9Ou"
+                  },
+                  "property": "dialog.formattedOption",
+                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "FbjTHk"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.choices",
+                  "value": "=dialog.formattedOption"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OqJa6A"
           },
-          "choices": "=select(dialog.foreach.value.Resolution.values, x, formatDateTime(x.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))",
-          "property": "dialog.selected",
-          "style": "heroCard"
+          "condition": "dialog.choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QhjFD1"
+              },
+              "condition": "count(dialog.choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "RSIYeJ"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_RSIYeJ()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=dialog.choices",
+                  "property": "dialog.selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "0uAZcl"
+                  },
+                  "property": "dialog.selected",
+                  "value": "=dialog.choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9oQtz5"
+              },
+              "activity": "${SendActivity_9oQtz5()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "awh8Ju"
+              },
+              "property": "dialog.selected",
+              "value": "=formatDateTime(dialog.minDate, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+            }
+          ]
         }
       ]
     },
