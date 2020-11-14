@@ -655,18 +655,8 @@
         },
         {
             "type": "Action.Submit",
-            "title": "Update event",
-            "data": ${BuildCardActionData('Update event')}
-        },
-        {
-            "type": "Action.Submit",
-            "title": "Change duration",
-            "data": {
-                "intent": "UpdateEvent",
-                "eventId": "${event.Id}",
-                "entityName": "duration",
-                "operation": "change"
-            }
+            "title": "Cancel",
+            "data": ${BuildCardActionData('Cancel')}
         }
     ]
 }
