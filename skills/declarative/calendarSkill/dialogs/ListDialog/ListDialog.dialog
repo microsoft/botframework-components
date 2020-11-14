@@ -52,7 +52,7 @@
           "choices": "=dialog.choices",
           "style": "none",
           "alwaysPrompt": false,
-          "allowInterruptions": "=#ChoiceInput_Response_dc3QNs == null && turn.recognized.score > 0.8",
+          "allowInterruptions": "=#ChoiceInput_Response_dc3QNs == null && (#Next != null || #Previous != null || #Skip != null) && turn.recognized.score > 0.8",
           "defaultValue": "=null",
           "maxTurnCount": "=3",
           "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_dc3QNs()}",
@@ -301,24 +301,6 @@
               },
               "property": "dialog.choiceItem",
               "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" } }'))"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "tBEwQY"
-              },
-              "condition": "dialog.synonymsProperty != null",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EditArray",
-                  "$designer": {
-                    "id": "KoZvlt"
-                  },
-                  "itemsProperty": "dialog.choiceItem.synonyms",
-                  "value": "=dialog.pageItems[dialog.foreach.index][dialog.synonymsProperty]",
-                  "changeType": "push"
-                }
-              ]
             },
             {
               "$kind": "Microsoft.EditArray",

@@ -216,8 +216,7 @@
                   "dialog": "ListDialog",
                   "options": {
                     "items": "=dialog.contactsCandidate",
-                    "actionTitleProperty": "name",
-                    "synonymsProperty": "email",
+                    "actionTitleProperty": "email",
                     "activePrompt": "ContactListPrompt",
                     "templates": {
                       "icon": "ContactIconUrl",

@@ -90,6 +90,8 @@
 - when am i {Title=watching england}
 - when do i have {Title=exam}
 - when do i meet with charles
+- when is my next meeting with elaine
+- when do i meet with paul
 
 # GetEventTitle
 - Do I have an event at 1pm on Friday?
@@ -109,6 +111,8 @@
 - find my meeting with lydia
 - what do i have tomorrow at noon
 - am i busy tomorrow afternoon
+- what meetings do i have with Elaine?
+- what do I have with Tim this week
 # GetFirstEvent
 - What time does my day start?
 - When is my first meeting?
@@ -147,11 +151,15 @@
 - Tell me when my next break is
 - Tell me when I can step away from my computer
 - How long till my next break?
+- how much free time do i have tomorrow
 
 # GetTimeUntilNextMeeting
-- How long till my next meeting
+- How long until my next meeting
 - How long is my break for
-- How much time do I have till my next meeting
+- How much time do I have until my next meeting
+- how much free time until my next meeting
+- how long of a break do i have
+- how long am i free for
 
 # AcceptEvent
 - Accept the meeting with John
