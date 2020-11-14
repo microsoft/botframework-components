@@ -89,11 +89,6 @@
             "data": {
                 "intent": "Skip"
             }
-        },
-        {
-            "type": "Action.Submit",
-            "title": "Change duration",
-            "data": ${BuildCardActionData('Change duration')}
         }
     ]
 }
