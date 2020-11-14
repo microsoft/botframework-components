@@ -3,6 +3,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
+using Microsoft.Recognizers.Text.NumberWithUnit.Dutch;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 Body = new ItemBody()
                 {
                     ContentType = BodyType.Html,
-                    Content = descriptionProperty
+                    Content = descriptionProperty + $"<br /><span>🤖 </span><span style=\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>"
                 },
                 Location = new Location()
                 {
