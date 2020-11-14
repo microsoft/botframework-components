@@ -80,6 +80,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
+            results = results.OrderBy(s => s.Start).ToList();
+
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(DeclarativeType, results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
 
