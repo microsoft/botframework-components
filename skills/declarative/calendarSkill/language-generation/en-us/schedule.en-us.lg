@@ -20,7 +20,7 @@
     - ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
 
 # ScheduleDateRangeResponseText(count, startDate, endDate, firstDate)
-- You have ${count} events planned from ${formatDateTime(startDate, 'MMM.d')} to ${formatDateTime(endDate, 'MMM.d')}. First up on ${formatDateTime(startDate, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(startDate)))}:
+- You have ${count} events planned from ${formatDateTime(startDate, 'MMM. d')} to ${formatDateTime(endDate, 'MMM. d')}. First up on ${formatDateTime(startDate, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(startDate)))}:
 
 # ScheduleHeader(date, events)
 - ${CardHeader(CalendarIconUrl(), ScheduleTitle(), ScheduleSubtitle(date), ScheduleCounter(events))}
