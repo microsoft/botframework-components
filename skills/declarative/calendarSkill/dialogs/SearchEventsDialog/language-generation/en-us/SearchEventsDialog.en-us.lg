@@ -14,11 +14,6 @@
 # TextInput_Prompt_a8RIpz()
 - ${AskforMeetingParameters(dialog.turnCount, dialog.firstTimeAskForParameters)}
 
-
-
-
-
-
 # TextInput_InvalidPrompt_a8RIpz()
 - I didn't understand the start time, title, or attendees you provided. Can you try again?
 
@@ -27,3 +22,9 @@
 
 # SendActivity_TMEgrc()
 - ${CancelMessage()}
+
+# SendActivity_7qP2XO()
+- I'm searching your calendar, this might take a sec…
+- This might take a sec...
+- Hold on, this is taking a while...
+- Hold on, I'm trying to find events that match...

@@ -6,7 +6,7 @@
 - IF: ${ dialog.items == null || count(dialog.items) <= 1 }
     - Something must be wrong.
 - ELSE:
-    - I've found ${count(dialog.items)} events that match your request.
+    - I've found ${count(dialog.items)} events that match your request. Please select an option:
 
 # EventListShowMorePrompt()
 - How about these options:
@@ -69,48 +69,4 @@
 
 
 # EventListActions()
-- IF: ${ dialog.items == null || count(dialog.items) == 0 }
-    - ```
-    {
-        "type": "ActionSet",
-        "actions": [
-            {
-                "type": "Action.Submit",
-                "title": "What's on today",
-                "data": {
-                    "intent": "GetEvents"
-                }
-            },
-            {
-                "type": "Action.Submit",
-                "title": "New event",
-                "data": {
-                    "intent": "CreateEvent"
-                }
-            }
-        ]
-    }
-    ```
-- ELSE:
-    - ```
-    {
-        "type": "ActionSet",
-        "actions": [
-            {
-                "type": "Action.Submit",
-                "title": "What's on today",
-                "data": {
-                    "intent": "GetEvents"
-                }
-            },
-            {
-                "type": "Action.Submit",
-                "title": "New event",
-                "data": {
-                    "intent": "CreateEvent"
-                }
-            }
-        ]
-    }
-    ```
-
+- 

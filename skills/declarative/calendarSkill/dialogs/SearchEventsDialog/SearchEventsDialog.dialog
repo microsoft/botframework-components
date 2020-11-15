@@ -115,6 +115,22 @@
           "condition": "dialog.eventId != null",
           "elseActions": [
             {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Tl3qhs"
+              },
+              "condition": "dialog.start == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "7qP2XO"
+                  },
+                  "activity": "${SendActivity_7qP2XO()}"
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.Graph.Calendar.GetEvents",
               "$designer": {
                 "id": "aCs8G1"
