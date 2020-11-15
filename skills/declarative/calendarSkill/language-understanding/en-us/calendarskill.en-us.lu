@@ -1,207 +1,393 @@
+
+> # Intent definitions
+
+## AcceptEvent
+- accept
+- accept it
+- accept my 10 pm
+- accept that meeting
+- accept that yes
+- accept the {@EntityName={@EventTitle=1:1}} with {@EntityName=susan}
+- accept the event with anna
+- accept the meeting at 2
+- accept the meeting at 2 pm
+- accept the meeting at 9
+- accept the meeting with john
+- accept the {@EntityName={@EventTitle=teams sync}}
+- accept the upcoming meeting
+- accept this invite
+- i want to accept this event
+- i want to accept this meeting
+- i would like to accept that
+- yes please accept the meeting at 9 am
+
+
 # Cancel
 - cancel
 - cancel this
+- i'm done
+- just stop
+- nevermind
+- never mind
+- ok please stop
+- please stop doing that
+- quit
 - stop
 - stop this
-- please stop doing that
-- nevermind
-# Help
-- help
-- help me
-- can you help me?
-- what can you do
-- I don't know what to do
-- hi
-- hi there
-# SignOut
-- logout
-- sign me out
-- sign out
-- forget me
-- log out
+- stuck again
+- you are dumb
 
-# CreateEvent
-- Add a meeting to my calendar
-- Create an event at 9pm
-- Set up focus time at 9 AM
-- Add an event called {Title=Brthday Party}
-- Schedule an event {Title=dentist appointment} on Friday at 2
-- Book some time tomorrow
-- Set a {Title=private event} for 4pm
-- Book a meeting with megan at 10 am about {Title=sync meeting}
-- Add a meeting to my calendar with Anna
-- Add a lunch meeting with Jim on Wednesday at noon
-- Set up meeting about the {Title=2020 sales report} at 9am on Thursday 
-- Schedule a meeting with Stephanie tomorrow afternoon
+
+## CancelEvent
+- cancel my 4 pm meeting
+- cancel my 4 pm meeting with title {@Title=weekly report}
+- cancel my meeting with andrew today.
+- cancel my meeting with lydia
+- cancel my meeting with title {@Title=daily meeting}
+- cancel my next meeting
+- cancel the event at 4
+- cancel the event title {@EntityName={@EventTitle={@Title=shareholders revisit} {@Title=our scope}}}
+- cancel this event
+- cancel this meeting for me
+- i want to cancel the meeting later today at 5
+- just cancel the one with mary
+
+
+## CreateEvent
+- add a lunch meeting with jim on wednesday at noon
+- add a meeting to my calendar
+- add a meeting to my calendar with {@EntityName={@EventAttendee=anna}}
+- add an event called {@Title=brthday party}
+- book a meeting with megan at 10 am about {@Title=sync meeting}
+- book some time tomorrow
+- create a {@Title={@EntityName={@EventTitle=1:1}}} meeting with {@EntityName={@EventAttendee=elaine}} and {@EntityName={@EventAttendee=lauren}}
+- create a {@EntityName={@EventTitle=brainstorm}} with lauren and {@EntityName={@EventAttendee=elaine}} at 9
+- create a event
+- create a meeting
+- create an event at 9pm
+- create new
+- i want to create a meeting with {@EntityName={@EventAttendee=elaine}} at 9
+- i want to create a new event
+- new event
+- new event with {@EntityName={@TeamsLink=teams link}}
 - new meeting
+- new meeting at 9
+- schedule a meeting with stephanie tomorrow afternoon
+- schedule an event {@Title=dentist appointment} on friday at 2
+- set a {@Title=private event} for 4pm
+- set up a meeting called {@Title={@EntityName={@EventTitle=sync}}} with {@EntityName={@EventAttendee=lauren}}
+- set up a new invite
+- set up focus time at 9 am
+- set up meeting about the {@Title=2020 sales report} at 9am on thursday
+- set up time for {@EntityName={@EventAttendee=myself}}
+- set-up an event
 
-# GetEvents
-- Do I have an event tomorrow?
-- What's on my calendar today?
-- What is on for today?
-- What's on for today
-- What's on today
-- Read me my calendar
-- Show my calendar
-- List all events for August 20th
-- What do I have planned for tomorrow?
-- What meetings do I need to attend today?
-- What meetings do I have this weekend?
-- What is up next month?
-- What is my agenda for this weekend?
-- Tell me what my next month is like
-- What meetings do I have on Thursday?
-- what meetings do i have today
-- show schedule
 
-# GetEventAttendees
-- Who am I meeting at 11 today?
-- Who else is in my 2pm meeting?
-- Who is coming to the {Title=project review} tomorrow?
-- Who all is attending the 4pm meeting?
+## DeclineEvent
+- decline
+- decline my 4 pm meeting with title {@Title=weekly report}
+- decline my meeting with lydia
+- decline my meeting with title {@Title=daily meeting}
+- decline my next meeting
+- decline that event
+- decline the 1:1 with susan
+- decline the event titled {@EntityName={@EventTitle=review our scope}}
+- decline the meeting at 9
+- decline the meeting with john
+- decline the one at 9
+- decline the one with mary
+- i will not attend
+
+
+## GetEventAttendees
+- who all is attending the 4pm meeting?
 - who am i meeting at 10 am tomorrow
-- who am i meeting for {Title=dinner}
+- who am i meeting at 11 today?
+- who am i meeting for {@Title=dinner}
 - who else is going to the 2pm meeting tomorrow
-- who else will be in {Title=banking meeting}
+- who else is in my 2pm meeting?
+- who else is included during the {@EntityName={@EventTitle=sync on progress}}
+- who else is joining the event at 1 pm
+- who else will be in {@Title=banking meeting}
 - who is attending 2 pm meeting tomorrow
 - who is attending the meeting
 - who is attending the meeting on wednesday
+- who is coming to the {@Title=project review} tomorrow?
 - who is going to attend the meeting tomorrow at 2 pm
+- who is included in the invite in the next meeting
+- who will attend the {@EntityName={@EventTitle=sync about roles}}
+- who will be present at 3
+- who will be there at noon
 
-# GetEventLocation
-- Where is my meeting this afternoon?
-- Is my 11 o'clock meeting in building 35?
-- Where am I going for {Title=team meeting}?
-- Where am I going for {Title=daily sync up}?
-- Can you tell me what conference room my next meeting is in?
-- What is the location of the {Title=all hands} meeting?
+
+## GetEventLocation
+- can you tell me what conference room my next meeting is in?
+- is my 11 o'clock meeting in building 35?
+- tell me where the meeting at 9 is at
+- what is the location of the {@Title=all hands} meeting?
+- what is the location of the sync at noon
+- what location is included in the meeting at 11
+- what location is there for the sync with lauren
+- where am i going for {@Title=daily sync up}?
+- where am i going for {@Title=team meeting}?
+- where is my meeting this afternoon?
 - where is the meeting at 11 am tomorrow
-- where is the {Title=performance review meeting}
+- where is the meeting with anna
+- where is the {@Title=performance review meeting}
 - where is tomorrow ' s 11 am meeting
 - where is tomorrow meeting at 11 am
 - where is tomorrow 's event
+- where will the next event take place
 - where's my next meeting
 
-# GetEventTime
-- When is my meeting with John?
-- What time am I meeting with Emma?
-- What time is my {Title=team meeting} today?
-- When do I meet with Stephanie next?
-- when am i {Title=watching england}
-- when do i have {Title=exam}
+
+## GetEvents
+- calendar overview
+- give me an overview of my calendar
+- what does my day look like
+- how does my day look so far
+- just tell me my calendar today
+- list all events for august 20th
+- my appointments of the day
+- my calendar for tomorrow
+- my day today
+- my events for today
+- overview of thursday
+- overview of today
+- read me my calendar
+- show my calendar
+- show schedule
+- show what is going on
+- show what is on my calendar today
+- tell me about my meetings on friday
+- tell me about today
+- tell me what is going on
+- tell me what my next month is like
+- what appointments do i have
+- what do i have planned for tomorrow?
+- what meetings do i have on thursday?
+- what meetings do i have this weekend?
+- what meetings do i have today
+- what meetings do i need to attend today?
+- what is going on next week
+- what is going on today
+- what is my agenda for this weekend?
+- what is on for today?
+- what is on my calendar
+- what is on my calendar tomorrow
+- what is up next month?
+- what's on for today
+- what's on my calendar
+- what's on my calendar today?
+- what's on today
+- what's on monday
+
+
+## GetEventTime
+- what time am i discussing the {@Title=fiscal plans}
+- what time am i meeting with emma?
+- what time does my next meeting start
+- what time is my {@Title=team meeting} today?
+- what time is the {@EntityName={@EventTitle=sync}} planned for
+- when am i meeting elaine today
+- when am i meeting henry
+- when am i {@Title=watching england}
+- when do i have {@Title=exam}
 - when do i meet with charles
-- when is my next meeting with elaine
-- when do i meet with paul
+- when do i meet with stephanie next?
+- when is my meeting with john?
+- when will i chat to lauren
+- when will i discuss matters with elaine about {@EntityName={@EventTitle=our plans}}
+- when will we meet with the {@EntityName={@EventAttendee=design team}} today
 
-# GetEventTitle
-- Do I have an event at 1pm on Friday?
-- What meeting do I have at 1pm?
-- 1pm on Friday, what do I have?
-- Am I busy at 1pm on Friday?
-- find a meeting about {Title=group meeting}
-- find a meeting about {Title=plan}
-- find a meeting at 7pm from melissa
-- find a meeting from darren about {Title=status update}
-- find a meeting from deborah about {Title=team session}
-- find a meeting from donna
-- find a meeting Title {Title=daily meeting}
-- find a meeting with Title {Title=weekly report}
-- find a meeting with title {Title=second lesson} from amanda
-- find a meeting with title {Title=sharing} from steven
-- find my meeting with lydia
-- what do i have tomorrow at noon
-- am i busy tomorrow afternoon
-- what meetings do i have with Elaine?
-- what do I have with Tim this week
-# GetFirstEvent
-- What time does my day start?
-- When is my first meeting?
-- When is my first meeting tomorrow?
-- What is my first meeting today?
-- What is my first meeting tomorrow?
-- What is first on my agenda?
-- Tell me what my first meeting is
-- Tell me what time my meetings start
 
-# GetLastEvent
-- What time does my day end?
-- When am I finished for today?
-- When does my day end?
-- When am I done today?
-- When am I done for the day?
-- How long is my last meeting?
-- What time does my last meeting end?
-- When is my day over?
-- Tell me when my day ends
-- Tell me my last meeting for today
-- Tell me when I'll be done with meetings today
+## GetEventTitle
+- do I have an event at 1pm on Friday?
+- do I have anything with steve on Friday?
+- do I have anything with steve on Friday about {Title=composer features}?
+- do i have anything about the {Title=project review} today
+- find meetings with tom
+- find meetings with susan tomorrow
+- find meetings about {Title=dev sync}
+- find meetings with tom tomorrow named {Title=PM sync} 
+- show my meeting tomorrow night
+- show my meeting with chris on wednesday
+- show my meeting about {Title=budget approval} 
+- am I busy tomorrow afternoon?
+- am I busy wednesday at 1pm?
+- am I busy wednesday
+- what do i have with John
+- what do I have with Elaine this week
+- what do i have planned for today at noon
+- what meetings do i have with robert
+- what meetings do i have with sally on monday
+- what meetings do I have named {Title=team meeting} this week
+- what meetings do i have about {Title=skills} this week
+- Anything named {Title=standup} this week?
+- Is there a meeting named {Title=review} tomorrow?
+- do I have a {Title=dentist} appointment this week
 
-# GetMyAvailability
-- What time am I available again
-- when will I be available today
-- Am I free at 4:30 PM
-- When do I have a break?
-- Do I have time to breathe today?
-- When is my break?
-- When is my next break?
-- When is my next gap in meetings?
-- Do I have a break today?
-- When can I take a break?
-- Can I take a break today?
-- Tell me when my next break is
-- Tell me when I can step away from my computer
-- How long till my next break?
-- how much free time do i have tomorrow
 
-# GetTimeUntilNextMeeting
-- How long until my next meeting
-- How long is my break for
-- How much time do I have until my next meeting
-- how much free time until my next meeting
-- how long of a break do i have
-- how long am i free for
+## GetFirstEvent
+- how does my day start
+- i just woke up, what can i expect
+- kick off my day will you
+- tell me about my first appointment
+- tell me what my first meeting is
+- tell me what time my meetings start
+- what can i expect first today
+- what is first on my agenda?
+- what is my first meeting today?
+- what is my first meeting tomorrow?
+- what time does my day start?
+- what's happening first
+- when is my first meeting tomorrow?
+- when is my first meeting?
 
-# AcceptEvent
-- Accept the meeting with John
-- Accept the meeting at 9
-- Accept the 1:1 with Susan
 
-# CancelEvent
-- Cancel my next meeting
-- Cancel my meeting with Andrew today.
-- Cancel my 4 PM meeting
-- Cancel my meeting with lydia
-- Cancel my meeting with title {Title=daily meeting}
-- Cancel my 4 PM meeting with title {Title=weekly report}
+## GetLastEvent
+- how long is my last meeting?
+- tell me my last meeting for today
+- tell me when i'll be done with meetings today
+- tell me when my day ends
+- what time does my day end?
+- what time does my last meeting end?
+- when am i done
+- when am i done for the day?
+- when am i done today?
+- when am i finished for today?
+- when can i go and prepare dinner
+- when can i have a drink
+- when can i quit work and go home
+- when does my day end?
+- when does my day finally end
+- when is it time for me to stop working
+- when is my day over?
+- when will i be released today
 
-# DeclineEvent
-- Decline the meeting with John
-- Decline the meeting at 9
-- Decline the 1:1 with Susan
-- Decline my meeting with lydia
-- Decline my meeting with title {Title=daily meeting}
-- Decline my 4 PM meeting with title {Title=weekly report}
 
-# TentativelyAcceptEvent
-- Tentatively accept the meeting with John
-- Tentatively accept the meeting at 9
-- Tentatively accept  the 1:1 with Susan
-- Make the meeting with John tentative
-- Make the meeting at 9 tentative
-- Make the 1:1 meeting with Susan tentative
+## GetMyAvailability
+- am i free at 4:30 pm
+- can i take a break today?
+- do i have a break today?
+- do i have time to breathe today?
+- how long till my next break?
+- i need a break, when can i?
+- is there a gap in my calendar
+- let me know when i have a break
+- tell me when i can step away from my computer
+- tell me when i can take a break
+- tell me when my next break is
+- what time am i available again
+- when can i take a break?
+- when do i have a break?
+- when do i have time between meetings
+- when do i have time for myself today
+- when is my break?
+- when is my next break?
+- when is my next gap in meetings?
+- when will i be available today
 
-# UpdateEvent
-- Can you {@EntityOperation={@Add=add}} Rachel
-- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
-- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
-- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
-- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
-- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
-- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
-- Update meeting
-- update my meeting with elaine
-- change my meeting tomorrow morning
+
+## GetTimeUntilNextMeeting
+- how long is my break for
+- how long until another meeting starts
+- how long until i need to join the next event
+- how long until i'm up again
+- how long until my next meeting
+- how many minutes do i have until another meeting starts
+- how much time do i have until my next meeting
+- how much time until i have to be present in a meeting again
+- tell me how long i can rest for
+
+
+## Help
+- can you help me out
+- can you help me?
+- help
+- help me
+- i don't know what to do
+- i guess i'm stuck
+- just help me
+- need help
+- stuck right now
+- what about helping me
+- what can you do
+- what should i do
+
+
+## None
+- tomorrow at 3pm
+- tomorrow
+- this week
+- monday
+- tuesday
+- wednesday
+- thursday
+- Friday
+- saturday
+- sunday
+- monday at 1pm
+- tuesday at 11
+- wednesday at 6pm
+- thursday at 10am
+- friday at noon
+- 3pm
+- susan
+- tom
+- elaine
+- justin
+- allan
+
+## SignOut
+- forget me
+- i want you to sign me out already
+- just signout
+- log off
+- log out
+- logout
+- sign me out
+- sign out
+- signout
+
+
+## TentativelyAcceptEvent
+- accept that event tentatively for now
+- just make me tentative
+- make me tentative for that meeting
+- make the 1:1 meeting with susan tentative
+- make the meeting at 9 tentative
+- make the meeting with john tentative
+- tentatively accept the 1:1 with susan
+- tentatively accept the meeting at 9
+- tentatively accept the meeting with john
+- the meeting with anna i want it to be tentative
+
+
+## UpdateEvent
+- can you {@EntityOperation={@Add=add}} rachel
+- can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=brainstorm}
+- can you {@EntityOperation={@Change=move}} the event with elaine to start at 12 instead of 11
+- {@EntityOperation={@Change=change}} my meeting tomorrow morning
+- {@EntityOperation={@Change=change}} the sync with mary to start at 12
 - edit my event tomorrow afternoon with thomas
+- i would like the meeting with sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- {@EntityOperation={@Change=move}} this event to 9
+- {@EntityOperation={@Change=move}} this event to tomorrow
+- {@EntityOperation={@Change=move this}} to start tomorrow at 4
+- please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=teams link}}
+- please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=teams link}}
+- {@EntityOperation={@Change=reschedule}} my meeting with ashley to start at 2 pm
+- {@EntityOperation={@Change=update it}}
+- update meeting
+- update my {@EntityName={@EventLocation=location}} to café paris
+- update my meeting with elaine
+- {@EntityOperation={@Change=update}} the event with patrick and {@EntityOperation={@Add=include}} lauren to the invite
+- update the meeting with anna
+- update the sync on {@EntityName={@EventTitle=planning for release}} to start at 9
+
+
+> # Entity definitions
 
 @ ml EntityName
     - @ ml EventTitle
@@ -211,13 +397,26 @@
     - @ ml EventDuration
     - @ ml TeamsLink
 
+
 @ ml EntityOperation
     - @ ml Add
     - @ ml Remove
     - @ ml Change
 
+
 @ ml Title
+
+
+> # PREBUILT Entity definitions
+
 @ prebuilt datetimeV2
 @ prebuilt email
-@ prebuilt personName
 @ prebuilt ordinalV2
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities
