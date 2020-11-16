@@ -136,10 +136,12 @@
               "invalidPrompt": "",
               "defaultValueResponse": "",
               "choiceOptions": {
-                "includeNumbers": true
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or "
               },
               "property": "dialog.attendanceConfirm",
-              "allowInterruptions": "=#Cancel.score > 0.8"
+              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -212,17 +214,33 @@
                       "choiceOptions": {
                         "includeNumbers": true,
                         "inlineOrMore": ", or ",
-                        "inlineOr": " or "
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
                       },
                       "property": "dialog.attendanceChoice",
-                      "choices": [
-                        "Accept",
-                        "Decline"
-                      ],
                       "recognizerOptions": {
-                        "recognizeOrdinals": true
+                        "recognizeOrdinals": true,
+                        "recognizeNumbers": true
                       },
-                      "allowInterruptions": "=#Cancel.score > 0.8"
+                      "allowInterruptions": "=#Cancel.score > 0.8",
+                      "choices": [
+                        {
+                          "value": "Accept",
+                          "action": {
+                            "type": "postBack",
+                            "title": "Accept",
+                            "value": "Accept"
+                          }
+                        },
+                        {
+                          "value": "Decline",
+                          "action": {
+                            "type": "postBack",
+                            "title": "Decline",
+                            "value": "Decline"
+                          }
+                        }
+                      ]
                     }
                   ]
                 }
@@ -247,7 +265,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='accepted'",
-                        "eventId": "=dialog.selectedEvent.id"
+                        "event": "=dialog.selectedEvent"
                       }
                     }
                   ]
@@ -264,7 +282,7 @@
                       "dialog": "RespondToEventDialog",
                       "options": {
                         "response": "='declined'",
-                        "eventId": "=dialog.selectedEvent.id"
+                        "event": "=dialog.selectedEvent"
                       }
                     }
                   ]

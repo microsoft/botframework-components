@@ -1,4 +1,3 @@
-
 > # Intent definitions
 
 ## AcceptEvent
@@ -22,13 +21,13 @@
 - yes please accept the meeting at 9 am
 
 
-# Cancel
+## Cancel
 - cancel
 - cancel this
 - i'm done
 - just stop
-- nevermind
 - never mind
+- nevermind
 - ok please stop
 - please stop doing that
 - quit
@@ -144,7 +143,6 @@
 ## GetEvents
 - calendar overview
 - give me an overview of my calendar
-- what does my day look like
 - how does my day look so far
 - just tell me my calendar today
 - list all events for august 20th
@@ -165,10 +163,10 @@
 - tell me what my next month is like
 - what appointments do i have
 - what do i have planned for tomorrow?
-- what meetings do i have on thursday?
-- what meetings do i have this weekend?
-- what meetings do i have today
-- what meetings do i need to attend today?
+- what do i have this week
+- what do i have tomorrow
+- what do i have wednesday
+- what does my day look like
 - what is going on next week
 - what is going on today
 - what is my agenda for this weekend?
@@ -176,11 +174,17 @@
 - what is on my calendar
 - what is on my calendar tomorrow
 - what is up next month?
+- what meetings do i have on thursday?
+- what meetings do i have this weekend?
+- what meetings do i have today
+- what meetings do i need to attend today?
 - what's on for today
+- what's on monday
 - what's on my calendar
 - what's on my calendar today?
+- whats on next
 - what's on today
-- what's on monday
+- whats upcoming
 
 
 ## GetEventTime
@@ -202,30 +206,30 @@
 
 
 ## GetEventTitle
-- do I have an event at 1pm on Friday?
-- do I have anything with steve on Friday?
-- do I have anything with steve on Friday about {Title=composer features}?
-- do i have anything about the {Title=project review} today
-- find meetings with tom
+- am i busy tomorrow afternoon?
+- am i busy wednesday
+- am i busy wednesday at 1pm?
+- anything named {@Title=standup} this week?
+- do i have a {@Title=dentist} appointment this week
+- do i have an event at 1pm on friday?
+- do i have anything about the {@Title=project review} today
+- do i have anything with steve on friday about {@Title=composer features}?
+- do i have anything with steve on friday?
+- find meetings about {@Title=dev sync}
 - find meetings with susan tomorrow
-- find meetings about {Title=dev sync}
-- find meetings with tom tomorrow named {Title=PM sync} 
+- find meetings with tom
+- find meetings with tom tomorrow named {@Title=pm sync}
+- is there a meeting named {@Title=review} tomorrow?
+- show my meeting about {@Title=budget approval}
 - show my meeting tomorrow night
 - show my meeting with chris on wednesday
-- show my meeting about {Title=budget approval} 
-- am I busy tomorrow afternoon?
-- am I busy wednesday at 1pm?
-- am I busy wednesday
-- what do i have with John
-- what do I have with Elaine this week
 - what do i have planned for today at noon
+- what do i have with elaine this week
+- what do i have with john
+- what meetings do i have about {@Title=skills} this week
+- what meetings do i have named {@Title=team meeting} this week
 - what meetings do i have with robert
 - what meetings do i have with sally on monday
-- what meetings do I have named {Title=team meeting} this week
-- what meetings do i have about {Title=skills} this week
-- Anything named {Title=standup} this week?
-- Is there a meeting named {Title=review} tomorrow?
-- do I have a {Title=dentist} appointment this week
 
 
 ## GetFirstEvent
@@ -279,6 +283,9 @@
 - tell me when i can take a break
 - tell me when my next break is
 - what time am i available again
+- when am i free
+- when am i free on tuesday
+- when am i free this week
 - when can i take a break?
 - when do i have a break?
 - when do i have time between meetings
@@ -304,8 +311,11 @@
 ## Help
 - can you help me out
 - can you help me?
+- hello
 - help
 - help me
+- hey there
+- hi
 - i don't know what to do
 - i guess i'm stuck
 - just help me
@@ -317,27 +327,28 @@
 
 
 ## None
-- tomorrow at 3pm
-- tomorrow
-- this week
+- 3pm
+- allan
+- elaine
+- friday
+- friday at noon
+- justin
 - monday
-- tuesday
-- wednesday
-- thursday
-- Friday
+- monday at 1pm
 - saturday
 - sunday
-- monday at 1pm
-- tuesday at 11
-- wednesday at 6pm
-- thursday at 10am
-- friday at noon
-- 3pm
 - susan
+- this week
+- thursday
+- thursday at 10am
 - tom
-- elaine
-- justin
-- allan
+- tomorrow
+- tomorrow at 3pm
+- tuesday
+- tuesday at 11
+- wednesday
+- wednesday at 6pm
+
 
 ## SignOut
 - forget me
@@ -410,8 +421,11 @@
 > # PREBUILT Entity definitions
 
 @ prebuilt datetimeV2
+
 @ prebuilt email
+
 @ prebuilt ordinalV2
+
 @ prebuilt personName
 
 
