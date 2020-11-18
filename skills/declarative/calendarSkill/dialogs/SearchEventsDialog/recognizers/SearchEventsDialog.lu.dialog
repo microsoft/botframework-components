@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_SearchEventsDialog",
+  "recognizers": {
+    "en-us": "SearchEventsDialog.en-us.lu",
+    "": "SearchEventsDialog.en-us.lu"
+  }
+}
