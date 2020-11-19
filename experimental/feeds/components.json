@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Preview.ConversationalCore.GeneralIntent",
+    "version": "0.0.1-preview1",
+    "source": "nuget",
+    "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide general intent handling - like help and cancel"
+  },
+  {
+    "name": "Preview.ConversationalCore.GreetingDialog",
+    "version": "0.0.1-preview1",
+    "source": "nuget",
+    "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide a greeting experience"
+  },
+  {
+    "name": "Preview.ConversationalCore.OnboardingDialog",
+    "version": "0.0.1-preview1",
+    "source": "nuget",
+    "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide an onboarding experience"
+  },
+  {
+    "name": "Preview.ConversationalCore.UnknownIntentDialog",
+    "version": "0.0.1-preview1",
+    "source": "nuget",
+    "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide a fallback experience"
+  }
+]
