@@ -151,28 +151,24 @@
           },
           "assignments": [
             {
-              "property": "dialog.slots.personName",
-              "value": "=coalesce(if(@personName != null, json('[\"' + @personName + '\"]'), null), $slots.personName)"
+              "property": "$query",
+              "value": "=turn.activity.text"
             },
             {
-              "property": "dialog.slots.title",
-              "value": "=coalesce(@Title, $slots.title)"
+              "property": "$title",
+              "value": "=@title"
             },
             {
-              "property": "dialog.slots.dateTime",
-              "value": "=coalesce(@datetime, $slots.DateTime)"
+              "property": "$email",
+              "value": "=@@email"
             },
             {
-              "property": "dialog.slots.location",
-              "value": "=coalesce(@Location, $slots.Location)"
+              "property": "$personNameArray",
+              "value": "=@@personName"
             },
             {
-              "property": "dialog.slots.duration",
-              "value": "=coalesce(@Duration, $slots.Duration)"
-            },
-            {
-              "property": "dialog.slots.email",
-              "value": "=coalesce(if(@email != null, json('[\"' +@email + '\"]'), null), $slots.email)"
+              "property": "$location",
+              "value": "=@location"
             }
           ]
         },
@@ -187,12 +183,30 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "qXPZii"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=$query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+          },
+          "resultProperty": "$datetime"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "oD8szu"
           },
           "activityProcessed": true,
-          "dialog": "CreateEventDialog",
+          "dialog": "CreateDialog",
           "options": {
-            "slots": "=dialog.slots"
+            "title": "=$title",
+            "personNameArray": "=$personNameArray",
+            "email": "=$email",
+            "start": "=coalesce($datetime.start, $datetime.value)",
+            "end": "=$datetime.end",
+            "location": "=$location"
           }
         },
         {

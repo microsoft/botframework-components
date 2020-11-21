@@ -1,0 +1,1122 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "7Wk4XJ",
+    "name": "CreateDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "r2tHdG"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "mBFKDC"
+          },
+          "name": "CreateDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "PxySim"
+          },
+          "eventName": "SetTitle"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "OfZQWN"
+          },
+          "eventName": "SetAttendees",
+          "eventValue": {
+            "action": "add"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "bHpmSQ"
+          },
+          "condition": "=exists($attendees)",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "YXwTjT"
+              },
+              "eventName": "FindMeetingTimes"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "xHWvcD"
+              },
+              "eventName": "SetOnlineMeeting"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "4f0gJe"
+              },
+              "eventName": "SetDateTime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "zJ63LA"
+          },
+          "eventName": "SetLocation"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "xh99PI"
+          },
+          "assignments": [
+            {
+              "property": "$event.subject",
+              "value": "=$title"
+            },
+            {
+              "property": "$event.start.dateTime",
+              "value": "=$start"
+            },
+            {
+              "property": "$event.start.timeZone",
+              "value": "=user.workingHours.timeZone.name"
+            },
+            {
+              "property": "$event.end.dateTime",
+              "value": "=$end"
+            },
+            {
+              "property": "$event.end.timeZone",
+              "value": "=user.workingHours.timeZone.name"
+            },
+            {
+              "property": "$event.attendees",
+              "value": "=$attendees"
+            },
+            {
+              "property": "$event.isOnlineMeeting",
+              "value": "=$isTeamsMeeting"
+            },
+            {
+              "property": "$event.location",
+              "value": "=coalesce($location, '')"
+            },
+            {
+              "property": "$event.response",
+              "value": "=organizer"
+            },
+            {
+              "property": "$event.description",
+              "value": "=coalesce($description, '')"
+            },
+            {
+              "property": "$event.isRecurring",
+              "value": "=coalesce($isRecurring, false)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "o1UB6n"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "alwaysPrompt": false,
+          "prompt": "${ConfirmInput_Prompt_o1UB6n()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "$createConfirmResult",
+          "allowInterruptions": "=DefaultInterruptionCondition(ConfirmInput_Response_o1UB6n)",
+          "style": "none",
+          "maxTurnCount": "=DefaultSkipCondition()"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "g4zn9l"
+          },
+          "condition": "=$createConfirmResult",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "EWqAV7"
+              },
+              "eventName": "CreateNewEvent"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "111xmA"
+              },
+              "activity": "${SendActivity_111xmA()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "AdPoOF"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "IFUPn8",
+        "name": "OnEvent (SetTitle)"
+      },
+      "event": "SetTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "DHvA61"
+          },
+          "name": "CreateDialog.OnEvent_SetTitle"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "HmkRsB"
+          },
+          "disabled": false,
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#Cancel.score > 0.8 || exists(turn.activity.value.intent)",
+          "prompt": "${TextInput_Prompt_HmkRsB()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "$title",
+          "maxTurnCount": "=if(turn.skip, 1, 3)",
+          "value": "=coalesce(@title, $title)",
+          "outputFormat": "=sentenceCase(this.value)"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "k7v0z0",
+        "name": "OnEvent (SetAttendees)"
+      },
+      "event": "SetAttendees",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2wFYKn"
+          },
+          "name": "CreateDialog.OnEvent_SetAttendees"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0XBGS4"
+          },
+          "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "vp82Mq"
+              },
+              "activityProcessed": true,
+              "dialog": "LookupContactDialog",
+              "resultProperty": "$contacts",
+              "options": {
+                "personNameArray": "=$personNameArray",
+                "emailArray": "=$emailArray"
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "zqgAVO"
+              },
+              "condition": "=exists($contacts)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "9AbjQq"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "$attendees",
+                  "value": "=$contacts"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "KhyZ3n"
+                  },
+                  "activity": "${SendActivity_KhyZ3n()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "yZQDmt"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$attendees"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "=email"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "=ContactListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "ContactListTitle",
+                    "item": "ContactListItem",
+                    "actions": "ContactListActions",
+                    "initialPrompt": "ContactListPrompt",
+                    "showMorePrompt": "ContactListShowMorePrompt",
+                    "skipResponse": "ContactListSkipResponse",
+                    "defaultValueResponse": "ContactListDefaultValueResponse"
+                  }
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "contactName": "=dialog.foreach.contactValue"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "QPOAj3"
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "resultProperty": "$selectedContact",
+              "options": "=$listOptions"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "5bw59y"
+              },
+              "changeType": "remove",
+              "itemsProperty": "$attendees",
+              "value": "=$selectedContact"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "zz0Eaj"
+              },
+              "activity": "${SendActivity_zz0Eaj()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "S3lhI0",
+        "name": "OnEvent (FindMeetingTimes)"
+      },
+      "event": "FindMeetingTimes",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2yLHBA"
+          },
+          "name": "CreateDialog.OnEvent_FindMeetingTimes"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
+          "$designer": {
+            "id": "JRs7I1"
+          },
+          "resultProperty": "$timeslots",
+          "token": "=user.token.token",
+          "attendeesProperty": "=$attendees",
+          "durationProperty": "=int(coalesce($duration, settings.defaultValue.duration))",
+          "timeZoneProperty": "=user.workingHours.timeZone.name"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GXltMW"
+          },
+          "assignments": [
+            {
+              "property": "$listOptions.items",
+              "value": "=$timeslots"
+            },
+            {
+              "property": "$listOptions.actionTitleProperty",
+              "value": "index"
+            },
+            {
+              "property": "$listOptions.activePrompt",
+              "value": "TimeSuggestionListPrompt"
+            },
+            {
+              "property": "$listOptions.templates",
+              "value": {
+                "icon": "TimeSlotIconUrl",
+                "title": "TimeSuggestionListTitle",
+                "item": "TimeSuggestionListItem",
+                "actions": "TimeSuggestionListActions",
+                "initialPrompt": "TimeSuggestionListPrompt",
+                "showMorePrompt": "TimeSuggestionListShowMorePrompt",
+                "skipResponse": "TimeSuggestionListSkipResponse",
+                "defaultValueResponse": "TimeSuggestionListDefaultValueResponse",
+                "numericalChoiceResponse": "TimeSuggestionNumericalChoiceResponse"
+              },
+              "additionalOptions": {}
+            },
+            {
+              "property": "$listOptions.additionalOptions",
+              "value": {
+                "attendees": "=$attendees"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "OKwaeW"
+          },
+          "activityProcessed": true,
+          "dialog": "ListDialog",
+          "options": "=$listOptions",
+          "resultProperty": "$selectedTimeSlot"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "8UYg0q"
+          },
+          "condition": "=exists($selectedTimeSlot)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "PSMGrc"
+              },
+              "assignments": [
+                {
+                  "property": "$start",
+                  "value": "=$selectedTimeSlot.Start"
+                },
+                {
+                  "property": "$end",
+                  "value": "=$selectedTimeSlot.End"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "P8mLoH"
+              },
+              "eventName": "SetDateTime"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "aREGVo",
+        "name": "OnEvent (SetDateTime)"
+      },
+      "event": "SetDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "EqokE4"
+          },
+          "name": "CreateDialog.OnEvent_SetDateTime"
+        },
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "D6qCmX"
+          },
+          "disabled": false,
+          "maxTurnCount": "=if(turn.skip, 1, 3)",
+          "alwaysPrompt": false,
+          "prompt": "${DateTimeInput_Prompt_D6qCmX()}",
+          "unrecognizedPrompt": "${DateTimeInput_UnrecognizedPrompt_D6qCmX()}",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "$dateTime",
+          "validations": [],
+          "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != DateTimeInput_Response_D6qCmX) || exists(turn.activity.value.intent)"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "TuvMfj"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=turn.activity.text",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+          },
+          "resultProperty": "dialog.dateTimeResolution"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "Bxsd4C"
+          },
+          "condition": "dialog.dateTimeResolution.type",
+          "cases": [
+            {
+              "value": "date",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DateTimeInput",
+                  "$designer": {
+                    "id": "SOJEYp"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": "=DefaultSkipCondition()",
+                  "alwaysPrompt": false,
+                  "prompt": "${DateTimeInput_Prompt_SOJEYp()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "$time",
+                  "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != DateTimeInput_Response_SOJEYp) || exists(turn.activity.value.intent)"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "bylA5J"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ResolveDateTimeDialog",
+                  "options": {
+                    "query": "=turn.activity.text"
+                  },
+                  "resultProperty": "$timeResolution"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "nQR5XT"
+                  },
+                  "property": "$start",
+                  "value": "=formatTicks(ticks(startOfDay(formatDateTime($dateTimeResolution.value))) + (ticks(formatDateTime($timeResolution.value)) - ticks(startOfDay(formatDateTime($timeResolution.value)))))"
+                }
+              ]
+            },
+            {
+              "value": "time",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WhncDF"
+                  },
+                  "property": "$start",
+                  "value": "=formatDateTime($dateTimeResolution.value)"
+                }
+              ]
+            },
+            {
+              "value": "datetime",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Ch5Bht"
+                  },
+                  "property": "$start",
+                  "value": "=formatDateTime($dateTimeResolution.value)"
+                }
+              ]
+            },
+            {
+              "value": "daterange",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "IgCofz"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$start",
+                      "value": "=formatDateTime($dateTimeResolution.start)"
+                    },
+                    {
+                      "property": "$end",
+                      "value": "=addDays(formatDateTime($dateTimeResolution.end), 1)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "timerange",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "dxljMy"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$start",
+                      "value": "=formatDateTime($dateTimeResolution.start)"
+                    },
+                    {
+                      "property": "$end",
+                      "value": "=formatDateTime($dateTimeResolution.end)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "datetimerange",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "oNO16y"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$start",
+                      "value": "=formatDateTime($dateTimeResolution.start)"
+                    },
+                    {
+                      "property": "$end",
+                      "value": "=formatDateTime($dateTimeResolution.end)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "bKG6t7"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OlaFLm"
+          },
+          "condition": "=exists($end)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "1H4f3Z"
+              },
+              "property": "$end",
+              "value": "=addMinutes(formatDateTime($start), int(coalesce($duration, settings.defaultValue.duration)))"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "7jMd5S",
+        "name": "OnEvent (SetOnlineMeeting)"
+      },
+      "event": "SetOnlineMeeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wuIKU1"
+          },
+          "name": "CreateDialog.OnEvent_SetOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6lIKTQ"
+          },
+          "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "a5WUmn"
+              },
+              "property": "$isTeamsMeeting",
+              "value": "=true"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "PqPtGV"
+              },
+              "activity": "${SendActivity_PqPtGV()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lYmPDC"
+              },
+              "property": "$isTeamsMeeting",
+              "value": "=false"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "wYoWNO"
+              },
+              "activity": "${SendActivity_wYoWNO()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "1bBEA4",
+        "name": "OnEvent (SetLocation)"
+      },
+      "event": "SetLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ucMWCF"
+          },
+          "name": "CreateDialog.OnEvent_SetLocation"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "Qi0vNC"
+          },
+          "disabled": false,
+          "alwaysPrompt": false,
+          "prompt": "${TextInput_Prompt_Qi0vNC()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "$location",
+          "maxTurnCount": "=if(turn.skip, 1, 3)",
+          "allowInterruptions": "=#Cancel.score > 0.8 || exists(turn.activity.value.intent)"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Q2F4BT",
+        "name": "OnEvent (SetDescription)"
+      },
+      "event": "SetDescription",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "XTPspF"
+          },
+          "name": "CreateDialog.OnEvent_SetDescription"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "68Dudo"
+          },
+          "disabled": false,
+          "maxTurnCount": "=if(turn.skip, 1, 3)",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#Cancel.score > 0.8 || exists(turn.activity.value.intent)",
+          "prompt": "${TextInput_Prompt_68Dudo()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "$description",
+          "outputFormat": "=sentenceCase(this.value)"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Ne7r9K",
+        "name": "OnEvent (CreateNewEvent)"
+      },
+      "event": "CreateNewEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "sTKDg2"
+          },
+          "name": "CreateDialog.OnEvent_CreateNewEvent"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.CreateEvent",
+          "$designer": {
+            "id": "MeUSTw"
+          },
+          "resultProperty": "$createEventResult",
+          "token": "=user.token.token",
+          "titleProperty": "=$title",
+          "descriptionProperty": "=$desciption",
+          "startProperty": "=$start",
+          "endProperty": "=$end",
+          "timeZoneProperty": "=user.workingHours.timeZone.name",
+          "locationProperty": "=$location",
+          "attendeesProperty": "=$attendees",
+          "isOnlineMeetingProperty": "=$isTeamsMeeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "aX3aSR"
+          },
+          "condition": "$createEventResult != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ML5sqP"
+              },
+              "activity": "${SendActivity_ML5sqP()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "BZkdix"
+              },
+              "activity": "${SendActivity_BZkdix()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "KMdstA",
+        "name": "OnIntent (SetTitle)"
+      },
+      "intent": "SetTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "i9KMqi"
+          },
+          "name": "CreateDialog.OnIntent_SetTitle"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "EKSQWL"
+          },
+          "eventName": "SetTitle"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "H1FdHn",
+        "name": "OnIntent (AddAttendee)"
+      },
+      "intent": "AddAttendee",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "AkjCpl"
+          },
+          "name": "CreateDialog.OnIntent_AddAttendee"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "W9Qu4d"
+          },
+          "eventName": "SetAttendees",
+          "eventValue": {
+            "action": "add"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "wUpPeb",
+        "name": "OnIntent (RemoveAttendee)"
+      },
+      "intent": "RemoveAttendee",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "okdtUr"
+          },
+          "name": "CreateDialog.OnIntent_RemoveAttendee"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "S7JXBq"
+          },
+          "eventName": "SetAttendees",
+          "eventValue": {
+            "action": "remove"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "oWMJft",
+        "name": "OnIntent (SetDateTime)"
+      },
+      "intent": "SetDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "mPKrRM"
+          },
+          "name": "CreateDialog.OnIntent_SetDateTime"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Aa8MZT"
+          },
+          "eventName": "SetDateTime"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "dKR4NI",
+        "name": "OnIntent (AddTeamsLink)"
+      },
+      "intent": "AddTeamsLink",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "sAWJjF"
+          },
+          "name": "CreateDialog.OnIntent_AddTeamsLink"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "nBimuO"
+          },
+          "eventName": "SetOnlineMeeting",
+          "eventValue": {
+            "action": "add"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "CUNQMu",
+        "name": "OnIntent (RemoveTeamsLink)"
+      },
+      "intent": "RemoveTeamsLink",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "AIp7JR"
+          },
+          "name": "CreateDialog.OnIntent_RemoveTeamsLink"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "dLCdSc"
+          },
+          "eventName": "SetOnlineMeeting",
+          "eventValue": {
+            "action": "remove"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "SuPEFo",
+        "name": "OnIntent (SetLocation)"
+      },
+      "intent": "SetLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xAorBS"
+          },
+          "name": "CreateDialog.OnIntent_SetLocation"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "R40YIi"
+          },
+          "eventName": "SetLocation"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9KQ0ec",
+        "name": "OnIntent (SetDescription)"
+      },
+      "intent": "SetDescription",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "09ybf4"
+          },
+          "name": "CreateDialog.OnIntent_SetDescription"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "8Pwzv9"
+          },
+          "eventName": "SetDescription"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "aFeCU4",
+        "name": "OnIntent (Skip)"
+      },
+      "intent": "Skip",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Y5PPQB"
+          },
+          "name": "CreateDialog.OnIntent_Skip"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "L2LKtF"
+          },
+          "property": "turn.skip",
+          "value": "=true"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "8caScR",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "lnSf08"
+          },
+          "name": "CreateDialog.OnIntent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "luOnHv"
+          },
+          "activity": "${SendActivity_luOnHv()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "dSHOIO"
+          },
+          "activityProcessed": true
+        }
+      ]
+    }
+  ],
+  "generator": "CreateDialog.lg",
+  "recognizer": "CreateDialog.lu.qna",
+  "id": "CreateDialog"
+}

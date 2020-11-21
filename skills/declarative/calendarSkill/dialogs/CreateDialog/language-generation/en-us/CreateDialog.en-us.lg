@@ -1,0 +1,60 @@
+[import](common.lg)
+[import](event.lg)
+
+# TextInput_Prompt_HmkRsB()
+- What should I set the title to?
+
+# DateTimeInput_Prompt_D6qCmX()
+- When should I schedule the meeting?
+# DateTimeInput_Prompt_SOJEYp()
+- At what time?
+- What time works best?
+- And at what time?
+- Got it, and when do you want it to start?
+
+# ConfirmCreatePrompt
+- Does this look correct?
+
+# SendActivity_ML5sqP()
+- All right, your event has been created.
+- I've added the meeting to your calendar.
+- OK, the event has been created for you.
+
+# SendActivity_BZkdix()
+- Sorry, I can't create event for you now. Please try again later.
+
+# SendActivity_111xmA()
+- OK, I will not create the event.
+- No problem, the event has not been created.
+
+# ConfirmInput_Prompt_o1UB6n()
+[Activity
+    text=${ConfirmCreatePrompt()}
+    attachments=${json(EventCreateDetailCard($event))}
+]
+
+# DateTimeInput_UnrecognizedPrompt_D6qCmX()
+- I didn't understand that date or time. Please try again.
+# SendActivity_PqPtGV()
+- Sure, I’ve added a Teams link for you as well.
+- OK, I’ll also include a Teams link.
+- Got it. I've also included a Teams meeting.
+# SendActivity_wYoWNO()
+- Sure, I’ve removed the Teams link for you.
+- OK, I’ll remove the Teams link.
+- Got it. I've removed the Teams meeting.
+# TextInput_Prompt_Qi0vNC()
+- What location would you like to include?
+- What should I set the location to?
+- What is the location?
+- What is the location?
+
+# SendActivity_KhyZ3n()
+- ```
+I've added the following attendees:
+\n * ${join(select($contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), " \n * ")}
+```
+# SendActivity_zz0Eaj()
+- I've removed ${selectedContact.name}.
+# SendActivity_luOnHv()
+- ${CancelMessage()}

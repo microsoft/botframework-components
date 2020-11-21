@@ -9,7 +9,8 @@
       "Help": [],
       "SignOut": [],
       "CreateEvent": [
-        "CreateEventDialog.en-us"
+        "ResolveDateTimeDialog.en-us",
+        "CreateDialog.en-us"
       ],
       "GetEvents": [
         "ResolveDateTimeDialog.en-us",
@@ -73,6 +74,26 @@
       ]
     }
   },
+  "CreateDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "LookupContactDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "SetTitle": [],
+      "AddAttendee": [],
+      "RemoveAttendee": [],
+      "SetDateTime": [],
+      "AddTeamsLink": [],
+      "RemoveTeamsLink": [],
+      "SetLocation": [],
+      "SetDescription": [],
+      "Skip": [],
+      "Cancel": []
+    }
+  },
   "CreateEventDialog.en-us": {
     "rootDialog": false,
     "triggers": {
@@ -109,6 +130,16 @@
       "Next": [],
       "Previous": [],
       "Skip": []
+    }
+  },
+  "LookupContactDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ListDialog.en-us"
+      ],
+      "Skip": [],
+      "Cancel": []
     }
   },
   "SearchEventsDialog.en-us": {

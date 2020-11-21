@@ -1,0 +1,12 @@
+[import](common.lg)
+
+# TextInput_Prompt_sFm17r()
+- Who should I invite?
+# ConfirmInput_Prompt_pjKHu4()
+- Would you like to invite anyone else?
+# SendActivity_84gSFd()
+- I couldn't find any matching contacts. Can you try providing the first and last name or email address?
+# SendActivity_Lr3hgt()
+- Sure, I'll continue with ${$contact.EmailAddress.Name} (${$contact.EmailAddress.Address}).
+- Got it. I'll move forward with ${$contact.EmailAddress.Name} (${$contact.EmailAddress.Address}).
+- OK. I'll invite ${$contact.EmailAddress.Name} (${$contact.EmailAddress.Address}).
