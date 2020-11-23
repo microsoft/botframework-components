@@ -138,10 +138,12 @@
               "choiceOptions": {
                 "includeNumbers": true,
                 "inlineOrMore": ", or ",
-                "inlineOr": " or "
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
               },
               "property": "dialog.attendanceConfirm",
-              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null"
+              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null",
+              "style": "none"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -322,7 +324,7 @@
             "email": "=dialog.email",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult",
-            "eventInfo": "=dialog.selectedEvent",
+            "eventInfo": "=if(dialog.eventId==null, dialog.selectedEvent, null)",
             "operation": "=dialog.operation",
             "entityName": "=dialog.entityName"
           }

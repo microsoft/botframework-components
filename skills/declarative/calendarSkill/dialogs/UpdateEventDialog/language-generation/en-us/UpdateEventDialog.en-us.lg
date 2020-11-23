@@ -6,10 +6,10 @@
 - I can't update this event.
 
 # ConfirmInput_Prompt_UoeZDh()
-[Activity
-    text = ${ConfirmUpdate()}
-    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
-]
+- IF: ${ dialog.eventId == null}
+    - ${ConfirmUpdateEntity()}
+- ELSE:
+    - ${ConfirmUpdate()}
 
 # SendActivity_mRrjQN()
 - All right, I've updated the event for you.
@@ -20,6 +20,12 @@
 - Sure, you can update the event:
 - Alright, here you go:
 - Ready to update:
+
+# ConfirmUpdateEntity()
+[Activity
+    text = ${ConfirmUpdate()}
+    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
+]
 
 # ConfirmInput_Prompt_35TBWD()
 [Activity
