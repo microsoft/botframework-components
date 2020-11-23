@@ -3,12 +3,6 @@
 [import](schedule.lg)
 [import](availability.lg)
 
-# SendActivity_gKWYRF()
-[Activity
-    text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
-]
-
 # SendActivity_IrC8MR()
 - You're signed out!
 
@@ -184,3 +178,30 @@
 
 # SendActivity_iHNKPb()
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
+
+# SendActivity_lqvfia()
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = New event | What's on today
+]
+
+# SendActivity_DGXXhL()
+[HeroCard
+   text = Try the calendar skill now!
+   buttons = ${LaunchAction()}
+]
+
+# LaunchAction
+[CardAction
+title = Launch
+type = postBack
+value = Launch
+]
+
+# SendActivity_wkpDLo()
+- text: ${turn.activity.text}
+# Bot.SendActivityPlus_Activity_y4L5ab()
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = New event | What's on today
+]
