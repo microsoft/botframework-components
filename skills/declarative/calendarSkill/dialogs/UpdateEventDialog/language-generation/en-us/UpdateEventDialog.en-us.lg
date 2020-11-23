@@ -6,10 +6,10 @@
 - I can't update this event.
 
 # ConfirmInput_Prompt_UoeZDh()
-- IF: ${ dialog.eventId == null}
-    - ${ConfirmUpdateEntity()}
-- ELSE:
-    - ${ConfirmUpdate()}
+[Activity
+    text = ${ConfirmUpdate()}
+    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
+]
 
 # SendActivity_mRrjQN()
 - All right, I've updated the event for you.
@@ -21,18 +21,17 @@
 - Alright, here you go:
 - Ready to update:
 
-# ConfirmUpdateEntity()
-[Activity
-    text = ${ConfirmUpdate()}
-    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
-]
-
 # ConfirmInput_Prompt_35TBWD()
+- IF: ${ dialog.eventId == null }
+    - ${ConfirmUpdateResponseCard()}
+- ELSE:
+    - ${ConfirmUpdateResponse()}
+
+# ConfirmUpdateResponseCard()
 [Activity
     text = ${ConfirmUpdateResponse()}
-    attachments=${json(EventDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
 ]
-
 
 # ConfirmUpdateResponse()
 - I see you are not the owner of the meeting. Would you like to update your response? 

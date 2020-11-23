@@ -9,6 +9,9 @@
 # EventRespondDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventRespondAction(event))}
 
+# EventUpdateDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventUpdateAction())}
+
 # EventDetailHeader(event)
 - ${CardHeader(EventIconUrl(), event.Subject, "", "")}
 
@@ -716,3 +719,27 @@
     - , with ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
 - ELSE:
     - , with ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
+
+# EventUpdateAction()
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Add participant",
+            "data": ${BuildCardActionData('Add participant')}
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Update location",
+            "data": ${BuildCardActionData('Update location')}
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Cancel event",
+            "data": ${BuildCardActionData('Cancel event')}
+        }
+    ]
+}
+```

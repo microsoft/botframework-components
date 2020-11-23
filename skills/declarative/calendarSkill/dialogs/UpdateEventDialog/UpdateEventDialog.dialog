@@ -550,7 +550,9 @@
           "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.confirmUpdate",
           "allowInterruptions": "=#Cancel.score > 0.8",
