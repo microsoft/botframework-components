@@ -198,8 +198,6 @@ type = postBack
 value = Launch
 ]
 
-# SendActivity_wkpDLo()
-- text: ${turn.activity.text}
 # Bot.SendActivityPlus_Activity_y4L5ab()
 [Activity
     text = ${WelcomeUser()}

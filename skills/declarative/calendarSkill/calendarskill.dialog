@@ -27,7 +27,7 @@
           "$designer": {
             "id": "25rJrE"
           },
-          "condition": "= turn.activity.channelId == 'msteams'",
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -2186,13 +2186,6 @@
             "id": "6cuuag"
           },
           "name": "calendarSkill.UnknownIntent"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "wkpDLo"
-          },
-          "activity": "${SendActivity_wkpDLo()}"
         },
         {
           "$kind": "Microsoft.SendActivity",
