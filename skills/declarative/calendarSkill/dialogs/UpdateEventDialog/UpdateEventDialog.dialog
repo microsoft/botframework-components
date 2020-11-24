@@ -512,6 +512,68 @@
                   ]
                 }
               ]
+            },
+            {
+              "value": "attendance",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "0c3hqk"
+                  },
+                  "condition": "dialog.updateResult.newValue",
+                  "cases": [
+                    {
+                      "value": "accept",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "ZuGXhI"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "RespondToEventDialog",
+                          "options": {
+                            "response": "='accepted'",
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "value": "cancel",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "sParo4"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "CancelEventDialog",
+                          "options": {
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "2a0oM8"
+                      },
+                      "activity": "${SendActivity_2a0oM8()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "vENL9U"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "default": [

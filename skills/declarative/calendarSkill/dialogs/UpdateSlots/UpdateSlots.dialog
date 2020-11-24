@@ -59,7 +59,7 @@
                 "id": "gZ1tbS"
               },
               "disabled": false,
-              "maxTurnCount": 3,
+              "maxTurnCount": "3",
               "alwaysPrompt": false,
               "prompt": "${TextInput_Prompt_gZ1tbS()}",
               "unrecognizedPrompt": "",
@@ -71,7 +71,7 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "i6GQWG"
+                "id": "FwP0Ar"
               },
               "activityProcessed": true,
               "dialog": "ResolveUpdateEntity",
@@ -81,7 +81,7 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "euJ1Gm"
+                "id": "zrGQd8"
               },
               "property": "dialog.entityName",
               "value": "=toLower(coalesce(dialog.resolveUpdateEntityResult.entityName, dialog.entityName))"
@@ -661,6 +661,39 @@
             "id": "GYndux"
           },
           "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qu3sJ7",
+        "name": "CancelEvent"
+      },
+      "intent": "CancelEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "5Ez2tg"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "attendance"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "cancel"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "bj08J1"
+          },
+          "value": "=dialog.newSlotsResult"
         }
       ]
     }

@@ -3,8 +3,8 @@
 # EventDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventDetailActions(event))}
 
-# EventCreateDetailCard(event)
-- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventCreateAction(event))}
+# EventConfirmDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventConfirmAction(event))}
 
 # EventRespondDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventRespondAction(event))}
@@ -646,7 +646,7 @@
     }
     ```
 
-# EventCreateAction(event)
+# EventConfirmAction(event)
 -```
 {
     "type": "ActionSet",

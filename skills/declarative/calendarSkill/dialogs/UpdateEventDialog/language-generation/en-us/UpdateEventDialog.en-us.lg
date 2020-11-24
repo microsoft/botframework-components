@@ -8,7 +8,7 @@
 # ConfirmInput_Prompt_UoeZDh()
 [Activity
     text = ${ConfirmUpdate()}
-    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventConfirmDetailCard(dialog.selectedEvent))}
 ]
 
 # SendActivity_mRrjQN()
@@ -30,7 +30,7 @@
 # ConfirmUpdateResponseCard()
 [Activity
     text = ${ConfirmUpdateResponse()}
-    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventConfirmDetailCard(dialog.selectedEvent))}
 ]
 
 # ConfirmUpdateResponse()
@@ -57,3 +57,6 @@
 
 # SendActivity_IzVDsv()
 - ${CancelMessage()}
+
+# SendActivity_2a0oM8()
+- I can't update this event.
