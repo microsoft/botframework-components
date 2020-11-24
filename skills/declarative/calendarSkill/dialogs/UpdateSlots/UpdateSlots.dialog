@@ -59,7 +59,7 @@
                 "id": "gZ1tbS"
               },
               "disabled": false,
-              "maxTurnCount": "3",
+              "maxTurnCount": 3,
               "alwaysPrompt": false,
               "prompt": "${TextInput_Prompt_gZ1tbS()}",
               "unrecognizedPrompt": "",
@@ -71,7 +71,7 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "FwP0Ar"
+                "id": "i6GQWG"
               },
               "activityProcessed": true,
               "dialog": "ResolveUpdateEntity",
@@ -81,7 +81,7 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "zrGQd8"
+                "id": "euJ1Gm"
               },
               "property": "dialog.entityName",
               "value": "=toLower(coalesce(dialog.resolveUpdateEntityResult.entityName, dialog.entityName))"
