@@ -70,7 +70,8 @@
       "UpdateEvent": [
         "ResolveDateTimeDialog.en-us",
         "UpdateEventDialog.en-us"
-      ]
+      ],
+      "LaunchBot": []
     }
   },
   "CreateEventDialog.en-us": {
