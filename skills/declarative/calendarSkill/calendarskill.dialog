@@ -23,20 +23,38 @@
           "name": "calendarSkill.Greeting"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "RvRTf5"
+            "id": "25rJrE"
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "gKWYRF",
-            "name": "Send a response"
-          },
-          "activity": "${SendActivity_gKWYRF()}"
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "NeTAU8"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lqvfia",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_lqvfia()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DGXXhL"
+              },
+              "activity": "${SendActivity_DGXXhL()}"
+            }
+          ]
         }
       ]
     },
@@ -2198,6 +2216,32 @@
             "id": "ccWEyG"
           },
           "activity": "${SendActivity_ccWEyG()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "z90pOz",
+        "name": "LaunchBot"
+      },
+      "intent": "LaunchBot",
+      "actions": [
+        {
+          "$kind": "Microsoft.Bot.SendActivityPlus",
+          "$designer": {
+            "id": "y4L5ab"
+          },
+          "operationType": "whisper",
+          "activityIdProperty": "turn.activity.replyToId",
+          "whisperToProperty": "turn.activity.from",
+          "activity": "${Bot.SendActivityPlus_Activity_y4L5ab()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "pqtmHa"
+          }
         }
       ]
     }
