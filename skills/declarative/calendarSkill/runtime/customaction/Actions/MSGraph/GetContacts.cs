@@ -13,6 +13,7 @@ using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using AdaptiveExpressions;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -66,6 +67,11 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     //var emailAddresses = new List<string>();
                     var emailAddresses = contact.EmailAddresses.Where(e => !string.IsNullOrEmpty(e.Address) && IsEmail(e.Address)).Select(e => e.Address).ToList();
+                    if (!emailAddresses.Any())
+                    {
+                        emailAddresses = contact.ImAddresses.Where(e => !string.IsNullOrEmpty(e) && IsEmail(e)).ToList();
+                    }
+
                     if (emailAddresses.Any())
                     {
                         // Get user properties.
