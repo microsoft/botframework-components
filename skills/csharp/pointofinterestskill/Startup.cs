@@ -95,7 +95,7 @@ namespace PointOfInterestSkill
 
             // Configure bot state
             // Uncomment the following line for local development without Cosmos Db
-            // services.AddSingleton<IStorage, MemoryStorage>();
+            // services.AddSingleton<IStorage>(new MemoryStorage());
             services.AddSingleton<IStorage>(new CosmosDbPartitionedStorage(settings.CosmosDb));
             services.AddSingleton<UserState>();
             services.AddSingleton<ConversationState>();
@@ -128,7 +128,7 @@ namespace PointOfInterestSkill
             services.AddTransient<GetDirectionsDialog>();
 
             // Configure adapters
-            services.AddTransient<IBotFrameworkHttpAdapter, DefaultAdapter>();
+            services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure bot
             services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();

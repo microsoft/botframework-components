@@ -1,12 +1,18 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
+using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.DependencyInjection;
+using ToDoSkill.Responses.Main;
 
 namespace ToDoSkill.Bots
 {
@@ -17,6 +23,7 @@ namespace ToDoSkill.Bots
         private readonly BotState _conversationState;
         private readonly BotState _userState;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
+        private readonly LocaleTemplateManager _templateManager;
 
         public DefaultActivityHandler(IServiceProvider serviceProvider, T dialog)
         {
@@ -25,6 +32,7 @@ namespace ToDoSkill.Bots
             _conversationState = serviceProvider.GetService<ConversationState>();
             _userState = serviceProvider.GetService<UserState>();
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
+            _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
@@ -41,13 +49,21 @@ namespace ToDoSkill.Bots
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
-        protected override Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
+        protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
+            await turnContext.SendActivityAsync(_templateManager.GenerateActivityForLocale(ToDoMainResponses.ToDoWelcomeMessage), cancellationToken);
+            await _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 
         protected override Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            // directline speech occasionally sends empty message activities that should be ignored
+            var activity = turnContext.Activity;
+            if (activity.ChannelId == Channels.DirectlineSpeech && activity.Type == ActivityTypes.Message && string.IsNullOrEmpty(activity.Text))
+            {
+                return Task.CompletedTask;
+            }
+
             return _dialog.RunAsync(turnContext, _dialogStateAccessor, cancellationToken);
         }
 

@@ -24,8 +24,12 @@ namespace ToDoSkill.Tests.Flow.Utterances
                 General.Intent.ShowNext));
 
             this.Add(Logout, GetGeneralIntent(
-                ReadMore,
+                Logout,
                 General.Intent.Logout));
+
+            this.Add(Help, GetGeneralIntent(
+                Help,
+                General.Intent.Help));
         }
 
         public static double TopIntentScore { get; } = 0.9;
@@ -37,6 +41,8 @@ namespace ToDoSkill.Tests.Flow.Utterances
         public static string ReadMore { get; } = "read more";
 
         public static string Logout { get; } = "log out";
+
+        public static string Help { get; } = "help";
 
         public static string UnknownIntent { get; } = "what's the weather?";
 

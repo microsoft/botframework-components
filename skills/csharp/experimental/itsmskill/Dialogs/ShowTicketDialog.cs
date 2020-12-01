@@ -3,29 +3,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
-using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
-using ITSMSkill.Services;
 using ITSMSkill.Utilities;
 using Luis;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Solutions.Responses;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Showing Ticket.
+    /// </summary>
     public class ShowTicketDialog : SkillDialogBase
     {
         public ShowTicketDialog(
@@ -187,7 +182,22 @@ namespace ITSMSkill.Dialogs
             var states = new List<TicketState>();
             if (state.TicketState != TicketState.None)
             {
-                states.Add(state.TicketState);
+                if (state.TicketState == TicketState.Active)
+                {
+                    states.Add(TicketState.New);
+                    states.Add(TicketState.InProgress);
+                    states.Add(TicketState.OnHold);
+                    states.Add(TicketState.Resolved);
+                }
+                else if (state.TicketState == TicketState.Inactive)
+                {
+                    states.Add(TicketState.Closed);
+                    states.Add(TicketState.Canceled);
+                }
+                else
+                {
+                    states.Add(state.TicketState);
+                }
             }
 
             var countResult = await management.CountTicket(query: state.TicketTitle, urgencies: urgencies, number: state.TicketNumber, states: states);
@@ -241,7 +251,7 @@ namespace ITSMSkill.Dialogs
                 var cards = new List<Card>();
                 foreach (var ticket in result.Tickets)
                 {
-                    cards.Add(GetTicketCard(sc.Context, ticket));
+                    cards.Add(GetTicketCard(sc.Context, state, ticket));
                 }
 
                 await sc.Context.SendActivityAsync(GetCardsWithIndicator(state.PageIndex, maxPage, cards), cancellationToken);

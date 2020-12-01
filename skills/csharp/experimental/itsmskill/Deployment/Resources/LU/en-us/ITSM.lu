@@ -2,6 +2,7 @@
 [Ticket Update](./secondary/TicketUpdate.lu)
 [Ticket Show](./secondary/TicketShow.lu)
 [Ticket Close](./secondary/TicketClose.lu)
+[Create Subscription](./secondary/CreateSubscription.lu)
 [Knowledge Show](./secondary/KnowledgeShow.lu)
 
 
@@ -70,6 +71,13 @@ $TicketState:closed=
 
 $TicketState:canceled=
 - canceled
+
+$TicketState:active=
+- active
+- open
+
+$TicketState:inactive=
+- inactive
 
 
 > # Regex entities

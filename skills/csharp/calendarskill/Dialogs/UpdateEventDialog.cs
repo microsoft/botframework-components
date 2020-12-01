@@ -190,13 +190,13 @@ namespace CalendarSkill.Dialogs
                 var state = await Accessor.GetAsync(sc.Context, cancellationToken: cancellationToken);
                 var options = (CalendarSkillDialogOptions)sc.Options;
 
-                var newStartTime = (DateTime)state.UpdateMeetingInfo.NewStartDateTime;
+                var newStartTime = TimeConverter.ConvertUtcToUserTime((DateTime)state.UpdateMeetingInfo.NewStartDateTime, state.GetUserTimeZone());
                 var origin = state.ShowMeetingInfo.FocusedEvents[0];
                 var updateEvent = new EventModel(origin.Source);
                 var last = origin.EndTime - origin.StartTime;
+                updateEvent.TimeZone = state.GetUserTimeZone();
                 updateEvent.StartTime = newStartTime;
                 updateEvent.EndTime = (newStartTime + last).AddSeconds(1);
-                updateEvent.TimeZone = TimeZoneInfo.Utc;
                 updateEvent.Id = origin.Id;
 
                 if (!string.IsNullOrEmpty(state.UpdateMeetingInfo.RecurrencePattern) && !string.IsNullOrEmpty(origin.RecurringId))

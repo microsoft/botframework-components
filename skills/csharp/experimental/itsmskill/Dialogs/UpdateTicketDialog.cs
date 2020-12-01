@@ -3,27 +3,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
-using ITSMSkill.Models.ServiceNow;
 using ITSMSkill.Prompts;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Responses.Ticket;
-using ITSMSkill.Services;
 using ITSMSkill.Utilities;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Choices;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Solutions.Responses;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Updating Ticket.
+    /// </summary>
     public class UpdateTicketDialog : SkillDialogBase
     {
         public UpdateTicketDialog(
@@ -128,10 +123,11 @@ namespace ITSMSkill.Dialogs
 
             if (!result.Success)
             {
-                return await SendServiceErrorAndCancelAsync(sc, result, cancellationToken);
+                // Check if Error is UnAuthorized and logout user
+                return await HandleAPIUnauthorizedError(sc, result, cancellationToken);
             }
 
-            var card = GetTicketCard(sc.Context, result.Tickets[0]);
+            var card = GetTicketCard(sc.Context, state, result.Tickets[0]);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketUpdated, card, null), cancellationToken);
             return await sc.NextAsync(await CreateActionResultAsync(sc.Context, true, cancellationToken), cancellationToken);
