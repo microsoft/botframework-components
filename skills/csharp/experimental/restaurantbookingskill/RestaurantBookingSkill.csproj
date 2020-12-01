@@ -8,13 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.9.1" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.1" />
     <PackageReference Include="Microsoft.Recognizers.Text" Version="1.2.9" />
     <PackageReference Include="Microsoft.Recognizers.Text.DataTypes.TimexExpression" Version="1.2.9" />
     <PackageReference Include="Microsoft.Recognizers.Text.DateTime" Version="1.2.9" />
     <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

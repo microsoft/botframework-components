@@ -48,7 +48,8 @@
 
 # GuestServicesConfirm(Data, Cards, Layout)
 [Activity
-    ${GuestServicesConfirm.Text(Data)}
+    Text = ${GuestServicesConfirm.Text(Data)}
+    Speak = ${GuestServicesConfirm.Text(Data)}
     Attachments = ${if(Cards == null, null, foreach(Cards, Card, CreateCard(Card)))}
     AttachmentLayout = ${if(Layout == null, 'list', Layout)}
     InputHint = ignoringInput

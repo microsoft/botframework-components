@@ -11,6 +11,10 @@ namespace ITSMSkill.Services
 
         public string ServiceNowGetUserId { get; set; }
 
+        public string ServiceNowNamespaceId { get; set; }
+
         public int LimitSize { get; set; }
+
+        public bool FallbackToKnowledge { get; set; }
     }
 }

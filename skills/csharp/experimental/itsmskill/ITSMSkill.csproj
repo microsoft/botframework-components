@@ -4,17 +4,23 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <Content Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <EmbeddedResource Remove="Services\ServiceNow\BusinessRuleM\**" />
+    <None Remove="Services\ServiceNow\BusinessRuleM\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="Responses\Ticket\CreateTicketResponses.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AdaptiveCards" Version="1.2.3" />
+    <PackageReference Include="AdaptiveCards" Version="1.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.ContentModerator" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.9.1" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.12.0" />
@@ -30,11 +36,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Update="Responses\Shared\SharedStrings.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -103,7 +106,5 @@
     <None Update="Content\TicketUpdateClose.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

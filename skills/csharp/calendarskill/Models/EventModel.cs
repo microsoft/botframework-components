@@ -369,7 +369,14 @@ namespace CalendarSkill.Models
                             msftEventData.Start.DateTime = msftEventData.Start.DateTime + "Z";
                         }
 
-                        return DateTime.Parse(msftEventData.Start.DateTime).ToUniversalTime();
+                        var start = new DateTime(DateTime.Parse(msftEventData.Start.DateTime).Ticks, DateTimeKind.Unspecified);
+
+                        if (this.TimeZone.Id != CalendarCommonUtil.UTCTimeZone)
+                        {
+                            return TimeZoneInfo.ConvertTimeToUtc(start, this.TimeZone).ToUniversalTime();
+                        }
+
+                        return start.ToUniversalTime();
                     case EventSource.Google:
                         return gmailEventData.Start.DateTime.Value.ToUniversalTime();
                     default:
@@ -379,11 +386,6 @@ namespace CalendarSkill.Models
 
             set
             {
-                if (value.Kind != DateTimeKind.Utc)
-                {
-                    throw new Exception("Model Start Time is not Utc Time");
-                }
-
                 switch (source)
                 {
                     case EventSource.Microsoft:
@@ -392,7 +394,7 @@ namespace CalendarSkill.Models
                             msftEventData.Start = new Microsoft.Graph.DateTimeTimeZone();
                         }
 
-                        msftEventData.Start.DateTime = value.ToString("o");
+                        msftEventData.Start.DateTime = value.ToString("yyyy-MM-ddTHH:mm:ss");
                         break;
                     case EventSource.Google:
                         if (gmailEventData.Start == null)
@@ -400,7 +402,7 @@ namespace CalendarSkill.Models
                             gmailEventData.Start = new Google.Apis.Calendar.v3.Data.EventDateTime();
                         }
 
-                        gmailEventData.Start.DateTimeRaw = value.ToString("o");
+                        gmailEventData.Start.DateTimeRaw = value.ToString("yyyy-MM-ddTHH:mm:ss");
                         break;
                     default:
                         throw new Exception("Event Type not Defined");
@@ -431,7 +433,14 @@ namespace CalendarSkill.Models
                             msftEventData.End.DateTime = msftEventData.End.DateTime + "Z";
                         }
 
-                        return DateTime.Parse(msftEventData.End.DateTime).ToUniversalTime();
+                        var end = new DateTime(DateTime.Parse(msftEventData.End.DateTime).Ticks, DateTimeKind.Unspecified);
+
+                        if (this.TimeZone.Id != CalendarCommonUtil.UTCTimeZone)
+                        {
+                            TimeZoneInfo.ConvertTimeToUtc(end, this.TimeZone).ToUniversalTime();
+                        }
+
+                        return end.ToUniversalTime();
                     case EventSource.Google:
                         return gmailEventData.End.DateTime.Value.ToUniversalTime();
                     default:
@@ -441,11 +450,6 @@ namespace CalendarSkill.Models
 
             set
             {
-                if (value.Kind != DateTimeKind.Utc)
-                {
-                    throw new Exception("Model End Time is not Utc Time");
-                }
-
                 switch (source)
                 {
                     case EventSource.Microsoft:
@@ -454,7 +458,7 @@ namespace CalendarSkill.Models
                             msftEventData.End = new Microsoft.Graph.DateTimeTimeZone();
                         }
 
-                        msftEventData.End.DateTime = value.ToString("o");
+                        msftEventData.End.DateTime = value.ToString("yyyy-MM-ddTHH:mm:ss");
                         break;
                     case EventSource.Google:
                         if (gmailEventData.End == null)
@@ -462,7 +466,7 @@ namespace CalendarSkill.Models
                             gmailEventData.End = new Google.Apis.Calendar.v3.Data.EventDateTime();
                         }
 
-                        gmailEventData.End.DateTimeRaw = value.ToString("o");
+                        gmailEventData.End.DateTimeRaw = value.ToString("yyyy-MM-ddTHH:mm:ss");
                         break;
                     default:
                         throw new Exception("Event Type not Defined");
@@ -714,14 +718,87 @@ namespace CalendarSkill.Models
                 switch (source)
                 {
                     case EventSource.Microsoft:
-                        if (msftEventData.OnlineMeetingUrl == string.Empty)
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.JoinUrl))
                         {
                             return null;
                         }
 
-                        return msftEventData.OnlineMeetingUrl;
+                        return msftEventData.OnlineMeeting.JoinUrl;
                     case EventSource.Google:
                         return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public string OnlineMeetingTollNumber
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.TollNumber))
+                        {
+                            return null;
+                        }
+
+                        return msftEventData.OnlineMeeting.TollNumber;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public string OnlineMeetingConferenceId
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        if (string.IsNullOrEmpty(msftEventData.OnlineMeeting?.ConferenceId))
+                        {
+                            return null;
+                        }
+
+                        return msftEventData.OnlineMeeting.ConferenceId;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+        }
+
+        public bool? IsOnlineMeeting
+        {
+            get
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        return msftEventData.IsOnlineMeeting;
+                    case EventSource.Google:
+                        return null;
+                    default:
+                        throw new Exception("Event Type not Defined");
+                }
+            }
+
+            set
+            {
+                switch (source)
+                {
+                    case EventSource.Microsoft:
+                        msftEventData.IsOnlineMeeting = value;
+                        break;
+                    case EventSource.Google:
+                        // todo check google ones
+                        break;
                     default:
                         throw new Exception("Event Type not Defined");
                 }

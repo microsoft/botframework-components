@@ -14,10 +14,9 @@
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Language" Version="1.0.1-preview" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Search.NewsSearch" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.Search" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.8.1" />
-    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Graph" Version="1.15.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />  
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.ApplicationInsights.Core" Version="4.9.1" />
+    <PackageReference Include="Microsoft.Bot.Solutions" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Graph" Version="3.7.0" />
   </ItemGroup>
 
   <ItemGroup>

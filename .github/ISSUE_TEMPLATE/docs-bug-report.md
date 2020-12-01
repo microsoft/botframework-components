@@ -1,10 +1,7 @@
 ---
-name: Docs Bug Report
+name: "Documentation Issue"
 about: Create a report to help us improve our documentation
-title: "[Docs]"
-labels: 'Type: Docs'
-assignees: ''
-
+labels: "needs-triage, Area: Docs"
 ---
 
 **Please describe your request**

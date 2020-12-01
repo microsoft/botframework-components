@@ -19,6 +19,8 @@ namespace CalendarSkill.Utilities
 
         public const int AvailabilityViewInterval = 5;
 
+        public const string UTCTimeZone = "UTC";
+
         public static async Task<List<EventModel>> GetEventsByTimeAsync(List<DateTime> startDateList, List<DateTime> startTimeList, List<DateTime> endDateList, List<DateTime> endTimeList, TimeZoneInfo userTimeZone, ICalendarService calendarService)
         {
             // todo: check input datetime is utc

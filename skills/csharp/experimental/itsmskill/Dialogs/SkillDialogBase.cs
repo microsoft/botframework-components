@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models;
@@ -28,10 +25,12 @@ using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Bot.Solutions.Skills;
 using Microsoft.Bot.Solutions.Util;
 using Microsoft.Extensions.DependencyInjection;
-using SkillServiceLibrary.Utilities;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog Base class.
+    /// </summary>
     public class SkillDialogBase : ComponentDialog
     {
         public SkillDialogBase(
@@ -229,6 +228,8 @@ namespace ITSMSkill.Dialogs
                 // When the token is cached we get a TokenResponse object.
                 if (sc.Result is ProviderTokenResponse providerTokenResponse)
                 {
+                    // Save TokenResponse to State
+                    state.AccessTokenResponse = providerTokenResponse.TokenResponse;
                     return await sc.NextAsync(providerTokenResponse.TokenResponse, cancellationToken);
                 }
                 else
@@ -251,7 +252,7 @@ namespace ITSMSkill.Dialogs
 
         protected async Task<DialogTurnResult> BeginInitialDialogAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await sc.ReplaceDialogAsync(InitialDialogId, cancellationToken: cancellationToken);
+            return await sc.ReplaceDialogAsync(InitialDialogId, sc.Options, cancellationToken: cancellationToken);
         }
 
         protected async Task<DialogTurnResult> CheckIdAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
@@ -411,6 +412,12 @@ namespace ITSMSkill.Dialogs
             }
             else
             {
+                var option = sc.Options as BaseOption;
+                if (option != null && !option.ConfirmSearch)
+                {
+                    return await sc.NextAsync(true, cancellationToken);
+                }
+
                 var replacements = new Dictionary<string, object>
                 {
                     { "Search", state.TicketTitle }
@@ -645,7 +652,7 @@ namespace ITSMSkill.Dialogs
             state.TicketTarget = result.Tickets[0];
             state.Id = state.TicketTarget.Id;
 
-            var card = GetTicketCard(sc.Context, state.TicketTarget, false);
+            var card = GetTicketCard(sc.Context, state, state.TicketTarget, false);
 
             await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(TicketResponses.TicketTarget, card, null), cancellationToken);
             return await sc.NextAsync(cancellationToken: cancellationToken);
@@ -781,6 +788,14 @@ namespace ITSMSkill.Dialogs
                         new Choice()
                         {
                             Value = TicketState.Canceled.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Active.ToLocalizedString()
+                        },
+                        new Choice()
+                        {
+                            Value = TicketState.Inactive.ToLocalizedString()
                         }
                     }
                 };
@@ -880,7 +895,7 @@ namespace ITSMSkill.Dialogs
                 {
                     cards.Add(new Card()
                     {
-                        Name = GetDivergedCardName(sc.Context, "Knowledge"),
+                        Name = GetDivergedCardName(sc.Context, state, "Knowledge"),
                         Data = ConvertKnowledge(knowledge)
                     });
                 }
@@ -894,6 +909,36 @@ namespace ITSMSkill.Dialogs
 
                 return await sc.PromptAsync(ShowKnowledgePrompt, options, cancellationToken);
             }
+        }
+
+        protected async Task<DialogTurnResult> HandleAPIUnauthorizedError(WaterfallStepContext sc, TicketsResult ticketsResult, CancellationToken cancellationToken)
+        {
+            // Check if the error is UnAuthorized
+            if (ticketsResult.Reason.Equals("Unauthorized"))
+            {
+                // Logout User
+                var botAdapter = (BotFrameworkAdapter)sc.Context.Adapter;
+                await botAdapter.SignOutUserAsync(sc.Context, Settings.OAuthConnections.FirstOrDefault().Name, null, cancellationToken);
+
+                // Send Signout Message
+                return await SignOutUser(sc);
+            }
+            else
+            {
+                return await SendServiceErrorAndCancel(sc, ticketsResult);
+            }
+        }
+
+        protected async Task<DialogTurnResult> SendServiceErrorAndCancel(WaterfallStepContext sc, ResultBase result, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.ServiceFailed), cancellationToken);
+            return await sc.CancelAllDialogsAsync();
+        }
+
+        protected async Task<DialogTurnResult> SignOutUser(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await sc.Context.SendActivityAsync(TemplateManager.GenerateActivity(SharedResponses.SignOut), cancellationToken);
+            return await sc.EndDialogAsync();
         }
 
         protected async Task<DialogTurnResult> IfKnowledgeHelpAsync(WaterfallStepContext sc, CancellationToken cancellationToken = default(CancellationToken))
@@ -1060,13 +1105,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected Card GetTicketCard(ITurnContext turnContext, Ticket ticket, bool showButton = true)
+        protected Card GetTicketCard(ITurnContext turnContext, SkillState state, Ticket ticket, bool showButton = true)
         {
             var name = showButton ? (ticket.State != TicketState.Closed ? "TicketUpdateClose" : "TicketUpdate") : "Ticket";
 
             return new Card
             {
-                Name = GetDivergedCardName(turnContext, name),
+                Name = GetDivergedCardName(turnContext, state, name),
                 Data = ConvertTicket(ticket)
             };
         }
@@ -1128,8 +1173,13 @@ namespace ITSMSkill.Dialogs
             }
         }
 
-        protected string GetDivergedCardName(ITurnContext turnContext, string card)
+        protected string GetDivergedCardName(ITurnContext turnContext, SkillState state, string card)
         {
+            if (state.IsAction)
+            {
+                return card + ".pva";
+            }
+
             if (Channel.GetChannelId(turnContext) == Channels.Msteams)
             {
                 return card + ".1.0";
@@ -1173,6 +1223,9 @@ namespace ITSMSkill.Dialogs
 
             public const string ShowKnowledge = "ShowKnowledge";
             public const string ShowKnowledgeLoop = "ShowKnowledgeLoop";
+
+            public const string CreateTicketTeamsTaskModule = "CreateTickTeamsTaskModule";
+            public const string CreateSubscriptionTaskModule = "CreateSubscriptionTaskModule";
         }
     }
 }
