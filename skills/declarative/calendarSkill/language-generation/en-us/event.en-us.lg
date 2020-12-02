@@ -294,7 +294,7 @@
         ]
     },
     ```
-- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1 && event.Response != 'organizer'}
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
     -  ```
     {
         "type": "ColumnSet",
