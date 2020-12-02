@@ -95,6 +95,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             if (people?.Count > 0)
             {
+                var existingResult = contactsResult.SelectMany(c => c.EmailAddresses).ToHashSet();
                 foreach (var person in people)
                 {
                     var emailAddresses = new List<string>();
@@ -102,7 +103,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     foreach (var email in person.ScoredEmailAddresses)
                     {
                         // If the email address isn't already included in the contacts list, add it
-                        if (!contactsResult.SelectMany(c => c.EmailAddresses).Contains(email.Address) && IsEmail(email.Address))
+                        if (!existingResult.Contains(email.Address) && IsEmail(email.Address))
                         {
                             emailAddresses.Add(email.Address);
                         }
