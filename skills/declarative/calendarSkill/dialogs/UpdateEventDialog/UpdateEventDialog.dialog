@@ -138,10 +138,12 @@
               "choiceOptions": {
                 "includeNumbers": true,
                 "inlineOrMore": ", or ",
-                "inlineOr": " or "
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
               },
               "property": "dialog.attendanceConfirm",
-              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null"
+              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null",
+              "style": "none"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -322,7 +324,7 @@
             "email": "=dialog.email",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult",
-            "eventInfo": "=dialog.selectedEvent",
+            "eventInfo": "=if(dialog.eventId==null, dialog.selectedEvent, null)",
             "operation": "=dialog.operation",
             "entityName": "=dialog.entityName"
           }
@@ -510,6 +512,68 @@
                   ]
                 }
               ]
+            },
+            {
+              "value": "attendance",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "0c3hqk"
+                  },
+                  "condition": "dialog.updateResult.newValue",
+                  "cases": [
+                    {
+                      "value": "accept",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "ZuGXhI"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "RespondToEventDialog",
+                          "options": {
+                            "response": "='accepted'",
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "value": "cancel",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "sParo4"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "CancelEventDialog",
+                          "options": {
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "2a0oM8"
+                      },
+                      "activity": "${SendActivity_2a0oM8()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "vENL9U"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "default": [
@@ -548,7 +612,9 @@
           "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.confirmUpdate",
           "allowInterruptions": "=#Cancel.score > 0.8",

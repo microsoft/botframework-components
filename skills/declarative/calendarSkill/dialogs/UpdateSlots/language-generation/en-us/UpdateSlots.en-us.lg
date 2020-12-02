@@ -10,7 +10,7 @@
 # AskForEntityWithEvent()
 [Activity
     text = ${AskForEntity()}
-    attachments=${json(EventDetailCard(dialog.eventInfo))}
+    attachments=${json(EventUpdateDetailCard(dialog.eventInfo))}
 ]
 
 # TextInput_Prompt_gZ1tbS()
