@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -13,7 +13,6 @@ using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using AdaptiveExpressions;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -65,11 +64,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var contact in contacts)
                 {
-                    //var emailAddresses = new List<string>();
-                    var emailAddresses = contact.EmailAddresses.Where(e => !string.IsNullOrEmpty(e.Address) && IsEmail(e.Address)).Select(e => e.Address).ToList();
+                    var emailAddresses = contact.EmailAddresses.Where(e => IsEmail(e.Address)).Select(e => e.Address).ToList();
                     if (!emailAddresses.Any())
                     {
-                        emailAddresses = contact.ImAddresses.Where(e => !string.IsNullOrEmpty(e) && IsEmail(e)).ToList();
+                        emailAddresses = contact.ImAddresses.Where(e => IsEmail(e)).ToList();
                     }
 
                     if (emailAddresses.Any())
@@ -139,7 +137,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
         private bool IsEmail(string emailString)
         {
-            bool isEmail = !string.IsNullOrEmpty(emailString) && Regex.IsMatch(emailString, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+            
+            bool isEmail = !string.IsNullOrEmpty(emailString) && Regex.IsMatch(emailString, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             return isEmail;
         }
     }

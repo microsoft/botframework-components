@@ -259,9 +259,7 @@
     -
 
 # EventAttendeeContainer(event)
-- IF: ${ event.Response == 'organizer' }  
-    -
-- ELSEIF: ${ event.attendees != null && count(event.attendees) > 1 }
+- IF: ${ event.attendees != null && count(event.attendees) > 1 }
     - ```
     {
         "type": "ColumnSet",
@@ -296,7 +294,7 @@
         ]
     },
     ```
-- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1 && event.Response != 'organizer'}
     -  ```
     {
         "type": "ColumnSet",
