@@ -65,6 +65,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
+        [JsonProperty("userEmailProperty")]
+        public StringExpression UserEmailProperty { get; set; }
+
         [JsonProperty("futureEventsOnlyProperty")]
         public BoolExpression FutureEventsOnlyProperty { get; set; }
 
@@ -83,6 +86,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
             var maxResults = MaxResultsProperty.GetValue(dcState);
+            var userEmail = UserEmailProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -159,7 +163,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var ev in events)
                 {
-                    parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                    parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
                 }
             }
 
@@ -170,7 +174,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                        parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
                     }
                 }
             }
@@ -242,7 +246,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             return await dc.EndDialogAsync(result: parsedEvents, cancellationToken: cancellationToken);
         }
 
-        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index)
+        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index, string userEmail)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
@@ -251,7 +255,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
-            return new CalendarSkillEventModel(ev, currentDateTime, index);
+            return new CalendarSkillEventModel(ev, currentDateTime, index, userEmail);
         }
     }
 }
