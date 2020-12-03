@@ -1,67 +1,104 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
-using Microsoft.Recognizers.Text.NumberWithUnit.Dutch;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
-    public class CreateEvent : Dialog
+    /// <summary>
+    /// Custom action for creating a new event in MS Graph
+    /// </summary>
+    [ComponentRegistration(CreateEvent.CreateEventDeclarativeType)]
+    public class CreateEvent : BaseMsGraphCustomAction<Event>
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";
+        public const string CreateEventDeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";
 
+        /// <summary>
+        /// Creates a new instance of <seealso cref="CreateEvent" />
+        /// </summary>
+        /// <param name="callerPath"></param>
+        /// <param name="callerLine"></param>
         [JsonConstructor]
         public CreateEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public string ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// Gets or sets the event title
+        /// </summary>
+        /// <value>Title of the event</value>
         [JsonProperty("titleProperty")]
         public StringExpression TitleProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the description of the event
+        /// </summary>
+        /// <value>Description of the event</value>
         [JsonProperty("descriptionProperty")]
         public StringExpression DescriptionProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start time and date of the event
+        /// </summary>
+        /// <value>Start time and date of the event</value>
         [JsonProperty("startProperty")]
         public ObjectExpression<DateTime> StartProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the end time and date of the event
+        /// </summary>
+        /// <value>End time and date of the event</value>
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime> EndProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the timezone of the event
+        /// </summary>
+        /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the location of the event
+        /// </summary>
+        /// <value>Location of the event</value>
         [JsonProperty("locationProperty")]
         public StringExpression LocationProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the list of attendees in the event
+        /// </summary>
+        /// <value>List of attendees to the event</value>
         [JsonProperty("attendeesProperty")]
         public ArrayExpression<Attendee> AttendeesProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the online meeting property for the event
+        /// </summary>
+        /// <value><c>True</c> if the meeting is an online event, <c>False</c> if otherwise.</value>
         [JsonProperty("isOnlineMeetingProperty")]
         public BoolExpression IsOnlineMeetingProperty { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
+        protected override string DeclarativeType => CreateEventDeclarativeType;
+
+        /// <summary>
+        /// Calls Graph service to create a calendar event
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="dc"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override async Task<Event> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var token = this.Token.GetValue(dcState);
             var titleProperty = this.TitleProperty.GetValue(dcState);
             var descriptionProperty = this.DescriptionProperty.GetValue(dcState);
             var startProperty = this.StartProperty.GetValue(dcState);
@@ -98,29 +135,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
             };
 
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-
-            Event result = null;
-            try
-            {
-                result = await graphClient.Me.Events.Request().AddAsync(newEvent);
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
-
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, result, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
-            {
-                dcState.SetValue(ResultProperty, result);
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken);
         }
     }
 }

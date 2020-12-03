@@ -1,11 +1,12 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using System;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,69 +16,68 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// This action gets an event from MS Graph by its EventId. 
     /// </summary>
-    public class GetEventById : Dialog
+    [ComponentRegistration(GetEventById.GetEventByIdDeclarativeType)]
+    public class GetEventById : BaseMsGraphCustomAction<CalendarSkillEventModel>
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.GetEventById";
+        /// <summary>
+        /// Declarative type name for this custom action
+        /// </summary>
+        public const string GetEventByIdDeclarativeType = "Microsoft.Graph.Calendar.GetEventById";
 
+        /// <summary>
+        /// Creates an instance of <seealso cref="GetEventById" />
+        /// </summary>
+        /// <param name="callerPath"></param>
+        /// <param name="callerLine"></param>
         [JsonConstructor]
         public GetEventById([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public string ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// Gets or sets the id of the event
+        /// </summary>
+        /// <value>Id of the event</value>
         [JsonProperty("eventIdProperty")]
         public StringExpression EventIdProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the timezone of the event 
+        /// </summary>
+        /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Declarative type of this custom action
+        /// </summary>
+        protected override string DeclarativeType => GetEventByIdDeclarativeType;
+
+        /// <summary>
+        /// Gets the event by its id from the Graph service
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="dc"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override async Task<CalendarSkillEventModel> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var token = this.Token.GetValue(dcState);
             var eventId = EventIdProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
-            CalendarSkillEventModel result = null;
-            try
-            {
-                var ev = await graphClient.Me.Events[eventId].Request().GetAsync();
+            Event ev = await client.Me.Events[eventId].Request().GetAsync(cancellationToken);
 
-                var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
-                var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
-                var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
+            var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
+            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
+            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
 
-                ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
-                ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
+            ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
+            ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
-                result = new CalendarSkillEventModel(ev, TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone));
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
-
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, result, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
-            {
-                dcState.SetValue(ResultProperty, result);
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return new CalendarSkillEventModel(ev, TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone));
         }
     }
 }

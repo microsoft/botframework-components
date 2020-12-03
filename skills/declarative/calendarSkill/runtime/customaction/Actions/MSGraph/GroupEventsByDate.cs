@@ -1,21 +1,21 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.Bot.Builder.AI.Luis;
-using Microsoft.Graph;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    [ComponentRegistration(GroupEventsByDate.DeclarativeType)]
     public class GroupEventsByDate : Dialog
     {
         [JsonProperty("$kind")]
