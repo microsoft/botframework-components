@@ -76,6 +76,12 @@
       "description": "Timezone.",
       "examples": []
     },
+    "userEmailProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "UserEmail",
+      "description": "Current User's Email Address.",
+      "examples": []
+    },
     "futureEventsOnlyProperty": {
       "$ref": "schema:#/definitions/booleanExpression",
       "title": "Future Events Only",

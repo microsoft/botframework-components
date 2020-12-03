@@ -109,11 +109,17 @@
           ]
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tdNJ28"
+          }
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "P1awzy"
           },
-          "condition": "(dialog.pageIndex * dialog.pageSize) - count(dialog.Items) <= dialog.pageSize",
+          "condition": "dialog.pageIndex * dialog.pageSize <  count(dialog.Items)",
           "actions": [
             {
               "$kind": "Microsoft.RepeatDialog",
@@ -132,6 +138,14 @@
             }
           ],
           "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lepsYO"
+              },
+              "property": "dialog.pageIndex",
+              "value": "= dialog.pageIndex - 1"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -191,6 +205,14 @@
             }
           ],
           "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MgUdSM"
+              },
+              "property": "dialog.pageIndex",
+              "value": "= 0"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
