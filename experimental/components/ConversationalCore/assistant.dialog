@@ -1,0 +1,83 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "Assistant",
+      "id": "yljW4K"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "dSHrlN"
+          },
+          "activityProcessed": true,
+          "dialog": "Greeting"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "CbiPPL"
+      },
+      "intent": "Onboarding",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "jc7tAB"
+          },
+          "activityProcessed": true,
+          "dialog": "Onboarding"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gZE9hG"
+      },
+      "intent": "General",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "q4TygS"
+          },
+          "activityProcessed": false,
+          "dialog": "General"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "rGaaTe"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "eArpm6"
+          },
+          "activityProcessed": true,
+          "dialog": "UnknownIntent"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "assistant.lg",
+  "recognizer": "assistant.lu.qna",
+  "id": "assistant"
+}

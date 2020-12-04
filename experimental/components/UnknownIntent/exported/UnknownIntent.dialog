@@ -1,0 +1,31 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UyXOgD",
+    "name": "UnknownIntent",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "Y7FvXO"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ijwUox"
+          },
+          "activity": "${SendActivity_ijwUox()}"
+        }
+      ]
+    }
+  ],
+  "generator": "UnknownIntent.lg",
+  "id": "UnknownIntent"
+}
