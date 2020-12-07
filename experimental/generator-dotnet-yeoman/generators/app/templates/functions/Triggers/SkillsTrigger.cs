@@ -8,7 +8,7 @@ using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Builder.Runtime.FunctionHost.Triggers
+namespace <%= botName %>.FunctionHost.Triggers
 {
     /// <summary>
     /// Functions trigger for Bot Framework Skills messages.
