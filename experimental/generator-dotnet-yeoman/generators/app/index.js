@@ -30,6 +30,7 @@ module.exports = class extends Generator {
 
     writing() {
         this._copyBotProject(this.options.integration);
+        this._copyCommon();
         this._copySolutionFile();
     }
 
@@ -50,6 +51,18 @@ module.exports = class extends Generator {
                 this.destinationPath(path.join(botName, `${botName}.csproj`))
             );
         }
+    }
+
+    _copyCommon() {
+        const botName = this.options.botName;
+
+        this.fs.copyTpl(
+            this.templatePath(path.join('common','**')),
+            this.destinationPath(botName),
+            {
+                botName
+            }
+        );
     }
 
     _copySolutionFile() {
