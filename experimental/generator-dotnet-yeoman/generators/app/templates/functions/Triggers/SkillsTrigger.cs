@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +40,7 @@ namespace Microsoft.Bot.Builder.Runtime.FunctionHost.Triggers
         [FunctionName("ReplyToActivity")]
         public async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v3/conversations/{conversationId}/activities/{activityId}")] HttpRequest req,
-            string conversationId, 
+            string conversationId,
             string activityId)
         {
             var body = await req.ReadAsStringAsync().ConfigureAwait(false);
