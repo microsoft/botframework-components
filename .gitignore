@@ -375,3 +375,4 @@ ASALocalRun/
 .DS_Store
 /.project
 *.luis
+experimental/generator-dotnet-yeoman/node_modules
