@@ -738,7 +738,7 @@
                 "id": "ifIblU"
               },
               "property": "dialog.formattedOption",
-              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"y h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"h:mm tt\"))"
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"h:mm tt\"))"
             },
             {
               "$kind": "Microsoft.EditArray",
