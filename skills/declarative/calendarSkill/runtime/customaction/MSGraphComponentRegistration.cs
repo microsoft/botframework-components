@@ -18,7 +18,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction
     /// Attribute to specify to allow automatic registration of the custom action
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ComponentRegistrationAttribute : Attribute
+    public class MsGraphCustomActionRegistrationAttribute : Attribute
     {
         /// <summary>
         /// The declarative type for the component registration
@@ -30,7 +30,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction
             private set;
         }
 
-        public ComponentRegistrationAttribute(string declarativeType)
+        public MsGraphCustomActionRegistrationAttribute(string declarativeType)
         {
             this.DeclarativeType = declarativeType;
         }
@@ -42,11 +42,11 @@ namespace Microsoft.BotFramework.Composer.CustomAction
         {
             // Actions
             // Get all the classes where they have a ComponentRegistration attribute
-            IEnumerable<Type> typesToInstatiate = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.CustomAttributes.Any(attr => attr.AttributeType == typeof(ComponentRegistrationAttribute)));
+            IEnumerable<Type> typesToInstatiate = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.CustomAttributes.Any(attr => attr.AttributeType == typeof(MsGraphCustomActionRegistrationAttribute)));
 
             foreach (Type type in typesToInstatiate)
             {
-                ComponentRegistrationAttribute attribute = type.GetCustomAttribute(typeof(ComponentRegistrationAttribute)) as ComponentRegistrationAttribute;
+                MsGraphCustomActionRegistrationAttribute attribute = type.GetCustomAttribute(typeof(MsGraphCustomActionRegistrationAttribute)) as MsGraphCustomActionRegistrationAttribute;
 
                 if (attribute != null)
                 {

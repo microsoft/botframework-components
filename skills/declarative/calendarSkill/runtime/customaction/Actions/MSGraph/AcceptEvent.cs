@@ -14,7 +14,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Represents a custom action that calls to MSGraph to accept an event
     /// </summary>
-    [ComponentRegistration(AcceptEvent.AcceptEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(AcceptEvent.AcceptEventDeclarativeType)]
     public class AcceptEvent : BaseMsGraphCustomAction
     {
         /// <summary>

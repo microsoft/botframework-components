@@ -16,7 +16,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// This action gets an event from MS Graph by its EventId. 
     /// </summary>
-    [ComponentRegistration(GetEventById.GetEventByIdDeclarativeType)]
+    [MsGraphCustomActionRegistration(GetEventById.GetEventByIdDeclarativeType)]
     public class GetEventById : BaseMsGraphCustomAction<CalendarSkillEventModel>
     {
         /// <summary>

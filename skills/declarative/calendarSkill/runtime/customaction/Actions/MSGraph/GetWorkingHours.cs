@@ -3,10 +3,8 @@
 
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,7 +16,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// This action gets the working hours including timezone information for the provided address.
     /// </summary>
-    [ComponentRegistration(GetWorkingHoursCustomAction.GetWorkingHoursCustomActionDeclarativeType)]
+    [MsGraphCustomActionRegistration(GetWorkingHoursCustomAction.GetWorkingHoursCustomActionDeclarativeType)]
     public class GetWorkingHoursCustomAction : BaseMsGraphCustomAction<WorkingHours>
     {
         /// <summary>

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
-    [ComponentRegistration(GroupEventsByDate.DeclarativeType)]
+    [MsGraphCustomActionRegistration(GroupEventsByDate.DeclarativeType)]
     public class GroupEventsByDate : Dialog
     {
         [JsonProperty("$kind")]

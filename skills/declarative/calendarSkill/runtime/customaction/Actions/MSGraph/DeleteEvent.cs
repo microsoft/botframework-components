@@ -14,7 +14,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action for deleting an event in MS Graph
     /// </summary>
-    [ComponentRegistration(DeleteEvent.DeleteEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(DeleteEvent.DeleteEventDeclarativeType)]
     public class DeleteEvent : BaseMsGraphCustomAction
     {
         public const string DeleteEventDeclarativeType = "Microsoft.Graph.Calendar.DeleteEvent";

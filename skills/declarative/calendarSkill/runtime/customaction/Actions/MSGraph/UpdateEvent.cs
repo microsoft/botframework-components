@@ -15,7 +15,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Updates the event using MS Graph service
     /// </summary>
-    [ComponentRegistration(UpdateEvent.UpdateEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(UpdateEvent.UpdateEventDeclarativeType)]
     public class UpdateEvent : BaseMsGraphCustomAction<Event>
     {
         /// <summary>

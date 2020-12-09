@@ -15,7 +15,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action for creating a new event in MS Graph
     /// </summary>
-    [ComponentRegistration(CreateEvent.CreateEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(CreateEvent.CreateEventDeclarativeType)]
     public class CreateEvent : BaseMsGraphCustomAction<Event>
     {
         public const string CreateEventDeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";

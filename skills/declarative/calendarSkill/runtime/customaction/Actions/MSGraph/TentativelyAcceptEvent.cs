@@ -14,7 +14,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action to Graph that allows the caller to tentatively accept an invite
     /// </summary>
-    [ComponentRegistration(TentativelyAcceptEvent.TentativelyAcceptEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(TentativelyAcceptEvent.TentativelyAcceptEventDeclarativeType)]
     public class TentativelyAcceptEvent : BaseMsGraphCustomAction
     {
         public const string TentativelyAcceptEventDeclarativeType = "Microsoft.Graph.Calendar.TentativelyAcceptEvent";

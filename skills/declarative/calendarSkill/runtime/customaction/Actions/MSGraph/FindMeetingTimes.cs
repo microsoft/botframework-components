@@ -18,7 +18,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action to find meeting time that works for attendees using MS Graph
     /// </summary>
-    [ComponentRegistration(FindMeetingTimes.FindMeetingTimesDeclarativeType)]
+    [MsGraphCustomActionRegistration(FindMeetingTimes.FindMeetingTimesDeclarativeType)]
     public class FindMeetingTimes : BaseMsGraphCustomAction<List<CalendarSkillTimeSlotModel>>
     {
         /// <summary>

@@ -19,7 +19,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// This has proven to be more consistent that LUIS datetime recognition by allowing the use of the 
     /// user's current timezone time as a relative datetime rather than a mix of absolute times and UTC times.
     /// </summary>
-    [ComponentRegistration(FindAvailableTime.DeclarativeType)]
+    [MsGraphCustomActionRegistration(FindAvailableTime.DeclarativeType)]
     public class FindAvailableTime : Dialog
     {
         [JsonProperty("$kind")]
@@ -31,7 +31,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         {
             this.RegisterSourceLocation(callerPath, callerLine);
         }
-
+        
         [JsonProperty("resultProperty")]
         public string ResultProperty { get; set; }
 

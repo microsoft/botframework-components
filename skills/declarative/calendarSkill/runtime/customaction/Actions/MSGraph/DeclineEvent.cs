@@ -14,7 +14,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action that calls MS Graph to decline an event
     /// </summary>
-    [ComponentRegistration(DeclineEvent.DeclineEventDeclarativeType)]
+    [MsGraphCustomActionRegistration(DeclineEvent.DeclineEventDeclarativeType)]
     class DeclineEvent : BaseMsGraphCustomAction
     {
         /// <summary>

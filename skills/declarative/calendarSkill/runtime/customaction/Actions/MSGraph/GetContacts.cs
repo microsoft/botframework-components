@@ -3,14 +3,9 @@
 
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +18,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// <summary>
     /// Custom action to get contacts for the user from MS Graph
     /// </summary>
-    [ComponentRegistration(GetContacts.GetContactsDeclarativeType)]
+    [MsGraphCustomActionRegistration(GetContacts.GetContactsDeclarativeType)]
     public class GetContacts : BaseMsGraphCustomAction<List<CalendarSkillContactModel>>
     {
         public const string GetContactsDeclarativeType = "Microsoft.Graph.Calendar.GetContacts";

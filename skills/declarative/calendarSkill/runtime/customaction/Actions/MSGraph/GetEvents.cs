@@ -23,7 +23,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// For that reason, additional filtering based on title, attendees, location, etc should happen in this 
     /// action after the API call has been made.
     /// </summary>
-    [ComponentRegistration(GetEvents.GetEventsDeclarativeType)]
+    [MsGraphCustomActionRegistration(GetEvents.GetEventsDeclarativeType)]
     public class GetEvents : BaseMsGraphCustomAction<List<CalendarSkillEventModel>>
     {
         public const string GetEventsDeclarativeType = "Microsoft.Graph.Calendar.GetEvents";
