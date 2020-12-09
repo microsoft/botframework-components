@@ -12,6 +12,8 @@
 - {@EntityName={@EventDateTime=date}}
 - {@EntityName={@EventDateTime=date time}}
 - {@EntityOperation={@Change=change}} {@EntityName={@EventDateTime=time}}
+- {@EntityOperation={@Add=add}} {@EntityName={@EventAttendee=participant}}
+- {@EntityOperation={@Change=update}} {@EntityName={@EventLocation=location}}
 @ prebuilt personName
 @ prebuilt email
 @ prebuilt datetimeV2
@@ -48,3 +50,7 @@
 - stop
 - stop this
 - exit
+
+
+# CancelEvent
+- cancel event

@@ -25,9 +25,9 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - You've made it to the end 👏, thank you for helping us out!
 
 # GeneralErrorMessage
-- I can tell there is something wrong here, can you please try again?
-- Oops, I'm stuck, can you try to ask me differently?
-- Please help me out here, can you ask again but in a different way?
+- I'm not sure I understand. Can you please try again?
+- Oops, looks like I'm stuck. Can you try to ask me in a different way?
+- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 
 # ContactConfirmWithOne(attendees)
 - IF: ${ attendees == null || count(attendees) == 0 }

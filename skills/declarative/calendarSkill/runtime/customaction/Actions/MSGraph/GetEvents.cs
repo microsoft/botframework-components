@@ -96,6 +96,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
+        /// Gets or sets the user email address
+        /// </summary>
+        /// <value>The email address of the user</value>
+        [JsonProperty("userEmailProperty")]
+        public StringExpression UserEmailProperty { get; set; }
+
+        /// <summary>
         /// Gets or sets whether to show only future events in the result set
         /// </summary>
         /// <value><c>True</c> if we want to show only future events. <c>False</c> if otherwise.</value>
@@ -129,6 +136,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
             var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
             var maxResults = MaxResultsProperty.GetValue(dcState);
+            var userEmail = UserEmailProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
@@ -195,7 +203,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var ev in events)
                 {
-                    parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                    parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
                 }
             }
 
@@ -206,7 +214,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        parsedEvents.Add(ParseEvent(ev, timeZone, index++));
+                        parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
                     }
                 }
             }
@@ -273,8 +281,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <param name="ev"></param>
         /// <param name="timeZone"></param>
         /// <param name="index"></param>
+        /// <param name="userEmail"></param>
         /// <returns></returns>    
-        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index)
+        private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index, string userEmail)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
@@ -283,7 +292,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
-            return new CalendarSkillEventModel(ev, currentDateTime, index);
+            return new CalendarSkillEventModel(ev, currentDateTime, index, userEmail);
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Models
 {
@@ -12,7 +13,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
     {
         public CalendarSkillEventModel() { }
 
-        public CalendarSkillEventModel(Event ev, DateTime currentDateTime, int index = 0)
+        public CalendarSkillEventModel(Event ev, DateTime currentDateTime, int index = 0, string userEmail = null)
         {
             var start = DateTime.Parse(ev.Start.DateTime);
             var end = DateTime.Parse(ev.End.DateTime);
@@ -31,7 +32,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
             Subject = ev.Subject;
             Start = ev.Start;
             End = ev.End;
-            Attendees = ev.Attendees;
+            Attendees = ev.Attendees.Where(a => a.EmailAddress.Address.ToLower() != userEmail.ToLower());
             IsOnlineMeeting = ev.IsOnlineMeeting;
             OnlineMeeting = ev.OnlineMeeting;
             Description = ev.BodyPreview;

@@ -6,10 +6,10 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -67,23 +67,22 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var contact in contacts)
                 {
-                    var emailAddresses = new List<string>();
-
-                    foreach (var email in contact.EmailAddresses)
+                    var emailAddresses = contact.EmailAddresses.Where(e => IsEmail(e.Address)).Select(e => e.Address).ToList();
+                    if (!emailAddresses.Any())
                     {
-                        if (!string.IsNullOrEmpty(email.Address))
-                        {
-                            emailAddresses.Add(email.Address);
-                        }
+                        emailAddresses = contact.ImAddresses.Where(e => IsEmail(e)).ToList();
                     }
 
-                    // Get user properties.
-                    contactsResult.Add(new CalendarSkillContactModel
+                    if (emailAddresses.Any())
                     {
-                        Name = contact.DisplayName,
-                        EmailAddresses = emailAddresses,
-                        Id = contact.Id
-                    });
+                        // Get user properties.
+                        contactsResult.Add(new CalendarSkillContactModel
+                        {
+                            Name = contact.DisplayName,
+                            EmailAddresses = emailAddresses,
+                            Id = contact.Id
+                        });
+                    }
                 }
             }
 
@@ -91,6 +90,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             if (people?.Count > 0)
             {
+                var existingResult = contactsResult.SelectMany(c => c.EmailAddresses).ToHashSet();
                 foreach (var person in people)
                 {
                     var emailAddresses = new List<string>();
@@ -98,7 +98,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     foreach (var email in person.ScoredEmailAddresses)
                     {
                         // If the email address isn't already included in the contacts list, add it
-                        if (!contactsResult.SelectMany(c => c.EmailAddresses).Contains(email.Address))
+                        if (!existingResult.Contains(email.Address) && IsEmail(email.Address))
                         {
                             emailAddresses.Add(email.Address);
                         }
@@ -120,6 +120,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             results.AddRange(contactsResult);
 
             return results;
+        }
+
+        private bool IsEmail(string emailString)
+        {
+            bool isEmail = !string.IsNullOrEmpty(emailString) && Regex.IsMatch(emailString, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            return isEmail;
         }
     }
 }

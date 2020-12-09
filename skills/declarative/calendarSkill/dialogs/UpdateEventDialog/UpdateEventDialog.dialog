@@ -138,10 +138,12 @@
               "choiceOptions": {
                 "includeNumbers": true,
                 "inlineOrMore": ", or ",
-                "inlineOr": " or "
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
               },
               "property": "dialog.attendanceConfirm",
-              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null"
+              "allowInterruptions": "=#Cancel.score > 0.8 || turn.activity.value.intent != null",
+              "style": "none"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -322,7 +324,7 @@
             "email": "=dialog.email",
             "location": "=dialog.location",
             "entityOperationResult": "=dialog.entityOperationResult",
-            "eventInfo": "=dialog.selectedEvent",
+            "eventInfo": "=if(dialog.eventId==null, dialog.selectedEvent, null)",
             "operation": "=dialog.operation",
             "entityName": "=dialog.entityName"
           }
@@ -357,20 +359,12 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "45abUj"
+                    "id": "WSjIjO"
                   },
                   "assignments": [
                     {
                       "property": "dialog.meetingDuration",
                       "value": "=(ticks(formatDateTime(dialog.selectedEvent.End.datetime)) - ticks(formatDateTime(dialog.selectedEvent.Start.datetime))) / 10000000"
-                    },
-                    {
-                      "property": "dialog.selectedEvent.Start.datetime",
-                      "value": "=coalesce(dialog.datetime.Start, dialog.updateResult.newValue.Value)"
-                    },
-                    {
-                      "value": "=coalesce(dialog.datetime.End, addSeconds(formatDateTime(dialog.selectedEvent.Start.datetime), dialog.meetingDuration))",
-                      "property": "dialog.selectedEvent.End.datetime"
                     },
                     {
                       "property": "dialog.selectedEvent.Start.timezone",
@@ -379,6 +373,96 @@
                     {
                       "property": "dialog.selectedEvent.End.timezone",
                       "value": "=user.workingHours.timezone.name"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "RboJbN"
+                  },
+                  "condition": "=$updateResult.newValue.type",
+                  "cases": [
+                    {
+                      "value": "date",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "ruqYzV"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.selectedEvent.Start.datetime",
+                              "value": "=formatDateTime(concat(dialog.updateResult.newValue.Value + ' ' + formatDateTime(dialog.selectedEvent.Start.datetime, 'hh:mm:ss')))"
+                            },
+                            {
+                              "value": "=addSeconds(formatDateTime(dialog.selectedEvent.Start.datetime), dialog.meetingDuration)",
+                              "property": "dialog.selectedEvent.End.datetime"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "value": "time",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "CabgEA"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.selectedEvent.Start.datetime",
+                              "value": "=formatDateTime(concat(formatDateTime(dialog.selectedEvent.Start.datetime, 'yyyy/MM/dd') + ' ' + dialog.updateResult.newValue.Value))"
+                            },
+                            {
+                              "value": "=addSeconds(formatDateTime(dialog.selectedEvent.Start.datetime), dialog.meetingDuration)",
+                              "property": "dialog.selectedEvent.End.datetime"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "value": "timerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "StmPcn"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.selectedEvent.Start.datetime",
+                              "value": "=formatDateTime(concat(formatDateTime(dialog.selectedEvent.Start.datetime, 'yyyy/MM/dd') + ' ' + dialog.updateResult.newValue.start))"
+                            },
+                            {
+                              "value": "=formatDateTime(concat(formatDateTime(dialog.selectedEvent.Start.datetime, 'yyyy/MM/dd') + ' ' + dialog.updateResult.newValue.end))",
+                              "property": "dialog.selectedEvent.End.datetime"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "hniNtb"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.selectedEvent.Start.datetime",
+                          "value": "=coalesce(dialog.updateResult.newValue.start, dialog.updateResult.newValue.Value)"
+                        },
+                        {
+                          "value": "=coalesce(dialog.updateResult.newValue.end, addSeconds(formatDateTime(dialog.selectedEvent.Start.datetime), dialog.meetingDuration))",
+                          "property": "dialog.selectedEvent.End.datetime"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -510,6 +594,68 @@
                   ]
                 }
               ]
+            },
+            {
+              "value": "attendance",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "0c3hqk"
+                  },
+                  "condition": "dialog.updateResult.newValue",
+                  "cases": [
+                    {
+                      "value": "accept",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "ZuGXhI"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "RespondToEventDialog",
+                          "options": {
+                            "response": "='accepted'",
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "value": "cancel",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "sParo4"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "CancelEventDialog",
+                          "options": {
+                            "event": "=dialog.selectedEvent"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "2a0oM8"
+                      },
+                      "activity": "${SendActivity_2a0oM8()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "vENL9U"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "default": [
@@ -548,7 +694,9 @@
           "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
           "property": "dialog.confirmUpdate",
           "allowInterruptions": "=#Cancel.score > 0.8",
