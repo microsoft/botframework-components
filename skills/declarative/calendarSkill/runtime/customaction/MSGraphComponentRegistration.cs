@@ -41,22 +41,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction
         public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
         {
             // Actions
-            //yield return new DeclarativeType<GetProfile>(GetProfile.DeclarativeType);
-            //yield return new DeclarativeType<GetEventById>(GetEventById.DeclarativeType);
-            //yield return new DeclarativeType<GetEvents>(GetEvents.DeclarativeType);
-            //yield return new DeclarativeType<GroupEventsByDate>(GroupEventsByDate.DeclarativeType);
-            //yield return new DeclarativeType<GetWorkingHours>(GetWorkingHours.DeclarativeType);
-            //yield return new DeclarativeType<GetContacts>(GetContacts.DeclarativeType);
-            //yield return new DeclarativeType<FindMeetingTimes>(FindMeetingTimes.DeclarativeType);
-            //yield return new DeclarativeType<CreateEvent>(CreateEvent.DeclarativeType);
-            //yield return new DeclarativeType<AcceptEvent>(AcceptEvent.DeclarativeType);
-            //yield return new DeclarativeType<TentativelyAcceptEvent>(TentativelyAcceptEvent.DeclarativeType);
-            //yield return new DeclarativeType<DeclineEvent>(DeclineEvent.DeclarativeType);
-            //yield return new DeclarativeType<DeleteEvent>(DeleteEvent.DeclarativeType);
-            //yield return new DeclarativeType<UpdateEvent>(UpdateEvent.DeclarativeType);
-            //yield return new DeclarativeType<CheckAvailability>(CheckAvailability.DeclarativeType);
-            //yield return new DeclarativeType<FindAvailableTime>(FindAvailableTime.DeclarativeType);
-
             // Get all the classes where they have a ComponentRegistration attribute
             IEnumerable<Type> typesToInstatiate = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.CustomAttributes.Any(attr => attr.AttributeType == typeof(ComponentRegistrationAttribute)));
 
