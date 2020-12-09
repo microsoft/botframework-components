@@ -6,7 +6,7 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Schema;
 
-namespace <%= botName %>.WebHost.Controllers
+namespace <%= botName %>.Controllers
 {
     /// <summary>
     /// A controller that handles skill replies to the bot.

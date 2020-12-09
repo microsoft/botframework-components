@@ -2,9 +2,9 @@
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.Runtime.Extensions;
 
-[assembly: FunctionsStartup(typeof(<%= botName %>.FunctionHost.Startup))]
+[assembly: FunctionsStartup(typeof(<%= botName %>.Startup))]
 
-namespace <%= botName %>.FunctionHost
+namespace <%= botName %>
 {
     public class Startup : FunctionsStartup
     {

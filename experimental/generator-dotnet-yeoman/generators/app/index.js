@@ -5,13 +5,13 @@ const Generator = require('yeoman-generator');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-INTEGRATION_WEBAPP = 'webapp';
-INTEGRATION_FUNCTIONS = 'functions';
+const INTEGRATION_WEBAPP = 'webapp';
+const INTEGRATION_FUNCTIONS = 'functions';
 
-PLATFORM_DOTNET = 'dotnet';
-PLATFORM_JS = 'js';
-PLATFORM_JAVA = 'java';
-PLATFORM_PYTHON = 'python';
+const PLATFORM_DOTNET = 'dotnet';
+const PLATFORM_JS = 'js';
+const PLATFORM_JAVA = 'java';
+const PLATFORM_PYTHON = 'python';
 
 module.exports = class extends Generator {
     constructor(args, opts) {
@@ -41,7 +41,7 @@ module.exports = class extends Generator {
 
     _verifyOptions() {
         if (this.options.integration != INTEGRATION_WEBAPP && this.options.integration != INTEGRATION_FUNCTIONS) {
-            throw new Error(`--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`)
+            throw new Error(`--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`);
         }
 
         if (this.options.platform != PLATFORM_DOTNET) {

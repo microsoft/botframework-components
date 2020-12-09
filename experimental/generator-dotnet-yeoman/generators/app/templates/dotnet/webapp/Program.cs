@@ -4,7 +4,7 @@ using Microsoft.Bot.Builder.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace <%= botName %>.WebHost
+namespace <%= botName %>
 {
     public class Program
     {

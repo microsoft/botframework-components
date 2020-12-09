@@ -2,7 +2,7 @@
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 
-namespace <%= botName %>.FunctionHost
+namespace <%= botName %>
 {
     internal class ActivitySerializationSettings
     {
