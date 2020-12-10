@@ -13,6 +13,9 @@ const PLATFORM_JS = 'js';
 const PLATFORM_JAVA = 'java';
 const PLATFORM_PYTHON = 'python';
 
+const PROJECT_TYPEID_WEBAPP = '9A19103F-16F7-4668-BE54-9A1E7A4F7556';
+const PROJECT_TYPEID_FUNCTION = 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC';
+
 module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -88,6 +91,9 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
         const botProjectGuid = uuidv4().toUpperCase();
         const solutionGuid = uuidv4().toUpperCase();
+        const projectType = this.options.integration == INTEGRATION_WEBAPP ?
+            PROJECT_TYPEID_WEBAPP :
+            PROJECT_TYPEID_FUNCTION;
 
         this.fs.copyTpl(
             this.templatePath(path.join(this.options.platform, 'botName.sln')),
@@ -95,7 +101,8 @@ module.exports = class extends Generator {
             {
                 botName,
                 botProjectGuid,
-                solutionGuid
+                solutionGuid,
+                projectType
             }
         );
     }
