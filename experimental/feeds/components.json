@@ -1,7 +1,7 @@
 [
   {
     "name": "Preview.Bot.Component.GeneralIntent",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview2",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -23,7 +23,7 @@
   },
   {
     "name": "Preview.Bot.Component.GreetingDialog",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview3",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -45,7 +45,7 @@
   },
   {
     "name": "Preview.Bot.Component.OnboardingDialog",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview2",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -67,7 +67,7 @@
   },
   {
     "name": "Preview.Bot.Component.UnknownIntentDialog",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview4",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
