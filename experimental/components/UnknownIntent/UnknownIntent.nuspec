@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Preview.Bot.Component.UnknownIntentDialog</id>
-        <version>0.0.1-preview3</version>
+        <version>0.0.1-preview4</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>first version of unknown intent dialog package</releaseNotes>
-        <description>this package contains dialogs to provide unknown intent experience</description>
+        <description>Dialogs to provide a fallback experience</description>
         <tags>conversationalcore unknownintent preview</tags>
         <dependencies />
     </metadata>
