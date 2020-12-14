@@ -46,13 +46,6 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "qft3d6"
-          },
-          "activity": "${SendActivity_qft3d6()}"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
             "id": "AXlYsm"
           },
           "activity": "${SendActivity_AXlYsm()}"

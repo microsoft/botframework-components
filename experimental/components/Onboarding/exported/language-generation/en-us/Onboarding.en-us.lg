@@ -5,8 +5,6 @@ SuggestedActions = Why?
 ]
 # SendActivity_Fp5DpR()
 - Nice to meet you, ${user.name}!
-# SendActivity_qft3d6()
-- ${YouCanAskMeCard()}
 # SendActivity_AXlYsm()
 - ${HowCanIHelp()}
 # SendActivity_dMoo6D()
