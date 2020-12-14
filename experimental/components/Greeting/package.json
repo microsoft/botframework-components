@@ -1,5 +1,5 @@
 {
-  "name": "preview-bot-component-greeting",
+  "name": "preview-bot-component-greetingdialog",
   "version": "0.0.1-preview1",
   "description": "Dialogs to provide a greeting experience",
   "main": "index.js",

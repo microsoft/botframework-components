@@ -1,5 +1,5 @@
 {
-  "name": "preview-bot-component-onboarding",
+  "name": "preview-bot-component-onboardingdialog",
   "version": "0.0.1-preview1",
   "description": "Dialogs to provide an onboarding experience",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "preview-bot-component-unknownintent",
+  "name": "preview-bot-component-unknownintentdialog",
   "version": "0.0.1-preview1",
   "description": "Dialogs to provide a fallback experience",
   "main": "index.js",
