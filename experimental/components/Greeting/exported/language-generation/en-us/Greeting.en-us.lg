@@ -12,7 +12,7 @@ Attachments = ${json(NewUserIntroCardJson())}
 ]
 
 # UserName 
-- IF: ${user.name && rand(0, 1000) > 500}
+- IF: ${user.name}
     - ${concat(' ', user.name)}
 - ELSE:
     - 
@@ -30,12 +30,12 @@ Attachments = ${json(NewUserIntroCardJson())}
 - Hey there${UserName()}.
 
 # NewUserGreeting()
-- ${Greeting()} I'm your virtual assistant. I'm here to help you get things done.
+- ${Greeting()} I'm your virtual assistant. I'm here to help you get things done. This is my `NewUserGreeting` - you can customize this message in the `Bot Responses` tab.
 
 # ReturningUserGreeting()
-- ${Greeting()} ${HowCanIHelp()}
-- ${Greeting()} ${HowCanIHelp()}
-- ${Greeting()} ${HowCanIHelp()}
+- ${Greeting()} ${HowCanIHelp()} This is my `ReturningUserGreeting` - you can customize this message in the `Bot Responses` tab.
+- ${Greeting()} ${HowCanIHelp()} This is my `ReturningUserGreeting` - you can customize this message in the `Bot Responses` tab.
+- ${Greeting()} ${HowCanIHelp()} This is my `ReturningUserGreeting` - you can customize this message in the `Bot Responses` tab.
 
 
 # NewUserIntroCardJson
@@ -115,14 +115,6 @@ Attachments = ${json(NewUserIntroCardJson())}
                   "weight": "Bolder",
                   "color": "Light",
                   "text": "${ReturningUserGreeting()}",
-                  "wrap": true
-                },
-                {
-                  "type": "TextBlock",
-                  "id": "body",
-                  "size": "Medium",
-                  "color": "Light",
-                  "text": "How can I help?",
                   "wrap": true
                 }
               ],

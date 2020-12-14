@@ -23,30 +23,18 @@
           },
           "disabled": false,
           "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "alwaysPrompt": true,
           "prompt": "${TextInput_Prompt_hWwg7E()}",
           "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
-          "property": "user.name"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "Alpkp1"
-          },
-          "condition": "exists(turn.recognizedEntities.PersonName[0])",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "sCAkak"
-              },
-              "property": "user.name",
-              "value": "(turn.recognizedEntities.PersonName[0]"
-            }
-          ]
+          "invalidPrompt": "${TextInput_InvalidPrompt_hWwg7E()}",
+          "defaultValueResponse": "${TextInput_DefaultValueResponse_hWwg7E()}",
+          "property": "user.name",
+          "validations": [
+            "exists(@personName)"
+          ],
+          "defaultValue": "Human",
+          "value": "=@personName",
+          "allowInterruptions": "=!@personName"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -54,13 +42,6 @@
             "id": "Fp5DpR"
           },
           "activity": "${SendActivity_Fp5DpR()}"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "qft3d6"
-          },
-          "activity": "${SendActivity_qft3d6()}"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -90,5 +71,6 @@
     }
   ],
   "generator": "Onboarding.lg",
-  "recognizer": "Onboarding.lu"
+  "recognizer": "Onboarding.lu.qna",
+  "id": "Onboarding"
 }

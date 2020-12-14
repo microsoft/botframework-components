@@ -1,7 +1,7 @@
 [
   {
     "name": "Preview.Bot.Component.GeneralIntent",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview2",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -12,7 +12,7 @@
   },
   {
     "name": "preview-bot-component-generalintent",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview2",
     "source": "npm",
     "language": "js",
     "category": "Conversational Core",
@@ -23,7 +23,7 @@
   },
   {
     "name": "Preview.Bot.Component.GreetingDialog",
-    "version": "0.0.1-preview1",
+    "version": "0.0.1-preview3",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -33,8 +33,19 @@
     "description": "Dialogs to provide a greeting experience"
   },
   {
-    "name": "Preview.Bot.Component.OnboardingDialog",
+    "name": "preview-bot-component-greetingdialog",
     "version": "0.0.1-preview1",
+    "source": "npm",
+    "language": "js",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide a greeting experience"
+  },
+  {
+    "name": "Preview.Bot.Component.OnboardingDialog",
+    "version": "0.0.1-preview2",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
@@ -44,10 +55,32 @@
     "description": "Dialogs to provide an onboarding experience"
   },
   {
-    "name": "Preview.Bot.Component.UnknownIntentDialog",
+    "name": "preview-bot-component-onboardingdialog",
     "version": "0.0.1-preview1",
+    "source": "npm",
+    "language": "js",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide an onboarding experience"
+  },
+  {
+    "name": "Preview.Bot.Component.UnknownIntentDialog",
+    "version": "0.0.1-preview4",
     "source": "nuget",
     "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialogs to provide a fallback experience"
+  },
+  {
+    "name": "preview-bot-component-unknownintentdialog",
+    "version": "0.0.1-preview1",
+    "source": "npm",
+    "language": "js",
     "category": "Conversational Core",
     "authors": [
       "Bot Framework"
