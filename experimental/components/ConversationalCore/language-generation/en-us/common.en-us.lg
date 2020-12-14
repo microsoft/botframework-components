@@ -1,5 +1,5 @@
 # UserName 
-- IF: ${user.name && rand(0, 1000) > 500}
+- IF: ${user.name}
     - ${concat(' ', user.name)}
 - ELSE:
     - 

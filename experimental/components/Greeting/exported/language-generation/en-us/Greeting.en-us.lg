@@ -116,14 +116,6 @@ Attachments = ${json(NewUserIntroCardJson())}
                   "color": "Light",
                   "text": "${ReturningUserGreeting()}",
                   "wrap": true
-                },
-                {
-                  "type": "TextBlock",
-                  "id": "body",
-                  "size": "Medium",
-                  "color": "Light",
-                  "text": "How can I help?",
-                  "wrap": true
                 }
               ],
               "width": "stretch"
