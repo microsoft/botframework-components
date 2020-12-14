@@ -7,7 +7,7 @@
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>first version of general intent package</releaseNotes>
-        <description>this package contains dialogs to provide general intent handling</description>
+        <description>Dialogs to provide general intent handling - like help and cancel</description>
         <tags>conversationalcore generalintent preview</tags>
         <dependencies />
     </metadata>

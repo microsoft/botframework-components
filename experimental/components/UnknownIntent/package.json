@@ -1,0 +1,11 @@
+{
+  "name": "preview-bot-component-unknownintent",
+  "version": "0.0.1-preview1",
+  "description": "Dialogs to provide a fallback experience",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bot Framework",
+  "license": "MIT"
+}

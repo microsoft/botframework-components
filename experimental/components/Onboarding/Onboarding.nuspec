@@ -7,7 +7,7 @@
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>first version of onboarding package</releaseNotes>
-        <description>this package contains dialogs to provide onboarding experience</description>
+        <description>Dialogs to provide an onboarding experience</description>
         <tags>conversationalcore onboarding preview</tags>
         <dependencies />
     </metadata>
