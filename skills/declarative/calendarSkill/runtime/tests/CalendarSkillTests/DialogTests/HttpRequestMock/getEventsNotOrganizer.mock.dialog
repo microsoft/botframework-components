@@ -48,7 +48,7 @@
             },
             "bodyPreview": "________________________________________________________________________________\r\nMicrosoft Teams meeting\r\nJoin on your computer or mobile app\r\nClick here to join the meeting\r\nOr call in (audio only)\r\n+1 213-436-3272,,771965173#   United States, Los",
             "end": {
-              "dateTime": "2020-10-21T04:30:00.0000000",
+              "dateTime": "2999-10-21T04:30:00.0000000",
               "timeZone": "Pacific Standard Time",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },
@@ -100,7 +100,7 @@
             "sensitivity": "normal",
             "showAs": "tentative",
             "start": {
-              "dateTime": "2020-10-21T04:00:00.0000000",
+              "dateTime": "2999-10-21T04:00:00.0000000",
               "timeZone": "Pacific Standard Time",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },

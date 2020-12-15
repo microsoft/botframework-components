@@ -68,7 +68,7 @@
 
 # SendActivity_3j3wUV()
 [Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
+    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventAttendeesResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 
@@ -83,7 +83,7 @@
 
 # SendActivity_g7immX()
 [Activity
-    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
+    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventLocationResponseText(dialog.event))}
     attachments = ${json(EventDetailCard(dialog.event))}
 ]
 

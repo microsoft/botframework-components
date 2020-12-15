@@ -1,0 +1,1 @@
+{"query":"decline my meeting with lidia","prediction":{"topIntent":"DeclineEvent","intents":{"DeclineEvent":{"score":0.8658633}},"entities":{"personName":["lidia"]}}}

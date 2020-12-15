@@ -28,12 +28,17 @@
       "text": "where is my meeting with lidia"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I'm searching your calendar, this might take a sec…",
+        "This might take a sec...",
+        "Hold on, this is taking a while...",
+        "Hold on, I'm trying to find events that match..."
+      ]
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "The meeting is in Conference Room - Stevens. The meeting is on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": "The meeting location is Conference Room - Stevens. The meeting is on Tuesday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],

@@ -29,7 +29,7 @@
     - Great. It's almost ready to send. To confirm, this meeting is called ${dialog.slots.title} on ${DateString(dialog.slots.startDateTime)} for ${FormatDateTimeDuration(dialog.slots.startDateTime, dialog.slots.endDateTime)}. And you've invited ${ContactConfirmWithOne(dialog.slots.attendees)}. Is all of that correct?
 
 # DateString(startDateTime)
-- ${formatDateTime(startDateTime, 'dddd, MMMM ')} ${addOrdinal(dayOfMonth(formatDateTime(startDateTime)))} at ${formatDateTime(startDateTime, 'h:mm tt')}
+- ${formatDateTime(startDateTime, 'dddd, MMMM')} ${addOrdinal(dayOfMonth(formatDateTime(startDateTime)))} at ${formatDateTime(startDateTime, 'h:mm tt')}
 
 # FormatDateTimeDuration(startTime, endTime)
 - ${FormatDuration((ticks(formatDateTime(endTime)) - ticks(formatDateTime(startTime))) / 10000000)}

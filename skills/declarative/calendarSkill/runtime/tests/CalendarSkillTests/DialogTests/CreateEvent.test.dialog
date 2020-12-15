@@ -58,18 +58,17 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name, test@test.com.",
-        "Got it. I'll move forward with test name, test@test.com.",
-        "OK. I'll include test name, test@test.com as attendee."
+        "Sure, I'll continue with test name (test@test.com).",
+        "Got it. I'll move forward with test name (test@test.com).",
+        "OK. I'll invite test name (test@test.com)."
       ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Want to include anyone else? (1) Yes or (2) No",
+        "Want to invite anyone else? (1) Yes or (2) No",
         "Want to add another attendee? (1) Yes or (2) No",
-        "Should I add anyone else? (1) Yes or (2) No",
-        "Any other attendees? (1) Yes or (2) No"
+        "Should I add anyone else? (1) Yes or (2) No"
       ]
     },
     {
@@ -80,8 +79,9 @@
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
         "I've found multiple suggestions when you can meet with test name:",
-        "I've found multiple suggestions when you can meet with test name:",
-        "I've found the following time when you can meet with test name:"
+        "I've found the following time when you can meet with test name:",
+        "There are multiple suggestions when you can meet with test name:",
+        "Looks like there are several options when you can meet with test name:"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
@@ -94,26 +94,17 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, let’s continue with the 1st option.",
-        "OK. I'll continue with November 4 at 3:00 PM.",
-        "You got it! I'll schedule this meeting for November 4 at 3:00 PM.",
-        "OK. I'll continue with the 1st option."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
         "Sure, I’ve added a Teams link for you as well.",
         "OK, I’ll also include a Teams link.",
-        "Got it. A Teams link will be added to your meeting.",
-        "Great. I've gone ahead and added Teams to this meeting."
+        "Got it. I've also included a Teams meeting."
       ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Please let me know what location you would like to include?",
-        "If you want to include a physical location, please call out what I should include for you?"
+        "What location would you like to include?",
+        "What should I set the location to?",
+        "What is the location?"
       ]
     },
     {
@@ -123,9 +114,9 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Got it, I will create a meeting on November 4, at 3:00 PM, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right? (1) Yes or (2) No",
-        "OK, I want to confirm before saving this meeting. It's on November 4, at 3:00 PM, called test title. test name will be invited, and the location is test location with a Teams link included. Do you want to send it? (1) Yes or (2) No",
-        "Great. It's almost ready to send. To confirm, this meeting is called test title on November 4, at 3:00 PM for 30 minutes. It'll take place at test location with a Teams link included, and you've invited test name people. Is all of that correct? (1) Yes or (2) No"
+        "Got it, I will create a meeting on Wednesday, November 4th at 1:00 PM for 1h, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right?",
+        "OK, I want to confirm before saving this meeting. It's on Wednesday, November 4th at 1:00 PM, called test title. test name will be invited, and the location is test location with a Teams link included. Do you want to send it?",
+        "Great. It's almost ready to send. To confirm, this meeting is called test title on Wednesday, November 4th at 1:00 PM for 1h. It'll take place at test location with a Teams link included, and you've invited test name. Is all of that correct?"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
@@ -138,9 +129,9 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Your event has been created.",
-        "Your meeting is on your calendar.",
-        "The event has been created."
+        "All right, your event has been created.",
+        "I've added the meeting to your calendar.",
+        "OK, the event has been created for you."
       ]
     }
   ]

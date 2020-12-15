@@ -25,7 +25,7 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "find a meeting"
+      "text": "find my meeting with tom"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
@@ -36,8 +36,13 @@
       "text": "with jackie"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I'm searching your calendar, this might take a sec…",
+        "This might take a sec...",
+        "Hold on, this is taking a while...",
+        "Hold on, I'm trying to find events that match..."
+      ]
     },
     {
       "$kind": "Microsoft.Test.AssertReply",

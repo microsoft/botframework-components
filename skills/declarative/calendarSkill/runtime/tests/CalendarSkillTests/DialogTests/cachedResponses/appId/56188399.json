@@ -1,0 +1,1 @@
+{"query":"find my meeting with lidia","prediction":{"topIntent":"GetEventTitle","intents":{"GetEventTitle":{"score":0.0713483}},"entities":{"personName":["lidia"]}}}

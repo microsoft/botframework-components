@@ -1,0 +1,1 @@
+{"query":"test location","prediction":{"topIntent":"ChangeSlots","intents":{"ChangeSlots":{"score":0.227009088}},"entities":{}}}

@@ -29,12 +29,17 @@
       "text": "cancel my meeting with lidia"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I'm searching your calendar, this might take a sec…",
+        "This might take a sec...",
+        "Hold on, this is taking a while...",
+        "Hold on, I'm trying to find events that match..."
+      ]
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "OK. Are you sure you want to cancel the event on Thursday, October 15th, at 8:00 AM,  Project Team Meeting? (1) Yes or (2) No",
+      "text": "OK. Are you sure you want to cancel the event Project Team Meeting on Tuesday, October 15th at 8:00 AM? (1) Yes or (2) No",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ]
@@ -45,7 +50,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I’ve cancelled the event for you and attendees will be notified.",
+      "text": "I’ve cancelled the event for you and notified the attendees.",
       "description": "Response to input 1"
     }
   ]

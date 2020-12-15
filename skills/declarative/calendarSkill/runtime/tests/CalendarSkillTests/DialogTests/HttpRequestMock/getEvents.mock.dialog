@@ -90,7 +90,7 @@
             },
             "bodyPreview": "",
             "end": {
-              "dateTime": "2020-10-15T16:30:00.0000000",
+              "dateTime": "2999-10-15T16:30:00.0000000",
               "timeZone": "UTC",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },
@@ -140,7 +140,7 @@
             "seriesMasterId": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQBGAAAAAADoe4Tuth0XSai2z9sEhsTuBwBN8odIGmZQQalnLh3DCfMfAAAAAAENAABN8odIGmZQQalnLh3DCfMfAAABsRynAAA=",
             "showAs": "busy",
             "start": {
-              "dateTime": "2020-10-15T15:00:00.0000000",
+              "dateTime": "2999-10-15T15:00:00.0000000",
               "timeZone": "UTC",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },

@@ -1,0 +1,1 @@
+{"query":"update a meeting","prediction":{"topIntent":"UpdateEvent","intents":{"UpdateEvent":{"score":0.875389636}},"entities":{}}}
