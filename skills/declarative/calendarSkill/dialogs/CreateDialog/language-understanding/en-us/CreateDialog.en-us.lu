@@ -19,6 +19,7 @@
 - add alex to this
 - add allan
 - add attendees
+- add an attendee
 - add susan to my meeting this afternoon with darren
 - add test@outlook.com and bob
 - can you send this to mary too
@@ -30,6 +31,8 @@
 - invite elaine, quirine, and test@email.com
 - invite more people
 - invite test@email.com
+- invite someone else
+- add patti to this
 
 @ prebuilt personName
 @ prebuilt email
@@ -91,7 +94,8 @@
 - skip
 - skip this
 - skip it
-
+- none
+- no location
 # Cancel
 - cancel
 - cancel this

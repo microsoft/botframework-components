@@ -3,7 +3,6 @@
 
 # TextInput_Prompt_HmkRsB()
 - What should I set the title to?
-
 # DateTimeInput_Prompt_D6qCmX()
 - When should I schedule the meeting?
 # DateTimeInput_Prompt_SOJEYp()
@@ -30,7 +29,7 @@
 # ConfirmInput_Prompt_o1UB6n()
 [Activity
     text=${ConfirmCreatePrompt()}
-    attachments=${json(EventCreateDetailCard($event))}
+    attachments=${json(EventCreateDetailCard($slots))}
 ]
 
 # DateTimeInput_UnrecognizedPrompt_D6qCmX()
@@ -47,7 +46,6 @@
 - What location would you like to include?
 - What should I set the location to?
 - What is the location?
-- What is the location?
 
 # SendActivity_KhyZ3n()
 - ```
@@ -56,5 +54,13 @@ I've added the following attendees:
 ```
 # SendActivity_zz0Eaj()
 - I've removed ${selectedContact.name}.
-# SendActivity_luOnHv()
+# TextInput_Prompt_68Dudo()
+- What should I set the description to?
+# SendActivity_rff2tR()
+- I'll skip adding a title.
+# ConfirmInput_Prompt_WF6urX()
+- Are you sure you want to cancel? Your progress will be lost.
+# SendActivity_VzJCSo()
 - ${CancelMessage()}
+# SendActivity_VLAwOi()
+- All right, let's continue.

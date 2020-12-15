@@ -155,20 +155,20 @@
               "value": "=turn.activity.text"
             },
             {
-              "property": "$title",
+              "property": "$slots.subject",
               "value": "=@title"
             },
             {
-              "property": "$email",
+              "property": "$slots.location",
+              "value": "=@location"
+            },
+            {
+              "property": "$emailArray",
               "value": "=@@email"
             },
             {
               "property": "$personNameArray",
               "value": "=@@personName"
-            },
-            {
-              "property": "$location",
-              "value": "=@location"
             }
           ]
         },
@@ -191,7 +191,23 @@
             "query": "=$query",
             "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
-          "resultProperty": "$datetime"
+          "resultProperty": "$dateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jWevfz"
+          },
+          "assignments": [
+            {
+              "property": "$slots.start.dateTime",
+              "value": "=coalesce($dateTime.start, $dateTime.value, null)"
+            },
+            {
+              "property": "$slots.end.dateTime",
+              "value": "=coalesce($dateTime.end, null)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -201,12 +217,9 @@
           "activityProcessed": true,
           "dialog": "CreateDialog",
           "options": {
-            "title": "=$title",
+            "slots": "=$slots",
             "personNameArray": "=$personNameArray",
-            "email": "=$email",
-            "start": "=coalesce($datetime.start, $datetime.value)",
-            "end": "=$datetime.end",
-            "location": "=$location"
+            "emailArray": "=$emailArray"
           }
         },
         {

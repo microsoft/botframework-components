@@ -2,9 +2,6 @@
 [import](functions.lg)
 [import](cards.lg)
 
-# DefaultInterruptionCondition
-
-
 # WelcomeUser
 - IF: ${user.profile.displayName != null}
 - ```

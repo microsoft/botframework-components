@@ -52,36 +52,33 @@
 - just cancel the one with mary
 
 
-## CreateEvent
-- add a lunch meeting with jim on wednesday at noon
+# CreateEvent
+- add a {@title=lunch meeting} with jim on wednesday at noon
 - add a meeting to my calendar
-- add a meeting to my calendar with {@EntityName={@EventAttendee=anna}}
-- add an event called {@Title=brthday party}
-- book a meeting with megan at 10 am about {@Title=sync meeting}
+- add a meeting to my calendar with anna
+- add an event called {@title=brthday party}
+- book a meeting with megan at 10 am about {@title=sync meeting}
 - book some time tomorrow
-- create a {@Title={@EntityName={@EventTitle=1:1}}} meeting with {@EntityName={@EventAttendee=elaine}} and {@EntityName={@EventAttendee=lauren}}
-- create a {@EntityName={@EventTitle=brainstorm}} with lauren and {@EntityName={@EventAttendee=elaine}} at 9
+- create a {@title=1:1} meeting with elaine and lauren
+- create a {@title=brainstorm} with lauren and elaine at 9
 - create a event
 - create a meeting
 - create an event at 9pm
 - create new
-- i want to create a meeting with {@EntityName={@EventAttendee=elaine}} at 9
+- i want to create a meeting with elaine at 9
 - i want to create a new event
 - new event
-- new event with {@EntityName={@TeamsLink=teams link}}
 - new meeting
 - new meeting at 9
 - schedule a meeting with stephanie tomorrow afternoon
-- schedule an event {@Title=dentist appointment} on friday at 2
-- set a {@Title=private event} for 4pm
-- set up a meeting called {@Title={@EntityName={@EventTitle=sync}}} with {@EntityName={@EventAttendee=lauren}}
+- schedule an event {@title=dentist appointment} on friday at 2
+- set a {@title=private event} for 4pm
+- set up a meeting called {@title=sync} with lauren
 - set up a new invite
 - set up focus time at 9 am
-- set up meeting about the {@Title=2020 sales report} at 9am on thursday
-- set up time for {@EntityName={@EventAttendee=myself}}
-- set-up an event
-
-
+- set up meeting about the {@title=2020 sales report} at 9am on thursday
+- set up time for myself
+- setup an event
 ## DeclineEvent
 - decline
 - decline my 4 pm meeting with title {@Title=weekly report}

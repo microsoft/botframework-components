@@ -23,22 +23,6 @@
           "name": "LookupContactDialog.BeginDialog"
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "yU0Va4"
-          },
-          "assignments": [
-            {
-              "property": "$emailArray",
-              "value": "=coalesce($emailArray, @@email)"
-            },
-            {
-              "property": "$personNameArray",
-              "value": "=coalesce($personNameArray, @@personName)"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "I2X350"
@@ -107,7 +91,12 @@
                 "id": "sLro5t"
               },
               "activityProcessed": true,
-              "options": {}
+              "options": {
+                "$personNameArray": "=null",
+                "$emailArray": "=null",
+                "turn.recognized": "=null"
+              },
+              "allowLoop": false
             }
           ]
         },
@@ -118,8 +107,7 @@
           },
           "value": "=$contacts"
         }
-      ],
-      "defaultResultProperty": "dialog.result"
+      ]
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
@@ -135,6 +123,22 @@
             "id": "Y3KzlG"
           },
           "name": "LookupContactDialog.OnEvent_SetContactQuery"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "1yGoeO"
+          },
+          "assignments": [
+            {
+              "property": "$emailArray",
+              "value": "=coalesce($emailArray, @@email)"
+            },
+            {
+              "property": "$personNameArray",
+              "value": "=coalesce($personNameArray, @@personName)"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -153,23 +157,23 @@
               "alwaysPrompt": false,
               "property": "$contactQuery",
               "prompt": "${TextInput_Prompt_sFm17r()}",
-              "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != TextInput_Response_sFm17r) || exists(turn.activity.value.intent)"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "ZPGhum"
-          },
-          "assignments": [
-            {
-              "property": "$emailArray",
-              "value": "=@@email"
+              "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != 'TextInput_Response_sFm17r') || exists(turn.activity.value.intent)"
             },
             {
-              "property": "$personNameArray",
-              "value": "=@@personName"
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "Q24RO0"
+              },
+              "assignments": [
+                {
+                  "property": "$emailArray",
+                  "value": "=@@email"
+                },
+                {
+                  "property": "$personNameArray",
+                  "value": "=@@personName"
+                }
+              ]
             }
           ]
         }
@@ -313,6 +317,14 @@
           },
           "condition": "=exists($searchResults) && count($searchResults) > 0",
           "actions": [
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "mCBwai"
+              },
+              "changeType": "clear",
+              "itemsProperty": "$contactCandidates"
+            },
             {
               "$kind": "Microsoft.Foreach",
               "$designer": {
@@ -460,13 +472,6 @@
               "changeType": "push",
               "itemsProperty": "$contacts",
               "value": "=$contact"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "Lr3hgt"
-              },
-              "activity": "${SendActivity_Lr3hgt()}"
             }
           ],
           "elseActions": [
@@ -497,6 +502,13 @@
             "id": "LH8sYv"
           },
           "name": "LookupContactDialog.OnEvent_AddMoreContacts"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "VTKaKJ"
+          },
+          "activity": "${SendActivity_VTKaKJ()}"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -560,9 +572,9 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "lhZJQn"
+            "id": "GPAfJL"
           },
-          "value": "=null"
+          "value": "=$contacts"
         }
       ]
     },
@@ -580,6 +592,14 @@
             "id": "hNtq27"
           },
           "name": "LookupContactDialog.OnIntent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "4gphM0"
+          },
+          "activityProcessed": true,
+          "eventName": "Cancel"
         }
       ]
     }
