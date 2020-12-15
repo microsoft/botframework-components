@@ -52,12 +52,6 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
-        public async Task GetEventTitleWithoutCondition()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
         public async Task GetEventTitleReprompt()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);

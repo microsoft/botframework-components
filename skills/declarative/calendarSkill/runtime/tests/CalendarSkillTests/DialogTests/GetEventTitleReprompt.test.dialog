@@ -25,15 +25,27 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "find a meeting"
+      "text": "where is my meeting with tom"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I'm searching your calendar, this might take a sec…",
+        "This might take a sec...",
+        "Hold on, this is taking a while...",
+        "Hold on, I'm trying to find events that match..."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I couldn't find the event that you're looking for. Let's try your search again. Can you tell me the specific title, start date, or attendees?",
+        "I don't see a meeting with that info. Can you tell me more about the meeting you're looking for, like the start time, title of the event, or other attendees?"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "with jackie"
+      "text": "with lidia"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
@@ -46,23 +58,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?"
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "with lidia"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found a meeting on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": "The meeting location is Conference Room - Stevens. The meeting is on Tuesday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ],
-      "description": "Response to input 1"
+      ]
     }
   ]
 }

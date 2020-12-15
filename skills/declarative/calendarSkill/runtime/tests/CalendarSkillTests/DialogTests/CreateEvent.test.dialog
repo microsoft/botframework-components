@@ -114,7 +114,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Got it, I will create a meeting on Wednesday, November 4th at 1:00 PM for 1h, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right?",
+        "Got it, I will create a meeting on Wednesday, November 4th at 1:00 PM, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right?",
         "OK, I want to confirm before saving this meeting. It's on Wednesday, November 4th at 1:00 PM, called test title. test name will be invited, and the location is test location with a Teams link included. Do you want to send it?",
         "Great. It's almost ready to send. To confirm, this meeting is called test title on Wednesday, November 4th at 1:00 PM for 1h. It'll take place at test location with a Teams link included, and you've invited test name. Is all of that correct?"
       ],

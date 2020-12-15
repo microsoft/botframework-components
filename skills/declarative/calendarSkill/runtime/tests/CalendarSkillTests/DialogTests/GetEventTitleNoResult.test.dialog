@@ -25,11 +25,23 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "find my meeting with tom"
+      "text": "where is my meeting with tom"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I'm searching your calendar, this might take a sec…",
+        "This might take a sec...",
+        "Hold on, this is taking a while...",
+        "Hold on, I'm trying to find events that match..."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I couldn't find the event that you're looking for. Let's try your search again. Can you tell me the specific title, start date, or attendees?",
+        "I don't see a meeting with that info. Can you tell me more about the meeting you're looking for, like the start time, title of the event, or other attendees?"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
@@ -45,20 +57,23 @@
       ]
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I could not find the event you are looking for. Let’s try to search again, can you try to be specific by calling out a start date, title of meeting or attendee?"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today? (1) Yes or (2) No",
+        "Something seems to be going wrong. I can tell you more about your meetings today if you like? (1) Yes or (2) No"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "with lucy"
+      "text": "no"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "Something seems to be going wrong. I can tell you more about your meetings today."
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "OK, no problem.",
+        "OK, let me know if I can help you out with anything else.",
+        "OK, I'm here if you need me."
+      ]
     }
   ]
 }
