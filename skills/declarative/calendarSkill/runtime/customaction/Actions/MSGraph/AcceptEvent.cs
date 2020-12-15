@@ -40,7 +40,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
-        protected override string DeclarativeType => AcceptEvent.AcceptEventDeclarativeType;
+        public override string DeclarativeType => AcceptEvent.AcceptEventDeclarativeType;
 
         protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {

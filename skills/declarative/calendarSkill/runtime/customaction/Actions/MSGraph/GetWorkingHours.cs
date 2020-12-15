@@ -33,7 +33,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("AddressProperty")]
         public StringExpression AddressProperty { get; set; }
 
-        protected override string DeclarativeType => GetWorkingHoursCustomActionDeclarativeType;
+        public override string DeclarativeType => GetWorkingHoursCustomActionDeclarativeType;
 
         protected override async Task<WorkingHours> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {

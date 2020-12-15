@@ -40,6 +40,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction
     {
         public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
         {
+            yield return new DeclarativeType<CheckAvailability>(CheckAvailability.DeclarativeType);
+            yield return new DeclarativeType<FindAvailableTime>(FindAvailableTime.DeclarativeType);
+            yield return new DeclarativeType<GroupEventsByDate>(GroupEventsByDate.DeclarativeType);
+
             // Actions
             // Get all the classes where they have a ComponentRegistration attribute
             IEnumerable<Type> typesToInstatiate = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.CustomAttributes.Any(attr => attr.AttributeType == typeof(MsGraphCustomActionRegistrationAttribute)));

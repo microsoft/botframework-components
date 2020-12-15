@@ -41,7 +41,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("nameProperty")]
         public StringExpression NameProperty { get; set; }
 
-        protected override string DeclarativeType => GetContactsDeclarativeType;
+        public override string DeclarativeType => GetContactsDeclarativeType;
 
         /// <summary>
         /// Gets the list of contacts

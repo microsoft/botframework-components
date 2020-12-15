@@ -46,7 +46,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// Gets the declarative of the custom action
         /// </summary>
         /// <value></value>
-        protected abstract string DeclarativeType { get; }
+        [JsonProperty("$kind")]
+        public abstract string DeclarativeType { get; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(
             DialogContext dc, object options = null, CancellationToken cancellationToken = default)

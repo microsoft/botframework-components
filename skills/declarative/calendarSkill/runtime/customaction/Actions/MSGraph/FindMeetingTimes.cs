@@ -58,7 +58,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
-        protected override string DeclarativeType => FindMeetingTimesDeclarativeType;
+        public override string DeclarativeType => FindMeetingTimesDeclarativeType;
 
         protected override async Task<List<CalendarSkillTimeSlotModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {

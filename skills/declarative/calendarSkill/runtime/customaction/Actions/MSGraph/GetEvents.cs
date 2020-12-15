@@ -116,7 +116,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("maxResultsProperty")]
         public IntExpression MaxResultsProperty { get; set; }
 
-        protected override string DeclarativeType => GetEventsDeclarativeType;
+        public override string DeclarativeType => GetEventsDeclarativeType;
 
         /// <summary>
         /// Calls the graph service to get a list of events based on the query

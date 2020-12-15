@@ -87,7 +87,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("isOnlineMeetingProperty")]
         public BoolExpression IsOnlineMeetingProperty { get; set; }
 
-        protected override string DeclarativeType => CreateEventDeclarativeType;
+        public override string DeclarativeType => CreateEventDeclarativeType;
 
         /// <summary>
         /// Calls Graph service to create a calendar event

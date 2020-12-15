@@ -25,7 +25,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         {
         }
 
-        protected override string DeclarativeType => GetProfileDeclarativeType;
+        public override string DeclarativeType => GetProfileDeclarativeType;
 
         protected override async Task<User> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {

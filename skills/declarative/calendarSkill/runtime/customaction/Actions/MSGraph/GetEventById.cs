@@ -52,7 +52,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <summary>
         /// Declarative type of this custom action
         /// </summary>
-        protected override string DeclarativeType => GetEventByIdDeclarativeType;
+        public override string DeclarativeType => GetEventByIdDeclarativeType;
 
         /// <summary>
         /// Gets the event by its id from the Graph service

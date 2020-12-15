@@ -40,7 +40,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
-        protected override string DeclarativeType => DeclineEventDeclarativeType;
+        public override string DeclarativeType => DeclineEventDeclarativeType;
 
         /// <summary>
         /// Calls the graph service to decline an event

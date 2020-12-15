@@ -32,7 +32,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
-        protected override string DeclarativeType => TentativelyAcceptEventDeclarativeType;
+        public override string DeclarativeType => TentativelyAcceptEventDeclarativeType;
 
         /// <summary>
         /// Calls the graph service to tentatively accept the event on the user's behalf

@@ -36,7 +36,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("eventToUpdateProperty")]
         public ObjectExpression<CalendarSkillEventModel> EventToUpdateProperty { get; set; }
 
-        protected override string DeclarativeType => UpdateEventDeclarativeType;
+        public override string DeclarativeType => UpdateEventDeclarativeType;
 
         /// <summary>
         /// Calls the MS graph service to update an event's detail

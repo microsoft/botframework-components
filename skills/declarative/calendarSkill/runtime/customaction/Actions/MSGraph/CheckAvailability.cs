@@ -19,9 +19,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// This has proven to be more consistent that LUIS datetime recognition by allowing the use of the 
     /// user's current timezone time as a relative datetime rather than a mix of absolute times and UTC times.
     /// </summary>
-    [MsGraphCustomActionRegistration(CheckAvailability.DeclarativeType)]
     public class CheckAvailability : Dialog
     {
+        [JsonProperty("$kind")]
         public const string DeclarativeType = "Microsoft.Graph.Calendar.CheckAvailability";
 
         [JsonConstructor]

@@ -28,7 +28,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
-        protected override string DeclarativeType => DeleteEventDeclarativeType;
+        public override string DeclarativeType => DeleteEventDeclarativeType;
 
         /// <summary>
         /// Deletes the event from Graph
