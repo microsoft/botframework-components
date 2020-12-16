@@ -339,11 +339,12 @@ ASALocalRun/
 # AppSettings
 **/appsettings.production.json
 **/appsettings.development.json
+!/experimental/components/ConversationalCore/runtime/azurefunctions/appsettings.Development.json
+!/experimental/components/ConversationalCore/runtime/azurewebapp/appsettings.Development.json
 **/cognitivemodels.production.json
 **/cognitivemodels.development.json
 **/skills.production.json
 **/skills.development.json
-
 
 # Local deployment files
 /solutions/**/.deployment
