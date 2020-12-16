@@ -203,4 +203,3 @@ value = Launch
     text = ${WelcomeUser()}
     SuggestedActions = New event | What's on today
 ]
-
