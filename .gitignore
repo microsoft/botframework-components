@@ -377,3 +377,6 @@ ASALocalRun/
 *.luis
 /skills/declarative/calendarSkill/generated
 /skills/declarative/calendarSkill/runtime/azurewebapp/appsettings.Deployment.json
+
+# VSCode files
+.vscode/

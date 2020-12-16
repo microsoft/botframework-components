@@ -1,48 +1,54 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
-    public class UpdateEvent : Dialog
+    /// <summary>
+    /// Updates the event using MS Graph service
+    /// </summary>
+    [MsGraphCustomActionRegistration(UpdateEvent.UpdateEventDeclarativeType)]
+    public class UpdateEvent : BaseMsGraphCustomAction<Event>
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.UpdateEvent";
+        /// <summary>
+        /// Declarative type of this custom action
+        /// </summary>
+        public const string UpdateEventDeclarativeType = "Microsoft.Graph.Calendar.UpdateEvent";
 
         [JsonConstructor]
         public UpdateEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public string ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// The event and its property to update in graph
+        /// </summary>
+        /// <value></value>
         [JsonProperty("eventToUpdateProperty")]
         public ObjectExpression<CalendarSkillEventModel> EventToUpdateProperty { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
+        public override string DeclarativeType => UpdateEventDeclarativeType;
+
+        /// <summary>
+        /// Calls the MS graph service to update an event's detail
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="dc"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override async Task<Event> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var token = this.Token.GetValue(dcState);
             var eventToUpdateProperty = this.EventToUpdateProperty.GetValue(dcState);
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
             var eventToUpdate = new Event()
             {
@@ -59,26 +65,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
             };
 
-            Event result = null;
-            try
-            {
-                result = await graphClient.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate);
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
-
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, result, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
-            {
-                dcState.SetValue(ResultProperty, result);
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
         }
     }
 }

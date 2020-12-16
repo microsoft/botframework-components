@@ -1,17 +1,16 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
-using Microsoft.Recognizers.Text.DateTime;
-using Microsoft.Graph;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -31,7 +30,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         {
             this.RegisterSourceLocation(callerPath, callerLine);
         }
-
+        
         [JsonProperty("resultProperty")]
         public string ResultProperty { get; set; }
 
