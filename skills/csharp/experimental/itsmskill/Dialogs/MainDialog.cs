@@ -30,6 +30,7 @@ namespace ITSMSkill.Dialogs
     {
         private readonly BotServices _services;
         private readonly LocaleTemplateManager _templateManager;
+        private readonly BotSettings _botSettings;
         private readonly IStatePropertyAccessor<SkillState> _stateAccessor;
 
         public MainDialog(
@@ -38,6 +39,7 @@ namespace ITSMSkill.Dialogs
         {
             _services = serviceProvider.GetService<BotServices>();
             _templateManager = serviceProvider.GetService<LocaleTemplateManager>();
+            _botSettings = serviceProvider.GetService<BotSettings>();
 
             // Create conversation state properties
             var conversationState = serviceProvider.GetService<ConversationState>();
@@ -60,6 +62,7 @@ namespace ITSMSkill.Dialogs
             AddDialog(serviceProvider.GetService<ShowTicketDialog>());
             AddDialog(serviceProvider.GetService<CloseTicketDialog>());
             AddDialog(serviceProvider.GetService<ShowKnowledgeDialog>());
+            AddDialog(serviceProvider.GetService<CreateSubscriptionDialog>());
         }
 
         // Runs when the dialog is started.
@@ -230,9 +233,15 @@ namespace ITSMSkill.Dialogs
                 if (luisService != null)
                 {
                     var result = stepContext.Context.TurnState.Get<ITSMLuis>(StateProperties.ITSMLuisResult);
-                    var intent = result?.TopIntent().intent;
+                    var (intent, score) = result.TopIntent();
 
-                    if (intent != null && intent != ITSMLuis.Intent.None)
+                    // TODO filter bad ones
+                    if (score < 0.4)
+                    {
+                        intent = ITSMLuis.Intent.None;
+                    }
+
+                    if (intent != ITSMLuis.Intent.None)
                     {
                         state.DigestLuisResult(result, (ITSMLuis.Intent)intent);
                     }
@@ -264,12 +273,33 @@ namespace ITSMSkill.Dialogs
                                 return await stepContext.BeginDialogAsync(nameof(ShowKnowledgeDialog), cancellationToken: cancellationToken);
                             }
 
+                        case ITSMLuis.Intent.CreateSubscription:
+                            {
+                                return await stepContext.BeginDialogAsync(nameof(CreateSubscriptionDialog), cancellationToken: cancellationToken);
+                            }
+
                         case ITSMLuis.Intent.None:
                         default:
                             {
-                                // intent was identified but not yet implemented
-                                await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
-                                return await stepContext.NextAsync(cancellationToken: cancellationToken);
+                                if (_botSettings.FallbackToKnowledge)
+                                {
+                                    // TODO always use show knowledge here
+                                    state.ClearLuisResult();
+                                    state.TicketTitle = activity.Text;
+
+                                    var option = new BaseOption
+                                    {
+                                        ConfirmSearch = false,
+                                    };
+
+                                    return await stepContext.BeginDialogAsync(nameof(ShowKnowledgeDialog), option, cancellationToken: cancellationToken);
+                                }
+                                else
+                                {
+                                    // intent was identified but not yet implemented
+                                    await stepContext.Context.SendActivityAsync(_templateManager.GenerateActivity(MainResponses.FeatureNotAvailable), cancellationToken);
+                                    return await stepContext.NextAsync(cancellationToken: cancellationToken);
+                                }
                             }
                     }
                 }
@@ -394,7 +424,13 @@ namespace ITSMSkill.Dialogs
                 actionData.ProcessAfterDigest(state);
             }
 
-            return await stepContext.BeginDialogAsync(dialogId, null, cancellationToken);
+            // Don't confirm if provided in action
+            var option = new BaseOption
+            {
+                ConfirmSearch = false,
+            };
+
+            return await stepContext.BeginDialogAsync(dialogId, option, cancellationToken);
         }
     }
 }

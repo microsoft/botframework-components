@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ITSMSkill.Models.ServiceNow;
 using Moq;
 using Moq.Protected;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace ITSMSkill.Tests.API.Fakes
@@ -50,6 +52,33 @@ namespace ITSMSkill.Tests.API.Fakes
         {
             result = new List<TicketResponse>
             {
+                new TicketResponse
+                {
+                    state = MockData.CreateTicketState,
+                    opened_at = MockData.CreateTicketOpenedTime,
+                    short_description = MockData.CreateTicketTitle,
+                    description = MockData.CreateTicketDescription,
+                    sys_id = MockData.CreateTicketId,
+                    urgency = MockData.CreateTicketUrgency,
+                    number = MockData.CreateTicketNumber
+                }
+            }
+        };
+
+        private static readonly MultiTicketsResponse SearchActiveTicketResponse = new MultiTicketsResponse
+        {
+            result = new List<TicketResponse>
+            {
+                new TicketResponse
+                {
+                    state = MockData.CreateTicketState,
+                    opened_at = MockData.CreateTicketOpenedTime,
+                    short_description = MockData.CreateTicketTitle,
+                    description = MockData.CreateTicketDescription,
+                    sys_id = MockData.CreateTicketId,
+                    urgency = MockData.CreateTicketUrgency,
+                    number = MockData.CreateTicketNumber
+                },
                 new TicketResponse
                 {
                     state = MockData.CreateTicketState,
@@ -131,12 +160,13 @@ namespace ITSMSkill.Tests.API.Fakes
                .ReturnsAsync(CreateGetUserIdResponseAndCount());
 
             mockClient
-               .Setup(c => c.ExecuteGetTaskAsync<SingleAggregateResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/stats/incident") && r.Parameters.Any(p => p.Name == "sysparm_count" && p.Value is bool && (bool)p.Value))))
-               .ReturnsAsync(CreateIRestResponse(CountTicketResponse));
+                .Setup(c => c.ExecuteTaskAsync(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/stats/incident") && r.Parameters.Any(p => p.Name == "sysparm_count" && p.Value is bool && (bool)p.Value)), It.IsIn(CancellationToken.None), It.IsIn(Method.GET)))
+                .ReturnsAsync(new RestResponse { StatusCode = System.Net.HttpStatusCode.OK, Content = JsonConvert.SerializeObject(CountTicketResponse) });
 
             mockClient
-               .Setup(c => c.ExecutePostTaskAsync<SingleTicketResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident"))))
-               .ReturnsAsync(CreateIRestResponse(CreateTicketResponse));
+                    .Setup(c => c.ExecuteTaskAsync(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident")), It.IsIn(CancellationToken.None), It.IsIn(Method.POST)))
+                    .ReturnsAsync(new RestResponse { StatusCode = System.Net.HttpStatusCode.Created, Content = JsonConvert.SerializeObject(CreateTicketResponse) });
+
 
             mockClient
                .Setup(c => c.ExecuteGetTaskAsync<MultiTicketsResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident"))))
@@ -147,14 +177,19 @@ namespace ITSMSkill.Tests.API.Fakes
                .Setup(c => c.ExecuteGetTaskAsync<MultiTicketsResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident") && IsTicketToClose(r))))
                .ReturnsAsync(CreateIRestResponse(SearchTicketToCloseResponse));
 
+            mockClient
+               .Setup(c => c.ExecuteGetTaskAsync<MultiTicketsResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/incident") && IsActiveTicket(r))))
+               .ReturnsAsync(CreateIRestResponse(SearchActiveTicketResponse));
+
             // TODO use id is not an ideal way to distinguish
             mockClient
-               .Setup(c => c.ExecuteTaskAsync<SingleTicketResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith($"now/v1/table/incident/{MockData.CreateTicketId}")), It.IsIn(Method.PATCH)))
-               .ReturnsAsync(CreateIRestResponse(CreateTicketResponse));
+                     .Setup(c => c.ExecuteTaskAsync(It.Is<IRestRequest>(r => r.Resource.StartsWith($"now/v1/table/incident/{MockData.CreateTicketId}")), It.IsIn(CancellationToken.None), It.IsIn(Method.PATCH)))
+                     .ReturnsAsync(new RestResponse { StatusCode = System.Net.HttpStatusCode.OK, Content = JsonConvert.SerializeObject(CreateTicketResponse) });
 
             mockClient
-               .Setup(c => c.ExecuteTaskAsync<SingleTicketResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith($"now/v1/table/incident/{MockData.CloseTicketId}")), It.IsIn(Method.PATCH)))
-               .ReturnsAsync(CreateIRestResponse(CloseTicketResponse));
+               .Setup(c => c.ExecuteTaskAsync(It.Is<IRestRequest>(r => r.Resource.StartsWith($"now/v1/table/incident/{MockData.CloseTicketId}")), It.IsIn(CancellationToken.None), It.IsIn(Method.PATCH)))
+               .ReturnsAsync(new RestResponse { StatusCode = System.Net.HttpStatusCode.OK, Content = JsonConvert.SerializeObject(CloseTicketResponse) });
+
 
             mockClient
                .Setup(c => c.ExecuteGetTaskAsync<MultiKnowledgesResponse>(It.Is<IRestRequest>(r => r.Resource.StartsWith("now/v1/table/kb_knowledge"))))
@@ -173,7 +208,31 @@ namespace ITSMSkill.Tests.API.Fakes
 
         private static bool IsTicketToClose(IRestRequest restRequest)
         {
-            return restRequest.Parameters.Any(p => p.Name == "sysparm_query" && p.Value is string && ((string)p.Value).Contains(MockData.CloseTicketNumber));
+            return IsQueryContains(restRequest, $"number={MockData.CloseTicketNumber}");
+        }
+
+        private static bool IsActiveTicket(IRestRequest restRequest)
+        {
+            return IsQueryContains(restRequest, "stateIN1,2,3,6");
+        }
+
+        private static bool IsQueryContains(IRestRequest restRequest, params string[] parameters)
+        {
+            var query = restRequest.Parameters.First(p => p.Name == "sysparm_query" && p.Value is string)?.Value as string;
+            if (query == null)
+            {
+                return false;
+            }
+
+            foreach (var parameter in parameters)
+            {
+                if (!query.Contains(parameter))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private IRestResponse<GetUserIdResponse> CreateGetUserIdResponseAndCount()

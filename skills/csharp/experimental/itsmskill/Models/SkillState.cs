@@ -47,6 +47,9 @@ namespace ITSMSkill.Models
         // INC[0-9]{7}
         public string TicketNumber { get; set; }
 
+        // Use in Teams TaskModule to Get TokenRespose
+        public TokenResponse AccessTokenResponse { get; set; }
+
         // from OnInterruptDialogAsync
         public GeneralLuis.Intent GeneralIntent { get; set; }
 

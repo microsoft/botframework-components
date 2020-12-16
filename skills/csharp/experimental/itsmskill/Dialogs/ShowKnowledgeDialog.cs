@@ -24,6 +24,9 @@ using Microsoft.Bot.Solutions.Responses;
 
 namespace ITSMSkill.Dialogs
 {
+    /// <summary>
+    /// Dialog class for for Knowledge.
+    /// </summary>
     public class ShowKnowledgeDialog : SkillDialogBase
     {
         public ShowKnowledgeDialog(

@@ -90,14 +90,8 @@ namespace PointOfInterestSkill.Utilities
                 Data = data
             };
 
-            // Not use .Text in case text and speak are different
-            var list = manager.ExpandTemplate(name, input);
-            var result = list.Select(value =>
-            {
-                return JObject.Parse(value)["text"].ToString();
-            }).ToArray();
-
-            return result;
+            var res = manager.ExpandTemplate(name + ".Text", input).Select(obj => obj.ToString());
+            return res.ToArray();
         }
 
         public static Templates CreateTemplates()

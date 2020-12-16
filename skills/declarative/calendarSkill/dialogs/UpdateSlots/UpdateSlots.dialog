@@ -663,6 +663,39 @@
           "activityProcessed": true
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qu3sJ7",
+        "name": "CancelEvent"
+      },
+      "intent": "CancelEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "5Ez2tg"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "attendance"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "cancel"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "bj08J1"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
     }
   ],
   "generator": "UpdateSlots.lg",

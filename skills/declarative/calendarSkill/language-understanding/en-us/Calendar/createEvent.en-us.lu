@@ -1,0 +1,42 @@
+# CreateEvent
+- book a meeting with a title of {@subject=weekly review}
+- book a meeting with {@contact=cynthia} {@date=tomorrow}
+- book a meeting with {@contact=morgan} and {@contact=margaret} on {@date=tuesday} about {@subject=content review}
+- book time on {@date=tuesday}
+- book time with {@contact=tyler}, {@contact=morgan}, and {@contact=quirine}
+- can you set up a time for me to meet with {@contact=ryan} about the {@subject=project status}
+- i need to meet with {@contact=tom} {@date=this week}
+- i need to talk to {@contact=isaiah} about the {@subject=merger} on {@date=friday}
+- make a meeting with {@contact=cynthia} about {@subject=dentist appointment}
+- make a meeting with {@contact=em}
+- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
+- new event {@date=today at 3} with {@contact=hyunjin} and {@contact=em}
+- new meeting with {@contact=chris}, {@contact=elaine}, and {@contact=chris} titled {@subject=hair appointment} {@date=next week}
+- new meeting with {@contact=youngjae}, {@contact=lauren}, and {@contact=tyler}
+- schedule a meeting about {@subject=user feedback discussion} on {@date=friday}
+- schedule a meeting from {@date=3pm} to {@date=4pm}
+- schedule a meeting {@date=this weekend} with {@contact=scott}
+- schedule an event with {@contact=cynthia} and {@contact=scott} on {@date=monday}
+- set up a meeting with {@contact=ryan}, {@contact=darren}, {@contact=ted}, and {@contact=elaine}
+- set up time with {@contact=melanie}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

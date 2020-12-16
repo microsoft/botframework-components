@@ -4,94 +4,7 @@
     "triggers": {
       "": [
         "GetScheduleDialog.en-us"
-      ],
-      "Cancel": [],
-      "Help": [],
-      "SignOut": [],
-      "CreateEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "CreateDialog.en-us"
-      ],
-      "GetEvents": [
-        "ResolveDateTimeDialog.en-us",
-        "GetScheduleDialog.en-us"
-      ],
-      "GetEventAttendees": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventLocation": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventTime": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventTitle": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetFirstEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetLastEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetMyAvailability": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetTimeUntilNextMeeting": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "CancelEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "CancelEventDialog.en-us"
-      ],
-      "AcceptEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "DeclineEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "TentativelyAcceptEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "UpdateEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "UpdateEventDialog.en-us"
       ]
-    }
-  },
-  "CreateDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "": [
-        "LookupContactDialog.en-us",
-        "ListDialog.en-us",
-        "ResolveDateTimeDialog.en-us"
-      ],
-      "SetTitle": [],
-      "AddAttendee": [],
-      "RemoveAttendee": [],
-      "SetDateTime": [],
-      "AddTeamsLink": [],
-      "RemoveTeamsLink": [],
-      "SetLocation": [],
-      "SetDescription": [],
-      "Skip": [],
-      "Cancel": []
     }
   },
   "CreateEventDialog.en-us": {
@@ -132,16 +45,6 @@
       "Skip": []
     }
   },
-  "LookupContactDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "": [
-        "ListDialog.en-us"
-      ],
-      "Skip": [],
-      "Cancel": []
-    }
-  },
   "SearchEventsDialog.en-us": {
     "rootDialog": false,
     "triggers": {
@@ -160,7 +63,9 @@
         "SearchEventsDialog.en-us",
         "RespondToEventDialog.en-us",
         "RespondToEventDialog.en-us",
-        "UpdateSlots.en-us"
+        "UpdateSlots.en-us",
+        "RespondToEventDialog.en-us",
+        "CancelEventDialog.en-us"
       ],
       "Cancel": [],
       "ConfirmYes": []
@@ -174,7 +79,8 @@
         "ResolveDateTimeDialog.en-us",
         "GetContactDialog.en-us"
       ],
-      "Cancel": []
+      "Cancel": [],
+      "CancelEvent": []
     }
   }
 }

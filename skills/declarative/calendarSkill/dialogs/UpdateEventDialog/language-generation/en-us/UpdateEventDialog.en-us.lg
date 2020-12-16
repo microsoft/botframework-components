@@ -1,6 +1,5 @@
-[import](common.lg)
-[import](event.lg)
-[import](calendarskill.lg)
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
 
 # SendActivity_ehvCtJ()
 - I can't update this event.
@@ -8,7 +7,7 @@
 # ConfirmInput_Prompt_UoeZDh()
 [Activity
     text = ${ConfirmUpdate()}
-    attachments=${json(EventCreateDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventConfirmDetailCard(dialog.selectedEvent))}
 ]
 
 # SendActivity_mRrjQN()
@@ -22,11 +21,16 @@
 - Ready to update:
 
 # ConfirmInput_Prompt_35TBWD()
+- IF: ${ dialog.eventId == null }
+    - ${ConfirmUpdateResponseCard()}
+- ELSE:
+    - ${ConfirmUpdateResponse()}
+
+# ConfirmUpdateResponseCard()
 [Activity
     text = ${ConfirmUpdateResponse()}
-    attachments=${json(EventDetailCard(dialog.selectedEvent))}
+    attachments=${json(EventConfirmDetailCard(dialog.selectedEvent))}
 ]
-
 
 # ConfirmUpdateResponse()
 - I see you are not the owner of the meeting. Would you like to update your response? 
@@ -52,3 +56,6 @@
 
 # SendActivity_IzVDsv()
 - ${CancelMessage()}
+
+# SendActivity_2a0oM8()
+- I can't update this event.

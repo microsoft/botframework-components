@@ -1,4 +1,4 @@
-[import](cards.lg)
+[Cards](cards.en-us.lg)
 
 # TimeSuggestionListPrompt()
 - IF: ${count(dialog.additionalOptions.attendees) == 1}

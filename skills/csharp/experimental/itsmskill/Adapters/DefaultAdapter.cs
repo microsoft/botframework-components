@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using ITSMSkill.Middleware;
 using ITSMSkill.Responses.Shared;
 using ITSMSkill.Services;
 using ITSMSkill.Utilities;
@@ -56,6 +57,9 @@ namespace ITSMSkill.Adapters
             Use(new SetLocaleMiddleware(settings.DefaultLocale ?? "en-us"));
             Use(new EventDebuggerMiddleware());
             Use(new SetSpeakMiddleware());
+
+            // TODO: Check If Middleware is a better way to update acitivities
+            // Use(new SetConnectorClientMiddleware(credentialProvider));
         }
 
         private async Task HandleTurnError(ITurnContext turnContext, Exception exception)
@@ -64,7 +68,7 @@ namespace ITSMSkill.Adapters
             _logger.LogError(exception, $"[OnTurnError] unhandled error : {exception.Message}");
 
             await SendErrorMessageAsync(turnContext, exception);
-            await SendEoCToParentAsync(turnContext, exception);
+            await SendEndOfConversationToParentAsync(turnContext, exception);
             await ClearConversationStateAsync(turnContext);
         }
 
@@ -88,7 +92,7 @@ namespace ITSMSkill.Adapters
             }
         }
 
-        private async Task SendEoCToParentAsync(ITurnContext turnContext, Exception exception)
+        private async Task SendEndOfConversationToParentAsync(ITurnContext turnContext, Exception exception)
         {
             try
             {

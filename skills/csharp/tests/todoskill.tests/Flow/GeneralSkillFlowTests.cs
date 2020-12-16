@@ -27,6 +27,19 @@ namespace ToDoSkill.Tests.Flow
                 .StartTestAsync();
         }
 
+        [TestMethod]
+        public async Task Test_Help()
+        {
+            await this.GetTestFlow()
+                .SendConversationUpdate()
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.ToDoWelcomeMessage))
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.FirstPromptMessage))
+                .Send(GeneralTestUtterances.Help)
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.HelpMessage))
+                .AssertReplyOneOf(GetTemplates(ToDoMainResponses.FirstPromptMessage))
+                .StartTestAsync();
+        }
+
         private string[] ConfusedResponse()
         {
             return GetTemplates(ToDoMainResponses.DidntUnderstandMessage);

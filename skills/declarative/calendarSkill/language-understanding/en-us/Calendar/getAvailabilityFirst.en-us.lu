@@ -1,0 +1,42 @@
+# GetAvailabilityFirst
+- {@date=friday}'s first meeting
+- show {@date=tomorrow}'s first meeting
+- tell me what my first meeting is
+- tell me what my first meeting is on {@date=wednesday}
+- tell me what time my meetings start
+- tell me what time my meetings start {@date=tomorrow}
+- what is first on my agenda
+- what time do i start
+- what time do i start on {@date=sunday}
+- what time do i start on {@date=thursday}
+- what time do i start this {@date=monday}
+- what time do i start this {@date=tuesday}
+- what time does my day start
+- what time does my day start next {@date=sunday}
+- when do i need to be ready {@date=tomorrow}
+- when does my day start
+- when does my day start next {@date=friday}
+- when does my day start on {@date=wednesday}
+- when is my first meeting
+- when is my first meeting {@date=today}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

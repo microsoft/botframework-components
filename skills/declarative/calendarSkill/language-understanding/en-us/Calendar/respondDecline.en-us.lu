@@ -1,0 +1,43 @@
+# RespondDecline
+- can't make the meeting {@date=wednesday at 2pm}
+- decline
+- decline the event
+- decline the invite to my meeting with {@contact=quirine}
+- decline the invite to the next event
+- decline the meeting {@subject=1:1}
+- don't accept the {@subject=budget meeting} {@date=this week}
+- don't accept the meeting with {@contact=josie} {@date=tomorrow}
+- i can't attend my meeting
+- i can't attend the {@subject=editorial meeting} meeting on {@date=sunday}
+- i can't make my {@date=4:00} meeting
+- i need to decline called {@subject=planning for end of year} with {@contact=jose} and {@contact=scott} at {@date=7:30am}
+- i want to decline my meeting called {@subject=planning for end of year} {@date=today at 3}
+- i want to decline the event with {@contact=rebecca}
+- i want to decline the meeting
+- i want to decline the next meeting
+- say no to {@contact=tommy}'s meeting request
+- tell {@contact=chris} i can't make the event with {@contact=rebecca} and {@contact=hyunjin} on {@date=saturday}
+- tell {@contact=you@test.net} i can't make my meeting with {@contact=quirine}, {@contact=isaac}, and {@contact=margaret} called {@subject=1:1}
+- won't make the meeting {@date=next monday afternoon}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

@@ -1,0 +1,47 @@
+# SetDateTime
+- change my event from {@currentDate=tomorrow} to {@newDate=saturday}
+- change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
+- change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
+- change my meeting with {@contact=elaine} to {@newDate=next week}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@date=thursday at 11am} to {@newDate=saturday}
+- change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
+- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
+- change the time of my event with {@contact=gary} on {@date=monday} named {@subject=lunch} to {@newDate=next month}
+- change the time of my meeting to {@newDate=6pm}
+- change the time of my next meeting to {@newDate=thursday at 11am}
+- change the time of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
+- change the time of the meeting to {@newDate=wednesday}
+- change the time of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
+- change the time of the next event to {@newDate=wednesday}
+- move my meeting from {@currentDate=3pm} to {@newDate=5pm}
+- move my meeting on {@date=tuesday} to {@newDate=next week}
+- move my meeting with {@contact=darren} to {@newDate=this tuesday}
+- move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
+- reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
+- reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
+- set the meeting time to {@newDate=3:30}
+- update my meeting to start at {@newDate=noon on saturday}
+- update my meeting with {@contact=elaine} to {@newDate=monday at 2}
+- update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities
