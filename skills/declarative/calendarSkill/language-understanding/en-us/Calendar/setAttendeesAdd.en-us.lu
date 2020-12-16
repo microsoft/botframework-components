@@ -1,0 +1,43 @@
+# SetAttendeesAdd
+- add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
+- add {@newContact=jose} to my next meeting
+- add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
+- can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
+- forward my meeting on {@date=thursday} to {@newContact=youngjae}
+- forward the next event to {@newContact=scott}
+- forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
+- forward this to {@newContact=john}
+- forward to {@newContact=chris} and {@newContact=me@myemail.edu}
+- forward to {@newContact=scott}
+- invite {@newContact=elaine} and {@newContact=morgan}
+- invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
+- invite {@newContact=jose}
+- invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
+- invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
+- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- send my {@subject=breakfast} event to {@newContact=gary}
+- send my event titled {@subject=1:1} to {@newContact=chris}
+- send the meeting to {@newContact=morgan}
+- send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

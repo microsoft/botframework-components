@@ -4,74 +4,7 @@
     "triggers": {
       "": [
         "GetScheduleDialog.en-us"
-      ],
-      "Cancel": [],
-      "Help": [],
-      "SignOut": [],
-      "CreateEvent": [
-        "CreateEventDialog.en-us"
-      ],
-      "GetEvents": [
-        "ResolveDateTimeDialog.en-us",
-        "GetScheduleDialog.en-us"
-      ],
-      "GetEventAttendees": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventLocation": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventTime": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetEventTitle": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetFirstEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetLastEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetMyAvailability": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "GetTimeUntilNextMeeting": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us"
-      ],
-      "CancelEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "CancelEventDialog.en-us"
-      ],
-      "AcceptEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "DeclineEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "TentativelyAcceptEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
-        "RespondToEventDialog.en-us"
-      ],
-      "UpdateEvent": [
-        "ResolveDateTimeDialog.en-us",
-        "UpdateEventDialog.en-us"
-      ],
-      "LaunchBot": []
+      ]
     }
   },
   "CreateEventDialog.en-us": {
@@ -130,7 +63,9 @@
         "SearchEventsDialog.en-us",
         "RespondToEventDialog.en-us",
         "RespondToEventDialog.en-us",
-        "UpdateSlots.en-us"
+        "UpdateSlots.en-us",
+        "RespondToEventDialog.en-us",
+        "CancelEventDialog.en-us"
       ],
       "Cancel": [],
       "ConfirmYes": []
@@ -144,7 +79,8 @@
         "ResolveDateTimeDialog.en-us",
         "GetContactDialog.en-us"
       ],
-      "Cancel": []
+      "Cancel": [],
+      "CancelEvent": []
     }
   }
 }

@@ -1,0 +1,44 @@
+# SetOnlineMeetingAdd
+- add a phone number to the next meeting
+- add a teams call to my meeting with {@contact=benedict} on {@date=november 5th}
+- add a teams link to my {@subject=editorial meeting} meeting
+- add a teams link to my event on {@date=friday}
+- add a teams link to my event on {@date=tuesday} with {@contact=tyler}
+- add a teams link to my next meeting
+- add a teams link to the {@subject=content review} event {@date=tomorrow} with {@contact=elaine}
+- add a teams link to the meeting with {@contact=test@email.com}, {@contact=chris}, and {@contact=you@test.net}
+- add a teams link to the next event
+- add {@contact=elaine} to my meeting with {@contact=tom}
+- add {@contact=elaine} to the meeting with {@contact=tyler}
+- include a call number on the {@subject=project review} meeting {@date=next week}
+- include a link
+- include a link to my meeting {@date=this weekend} with {@contact=quirine}, {@contact=morgan}, and {@contact=susan}
+- include a link to the meeting
+- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and {@contact=test@email.com}
+- include teams to the event with {@contact=elaine}
+- include teams to the {@subject=standup} meeting on {@date=tuesday}
+- make it a teams meeting
+- make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
+- make the {@subject=standup} a virtual meeting {@date=today}
+- make this an online meeting
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

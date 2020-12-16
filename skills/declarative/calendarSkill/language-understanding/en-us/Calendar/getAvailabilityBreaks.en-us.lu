@@ -1,0 +1,42 @@
+# GetAvailabilityBreaks
+- can i take a break {@date=wednesday}
+- do i have a break before my next meeting
+- do i have a break {@date=this afternoon}
+- do i have any breaks
+- do i have any breaks on {@date=january 3, 2021}
+- do i have any breaks {@date=wednesday}
+- do i have any free time {@date=today}
+- how long until my next meeting
+- how much time do i have until my next meeting
+- tell me when my next break is
+- what breaks do i have {@date=monday}
+- what breaks do i have {@date=tomorrow}
+- what time am i available again
+- when am i free {@date=today}
+- when are my breaks
+- when can i take a break
+- when do i have breaks
+- when do i have breaks {@date=today}
+- when is my next break
+- when is my next gap in meetings
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities
