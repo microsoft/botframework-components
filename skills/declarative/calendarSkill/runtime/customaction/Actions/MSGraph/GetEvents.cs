@@ -1,18 +1,18 @@
-﻿using AdaptiveExpressions.Properties;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Bot.Builder.AI.Luis;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
@@ -23,61 +23,111 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     /// For that reason, additional filtering based on title, attendees, location, etc should happen in this 
     /// action after the API call has been made.
     /// </summary>
-    public class GetEvents : Dialog
+    [MsGraphCustomActionRegistration(GetEvents.GetEventsDeclarativeType)]
+    public class GetEvents : BaseMsGraphCustomAction<List<CalendarSkillEventModel>>
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.GetEvents";
+        public const string GetEventsDeclarativeType = "Microsoft.Graph.Calendar.GetEvents";
 
+        /// <summary>
+        /// Creates an instance of <seealso cref="GetEvents" />
+        /// </summary>
+        /// <param name="callerPath"></param>
+        /// <param name="callerLine"></param>
         [JsonConstructor]
         public GetEvents([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public StringExpression ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// Gets or sets the title of event to query
+        /// </summary>
+        /// <value>Title of the event to query</value>
         [JsonProperty("titleProperty")]
         public StringExpression TitleProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the location of the event to query
+        /// </summary>
+        /// <value>The location of the event to query</value>
         [JsonProperty("locationProperty")]
         public StringExpression LocationProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the attendees of the event to query
+        /// </summary>
+        /// <value>The attendees of the event to query</value>
         [JsonProperty("attendeesProperty")]
         public ArrayExpression<string> AttendeesProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the start time of the event to query
+        /// </summary>
+        /// <value>The start time of the event to query</value>
         [JsonProperty("startProperty")]
         public ObjectExpression<DateTime?> StartProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the end time of the event to query
+        /// </summary>
+        /// <value>The end time of the event to query</value>
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime?> EndProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets date time type of the event to query
+        /// </summary>
+        /// <value>The date time type of the event to query</value>
         [JsonProperty("dateTimeTypeProperty")]
         public StringExpression DateTimeTypeProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ordinal of the event to query
+        /// </summary>
+        /// <value>The ordinal of the event to query</value>
         [JsonProperty("ordinalProperty")]
         public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the timezone of the event to query
+        /// </summary>
+        /// <value>The timezone of the event to query</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the user email address
+        /// </summary>
+        /// <value>The email address of the user</value>
         [JsonProperty("userEmailProperty")]
         public StringExpression UserEmailProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to show only future events in the result set
+        /// </summary>
+        /// <value><c>True</c> if we want to show only future events. <c>False</c> if otherwise.</value>
         [JsonProperty("futureEventsOnlyProperty")]
         public BoolExpression FutureEventsOnlyProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the max number of results to return from the query
+        /// </summary>
+        /// <value>The max number of results</value>
         [JsonProperty("maxResultsProperty")]
         public IntExpression MaxResultsProperty { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
+        public override string DeclarativeType => GetEventsDeclarativeType;
+
+        /// <summary>
+        /// Calls the graph service to get a list of events based on the query
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="dc"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override async Task<List<CalendarSkillEventModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var token = Token.GetValue(dcState);
             var startProperty = StartProperty.GetValue(dcState);
             var endProperty = EndProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
@@ -135,8 +185,6 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 endProperty = startProperty.Value.Date.AddHours(23).AddMinutes(59);
             }
 
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
             var parsedEvents = new List<CalendarSkillEventModel>();
 
             // Define the time span for the calendar view.
@@ -148,15 +196,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 new QueryOption("$orderBy", "start/dateTime"),
             };
 
-            IUserCalendarViewCollectionPage events = null;
-            try
-            {
-                events = await graphClient.Me.CalendarView.Request(queryOptions).GetAsync();
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
+            IUserCalendarViewCollectionPage events =  await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken);
 
             int index = 0;
             if (events?.Count > 0)
@@ -228,24 +268,21 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             }
 
             // TODO: Support for events that last all day or span multiple days. Needs design
-            parsedEvents = parsedEvents
+            return parsedEvents
                 .Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime).Date >= startProperty.Value.Date)
                 .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
                 .Take(maxResults)
                 .ToList();
-
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, parsedEvents, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
-            {
-                dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(parsedEvents));
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: parsedEvents, cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Convers the graph's event model into our own internal <seealso cref="CalendarSkillEventModel" />
+        /// </summary>
+        /// <param name="ev"></param>
+        /// <param name="timeZone"></param>
+        /// <param name="index"></param>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>    
         private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index, string userEmail)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);

@@ -1,67 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
-    class AcceptEvent : Dialog
+    /// <summary>
+    /// Represents a custom action that calls to MSGraph to accept an event
+    /// </summary>
+    [MsGraphCustomActionRegistration(AcceptEvent.AcceptEventDeclarativeType)]
+    public class AcceptEvent : BaseMsGraphCustomAction
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.AcceptEvent";
+        /// <summary>
+        /// The declarative type of the custom action
+        /// </summary>
+        public const string AcceptEventDeclarativeType = "Microsoft.Graph.Calendar.AcceptEvent";
 
+        /// <summary>
+        /// Creates an instance of <seealso cref="AcceptEvent" />
+        /// </summary>
+        /// <param name="callerPath"></param>
+        /// <param name="callerLine"></param>
         [JsonConstructor]
         public AcceptEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public string ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// Event ID in which to accept
+        /// </summary>
+        /// <value></value>
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
+        public override string DeclarativeType => AcceptEvent.AcceptEventDeclarativeType;
+
+        protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var token = Token.GetValue(dcState);
             var eventId = EventId.GetValue(dcState);
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-            
-            try
-            {
-                await graphClient.Me.Events[eventId].Accept("accept").Request().PostAsync();
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
 
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, null, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            var result = true;
-
-            if (this.ResultProperty != null)
-            {
-                dcState.SetValue(ResultProperty, result);
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            await client.Me.Events[eventId].Accept("accept").Request().PostAsync(cancellationToken);
         }
     }
 }

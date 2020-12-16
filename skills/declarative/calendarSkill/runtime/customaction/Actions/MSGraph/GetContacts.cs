@@ -1,63 +1,66 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.BotFramework.Composer.CustomAction.Models;
+using Microsoft.Graph;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
-    class GetContacts : Dialog
+    /// <summary>
+    /// Custom action to get contacts for the user from MS Graph
+    /// </summary>
+    [MsGraphCustomActionRegistration(GetContacts.GetContactsDeclarativeType)]
+    public class GetContacts : BaseMsGraphCustomAction<List<CalendarSkillContactModel>>
     {
-        [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.GetContacts";
+        public const string GetContactsDeclarativeType = "Microsoft.Graph.Calendar.GetContacts";
 
+        /// <summary>
+        /// Creates an instance of <seealso cref="GetContacts" />
+        /// </summary>
+        /// <param name="callerPath"></param>
+        /// <param name="callerLine"></param>
         [JsonConstructor]
         public GetContacts([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base()
+            : base(callerPath, callerLine)
         {
-            this.RegisterSourceLocation(callerPath, callerLine);
         }
 
-        [JsonProperty("resultProperty")]
-        public StringExpression ResultProperty { get; set; }
-
-        [JsonProperty("token")]
-        public StringExpression Token { get; set; }
-
+        /// <summary>
+        /// Gets or sets the name of the contact to search
+        /// </summary>
+        /// <value></value>
         [JsonProperty("nameProperty")]
         public StringExpression NameProperty { get; set; }
 
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
-        {
+        public override string DeclarativeType => GetContactsDeclarativeType;
+
+        /// <summary>
+        /// Gets the list of contacts
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="dc"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override async Task<List<CalendarSkillContactModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        {            
             var dcState = dc.State;
             var name = this.NameProperty.GetValue(dcState);
-            var token = this.Token.GetValue(dcState);
-            var httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            var graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
             var results = new List<CalendarSkillContactModel>();
+
             var optionList = new List<QueryOption>();
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
 
             // Get the current user's profile.
-            IUserContactsCollectionPage contacts = null;
-            try
-            {
-                contacts = await graphClient.Me.Contacts.Request(optionList).GetAsync();
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
+            IUserContactsCollectionPage contacts = await client.Me.Contacts.Request(optionList).GetAsync(cancellationToken);
 
             var contactsResult = new List<CalendarSkillContactModel>();
             if (contacts?.Count > 0)
@@ -83,15 +86,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 }
             }
 
-            IUserPeopleCollectionPage people = null;
-            try
-            {
-                people = await graphClient.Me.People.Request(optionList).GetAsync();
-            }
-            catch (ServiceException ex)
-            {
-                throw MSGraphClient.HandleGraphAPIException(ex);
-            }
+            IUserPeopleCollectionPage people =  await client.Me.People.Request(optionList).GetAsync(cancellationToken);
 
             if (people?.Count > 0)
             {
@@ -124,16 +119,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             results.AddRange(contactsResult);
 
-            // Write Trace Activity for the http request and response values
-            await dc.Context.TraceActivityAsync(DeclarativeType, results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
-
-            if (this.ResultProperty != null)
-            {
-                dc.State.SetValue(this.ResultProperty.GetValue(dc.State), JToken.FromObject(results));
-            }
-
-            // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+            return results;
         }
 
         private bool IsEmail(string emailString)

@@ -1,4 +1,7 @@
-﻿using Microsoft.Graph;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Graph;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -6,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.BotFramework.Composer.CustomAction
 {
+    /// <summary>
+    /// Client to call MS Graph service
+    /// </summary>
     public class MSGraphClient
     {
         public static GraphServiceClient GetAuthenticatedClient(string accessToken, HttpClient httpClient)
@@ -27,7 +33,9 @@ namespace Microsoft.BotFramework.Composer.CustomAction
 
         public static Exception HandleGraphAPIException(ServiceException ex)
         {
-            return new Exception($"Microsoft Graph API Exception: {ex.Message}");
+            // TODO: Why do we throw a very generic exception when there is a much better
+            // exception to use?
+            return new Exception($"Microsoft Graph API Exception: {ex.Message}", ex);
         }
     }
 }
