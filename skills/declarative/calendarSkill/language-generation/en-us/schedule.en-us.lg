@@ -1,5 +1,5 @@
-[Common](./common.en-us.lg)
-[Event](./event.en-us.lg)
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
 
 # ScheduleResponseText(date, events)
 - IF: ${ events == null || count(events) == 0 }
