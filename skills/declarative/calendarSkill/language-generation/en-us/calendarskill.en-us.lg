@@ -204,5 +204,3 @@ value = Launch
     SuggestedActions = New event | What's on today
 ]
 
-# SendActivity_gKWYRF()
-- ${WelcomeUser()}
