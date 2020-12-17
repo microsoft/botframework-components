@@ -1,11 +1,10 @@
 {
-  "adapters": [
-    {
-      "$kind": "Microsoft.BotCoreAdapter",
-      "middleware": [
-      ]
-    }
-  ],
+  "adapter":
+  {
+    "$kind": "Microsoft.BotCoreAdapter",
+    "middleware": [
+    ]
+  },
   "channel": {
     "$kind": "Microsoft.DeclarativeChannelProvider",
     "channel": null

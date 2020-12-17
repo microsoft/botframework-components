@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Bot.Builder.Runtime" Version="4.12.0-daily.preview.20201207.192346.a48b032" />
+    <PackageReference Include="Microsoft.Bot.Builder.Runtime" Version="4.12.0-daily.preview.20201217.196372.445b9b4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" />
   </ItemGroup>
   <ItemGroup>
