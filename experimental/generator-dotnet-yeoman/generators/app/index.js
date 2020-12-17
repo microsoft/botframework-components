@@ -43,11 +43,11 @@ module.exports = class extends Generator {
     }
 
     _verifyOptions() {
-        if (this.options.integration != INTEGRATION_WEBAPP && this.options.integration != INTEGRATION_FUNCTIONS) {
+        if (this.options.integration.toLowerCase() != INTEGRATION_WEBAPP && this.options.integration.toLowerCase() != INTEGRATION_FUNCTIONS) {
             throw new Error(`--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`);
         }
 
-        if (this.options.platform != PLATFORM_DOTNET) {
+        if (this.options.platform !== PLATFORM_DOTNET) {
             throw new Error(`--platform must be: ${PLATFORM_DOTNET}`);
         }
     }
