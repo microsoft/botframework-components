@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Preview.Bot.Component.GeneralIntent</id>
+        <version>0.0.1-preview2</version>
+        <authors>Microsoft</authors>
+        <owners>Microsoft</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>first version of general intent package</releaseNotes>
+        <description>Dialogs to provide general intent handling - like help and cancel</description>
+        <tags>conversationalcore generalintent preview</tags>
+        <dependencies />
+    </metadata>
+
+    <files>
+        <file src="exported\**\*.*" target="exported" />
+    </files>
+</package>
