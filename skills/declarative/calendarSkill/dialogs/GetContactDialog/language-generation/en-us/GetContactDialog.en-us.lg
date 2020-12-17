@@ -1,5 +1,5 @@
-[import](common.lg)
-[import](contactList.en-us.lg)
+[Common](common.en-us.lg)
+[ContactList](contactList.en-us.lg)
 
 # TextInput_Prompt_wIEu2k()
 - IF: ${ dialog.tryAgain == true }

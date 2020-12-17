@@ -1,0 +1,43 @@
+# CancelEvent
+- cancel my {@date=3 o'clock}
+- cancel my {@date=5:00}
+- cancel my event with {@contact=chris} and {@contact=hyunjin} with a subject of {@subject=breakfast}
+- cancel my event with {@contact=john}
+- cancel my meeting
+- cancel my meeting with a subject of {@subject=weekly review} {@date=today at 3} with {@contact=tyler} and {@contact=cynthia}
+- cancel my meeting with {@contact=me@myemail.edu} and {@contact=margaret}
+- cancel my next meeting
+- cancel the event
+- cancel the event {@date=this weekend}
+- cancel the meeting titled {@subject=weekly review} with {@contact=rebecca}, {@contact=quirine}, and {@contact=rebecca}
+- cancel with {@contact=darren}, {@contact=ryan}, and {@contact=ted}
+- delete my meeting {@date=this week} named {@subject=project sync}
+- delete my meeting {@date=this week} with {@contact=susan}
+- delete my next event
+- delete the meeting about {@subject=editorial meeting} on {@date=monday}
+- delete the next meeting
+- i need to cancel the meeting with {@contact=elaine}
+- i want to cancel my {@subject=1:1} with {@contact=thomas} {@date=tomorrow}
+- i want to cancel the meeting {@date=this afternoon}
+- let {@contact=bob} know i need to cancel {@date=today}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

@@ -1,6 +1,6 @@
-[import](common.lg)
-[import](event.lg)
-[import](cards.lg)
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Cards](cards.en-us.lg)
 
 # EventListPrompt()
 - IF: ${ dialog.items == null || count(dialog.items) <= 1 }

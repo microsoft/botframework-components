@@ -1,6 +1,5 @@
-[import](common.lg)
-[import](event.lg)
-[import](calendarskill.lg)
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
 
 # SendActivity_ehvCtJ()
 - I can't update this event.
