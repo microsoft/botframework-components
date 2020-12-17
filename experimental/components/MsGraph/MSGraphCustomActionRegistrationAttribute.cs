@@ -1,9 +1,5 @@
-// ----------------------------------------------------------------------
-// <copyright company="Microsoft Corporation" file="MSGraphCustomActionRegistrationAttribute.cs">
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// </copyright>
-// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction
 {
