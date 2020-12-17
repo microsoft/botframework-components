@@ -1,0 +1,42 @@
+# SetLocation
+- change the location of the next event to {@location=123 address st}
+- change the room for the {@subject=standup}
+- i need to set a new location for the next meeting
+- make it in {@location=city center}
+- make the location {@location=baltimore, md}
+- make the location {@location=olive garden}
+- move the event {@date=tomorrow afternoon} to another location
+- move this meeting to another room
+- set the address as {@location=134 main st}
+- set the location of my event about {@subject=project sync} {@date=today} to {@location=new york, new york}
+- set the location of my next meeting to {@location=123 address st}
+- set the location of my {@date=wednesday} meeting to {@location=123 address st}
+- update the location
+- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, {@contact=test@email.com}, and {@contact=scott} to {@location=123 address st}
+- update the location of the {@subject=hair appointment} event to {@location=bellevue, wa}
+- update the location of the meeting to {@location=bellevue, wa}
+- update the location of the meeting with {@contact=gary} and {@contact=margaret} to {@location=room 345}
+- update the location of the meeting with {@contact=jose} and {@contact=em} on {@date=thursday at 11am} to {@location=room 345}
+- update the location of the meeting with {@contact=susan} and {@contact=john}
+- update the location to {@location=kitchen}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

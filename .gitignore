@@ -376,8 +376,7 @@ ASALocalRun/
 .DS_Store
 /.project
 *.luis
-/skills/declarative/calendarSkill/generated
-/skills/declarative/calendarSkill/runtime/azurewebapp/appsettings.Deployment.json
+experimental/generator-dotnet-yeoman/node_modules
 
 # VSCode files
 .vscode/

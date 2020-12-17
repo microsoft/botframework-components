@@ -1,0 +1,43 @@
+# SetOnlineMeetingRemove
+- don't add a call to the meeting later
+- don't add teams to my {@subject=1:1} later
+- don't add teams to my {@subject=happy hour} event
+- don't add teams to my meeting with {@contact=test@email.com} on {@date=monday}
+- don't include a link with the meeting
+- don't include a teams link for the meeting on {@date=april 10th}
+- don't make the meeting virtual
+- remove teams from my {@subject=breakfast} event with {@contact=rebecca}, {@contact=morgan}, and {@contact=morgan} on {@date=thursday}
+- remove teams from my meeting on {@date=friday} with {@contact=john}
+- remove teams from my meeting with {@contact=test@email.com} and {@contact=margaret}
+- remove teams from my next meeting
+- remove teams from my {@subject=standup} event {@date=today}
+- remove the link from
+- remove the link from my meeting with {@contact=tyler}
+- remove the link from the {@subject=planning for end of year} meeting {@date=next month} with {@contact=youngjae}
+- remove the online meeting from the event
+- remove the online meeting from the meeting {@date=tomorrow at noon}
+- remove the online meeting from the next event
+- remove the phone number from the {@subject=team meeting} {@date=next week}
+- remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

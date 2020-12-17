@@ -1,0 +1,43 @@
+# SetAttendeesRemove
+- don't add {@currentContact=em} to my event with {@contact=jose} and {@contact=cynthia} called {@subject=team check-in}
+- don't add {@currentContact=gary} to this
+- don't add {@currentContact=margaret} to the event on {@date=saturday} with {@contact=rebecca}
+- don't add {@currentContact=me@myemail.edu}
+- don't invite {@currentContact=chris} to my event with {@contact=jose} and {@contact=you@test.net}
+- don't invite {@currentContact=john} to the next event
+- don't invite {@currentContact=john}, {@currentContact=john}, and {@currentContact=em}
+- don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
+- remove {@currentContact=hyunjin} from this
+- remove {@currentContact=jose} from the event called {@subject=project sync}
+- remove {@currentContact=rebecca} and {@currentContact=susan}
+- remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
+- remove {@currentContact=susan} from the next event
+- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- uninvite {@currentContact=cynthia}
+- uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
+- uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
+- uninvite {@currentContact=morgan} from my event {@date=tomorrow}
+- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

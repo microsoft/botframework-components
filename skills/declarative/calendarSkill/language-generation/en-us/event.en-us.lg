@@ -1,4 +1,4 @@
-[import](common.lg)
+[Common](common.en-us.lg)
 
 # EventDetailCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventDetailActions(event))}

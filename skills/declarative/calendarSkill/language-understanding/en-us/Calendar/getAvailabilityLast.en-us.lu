@@ -1,0 +1,42 @@
+# GetAvailabilityLast
+- how long is my last meeting
+- tell me my last meeting
+- tell me my last meeting next {@date=wednesday}
+- tell me when i'll be done with meetings
+- tell me when my day ends
+- tell me when my day ends on {@date=wednesday}
+- what is my last meeting on {@date=friday}
+- what time can i go home
+- what time can i go home {@date=tomorrow}
+- what time does my day end
+- what time does my last meeting end
+- what time is my day over {@date=tomorrow}
+- when am i done
+- when am i done for the day
+- when am i done for the day this {@date=monday}
+- when am i finished
+- when am i finished {@date=today}
+- when does my day end
+- when is my day over
+- when is my day over on {@date=friday}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

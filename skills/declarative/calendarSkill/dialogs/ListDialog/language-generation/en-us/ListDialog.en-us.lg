@@ -1,7 +1,7 @@
-[import](common.lg)
-[import](contactList.lg)
-[import](eventList.lg)
-[import](timeSuggestionList.en-us.lg)
+[Common](common.en-us.lg)
+[ContactList](contactList.en-us.lg)
+[EventList](eventList.en-us.lg)
+[TimeSuggestionList](timeSuggestionList.en-us.lg)
 
 # ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount)
 - ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount), template(actionsTemplate))}
