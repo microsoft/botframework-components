@@ -1,10 +1,5 @@
-// ----------------------------------------------------------------------
-// <copyright company="Microsoft Corporation" file="BaseMsGraphCustomAction.cs">
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// </copyright>
-// ----------------------------------------------------------------------
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
     using System;
