@@ -1,0 +1,20 @@
+{
+  "name": "generator-botframework",
+  "version": "0.1.0",
+  "description": "Yeoman generators for Microsoft Bot Framework.",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "uuid": "^8.3.1",
+    "yeoman-generator": "^1.1.1"
+  },
+  "author": "Microsoft Corporation",
+  "license": "ISC"
+}
