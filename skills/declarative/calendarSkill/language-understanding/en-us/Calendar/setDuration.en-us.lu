@@ -1,0 +1,43 @@
+# SetDuration
+- change the event with {@contact=you@test.net} to {@duration=2 hours}
+- change to {@duration=3 hrs}
+- extend the event to {@duration=1 hour and 30 minutes}
+- extend the {@subject=standup} to {@duration=2 hours}
+- make it {@duration=1 hour}
+- make it {@duration=1 hour and 30 minutes}
+- make my meeting with {@contact=thomas} {@duration=1 hour}
+- make the meeting last {@duration=30 min}
+- set the duration of my meeting
+- set the event to {@duration=1 hour and 30 minutes}
+- set the length the event with {@contact=rebecca}
+- set this to {@duration=15 min}
+- set to {@duration=1 hour}
+- shorten the {@subject=team meeting} to {@duration=half an hour}
+- update my event on {@date=monday} with {@contact=john} to {@duration=15 min}
+- update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
+- update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
+- update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
+- update the meeting to last {@duration=an hour and a half}
+- update to {@duration=1 hour and 30 minutes}
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

@@ -1,6 +1,6 @@
-[import](common.lg)
-[import](event.lg)
-[import](timeSuggestionList.lg)
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[TimeSuggestionList](timeSuggestionList.en-us.lg)
 
 # SendActivity_Nd5hYw()
 - Sure, I’ve added a Teams link for you as well.
