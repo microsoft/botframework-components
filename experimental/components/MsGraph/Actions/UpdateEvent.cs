@@ -1,17 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="UpdateEvent.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
+// </copyright>
+// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Updates the event using MS Graph service
     /// </summary>
@@ -57,12 +61,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 Start = eventToUpdateProperty.Start,
                 End = eventToUpdateProperty.End,
                 Attendees = eventToUpdateProperty.Attendees,
-                Location = new Location() 
-                { 
-                    DisplayName = eventToUpdateProperty.Location
+                Location = new Location()
+                {
+                    DisplayName = eventToUpdateProperty.Location,
                 },
                 IsOnlineMeeting = eventToUpdateProperty.IsOnlineMeeting,
-                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
+                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
             return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
