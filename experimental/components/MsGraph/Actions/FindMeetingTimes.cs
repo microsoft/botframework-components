@@ -1,20 +1,24 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="FindMeetingTimes.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
+// </copyright>
+// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action to find meeting time that works for attendees using MS Graph
     /// </summary>
@@ -82,7 +86,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     results.Add(new CalendarSkillTimeSlotModel()
                     {
                         Start = TimeZoneInfo.ConvertTimeFromUtc(start, timeZone),
-                        End = TimeZoneInfo.ConvertTimeFromUtc(end, timeZone)
+                        End = TimeZoneInfo.ConvertTimeFromUtc(end, timeZone),
                     });
                 }
             }

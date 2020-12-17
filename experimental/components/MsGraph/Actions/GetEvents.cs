@@ -1,26 +1,29 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="GetEvents.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.AI.Luis;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
+// </copyright>
+// ----------------------------------------------------------------------
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.AI.Luis;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// This action gets events from the user's MS Outlook calendar. 
-    /// The CalendarView API is used (rather than the events API) because it gives the most consistent results. 
-    /// However, it does not allow for filtering by any other properties except start and end date. 
-    /// For that reason, additional filtering based on title, attendees, location, etc should happen in this 
+    /// This action gets events from the user's MS Outlook calendar.
+    /// The CalendarView API is used (rather than the events API) because it gives the most consistent results.
+    /// However, it does not allow for filtering by any other properties except start and end date.
+    /// For that reason, additional filtering based on title, attendees, location, etc should happen in this
     /// action after the API call has been made.
     /// </summary>
     [MsGraphCustomActionRegistration(GetEvents.GetEventsDeclarativeType)]
@@ -128,32 +131,32 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         protected override async Task<List<CalendarSkillEventModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var startProperty = StartProperty.GetValue(dcState);
-            var endProperty = EndProperty.GetValue(dcState);
-            var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
-            var ordinalProperty = OrdinalProperty.GetValue(dcState);
+            var startProperty = this.StartProperty.GetValue(dcState);
+            var endProperty = this.EndProperty.GetValue(dcState);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
+            var ordinalProperty = this.OrdinalProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
-            var dateTimeTypeProperty = DateTimeTypeProperty.GetValue(dcState);
-            var isFuture = FutureEventsOnlyProperty.GetValue(dcState);
-            var maxResults = MaxResultsProperty.GetValue(dcState);
-            var userEmail = UserEmailProperty.GetValue(dcState);
+            var dateTimeTypeProperty = this.DateTimeTypeProperty.GetValue(dcState);
+            var isFuture = this.FutureEventsOnlyProperty.GetValue(dcState);
+            var maxResults = this.MaxResultsProperty.GetValue(dcState);
+            var userEmail = this.UserEmailProperty.GetValue(dcState);
             var titleProperty = string.Empty;
             var locationProperty = string.Empty;
             var attendeesProperty = new List<string>();
 
-            if (TitleProperty != null)
+            if (this.TitleProperty != null)
             {
-                titleProperty = TitleProperty.GetValue(dcState);
+                titleProperty = this.TitleProperty.GetValue(dcState);
             }
 
-            if (LocationProperty != null)
+            if (this.LocationProperty != null)
             {
-                locationProperty = LocationProperty.GetValue(dcState);
+                locationProperty = this.LocationProperty.GetValue(dcState);
             }
 
-            if (AttendeesProperty != null)
+            if (this.AttendeesProperty != null)
             {
-                attendeesProperty = AttendeesProperty.GetValue(dcState);
+                attendeesProperty = this.AttendeesProperty.GetValue(dcState);
             }
 
             // if start date is not provided, default to DateTime.Now
@@ -166,6 +169,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     startProperty = now.Date + startProperty.Value.TimeOfDay;
                 }
+
                 if (endProperty != null)
                 {
                     endProperty = now.Date + endProperty.Value.TimeOfDay;
@@ -196,14 +200,14 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 new QueryOption("$orderBy", "start/dateTime"),
             };
 
-            IUserCalendarViewCollectionPage events =  await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken);
+            IUserCalendarViewCollectionPage events = await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken);
 
             int index = 0;
             if (events?.Count > 0)
             {
                 foreach (var ev in events)
                 {
-                    parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
+                    parsedEvents.Add(this.ParseEvent(ev, timeZone, index++, userEmail));
                 }
             }
 
@@ -214,7 +218,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 {
                     foreach (var ev in events)
                     {
-                        parsedEvents.Add(ParseEvent(ev, timeZone, index++, userEmail));
+                        parsedEvents.Add(this.ParseEvent(ev, timeZone, index++, userEmail));
                     }
                 }
             }
@@ -282,7 +286,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <param name="timeZone"></param>
         /// <param name="index"></param>
         /// <param name="userEmail"></param>
-        /// <returns></returns>    
+        /// <returns></returns>
         private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index, string userEmail)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);

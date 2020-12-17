@@ -1,16 +1,19 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="AcceptEvent.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
+// </copyright>
+// ----------------------------------------------------------------------
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Represents a custom action that calls to MSGraph to accept an event
     /// </summary>
@@ -45,7 +48,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var eventId = EventId.GetValue(dcState);
+            var eventId = this.EventId.GetValue(dcState);
 
             await client.Me.Events[eventId].Accept("accept").Request().PostAsync(cancellationToken);
         }

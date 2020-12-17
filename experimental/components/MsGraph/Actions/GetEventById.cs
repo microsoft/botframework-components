@@ -1,20 +1,23 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="GetEventById.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
+// </copyright>
+// ----------------------------------------------------------------------
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// This action gets an event from MS Graph by its EventId. 
+    /// This action gets an event from MS Graph by its EventId.
     /// </summary>
     [MsGraphCustomActionRegistration(GetEventById.GetEventByIdDeclarativeType)]
     public class GetEventById : BaseMsGraphCustomAction<CalendarSkillEventModel>
@@ -43,7 +46,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public StringExpression EventIdProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the timezone of the event 
+        /// Gets or sets the timezone of the event
         /// </summary>
         /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
@@ -64,8 +67,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         protected override async Task<CalendarSkillEventModel> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var eventId = EventIdProperty.GetValue(dcState);
-            var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
+            var eventId = this.EventIdProperty.GetValue(dcState);
+            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
 
             Event ev = await client.Me.Events[eventId].Request().GetAsync(cancellationToken);

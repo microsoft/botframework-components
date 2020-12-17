@@ -1,23 +1,27 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="GetWorkingHours.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
+// </copyright>
+// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// This action gets the working hours including timezone information for the provided address.
     /// </summary>
-    [MsGraphCustomActionRegistration(GetWorkingHoursCustomAction.GetWorkingHoursCustomActionDeclarativeType)]
-    public class GetWorkingHoursCustomAction : BaseMsGraphCustomAction<WorkingHours>
+    [MsGraphCustomActionRegistration(GetWorkingHours.GetWorkingHoursCustomActionDeclarativeType)]
+    public class GetWorkingHours : BaseMsGraphCustomAction<WorkingHours>
     {
         /// <summary>
         /// The declarative type of the custom action
@@ -25,7 +29,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public const string GetWorkingHoursCustomActionDeclarativeType = "Microsoft.Graph.Calendar.GetWorkingHours";
 
         [JsonConstructor]
-        public GetWorkingHoursCustomAction([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
+        public GetWorkingHours([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
         {
         }
@@ -38,12 +42,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         protected override async Task<WorkingHours> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var addressProperty = AddressProperty.GetValue(dcState);
+            var addressProperty = this.AddressProperty.GetValue(dcState);
             var startProperty = DateTime.UtcNow.Date;
             var endProperty = startProperty.Date.AddHours(23).AddMinutes(59);
 
             ICalendarGetScheduleCollectionPage schedule = await client.Me.Calendar.GetSchedule(
-                        Schedules: new[] { addressProperty }, 
+                        Schedules: new[] { addressProperty },
                         StartTime: DateTimeTimeZone.FromDateTime(startProperty, "UTC"),
                         EndTime: DateTimeTimeZone.FromDateTime(endProperty, "UTC"))
                     .Request()

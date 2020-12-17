@@ -1,14 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="MSGraphClient.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using Microsoft.Graph;
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+// </copyright>
+// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction
 {
+    using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+    using Microsoft.Graph;
+
     /// <summary>
     /// Client to call MS Graph service
     /// </summary>

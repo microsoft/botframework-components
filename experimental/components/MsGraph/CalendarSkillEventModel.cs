@@ -1,17 +1,23 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// ----------------------------------------------------------------------
+// <copyright company="Microsoft Corporation" file="CalendarSkillEventModel.cs">
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using Microsoft.Graph;
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.Linq;
+// </copyright>
+// ----------------------------------------------------------------------
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     public class CalendarSkillEventModel
     {
-        public CalendarSkillEventModel() { }
+        public CalendarSkillEventModel()
+        {
+        }
 
         public CalendarSkillEventModel(Event ev, DateTime currentDateTime, int index = 0, string userEmail = null)
         {
@@ -20,33 +26,33 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
             var duration = end.Subtract(start);
             var isCurrentEvent = false;
 
-            if (start <= currentDateTime && currentDateTime <= end
-                || start.AddMinutes(-30) <= currentDateTime && currentDateTime <= start)
+            if (start <= currentDateTime && (currentDateTime <= end
+                || start.AddMinutes(-30) <= currentDateTime) && currentDateTime <= start)
             {
                 // If event is currently ongoing, or will start in the next 30 minutes
                 isCurrentEvent = true;
             }
 
-            Index = index;
-            Id = ev.Id;
-            Subject = ev.Subject;
-            Start = ev.Start;
-            End = ev.End;
-            Attendees = ev.Attendees.Where(a => a.EmailAddress.Address.ToLower() != userEmail.ToLower());
-            IsOnlineMeeting = ev.IsOnlineMeeting;
-            OnlineMeeting = ev.OnlineMeeting;
-            Description = ev.BodyPreview;
-            Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty;
-            DurationDays = duration.Days;
-            DurationHours = duration.Hours;
-            DurationMinutes = duration.Minutes;
-            IsRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false;
-            IsCurrentEvent = isCurrentEvent;
-            IsOrganizer = ev.IsOrganizer;
-            IsAllDay = ev.IsAllDay;
-            Response = ev.ResponseStatus.Response;
-            Organizer = ev.Organizer;
-            WebLink = ev.WebLink;
+            this.Index = index;
+            this.Id = ev.Id;
+            this.Subject = ev.Subject;
+            this.Start = ev.Start;
+            this.End = ev.End;
+            this.Attendees = ev.Attendees.Where(a => a.EmailAddress.Address.ToLower() != userEmail.ToLower());
+            this.IsOnlineMeeting = ev.IsOnlineMeeting;
+            this.OnlineMeeting = ev.OnlineMeeting;
+            this.Description = ev.BodyPreview;
+            this.Location = !string.IsNullOrEmpty(ev.Location.DisplayName) ? ev.Location.DisplayName : string.Empty;
+            this.DurationDays = duration.Days;
+            this.DurationHours = duration.Hours;
+            this.DurationMinutes = duration.Minutes;
+            this.IsRecurring = ev.Type == EventType.Occurrence || ev.Type == EventType.SeriesMaster ? true : false;
+            this.IsCurrentEvent = isCurrentEvent;
+            this.IsOrganizer = ev.IsOrganizer;
+            this.IsAllDay = ev.IsAllDay;
+            this.Response = ev.ResponseStatus.Response;
+            this.Organizer = ev.Organizer;
+            this.WebLink = ev.WebLink;
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "index", Required = Required.Default)]
@@ -69,7 +75,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "isOnlineMeeting", Required = Required.Default)]
         public bool? IsOnlineMeeting { get; set; }
-        
+
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "onlineMeeting", Required = Required.Default)]
         public OnlineMeetingInfo OnlineMeeting { get; set; }
 
