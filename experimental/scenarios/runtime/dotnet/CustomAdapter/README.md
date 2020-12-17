@@ -1,8 +1,10 @@
-﻿# Slack Adapter
+﻿# CustomAdapter
 
 Bot Framework Adaptive Runtime echo bot using Slack Adapter sample.
 
 This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple echo bot that connects with Slack to respond messages.
+
+The purpose of this sample is to demonstrate how to use a custom Adapter outside the Conversational Core Component Model.  There is a SlackAdapter Component that would normally be better suited for use with a Runtime Bot.
 
 ## Prerequisites
 
