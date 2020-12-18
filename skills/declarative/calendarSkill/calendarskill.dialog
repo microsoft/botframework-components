@@ -174,19 +174,19 @@
             },
             {
               "property": "$slots.subject",
-              "value": "=@title"
+              "value": "=@subject"
             },
             {
               "property": "$slots.location",
               "value": "=@location"
             },
             {
-              "property": "$emailArray",
-              "value": "=@@email"
+              "property": "$contactArray",
+              "value": "=@@contact"
             },
             {
-              "property": "$personNameArray",
-              "value": "=@@personName"
+              "property": "$emailArray",
+              "value": "=@@email"
             }
           ]
         },
@@ -233,10 +233,10 @@
             "id": "oD8szu"
           },
           "activityProcessed": true,
-          "dialog": "CreateDialog",
+          "dialog": "CreateEventDialog",
           "options": {
             "slots": "=$slots",
-            "personNameArray": "=$personNameArray",
+            "contactArray": "=$contactArray",
             "emailArray": "=$emailArray"
           }
         },
