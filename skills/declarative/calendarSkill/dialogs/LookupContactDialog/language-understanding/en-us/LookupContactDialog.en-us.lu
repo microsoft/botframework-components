@@ -1,22 +1,13 @@
-
-
-
+> General intent imports
+[Cancel](cancel.en-us.lu)
+[Skip](skip.en-us.lu)
 
 # Skip
-- skip
-- skip this
 - no one
 - nobody
 - don't invite anyone
 - just me
 - only me
-
-# Cancel
-- cancel
-- cancel this
-- stop
-- stop this
-- never mind
 
 # TextInput_Response_sFm17r
 - susan
@@ -29,12 +20,6 @@
 
 @ prebuilt email
 @ prebuilt personName
-
-
-
-
-
-
 
 # ConfirmInput_Response_pjKHu4
 - yes, add allan

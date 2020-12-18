@@ -34,21 +34,21 @@
           "$designer": {
             "id": "4hJSa3"
           },
-          "condition": "=exists($emailArray) || exists($personNameArray)",
+          "condition": "=exists($contactArray)",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "DZjBwA"
               },
-              "eventName": "AddEmailsToContacts"
+              "eventName": "AddEmails"
             },
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "EIW0OT"
               },
-              "eventName": "AddPeopleToContacts"
+              "eventName": "AddContacts"
             }
           ],
           "elseActions": [
@@ -135,8 +135,8 @@
               "value": "=coalesce($emailArray, @@email)"
             },
             {
-              "property": "$personNameArray",
-              "value": "=coalesce($personNameArray, @@personName)"
+              "property": "$contactArray",
+              "value": "=coalesce($contactArray, @@contact)"
             }
           ]
         },
@@ -145,7 +145,7 @@
           "$designer": {
             "id": "pNZ1RI"
           },
-          "condition": "not(exists($emailArray)) && not(exists($personNameArray))",
+          "condition": "not(exists($emailArray)) && not(exists($contactArray))",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
@@ -170,8 +170,8 @@
                   "value": "=@@email"
                 },
                 {
-                  "property": "$personNameArray",
-                  "value": "=@@personName"
+                  "property": "$contactArray",
+                  "value": "=@@contact"
                 }
               ]
             }
@@ -183,9 +183,9 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "yWEltK",
-        "name": "OnEvent (AddEmailsToContacts)"
+        "name": "OnEvent (AddEmails)"
       },
-      "event": "AddEmailsToContacts",
+      "event": "AddEmails",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
@@ -245,9 +245,9 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "YIOl1Z",
-        "name": "OnEvent (AddPeopleToContacts)"
+        "name": "OnEvent (AddContacts)"
       },
-      "event": "AddPeopleToContacts",
+      "event": "AddContacts",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
@@ -261,7 +261,7 @@
           "$designer": {
             "id": "V4szkf"
           },
-          "condition": "=exists($personNameArray)",
+          "condition": "=exists($contactArray)",
           "actions": [
             {
               "$kind": "Microsoft.Foreach",
@@ -270,7 +270,7 @@
               },
               "index": "$foreach.index",
               "value": "$foreach.value",
-              "itemsProperty": "$personNameArray",
+              "itemsProperty": "$contactArray",
               "actions": [
                 {
                   "$kind": "Microsoft.EmitEvent",
