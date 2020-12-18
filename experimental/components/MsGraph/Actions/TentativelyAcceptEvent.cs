@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action to Graph that allows the caller to tentatively accept an invite
     /// </summary>
@@ -43,8 +43,8 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <returns></returns>
         protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
-            var eventId = EventId.GetValue(dc.State);
-            
+            var eventId = this.EventId.GetValue(dc.State);
+
             await client.Me.Events[eventId].TentativelyAccept("tentativelyAccept").Request().PostAsync();
         }
     }

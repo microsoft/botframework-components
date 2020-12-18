@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// This action gets user settings from MS Graph. 
+    /// This action gets user settings from MS Graph.
     /// These include the user's display name and mailboxSettings (which includes timezone).
     /// </summary>
     [MsGraphCustomActionRegistration(GetProfile.GetProfileDeclarativeType)]

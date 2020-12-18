@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action that calls MS Graph to decline an event
     /// </summary>
     [MsGraphCustomActionRegistration(DeclineEvent.DeclineEventDeclarativeType)]
-    class DeclineEvent : BaseMsGraphCustomAction
+    public class DeclineEvent : BaseMsGraphCustomAction
     {
         /// <summary>
         /// Declarative type name fo this custom action, referenced by the Bot Composer
@@ -51,7 +51,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <returns></returns>
         protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
-            var eventId = EventId.GetValue(dc.State);
+            var eventId = this.EventId.GetValue(dc.State);
 
             await client.Me.Events[eventId].Decline("decline").Request().PostAsync(cancellationToken);
         }

@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action to get contacts for the user from MS Graph
     /// </summary>
@@ -51,7 +51,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected override async Task<List<CalendarSkillContactModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
-        {            
+        {
             var dcState = dc.State;
             var name = this.NameProperty.GetValue(dcState);
             var results = new List<CalendarSkillContactModel>();
@@ -67,10 +67,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
             {
                 foreach (var contact in contacts)
                 {
-                    var emailAddresses = contact.EmailAddresses.Where(e => IsEmail(e.Address)).Select(e => e.Address).ToList();
+                    var emailAddresses = contact.EmailAddresses.Where(e => this.IsEmail(e.Address)).Select(e => e.Address).ToList();
                     if (!emailAddresses.Any())
                     {
-                        emailAddresses = contact.ImAddresses.Where(e => IsEmail(e)).ToList();
+                        emailAddresses = contact.ImAddresses.Where(e => this.IsEmail(e)).ToList();
                     }
 
                     if (emailAddresses.Any())
@@ -80,13 +80,13 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                         {
                             Name = contact.DisplayName,
                             EmailAddresses = emailAddresses,
-                            Id = contact.Id
+                            Id = contact.Id,
                         });
                     }
                 }
             }
 
-            IUserPeopleCollectionPage people =  await client.Me.People.Request(optionList).GetAsync(cancellationToken);
+            IUserPeopleCollectionPage people = await client.Me.People.Request(optionList).GetAsync(cancellationToken);
 
             if (people?.Count > 0)
             {
@@ -98,7 +98,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     foreach (var email in person.ScoredEmailAddresses)
                     {
                         // If the email address isn't already included in the contacts list, add it
-                        if (!existingResult.Contains(email.Address) && IsEmail(email.Address))
+                        if (!existingResult.Contains(email.Address) && this.IsEmail(email.Address))
                         {
                             emailAddresses.Add(email.Address);
                         }
@@ -111,7 +111,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                         {
                             Name = person.DisplayName,
                             EmailAddresses = emailAddresses,
-                            Id = person.Id
+                            Id = person.Id,
                         });
                     }
                 }
