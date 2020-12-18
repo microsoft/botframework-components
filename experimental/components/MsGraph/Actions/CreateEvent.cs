@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action for creating a new event in MS Graph
     /// </summary>
@@ -114,25 +114,25 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 Body = new ItemBody()
                 {
                     ContentType = BodyType.Html,
-                    Content = descriptionProperty + $"<br /><span>🤖 </span><span style=\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>"
+                    Content = descriptionProperty + $"<br /><span>🤖 </span><span style=\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>",
                 },
                 Location = new Location()
                 {
-                    DisplayName = locationProperty
+                    DisplayName = locationProperty,
                 },
                 Start = new DateTimeTimeZone()
                 {
                     DateTime = startProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = timeZoneProperty
+                    TimeZone = timeZoneProperty,
                 },
                 End = new DateTimeTimeZone()
                 {
                     DateTime = endProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = timeZoneProperty
+                    TimeZone = timeZoneProperty,
                 },
                 Attendees = attendeesProperty,
                 IsOnlineMeeting = isOnlineMeetingProperty,
-                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness
+                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
             return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken);
