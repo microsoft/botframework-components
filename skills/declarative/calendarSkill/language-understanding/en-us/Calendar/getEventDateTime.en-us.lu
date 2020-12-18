@@ -9,8 +9,8 @@
 - when am i meeting with {@contact=shauna} {@date=this week}
 - when is my event with {@contact=cynthia}, {@contact=isaac}, and {@contact=elaine} {@date=next month} about {@subject=team check-in}
 - when is my {@subject=lunch} event
-- when is my meeting {@date=tomorrow at noon} with {@contact=me@myemail.edu} and {@contact=morgan}
-- when is my meeting with {@contact=chris} and {@contact=me@myemail.edu}
+- when is my meeting {@date=tomorrow at noon} with me@myemail.edu and {@contact=morgan}
+- when is my meeting with {@contact=chris} and me@myemail.edu
 - when is my meeting with {@contact=tyler} and {@contact=tyler}
 - when is my next meeting
 - when is my next meeting with {@contact=jonathan} and {@contact=alex}
@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

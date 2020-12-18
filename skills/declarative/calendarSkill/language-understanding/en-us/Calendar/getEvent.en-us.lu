@@ -9,7 +9,7 @@
 - lookup meetings
 - lookup meetings with {@contact=cynthia} called {@subject=planning for end of year}
 - lookup meetings with {@contact=margaret}, {@contact=lauren}, and {@contact=elaine} {@date=today} with a title of {@subject=lunch}
-- lookup meetings with {@contact=susan}, {@contact=youngjae}, and {@contact=you@test.net}
+- lookup meetings with {@contact=susan}, {@contact=youngjae}, and you@test.net
 - read me my calendar
 - read me my calendar next
 - show my calendar
@@ -22,14 +22,14 @@
 - what do i have {@date=this week}
 - what is on
 - what is on with {@contact=isaac} {@date=today at 3}
-- what time do i start on {@date=thursday at 11am} named {@subject=project sync} with {@contact=you@test.net} and {@contact=scott}
+- what time do i start on {@date=thursday at 11am} named {@subject=project sync} with you@test.net and {@contact=scott}
 - what's on my calendar
-- what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
+- what's on my calendar with {@contact=margaret} and you@test.net with a title of {@subject=planning for end of year}
 
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

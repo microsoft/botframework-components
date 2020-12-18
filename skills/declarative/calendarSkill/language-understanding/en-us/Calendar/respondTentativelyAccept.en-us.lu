@@ -1,7 +1,7 @@
 # RespondTentativelyAccept
 - i might be able to make the {@subject=hackathon} {@date=next week}
 - i might be able to make the meeting {@subject=happy hour}
-- i might be able to make the meeting with {@contact=me@myemail.edu} about {@subject=editorial meeting}
+- i might be able to make the meeting with me@myemail.edu about {@subject=editorial meeting}
 - i might not make the {@subject=testing meeting} with {@contact=em} and {@contact=darren} {@date=tomorrow morning}
 - i want to tentatively accept the event with {@contact=quirine}
 - i want to tentatively accept the next meeting
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

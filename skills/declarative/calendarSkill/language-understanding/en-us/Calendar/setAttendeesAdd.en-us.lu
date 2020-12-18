@@ -14,7 +14,7 @@
 - invite {@newContact=jose}
 - invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
 - invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
-- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- invite {@newContact=test@email.com} to the event with you@test.net, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
 - send my {@subject=breakfast} event to {@newContact=gary}
 - send my event titled {@subject=1:1} to {@newContact=chris}
 - send the meeting to {@newContact=morgan}
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

@@ -6,24 +6,24 @@
 - accept the meeting
 - accept the meeting on {@date=feb 4th}
 - accept the meeting with a title of {@subject=1:1} with {@contact=rebecca}
-- accept the meeting with {@contact=gary}, {@contact=test@email.com}, and {@contact=gary}
+- accept the meeting with {@contact=gary}, test@email.com, and {@contact=gary}
 - accept the {@subject=team standup} invite
 - i can make my event named {@subject=team meeting} on {@date=saturday}
 - i can make the next meeting
 - i can make the {@subject=team meeting} meeting
 - i want to accept the next event
 - i'll be at my meeting {@subject=project sync}
-- i'll be at the event on {@date=wednesday} with {@contact=gary}, {@contact=test@email.com}, and {@contact=test@email.com}
+- i'll be at the event on {@date=wednesday} with {@contact=gary}, test@email.com, and test@email.com
 - i'll be at the {@subject=weekly team meeting}
 - let {@contact=monique} know i'll be at the {@date=1 o'clock} meeting
 - respond yes to {@contact=andrew}'s invite
 - tell {@contact=eunice} i'll be at the {@subject=status update}
-- tell {@contact=hyunjin} i can make the event with {@contact=me@myemail.edu} and {@contact=susan}
+- tell {@contact=hyunjin} i can make the event with me@myemail.edu and {@contact=susan}
 - tell {@contact=john} i can make on {@date=saturday} about {@subject=happy hour} with {@contact=isaac}
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

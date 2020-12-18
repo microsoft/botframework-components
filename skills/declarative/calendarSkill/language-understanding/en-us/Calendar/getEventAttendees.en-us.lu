@@ -7,22 +7,22 @@
 - who is attending the event titled {@subject=dentist appointment} with {@contact=john} and {@contact=chris}
 - who is attending the next meeting
 - who is attending the {@subject=planning for end of year} meeting
-- who is coming to my event with {@contact=you@test.net} and {@contact=scott}
+- who is coming to my event with you@test.net and {@contact=scott}
 - who is coming to my meeting {@date=tomorrow morning}
 - who is coming to the event about {@subject=weekly review} {@date=tomorrow at noon}
 - who is coming to the event with {@contact=rebecca}, {@contact=john}, and {@contact=gary} at {@date=7:30am}
 - who is coming to the meeting with {@contact=tyler} and {@contact=lauren}
-- who is coming to the meeting with {@contact=you@test.net}
+- who is coming to the meeting with you@test.net
 - who is coming {@date=tomorrow at 3pm}
 - who's coming on {@date=sept 3}
 - who's coming to the meeting {@date=tomorrow morning}
 - will {@contact=gary} be at my event on {@date=thursday}
-- will {@contact=test@email.com} be at the event
+- will test@email.com be at the event
 - will {@contact=tyler} be at my next event
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

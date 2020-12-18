@@ -1,0 +1,40 @@
+# SetDescription
+- add a body
+- add a description
+- add a description to the {@subject=standup}
+- add content
+- add content to the meeting with {@contact=darren}
+- add description to the meeting with {@contact=ryan}, {@contact=ted}, and {@contact=marie} later {@date=today}
+- can you set the meeting content
+- please update the body of this meeting
+- set the body on the meeting {@date=this afternoon}
+- set the description
+- set the description on the {@date=1 o'clock} meeting
+- update the body of the invite
+- update the content
+- update the content of the meeting with {@contact=sharon} and {@contact=ron}
+- update the description on my event
+- update the meeting body
+- update the meeting content for the {@subject=budget review}
+- update the meeting content with {@contact=ryan} {@date=next week}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

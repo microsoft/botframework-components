@@ -2,7 +2,7 @@
 - can you tell me the building for the {@subject=team offsite}
 - show location for the meeting {@date=today}
 - tell me where i need to go for the next meeting
-- what is the location of my event with {@contact=you@test.net}
+- what is the location of my event with you@test.net
 - what is the location of the event with {@contact=isaac}
 - what room is my event {@date=tomorrow at noon}
 - what room is my next meeting
@@ -14,7 +14,7 @@
 - what's the location for the meeting {@date=this afternoon}
 - where do i need to go {@date=this afternoon}
 - where is my meeting with {@contact=michiel}
-- where is my meeting with {@contact=you@test.net} and {@contact=morgan}
+- where is my meeting with you@test.net and {@contact=morgan}
 - where is the event on {@date=thursday at 11am} with {@contact=morgan} and {@contact=tyler}
 - where is the event titled {@subject=project sync} with {@contact=cynthia} and {@contact=john}
 - where is the next meeting
@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

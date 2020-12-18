@@ -3,7 +3,7 @@
 - don't add {@currentContact=gary} to this
 - don't add {@currentContact=margaret} to the event on {@date=saturday} with {@contact=rebecca}
 - don't add {@currentContact=me@myemail.edu}
-- don't invite {@currentContact=chris} to my event with {@contact=jose} and {@contact=you@test.net}
+- don't invite {@currentContact=chris} to my event with {@contact=jose} and you@test.net
 - don't invite {@currentContact=john} to the next event
 - don't invite {@currentContact=john}, {@currentContact=john}, and {@currentContact=em}
 - don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

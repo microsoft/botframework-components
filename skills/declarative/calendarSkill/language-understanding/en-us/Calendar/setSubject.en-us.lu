@@ -5,8 +5,8 @@
 - change the title from {@currentSubject=standup} to {@newSubject=sprint planning}
 - change the title of my next meeting to {@newSubject=editorial meeting}
 - change the title of the {@currentSubject=daily standup} meeting to {@newSubject=daily status update}
-- change the title of the event {@date=this week} with {@contact=you@test.net}, {@contact=scott}, and {@contact=john}
-- change the title of the meeting with {@contact=test@email.com} and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
+- change the title of the event {@date=this week} with you@test.net, {@contact=scott}, and {@contact=john}
+- change the title of the meeting with test@email.com and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
 - make the title {@newSubject=daily commute}
 - rename my meeting {@date=next month} named {@currentSubject=hair appointment}
 - rename the event from {@currentSubject=editorial meeting} to {@newSubject=project sync}
@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

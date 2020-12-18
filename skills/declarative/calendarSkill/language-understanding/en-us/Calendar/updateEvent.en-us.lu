@@ -3,10 +3,10 @@
 - change the details of my meeting titled {@subject=design workshop}
 - change the {@subject=issue triage} on {@date=wednesday}
 - change the meeting
-- change the meeting with {@contact=cynthia} and {@contact=test@email.com}
+- change the meeting with {@contact=cynthia} and test@email.com
 - make a change to my {@subject=dentist appointment} meeting
 - make a change to my event {@date=this weekend}
-- make a change to my event with {@contact=me@myemail.edu} and {@contact=you@test.net}
+- make a change to my event with me@myemail.edu and you@test.net
 - make a change to the meeting with {@contact=charlotte} and {@contact=greg}
 - make an update to my meeting {@date=next week}
 - modify my event with {@contact=chris}, {@contact=isaac}, and {@contact=youngjae} {@date=this weekend}
@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml contact hasRoles currentContact,newContact usesFeature personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2
