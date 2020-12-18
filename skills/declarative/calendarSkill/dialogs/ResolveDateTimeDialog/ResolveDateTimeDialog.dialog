@@ -32,6 +32,10 @@
               "value": "=coalesce(dialog.query, turn.activity.text)"
             },
             {
+              "property": "dialog.expectedType",
+              "value": "=coalesce(dialog.expectedType, null)"
+            },
+            {
               "property": "dialog.minDate",
               "value": "=coalesce(dialog.minDate, null)"
             },
@@ -67,6 +71,21 @@
           "value": "dialog.foreach.value",
           "itemsProperty": "dialog.recognitionResults",
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "0FTMUN"
+              },
+              "property": "$resolvedType",
+              "value": "=$foreach.value.Resolution.values[0].type"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "QvhQlR"
+              },
+              "eventName": "CheckExpectedType"
+            },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
@@ -176,7 +195,7 @@
                       ]
                     }
                   ],
-                  "condition": "dialog.foreach.value.Resolution.values[0].type",
+                  "condition": "$resolvedType",
                   "default": [
                     {
                       "$kind": "Microsoft.SendActivity",
@@ -771,6 +790,56 @@
           "choices": "=dialog.choices",
           "property": "dialog.selected",
           "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "ClNq3i",
+        "name": "CheckExpectedType"
+      },
+      "event": "CheckExpectedType",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VXcLqd"
+          },
+          "condition": "=exists($expectedType) && $resolvedType != $expectedType",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "g2RoUz",
+                "name": "Prompt for textn a diffe"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_g2RoUz()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "$query"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "hoOdR8"
+              },
+              "activityProcessed": true,
+              "options": {
+                "query": "=$query",
+                "expectedType": "=$expectedType",
+                "minDate": "=$minDate",
+                "maxDate": "=$maxDate",
+                "minTime": "$minTime",
+                "maxTime": "$maxTime"
+              }
+            }
+          ]
         }
       ]
     }
