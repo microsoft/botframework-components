@@ -1,72 +1,23 @@
+> General intent imports
+[Cancel](cancel.en-us.lu)
+[Skip](skip.en-us.lu)
 
-# SkipSlot
-- skip
-- skip that
-- nothing
+> Calendar intent imports
+[SetAttendeesAdd](setAttendeesAdd.en-us.lu)
+[SetAttendeesRemove](setAttendeesRemove.en-us.lu)
+[SetDateTime](setDateTime.en-us.lu)
+[SetDescription](setDescription.en-us.lu)
+[SetDuration](setDuration.en-us.lu)
+[SetLocation](setLocation.en-us.lu)
+[SetOnlineMeetingAdd](setOnlineMeetingAdd.en-us.lu)
+[SetOnlineMeetingRemove](setOnlineMeetingRemove.en-us.lu)
+[SetSubject](setSubject.en-us.lu)
+
+# Skip
+- skip adding contacts
+- skip setting the title
+- skip adding a subject
+- skip adding teams
+- skip setting the location
 - none
-
-@ prebuilt datetimeV2
-
-# TextInput_Response_8FlYLk
-- It's a {Title=1:1} with Mary
-- Planning for {Title=end of year}
-- Call it {Title=editorial meeting}
-- Please title it {Title=content review}
-- How about {Title=team check-in}
-- Title it {Title=Happy Hour}
-
-# ChooseOwnDateTime
-- Choose own date and time
-- Choose my own date and time
-
-# ChangeSlots
-- Can you {@EntityOperation={@Add=add}} Rachel
-- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
-- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
-- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
-- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
-- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
-- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
-- change {@EntityName={@EventDuration=duration}}
-- change {@EntityName={@EventTitle=title}}
-- change event
-- {@EntityOperation={@Add=add}} megan
-- {@EntityOperation={@Add=add}} {@EntityName={@EventAttendee=attendee}}
-- change {@EntityName={@EventDateTime=time}}
-- change {@EntityName={@EventLocation=location}}
-- move my {@Title=lunch} meeting tomorrow to 12:30 pm
-
-@ prebuilt personName
-@ prebuilt email
-@ prebuilt datetimeV2
-
-@ ml EntityName
-    - @ ml EventTitle
-    - @ ml EventDateTime
-    - @ ml EventAttendee
-    - @ ml EventLocation
-    - @ ml EventDuration
-    - @ ml TeamsLink
-
-
-@ ml EntityOperation
-    - @ ml Add
-    - @ ml Remove
-    - @ ml Change
-
-# Cancel
-- cancel
-- cancel this
-- stop
-- stop this
-- exit
-
-# ConfirmYes
-- yes
-- confirm
-- sure
-
-# None
-- tomorrow at 9 am
-- at 3
-- today
+- no location
