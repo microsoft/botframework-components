@@ -27,7 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Runtime" Version="4.12.0-daily.preview.20201218.196720.6ea9b09" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" /><%- packageReferences %>
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
