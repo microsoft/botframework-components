@@ -88,7 +88,7 @@ module.exports = class extends Generator {
         const packageReferences = this._formatPackageReferences();
 
         this.fs.copyTpl(
-            this.templatePath(path.join(platform, integration, '**')),
+            this.templatePath(path.join(platform, integration)),
             this.destinationPath(botName),
             {
                 botName,
@@ -137,7 +137,7 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
 
         this.fs.copyTpl(
-            this.templatePath(path.join('assets', '**')),
+            this.templatePath(path.join('assets')),
             this.destinationPath(botName),
             {
                 botName
