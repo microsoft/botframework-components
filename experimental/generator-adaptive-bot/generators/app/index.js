@@ -40,16 +40,31 @@ module.exports = class extends Generator {
         });
 
         this._verifyOptions();
+        this.packageReferences = this._validatePackageReferences(opts.packageReferences);
     }
 
     _verifyOptions() {
-        if (this.options.integration.toLowerCase() != INTEGRATION_WEBAPP && this.options.integration.toLowerCase() != INTEGRATION_FUNCTIONS) {
-            throw new Error(`--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`);
+        if (this.options.integration.toLowerCase() != INTEGRATION_WEBAPP &&
+            this.options.integration.toLowerCase() != INTEGRATION_FUNCTIONS) {
+            this.env.error(`--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`);
         }
 
         if (this.options.platform !== PLATFORM_DOTNET) {
-            throw new Error(`--platform must be: ${PLATFORM_DOTNET}`);
+            this.env.error(`--platform must be: ${PLATFORM_DOTNET}`);
         }
+    }
+
+    _validatePackageReferences(packageReferences) {
+        let result = [];
+        if (Array.isArray(packageReferences)) {
+            packageReferences.forEach((reference) => {
+                if (typeof reference == 'object' && reference.name && reference.version) {
+                    result.push(reference);
+                }
+            });
+        }
+
+        return result;
     }
 
     // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
@@ -70,12 +85,14 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
         const integration = this.options.integration;
         const platform = this.options.platform;
+        const packageReferences = this._formatPackageReferences();
 
         this.fs.copyTpl(
-            this.templatePath(path.join(platform, integration,'**')),
+            this.templatePath(path.join(platform, integration)),
             this.destinationPath(botName),
             {
-                botName
+                botName,
+                packageReferences
             }
         );
 
@@ -85,6 +102,15 @@ module.exports = class extends Generator {
         );
 
         this._copyDotnetSolutionFile();
+    }
+
+    _formatPackageReferences() {
+        let result = '';
+        this.packageReferences.forEach((reference) => {
+            result = result.concat(`\n    <PackageReference Include="${reference.name}" Version="${reference.version}" />`);
+        });
+
+        return result;
     }
 
     _copyDotnetSolutionFile() {
@@ -111,7 +137,7 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
 
         this.fs.copyTpl(
-            this.templatePath(path.join('assets','**')),
+            this.templatePath(path.join('assets')),
             this.destinationPath(botName),
             {
                 botName
