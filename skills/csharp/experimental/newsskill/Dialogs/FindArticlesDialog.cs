@@ -24,7 +24,7 @@ namespace NewsSkill.Dialogs
         {
             var newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
-            _client = new NewsClient(newsKey);
+            _client = new NewsClient(Settings.BingNewsEndPoint, newsKey);
 
             var findArticles = new WaterfallStep[]
             {

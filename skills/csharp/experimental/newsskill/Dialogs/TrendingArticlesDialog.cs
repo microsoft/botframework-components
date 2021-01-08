@@ -23,7 +23,7 @@ namespace NewsSkill.Dialogs
         {
             var key = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
 
-            _client = new NewsClient(key);
+            _client = new NewsClient(Settings.BingNewsEndPoint, key);
 
             var trendingArticles = new WaterfallStep[]
             {
