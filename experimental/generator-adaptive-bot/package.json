@@ -29,8 +29,9 @@
   "license": "ISC",
   "scripts": {
     "build": "npm-run-all build:tsc build:copy",
+    "build:copy": "npm-run-all -p build:copy:dotnet",
+    "build:copy:dotnet": "shx cp -R src/dotnet/templates generators/dotnet/templates",
     "build:tsc": "tsc -b",
-    "build:copy": "shx cp -R src/app/templates generators/app/templates",
     "clean": "shx rm -rf generators tsconfig.tsbuildinfo",
     "prepare": "npm run build"
   }
