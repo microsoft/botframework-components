@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Patrick Volum",
+      "authorEmail": "pavolum@microsoft.com",
+      "authorUrl": ""
+    }
+  }
+}
