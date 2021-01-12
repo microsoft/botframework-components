@@ -2,22 +2,12 @@
 // Licensed under the MIT License.
 
 import Generator, { GeneratorOptions } from "yeoman-generator";
-import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
 enum Integration {
   WebApp = "webapp",
   Functions = "functions",
 }
-
-enum Platform {
-  Dotnet = "dotnet",
-  Javascript = "js",
-  Java = "java",
-  Python = "python",
-}
-
-const Platforms = new Set([Platform.Dotnet, Platform.Javascript]);
 
 enum ProjectTypeID {
   WebApp = "9A19103F-16F7-4668-BE54-9A1E7A4F7556",
@@ -50,13 +40,6 @@ module.exports = class extends (
       alias: "i",
     });
 
-    this.option("platform", {
-      description: `The programming platform to use: ${Platform.Dotnet}`,
-      type: String,
-      default: Platform.Dotnet,
-      alias: "p",
-    });
-
     this._verifyOptions();
 
     this.packageReferences = this._validatePackageReferences(
@@ -72,14 +55,6 @@ module.exports = class extends (
       this.env.error(
         new Error(
           `--integration must be: ${Integration.WebApp} or ${Integration.Functions}`
-        )
-      );
-    }
-
-    if (!Platforms.has(this.options.platform)) {
-      this.env.error(
-        new Error(
-          `--platform must be one of: ${Array.from(Platforms).join(", ")}`
         )
       );
     }
@@ -110,11 +85,10 @@ module.exports = class extends (
   private _copyDotnetProject(): void {
     const botName = this.options.botName;
     const integration = this.options.integration;
-    const platform = this.options.PLATFORM;
     const packageReferences = this._formatPackageReferences();
 
     this.fs.copyTpl(
-      this.templatePath(path.join(platform, integration)),
+      this.templatePath(integration),
       this.destinationPath(botName),
       {
         botName,
@@ -123,8 +97,8 @@ module.exports = class extends (
     );
 
     this.fs.move(
-      this.destinationPath(path.join(botName, "botName.csproj")),
-      this.destinationPath(path.join(botName, `${botName}.csproj`))
+      this.destinationPath(botName, "botName.csproj"),
+      this.destinationPath(botName, `${botName}.csproj`)
     );
 
     this._copyDotnetSolutionFile();
@@ -150,7 +124,7 @@ module.exports = class extends (
         : ProjectTypeID.Functions;
 
     this.fs.copyTpl(
-      this.templatePath(path.join(this.options.platform, "botName.sln")),
+      this.templatePath("botName.sln"),
       this.destinationPath(`${botName}.sln`),
       {
         botName,
@@ -165,7 +139,7 @@ module.exports = class extends (
     const botName = this.options.botName;
 
     this.fs.copyTpl(
-      this.templatePath(path.join("assets")),
+      this.templatePath("assets"),
       this.destinationPath(botName),
       {
         botName,
