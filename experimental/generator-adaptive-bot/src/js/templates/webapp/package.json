@@ -1,0 +1,36 @@
+{
+  "name": "<%= botName %>",
+  "dependencies": {
+  <%_ packageReferences.forEach(function (packageReference) { _%>
+    "<%= packageReference.name %>": "<%= packageReference.version _%>",
+  <%_ }); _%>
+    "botbuilder": "^4.11.1",
+    "botbuilder-ai": "^4.11.1",
+    "botbuilder-dialogs": "^4.11.1",
+    "botbuilder-dialogs-adaptive": "^4.11.1-preview",
+    "botbuilder-dialogs-declarative": "^4.11.1-preview",
+    "restify": "^8.5.1"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "latest",
+    "@types/restify": "^8.4.2",
+    "nodemon": "latest",
+    "npm-run-all": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "links": "npm-run-all link:bb link:bb-a link:bb-d link:bb-d-a link:bb-d-a link:bb-d-d link:bb-rt link:bb-rt-core",
+    "link:bb": "yarn link botbuilder",
+    "link:bb-a": "yarn link botbuilder-ai",
+    "link:bb-d": "yarn link botbuilder-dialogs",
+    "link:bb-d-a": "yarn link botbuilder-dialogs-adaptive",
+    "link:bb-d-d": "yarn link botbuilder-dialogs-declarative",
+    "link:bb-rt": "yarn link botbuilder-runtime",
+    "link:bb-rt-core": "yarn link botbuilder-runtime-core",
+    "prepare": "yarn build",
+    "start": "ts-node src/index.ts",
+    "watch": "nodemon -e ts,json -w . -i node_modules -x yarn start"
+  }
+}

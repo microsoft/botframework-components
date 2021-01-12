@@ -78,11 +78,11 @@ module.exports = class extends (
   // 8. end - Called last, cleanup, say good bye, etc
 
   writing(): void {
-    this._copyDotnetProject();
+    this._copyProject();
     this._copyAssets();
   }
 
-  private _copyDotnetProject(): void {
+  private _copyProject(): void {
     const botName = this.options.botName;
     const integration = this.options.integration;
     const packageReferences = this._formatPackageReferences();
@@ -101,7 +101,7 @@ module.exports = class extends (
       this.destinationPath(botName, `${botName}.csproj`)
     );
 
-    this._copyDotnetSolutionFile();
+    this._copySolutionFile();
   }
 
   private _formatPackageReferences(): string {
@@ -114,7 +114,7 @@ module.exports = class extends (
     );
   }
 
-  private _copyDotnetSolutionFile(): void {
+  private _copySolutionFile(): void {
     const botName = this.options.botName;
     const botProjectGuid = uuidv4().toUpperCase();
     const solutionGuid = uuidv4().toUpperCase();
