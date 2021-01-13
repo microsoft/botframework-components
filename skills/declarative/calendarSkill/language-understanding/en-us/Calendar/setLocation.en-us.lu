@@ -12,7 +12,7 @@
 - set the location of my next meeting to {@location=123 address st}
 - set the location of my {@date=wednesday} meeting to {@location=123 address st}
 - update the location
-- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, test@email.com, and {@contact=scott} to {@location=123 address st}
+- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, {@contact=test@email.com}, and {@contact=scott} to {@location=123 address st}
 - update the location of the {@subject=hair appointment} event to {@location=bellevue, wa}
 - update the location of the meeting to {@location=bellevue, wa}
 - update the location of the meeting with {@contact=gary} and {@contact=margaret} to {@location=room 345}
@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

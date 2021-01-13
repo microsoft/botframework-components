@@ -1,5 +1,5 @@
 # SetDuration
-- change the event with you@test.net to {@duration=2 hours}
+- change the event with {@contact=you@test.net} to {@duration=2 hours}
 - change to {@duration=3 hrs}
 - extend the event to {@duration=1 hour and 30 minutes}
 - extend the {@subject=standup} to {@duration=2 hours}
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

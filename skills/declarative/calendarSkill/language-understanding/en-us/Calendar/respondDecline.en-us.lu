@@ -17,13 +17,13 @@
 - i want to decline the next meeting
 - say no to {@contact=tommy}'s meeting request
 - tell {@contact=chris} i can't make the event with {@contact=rebecca} and {@contact=hyunjin} on {@date=saturday}
-- tell you@test.net i can't make my meeting with {@contact=quirine}, {@contact=isaac}, and {@contact=margaret} called {@subject=1:1}
+- tell {@contact=you@test.net} i can't make my meeting with {@contact=quirine}, {@contact=isaac}, and {@contact=margaret} called {@subject=1:1}
 - won't make the meeting {@date=next monday afternoon}
 
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

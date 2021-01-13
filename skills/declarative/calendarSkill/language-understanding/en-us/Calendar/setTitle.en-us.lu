@@ -1,0 +1,42 @@
+# SetTitle
+- change the subject
+- change the subject of the meeting with {@contact=youngjae} and {@contact=elaine} to {@newSubject=standup}
+- change the subject to {@newSubject=family vacation}
+- change the title from {@currentSubject=standup} to {@newSubject=sprint planning}
+- change the title of my next meeting to {@newSubject=editorial meeting}
+- change the title of the {@currentSubject=daily standup} meeting to {@newSubject=daily status update}
+- change the title of the event {@date=this week} with {@contact=you@test.net}, {@contact=scott}, and {@contact=john}
+- change the title of the meeting with {@contact=test@email.com} and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
+- make the title {@newSubject=daily commute}
+- rename my meeting {@date=next month} named {@currentSubject=hair appointment}
+- rename the event from {@currentSubject=editorial meeting} to {@newSubject=project sync}
+- set the title of my event with {@contact=morgan} {@date=tomorrow} from {@currentSubject=weekly review} to {@newSubject=happy hour}
+- set the title of the {@subject=content review} meeting
+- set the title of the event
+- set the title of the event to {@newSubject=team meeting}
+- set the title to {@newSubject=daily health check-in}
+- update the subject of the meeting {@date=next week}
+- update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
+- update the subject of the next event to {@newSubject=standup}
+- update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles newDate,currentDate
+@ ml duration
+@ ml location usesFeature geographyV2
+@ ml subject hasRoles currentSubject,newSubject
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Phrase list definitions
+
+> # List entities
+
+> # RegEx entities

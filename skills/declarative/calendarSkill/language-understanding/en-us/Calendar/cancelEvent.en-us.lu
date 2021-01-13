@@ -5,7 +5,7 @@
 - cancel my event with {@contact=john}
 - cancel my meeting
 - cancel my meeting with a subject of {@subject=weekly review} {@date=today at 3} with {@contact=tyler} and {@contact=cynthia}
-- cancel my meeting with me@myemail.edu and {@contact=margaret}
+- cancel my meeting with {@contact=me@myemail.edu} and {@contact=margaret}
 - cancel my next meeting
 - cancel the event
 - cancel the event {@date=this weekend}
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

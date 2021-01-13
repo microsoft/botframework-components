@@ -22,7 +22,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

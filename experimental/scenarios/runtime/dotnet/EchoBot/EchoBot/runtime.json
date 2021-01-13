@@ -1,0 +1,17 @@
+{
+  "adapters": [
+    {
+      "$kind": "Microsoft.BotCoreAdapter"
+    }
+  ],
+  "credentials": {
+    "$kind": "Microsoft.DeclarativeCredentialsProvider",
+    "applicationId": "=MicrosoftAppId",
+    "applicationPassword": "=MicrosoftAppPassword"
+  },
+  "defaultLocale": "en-US",
+  "rootDialog": "=defaultRootDialog",
+  "storage": {
+    "$kind": "Microsoft.MemoryStorage"
+  }
+}

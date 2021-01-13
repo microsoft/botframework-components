@@ -2,13 +2,13 @@
 - don't add a call to the meeting later
 - don't add teams to my {@subject=1:1} later
 - don't add teams to my {@subject=happy hour} event
-- don't add teams to my meeting with test@email.com on {@date=monday}
+- don't add teams to my meeting with {@contact=test@email.com} on {@date=monday}
 - don't include a link with the meeting
 - don't include a teams link for the meeting on {@date=april 10th}
 - don't make the meeting virtual
 - remove teams from my {@subject=breakfast} event with {@contact=rebecca}, {@contact=morgan}, and {@contact=morgan} on {@date=thursday}
 - remove teams from my meeting on {@date=friday} with {@contact=john}
-- remove teams from my meeting with test@email.com and {@contact=margaret}
+- remove teams from my meeting with {@contact=test@email.com} and {@contact=margaret}
 - remove teams from my next meeting
 - remove teams from my {@subject=standup} event {@date=today}
 - remove the link from
@@ -23,7 +23,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2

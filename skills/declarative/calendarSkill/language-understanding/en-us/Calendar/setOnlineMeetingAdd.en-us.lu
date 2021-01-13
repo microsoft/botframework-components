@@ -6,7 +6,7 @@
 - add a teams link to my event on {@date=tuesday} with {@contact=tyler}
 - add a teams link to my next meeting
 - add a teams link to the {@subject=content review} event {@date=tomorrow} with {@contact=elaine}
-- add a teams link to the meeting with test@email.com, {@contact=chris}, and you@test.net
+- add a teams link to the meeting with {@contact=test@email.com}, {@contact=chris}, and {@contact=you@test.net}
 - add a teams link to the next event
 - add {@contact=elaine} to my meeting with {@contact=tom}
 - add {@contact=elaine} to the meeting with {@contact=tyler}
@@ -14,7 +14,7 @@
 - include a link
 - include a link to my meeting {@date=this weekend} with {@contact=quirine}, {@contact=morgan}, and {@contact=susan}
 - include a link to the meeting
-- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and test@email.com
+- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and {@contact=test@email.com}
 - include teams to the event with {@contact=elaine}
 - include teams to the {@subject=standup} meeting on {@date=tuesday}
 - make it a teams meeting
@@ -24,7 +24,7 @@
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 @ ml date hasRoles newDate,currentDate
 @ ml duration
 @ ml location usesFeature geographyV2
