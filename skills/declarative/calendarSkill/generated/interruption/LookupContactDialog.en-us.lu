@@ -1,0 +1,80 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# Skip
+- no one
+- nobody
+- don't invite anyone
+- just me
+- only me
+- skip
+- skip this
+- skip over this
+- skip this step
+- don't do this step
+- i want to skip
+
+
+# TextInput_Response_sFm17r
+- susan
+- bob, oscar, and harry
+- invite tyler
+- add shawn
+- invite sally and beatrice
+- add test@email.com
+- invite me@outlook.com
+
+
+# ConfirmInput_Response_pjKHu4
+- yes, add allan
+- yes
+- no, I'm done
+- no thanks
+- that's it
+- peter
+- sure, add paul
+
+
+# Cancel
+- cancel
+- cancel it
+- cancel that
+- canceled
+- cancelled
+- don't do that anymore
+- forget about it
+- go away
+- just cancel
+- just cancel it
+- never mind
+- no cancel
+- no never mind
+- don't do that
+- quit
+- sorry, don't do it
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+

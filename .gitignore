@@ -380,3 +380,4 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # VSCode files
 .vscode/
+/skills/declarative/calendarSkill/generated/luis.settings.composer.westus.json
