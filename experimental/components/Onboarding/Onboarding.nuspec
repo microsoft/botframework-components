@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Preview.Bot.Component.OnboardingDialog</id>
-        <version>0.0.1-preview2</version>
+        <version>0.0.1-preview3</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>first version of onboarding package</releaseNotes>
         <description>Dialogs to provide an onboarding experience</description>
-        <tags>conversationalcore onboarding preview</tags>
+        <tags>bf-component conversationalcore onboarding preview</tags>
         <dependencies />
     </metadata>
 
