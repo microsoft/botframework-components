@@ -37,7 +37,7 @@
                   "$designer": {
                     "id": "K1MbUz"
                   },
-                  "condition": "exists(user.name)",
+                  "condition": "exists(user.greeted)",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
@@ -54,6 +54,14 @@
                         "id": "2lVGYp"
                       },
                       "activity": "${SendActivity_2lVGYp()}"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "ujzKfS"
+                      },
+                      "property": "user.greeted",
+                      "value": "true"
                     }
                   ]
                 }
@@ -65,5 +73,6 @@
     }
   ],
   "generator": "Greeting.lg",
-  "id": "Greeting"
+  "id": "Greeting",
+  "recognizer": "Greeting.lu.qna"
 }
