@@ -35,23 +35,6 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "FmSrE6",
-        "name": "Escalate"
-      },
-      "intent": "Escalate",
-      "actions": [
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "tJCEYl"
-          },
-          "activity": "${SendActivity_tJCEYl()}"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
         "id": "cccZIk",
         "name": "Help"
       },
@@ -68,5 +51,6 @@
     }
   ],
   "generator": "General.lg",
-  "recognizer": "General.lu"
+  "recognizer": "General.lu.qna",
+  "id": "General"
 }
