@@ -1,6 +1,6 @@
 {
   "name": "preview-bot-component-generalintent",
-  "version": "0.0.1-preview3",
+  "version": "0.0.1-preview4",
   "keywords": ["bf-component"],
   "description": "Dialogs to provide general intent handling - like help and cancel",
   "main": "index.js",

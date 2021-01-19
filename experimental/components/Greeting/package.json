@@ -1,6 +1,6 @@
 {
   "name": "preview-bot-component-greetingdialog",
-  "version": "0.0.1-preview2",
+  "version": "0.0.1-preview3",
   "keywords": ["bf-component"],
   "description": "Dialogs to provide a greeting experience",
   "main": "index.js",
