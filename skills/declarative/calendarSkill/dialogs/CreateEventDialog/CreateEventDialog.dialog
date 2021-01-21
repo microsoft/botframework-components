@@ -40,7 +40,7 @@
           "$designer": {
             "id": "PxySim"
           },
-          "eventName": "SetSubject"
+          "eventName": "SetTitle"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -117,7 +117,8 @@
           "style": "none",
           "maxTurnCount": "=$turnCount",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           }
         },
         {
@@ -157,16 +158,16 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "IFUPn8",
-        "name": "OnEvent (SetSubject)"
+        "name": "OnEvent (SetTitle)"
       },
-      "event": "SetSubject",
+      "event": "SetTitle",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "DHvA61"
           },
-          "name": "CreateEventDialog.OnEvent_SetSubject"
+          "name": "CreateEventDialog.OnEvent_SetTitle"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -247,13 +248,6 @@
                       "value": "=$foreach.value"
                     }
                   ]
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "KhyZ3n"
-                  },
-                  "activity": "${SendActivity_KhyZ3n()}"
                 }
               ]
             }
@@ -262,20 +256,20 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "yZQDmt"
+                "id": "3h5xdT"
               },
               "assignments": [
                 {
                   "property": "$listOptions.items",
-                  "value": "=$slots.attendees"
+                  "value": "=foreach($slots.attendees, x, json(concat('{\"name\": \"', x.EmailAddress.Name ,'\" , \"email\":\"', x.EmailAddress.Address,'\" }')))"
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "=email"
+                  "value": "email"
                 },
                 {
                   "property": "$listOptions.activePrompt",
-                  "value": "=ContactListPrompt"
+                  "value": "ContactListRemovePrompt"
                 },
                 {
                   "property": "$listOptions.templates",
@@ -288,12 +282,6 @@
                     "showMorePrompt": "ContactListShowMorePrompt",
                     "skipResponse": "ContactListSkipResponse",
                     "defaultValueResponse": "ContactListDefaultValueResponse"
-                  }
-                },
-                {
-                  "property": "$listOptions.additionalOptions",
-                  "value": {
-                    "contactName": "=dialog.foreach.contactValue"
                   }
                 }
               ]
@@ -309,13 +297,21 @@
               "options": "=$listOptions"
             },
             {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "yxp9U4"
+              },
+              "property": "$contactToRemove",
+              "value": "=where($slots.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
+            },
+            {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "5bw59y"
+                "id": "uCfE6z"
               },
               "changeType": "remove",
               "itemsProperty": "$slots.attendees",
-              "value": "=$selectedContact"
+              "value": "=$contactToRemove[0]"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -701,6 +697,13 @@
       "event": "SetDuration",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6x1h7t"
+          },
+          "name": "CreateEventDialog.OnEvent_SetDuration"
+        },
+        {
           "$kind": "Microsoft.TextInput",
           "$designer": {
             "id": "NBZi0g"
@@ -895,6 +898,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Jyo2nx"
+          },
+          "name": "CreateEventDialog.OnEvent_Cancel"
+        },
+        {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
             "id": "WF6urX"
@@ -953,16 +963,16 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "KMdstA",
-        "name": "OnIntent (SetSubject)"
+        "name": "OnIntent (SetTitle)"
       },
-      "intent": "SetSubject",
+      "intent": "SetTitle",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "i9KMqi"
           },
-          "name": "CreateEventDialog.OnIntent_SetSubject"
+          "name": "CreateEventDialog.OnIntent_SetTitle"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -976,7 +986,7 @@
             },
             {
               "property": "$slots.subject",
-              "value": "=coalesce(@subject, null)"
+              "value": "=coalesce(@newSubject, null)"
             }
           ]
         },
@@ -985,7 +995,7 @@
           "$designer": {
             "id": "EKSQWL"
           },
-          "eventName": "SetSubject"
+          "eventName": "SetTitle"
         }
       ]
     },
@@ -995,14 +1005,14 @@
         "id": "H1FdHn",
         "name": "OnIntent (SetAttendeesAdd)"
       },
-      "intent": "AddAttendee",
+      "intent": "SetAttendeesAdd",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "AkjCpl"
           },
-          "name": "CreateEventDialog.OnIntent_AddAttendee"
+          "name": "CreateEventDialog.OnIntent_SetAttendeesAdd"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1042,7 +1052,7 @@
         "id": "wUpPeb",
         "name": "OnIntent (SetAttendeesRemove)"
       },
-      "intent": "SetAttendeesAdd",
+      "intent": "SetAttendeesRemove",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
@@ -1167,6 +1177,13 @@
       },
       "intent": "SetDuration",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "envbah"
+          },
+          "name": "CreateEventDialog.OnIntent_SetDuration"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
