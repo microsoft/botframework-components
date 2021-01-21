@@ -11,7 +11,7 @@
 [SetLocation](setLocation.en-us.lu)
 [SetOnlineMeetingAdd](setOnlineMeetingAdd.en-us.lu)
 [SetOnlineMeetingRemove](setOnlineMeetingRemove.en-us.lu)
-[SetSubject](setSubject.en-us.lu)
+[SetTitle](setTitle.en-us.lu)
 
 # Skip
 - skip adding contacts
@@ -21,3 +21,14 @@
 - skip setting the location
 - none
 - no location
+
+# None
+- yes
+- sure
+- no
+- no thanks
+- Alex
+- John
+- thursday
+- tuesday
+- next week

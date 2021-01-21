@@ -23,63 +23,116 @@
 - i want to skip
 
 
+@ intent Skip usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
+# None
+- yes
+- sure
+- no
+- no thanks
+- Alex
+- John
+- thursday
+- tuesday
+- next week
+
+
+@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # Cancel
 - cancel
+- cancel app
+- cancel cancel
 - cancel it
+- cancel never mind
 - cancel that
 - canceled
 - cancelled
+- do nothing
+- don't do that
 - don't do that anymore
 - forget about it
 - go away
 - just cancel
 - just cancel it
+- nerver mind
 - never mind
+- never mind cancel
+- never mind cancel that
 - no cancel
+- no cancel cancel
+- no cancel it
+- no cancel that
 - no never mind
-- don't do that
+- no no cancel
+- no no cancel it
+- nothing never mind
+- nothing please
+- oh cancel
+- oh don't do that
+- please do nothing
 - quit
 - sorry, don't do it
 
 
+@ intent Cancel usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetAttendeesAdd
+- add an attendee
+- add people
+- add more recipients
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
 - add {@newContact=jose} to my next meeting
 - add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
 - can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
 - forward my meeting on {@date=thursday} to {@newContact=youngjae}
+- forward to more people
 - forward the next event to {@newContact=scott}
 - forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
 - forward this to {@newContact=john}
 - forward to {@newContact=chris} and {@newContact=me@myemail.edu}
 - forward to {@newContact=scott}
+- invite more people
+- invite someone else
 - invite {@newContact=elaine} and {@newContact=morgan}
 - invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
 - invite {@newContact=jose}
 - invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
 - invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
-- invite {@newContact=test@email.com} to the event with you@test.net, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- send this to more people
 - send my {@subject=breakfast} event to {@newContact=gary}
 - send my event titled {@subject=1:1} to {@newContact=chris}
 - send the meeting to {@newContact=morgan}
 - send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
 
 
+@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetAttendeesRemove
 - don't add {@currentContact=em} to my event with {@contact=jose} and {@contact=cynthia} called {@subject=team check-in}
 - don't add {@currentContact=gary} to this
 - don't add {@currentContact=margaret} to the event on {@date=saturday} with {@contact=rebecca}
 - don't add {@currentContact=me@myemail.edu}
-- don't invite {@currentContact=chris} to my event with {@contact=jose} and you@test.net
+- don't invite {@currentContact=chris} to my event with {@contact=jose} and {@contact=you@test.net}
 - don't invite {@currentContact=john} to the next event
 - don't invite {@currentContact=john}, {@currentContact=john}, and {@currentContact=em}
 - don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
+- edit attendees
+- edit recipients list
+- remove an attendee
+- remove people from this
+- remove recipients
+- remove someone from this
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
 - remove {@currentContact=rebecca} and {@currentContact=susan}
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
 - remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- uninvite an attendee
+- uninvite a recipient
+- uninvite people from this meeting
 - uninvite {@currentContact=cynthia}
 - uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
 - uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
@@ -87,6 +140,8 @@
 - uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
 
+
+@ intent SetAttendeesRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetDateTime
 - change my event from {@currentDate=tomorrow} to {@newDate=saturday}
@@ -107,13 +162,15 @@
 - move my meeting on {@date=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
-- reschedule my event with you@test.net, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
+- reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
 - reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
 - set the meeting time to {@newDate=3:30}
 - update my meeting to start at {@newDate=noon on saturday}
 - update my meeting with {@contact=elaine} to {@newDate=monday at 2}
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
 
+
+@ intent SetDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetDescription
 - add a body
@@ -136,8 +193,10 @@
 - update the meeting content with {@contact=ryan} {@date=next week}
 
 
+@ intent SetDescription usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetDuration
-- change the event with you@test.net to {@duration=2 hours}
+- change the event with {@contact=you@test.net} to {@duration=2 hours}
 - change to {@duration=3 hrs}
 - extend the event to {@duration=1 hour and 30 minutes}
 - extend the {@subject=standup} to {@duration=2 hours}
@@ -159,6 +218,8 @@
 - update to {@duration=1 hour and 30 minutes}
 
 
+@ intent SetDuration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetLocation
 - change the location of the next event to {@location=123 address st}
 - change the room for the {@subject=standup}
@@ -173,7 +234,7 @@
 - set the location of my next meeting to {@location=123 address st}
 - set the location of my {@date=wednesday} meeting to {@location=123 address st}
 - update the location
-- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, test@email.com, and {@contact=scott} to {@location=123 address st}
+- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, {@contact=test@email.com}, and {@contact=scott} to {@location=123 address st}
 - update the location of the {@subject=hair appointment} event to {@location=bellevue, wa}
 - update the location of the meeting to {@location=bellevue, wa}
 - update the location of the meeting with {@contact=gary} and {@contact=margaret} to {@location=room 345}
@@ -181,6 +242,8 @@
 - update the location of the meeting with {@contact=susan} and {@contact=john}
 - update the location to {@location=kitchen}
 
+
+@ intent SetLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetOnlineMeetingAdd
 - add a phone number to the next meeting
@@ -190,7 +253,7 @@
 - add a teams link to my event on {@date=tuesday} with {@contact=tyler}
 - add a teams link to my next meeting
 - add a teams link to the {@subject=content review} event {@date=tomorrow} with {@contact=elaine}
-- add a teams link to the meeting with test@email.com, {@contact=chris}, and you@test.net
+- add a teams link to the meeting with {@contact=test@email.com}, {@contact=chris}, and {@contact=you@test.net}
 - add a teams link to the next event
 - add {@contact=elaine} to my meeting with {@contact=tom}
 - add {@contact=elaine} to the meeting with {@contact=tyler}
@@ -198,7 +261,7 @@
 - include a link
 - include a link to my meeting {@date=this weekend} with {@contact=quirine}, {@contact=morgan}, and {@contact=susan}
 - include a link to the meeting
-- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and test@email.com
+- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and {@contact=test@email.com}
 - include teams to the event with {@contact=elaine}
 - include teams to the {@subject=standup} meeting on {@date=tuesday}
 - make it a teams meeting
@@ -207,17 +270,19 @@
 - make this an online meeting
 
 
+@ intent SetOnlineMeetingAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetOnlineMeetingRemove
 - don't add a call to the meeting later
 - don't add teams to my {@subject=1:1} later
 - don't add teams to my {@subject=happy hour} event
-- don't add teams to my meeting with test@email.com on {@date=monday}
+- don't add teams to my meeting with {@contact=test@email.com} on {@date=monday}
 - don't include a link with the meeting
 - don't include a teams link for the meeting on {@date=april 10th}
 - don't make the meeting virtual
 - remove teams from my {@subject=breakfast} event with {@contact=rebecca}, {@contact=morgan}, and {@contact=morgan} on {@date=thursday}
 - remove teams from my meeting on {@date=friday} with {@contact=john}
-- remove teams from my meeting with test@email.com and {@contact=margaret}
+- remove teams from my meeting with {@contact=test@email.com} and {@contact=margaret}
 - remove teams from my next meeting
 - remove teams from my {@subject=standup} event {@date=today}
 - remove the link from
@@ -230,6 +295,8 @@
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
 
 
+@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 # SetTitle
 - change the subject
 - change the subject of the meeting with {@contact=youngjae} and {@contact=elaine} to {@newSubject=standup}
@@ -237,8 +304,8 @@
 - change the title from {@currentSubject=standup} to {@newSubject=sprint planning}
 - change the title of my next meeting to {@newSubject=editorial meeting}
 - change the title of the {@currentSubject=daily standup} meeting to {@newSubject=daily status update}
-- change the title of the event {@date=this week} with you@test.net, {@contact=scott}, and {@contact=john}
-- change the title of the meeting with test@email.com and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
+- change the title of the event {@date=this week} with {@contact=you@test.net}, {@contact=scott}, and {@contact=john}
+- change the title of the meeting with {@contact=test@email.com} and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
 - make the title {@newSubject=daily commute}
 - rename my meeting {@date=next month} named {@currentSubject=hair appointment}
 - rename the event from {@currentSubject=editorial meeting} to {@newSubject=project sync}
@@ -253,17 +320,19 @@
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
 
 
+@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeature personName
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml date hasRoles newDate,currentDate
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml duration
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml location usesFeature geographyV2
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml subject hasRoles currentSubject,newSubject
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 
 > # PREBUILT Entity definitions
@@ -278,6 +347,30 @@
 
 
 > # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) enabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
 
 
 > # List entities

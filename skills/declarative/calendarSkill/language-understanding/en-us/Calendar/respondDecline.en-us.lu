@@ -1,3 +1,5 @@
+
+
 # RespondDecline
 - can't make the meeting {@date=wednesday at 2pm}
 - decline
@@ -20,23 +22,54 @@
 - tell {@contact=you@test.net} i can't make my meeting with {@contact=quirine}, {@contact=isaac}, and {@contact=margaret} called {@subject=1:1}
 - won't make the meeting {@date=next monday afternoon}
 
+@ intent RespondDecline usesFeatures Create,Update,Event,Attending,Location,Add,Remove
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
-@ ml date hasRoles newDate,currentDate
-@ ml duration
-@ ml location usesFeature geographyV2
-@ ml subject hasRoles currentSubject,newSubject
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
 
 > # PREBUILT Entity definitions
 
 @ prebuilt email
+
 @ prebuilt geographyV2
+
 @ prebuilt ordinalV2
+
 @ prebuilt personName
 
+
 > # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
 
 > # List entities
 
