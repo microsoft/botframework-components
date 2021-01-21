@@ -1,0 +1,115 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock",
+    "getContact.mock",
+    "getPeople.mock",
+    "findMeetingTimes.mock",
+    "createEvent.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "calendarskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "new meeting tomorrow at 3pm"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What is the title of the meeting?",
+        "What is the title?",
+        "What is the meeting about?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test title"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Who should I invite?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Sure, I'll continue with test name (test@test.com).",
+        "Got it. I'll move forward with test name (test@test.com).",
+        "OK. I'll invite test name (test@test.com)."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Would you like to invite anyone else? (1) Yes or (2) No"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "no"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Sure, I’ve added a Teams link for you as well.",
+        "OK, I’ll also include a Teams link.",
+        "Got it. I've also included a Teams meeting."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What location would you like to include?",
+        "What should I set the location to?",
+        "What is the location?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test location"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Does this look right?"
+      ],
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "All right, your event has been created.",
+        "I've added the meeting to your calendar.",
+        "OK, the event has been created for you."
+      ]
+    }
+  ]
+}
