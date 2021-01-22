@@ -1,1 +1,1 @@
-{"query":"test title","prediction":{"topIntent":"SetTitle","intents":{"SetTitle":{"score":0.7376886}},"entities":{}}}
+{"query":"test title","prediction":{"topIntent":"SetTitle","intents":{"SetTitle":{"score":0.748878062}},"entities":{}}}

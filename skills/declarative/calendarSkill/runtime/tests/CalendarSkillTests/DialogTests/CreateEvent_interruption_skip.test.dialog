@@ -50,49 +50,19 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "test"
+      "text": "no one"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
-        "OK. I'll invite test name (test@test.com)."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Would you like to invite anyone else? (1) Yes or (2) No"
+        "What date and time did you have in mind?",
+        "When should the event start?",
+        "And what date?"
       ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "no"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "I've found multiple suggestions when you can meet with test name:",
-        "I've found the following time when you can meet with test name:",
-        "There are multiple suggestions when you can meet with test name:",
-        "Looks like there are several options when you can meet with test name:"
-      ],
-      "assertions": [
-        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "1"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Sure, I’ve added a Teams link for you as well.",
-        "OK, I’ll also include a Teams link.",
-        "Got it. I've also included a Teams meeting."
-      ]
+      "text": "tomorrow at 3pm"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
@@ -104,32 +74,7 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "test location"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Does this look right?"
-      ],
-      "assertions": [
-        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "change the title"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "What is the title of the meeting?",
-        "What is the title?",
-        "What is the meeting about?"
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "team meeting"
+      "text": "none"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",

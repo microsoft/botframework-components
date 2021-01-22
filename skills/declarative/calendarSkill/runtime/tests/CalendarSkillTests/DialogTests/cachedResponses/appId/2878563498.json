@@ -1,1 +1,1 @@
-{"query":"test location","prediction":{"topIntent":"Skip","intents":{"Skip":{"score":0.632119656}},"entities":{}}}
+{"query":"test location","prediction":{"topIntent":"Skip","intents":{"Skip":{"score":0.6334038}},"entities":{}}}

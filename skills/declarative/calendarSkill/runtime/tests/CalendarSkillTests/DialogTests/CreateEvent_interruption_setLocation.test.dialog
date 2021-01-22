@@ -117,19 +117,19 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "change the title"
+      "text": "change the location"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What is the title of the meeting?",
-        "What is the title?",
-        "What is the meeting about?"
+        "What location would you like to include?",
+        "What should I set the location to?",
+        "What is the location?"
       ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "team meeting"
+      "text": "Seattle"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
