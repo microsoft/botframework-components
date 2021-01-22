@@ -1117,6 +1117,39 @@
             {
               "property": "$turnCount",
               "value": "=$turnCount + 1"
+            },
+            {
+              "property": "$query",
+              "value": "=turn.activity.text"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "r4O4lE"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=$query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+          },
+          "resultProperty": "$dateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Mng9hy"
+          },
+          "assignments": [
+            {
+              "property": "$slots.start.dateTime",
+              "value": "=coalesce($dateTime.start, $dateTime.value, null)"
+            },
+            {
+              "property": "$slots.end.dateTime",
+              "value": "=coalesce($dateTime.end, null)"
             }
           ]
         },
