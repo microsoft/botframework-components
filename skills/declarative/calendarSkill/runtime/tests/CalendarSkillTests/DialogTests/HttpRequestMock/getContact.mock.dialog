@@ -18,7 +18,7 @@
             "initials": null,
             "middleName": null,
             "nickName": null,
-            "surname": "test",
+            "surname": "name",
             "title": null,
             "yomiGivenName": null,
             "yomiSurname": null,
@@ -41,7 +41,7 @@
             "children": [],
             "emailAddresses": [
                 {
-                    "name": "test@test.com",
+                    "name": "test name",
                     "address": "test@test.com"
                 }
             ],

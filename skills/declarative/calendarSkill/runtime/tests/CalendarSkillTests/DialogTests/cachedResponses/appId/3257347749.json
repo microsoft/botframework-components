@@ -1,0 +1,1 @@
+{"query":"next wednesday at 1pm","prediction":{"topIntent":"None","intents":{"None":{"score":0.07026384}},"entities":{"ordinalV2":[{"offset":1,"relativeTo":"current"}],"date":["wednesday at 1pm"]}}}

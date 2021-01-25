@@ -1,5 +1,8 @@
 [Common](common.en-us.lg)
 
+# ContactListRemovePrompt()
+- Who should I remove?
+
 # ContactListPrompt()
 - I've found multiple ${dialog.additionalOptions.contactName}'s:
 - I've found more than one ${dialog.additionalOptions.contactName}'s: 

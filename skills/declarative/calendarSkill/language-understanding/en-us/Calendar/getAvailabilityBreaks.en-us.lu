@@ -1,3 +1,5 @@
+
+
 # GetAvailabilityBreaks
 - can i take a break {@date=wednesday}
 - do i have a break before my next meeting
@@ -20,22 +22,51 @@
 - when is my next break
 - when is my next gap in meetings
 
+
+@ intent GetAvailabilityBreaks usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
 > # Entity definitions
 
 @ ml contact hasRoles currentContact,newContact usesFeatures email,personName
-@ ml date hasRoles newDate,currentDate
+@ ml date hasRoles currentDate,newDate
 @ ml duration
-@ ml location usesFeature geographyV2
-@ ml subject hasRoles currentSubject,newSubject
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
 
 > # PREBUILT Entity definitions
 
 @ prebuilt email
+
 @ prebuilt geographyV2
+
 @ prebuilt ordinalV2
+
 @ prebuilt personName
 
+
 > # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
 
 > # List entities
 
