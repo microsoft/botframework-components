@@ -169,28 +169,24 @@
           },
           "assignments": [
             {
-              "property": "dialog.slots.personName",
-              "value": "=coalesce(if(@personName != null, json('[\"' + @personName + '\"]'), null), $slots.personName)"
+              "property": "$query",
+              "value": "=turn.activity.text"
             },
             {
-              "property": "dialog.slots.title",
-              "value": "=coalesce(@Title, $slots.title)"
+              "property": "$slots.subject",
+              "value": "=@subject"
             },
             {
-              "property": "dialog.slots.dateTime",
-              "value": "=coalesce(@datetime, $slots.DateTime)"
+              "property": "$slots.location",
+              "value": "=@location"
             },
             {
-              "property": "dialog.slots.location",
-              "value": "=coalesce(@Location, $slots.Location)"
+              "property": "$contactArray",
+              "value": "=@@contact"
             },
             {
-              "property": "dialog.slots.duration",
-              "value": "=coalesce(@Duration, $slots.Duration)"
-            },
-            {
-              "property": "dialog.slots.email",
-              "value": "=coalesce(if(@email != null, json('[\"' +@email + '\"]'), null), $slots.email)"
+              "property": "$emailArray",
+              "value": "=@@email"
             }
           ]
         },
@@ -205,12 +201,43 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "qXPZii"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=$query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+          },
+          "resultProperty": "$dateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "jWevfz"
+          },
+          "assignments": [
+            {
+              "property": "$slots.start.dateTime",
+              "value": "=coalesce($dateTime.start, $dateTime.value, null)"
+            },
+            {
+              "property": "$slots.end.dateTime",
+              "value": "=coalesce($dateTime.end, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "oD8szu"
           },
           "activityProcessed": true,
           "dialog": "CreateEventDialog",
           "options": {
-            "slots": "=dialog.slots"
+            "slots": "=$slots",
+            "contactArray": "=$contactArray",
+            "emailArray": "=$emailArray"
           }
         },
         {

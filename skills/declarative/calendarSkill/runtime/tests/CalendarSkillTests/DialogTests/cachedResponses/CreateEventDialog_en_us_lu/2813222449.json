@@ -1,1 +1,0 @@
-{"query":"megan","prediction":{"topIntent":"SkipSlot","intents":{"SkipSlot":{"score":0.384882838}},"entities":{"personName":["megan"]}}}

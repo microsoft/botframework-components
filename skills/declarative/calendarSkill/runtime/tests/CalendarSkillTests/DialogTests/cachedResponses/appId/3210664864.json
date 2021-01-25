@@ -1,0 +1,1 @@
+{"query":"new meeting with Lydia named Team Meeting","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.990246952}},"entities":{"contact":["Lydia"],"personName":["Lydia"],"subject":["Team Meeting"]}}}
