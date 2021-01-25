@@ -266,6 +266,7 @@ FakesAssemblies/
 /tools/**/node_modules/
 /skills/**/node_modules/
 /samples/**/node_modules/
+experimental/templates/**/node_modules/
 
 # Visual Studio 6 build log
 *.plg
