@@ -14,19 +14,9 @@ module.exports = class extends Generator {
       require.resolve('generator-adaptive-bot/generators/app'),
       {
         arguments: this.args,
-        packageReferences: [{
-          name: 'Preview.Bot.Component.GeneralIntent',
-          version: '0.0.1-preview2'
-        }, {
-          name: 'Preview.Bot.Component.GreetingDialog',
-          version: '0.0.1-preview3'
-        }, {
-          name: 'Preview.Bot.Component.OnboardingDialog',
-          version: '0.0.1-preview2'
-        }, {
-          name: 'Preview.Bot.Component.UnknownIntentDialog',
-          version: '0.0.1-preview4'
-        }]
+        packageReferences: [
+          // PLACE COMPONENT PACKAGES THAT YOUR BOT TEMPLATE USES HERE
+        ]
       }
     );
   }

@@ -47,12 +47,10 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    console.log(this.templatePath()),
-    console.log(this.destinationPath()),
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(),
-      { botName: this.props.botName }
+      { name: this.props.name }
     );
   }
 };

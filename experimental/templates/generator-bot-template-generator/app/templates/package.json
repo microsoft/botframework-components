@@ -1,7 +1,7 @@
 {
-  "name": "generator-conversational-core",
-  "version": "1.0.5",
-  "description": "Preview conversational core package for TESTING ONLY",
+  "name": "<%= name %>",
+  "version": "0.0.1",
+  "description": "",
   "main": "./generators/app/templates/ConversationalCore/index.js",
   "dependencies": {
     "generator-adaptive-bot": "^1.0.0-preview.5",
@@ -10,11 +10,5 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "conversationalcore",
-    "yeoman-generator"
-  ],
-  "author": "Bot Framework",
-  "license": "ISC"
+  }
 }
