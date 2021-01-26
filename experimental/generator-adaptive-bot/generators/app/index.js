@@ -116,7 +116,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath(path.join(platform, integration)),
-            this.destinationPath(path.join(botName)),
+            this.destinationPath(botName),
             {
                 botName,
                 packageReferences,
