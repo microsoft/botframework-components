@@ -25,6 +25,8 @@ namespace <%= botName %>
                         applicationRoot,
                         settingsDirectory,
                         env.IsDevelopment());
+
+                    builder.AddCommandLine(args);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

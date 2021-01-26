@@ -116,7 +116,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             this.templatePath(path.join(platform, integration)),
-            this.destinationPath(botName),
+            this.destinationPath(path.join(botName)),
             {
                 botName,
                 packageReferences,
@@ -172,7 +172,7 @@ module.exports = class extends Generator {
         for (const assetFileName of assetFileNames) {
             this.fs.copyTpl(
                 this.templatePath(path.join('assets', assetFileName)),
-                this.destinationPath(botName),
+                this.destinationPath(path.join(botName, assetFileName)),
                 {
                     botName
                 }
