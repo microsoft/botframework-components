@@ -40,6 +40,8 @@ module.exports = class extends Generator {
         });
 
         this._verifyOptions();
+        this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(opts);
+        this.includeApplicationSettings = this._validateIncludeApplicationSettings(opts);
         this.packageReferences = this._validatePackageReferences(opts.packageReferences);
     }
 
@@ -52,6 +54,28 @@ module.exports = class extends Generator {
         if (this.options.platform !== PLATFORM_DOTNET) {
             this.env.error(`--platform must be: ${PLATFORM_DOTNET}`);
         }
+    }
+
+    _validateApplicationSettingsDirectory(opts) {
+        let result = null;
+        if ('applicationSettingsDirectory' in opts) {
+            if (opts.applicationSettingsDirectory &&
+                typeof(opts.applicationSettingsDirectory) === 'string') {
+                result = opts.applicationSettingsDirectory;
+            }
+        }
+
+        return result;
+    }
+
+    _validateIncludeApplicationSettings(opts) {
+        let result = true;
+        if ('includeApplicationSettings' in opts &&
+            typeof(opts.includeApplicationSettings) === 'boolean') {
+            result = opts.includeApplicationSettings;
+        }
+
+        return result;
     }
 
     _validatePackageReferences(packageReferences) {
@@ -86,13 +110,17 @@ module.exports = class extends Generator {
         const integration = this.options.integration;
         const platform = this.options.platform;
         const packageReferences = this._formatPackageReferences();
+        const settingsDirectory = this.applicationSettingsDirectory === null
+            ? 'null'
+            : `"${this.applicationSettingsDirectory}"`;
 
         this.fs.copyTpl(
             this.templatePath(path.join(platform, integration)),
             this.destinationPath(botName),
             {
                 botName,
-                packageReferences
+                packageReferences,
+                settingsDirectory
             }
         );
 
@@ -136,12 +164,19 @@ module.exports = class extends Generator {
     _copyAssets() {
         const botName = this.options.botName;
 
-        this.fs.copyTpl(
-            this.templatePath(path.join('assets')),
-            this.destinationPath(botName),
-            {
-                botName
-            }
-        );
+        const assetFileNames = ['NuGet.config', 'runtime.json'];
+        if (this.includeApplicationSettings) {
+            assetFileNames.push('appsettings.json');
+        }
+
+        for (const assetFileName of assetFileNames) {
+            this.fs.copyTpl(
+                this.templatePath(path.join('assets', assetFileName)),
+                this.destinationPath(path.join(botName, assetFileName)),
+                {
+                    botName
+                }
+            );
+        }
     }
 };
