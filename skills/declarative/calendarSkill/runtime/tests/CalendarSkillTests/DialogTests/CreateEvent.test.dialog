@@ -48,7 +48,8 @@
       "text": [
         "Who will join?",
         "Who do you want to invite?",
-        "What attendees do you want to add?"
+        "What attendees do you want to add?",
+        "Who should I invite?"
       ]
     },
     {
@@ -70,7 +71,8 @@
         "Want to add another attendee? (1) Yes or (2) No",
         "Should I add anyone else? (1) Yes or (2) No",
         "Any other attendees? (1) Yes or (2) No",
-        "Want to invite anyone else? (1) Yes or (2) No"
+        "Want to invite anyone else? (1) Yes or (2) No",
+        "Would you like to invite anyone else? (1) Yes or (2) No"
       ]
     },
     {
@@ -130,7 +132,8 @@
       "text": [
         "Got it, I will create a meeting on Thursday, December  31st at 1:00 PM, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right?",
         "OK, I want to confirm before saving this meeting. It's on Thursday, December  31st at 1:00 PM, called test title. test name will be invited, and the location is test location with a Teams link included. Do you want to send it?",
-        "Great. It's almost ready to send. To confirm, this meeting is called test title on Thursday, December  31st at 1:00 PM for 1h. It'll take place at test location with a Teams link included, and you've invited test name. Is all of that correct?"
+        "Great. It's almost ready to send. To confirm, this meeting is called test title on Thursday, December  31st at 1:00 PM for 1h. It'll take place at test location with a Teams link included, and you've invited test name. Is all of that correct?",
+        "Does this look right?"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
