@@ -1,1 +1,0 @@
-{"query":"cancel my meeting with lidia","prediction":{"topIntent":"CancelEvent","intents":{"CancelEvent":{"score":0.871427953}},"entities":{"personName":["lidia"]}}}

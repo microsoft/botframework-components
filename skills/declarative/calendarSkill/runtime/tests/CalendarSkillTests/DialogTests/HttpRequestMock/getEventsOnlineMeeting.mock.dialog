@@ -90,7 +90,7 @@
             },
             "bodyPreview": "",
             "end": {
-              "dateTime": "2020-10-15T16:30:00.0000000",
+              "dateTime": "2099-12-31T16:30:00.0000000",
               "timeZone": "UTC",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },
@@ -129,7 +129,7 @@
             "seriesMasterId": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQBGAAAAAADoe4Tuth0XSai2z9sEhsTuBwBN8odIGmZQQalnLh3DCfMfAAAAAAENAABN8odIGmZQQalnLh3DCfMfAAABsRynAAA=",
             "showAs": "busy",
             "start": {
-              "dateTime": "2020-10-15T15:00:00.0000000",
+              "dateTime": "2099-12-31T15:00:00.0000000",
               "timeZone": "UTC",
               "@odata.type": "microsoft.graph.dateTimeTimeZone"
             },
@@ -138,8 +138,8 @@
             "webLink": "https://outlook.office365.com/owa/?itemid=AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQFRAAgI2HCdQnQAAEYAAAAA6HuE7rYdF0mots%2FbBIbE7gcATfKHSBpmUEGpZy4dwwnzHwAAAAABDQAATfKHSBpmUEGpZy4dwwnzHwAAAbEcpwAAEA%3D%3D&exvsurl=1&path=/calendar/item",
             "categories": [],
             "changeKey": "TfKHSBpmUEGpZy4dwwnzHwAAPzyPlQ==",
-            "createdDateTime": "2020-07-12T09:01:02.5649204+00:00",
-            "lastModifiedDateTime": "2020-10-14T23:44:24.3036609+00:00",
+            "createdDateTime": "2099-07-12T09:01:02.5649204+00:00",
+            "lastModifiedDateTime": "2099-10-14T23:44:24.3036609+00:00",
             "id": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQFRAAgI2HCdQnQAAEYAAAAA6HuE7rYdF0mots-bBIbE7gcATfKHSBpmUEGpZy4dwwnzHwAAAAABDQAATfKHSBpmUEGpZy4dwwnzHwAAAbEcpwAAEA==",
             "@odata.type": "microsoft.graph.event",
             "@odata.etag": "W/\"TfKHSBpmUEGpZy4dwwnzHwAAPzyPlQ==\"",

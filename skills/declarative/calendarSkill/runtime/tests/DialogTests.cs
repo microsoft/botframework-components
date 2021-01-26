@@ -46,36 +46,42 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventTitleByAttendees()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventTitleWithoutCondition()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventTitleReprompt()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventTitleNoResult()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventLocationByAttendees()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
+        [Ignore]
         public async Task GetEventLocationOnlineMeeting()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
