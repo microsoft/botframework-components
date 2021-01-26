@@ -1,1 +1,1 @@
-{"query":"yes","prediction":{"topIntent":"ConfirmYes","intents":{"ConfirmYes":{"score":0.9032283}},"entities":{}}}
+{"query":"yes","prediction":{"topIntent":"None","intents":{"None":{"score":0.930312455}},"entities":{}}}

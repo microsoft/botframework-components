@@ -11,30 +11,11 @@
     "rootDialog": false,
     "triggers": {
       "": [
-        "ResolveDateTimeDialog.en-us",
-        "GetContactDialog.en-us",
+        "LookupContactDialog.en-us",
         "ListDialog.en-us",
-        "ResolveDateTimeDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ],
-      "SkipSlot": [],
-      "ChooseOwnDateTime": [],
-      "ChangeSlots": [
-        "UpdateSlots.en-us"
-      ],
-      "Cancel": [],
-      "ConfirmYes": []
-    }
-  },
-  "GetContactDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "": [
-        "ListDialog.en-us"
-      ],
-      "NoAttendees": [],
-      "TryAgain": [],
-      "Cancel": []
+      "Skip": []
     }
   },
   "ListDialog.en-us": {
@@ -42,6 +23,15 @@
     "triggers": {
       "Next": [],
       "Previous": [],
+      "Skip": []
+    }
+  },
+  "LookupContactDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ListDialog.en-us"
+      ],
       "Skip": []
     }
   },
@@ -76,8 +66,7 @@
     "triggers": {
       "": [
         "ResolveUpdateEntity.en-us",
-        "ResolveDateTimeDialog.en-us",
-        "GetContactDialog.en-us"
+        "ResolveDateTimeDialog.en-us"
       ],
       "Cancel": [],
       "CancelEvent": []
