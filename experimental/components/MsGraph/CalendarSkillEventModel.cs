@@ -34,7 +34,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Models
             this.Subject = ev.Subject;
             this.Start = ev.Start;
             this.End = ev.End;
-            this.Attendees = ev.Attendees.Where(a => a.EmailAddress.Address.ToLower() != userEmail.ToLower());
+            this.Attendees = ev.Attendees.Where(a => a.EmailAddress.Address.ToLower() != userEmail?.ToLower());
             this.IsOnlineMeeting = ev.IsOnlineMeeting;
             this.OnlineMeeting = ev.OnlineMeeting;
             this.Description = ev.BodyPreview;
