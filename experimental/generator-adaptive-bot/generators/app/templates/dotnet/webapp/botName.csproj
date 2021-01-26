@@ -5,12 +5,12 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="**/*.dialog;**/*.lg;**/*.lu;**/*.qna" Exclude="$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**">
+    <Content Include="**/*.blu;**/*.dialog;**/*.lg;**/*.lu;**/*.qna" Exclude="$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Bot.Builder.Runtime" Version="4.12.0-daily.preview.20201218.196720.6ea9b09" /><%- packageReferences %>
+    <PackageReference Include="Microsoft.Bot.Builder.Runtime" Version="4.12.0-daily.preview.20210126.206273.e467c25" /><%- packageReferences %>
   </ItemGroup>
 </Project>

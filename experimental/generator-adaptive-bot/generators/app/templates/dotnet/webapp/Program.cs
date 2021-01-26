@@ -15,17 +15,22 @@ namespace <%= botName %>
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hostingContext, builder) =>
-            {
-                IHostEnvironment env = hostingContext.HostingEnvironment;
-                var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+                .ConfigureAppConfiguration((hostingContext, builder) =>
+                {
+                    IHostEnvironment env = hostingContext.HostingEnvironment;
+                    string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+                    string settingsDirectory = <%- settingsDirectory %>;
 
-                builder.AddBotRuntimeConfiguration(applicationRoot, env.IsDevelopment());
-                builder.AddCommandLine(args);
-            })
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+                    builder.AddBotRuntimeConfiguration(
+                        applicationRoot,
+                        settingsDirectory,
+                        env.IsDevelopment());
+
+                    builder.AddCommandLine(args);
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
