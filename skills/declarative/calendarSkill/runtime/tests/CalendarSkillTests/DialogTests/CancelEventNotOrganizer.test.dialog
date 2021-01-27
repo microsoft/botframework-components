@@ -30,12 +30,12 @@
       "text": "cancel my meeting with lidia"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I see you are not the owner of the meeting, would you like to decline the meeting? (1) Yes or (2) No",
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [ "Someone else created this meeting. Would you like to decline it instead? (1) Yes or (2) No" , "I see you are not the owner of the meeting. Would you like to decline the meeting instead? (1) Yes or (2) No"],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ]
@@ -46,7 +46,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Alright, I’ve declined the meeting named Test Meeting.",
+      "text": "All right, I’ve declined the meeting named Test Meeting.",
       "description": "Response to input 1"
     }
   ]
