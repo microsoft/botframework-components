@@ -1,17 +1,13 @@
 {
   "calendarskill.en-us": {
     "rootDialog": true,
-    "triggers": {
-      "": [
-        "GetScheduleDialog.en-us"
-      ]
-    }
+    "triggers": {}
   },
   "CreateEventDialog.en-us": {
     "rootDialog": false,
     "triggers": {
       "": [
-        "LookupContactDialog.en-us",
+        "GetContactsDialog.en-us",
         "ListDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ],
@@ -26,23 +22,13 @@
       "Skip": []
     }
   },
-  "LookupContactDialog.en-us": {
+  "GetContactsDialog.en-us": {
     "rootDialog": false,
     "triggers": {
       "": [
         "ListDialog.en-us"
       ],
       "Skip": []
-    }
-  },
-  "SearchEventsDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "": [
-        "ResolveDateTimeDialog.en-us",
-        "ListDialog.en-us"
-      ],
-      "No": []
     }
   },
   "UpdateEventDialog.en-us": {
