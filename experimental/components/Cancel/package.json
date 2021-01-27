@@ -2,7 +2,7 @@
   "name": "preview-bot-component-canceldialog",
   "version": "0.0.1-preview1",
   "keywords": [ "bf-component" ],
-  "description": "Dialog to provide cancel utterance handling",
+  "description": "Dialog to provide \"cancel\" utterance handling",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
