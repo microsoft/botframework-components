@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_LookupContactDialog",
-  "recognizers": {
-    "en-us": "LookupContactDialog.en-us.lu",
-    "": "LookupContactDialog.en-us.lu"
-  }
-}
