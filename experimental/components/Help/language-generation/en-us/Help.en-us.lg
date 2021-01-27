@@ -1,8 +1,3 @@
-[import](common.lg)
-
-# SendActivity_Welcome
-- ${WelcomeUser()}
-
 # SendActivity_AMXYVW()
 - I'm here to help with simple asks. I'm just a basic bot for now. 
 - I'm a simple bot, I can help you with minimal requests. 
