@@ -90,7 +90,7 @@
 }
 ```
 
-# ScheduleNoResults(date)
+# ScheduleNoResultsCard(date)
 - ${CardTemplate(ScheduleHeader(date, createArray()), ScheduleNoResultsBody(), ScheduleActions(date))}
 
 # ScheduleNoResultsBody

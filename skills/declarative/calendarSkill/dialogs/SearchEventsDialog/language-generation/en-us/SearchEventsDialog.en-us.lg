@@ -1,30 +1,11 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 
-# AskforMeetingParameters(turnCount, firstTime)
-- IF: ${ turnCount == 0 }
-    - I couldn't find the event without any info. Can you tell me the start time, title, or who is attending?
-- ELSEIF: ${firstTime == true}
-    - I couldn't find the event that you're looking for. Let's try your search again. Can you tell me the specific title, start date, or attendees?
-    - I don't see a meeting with that info. Can you tell me more about the meeting you're looking for, like the start time, title of the event, or other attendees?
-- ELSE:
-    - I still couldn't find the event. Can you try again?
-    - I still don't see the event. Let's try again by calling out different specifics.
-    
-# TextInput_Prompt_a8RIpz()
-- ${AskforMeetingParameters(dialog.turnCount, dialog.firstTimeAskForParameters)}
-
-# TextInput_InvalidPrompt_a8RIpz()
-- I didn't understand the start time, title, or attendees you provided. Can you try again?
-
-# TextInput_UnrecognizedPrompt_a8RIpz()
-- Sorry, I didn't understand.
-
 # SendActivity_TMEgrc()
 - ${CancelMessage()}
 
-# SendActivity_7qP2XO()
-- I'm searching your calendar, this might take a sec…
-- This might take a sec...
-- Hold on, this is taking a while...
-- Hold on, I'm trying to find events that match...
+# SendActivity_fqm9MS()
+- Sorry, I wasn't able to find a match...
+
+# TextInput_Prompt_Fej6Ub()
+- Which event? Please provide the title, date, and/or attendees.

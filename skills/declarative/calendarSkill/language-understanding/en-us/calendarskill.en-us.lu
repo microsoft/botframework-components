@@ -8,7 +8,7 @@
 [GetAvailabilityBreaks](./Calendar/getAvailabilityBreaks.en-us.lu)
 [GetAvailabilityFirst](./Calendar/getAvailabilityFirst.en-us.lu)
 [GetAvailabilityLast](./Calendar/getAvailabilityLast.en-us.lu)
-[GetEvent](./Calendar/getEvent.en-us.lu)
+[GetEvents](./Calendar/getEvents.en-us.lu)
 [GetEventAttendees](./Calendar/getEventAttendees.en-us.lu)
 [GetEventDateTime](./Calendar/getEventDateTime.en-us.lu)
 [GetEventLocation](./Calendar/getEventLocation.en-us.lu)
