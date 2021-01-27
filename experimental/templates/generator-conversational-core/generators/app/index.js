@@ -28,7 +28,7 @@ module.exports = class extends Generator {
           version: '0.0.1-preview4'
         }],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: 'false'
+        includeApplicationSettings: false
       }
     );
   }
