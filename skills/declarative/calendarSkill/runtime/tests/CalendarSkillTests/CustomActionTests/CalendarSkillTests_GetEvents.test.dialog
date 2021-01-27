@@ -21,7 +21,9 @@
             "endProperty": "='2020-09-11T17:00:00'",
             "timezoneProperty": "='Pacific Standard Time'",
             "dateTimeTypeProperty": "='date'",
-            "ordinalProperty": "=null"
+            "ordinalProperty": "=null",
+            "maxResultsProperty": "=15",
+            "userEmailProperty" :  "=null"
           },
           {
             "$kind": "Microsoft.SendActivity",

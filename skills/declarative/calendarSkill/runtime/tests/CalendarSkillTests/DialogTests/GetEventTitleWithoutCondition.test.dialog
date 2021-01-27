@@ -28,20 +28,16 @@
       "text": "find a meeting"
     },
     {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?"
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [ "What is the title of the meeting?", "What is the title?", "What is the meeting about?" ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "with lidia"
+      "text" : "project team meeting"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found a meeting on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": "I found 1 event for Thursday, December 31st. It’s at 7:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
