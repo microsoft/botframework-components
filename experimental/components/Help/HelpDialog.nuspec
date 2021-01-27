@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>Preview.Bot.Component.GeneralIntent</id>
-        <version>0.0.1-preview4</version>
+        <id>Preview.Bot.Component.HelpDialog</id>
+        <version>0.0.1-preview1</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>first version of general intent package</releaseNotes>
-        <description>Dialogs to provide general intent handling - like help and cancel</description>
-        <tags>bf-component conversationalcore generalintent preview</tags>
+        <releaseNotes>First version of Help Dialog package</releaseNotes>
+        <description>Dialog to provide "help" utterance handling</description>
+        <tags>bf-component conversationalcore helpdialog preview</tags>
         <dependencies />
     </metadata>
 

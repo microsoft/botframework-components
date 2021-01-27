@@ -1,0 +1,12 @@
+{
+  "name": "preview-bot-component-helpdialog",
+  "version": "0.0.1-preview1",
+  "keywords": [ "bf-component" ],
+  "description": "Dialog to provide help handling",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bot Framework",
+  "license": "MIT"
+}
