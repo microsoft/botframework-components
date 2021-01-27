@@ -215,7 +215,7 @@
                 "id": "vp82Mq"
               },
               "activityProcessed": true,
-              "dialog": "LookupContactDialog",
+              "dialog": "GetContactsDialog",
               "resultProperty": "$contacts",
               "options": {
                 "contactArray": "=$contactArray",
