@@ -28,8 +28,17 @@
       "text": "where is my meeting with lidia"
     },
     {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
+    },
+    {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I'm searching your calendar, this might take a sec..."
+      "text": "Here's what I found:",
+      "description": "Response card for possible events"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",

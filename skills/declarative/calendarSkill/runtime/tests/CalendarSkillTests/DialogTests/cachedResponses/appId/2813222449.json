@@ -1,0 +1,1 @@
+{"query":"megan","prediction":{"topIntent":"TextInput_Response_wIEu2k","intents":{"TextInput_Response_wIEu2k":{"score":0.91789937}},"entities":{"personName":["megan"]}}}
