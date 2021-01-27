@@ -15,13 +15,15 @@ namespace NewsSkill.Dialogs
 {
     public class TrendingArticlesDialog : NewsDialogBase
     {
-        private string _newsKey;
+        private NewsClient _client;
 
         public TrendingArticlesDialog(
             IServiceProvider serviceProvider)
             : base(nameof(TrendingArticlesDialog), serviceProvider)
         {
-            _newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            var key = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+
+            _client = new NewsClient(key);
 
             var trendingArticles = new WaterfallStep[]
             {
@@ -38,19 +40,16 @@ namespace NewsSkill.Dialogs
         {
             var userState = await UserAccessor.GetAsync(sc.Context, () => new NewsSkillUserState(), cancellationToken: cancellationToken);
 
-            using (var client = new NewsClient(Settings.BingNewsEndPoint, _newsKey))
+            var articles = await _client.GetTrendingNewsAsync(userState.Market);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, TemplateManager, articles), cancellationToken);
+
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
+            if (state.IsAction)
             {
-                var articles = await client.GetTrendingNewsAsync(userState.Market);
-                await sc.Context.SendActivityAsync(HeroCardResponses.ShowTrendingCards(sc.Context, TemplateManager, articles), cancellationToken);
-
-                var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
-                if (state.IsAction)
-                {
-                    return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
-                }
-
-                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
             }
+
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
     }
 }

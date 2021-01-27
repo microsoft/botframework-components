@@ -1,8 +1,7 @@
 {
   "name": "preview-bot-component-unknownintentdialog",
-  "version": "0.0.1-preview2",
+  "version": "0.0.1-preview1",
   "description": "Dialogs to provide a fallback experience",
-  "keywords": ["bf-component"],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
