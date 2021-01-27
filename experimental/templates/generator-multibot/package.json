@@ -1,0 +1,21 @@
+{
+  "name": "generator-multibot",
+  "version": "1.0.5",
+  "description": "Preview conversational core package for TESTING ONLY",
+  "main": "./generators/app/templates/ConversationalCore/index.js",
+  "dependencies": {
+    "generator-adaptive-bot": "^1.0.0-preview.5",
+    "generator-conversational-core": "^1.0.0",
+    "yeoman-generator": "^2.0.5",
+    "yeoman-test": "^1.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "conversationalcore",
+    "yeoman-generator"
+  ],
+  "author": "Bot Framework",
+  "license": "ISC"
+}
