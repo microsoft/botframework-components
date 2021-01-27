@@ -1,4 +1,6 @@
 {
   "$kind": "Microsoft.CrossTrainedRecognizerSet",
-  "recognizers": []
+  "recognizers": [
+    "GetEventsDialog.lu"
+  ]
 }

@@ -36,7 +36,7 @@
     "triggers": {
       "": [
         "ResolveDateTimeDialog.en-us",
-        "SearchEventsDialog.en-us",
+        "GetEventsDialog.en-us",
         "RespondToEventDialog.en-us",
         "RespondToEventDialog.en-us",
         "UpdateSlots.en-us",

@@ -1,5 +1,5 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_SearchEventsDialog",
+  "id": "LUIS_ShowEventsDialog",
   "recognizers": {}
 }
