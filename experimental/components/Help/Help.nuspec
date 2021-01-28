@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>Preview.Bot.Component.Welcome</id>
-        <version>0.0.1-preview5</version>
+        <id>Preview.Bot.Component.Help</id>
+        <version>0.0.1-preview1</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>First version of welcome package</releaseNotes>
-        <description>Dialogs to provide a welcome experience</description>
-        <tags>bf-component conversationalcore welcome preview</tags>
+        <releaseNotes>First version of Help package</releaseNotes>
+        <description>Dialog to provide "help" utterance handling</description>
+        <tags>bf-component conversationalcore help preview</tags>
         <dependencies />
     </metadata>
 

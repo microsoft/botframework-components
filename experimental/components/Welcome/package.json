@@ -2,7 +2,7 @@
   "name": "preview-bot-component-welcome",
   "version": "0.0.1-preview1",
   "keywords": ["bf-component"],
-  "description": "Dialogs to provide a welcome experience",
+  "description": "Dialogs to provide a Welcome experience for new and returning users",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

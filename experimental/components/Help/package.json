@@ -1,5 +1,5 @@
 {
-  "name": "preview-bot-component-helpdialog",
+  "name": "preview-bot-component-help",
   "version": "0.0.1-preview1",
   "keywords": [ "bf-component" ],
   "description": "Dialog to provide help handling",

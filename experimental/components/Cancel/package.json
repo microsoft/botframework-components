@@ -1,5 +1,5 @@
 {
-  "name": "preview-bot-component-canceldialog",
+  "name": "preview-bot-component-cancel",
   "version": "0.0.1-preview1",
   "keywords": [ "bf-component" ],
   "description": "Dialog to provide \"cancel\" utterance handling",
