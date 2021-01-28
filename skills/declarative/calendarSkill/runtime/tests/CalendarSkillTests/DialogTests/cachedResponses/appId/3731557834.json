@@ -1,0 +1,1 @@
+{"query":"new meeting in Building 3","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.997025847}},"entities":{"location":["Building 3"]}}}

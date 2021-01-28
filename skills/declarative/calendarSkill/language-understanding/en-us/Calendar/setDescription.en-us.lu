@@ -1,0 +1,77 @@
+# SetDescription
+- add a body
+- add a description
+- add a description to the {@subject=standup}
+- add content
+- add content to the meeting with {@contact=darren}
+- add description to the meeting with {@contact=ryan}, {@contact=ted}, and {@contact=marie} later {@date=today}
+- can you set the meeting content
+- please update the body of this meeting
+- set the body on the meeting {@date=this afternoon}
+- set the description
+- set the description on the {@date=1 o'clock} meeting
+- update the body of the invite
+- update the content
+- update the content of the meeting with {@contact=sharon} and {@contact=ron}
+- update the description on my event
+- update the meeting body
+- update the meeting content for the {@subject=budget review}
+- update the meeting content with {@contact=ryan} {@date=next week}
+
+
+@ intent SetDescription usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) enabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+> # List entities
+
+> # RegEx entities

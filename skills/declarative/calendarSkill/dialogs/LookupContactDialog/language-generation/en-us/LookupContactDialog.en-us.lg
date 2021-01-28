@@ -1,0 +1,18 @@
+[import](common.lg)
+
+# TextInput_Prompt_sFm17r()
+- Who should I invite?
+
+# ConfirmInput_Prompt_pjKHu4()
+- Would you like to invite anyone else?
+
+# SendActivity_84gSFd()
+- I couldn't find any matching contacts. Can you try providing the first and last name or email address?
+
+# SendActivity_VTKaKJ()
+- Sure, I'll continue with ${GetContactsList($contacts)}.
+- Got it. I'll move forward with ${GetContactsList($contacts)}.
+- OK. I'll invite ${GetContactsList($contacts)}.
+
+# GetContactsList(contacts)
+- ${join(select(contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), ', ')}

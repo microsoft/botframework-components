@@ -1,0 +1,75 @@
+{
+  "calendarskill.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "": [
+        "GetScheduleDialog.en-us"
+      ]
+    }
+  },
+  "CreateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "LookupContactDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "ListDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "Next": [],
+      "Previous": [],
+      "Skip": []
+    }
+  },
+  "LookupContactDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ListDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "SearchEventsDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveDateTimeDialog.en-us",
+        "ListDialog.en-us"
+      ],
+      "No": []
+    }
+  },
+  "UpdateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveDateTimeDialog.en-us",
+        "SearchEventsDialog.en-us",
+        "RespondToEventDialog.en-us",
+        "RespondToEventDialog.en-us",
+        "UpdateSlots.en-us",
+        "RespondToEventDialog.en-us",
+        "CancelEventDialog.en-us"
+      ],
+      "Cancel": [],
+      "ConfirmYes": []
+    }
+  },
+  "UpdateSlots.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveUpdateEntity.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Cancel": [],
+      "CancelEvent": []
+    }
+  }
+}

@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Get Events Dialog",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "calendarskill",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "conversationUpdate"
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n"
+    }
+  ]
+}

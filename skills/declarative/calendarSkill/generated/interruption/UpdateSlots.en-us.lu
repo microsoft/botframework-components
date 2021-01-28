@@ -1,0 +1,86 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 7.0.0
+
+
+> # Intent definitions
+
+# TextInput_Response_gZ1tbS
+- Can you {@EntityOperation={@Add=add}} Rachel
+- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
+- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
+- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
+- Update my {@EntityName={@EventLocation=location}} to Café Paris
+- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to Brainstorm
+- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- {@EntityOperation={@Change=change}} the {@EntityName=@{@EventTitle=title}} to Lunch
+- {@EntityName={@EventDateTime=time}}
+- {@EntityName={@EventDateTime=date}}
+- {@EntityName={@EventDateTime=date time}}
+- {@EntityOperation={@Change=change}} {@EntityName={@EventDateTime=time}}
+- {@EntityOperation={@Add=add}} {@EntityName={@EventAttendee=participant}}
+- {@EntityOperation={@Change=update}} {@EntityName={@EventLocation=location}}
+
+
+# TextInput_Response_gtOavc
+- It's a 1:1 with Mary
+- Planning for end of year
+- Call it editorial meeting
+- Please title it content review
+- How about team check-in
+- Title it Happy Hour
+
+
+# TextInput_Response_NdRLDG
+- It holds at cafe
+
+
+# Cancel
+- cancel
+- cancel this
+- stop
+- stop this
+- exit
+
+
+# CancelEvent
+- cancel event
+
+
+> # Entity definitions
+
+@ ml EntityName
+    - @ ml EventTitle
+    - @ ml EventDateTime
+    - @ ml EventAttendee
+    - @ ml EventLocation
+    - @ ml EventDuration
+    - @ ml TeamsLink
+
+
+@ ml EntityOperation
+    - @ ml Add
+    - @ ml Remove
+    - @ ml Change
+
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt personName
+
+@ prebuilt email
+
+@ prebuilt datetimeV2
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+

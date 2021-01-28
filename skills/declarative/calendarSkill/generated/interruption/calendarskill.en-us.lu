@@ -1,0 +1,676 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 7.0.0
+
+
+> # Intent definitions
+
+# None
+- 1 hour
+- 3pm to 4pm
+- first
+- john and sarah
+- last
+- monday
+- project review
+- rainbows and butterflies
+- standup
+- team standup
+- today
+- tomorrow
+- tuesday at 4pm
+- tuesday to wednesday
+- tyler, tonya, and abby
+- yes
+- no
+
+
+@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# Help
+- any help
+- can you help
+- can you help me
+- give me some help
+- help
+- how can i get it
+- how to do it
+- i need help
+- i need some assist
+- i need some help
+- is there any help
+- open help
+- please help
+- some help
+- who can help me
+
+
+@ intent Help usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# Logout
+- forget me
+- log out
+- logout
+- sign out
+- signout
+
+
+@ intent Logout usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# CancelEvent
+- cancel my {@date=3 o'clock}
+- cancel my {@date=5:00}
+- cancel my event with {@contact=chris} and {@contact=hyunjin} with a subject of {@subject=breakfast}
+- cancel my event with {@contact=john}
+- cancel my meeting
+- cancel my meeting with a subject of {@subject=weekly review} {@date=today at 3} with {@contact=tyler} and {@contact=cynthia}
+- cancel my meeting with {@contact=me@myemail.edu} and {@contact=margaret}
+- cancel my next meeting
+- cancel the event
+- cancel the event {@date=this weekend}
+- cancel the meeting titled {@subject=weekly review} with {@contact=rebecca}, {@contact=quirine}, and {@contact=rebecca}
+- cancel with {@contact=darren}, {@contact=ryan}, and {@contact=ted}
+- delete my meeting {@date=this week} named {@subject=project sync}
+- delete my meeting {@date=this week} with {@contact=susan}
+- delete my next event
+- delete the meeting about {@subject=editorial meeting} on {@date=monday}
+- delete the next meeting
+- i need to cancel the meeting with {@contact=elaine}
+- i want to cancel my {@subject=1:1} with {@contact=thomas} {@date=tomorrow}
+- i want to cancel the meeting {@date=this afternoon}
+- let {@contact=bob} know i need to cancel {@date=today}
+
+
+@ intent CancelEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# CreateEvent
+- book a meeting with a title of {@subject=weekly review}
+- book a meeting with {@contact=cynthia} {@date=tomorrow}
+- book a meeting with {@contact=morgan} and {@contact=margaret} on {@date=tuesday} about {@subject=content review}
+- book time on {@date=tuesday} at {@location=Red Robin}
+- book time with {@contact=tyler}, {@contact=morgan}, and {@contact=quirine}
+- book time with {@contact=Lynne}, {@contact=Patti}, and {@contact=Joni} {@date=tomorrow} in {@location=Seattle} with the subject {@subject=Women's Lunch}
+- create an event with {@contact=Beth} in {@location=the cafeteria}
+- create a meeting with {@contact=Thomas}
+- can you set up a time for me to meet with {@contact=ryan} about the {@subject=project status}
+- i need to meet with {@contact=tom} {@date=this week} in {@location=Redwest B}
+- i need to talk to {@contact=isaiah} about the {@subject=merger} on {@date=friday}
+- make a meeting with {@contact=cynthia} about {@subject=dentist appointment}
+- make a meeting with {@contact=em} in {@location=Building 4}
+- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
+- new event {@date=today at 3} with {@contact=hyunjin} and {@contact=em}
+- new event named {@subject=standup} in {@location=city center}
+- new event titled {@subject=Team Meeting} with {@contact=Patti} in {@location=Seattle}
+- new meeting with {@contact=chris}, {@contact=elaine}, and {@contact=chris} titled {@subject=hair appointment} {@date=next week}
+- new meeting with {@contact=Diego} and {@contact=Alex} named {@subject=project sync} on {@date=Wednesday}
+- new meeting with {@contact=youngjae}, {@contact=lauren}, and {@contact=tyler}
+- schedule a meeting about {@subject=user feedback discussion} on {@date=friday}
+- schedule a meeting from {@date=3pm} to {@date=4pm}
+- schedule a meeting {@date=this weekend} with {@contact=scott}
+- schedule an event with {@contact=cynthia} and {@contact=scott} on {@date=monday}
+- set up a meeting with {@contact=ryan}, {@contact=darren}, {@contact=ted}, and {@contact=elaine}
+- set up time with {@contact=melanie}
+
+
+@ intent CreateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetAvailabilityBreaks
+- can i take a break {@date=wednesday}
+- do i have a break before my next meeting
+- do i have a break {@date=this afternoon}
+- do i have any breaks
+- do i have any breaks on {@date=january 3, 2021}
+- do i have any breaks {@date=wednesday}
+- do i have any free time {@date=today}
+- how long until my next meeting
+- how much time do i have until my next meeting
+- tell me when my next break is
+- what breaks do i have {@date=monday}
+- what breaks do i have {@date=tomorrow}
+- what time am i available again
+- when am i free {@date=today}
+- when are my breaks
+- when can i take a break
+- when do i have breaks
+- when do i have breaks {@date=today}
+- when is my next break
+- when is my next gap in meetings
+
+
+@ intent GetAvailabilityBreaks usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetAvailabilityFirst
+- {@date=friday}'s first meeting
+- show {@date=tomorrow}'s first meeting
+- tell me what my first meeting is
+- tell me what my first meeting is on {@date=wednesday}
+- tell me what time my meetings start
+- tell me what time my meetings start {@date=tomorrow}
+- what is first on my agenda
+- what time do i start
+- what time do i start on {@date=sunday}
+- what time do i start on {@date=thursday}
+- what time do i start this {@date=monday}
+- what time do i start this {@date=tuesday}
+- what time does my day start
+- what time does my day start next {@date=sunday}
+- when do i need to be ready {@date=tomorrow}
+- when does my day start
+- when does my day start next {@date=friday}
+- when does my day start on {@date=wednesday}
+- when is my first meeting
+- when is my first meeting {@date=today}
+
+
+@ intent GetAvailabilityFirst usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetAvailabilityLast
+- how long is my last meeting
+- tell me my last meeting
+- tell me my last meeting next {@date=wednesday}
+- tell me when i'll be done with meetings
+- tell me when my day ends
+- tell me when my day ends on {@date=wednesday}
+- what is my last meeting on {@date=friday}
+- what time can i go home
+- what time can i go home {@date=tomorrow}
+- what time does my day end
+- what time does my last meeting end
+- what time is my day over {@date=tomorrow}
+- when am i done
+- when am i done for the day
+- when am i done for the day this {@date=monday}
+- when am i finished
+- when am i finished {@date=today}
+- when does my day end
+- when is my day over
+- when is my day over on {@date=friday}
+
+
+@ intent GetAvailabilityLast usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetEvent
+- do i have an event
+- do i have an event next
+- do i have an event on {@date=tuesday} with {@contact=elaine}, {@contact=chris}, and {@contact=morgan}
+- find meetings {@date=this week} with {@contact=brenda}
+- find meetings with {@contact=tyler}
+- list all events with {@contact=isaac} and {@contact=margaret} about {@subject=1:1}
+- list all events with {@contact=jose}
+- lookup meetings
+- lookup meetings with {@contact=cynthia} called {@subject=planning for end of year}
+- lookup meetings with {@contact=margaret}, {@contact=lauren}, and {@contact=elaine} {@date=today} with a title of {@subject=lunch}
+- lookup meetings with {@contact=susan}, {@contact=youngjae}, and {@contact=you@test.net}
+- read me my calendar
+- read me my calendar next
+- show my calendar
+- show my calendar on {@date=sunday} with {@contact=rebecca} and {@contact=chris}
+- what do i have planned
+- what do i have planned on {@date=friday}
+- what do i have scheduled
+- what do i have scheduled called {@subject=editorial meeting} {@date=today} with {@contact=scott}
+- what do i have scheduled named {@subject=weekly review}
+- what do i have {@date=this week}
+- what is on
+- what is on with {@contact=isaac} {@date=today at 3}
+- what time do i start on {@date=thursday at 11am} named {@subject=project sync} with {@contact=you@test.net} and {@contact=scott}
+- what's on my calendar
+- what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
+
+
+@ intent GetEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetEventAttendees
+- did anyone respond to my meeting invite
+- is anyone coming to the meeting on {@date=wednesday}
+- is {@contact=tom} coming to my meeting {@date=wednesday afternoon}
+- who accepted the invite for {@date=tomorrow}'s meeting
+- who is attending my event with a subject of {@subject=hair appointment} with {@contact=youngjae}, {@contact=elaine}, and {@contact=isaac} {@date=next week}
+- who is attending the event titled {@subject=dentist appointment} with {@contact=john} and {@contact=chris}
+- who is attending the next meeting
+- who is attending the {@subject=planning for end of year} meeting
+- who is coming to my event with {@contact=you@test.net} and {@contact=scott}
+- who is coming to my meeting {@date=tomorrow morning}
+- who is coming to the event about {@subject=weekly review} {@date=tomorrow at noon}
+- who is coming to the event with {@contact=rebecca}, {@contact=john}, and {@contact=gary} at {@date=7:30am}
+- who is coming to the meeting with {@contact=tyler} and {@contact=lauren}
+- who is coming to the meeting with {@contact=you@test.net}
+- who is coming {@date=tomorrow at 3pm}
+- who's coming on {@date=sept 3}
+- who's coming to the meeting {@date=tomorrow morning}
+- will {@contact=gary} be at my event on {@date=thursday}
+- will {@contact=test@email.com} be at the event
+- will {@contact=tyler} be at my next event
+
+
+@ intent GetEventAttendees usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetEventDateTime
+- show me the time for the meeting on {@date=tuesday}
+- show me the time for the meeting with {@contact=john}
+- what time is my meeting about {@subject=user feedback discussion} with {@contact=elaine} and {@contact=cynthia}
+- what time is my next event
+- what time is my next meeting
+- what time is the event
+- what time is the meeting {@date=this evening}
+- when am i meeting with {@contact=shauna} {@date=this week}
+- when is my event with {@contact=cynthia}, {@contact=isaac}, and {@contact=elaine} {@date=next month} about {@subject=team check-in}
+- when is my {@subject=lunch} event
+- when is my meeting {@date=tomorrow at noon} with {@contact=me@myemail.edu} and {@contact=morgan}
+- when is my meeting with {@contact=chris} and {@contact=me@myemail.edu}
+- when is my meeting with {@contact=tyler} and {@contact=tyler}
+- when is my next meeting
+- when is my next meeting with {@contact=jonathan} and {@contact=alex}
+- when is the {@subject=cobalt update} meeting
+- when is the meeting titled {@subject=hair appointment} {@date=tomorrow at noon}
+- when is the meeting with will and {@contact=dan} {@date=this week}
+- when is the next {@subject=project review} meeting
+- when is the {@subject=project review} meeting
+
+
+@ intent GetEventDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# GetEventLocation
+- can you tell me the building for the {@subject=team offsite}
+- show location for the meeting {@date=today}
+- tell me where i need to go for the next meeting
+- what is the location of my event with {@contact=you@test.net}
+- what is the location of the event with {@contact=isaac}
+- what room is my event {@date=tomorrow at noon}
+- what room is my next meeting
+- what room is the meeting
+- what room is the meeting {@date=this weekend} with {@contact=hyunjin} about {@subject=weekly review}
+- what room is the meeting titled {@subject=breakfast} on {@date=wednesday}
+- what room is the next event
+- what room is the {@subject=sprint planning} meeting in
+- what's the location for the meeting {@date=this afternoon}
+- where do i need to go {@date=this afternoon}
+- where is my meeting with {@contact=michiel}
+- where is my meeting with {@contact=you@test.net} and {@contact=morgan}
+- where is the event on {@date=thursday at 11am} with {@contact=morgan} and {@contact=tyler}
+- where is the event titled {@subject=project sync} with {@contact=cynthia} and {@contact=john}
+- where is the next meeting
+- where is the {@subject=team check-in} event
+
+
+@ intent GetEventLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# RespondAccept
+- accept
+- accept {@contact=marieke}'s invite
+- accept the {@subject=dentist appointment} meeting {@date=next wednesday at 4pm}
+- accept the meeting
+- accept the meeting on {@date=feb 4th}
+- accept the meeting with a title of {@subject=1:1} with {@contact=rebecca}
+- accept the meeting with {@contact=gary}, {@contact=test@email.com}, and {@contact=gary}
+- accept the {@subject=team standup} invite
+- i can make my event named {@subject=team meeting} on {@date=saturday}
+- i can make the next meeting
+- i can make the {@subject=team meeting} meeting
+- i want to accept the next event
+- i'll be at my meeting {@subject=project sync}
+- i'll be at the event on {@date=wednesday} with {@contact=gary}, {@contact=test@email.com}, and {@contact=test@email.com}
+- i'll be at the {@subject=weekly team meeting}
+- let {@contact=monique} know i'll be at the {@date=1 o'clock} meeting
+- respond yes to {@contact=andrew}'s invite
+- tell {@contact=eunice} i'll be at the {@subject=status update}
+- tell {@contact=hyunjin} i can make the event with {@contact=me@myemail.edu} and {@contact=susan}
+- tell {@contact=john} i can make on {@date=saturday} about {@subject=happy hour} with {@contact=isaac}
+
+
+@ intent RespondAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# RespondDecline
+- can't make the meeting {@date=wednesday at 2pm}
+- decline
+- decline the event
+- decline the invite to my meeting with {@contact=quirine}
+- decline the invite to the next event
+- decline the meeting {@subject=1:1}
+- don't accept the {@subject=budget meeting} {@date=this week}
+- don't accept the meeting with {@contact=josie} {@date=tomorrow}
+- i can't attend my meeting
+- i can't attend the {@subject=editorial meeting} meeting on {@date=sunday}
+- i can't make my {@date=4:00} meeting
+- i need to decline called {@subject=planning for end of year} with {@contact=jose} and {@contact=scott} at {@date=7:30am}
+- i want to decline my meeting called {@subject=planning for end of year} {@date=today at 3}
+- i want to decline the event with {@contact=rebecca}
+- i want to decline the meeting
+- i want to decline the next meeting
+- say no to {@contact=tommy}'s meeting request
+- tell {@contact=chris} i can't make the event with {@contact=rebecca} and {@contact=hyunjin} on {@date=saturday}
+- tell {@contact=you@test.net} i can't make my meeting with {@contact=quirine}, {@contact=isaac}, and {@contact=margaret} called {@subject=1:1}
+- won't make the meeting {@date=next monday afternoon}
+
+
+@ intent RespondDecline usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# RespondTentativelyAccept
+- i might be able to make the {@subject=hackathon} {@date=next week}
+- i might be able to make the meeting {@subject=happy hour}
+- i might be able to make the meeting with {@contact=me@myemail.edu} about {@subject=editorial meeting}
+- i might not make the {@subject=testing meeting} with {@contact=em} and {@contact=darren} {@date=tomorrow morning}
+- i want to tentatively accept the event with {@contact=quirine}
+- i want to tentatively accept the next meeting
+- mark me as tentative for my {@subject=happy hour} meeting on {@date=friday}
+- mark me as tentative for the event with {@contact=scott} and {@contact=em} at {@date=7:30am} titled {@subject=1:1}
+- mark me as tentative for the meeting about {@subject=weekly review} {@date=today}
+- mark me as tentative for the meeting {@date=tuesday afternoon}
+- mark me as tentative for the next event
+- respond tentative to {@newContact=anna}'s meeting {@date=tomorrow at 11}
+- tell {@contact=louis} i'm tentative {@date=today}
+- tell {@contact=monty} i'm tentative for {@date=wednesday}'s sync
+- tell {@contact=susan} i might not make the meeting {@date=today}
+- tentatively accept
+- tentatively accept my {@subject=hair appointment} event
+- tentatively accept my meeting with {@contact=em}
+- tentatively accept the meeting invite from {@contact=alexander}
+- tentatively accept the meeting {@date=next week} with {@contact=tyler}
+
+
+@ intent RespondTentativelyAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetAttendeesAdd
+- add an attendee
+- add people
+- add more recipients
+- add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
+- add {@newContact=jose} to my next meeting
+- add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
+- can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
+- forward my meeting on {@date=thursday} to {@newContact=youngjae}
+- forward to more people
+- forward the next event to {@newContact=scott}
+- forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
+- forward this to {@newContact=john}
+- forward to {@newContact=chris} and {@newContact=me@myemail.edu}
+- forward to {@newContact=scott}
+- invite more people
+- invite someone else
+- invite {@newContact=elaine} and {@newContact=morgan}
+- invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
+- invite {@newContact=jose}
+- invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
+- invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
+- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- send this to more people
+- send my {@subject=breakfast} event to {@newContact=gary}
+- send my event titled {@subject=1:1} to {@newContact=chris}
+- send the meeting to {@newContact=morgan}
+- send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+
+
+@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetAttendeesRemove
+- don't add {@currentContact=em} to my event with {@contact=jose} and {@contact=cynthia} called {@subject=team check-in}
+- don't add {@currentContact=gary} to this
+- don't add {@currentContact=margaret} to the event on {@date=saturday} with {@contact=rebecca}
+- don't add {@currentContact=me@myemail.edu}
+- don't invite {@currentContact=chris} to my event with {@contact=jose} and {@contact=you@test.net}
+- don't invite {@currentContact=john} to the next event
+- don't invite {@currentContact=john}, {@currentContact=john}, and {@currentContact=em}
+- don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
+- edit attendees
+- edit recipients list
+- remove an attendee
+- remove people from this
+- remove recipients
+- remove someone from this
+- remove {@currentContact=hyunjin} from this
+- remove {@currentContact=jose} from the event called {@subject=project sync}
+- remove {@currentContact=rebecca} and {@currentContact=susan}
+- remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
+- remove {@currentContact=susan} from the next event
+- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- uninvite an attendee
+- uninvite a recipient
+- uninvite people from this meeting
+- uninvite {@currentContact=cynthia}
+- uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
+- uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
+- uninvite {@currentContact=morgan} from my event {@date=tomorrow}
+- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+
+
+@ intent SetAttendeesRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetDateTime
+- change my event from {@currentDate=tomorrow} to {@newDate=saturday}
+- change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
+- change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
+- change my meeting with {@contact=elaine} to {@newDate=next week}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@date=thursday at 11am} to {@newDate=saturday}
+- change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
+- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
+- change the date
+- change the time
+- change the date of my event with {@contact=gary} on {@date=monday} named {@subject=lunch} to {@newDate=next month}
+- change the time of my meeting to {@newDate=6pm}
+- change the date and time of my next meeting to {@newDate=thursday at 11am}
+- change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
+- change the date of the meeting to {@newDate=wednesday}
+- change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
+- change the day of the next event to {@newDate=wednesday}
+- move my meeting from {@currentDate=3pm} to {@newDate=5pm}
+- move my meeting on {@date=tuesday} to {@newDate=next week}
+- move my meeting with {@contact=darren} to {@newDate=this tuesday}
+- move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
+- reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
+- reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
+- set the meeting time to {@newDate=3:30}
+- update my meeting to start at {@newDate=noon on saturday}
+- update my meeting with {@contact=elaine} to {@newDate=monday at 2}
+- update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
+
+
+@ intent SetDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetDuration
+- change the event with {@contact=you@test.net} to {@duration=2 hours}
+- change to {@duration=3 hrs}
+- extend the event to {@duration=1 hour and 30 minutes}
+- extend the {@subject=standup} to {@duration=2 hours}
+- make it {@duration=1 hour}
+- make it {@duration=1 hour and 30 minutes}
+- make my meeting with {@contact=thomas} {@duration=1 hour}
+- make the meeting last {@duration=30 min}
+- set the duration of my meeting
+- set the event to {@duration=1 hour and 30 minutes}
+- set the length the event with {@contact=rebecca}
+- set this to {@duration=15 min}
+- set to {@duration=1 hour}
+- shorten the {@subject=team meeting} to {@duration=half an hour}
+- update my event on {@date=monday} with {@contact=john} to {@duration=15 min}
+- update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
+- update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
+- update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
+- update the meeting to last {@duration=an hour and a half}
+- update to {@duration=1 hour and 30 minutes}
+
+
+@ intent SetDuration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetLocation
+- change the location of the next event to {@location=123 address st}
+- change the room for the {@subject=standup}
+- i need to set a new location for the next meeting
+- make it in {@location=city center}
+- make the location {@location=baltimore, md}
+- make the location {@location=olive garden}
+- move the event {@date=tomorrow afternoon} to another location
+- move this meeting to another room
+- set the address as {@location=134 main st}
+- set the location of my event about {@subject=project sync} {@date=today} to {@location=new york, new york}
+- set the location of my next meeting to {@location=123 address st}
+- set the location of my {@date=wednesday} meeting to {@location=123 address st}
+- update the location
+- update the location of my meeting with a title of {@subject=user feedback discussion} with {@contact=chris}, {@contact=test@email.com}, and {@contact=scott} to {@location=123 address st}
+- update the location of the {@subject=hair appointment} event to {@location=bellevue, wa}
+- update the location of the meeting to {@location=bellevue, wa}
+- update the location of the meeting with {@contact=gary} and {@contact=margaret} to {@location=room 345}
+- update the location of the meeting with {@contact=jose} and {@contact=em} on {@date=thursday at 11am} to {@location=room 345}
+- update the location of the meeting with {@contact=susan} and {@contact=john}
+- update the location to {@location=kitchen}
+
+
+@ intent SetLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetOnlineMeetingAdd
+- add a phone number to the next meeting
+- add a teams call to my meeting with {@contact=benedict} on {@date=november 5th}
+- add a teams link to my {@subject=editorial meeting} meeting
+- add a teams link to my event on {@date=friday}
+- add a teams link to my event on {@date=tuesday} with {@contact=tyler}
+- add a teams link to my next meeting
+- add a teams link to the {@subject=content review} event {@date=tomorrow} with {@contact=elaine}
+- add a teams link to the meeting with {@contact=test@email.com}, {@contact=chris}, and {@contact=you@test.net}
+- add a teams link to the next event
+- add {@contact=elaine} to my meeting with {@contact=tom}
+- add {@contact=elaine} to the meeting with {@contact=tyler}
+- include a call number on the {@subject=project review} meeting {@date=next week}
+- include a link
+- include a link to my meeting {@date=this weekend} with {@contact=quirine}, {@contact=morgan}, and {@contact=susan}
+- include a link to the meeting
+- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and {@contact=test@email.com}
+- include teams to the event with {@contact=elaine}
+- include teams to the {@subject=standup} meeting on {@date=tuesday}
+- make it a teams meeting
+- make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
+- make the {@subject=standup} a virtual meeting {@date=today}
+- make this an online meeting
+
+
+@ intent SetOnlineMeetingAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetOnlineMeetingRemove
+- don't add a call to the meeting later
+- don't add teams to my {@subject=1:1} later
+- don't add teams to my {@subject=happy hour} event
+- don't add teams to my meeting with {@contact=test@email.com} on {@date=monday}
+- don't include a link with the meeting
+- don't include a teams link for the meeting on {@date=april 10th}
+- don't make the meeting virtual
+- remove teams from my {@subject=breakfast} event with {@contact=rebecca}, {@contact=morgan}, and {@contact=morgan} on {@date=thursday}
+- remove teams from my meeting on {@date=friday} with {@contact=john}
+- remove teams from my meeting with {@contact=test@email.com} and {@contact=margaret}
+- remove teams from my next meeting
+- remove teams from my {@subject=standup} event {@date=today}
+- remove the link from
+- remove the link from my meeting with {@contact=tyler}
+- remove the link from the {@subject=planning for end of year} meeting {@date=next month} with {@contact=youngjae}
+- remove the online meeting from the event
+- remove the online meeting from the meeting {@date=tomorrow at noon}
+- remove the online meeting from the next event
+- remove the phone number from the {@subject=team meeting} {@date=next week}
+- remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+
+
+@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# SetTitle
+- change the subject
+- change the subject of the meeting with {@contact=youngjae} and {@contact=elaine} to {@newSubject=standup}
+- change the subject to {@newSubject=family vacation}
+- change the title from {@currentSubject=standup} to {@newSubject=sprint planning}
+- change the title of my next meeting to {@newSubject=editorial meeting}
+- change the title of the {@currentSubject=daily standup} meeting to {@newSubject=daily status update}
+- change the title of the event {@date=this week} with {@contact=you@test.net}, {@contact=scott}, and {@contact=john}
+- change the title of the meeting with {@contact=test@email.com} and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
+- make the title {@newSubject=daily commute}
+- rename my meeting {@date=next month} named {@currentSubject=hair appointment}
+- rename the event from {@currentSubject=editorial meeting} to {@newSubject=project sync}
+- set the title of my event with {@contact=morgan} {@date=tomorrow} from {@currentSubject=weekly review} to {@newSubject=happy hour}
+- set the title of the {@subject=content review} meeting
+- set the title of the event
+- set the title of the event to {@newSubject=team meeting}
+- set the title to {@newSubject=daily health check-in}
+- update the subject of the meeting {@date=next week}
+- update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
+- update the subject of the next event to {@newSubject=standup}
+- update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+
+
+@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+# UpdateEvent
+- change my next event
+- change the details of my meeting titled {@subject=design workshop}
+- change the {@subject=issue triage} on {@date=wednesday}
+- change the meeting
+- change the meeting with {@contact=cynthia} and {@contact=test@email.com}
+- make a change to my {@subject=dentist appointment} meeting
+- make a change to my event {@date=this weekend}
+- make a change to my event with {@contact=me@myemail.edu} and {@contact=you@test.net}
+- make a change to the meeting with {@contact=charlotte} and {@contact=greg}
+- make an update to my meeting {@date=next week}
+- modify my event with {@contact=chris}, {@contact=isaac}, and {@contact=youngjae} {@date=this weekend}
+- modify my meeting with {@contact=chris} {@date=today} with a subject of {@subject=dentist appointment}
+- modify my meeting with {@contact=susan} with a subject of {@subject=team meeting}
+- modify the next meeting
+- update {@contact=greg}'s meeting on {@date=thursday}
+- update my event
+- update my event with {@contact=chris}
+- update the {@subject=all-hands} meeting details
+- update the event titled {@subject=user feedback discussion} {@date=this week}
+- update the {@subject=team lunch} on {@date=march 14, 2021}
+
+
+@ intent UpdateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+
+> # List entities
+
+> # RegEx entities
+
+

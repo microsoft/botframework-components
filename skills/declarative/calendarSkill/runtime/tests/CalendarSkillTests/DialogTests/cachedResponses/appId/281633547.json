@@ -1,0 +1,1 @@
+{"query":"new meeting with Jane","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.985944331}},"entities":{"contact":["Jane"],"personName":["Jane"]}}}

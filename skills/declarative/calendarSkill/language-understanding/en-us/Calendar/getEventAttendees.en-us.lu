@@ -1,0 +1,76 @@
+
+
+# GetEventAttendees
+- did anyone respond to my meeting invite
+- is anyone coming to the meeting on {@date=wednesday}
+- is {@contact=tom} coming to my meeting {@date=wednesday afternoon}
+- who accepted the invite for {@date=tomorrow}'s meeting
+- who is attending my event with a subject of {@subject=hair appointment} with {@contact=youngjae}, {@contact=elaine}, and {@contact=isaac} {@date=next week}
+- who is attending the event titled {@subject=dentist appointment} with {@contact=john} and {@contact=chris}
+- who is attending the next meeting
+- who is attending the {@subject=planning for end of year} meeting
+- who is coming to my event with {@contact=you@test.net} and {@contact=scott}
+- who is coming to my meeting {@date=tomorrow morning}
+- who is coming to the event about {@subject=weekly review} {@date=tomorrow at noon}
+- who is coming to the event with {@contact=rebecca}, {@contact=john}, and {@contact=gary} at {@date=7:30am}
+- who is coming to the meeting with {@contact=tyler} and {@contact=lauren}
+- who is coming to the meeting with {@contact=you@test.net}
+- who is coming {@date=tomorrow at 3pm}
+- who's coming on {@date=sept 3}
+- who's coming to the meeting {@date=tomorrow morning}
+- will {@contact=gary} be at my event on {@date=thursday}
+- will {@contact=test@email.com} be at the event
+- will {@contact=tyler} be at my next event
+
+@ intent GetEventAttendees usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities
