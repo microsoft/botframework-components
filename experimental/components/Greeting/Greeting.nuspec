@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Preview.Bot.Component.GreetingDialog</id>
-        <version>0.0.1-preview4</version>
+        <version>0.0.1-preview3</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <releaseNotes>first version of greeting dialog package</releaseNotes>
         <description>Dialogs to provide a greeting experience</description>
-        <tags>bf-component conversationalcore greeting preview</tags>
+        <tags>conversationalcore greeting preview</tags>
         <dependencies />
     </metadata>
 

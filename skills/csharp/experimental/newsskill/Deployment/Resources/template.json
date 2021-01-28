@@ -106,17 +106,9 @@
       "type": "string",
       "defaultValue": "[concat(parameters('name'), '-bing')]"
     },
-    "bingServiceSku": {
-      "type": "string",
-      "defaultValue": "S1"
-    },
     "azureMapsServiceName": {
       "type": "string",
       "defaultValue": "[concat(parameters('name'), '-maps')]"
-    },
-    "azureMapServiceSku": {
-      "type": "string",
-      "defaultValue": "S1"
     },
     "resourceTagName": {
       "type": "string",
@@ -311,29 +303,6 @@
         "[resourceId('Microsoft.CognitiveServices/accounts', parameters('luisRuntimeName'))]"
       ],
       "condition": "[parameters('useLuisAuthoring')]"
-    },
-    {
-      "apiVersion": "2020-06-10",
-      "name": "[parameters('bingServiceName')]",
-      "location": "global",
-      "type": "Microsoft.Bing/accounts",
-      "kind": "Bing.Search.v7",
-      "sku": {
-          "name": "[parameters('bingServiceSku')]"
-      },
-      "properties": {
-          "statisticsEnabled": false
-      }
-    },
-    {
-      "name": "[parameters('azureMapsServiceName')]",
-      "type": "Microsoft.Maps/accounts",
-      "apiVersion": "2018-05-01",
-      "location": "global",
-      "tags": {},
-      "sku": {
-        "name": "[parameters('azureMapServiceSku')]"
-      }
     }
   ],
   "outputs": {
@@ -380,7 +349,7 @@
     },
     "BingNewsKey": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Bing/accounts', parameters('bingServiceName')),'2020-06-10').key1]"
+      "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('bingServiceName')),'2017-04-18').key1]"
     },
     "AzureMapsKey": {
       "type": "string",
