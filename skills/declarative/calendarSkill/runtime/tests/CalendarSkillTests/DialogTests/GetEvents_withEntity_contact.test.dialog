@@ -4,7 +4,7 @@
   "httpRequestMocks": [
     "getProfile.mock",
     "getWorkingHours.mock",
-    "getEvent.mock"
+    "getEvents.mock"
   ],
   "userTokenMocks": [
     "nomagiccode.mock"
@@ -25,19 +25,32 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "find my meeting with lidia"
+      "text": "what meetings do i have with adele"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found a meeting on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": [
+        "I've found 2 events that match your request. Please select an option:",
+        "I've found 2 events that match your request. Please select an option:",
+        "There are 2 events that match your search. Please select an option:",
+        "2 events match your search criteria. Please select an option:",
+        "You have 2 events that match your search. Please select an option:"
+      ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
-      "description": "Response to input 1"
+      "description": "Find event list card response"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ],
+      "description": "Event detail card response"
     }
   ]
 }

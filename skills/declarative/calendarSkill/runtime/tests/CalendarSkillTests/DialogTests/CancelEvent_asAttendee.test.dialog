@@ -4,7 +4,7 @@
   "httpRequestMocks": [
     "getProfile.mock",
     "getWorkingHours.mock",
-    "getEvents.mock",
+    "getEvent.mock",
     "deleteEvent.mock"
   ],
   "userTokenMocks": [

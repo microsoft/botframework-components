@@ -203,3 +203,8 @@ value = Launch
     text = ${WelcomeUser()}
     SuggestedActions = New event | What's on today
 ]
+
+# SendActivity_57zVnQ()
+[Activity
+    attachments = ${json(EventDetailCard(turn.dialogEvent.value))}
+]
