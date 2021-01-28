@@ -18,13 +18,15 @@ namespace NewsSkill.Dialogs
 {
     public class FavoriteTopicsDialog : NewsDialogBase
     {
-        private string _newsKey;
+        private NewsClient _client;
 
         public FavoriteTopicsDialog(
             IServiceProvider serviceProvider)
             : base(nameof(FavoriteTopicsDialog), serviceProvider)
         {
-            _newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+            var newsKey = Settings.BingNewsKey ?? throw new Exception("The BingNewsKey must be provided to use this dialog. Please provide this key in your Skill Configuration.");
+
+            _client = new NewsClient(newsKey);
 
             var favoriteTopics = new WaterfallStep[]
             {
@@ -78,19 +80,16 @@ namespace NewsSkill.Dialogs
             userState.Category = (FoundChoice)sc.Result;
 
             // show favorite articles
-            using (var client = new NewsClient(Settings.BingNewsEndPoint, _newsKey))
+            var articles = await _client.GetNewsByCategoryAsync(userState.Category.Value, userState.Market);
+            await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, TemplateManager, articles, true));
+
+            var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
+            if (state.IsAction)
             {
-                var articles = await client.GetNewsByCategoryAsync(userState.Category.Value, userState.Market);
-                await sc.Context.SendActivityAsync(HeroCardResponses.ShowFindArticleCards(sc.Context, TemplateManager, articles, true));
-
-                var state = await ConvAccessor.GetAsync(sc.Context, () => new NewsSkillState(), cancellationToken: cancellationToken);
-                if (state.IsAction)
-                {
-                    return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
-                }
-
-                return await sc.EndDialogAsync(cancellationToken: cancellationToken);
+                return await sc.EndDialogAsync(GenerateNewsActionResult(articles, true), cancellationToken);
             }
+
+            return await sc.EndDialogAsync(cancellationToken: cancellationToken);
         }
     }
 }
