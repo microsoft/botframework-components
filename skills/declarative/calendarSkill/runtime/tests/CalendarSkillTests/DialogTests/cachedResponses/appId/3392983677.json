@@ -1,0 +1,1 @@
+{"query":"what meetings do i have","prediction":{"topIntent":"GetEvents","intents":{"GetEvents":{"score":0.9945034}},"entities":{}}}
