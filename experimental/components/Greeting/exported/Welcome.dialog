@@ -1,64 +1,64 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "BG2KJ6",
-    "name": "Greeting",
-    "description": ""
+    "$designer": {
+      "name": "Welcome",
+      "description": "",
+      "id": "8pOkoq"
+    }
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
-      "$kind": "Microsoft.OnBeginDialog",
+      "$kind": "Microsoft.OnConversationUpdateActivity",
       "$designer": {
-        "name": "BeginDialog",
-        "description": "",
-        "id": "xNxhEd"
+        "id": "376720"
       },
       "actions": [
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "Lp0TBQ"
+            "id": "518944",
+            "name": "Loop: for each item"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
           "itemsProperty": "turn.Activity.membersAdded",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "iOaJxR"
+                "id": "641773",
+                "name": "Branch: if/else"
               },
               "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "K1MbUz"
+                    "id": "94t8mB"
                   },
                   "condition": "exists(user.greeted)",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "h82AtE"
+                        "id": "wStAtd"
                       },
-                      "activity": "${SendActivity_h82AtE()}"
+                      "activity": "${SendActivity_wStAtd()}"
                     }
                   ],
                   "elseActions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "2lVGYp"
+                        "id": "S1JyrT"
                       },
-                      "activity": "${SendActivity_2lVGYp()}"
+                      "activity": "${SendActivity_S1JyrT()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
-                        "id": "ujzKfS"
+                        "id": "4vY0e9"
                       },
                       "property": "user.greeted",
                       "value": "true"
@@ -72,7 +72,8 @@
       ]
     }
   ],
-  "generator": "Greeting.lg",
-  "id": "Greeting",
-  "recognizer": "Greeting.lu.qna"
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "Welcome.lg",
+  "id": "Welcome",
+  "recognizer": "Welcome.lu.qna"
 }

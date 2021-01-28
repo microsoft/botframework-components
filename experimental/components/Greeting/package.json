@@ -1,8 +1,8 @@
 {
-  "name": "preview-bot-component-greetingdialog",
-  "version": "0.0.1-preview3",
+  "name": "preview-bot-component-welcome",
+  "version": "0.0.1-preview1",
   "keywords": ["bf-component"],
-  "description": "Dialogs to provide a greeting experience",
+  "description": "Dialogs to provide a welcome experience",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
