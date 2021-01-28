@@ -232,6 +232,7 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public async Task UpdateEvent()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
