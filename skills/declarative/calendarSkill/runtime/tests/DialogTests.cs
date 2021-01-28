@@ -88,32 +88,31 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
-        public async Task AcceptEvent()
+        public async Task RespondToEvent_Accept()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task TentativelyAcceptEvent()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-
-        [TestMethod]
-        public async Task DeclineEvent()
+        public async Task RespondToEvent_Decline()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CancelEvent()
+        public async Task RespondToEvent_TentativelyAccept()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CancelEventNotOrganizer()
+        public async Task CancelEvent_asAttendee()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task CancelEvent_asOrganizer()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
@@ -233,7 +232,38 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public async Task UpdateEvent()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEvents_multipleResults()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEvents_noResults()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEvents_singleResult()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEvents_withEntity_contact()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEvents_withEntity_datetime()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }

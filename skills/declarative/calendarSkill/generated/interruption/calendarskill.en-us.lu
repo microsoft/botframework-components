@@ -191,7 +191,7 @@
 
 @ intent GetAvailabilityLast usesFeatures Create,Update,Event,Attending,Location,Add,Remove
 
-# GetEvent
+# GetEvents
 - do i have an event
 - do i have an event next
 - do i have an event on {@date=tuesday} with {@contact=elaine}, {@contact=chris}, and {@contact=morgan}
@@ -220,7 +220,7 @@
 - what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
 
 
-@ intent GetEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetEvents usesFeatures Create,Update,Event,Attending,Location,Add,Remove
 
 # GetEventAttendees
 - did anyone respond to my meeting invite

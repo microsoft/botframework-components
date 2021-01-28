@@ -8,7 +8,7 @@
 - ELSE:
     - I've found ${count(dialog.items)} events that match your request. Please select an option:
     - I've found ${count(dialog.items)} events that match your request. Please select an option:
-    - There's ${count(dialog.items)} events that match your search. Please select an option:
+    - There are ${count(dialog.items)} events that match your search. Please select an option:
     - ${count(dialog.items)} events match your search criteria. Please select an option:
     - You have ${count(dialog.items)} events that match your search. Please select an option:
 
@@ -70,7 +70,6 @@
     ]
 }
 ```
-
 
 # EventListActions()
 - 

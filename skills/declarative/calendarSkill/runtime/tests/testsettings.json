@@ -14,27 +14,27 @@
     "environment": "composer",
     "endpoint": "https://westus.api.cognitive.microsoft.com",
     "authoringEndpoint": "https://westus.api.cognitive.microsoft.com",
-    "GetContactDialog_en_us_lu": {
+    "GetEventsDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "GetContactsDialog_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
     "CreateEventDialog_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "0.1"
+      "version": "4.2"
     },
     "calendarskill_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "0.1"
+      "version": "5.8"
     },
     "SearchEventsDialog_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
     "ListDialog_en_us_lu": {
-      "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "0.1"
-    },
-    "LookupContactDialog_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },

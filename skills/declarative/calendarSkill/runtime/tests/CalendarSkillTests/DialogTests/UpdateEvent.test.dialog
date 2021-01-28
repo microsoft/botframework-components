@@ -31,8 +31,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "I couldn't find the event you're looking for. Can you tell me the start time, title of meeting, or other attendees?",
-        "I couldn't find the event without any info. Can you tell me the start time, title, or who is attending?"
+        "Which event? Please provide the title, date, and/or attendees."
       ]
     },
     {

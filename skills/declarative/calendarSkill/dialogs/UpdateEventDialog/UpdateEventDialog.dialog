@@ -65,7 +65,7 @@
                 "id": "ZhueF5"
               },
               "activityProcessed": true,
-              "dialog": "SearchEventsDialog",
+              "dialog": "GetEventsDialog",
               "options": {
                 "start": "=dialog.start",
                 "end": "=dialog.end",
