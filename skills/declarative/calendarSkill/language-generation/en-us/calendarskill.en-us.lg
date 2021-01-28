@@ -174,7 +174,7 @@
 - OK, I'm here if you need me.
 
 # SendActivity_ccWEyG()
-- ${turn.dialogEvent.value}
+- ${GeneralErrorMessage()}
 
 # SendActivity_iHNKPb()
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
