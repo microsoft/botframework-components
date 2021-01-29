@@ -2,9 +2,9 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "$designer": {
-      "name": "Cancel",
+      "name": "HelpAndCancel",
       "description": "",
-      "id": "RIzlgH"
+      "id": "2XIjZK"
     }
   },
   "autoEndDialog": true,
@@ -13,7 +13,24 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "Hvo1Fx",
+        "id": "An8GU9",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "htpWFB"
+          },
+          "activity": "${SendActivity_htpWFB()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "a7CeR5",
         "name": "Cancel"
       },
       "intent": "Cancel",
@@ -21,14 +38,14 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "jkcp1D"
+            "id": "JybSbg"
           },
-          "activity": "${SendActivity_jkcp1D()}"
+          "activity": "${SendActivity_JybSbg()}"
         },
         {
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "rChBAU"
+            "id": "95G5c6"
           },
           "activityProcessed": true
         }
@@ -36,7 +53,7 @@
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-  "generator": "Cancel.lg",
-  "id": "Cancel",
-  "recognizer": "Cancel.lu.qna"
+  "generator": "HelpAndCancel.lg",
+  "id": "HelpAndCancel",
+  "recognizer": "HelpAndCancel.lu.qna"
 }
