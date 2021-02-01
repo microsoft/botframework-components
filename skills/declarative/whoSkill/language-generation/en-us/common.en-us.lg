@@ -1,2 +1,13 @@
-# WelcomeUser
-- Welcome to the EmptyBot sample
+# WelcomeUser()
+- IF: ${user.profile.displayName != null}
+- ```
+Hi ${user.profile.displayName} 🖐, thank you for helping the PBX team out with this dogfood for who skill!
+
+You can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```
+- ELSE: 
+- ```
+Hi there 🖐, thank you for helping the PBX team out with this dogfood for who skill!
+    
+You can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```
