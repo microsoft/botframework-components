@@ -2,9 +2,11 @@ name: Build & Test for Calendar V2
 
 on:
   push:
-    branches: [ "calendarSkill_v2"]
+    branches: [ "calendarSkill_v2", "main" ]
+    paths: "./skills/declarative/**"
   pull_request:
-    branches: [ "calendarSkill_v2" ]
+    branches: [ "calendarSkill_v2", "main" ]
+    paths: "./skills/declarative/**"
 
 jobs:
   build:
