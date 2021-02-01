@@ -1,0 +1,135 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "WRF5mG",
+    "name": "RespondToEventDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "hFpXgd"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Y9c7T3"
+          },
+          "name": "RespondToEventDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "T4tAUA"
+          },
+          "condition": "dialog.response",
+          "cases": [
+            {
+              "value": "accepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+                  "$designer": {
+                    "id": "K0DIol"
+                  },
+                  "resultProperty": "dialog.result",
+                  "token": "=user.token.token",
+                  "eventId": "=dialog.event.Id"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uxKimu"
+                  },
+                  "property": "dialog.event.Response",
+                  "value": "='accepted'"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "FJHk6U"
+                  },
+                  "activity": "${SendActivity_FJHk6U()}"
+                }
+              ]
+            },
+            {
+              "value": "declined",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+                  "$designer": {
+                    "id": "OUC9Oc"
+                  },
+                  "resultProperty": "dialog.result",
+                  "token": "=user.token.token",
+                  "eventId": "=dialog.event.Id"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "n4ICV0"
+                  },
+                  "property": "dialog.event.Response",
+                  "value": "='declined'"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "VOrXqP"
+                  },
+                  "activity": "${SendActivity_VOrXqP()}"
+                }
+              ]
+            },
+            {
+              "value": "tentativelyAccepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "jdauNL"
+                  },
+                  "name": "Ten"
+                },
+                {
+                  "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+                  "$designer": {
+                    "id": "DrLdRq"
+                  },
+                  "resultProperty": "dialog.result",
+                  "token": "=user.token.token",
+                  "eventId": "=dialog.event.Id"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "hzs1ez"
+                  },
+                  "property": "dialog.event.Response",
+                  "value": "='tentativelyAccepted'"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ss6d3v"
+                  },
+                  "activity": "${SendActivity_ss6d3v()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "RespondToEventDialog.lg",
+  "recognizer": "RespondToEventDialog.lu.qna",
+  "id": "RespondToEventDialog"
+}

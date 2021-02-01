@@ -1,0 +1,77 @@
+
+
+# GetAvailabilityLast
+- how long is my last meeting
+- tell me my last meeting
+- tell me my last meeting next {@date=wednesday}
+- tell me when i'll be done with meetings
+- tell me when my day ends
+- tell me when my day ends on {@date=wednesday}
+- what is my last meeting on {@date=friday}
+- what time can i go home
+- what time can i go home {@date=tomorrow}
+- what time does my day end
+- what time does my last meeting end
+- what time is my day over {@date=tomorrow}
+- when am i done
+- when am i done for the day
+- when am i done for the day this {@date=monday}
+- when am i finished
+- when am i finished {@date=today}
+- when does my day end
+- when is my day over
+- when is my day over on {@date=friday}
+
+
+@ intent GetAvailabilityLast usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities

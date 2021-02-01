@@ -1,0 +1,134 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "C6HI3d",
+    "name": "GetScheduleDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "agSqj6"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "yROg7H"
+          },
+          "name": "GetScheduleDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "wzfgsr"
+          },
+          "assignments": [
+            {
+              "property": "dialog.start",
+              "value": "=coalesce(dialog.datetime.Start, dialog.datetime.Value, formatDateTime(convertFromUTC(utcNow(), user.workingHours.timeZone.name), \"yyyy-MM-dd\"))"
+            },
+            {
+              "property": "dialog.end",
+              "value": "=coalesce(dialog.datetime.End, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "V4IYIL"
+          },
+          "activityProcessed": true,
+          "dialog": "SearchEventsDialog",
+          "options": {
+            "eventId": "=dialog.eventId",
+            "start": "=dialog.start",
+            "end": "=dialog.end",
+            "doSelection": "=false",
+            "futureOnly": "=true",
+            "maxResult": 1000
+          },
+          "resultProperty": "dialog.events"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "N02RSE"
+          },
+          "condition": "dialog.events != null && count(dialog.events) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hDknHb"
+              },
+              "activity": "${SendActivity_hDknHb()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "J8Jgea"
+              },
+              "condition": "count(dialog.events) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.GroupEventsByDate",
+                  "$designer": {
+                    "id": "RgCy25"
+                  },
+                  "resultProperty": "dialog.groupedEvents ",
+                  "eventsProperty": "=dialog.events"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "goJIoD"
+                  },
+                  "condition": "dialog.datetime.type == \"daterange\"",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "S1spP2"
+                      },
+                      "activity": "${SendActivity_S1spP2()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "sVtgKf"
+                      },
+                      "activity": "${SendActivity_sVtgKf()}"
+                    }
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "eSN2lu"
+                  },
+                  "activity": "${SendActivity_eSN2lu()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetScheduleDialog.lg",
+  "recognizer": "GetScheduleDialog.lu.qna",
+  "id": "GetScheduleDialog"
+}
