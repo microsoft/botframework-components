@@ -2,7 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Nuget packaging information -->
+  <PropertyGroup>
+    <PackageId>Microsoft.Bot.Components.MsGraph</PackageId>
+    <PackageVersion>1.0.0-preview.1</PackageVersion>
+    <Description>Plugin component for MSGraph custom action</Description>
+    <Summary>Plugin component for MSGraph custom action.</Summary>
+    <Company>Microsoft</Company>
+    <Authors>Microsoft</Authors>
+    <Product>Microsoft Bot Builder SDK</Product>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +34,4 @@
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
     <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
   </PropertyGroup>
-
 </Project>
