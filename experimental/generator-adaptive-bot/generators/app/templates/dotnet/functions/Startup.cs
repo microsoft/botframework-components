@@ -15,10 +15,17 @@ namespace <%= botName %>
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder configurationBuilder)
         {
-            var isDevelopment = string.Equals(configurationBuilder.GetContext().EnvironmentName, Microsoft.Extensions.Hosting.Environments.Development, StringComparison.OrdinalIgnoreCase);
-            var applicationRoot = configurationBuilder.GetContext().ApplicationRootPath;
+            string applicationRoot = configurationBuilder.GetContext().ApplicationRootPath;
+            string settingsDirectory = <%- settingsDirectory %>;
+            bool isDevelopment = string.Equals(
+                configurationBuilder.GetContext().EnvironmentName,
+                Microsoft.Extensions.Hosting.Environments.Development,
+                StringComparison.OrdinalIgnoreCase);
 
-            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(applicationRoot, isDevelopment);
+            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(
+                applicationRoot,
+                settingsDirectory,
+                isDevelopment);
         }
     }
 }

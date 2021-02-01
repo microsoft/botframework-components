@@ -1,0 +1,61 @@
+{
+  "calendarskill.en-us": {
+    "rootDialog": true,
+    "triggers": {}
+  },
+  "CreateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "GetContactsDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "ListDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "Next": [],
+      "Previous": [],
+      "Skip": []
+    }
+  },
+  "GetContactsDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ListDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "UpdateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveDateTimeDialog.en-us",
+        "GetEventsDialog.en-us",
+        "RespondToEventDialog.en-us",
+        "RespondToEventDialog.en-us",
+        "UpdateSlots.en-us",
+        "RespondToEventDialog.en-us",
+        "CancelEventDialog.en-us"
+      ],
+      "Cancel": [],
+      "ConfirmYes": []
+    }
+  },
+  "UpdateSlots.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveUpdateEntity.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Cancel": [],
+      "CancelEvent": []
+    }
+  }
+}
