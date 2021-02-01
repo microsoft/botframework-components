@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>Preview.Bot.Component.MsGraph</id>
-        <version>0.0.1</version>
+        <id>Microsoft.Bot.Component.MsGraph</id>
+        <version>1.0.0-alpha1</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
