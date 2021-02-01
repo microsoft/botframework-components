@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Preview.Bot.Component.MsGraph</id>
+        <version>0.0.1</version>
+        <authors>Microsoft</authors>
+        <owners>Microsoft</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>This is an early preview verison for testing use only.</releaseNotes>
+        <description>Package for the conversational core .net bot template.</description>
+        <tags>MsGraph c# preview</tags>
+        <dependencies />
+    </metadata>
+
+    <files>
+        <file src="**\*.*" target="content" />
+    </files>
+</package>
