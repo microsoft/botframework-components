@@ -9,7 +9,7 @@
   <!-- Nuget packaging information -->
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.CalendarSkill</PackageId>
-    <PackageVersion>1.0.0-alpha.1</PackageVersion>
+    <PackageVersion>1.0.0-alpha.2</PackageVersion>
     <Description>Plugin component for Calendaring custom action</Description>
     <Summary>Plugin component for Calendaring custom action.</Summary>
     <Company>Microsoft</Company>
@@ -31,12 +31,10 @@
 
   <ItemGroup>
     <Content Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <PackagePath>exported\$(AssemblyName)</PackagePath>
     </Content>
     <Content Include="..\MsGraph\Schemas\*.schema" CopyToOutputDirectory="always">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <PackagePath>exported\$(AssemblyName)</PackagePath>
     </Content>
