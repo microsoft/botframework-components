@@ -29,7 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always" />
+    <Content  Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
+      <IncludeInPackage>true</IncludeInPackage>
+      <CopyToOutput>true</CopyToOutput>
+      <BuildAction>Content</BuildAction>
+      <copyToOutput>true</copyToOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <PropertyGroup>
