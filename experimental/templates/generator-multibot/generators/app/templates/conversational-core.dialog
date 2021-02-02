@@ -58,6 +58,29 @@
           "activity": "${SendActivity_z0X16k()}"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Qg31vS",
+        "name": "Calendar"
+      },
+      "intent": "Calendar",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginSkill",
+          "$designer": {
+            "id": "hOM8Ns"
+          },
+          "activityProcessed": false,
+          "botId": "=settings.MicrosoftAppId",
+          "skillHostEndpoint": "=settings.skillHostEndpoint",
+          "connectionName": "=settings.connectionName",
+          "allowInterruptions": true,
+          "skillEndpoint": "=settings.skill['calendar'].endpointUrl",
+          "skillAppId": "=settings.skill['calendar'].msAppId"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
