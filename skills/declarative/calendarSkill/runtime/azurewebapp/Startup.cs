@@ -146,6 +146,7 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
 
             // This is for custom action component registration.
             ComponentRegistration.Add(new MSGraphComponentRegistration());
+            ComponentRegistration.Add(new CalendarCustomActionComponentRegistration());
             ComponentRegistration.Add(new CustomActionComponentRegistration());
 
             // Register the skills client and skills request handler.
