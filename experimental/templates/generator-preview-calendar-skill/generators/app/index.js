@@ -14,8 +14,17 @@ module.exports = class extends Generator {
       require.resolve('generator-adaptive-bot/generators/app'),
       {
         arguments: this.args,
-        packageReferences: [
-          /* put list of calendar related components here */
+        packageReferences: [{
+          name: 'Microsoft.Bot.Components.CalendarSkill',
+          version: '1.0.0-alpha.1'
+          }],
+        pluginDefinitions : [
+          {
+            'name': 'Microsoft.BotFramework.CustomAction.CalendarSkill'
+          },
+          {
+            'name': 'Microsoft.BotFramework.CustomAction.MsGraph'
+          },
         ]
       }
     );
