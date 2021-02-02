@@ -13,7 +13,7 @@ npm install -g generator-adaptive-bot
 Then generate your new project:
 
 ```bash
-yo adaptive-bot {BOT_NAME}
+yo adaptive-bot '{BOT_NAME}'
 ```
 
 ## Getting To Know Yeoman
@@ -24,9 +24,7 @@ yo adaptive-bot {BOT_NAME}
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## License
+Copyright (c) Microsoft Corporation. All rights reserved.
 
- © [Patrick Volum]()
-
-
-[npm-image]: https://badge.fury.io/js/generator-conversational-core.svg
-[npm-url]: https://npmjs.org/package/generator-conversational-core
+[npm-image]: https://badge.fury.io/js/generator-adaptive-bot.svg
+[npm-url]: https://npmjs.org/package/generator-adaptive-bot
