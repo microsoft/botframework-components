@@ -7,10 +7,10 @@
 
   <!-- Nuget packaging information -->
   <PropertyGroup>
-    <PackageId>Microsoft.Bot.Components.MsGraph</PackageId>
+    <PackageId>Microsoft.Bot.Components.CalendarSkill</PackageId>
     <PackageVersion>1.0.0-alpha.1</PackageVersion>
-    <Description>Plugin component for MSGraph custom action</Description>
-    <Summary>Plugin component for MSGraph custom action.</Summary>
+    <Description>Plugin component for Calendaring custom action</Description>
+    <Summary>Plugin component for Calendaring custom action.</Summary>
     <Company>Microsoft</Company>
     <Authors>Microsoft</Authors>
     <Product>Microsoft Bot Builder SDK</Product>
@@ -22,16 +22,14 @@
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.11.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Runtime.Plugins" Version="4.12.0-daily.preview.20210201.208375.958cb4f" />
     <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
-    
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.66">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include=".\Schemas\*.schema" CopyToOutputDirectory="always" />
+    <ProjectReference Include="..\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always" />
   </ItemGroup>
 
   <PropertyGroup>

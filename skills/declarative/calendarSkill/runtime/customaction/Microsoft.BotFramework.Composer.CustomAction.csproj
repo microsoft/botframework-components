@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\..\..\..\experimental\components\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Schemas\Actions\" />
+  </ItemGroup>
+
 </Project>
