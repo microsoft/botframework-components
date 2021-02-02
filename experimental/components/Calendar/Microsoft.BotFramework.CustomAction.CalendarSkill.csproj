@@ -31,11 +31,14 @@
 
   <ItemGroup>
     <Content Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
-      <IncludeInPackage>true</IncludeInPackage>
-      <CopyToOutput>true</CopyToOutput>
-      <BuildAction>Content</BuildAction>
-      <copyToOutput>true</copyToOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackagePath>exported\$(AssemblyName)</PackagePath>
+    </Content>
+    <Content Include="..\MsGraph\Schemas\*.schema" CopyToOutputDirectory="always">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackagePath>exported\$(AssemblyName)</PackagePath>
     </Content>
   </ItemGroup>
 
