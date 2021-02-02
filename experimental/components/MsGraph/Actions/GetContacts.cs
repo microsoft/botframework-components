@@ -90,7 +90,10 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             if (people?.Count > 0)
             {
-                var existingResult = contactsResult.SelectMany(c => c.EmailAddresses).ToHashSet();
+                var result = contactsResult.SelectMany(c => c.EmailAddresses);
+
+                var existingResult = new HashSet<string>(result);
+
                 foreach (var person in people)
                 {
                     var emailAddresses = new List<string>();
