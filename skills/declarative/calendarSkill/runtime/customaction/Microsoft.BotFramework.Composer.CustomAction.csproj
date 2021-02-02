@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\experimental\components\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" />
+    <ProjectReference Include="..\..\..\..\..\experimental\components\Calendar\Microsoft.BotFramework.CustomAction.CalendarSkill.csproj" />
   </ItemGroup>
 
   <ItemGroup>
