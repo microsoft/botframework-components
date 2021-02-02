@@ -50,6 +50,8 @@ module.exports = class extends Generator {
           version: '1.0.0-preview.1'
           },
         ],
+        applicationSettingsDirectory: 'settings',
+        includeApplicationSettings: false
       }
     );
 

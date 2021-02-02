@@ -25,7 +25,9 @@ module.exports = class extends Generator {
           {
             'name': 'Microsoft.BotFramework.CustomAction.MsGraph'
           },
-        ]
+        ],
+        applicationSettingsDirectory: 'settings',
+        includeApplicationSettings: false        
       }
     );
   }
