@@ -36,20 +36,29 @@ In addition to the packages published by the Bot Framework team, you'll be able 
 
 Getting started templates will be created on top of the component model. They will be built primarily by composing packages - ensuring that no matter which template you start from you'll have the flexibility to grow and develop your bot to meet your needs.
 
-For example, the Conversational Core template will take a dependency on four packages - greeting, help, cancel, and unknown intent. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
+For example, the Conversational Core template will take a dependency on two packages - welcome and  help & cancel. It will also include a root dialog that wires up the dialogs in those packages as well as a dialog for handling unkown intents. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
 
 ## Skills
 
 Skills are separate bots you connect your bot to in order to process messages for you. The skill manifest establishes a contract other bots can follow - defining messages and events the skill can handle and any data that will be returned when the skill completes its interaction with your user.
 
+## Index of Content
 
+### Templates
 
+| Name         | Description |  C#  | JavaScript |
+|:------------:|-------------|------|------------|
+|Echo Bot | The base empty bot | `someplace` | `someplace` |
 
+### Packages
 
+| Name         | Description |  C#  | JavaScript |
+|:------------:|-------------|------|------------|
+|Welcome | Simple dialog that triggers on conversation start | `someplace` | `someplace` |
 
-## Old things
+### Virtual Assistant skills
 
-This repository is the home for a list of Bot Framework Skills that provide productivity features as well as some experimental capabilities that are built on top of the latest BotBuilder SDK that offers [Skills](https://docs.microsoft.com/en-us/azure/bot-service/skills-conceptual?view=azure-bot-service-4.0) functionality.
+The experimental/sample skills listed below are designed to work with the [Virtual Assistant](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) bot template.
 
 | Name | Description |  
 |:------------:|------------| 
@@ -69,7 +78,7 @@ This repository is the home for a list of Bot Framework Skills that provide prod
 
 ## Documentation
 
-We document working with components [here][./docs/components-overview.md], and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
+We document working with components [here][./docs/overview.md], and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
 
 ## Need Help?
 
@@ -77,6 +86,7 @@ If you have any questions please start with [Stack Overflow](https://stackoverfl
 
 ## Contributing
 
+We welcome contributions to this repository! Please see our [wiki](https://github.com/microsoft/botframework-components/wiki) for details on how to contribute. If you'd like to contribute a completely new package or template, please use our [community repo](https://github.com/BotBuilderCommunity/).
 
 ## Reporting Security Issues
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
