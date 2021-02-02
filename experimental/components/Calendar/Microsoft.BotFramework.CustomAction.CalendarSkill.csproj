@@ -3,14 +3,15 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
   <!-- Nuget packaging information -->
   <PropertyGroup>
-    <PackageId>Microsoft.Bot.Components.MsGraph</PackageId>
+    <PackageId>Microsoft.Bot.Components.CalendarSkill</PackageId>
     <PackageVersion>1.0.0-alpha.1</PackageVersion>
-    <Description>Plugin component for MSGraph custom action</Description>
-    <Summary>Plugin component for MSGraph custom action.</Summary>
+    <Description>Plugin component for Calendaring custom action</Description>
+    <Summary>Plugin component for Calendaring custom action.</Summary>
     <Company>Microsoft</Company>
     <Authors>Microsoft</Authors>
     <Product>Microsoft Bot Builder SDK</Product>
@@ -22,16 +23,14 @@
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.11.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Runtime.Plugins" Version="4.12.0-daily.preview.20210201.208375.958cb4f" />
     <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
-    
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.66">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include=".\Schemas\*.schema" CopyToOutputDirectory="always">
+    <ProjectReference Include="..\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
       <IncludeInPackage>true</IncludeInPackage>
       <CopyToOutput>true</CopyToOutput>
       <BuildAction>Content</BuildAction>
@@ -45,4 +44,11 @@
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
     <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
   </PropertyGroup>
+
+   <!-- Temp workaround - include referenced MsGraph DLL with the package -->
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
+    </ItemGroup>
+  </Target>
 </Project>
