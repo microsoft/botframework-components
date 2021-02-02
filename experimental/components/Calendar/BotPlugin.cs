@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Bot.Components.MsGraph
+namespace Microsoft.Bot.Components.Calendar
 {
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Runtime.Plugins;
