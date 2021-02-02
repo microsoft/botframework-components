@@ -37,6 +37,7 @@ namespace Microsoft.BotFramework.Composer.Tests
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
             ComponentRegistration.Add(new MSGraphComponentRegistration());
+            ComponentRegistration.Add(new CalendarCustomActionComponentRegistration());
             ComponentRegistration.Add(new CustomActionComponentRegistration());
         }
 
