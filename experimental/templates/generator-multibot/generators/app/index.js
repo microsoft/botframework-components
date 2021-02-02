@@ -34,13 +34,22 @@ module.exports = class extends Generator {
       require.resolve('generator-adaptive-bot/generators/app'),
       {
         arguments: this.args,
+        pluginDefinitions: [{
+          name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
+        }],
         packageReferences: [{
           name: 'Preview.Bot.Component.HelpAndCancel',
           version: '0.0.1-preview1'
-          }, {
+          },
+          {
           name: 'Preview.Bot.Component.Welcome',
           version: '0.0.1-preview1'
-        }],
+          },
+          {
+          name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
+          version: '1.0.0-preview.1'
+          },
+        ],
       }
     );
 
