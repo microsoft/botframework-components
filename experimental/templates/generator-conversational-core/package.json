@@ -4,7 +4,7 @@
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/ConversationalCore/index.js",
   "dependencies": {
-    "generator-adaptive-bot": "^1.0.0-preview.6",
+    "generator-adaptive-bot": "^1.0.0-preview.8",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
