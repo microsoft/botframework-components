@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\customaction\Microsoft.BotFramework.Composer.CustomAction.csproj" />
+    <ProjectReference Include="..\..\..\..\..\experimental\components\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" />
+    <ProjectReference Include="..\..\..\..\..\experimental\components\Calendar\Microsoft.BotFramework.CustomAction.CalendarSkill.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,5 +38,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

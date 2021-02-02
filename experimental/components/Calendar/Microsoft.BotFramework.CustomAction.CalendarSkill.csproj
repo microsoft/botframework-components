@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
   <!-- Nuget packaging information -->
@@ -25,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" />
+    <ProjectReference Include="..\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content  Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
+    <Content Include=".\Schemas\Actions\*.schema" CopyToOutputDirectory="always">
       <IncludeInPackage>true</IncludeInPackage>
       <CopyToOutput>true</CopyToOutput>
       <BuildAction>Content</BuildAction>
@@ -43,4 +44,11 @@
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
     <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
   </PropertyGroup>
+
+   <!-- Temp workaround - include referenced MsGraph DLL with the package -->
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
+    </ItemGroup>
+  </Target>
 </Project>
