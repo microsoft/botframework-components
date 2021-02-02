@@ -3,6 +3,7 @@
 
 namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -90,9 +91,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
 
             if (people?.Count > 0)
             {
-                var result = contactsResult.SelectMany(c => c.EmailAddresses);
-
-                var existingResult = new HashSet<string>(result);
+                var existingResult = new HashSet<string>(contactsResult.SelectMany(c => c.EmailAddresses), StringComparer.OrdinalIgnoreCase);
 
                 foreach (var person in people)
                 {
