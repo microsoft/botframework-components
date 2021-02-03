@@ -1,5 +1,5 @@
 # generator-conversational-core [![NPM version][npm-image]][npm-url]
-> test generator for conversational core preview bot template
+> Yeoman generator for instantiating a bot template using the Conversational Core components.
 
 ## Installation
 
@@ -24,9 +24,7 @@ yo conversational-core
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## License
-
- © [Patrick Volum]()
-
+Copyright (c) Microsoft Corporation. All rights reserved.
 
 [npm-image]: https://badge.fury.io/js/generator-conversational-core.svg
 [npm-url]: https://npmjs.org/package/generator-conversational-core
