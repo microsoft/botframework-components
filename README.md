@@ -1,6 +1,64 @@
-![Bot Framework Solutions](https://github.com/microsoft/botframework-solutions/raw/master/docs/assets/images/bot_framework_solutions_header.png)
+---
+title:  'Building bots from building blocks'
+author: 'clearab'
+---
+# Bot Framework Components
 
-This repository is the home for a list of Bot Framework Skills that provide productivity features as well as some experimental capabilities that are built on top of the latest BotBuilder SDK that offers [Skills](https://docs.microsoft.com/en-us/azure/bot-service/skills-conceptual?view=azure-bot-service-4.0) functionality.
+This repository contains the source code for *components* published by Microsoft for bots built on the Azure Bot Framework technology stack. These components are part of the component model for building bots, which enables developers to build bots with re-usable building blocks (components). This model consists of a configurable [adaptive runtime](#adaptive-runtime), that can be extended by importing [packages](#packages) of functionality or connecting to other bots as [skills](#skills). Getting started [templates](#templates) built on this model will unify the creation experience, and eliminate the "dead-end" that can happen for some existing getting started experiences that lock you in to building a particular type of bot.
+
+**Our goals**:
+
+* Encourage the reuse of bot components – either connecting to a skill or importing in a package.
+* Enable the free movement of bots and components across hosting options and editing canvases.
+* Use industry/language-standard concepts and tools wherever possible.
+* Abstract away platform concepts for developers who do not wish to use them directly.
+* Enable provisioning and deployment to the necessary infrastructure based on the components included in a bot.
+* Publish a suite of packages, templates, and skills bot developers can use to build their bots from.
+* Publish components that demonstrate conversational design best practices.
+
+## Adaptive Runtime
+
+At the core of the component model is the adaptive runtime - an extensible, configurable runtime that is treated as a black box to bot developers and taken as a dependency. The runtime provides extensibility points to add additional functionality by importing packages, connection to skills, or adding your own functionality.
+
+## Packages
+
+Packages are bits of a bot you want to share/import like declarative dialog assets, coded dialogs, custom adapters, middleware or custom actions. They are just packages  - NuGet / npm etc based on the code-language of your bot. You'll use the Bot Framework CLI tool to merge the package's declarative contents with your bot (package management in Composer will handle this for you). They can be made up of any combination of declarative assets (.dialog, .lu, .lg, .qna files) or coded extensions (custom actions, middleware, adapters).
+
+In addition to the packages published by the Bot Framework team, you'll be able to create and share your own packages. We plan to provide tooling to make the entire package management lifecycle as simple as possible, from discovery and inclusion, to creation and publishing. Some examples of packages include:
+
+* Common conversational constructs like greeting, cancel, help, unknown intent.
+* Bundles of custom actions for working with an API like MS Graph, Dynamics, the Power Platform or GitHub.
+* Vertically aligned solutions containing a combination of custom actions and adaptive assets like human hand-off, or working with your calendar.
+* Bundles of custom actions for working with specific types of data or operations, like math functions or working with dates.
+* Meta-packages, that just take dependencies on a bunch of other packages to group functionality for simpler management.
+
+## Templates
+
+Getting started templates will be created on top of the component model. They will be built primarily by composing packages - ensuring that no matter which template you start from you'll have the flexibility to grow and develop your bot to meet your needs.
+
+For example, the Conversational Core template will take a dependency on two packages - welcome and  help & cancel. It will also include a root dialog that wires up the dialogs in those packages as well as a dialog for handling unkown intents. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
+
+## Skills
+
+Skills are separate bots you connect your bot to in order to process messages for you. The skill manifest establishes a contract other bots can follow - defining messages and events the skill can handle and any data that will be returned when the skill completes its interaction with your user.
+
+## Index of Content
+
+### Templates
+
+| Name         | Description |  C#  | JavaScript |
+|:------------:|-------------|------|------------|
+|Echo Bot | The base empty bot | `someplace` | `someplace` |
+
+### Packages
+
+| Name         | Description |  C#  | JavaScript |
+|:------------:|-------------|------|------------|
+|Welcome | Simple dialog that triggers on conversation start | `someplace` | `someplace` |
+
+### Virtual Assistant skills
+
+The experimental/sample skills listed below are designed to work with the [Virtual Assistant](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) bot template.
 
 | Name | Description |  
 |:------------:|------------| 
@@ -20,11 +78,15 @@ This repository is the home for a list of Bot Framework Skills that provide prod
 
 ## Documentation
 
-The Skills included in this repository are part of Bot Framework Solutions offering and please refer to the [site](https://aka.ms/bfsolutionsdocs) for comprehensive documentation for everything we offer.
+We document working with components [here][./docs/overview.md], and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
 
 ## Need Help?
 
 If you have any questions please start with [Stack Overflow](https://stackoverflow.com/questions/tagged/botframework) where we're happy to help. Please use this GitHub Repos issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-skills/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-skills/issues/new?assignees=&labels=Type%3A+Feature&template=feature_request.md&title=).
+
+## Contributing
+
+We welcome contributions to this repository! Please see our [wiki](https://github.com/microsoft/botframework-components/wiki) for details on how to contribute. If you'd like to contribute a completely new package or template, please use our [community repo](https://github.com/BotBuilderCommunity/).
 
 ## Reporting Security Issues
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
