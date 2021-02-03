@@ -4,6 +4,8 @@ using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Bot.Component.CalendarSkill;
+using Microsoft.Bot.Component.MsGraph;
 using Microsoft.BotFramework.Composer.CustomAction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
