@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
+namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
     using Microsoft.Bot.Builder.Dialogs;
-    using Microsoft.BotFramework.Composer.CustomAction.Models;
+    using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 

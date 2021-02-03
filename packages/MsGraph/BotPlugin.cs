@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Bot.Components.MsGraph
+namespace Microsoft.Bot.Component.MsGraph
 {
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Runtime.Plugins;
-    using Microsoft.BotFramework.Composer.CustomAction;
+    using Microsoft.Bot.Component.MsGraph;
 
     public class BotPlugin : IBotPlugin
     {

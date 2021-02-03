@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.BotFramework.Composer.CustomAction
+namespace Microsoft.Bot.Component.MsGraph
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction
     using Microsoft.Bot.Builder.Dialogs.Debugging;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
     using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
-    using Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph;
+    using Microsoft.Bot.Component.MsGraph.Actions.MSGraph;
     using Newtonsoft.Json;
 
     public class MSGraphComponentRegistration : ComponentRegistration, IComponentDeclarativeTypes

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
+namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
     using System;
     using System.Net.Http;
