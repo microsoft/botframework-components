@@ -1,0 +1,41 @@
+
+> LUIS application information
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 3.2.0
+
+
+> # Intent definitions
+
+# Help
+- any help
+- can you help
+- can you help me
+- give me some help
+- help
+- how can i get it
+- how to do it
+- i need help
+- i need some assist
+- i need some help
+- is there any help
+- open help
+- please help
+- some help
+- who can help me
+
+
+> # Entity definitions
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities
+
+

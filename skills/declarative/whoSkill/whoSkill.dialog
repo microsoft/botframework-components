@@ -17,32 +17,36 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.Foreach",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "518944",
-            "name": "Loop: for each item"
+            "id": "5oW8CV"
           },
-          "itemsProperty": "turn.Activity.membersAdded",
-          "actions": [
+          "name": "whoSkill.Greeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "8IgEJK"
+          },
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
+          "actions": [],
+          "elseActions": [
             {
-              "$kind": "Microsoft.IfCondition",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "641773",
-                "name": "Branch: if/else"
+                "id": "wkHAkx"
               },
-              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "859266",
-                    "name": "Send a response"
-                  },
-                  "activity": "${SendActivity_Welcome()}"
-                }
-              ]
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "TXYwSy"
+          },
+          "activity": "${SendActivity_TXYwSy()}"
         }
       ]
     }
