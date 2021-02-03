@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Bot.Components.Calendar
+namespace Microsoft.Bot.Component.CalendarSkill
 {
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Runtime.Plugins;
-    using Microsoft.BotFramework.Composer.CustomAction;
 
     public class BotPlugin : IBotPlugin
     {

@@ -24,6 +24,7 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core.Skills;
 using Microsoft.Bot.Builder.Skills;
+using Microsoft.Bot.Component.CalendarSkill;
 using Microsoft.Bot.Component.MsGraph;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.BotFramework.Composer.CustomAction.Actions
+namespace Microsoft.Bot.Component.CalendarSkill.Actions
 {
     /// <summary>
     /// This action calls the Microsoft.Recognizers.Text library for recognizing DateTimes from strings. 

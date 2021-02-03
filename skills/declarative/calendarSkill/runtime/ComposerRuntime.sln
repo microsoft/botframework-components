@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.MsGraph", "..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj", "{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.CustomAction.CalendarSkill", "..\..\..\..\packages\Calendar\Microsoft.BotFramework.CustomAction.CalendarSkill.csproj", "{218B47E4-0277-4809-94FE-6461B114D693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.CalendarSkill", "..\..\..\..\packages\Calendar\Microsoft.Bot.Component.CalendarSkill.csproj", "{218B47E4-0277-4809-94FE-6461B114D693}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

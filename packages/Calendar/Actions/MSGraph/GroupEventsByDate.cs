@@ -4,7 +4,7 @@
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.BotFramework.Composer.CustomAction.Models;
+using Microsoft.Bot.Component.MsGraph.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
+namespace Microsoft.Bot.Component.CalendarSkill.Actions.MSGraph
 {
     public class GroupEventsByDate : Dialog
     {

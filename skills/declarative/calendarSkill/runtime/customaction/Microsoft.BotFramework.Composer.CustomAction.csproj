@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\packages\Calendar\Microsoft.BotFramework.CustomAction.CalendarSkill.csproj" />
+    <ProjectReference Include="..\..\..\..\..\packages\Calendar\Microsoft.Bot.Component.CalendarSkill.csproj" />
     <ProjectReference Include="..\..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj" />
   </ItemGroup>
 
