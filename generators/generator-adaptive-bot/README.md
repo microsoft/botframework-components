@@ -1,4 +1,4 @@
-# generator-adpative-bot [![NPM version][npm-image]][npm-url]
+# generator-adaptive-bot [![NPM version][npm-image]][npm-url]
 > Yeoman generator for creating a bot application built on top of the Microsoft Bot Framework SDK and Adaptive Runtime.
 
 ## Installation
