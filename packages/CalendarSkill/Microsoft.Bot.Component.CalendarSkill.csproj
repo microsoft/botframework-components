@@ -8,8 +8,8 @@
 
   <!-- Nuget packaging information -->
   <PropertyGroup>
-    <PackageId>Microsoft.Bot.Components.CalendarSkill</PackageId>
-    <PackageVersion>1.0.0-alpha.2</PackageVersion>
+    <PackageId>Microsoft.Bot.Component.CalendarSkill</PackageId>
+    <PackageVersion>1.0.0-alpha.1</PackageVersion>
     <Description>Plugin component for Calendaring custom action</Description>
     <Summary>Plugin component for Calendaring custom action.</Summary>
     <Company>Microsoft</Company>
