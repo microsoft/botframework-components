@@ -1,0 +1,149 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+
+# ChoiceInput_Prompt_VRSPsi()
+[Activity
+    text = What would you like to change?
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# TextInput_Prompt_QxL9wg()
+- What should I set the title to?
+
+# TextInput_Prompt_CnAukI()
+- What should I set the location to?
+
+# TextInput_Prompt_vsIFCG()
+- What should I set the description to?
+
+# DateTimeInput_Prompt_b0tmn4()
+- When should I schedule it?
+
+# DateTimeInput_Prompt_u29CId()
+- What time?
+
+# SendActivity_F6WlGO()
+[Activity
+    text = You are not the meeting organizer.
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_7kNW6V()
+- Ok, I will not update the event.
+
+# ConfirmInput_Prompt_lvMf0G()
+[Activity
+    text = Does this look right?
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_hNTgiS()
+- Ok, I won't update the event.
+
+# SendActivity_J4FMqs()
+- I've updated the event.
+
+# SendActivity_tjEhsN()
+- Something went wrong while updating your event. 
+# AttendeeListCard(attendees)
+[Activity
+    attachments = ${json(CardTemplate(AttendeeListHeader(attendees), AttendeeListBody(attendees), AttendeeListActions()))}
+]
+
+# AttendeeListHeader(attendees)
+- ${CardHeader(ContactIconUrl(), AttendeeListTitle(), '', AttendeeListCounter(attendees))}
+
+# AttendeeListBody(items)
+- ${ExpandableListCardBody(foreach(items, item, AttendeeListItem(item)), 5)}
+
+# AttendeeListActions()
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Add",
+            "data": {
+                "intent": "AddAttendee"
+            }
+        }
+    ]
+}
+```
+
+# AttendeeListTitle
+- Edit Attendees
+
+# AttendeeListCounter(events)
+- ${count(events)} ${Pluralize(count(events), 'attendee', 'attendees')}
+
+# AttendeeListItem(attendee)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${attendee.emailAddress.name}",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${attendee.emailAddress.address}",
+                            "wrap": true,
+                            "spacing": "Small"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Remove",
+                            "wrap": true,
+                            "color": "Attention"
+                        }
+                    ],
+                    "selectAction": {
+                        "type": "Action.Submit",
+                        "data": {
+                            "intent": "RemoveAttendee"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+# RemoveAttendeeConfirmation(attendee)
+- I've removed ${coalesce(attendee.Name, attendee.Address)}.
+
+# TextInput_Prompt_wiYHdh()
+- How long should it last?
+# ConfirmInput_Prompt_7ANEcD()
+- Would you like to change anything else?
+# ConfirmInput_Prompt_OQk6xL()
+- Would you like to remove the Microsoft Teams link?
+# ConfirmInput_Prompt_WbBcd8()
+- Would you like to make this a Microsoft Teams meeting?
+# ChoiceInput_Prompt_488KMT()
+- Would you like to add or remove attendees?
+
+# SendActivity_n59nHl()
+- ${RemoveAttendeeConfirmation($selectedContact)}

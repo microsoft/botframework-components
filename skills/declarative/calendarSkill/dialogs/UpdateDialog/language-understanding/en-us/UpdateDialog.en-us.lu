@@ -1,0 +1,13 @@
+> General intent imports
+[Cancel](cancel.en-us.lu)
+
+> Calendar intent imports
+[SetAttendeesAdd](setAttendeesAdd.en-us.lu)
+[SetAttendeesRemove](setAttendeesRemove.en-us.lu)
+[SetDateTime](setDateTime.en-us.lu)
+[SetDescription](setDescription.en-us.lu)
+[SetDuration](setDuration.en-us.lu)
+[SetLocation](setLocation.en-us.lu)
+[SetOnlineMeetingAdd](setOnlineMeetingAdd.en-us.lu)
+[SetOnlineMeetingRemove](setOnlineMeetingRemove.en-us.lu)
+[SetTitle](setTitle.en-us.lu)

@@ -7,6 +7,19 @@
 
 > # Intent definitions
 
+# TextInput_Response_Fej6Ub
+- with {@contact=allan} and {@contact=alex}
+- the one with {@contact=elaine} next week
+- the event with test@email.com
+- {@contact=Sally}'s meeting friday morning
+- the one titled {@subject=lunch}
+- {@subject=project review} on thursday
+- the {@subject=design review} on tuesday at 11am
+- wednesday at 3pm
+- january 3rd
+- 4:30pm
+
+
 # Cancel
 - cancel
 - cancel app
@@ -45,8 +58,14 @@
 
 > # Entity definitions
 
+@ ml contact
+
+@ ml subject
+
 
 > # PREBUILT Entity definitions
+
+@ prebuilt email
 
 
 > # Phrase list definitions

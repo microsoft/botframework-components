@@ -7,38 +7,6 @@
 
 > # Intent definitions
 
-# Skip
-- skip adding contacts
-- skip setting the title
-- skip adding a subject
-- skip adding teams
-- skip setting the location
-- none
-- no location
-- skip
-- skip this
-- skip over this
-- skip this step
-- don't do this step
-- i want to skip
-
-
-@ intent Skip usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
-
-# None
-- yes
-- sure
-- no
-- no thanks
-- Alex
-- John
-- thursday
-- tuesday
-- next week
-
-
-@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
-
 # Cancel
 - cancel
 - cancel app

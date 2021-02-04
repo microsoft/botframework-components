@@ -84,7 +84,7 @@
                 }
               ],
               "elseActions": [],
-              "condition": "$options.maxResults == 1"
+              "condition": "$doSelection"
             },
             {
               "$kind": "Microsoft.EndDialog",
@@ -206,7 +206,8 @@
               },
               "activityProcessed": false,
               "options": {
-                "options": "=$options"
+                "options": "=$options",
+                "doSelection": "=true"
               }
             }
           ]
