@@ -6,7 +6,7 @@
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
-  "recognizer": "AddToDo.lu",
+  "recognizer": "AddToDo.lu.qna",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
@@ -18,7 +18,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Jk-nXo"
+            "id": "Jk_nXo"
           },
           "dialog": "SetListTypePage"
         },
@@ -186,7 +186,7 @@
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "-fYnxb"
+                "id": "_fYnxb"
               }
             }
           ],
@@ -205,7 +205,7 @@
             {
               "$kind": "Microsoft.ReplaceDialog",
               "$designer": {
-                "id": "8nNkT-"
+                "id": "8nNkT_"
               },
               "dialog": "ShowToDo",
               "options": {
@@ -252,5 +252,6 @@
       ]
     }
   ],
-  "generator": "AddToDo.lg"
+  "generator": "AddToDo.lg",
+  "id": "AddToDo"
 }

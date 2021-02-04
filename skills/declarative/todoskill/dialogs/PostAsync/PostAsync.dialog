@@ -11,7 +11,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "DBpVA-"
+        "id": "DBpVA_"
       },
       "actions": [
         {
@@ -33,7 +33,7 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "g37gp-"
+            "id": "g37gp_"
           }
         },
         {

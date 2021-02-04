@@ -120,7 +120,7 @@
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "x--xlA"
+                    "id": "x__xlA"
                   },
                   "condition": "=dialog.taskContent == null",
                   "actions": [

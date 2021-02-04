@@ -17,7 +17,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "--RowA"
+            "id": "__RowA"
           },
           "dialog": "SetListTypePage"
         },
@@ -93,7 +93,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "K-bSF9"
+            "id": "K_bSF9"
           },
           "assignments": [
             {

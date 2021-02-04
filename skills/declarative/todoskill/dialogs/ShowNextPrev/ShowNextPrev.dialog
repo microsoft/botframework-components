@@ -45,7 +45,7 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "mlvo2-"
+                    "id": "mlvo2_"
                   },
                   "assignments": [
                     {

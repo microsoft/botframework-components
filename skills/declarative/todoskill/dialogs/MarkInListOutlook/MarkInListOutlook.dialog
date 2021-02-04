@@ -17,7 +17,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "-AKi_C"
+            "id": "_AKi_C"
           },
           "dialog": "OAuth"
         },

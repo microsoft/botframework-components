@@ -52,7 +52,7 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "cz-kXr"
+            "id": "cz_kXr"
           },
           "value": "=turn.token"
         }

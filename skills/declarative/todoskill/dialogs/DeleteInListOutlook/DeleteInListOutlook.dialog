@@ -24,7 +24,7 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "2lh-BU"
+            "id": "2lh_BU"
           },
           "itemsProperty": "dialog.tasks",
           "actions": [

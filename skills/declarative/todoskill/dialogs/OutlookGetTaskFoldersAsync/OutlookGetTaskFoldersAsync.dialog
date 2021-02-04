@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "-E55SX",
+    "id": "_E55SX",
     "name": "OutlookGetTaskFoldersAsync"
   },
   "autoEndDialog": "true",

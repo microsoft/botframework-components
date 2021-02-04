@@ -40,7 +40,7 @@
             {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "DXIBQ-"
+                "id": "DXIBQ_"
               },
               "changeType": "push",
               "itemsProperty": "turn.listToId",
@@ -51,7 +51,7 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "cfZNG-"
+            "id": "cfZNG_"
           },
           "value": "=dialog.id"
         }

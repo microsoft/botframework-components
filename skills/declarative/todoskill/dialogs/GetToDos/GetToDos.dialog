@@ -57,7 +57,7 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "_utP-l"
+            "id": "_utP_l"
           },
           "value": "=dialog.result"
         }
