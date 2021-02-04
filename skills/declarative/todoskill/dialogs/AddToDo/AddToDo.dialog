@@ -6,7 +6,7 @@
   },
   "autoEndDialog": "true",
   "defaultResultProperty": "dialog.result",
-  "recognizer": "AddToDo.lu.qna",
+  "recognizer": "AddToDo.lu",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
@@ -252,6 +252,5 @@
       ]
     }
   ],
-  "generator": "AddToDo.lg",
-  "id": "AddToDo"
+  "generator": "AddToDo.lg"
 }
