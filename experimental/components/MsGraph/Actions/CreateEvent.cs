@@ -9,11 +9,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
     using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.BotFramework.Composer.CustomAction.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Custom action for creating a new event in MS Graph
+    /// Custom action for creating a new event in MS Graph.
     /// </summary>
     [MsGraphCustomActionRegistration(CreateEvent.CreateEventDeclarativeType)]
     public class CreateEvent : BaseMsGraphCustomAction<Event>
@@ -39,49 +40,49 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public StringExpression TitleProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the description of the event
+        /// Gets or sets the description of the event.
         /// </summary>
         /// <value>Description of the event</value>
         [JsonProperty("descriptionProperty")]
         public StringExpression DescriptionProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the start time and date of the event
+        /// Gets or sets the start time and date of the event.
         /// </summary>
         /// <value>Start time and date of the event</value>
         [JsonProperty("startProperty")]
         public ObjectExpression<DateTime> StartProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the end time and date of the event
+        /// Gets or sets the end time and date of the event.
         /// </summary>
-        /// <value>End time and date of the event</value>
+        /// <value>End time and date of the event.</value>
         [JsonProperty("endProperty")]
         public ObjectExpression<DateTime> EndProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the timezone of the event
+        /// Gets or sets the timezone of the event.
         /// </summary>
         /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the event
+        /// Gets or sets the location of the event.
         /// </summary>
         /// <value>Location of the event</value>
         [JsonProperty("locationProperty")]
         public StringExpression LocationProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of attendees in the event
+        /// Gets or sets the list of attendees in the event.
         /// </summary>
-        /// <value>List of attendees to the event</value>
+        /// <value>List of attendees to the event.</value>
         [JsonProperty("attendeesProperty")]
         public ArrayExpression<Attendee> AttendeesProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the online meeting property for the event
+        /// Gets or sets the online meeting property for the event.
         /// </summary>
         /// <value><c>True</c> if the meeting is an online event, <c>False</c> if otherwise.</value>
         [JsonProperty("isOnlineMeetingProperty")]
@@ -90,7 +91,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public override string DeclarativeType => CreateEventDeclarativeType;
 
         /// <summary>
-        /// Calls Graph service to create a calendar event
+        /// Calls Graph service to create a calendar event.
         /// </summary>
         /// <param name="client"></param>
         /// <param name="dc"></param>
@@ -114,7 +115,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                 Body = new ItemBody()
                 {
                     ContentType = BodyType.Html,
-                    Content = descriptionProperty + $"<br /><span>🤖 </span><span style=\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>",
+                    Content = descriptionProperty + CalendarSkillEventModel.CalendarDescriptionString,
                 },
                 Location = new Location()
                 {

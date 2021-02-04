@@ -19,7 +19,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
     public class UpdateEvent : BaseMsGraphCustomAction<Event>
     {
         /// <summary>
-        /// Declarative type of this custom action
+        /// Declarative type of this custom action.
         /// </summary>
         public const string UpdateEventDeclarativeType = "Microsoft.Graph.Calendar.UpdateEvent";
 
@@ -30,7 +30,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         }
 
         /// <summary>
-        /// The event and its property to update in graph
+        /// The event and its property to update in graph.
         /// </summary>
         /// <value></value>
         [JsonProperty("eventToUpdateProperty")]
@@ -39,7 +39,7 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
         public override string DeclarativeType => UpdateEventDeclarativeType;
 
         /// <summary>
-        /// Calls the MS graph service to update an event's detail
+        /// Calls the MS graph service to update an event's detail.
         /// </summary>
         /// <param name="client"></param>
         /// <param name="dc"></param>
@@ -62,7 +62,12 @@ namespace Microsoft.BotFramework.Composer.CustomAction.Actions.MSGraph
                     DisplayName = eventToUpdateProperty.Location,
                 },
                 IsOnlineMeeting = eventToUpdateProperty.IsOnlineMeeting,
-                OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
+                OnlineMeetingProvider = eventToUpdateProperty.IsOnlineMeeting.Value ? OnlineMeetingProviderType.TeamsForBusiness : OnlineMeetingProviderType.Unknown,
+                Body = new ItemBody()
+                {
+                    ContentType = BodyType.Html,
+                    Content = eventToUpdateProperty.Description,
+                },
             };
 
             return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
