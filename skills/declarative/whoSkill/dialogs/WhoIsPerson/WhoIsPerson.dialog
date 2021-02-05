@@ -17,6 +17,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "SxiSA0"
+          },
+          "property": "$name",
+          "value": "=@firstName"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "A5uu49"

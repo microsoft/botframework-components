@@ -25,10 +25,18 @@
 - who can help me
 
 
+# WhoIsPerson
+- Who is {@firstName=Thomas}?
+
+
 > # Entity definitions
+
+@ ml firstName
 
 
 > # PREBUILT Entity definitions
+
+@ prebuilt personName hasRole firstName
 
 
 > # Phrase list definitions

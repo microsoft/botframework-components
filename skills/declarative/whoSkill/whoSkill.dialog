@@ -49,6 +49,24 @@
           "activity": "${SendActivity_TXYwSy()}"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ZREiXe",
+        "name": "WhoIsPerson"
+      },
+      "intent": "WhoIsPerson",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8cejea"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPerson"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
