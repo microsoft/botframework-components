@@ -24,6 +24,18 @@
           "name": "UpdateDialog.BeginDialog"
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "M0Ccnm"
+          },
+          "assignments": [
+            {
+              "property": "$turnCount",
+              "value": "=3"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "1y2dDi"
@@ -94,7 +106,7 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=turn.recognized.score > 0.8 && not(exists(#None)) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_VRSPsi()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -109,35 +121,71 @@
           "choices": [
             {
               "value": "title",
-              "displayText": "Title"
+              "displayText": "Title",
+              "action": {
+                "title": "Title",
+                "type": "postBack",
+                "value": "title"
+              }
             },
             {
               "value": "attendees",
-              "displayText": "Attendees"
+              "displayText": "Attendees",
+              "action": {
+                "title": "Attendees",
+                "type": "postBack",
+                "value": "attendees"
+              }
             },
             {
               "value": "datetime",
-              "displayText": "Date and time"
+              "displayText": "Date and time",
+              "action": {
+                "title": "Date and time",
+                "type": "postBack",
+                "value": "datetime"
+              }
             },
             {
               "value": "location",
-              "displayText": "Location"
+              "displayText": "Location",
+              "action": {
+                "title": "Location",
+                "type": "postBack",
+                "value": "location"
+              }
             },
             {
               "value": "description",
-              "displayText": "Description"
+              "displayText": "Description",
+              "action": {
+                "title": "Description",
+                "type": "postBack",
+                "value": "description"
+              }
             },
             {
-              "value": "duration"
+              "value": "duration",
+              "action": {
+                "title": "Duration",
+                "type": "postBack",
+                "value": "duration"
+              }
             },
             {
-              "value": "onlineMeeting"
+              "value": "onlineMeeting",
+              "action": {
+                "title": "Microsoft Teams",
+                "type": "postBack",
+                "value": "onlineMeeting"
+              }
             }
           ],
           "recognizerOptions": {
             "recognizeOrdinals": true,
             "recognizeNumbers": true
-          }
+          },
+          "style": "suggestedAction"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -239,7 +287,7 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
+          "maxTurnCount": "=$turnCount",
           "alwaysPrompt": false,
           "allowInterruptions": false,
           "prompt": "${ConfirmInput_Prompt_7ANEcD()}",
@@ -252,7 +300,8 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "property": "turn.repeat"
+          "property": "turn.repeat",
+          "style": "suggestedAction"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -306,13 +355,13 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_QxL9wg()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "property": "$title",
-          "value": "=$options.updateValue"
+          "value": "=coalesce($options.updateValue, @title)"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -324,6 +373,17 @@
               "property": "$event.subject",
               "value": "=$title"
             }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "V8YqS8"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
           ]
         }
       ]
@@ -352,7 +412,7 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_488KMT()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -491,6 +551,17 @@
               "activity": "${SendActivity_n59nHl()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "7hriuo"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
+          ]
         }
       ]
     },
@@ -523,7 +594,7 @@
           "defaultValueResponse": "",
           "property": "$datetime",
           "validations": [],
-          "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != 'DateTimeInput_Response_D6qCmX') || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != SetDateTime) || exists(turn.activity.value.intent)",
           "value": "=$options.updateValue"
         },
         {
@@ -708,6 +779,17 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "RHQyIk"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
+          ]
         }
       ]
     },
@@ -734,7 +816,7 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=#Skip.score > 0.8 || #Cancel.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_vsIFCG()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -751,6 +833,17 @@
               "property": "$event.description",
               "value": "=$description"
             }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "SpNsQC"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
           ]
         }
       ]
@@ -778,11 +871,10 @@
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=#Skip.score > 0.8 || #Cancel.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_wiYHdh()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
-          "defaultValueResponse": "",
           "property": "$duration",
           "value": "=coalesce($options.updateValue, @duration)"
         },
@@ -806,6 +898,17 @@
           },
           "property": "$event.end.dateTime",
           "value": "=addSeconds(formatDateTime($event.start.dateTime), int($datetime.value))"
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "2OSAAa"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
+          ]
         }
       ]
     },
@@ -832,7 +935,7 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_CnAukI()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -851,6 +954,17 @@
               "value": "=$location"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "11cwwF"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
+          ]
         }
       ]
     },
@@ -863,6 +977,13 @@
       "event": "UpdateOnlineMeeting",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HvVEp5"
+          },
+          "name": "UpdateDialog.OnEvent_UpdateOnlineMeeting"
+        },
+        {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
             "id": "WbBcd8"
@@ -870,8 +991,7 @@
           "defaultLocale": "en-us",
           "disabled": false,
           "maxTurnCount": 3,
-          "alwaysPrompt": true,
-          "allowInterruptions": false,
+          "alwaysPrompt": false,
           "prompt": "${ConfirmInput_Prompt_WbBcd8()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -883,7 +1003,8 @@
             "inlineSeparator": ", "
           },
           "property": "$isOnlineMeeting",
-          "value": "=$options.updateValue"
+          "value": "=$options.updateValue",
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -891,7 +1012,18 @@
             "id": "EnRbhm"
           },
           "property": "$event.isOnlineMeeting",
-          "value": "$isOnlineMeeting"
+          "value": "=$isOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "SYK5xD"
+          },
+          "properties": [
+            "$options.updateProperty",
+            "$options.updateAction",
+            "$options.updateValue"
+          ]
         }
       ]
     },
@@ -903,6 +1035,13 @@
       },
       "event": "UpdateResponse",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "MV8pj1"
+          },
+          "name": "UpdateDialog.OnEvent_UpdateResponse"
+        },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
@@ -921,21 +1060,29 @@
       "event": "ConfirmUpdate",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hQBh9w"
+          },
+          "name": "UpdateDialog.OnEvent_ConfirmUpdate"
+        },
+        {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
             "id": "lvMf0G"
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
+          "maxTurnCount": "=$turnCount",
           "alwaysPrompt": false,
-          "allowInterruptions": false,
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "prompt": "${ConfirmInput_Prompt_lvMf0G()}",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           },
           "property": "$confirmUpdate"
         },
@@ -994,6 +1141,75 @@
       ]
     },
     {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "DzqIG5",
+        "name": "OnEvent (Cancel)"
+      },
+      "event": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WubtHA"
+          },
+          "name": "UpdateDialog.OnEvent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "br66dN"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
+          },
+          "property": "$cancelConfirmed",
+          "prompt": "${ConfirmInput_Prompt_br66dN()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "eS4tLb"
+          },
+          "condition": "=$cancelConfirmed",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "cfhvpL"
+              },
+              "activity": "${SendActivity_cfhvpL()}"
+            },
+            {
+              "$kind": "Microsoft.CancelAllDialogs",
+              "$designer": {
+                "id": "mEfvlw"
+              },
+              "activityProcessed": true
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lgaJK3"
+              },
+              "activity": "${SendActivity_lgaJK3()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "1M2GBg",
@@ -1001,6 +1217,21 @@
       },
       "intent": "SetAttendeesAdd",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SwlrbV"
+          },
+          "name": "UpdateDialog.OnIntent_SetAttendeesAdd"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Xamu30"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -1039,6 +1270,21 @@
       "intent": "SetAttendeesRemove",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uJvdmu"
+          },
+          "name": "UpdateDialog.OnIntent_SetAttendeesRemove"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "rHnsuH"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "46yGS4"
@@ -1076,6 +1322,21 @@
       "intent": "SetDateTime",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Ac1Mlx"
+          },
+          "name": "UpdateDialog.OnIntent_SetDateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "uevCOy"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "IT5Mhb"
@@ -1109,6 +1370,21 @@
       "intent": "SetDescription",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hogjiQ"
+          },
+          "name": "UpdateDialog.OnIntent_SetDescription"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "sGT7jB"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "i2Fadn"
@@ -1137,6 +1413,21 @@
       },
       "intent": "SetDuration",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "BIZY6i"
+          },
+          "name": "UpdateDialog.OnIntent_SetDuration"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "fxzMfC"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -1171,6 +1462,21 @@
       "intent": "SetLocation",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "q8M4Vb"
+          },
+          "name": "UpdateDialog.OnIntent_SetLocation"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "tE4SWA"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "ZtHibq"
@@ -1203,6 +1509,21 @@
       },
       "intent": "SetOnlineMeetingAdd",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jXByO9"
+          },
+          "name": "UpdateDialog.OnIntent_SetOnlineMeetingAdd"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "unJhAH"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -1237,6 +1558,21 @@
       "intent": "SetOnlineMeetingRemove",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6Ck8gB"
+          },
+          "name": "UpdateDialog.OnIntent_SetOnlineMeetingRemove"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "JZrqdr"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "0hsFO7"
@@ -1270,6 +1606,21 @@
       "intent": "SetTitle",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Ifec42"
+          },
+          "name": "UpdateDialog.OnIntent_SetTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "1jHGHO"
+          },
+          "property": "$turnCount",
+          "value": "=$turnCount + 1"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "IfAGtw"
@@ -1300,7 +1651,30 @@
         "id": "07kxJ0",
         "name": "OnIntent (Cancel)"
       },
-      "intent": "Cancel"
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "0ejJaX"
+          },
+          "name": "UpdateDialog.OnIntent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "TBIiOv"
+          },
+          "name": "UpdateDialog.OnIntent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "qjGu3G"
+          },
+          "eventName": "Cancel"
+        }
+      ]
     }
   ],
   "generator": "UpdateDialog.lg",

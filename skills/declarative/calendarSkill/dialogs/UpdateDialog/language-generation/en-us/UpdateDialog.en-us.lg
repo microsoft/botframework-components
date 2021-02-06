@@ -45,105 +45,30 @@
 
 # SendActivity_tjEhsN()
 - Something went wrong while updating your event. 
-# AttendeeListCard(attendees)
-[Activity
-    attachments = ${json(CardTemplate(AttendeeListHeader(attendees), AttendeeListBody(attendees), AttendeeListActions()))}
-]
-
-# AttendeeListHeader(attendees)
-- ${CardHeader(ContactIconUrl(), AttendeeListTitle(), '', AttendeeListCounter(attendees))}
-
-# AttendeeListBody(items)
-- ${ExpandableListCardBody(foreach(items, item, AttendeeListItem(item)), 5)}
-
-# AttendeeListActions()
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Add",
-            "data": {
-                "intent": "AddAttendee"
-            }
-        }
-    ]
-}
-```
-
-# AttendeeListTitle
-- Edit Attendees
-
-# AttendeeListCounter(events)
-- ${count(events)} ${Pluralize(count(events), 'attendee', 'attendees')}
-
-# AttendeeListItem(attendee)
-- ```
-{
-    "type": "Container",
-    "separator": true,
-    "spacing": "Medium",
-    "items": [
-        {
-            "type": "ColumnSet",
-            "spacing": "Small",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "${attendee.emailAddress.name}",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": "${attendee.emailAddress.address}",
-                            "wrap": true,
-                            "spacing": "Small"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Remove",
-                            "wrap": true,
-                            "color": "Attention"
-                        }
-                    ],
-                    "selectAction": {
-                        "type": "Action.Submit",
-                        "data": {
-                            "intent": "RemoveAttendee"
-                        }
-                    }
-                }
-            ]
-        }
-    ]
-}
-```
 
 # RemoveAttendeeConfirmation(attendee)
 - I've removed ${coalesce(attendee.Name, attendee.Address)}.
 
 # TextInput_Prompt_wiYHdh()
 - How long should it last?
+
 # ConfirmInput_Prompt_7ANEcD()
 - Would you like to change anything else?
-# ConfirmInput_Prompt_OQk6xL()
-- Would you like to remove the Microsoft Teams link?
+
 # ConfirmInput_Prompt_WbBcd8()
 - Would you like to make this a Microsoft Teams meeting?
+
 # ChoiceInput_Prompt_488KMT()
 - Would you like to add or remove attendees?
 
 # SendActivity_n59nHl()
 - ${RemoveAttendeeConfirmation($selectedContact)}
+
+# ConfirmInput_Prompt_br66dN()
+- ${CancelConfirmPrompt()}
+
+# SendActivity_cfhvpL()
+- ${CancelApproved()}
+
+# SendActivity_lgaJK3()
+- ${CancelRejected()}

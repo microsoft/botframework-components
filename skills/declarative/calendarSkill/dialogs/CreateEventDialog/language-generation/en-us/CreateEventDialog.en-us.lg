@@ -59,15 +59,6 @@
 - OK, I will not create the event.
 - No problem, the event has not been created.
 
-# CancelConfirmPrompt()
-- Are you sure you want to cancel? Your progress will be lost.
-
-# CancelApproved()
-- Ok, I'll cancel this.
-
-# CancelRejected()
-- Let's keep going.
-
 # SendActivity_44hcCm()
 - ${CancelMessage()}
 
