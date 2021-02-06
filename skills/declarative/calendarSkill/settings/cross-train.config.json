@@ -43,5 +43,17 @@
       "Previous": [],
       "Skip": []
     }
+  },
+  "UpdateDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "GetEventsDialog.en-us",
+        "GetContactsDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Cancel": []
+    }
   }
 }

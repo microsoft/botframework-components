@@ -9,41 +9,35 @@
 
 # Cancel
 - cancel
-- cancel app
-- cancel cancel
-- cancel it
-- cancel never mind
-- cancel that
-- canceled
-- cancelled
-- do nothing
-- don't do that
-- don't do that anymore
-- forget about it
-- go away
-- just cancel
-- just cancel it
-- nerver mind
-- never mind
-- never mind cancel
-- never mind cancel that
-- no cancel
-- no cancel cancel
-- no cancel it
-- no cancel that
-- no never mind
-- no no cancel
-- no no cancel it
-- nothing never mind
-- nothing please
-- oh cancel
-- oh don't do that
-- please do nothing
+- cancel this
+- stop
+- i want to stop
+- nevermind
+- don't do this anymore
 - quit
-- sorry, don't do it
+- nothing
 
 
 @ intent Cancel usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
+# None
+- title
+- attendees
+- datetime
+- onlineMeeting
+- location
+- description
+- duration
+- tuesday at 3pm
+- tomorrow
+- next week
+- next tuesday
+- 3pm
+- monday
+- wednesday
+
+
+@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetAttendeesAdd
 - add an attendee
