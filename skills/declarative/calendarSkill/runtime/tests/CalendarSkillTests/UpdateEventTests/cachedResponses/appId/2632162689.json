@@ -1,0 +1,1 @@
+{"query":"remove attendees from my meeting on tuesday","prediction":{"topIntent":"SetAttendeesRemove","intents":{"SetAttendeesRemove":{"score":0.905428469}},"entities":{"date":["tuesday"]}}}

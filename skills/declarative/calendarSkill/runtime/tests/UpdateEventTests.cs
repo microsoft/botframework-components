@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
 {
     [TestClass]
-    public class DialogTests
+    public class UpdateEventTests
     {
         public static ResourceExplorer ResourceExplorer { get; set; }
 
@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         public static void ClassInitialize(TestContext context)
         {
             var rootFolder = Path.Combine(TestUtils.GetProjectPath(), @"..\..\");
-            var testFolder = Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(DialogTests));
+            var testFolder = Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(UpdateEventTests));
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -40,223 +40,139 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
-        public async Task Greeting()
+        public async Task UpdateEvent_basic_attendees()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventTitleByAttendees()
+        public async Task UpdateEvent_basic_datetime()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventTitleWithoutCondition()
+        public async Task UpdateEvent_basic_description()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventTitleReprompt()
+        public async Task UpdateEvent_basic_duration()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventTitleNoResult()
+        public async Task UpdateEvent_basic_location()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventLocationByAttendees()
+        public async Task UpdateEvent_basic_onlineMeeting()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        [Ignore]
-        public async Task GetEventLocationOnlineMeeting()
+        public async Task UpdateEvent_basic_title()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task RespondToEvent_Accept()
+        public async Task UpdateEvent_interruption_setAttendeesAdd()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task RespondToEvent_Decline()
+        public async Task UpdateEvent_interruption_setAttendeesRemove()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task RespondToEvent_TentativelyAccept()
+        public async Task UpdateEvent_interruption_setDateTime()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CancelEvent_asAttendee()
+        public async Task UpdateEvent_interruption_setDescription()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CancelEvent_asOrganizer()
+        public async Task UpdateEvent_interruption_setDuration()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent()
+        public async Task UpdateEvent_interruption_setLocation()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_noEntities()
+        public async Task UpdateEvent_interruption_setOnlineMeeting()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_title()
+        public async Task UpdateEvent_interruption_setTitle()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_title_contact()
+        public async Task UpdateEvent_trigger_setAttendeesAdd()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_title_contact_datetime()
+        public async Task UpdateEvent_trigger_setAttendeesRemove()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_contact()
+        public async Task UpdateEvent_trigger_setDateTime()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_datetime()
+        public async Task UpdateEvent_trigger_setDescription()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_withEntity_location()
+        public async Task UpdateEvent_trigger_setDuration()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_interruption_setTitle()
+        public async Task UpdateEvent_trigger_setLocation()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_interruption_setAttendeeAdd()
+        public async Task UpdateEvent_trigger_setOnlineMeeting()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
 
         [TestMethod]
-        public async Task CreateEvent_interruption_setAttendeeRemove()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setDateTime()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setDescription()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setDuration()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setOnlineMeetingAdd()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setOnlineMeetingRemove()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_setLocation()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_multiple()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task CreateEvent_interruption_skip()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task GetEvents_multipleResults()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task GetEvents_noResults()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task GetEvents_singleResult()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task GetEvents_withEntity_contact()
-        {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
-        }
-
-        [TestMethod]
-        public async Task GetEvents_withEntity_datetime()
+        public async Task UpdateEvent_trigger_setTitle()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
         }
