@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj" />
     <ProjectReference Include="..\customaction\Microsoft.BotFramework.Composer.CustomAction.csproj" />
   </ItemGroup>
 
@@ -36,5 +37,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

@@ -12,7 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Composer.CustomAction", "customaction\Microsoft.BotFramework.Composer.CustomAction.csproj", "{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.CustomAction.MsGraph", "..\..\..\..\experimental\components\MsGraph\Microsoft.BotFramework.CustomAction.MsGraph.csproj", "{3A656635-7492-4FF2-B300-E39AA79BDD98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.MsGraph", "..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj", "{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.CalendarSkill", "..\..\..\..\packages\CalendarSkill\Microsoft.Bot.Component.CalendarSkill.csproj", "{F8BECA84-0250-4B16-8D33-DA5684A194E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +42,14 @@ Global
 		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A656635-7492-4FF2-B300-E39AA79BDD98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A656635-7492-4FF2-B300-E39AA79BDD98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A656635-7492-4FF2-B300-E39AA79BDD98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A656635-7492-4FF2-B300-E39AA79BDD98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8BECA84-0250-4B16-8D33-DA5684A194E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8BECA84-0250-4B16-8D33-DA5684A194E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8BECA84-0250-4B16-8D33-DA5684A194E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8BECA84-0250-4B16-8D33-DA5684A194E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
