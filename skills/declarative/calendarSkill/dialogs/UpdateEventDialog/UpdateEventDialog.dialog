@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "BZjMau",
-    "name": "UpdateDialog",
+    "name": "UpdateEventDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "CY8w3b"
           },
-          "name": "UpdateDialog.BeginDialog"
+          "name": "UpdateEventDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -95,7 +95,7 @@
           "$designer": {
             "id": "QxCQ6Q"
           },
-          "name": "UpdateDialog.OnEvent_SetProperties"
+          "name": "UpdateEventDialog.OnEvent_SetProperties"
         },
         {
           "$kind": "Microsoft.ChoiceInput",
@@ -345,7 +345,7 @@
           "$designer": {
             "id": "xFHEZq"
           },
-          "name": "UpdateDialog.OnEvent_UpdateTitle"
+          "name": "UpdateEventDialog.OnEvent_UpdateTitle"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -401,7 +401,7 @@
           "$designer": {
             "id": "r9DewF"
           },
-          "name": "UpdateDialog.OnEvent_UpdateAttendees"
+          "name": "UpdateEventDialog.OnEvent_UpdateAttendees"
         },
         {
           "$kind": "Microsoft.ChoiceInput",
@@ -578,7 +578,7 @@
           "$designer": {
             "id": "RTDLBI"
           },
-          "name": "UpdateDialog.OnEvent_UpdateDateTime"
+          "name": "UpdateEventDialog.OnEvent_UpdateDateTime"
         },
         {
           "$kind": "Microsoft.DateTimeInput",
@@ -806,7 +806,7 @@
           "$designer": {
             "id": "XFBS6F"
           },
-          "name": "UpdateDialog.OnEvent_UpdateDescription"
+          "name": "UpdateEventDialog.OnEvent_UpdateDescription"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -861,7 +861,7 @@
           "$designer": {
             "id": "GasUjc"
           },
-          "name": "UpdateDialog.OnEvent_UpdateDuration"
+          "name": "UpdateEventDialog.OnEvent_UpdateDuration"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -925,7 +925,7 @@
           "$designer": {
             "id": "dcUXGp"
           },
-          "name": "UpdateDialog.OnEvent_UpdateLocation"
+          "name": "UpdateEventDialog.OnEvent_UpdateLocation"
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -981,7 +981,7 @@
           "$designer": {
             "id": "HvVEp5"
           },
-          "name": "UpdateDialog.OnEvent_UpdateOnlineMeeting"
+          "name": "UpdateEventDialog.OnEvent_UpdateOnlineMeeting"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -1040,7 +1040,7 @@
           "$designer": {
             "id": "MV8pj1"
           },
-          "name": "UpdateDialog.OnEvent_UpdateResponse"
+          "name": "UpdateEventDialog.OnEvent_UpdateResponse"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -1064,7 +1064,7 @@
           "$designer": {
             "id": "hQBh9w"
           },
-          "name": "UpdateDialog.OnEvent_ConfirmUpdate"
+          "name": "UpdateEventDialog.OnEvent_ConfirmUpdate"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -1153,7 +1153,7 @@
           "$designer": {
             "id": "WubtHA"
           },
-          "name": "UpdateDialog.OnEvent_Cancel"
+          "name": "UpdateEventDialog.OnEvent_Cancel"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -1222,7 +1222,7 @@
           "$designer": {
             "id": "SwlrbV"
           },
-          "name": "UpdateDialog.OnIntent_SetAttendeesAdd"
+          "name": "UpdateEventDialog.OnIntent_SetAttendeesAdd"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -1230,7 +1230,7 @@
             "id": "Xamu30"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1274,15 +1274,15 @@
           "$designer": {
             "id": "uJvdmu"
           },
-          "name": "UpdateDialog.OnIntent_SetAttendeesRemove"
+          "name": "UpdateEventDialog.OnIntent_SetAttendeesRemove"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "rHnsuH"
+            "id": "0mukx7"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1326,15 +1326,15 @@
           "$designer": {
             "id": "Ac1Mlx"
           },
-          "name": "UpdateDialog.OnIntent_SetDateTime"
+          "name": "UpdateEventDialog.OnIntent_SetDateTime"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "uevCOy"
+            "id": "4N54ak"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1374,15 +1374,15 @@
           "$designer": {
             "id": "hogjiQ"
           },
-          "name": "UpdateDialog.OnIntent_SetDescription"
+          "name": "UpdateEventDialog.OnIntent_SetDescription"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "sGT7jB"
+            "id": "jbrNlC"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1418,15 +1418,15 @@
           "$designer": {
             "id": "BIZY6i"
           },
-          "name": "UpdateDialog.OnIntent_SetDuration"
+          "name": "UpdateEventDialog.OnIntent_SetDuration"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "fxzMfC"
+            "id": "ok88vW"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1466,15 +1466,15 @@
           "$designer": {
             "id": "q8M4Vb"
           },
-          "name": "UpdateDialog.OnIntent_SetLocation"
+          "name": "UpdateEventDialog.OnIntent_SetLocation"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "tE4SWA"
+            "id": "esjmBv"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1514,15 +1514,15 @@
           "$designer": {
             "id": "jXByO9"
           },
-          "name": "UpdateDialog.OnIntent_SetOnlineMeetingAdd"
+          "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingAdd"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "unJhAH"
+            "id": "AAtPwI"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1562,15 +1562,15 @@
           "$designer": {
             "id": "6Ck8gB"
           },
-          "name": "UpdateDialog.OnIntent_SetOnlineMeetingRemove"
+          "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingRemove"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "JZrqdr"
+            "id": "gjoQrh"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1610,15 +1610,15 @@
           "$designer": {
             "id": "Ifec42"
           },
-          "name": "UpdateDialog.OnIntent_SetTitle"
+          "name": "UpdateEventDialog.OnIntent_SetTitle"
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "1jHGHO"
+            "id": "c4KJAJ"
           },
           "property": "$turnCount",
-          "value": "=$turnCount + 1"
+          "value": "=3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1658,14 +1658,14 @@
           "$designer": {
             "id": "0ejJaX"
           },
-          "name": "UpdateDialog.OnIntent_Cancel"
+          "name": "UpdateEventDialog.OnIntent_Cancel"
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "TBIiOv"
           },
-          "name": "UpdateDialog.OnIntent_Cancel"
+          "name": "UpdateEventDialog.OnIntent_Cancel"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1677,7 +1677,7 @@
       ]
     }
   ],
-  "generator": "UpdateDialog.lg",
-  "recognizer": "UpdateDialog.lu.qna",
-  "id": "UpdateDialog"
+  "generator": "UpdateEventDialog.lg",
+  "recognizer": "UpdateEventDialog.lu.qna",
+  "id": "UpdateEventDialog"
 }

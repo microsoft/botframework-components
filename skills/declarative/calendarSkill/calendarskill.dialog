@@ -1199,7 +1199,7 @@
             "id": "Ay1N1B"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1287,7 +1287,7 @@
             "id": "HayvUy"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1349,7 +1349,7 @@
             "id": "hr8JyA"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1407,7 +1407,7 @@
             "id": "PrLUrX"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1461,7 +1461,7 @@
             "id": "IY8ISQ"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1519,7 +1519,7 @@
             "id": "9Uruze"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1577,7 +1577,7 @@
             "id": "v8W2ZF"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1635,7 +1635,7 @@
             "id": "Q0zeTG"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1693,7 +1693,7 @@
             "id": "pfUqxK"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }
@@ -1751,7 +1751,7 @@
             "id": "9O6G3G"
           },
           "activityProcessed": true,
-          "dialog": "UpdateDialog",
+          "dialog": "UpdateEventDialog",
           "options": {
             "options": "=$options"
           }

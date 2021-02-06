@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_UpdateDialog",
-  "recognizers": {
-    "en-us": "UpdateDialog.en-us.lu",
-    "": "UpdateDialog.en-us.lu"
-  }
-}
