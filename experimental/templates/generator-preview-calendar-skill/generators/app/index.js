@@ -27,15 +27,16 @@ module.exports = class extends Generator {
           },
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false        
+        includeApplicationSettings: false
       }
     );
   }
   
   writing() {
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
+      { botName: this.options.botName },
     );
   }
 };
