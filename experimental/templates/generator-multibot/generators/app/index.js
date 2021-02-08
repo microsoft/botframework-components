@@ -47,7 +47,7 @@ module.exports = class extends Generator {
           },
           {
           name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
-          version: '1.0.0-preview.1'
+          version: '1.0.0-preview.2'
           },
         ],
         applicationSettingsDirectory: 'settings',
