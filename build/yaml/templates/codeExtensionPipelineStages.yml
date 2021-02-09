@@ -1,12 +1,6 @@
-# Plugins need a more extensive pipeline to build the projects and publish.
-# TODO: NPM pipeline which may result in refactoring this.
+# TODO: NPM pipeline when package is available
 
 stages:
-- stage : Prepare
-  jobs:
-  - job: Prepare
-    steps:
-    - template: ../tasks/displayEnvironmentVariablesSteps.yml
 - stage: Build_pack
   displayName: Build and pack
   dependsOn: []

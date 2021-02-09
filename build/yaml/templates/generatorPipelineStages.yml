@@ -1,9 +1,4 @@
 stages:
-- stage : Prepare
-  jobs:
-  - job: Prepare
-    steps:
-    - template: ../tasks/displayEnvironmentVariablesSteps.yml
 - stage: Build_pack
   displayName: Build and package
   jobs:
@@ -12,4 +7,3 @@ stages:
       steps:
       - template: ../tasks/copyNpmFilesSteps.yml
       - template: ../tasks/publishBuildArtifactsNpmSteps.yml
-      - template: ../tasks/debugWorkspaceSteps.yml

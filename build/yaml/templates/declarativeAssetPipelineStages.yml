@@ -1,12 +1,6 @@
 stages:
-- stage : Prepare
-  jobs:
-  - job: Prepare
-    steps:
-    - template: ../tasks/displayEnvironmentVariablesSteps.yml
 - stage: Build_pack
   displayName: Build and package
-  dependsOn: Prepare
   jobs:
     - job: NugetPack
       displayName: Create nuget package
@@ -14,10 +8,8 @@ stages:
       # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
       - template: ../tasks/nugetPackSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
-      - template: ../tasks/debugWorkspaceSteps.yml
     - job: NpmPack
       displayName: Create npm package
       steps:
       - template: ../tasks/copyNpmFilesSteps.yml
       - template: ../tasks/publishBuildArtifactsNpmSteps.yml
-      - template: ../tasks/debugWorkspaceSteps.yml

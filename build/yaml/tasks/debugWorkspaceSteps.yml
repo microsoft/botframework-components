@@ -1,5 +1,0 @@
-steps:
-- script: 'dir ..\*.* /s'
-  displayName: 'Debug: dir workspace'
-  continueOnError: true
-  condition: always()
