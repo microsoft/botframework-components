@@ -1,5 +1,5 @@
 stages:
-- stage : prepare
+- stage : Prepare
   jobs:
   - job: Prepare
     steps:
