@@ -18,3 +18,4 @@ extends:
 
 variables:
   WorkingDirectory: 'packages/HelpAndCancel'
+  BuildConfiguration: 'Release'

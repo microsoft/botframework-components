@@ -18,3 +18,4 @@ extends:
 
 variables:
   WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
+  BuildConfiguration: 'Release'
