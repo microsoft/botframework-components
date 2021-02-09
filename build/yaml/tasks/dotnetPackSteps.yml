@@ -4,6 +4,5 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '$(WorkingDirectory)/*.csproj'
-    packDirectory: '$(Build.ArtifactStagingDirectory)/nuget'
     nobuild: true
     versioningScheme: 'off'
