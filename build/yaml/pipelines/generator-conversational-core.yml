@@ -14,7 +14,7 @@ trigger:
 extends:
   template: ../templates/componentPipelineTemplate.yml
   parameters:
-      componentType: declarativeAsset
+      componentType: generator
 
 variables:
   WorkingDirectory: 'generators/generator-conversational-core'
