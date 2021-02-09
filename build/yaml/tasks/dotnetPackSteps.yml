@@ -1,0 +1,10 @@
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: pack
+    packagesToPack: '$(WorkingDirectory)/*.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)\nuget'
+    includesymbols: true
+    includesource: true
+    versioningScheme: off

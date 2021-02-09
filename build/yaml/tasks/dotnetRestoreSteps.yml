@@ -1,0 +1,8 @@
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: '$(WorkingDirectory)/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: packages/NuGet.Config
