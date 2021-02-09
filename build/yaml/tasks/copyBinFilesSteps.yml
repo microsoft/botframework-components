@@ -2,6 +2,6 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy bin files'
   inputs:
-    SourceFolder: '$(WorkingDirectory)\bin\Release'
+    SourceFolder: '$(WorkingDirectory)/bin/Release'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\binaries'
