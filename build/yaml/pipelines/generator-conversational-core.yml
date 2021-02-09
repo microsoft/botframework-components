@@ -9,7 +9,7 @@ trigger:
       - preview/*
   paths:
     include:
-      - packages/Welcome
+      - generators/generator-conversational-core
 
 extends:
   template: ../templates/componentPipelineTemplate.yml
@@ -17,4 +17,4 @@ extends:
       componentType: declarativeAsset
 
 variables:
-  WorkingDirectory: 'packages/Welcome'
+  WorkingDirectory: 'generators/generator-conversational-core'
