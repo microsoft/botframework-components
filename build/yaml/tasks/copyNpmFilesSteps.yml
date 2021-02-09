@@ -6,4 +6,4 @@ steps:
     Contents: |
       **
       !*.nuspec
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/npm'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\npm'

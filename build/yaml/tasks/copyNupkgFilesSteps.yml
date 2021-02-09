@@ -1,0 +1,11 @@
+steps:
+- task: CopyFiles@2
+  displayName: 'Copy packages'
+  inputs:
+    SourceFolder: '$(WorkingDirectory)'
+    Contents: |
+     outputpackages\*.nupkg
+     outputpackages\*.snupkg
+     !outputpackages\*.symbols.nupkg
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\nuget'
+    flattenFolders: true
