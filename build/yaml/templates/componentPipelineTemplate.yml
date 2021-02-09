@@ -1,6 +1,6 @@
 parameters:
 - name: componentType
-  displayName: 'What are the contents of the component?'
+  displayName: 'What type of component?'
   type: string
   values:
   - declarativeAsset

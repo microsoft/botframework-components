@@ -8,7 +8,6 @@ stages:
     - job: Build
       steps:
       - template: ../tasks/useDotNetCore2Steps.yml
-      - template: ../tasks/useDotNetCore3Steps.yml
       - template: ../tasks/dotnetRestoreSteps.yml
       - template: ../tasks/dotnetBuildSteps.yml
       - template: ../tasks/copyBinFilesSteps.yml
