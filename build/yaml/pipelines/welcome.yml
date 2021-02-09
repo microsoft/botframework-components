@@ -9,7 +9,7 @@ trigger:
       - preview/*
   paths:
     include:
-      - packages/greeting
+      - packages/welcome
 
 extends:
   template: ../templates/componentPipelineTemplate.yml
@@ -17,4 +17,4 @@ extends:
       componentType: declarativeAsset
 
 variables:
-  WorkingDirectory: 'packages/greeting'
+  WorkingDirectory: 'packages/welcome'
