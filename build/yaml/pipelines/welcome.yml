@@ -1,4 +1,4 @@
-name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
   batch: true
@@ -9,7 +9,7 @@ trigger:
       - preview/*
   paths:
     include:
-      - packages/welcome
+      - packages/Welcome
 
 extends:
   template: ../templates/componentPipelineTemplate.yml
@@ -17,4 +17,4 @@ extends:
       componentType: declarativeAsset
 
 variables:
-  WorkingDirectory: 'packages/welcome'
+  WorkingDirectory: 'packages/Welcome'
