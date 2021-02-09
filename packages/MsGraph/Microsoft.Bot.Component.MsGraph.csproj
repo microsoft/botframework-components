@@ -8,7 +8,8 @@
   <!-- Nuget packaging information -->
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Component.MsGraph</PackageId>
-    <PackageVersion>1.0.0-alpha.1</PackageVersion>
+	<VersionPrefix>1.0.0</VersionPrefix>
+	<VersionSuffix>alpha.1</VersionSuffix>
     <Description>Plugin component for MSGraph custom action</Description>
     <Summary>Plugin component for MSGraph custom action.</Summary>
     <Company>Microsoft</Company>

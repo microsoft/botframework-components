@@ -4,4 +4,4 @@ steps:
   inputs:
     SourceFolder: '$(WorkingDirectory)/bin/Release'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\binaries'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/binaries'
