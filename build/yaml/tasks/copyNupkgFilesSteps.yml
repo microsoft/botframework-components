@@ -2,7 +2,6 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy packages'
   inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'
     Contents: |
      outputpackages\*.nupkg
      outputpackages\*.snupkg
