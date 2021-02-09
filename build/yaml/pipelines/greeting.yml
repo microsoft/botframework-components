@@ -1,0 +1,20 @@
+name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - bugfix/*
+      - main
+      - preview/*
+  paths:
+    include:
+      - packages/greeting
+
+extends:
+  template: ../templates/componentPipelineTemplate.yml
+  parameters:
+      componentType: declarativeAsset
+
+variables:
+  WorkingDirectory: 'packages/greeting'
