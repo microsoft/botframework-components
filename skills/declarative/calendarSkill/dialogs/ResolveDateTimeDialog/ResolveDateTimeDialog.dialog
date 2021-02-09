@@ -29,7 +29,7 @@
           "assignments": [
             {
               "property": "dialog.query",
-              "value": "=coalesce(dialog.query, turn.activity.text)"
+              "value": "=coalesce(dialog.query, turn.activity.text, '')"
             },
             {
               "property": "dialog.expectedType",

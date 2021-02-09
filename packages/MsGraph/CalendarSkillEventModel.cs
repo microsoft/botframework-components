@@ -11,6 +11,8 @@ namespace Microsoft.Bot.Component.MsGraph.Models
 
     public class CalendarSkillEventModel
     {
+        public const string CalendarDescriptionString = "<br /><br /><span>📆 </span><span style =\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>";
+
         public CalendarSkillEventModel()
         {
         }

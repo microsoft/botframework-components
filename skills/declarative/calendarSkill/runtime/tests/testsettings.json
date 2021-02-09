@@ -22,15 +22,11 @@
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
-    "CreateEventDialog_en_us_lu": {
-      "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "4.2"
-    },
     "calendarskill_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "5.8"
+      "version": "0.1"
     },
-    "SearchEventsDialog_en_us_lu": {
+    "CreateEventDialog_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
@@ -39,10 +35,6 @@
       "version": "0.1"
     },
     "UpdateEventDialog_en_us_lu": {
-      "appId": "00000000-0000-0000-0000-000000000000",
-      "version": "0.1"
-    },
-    "UpdateSlots_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     }

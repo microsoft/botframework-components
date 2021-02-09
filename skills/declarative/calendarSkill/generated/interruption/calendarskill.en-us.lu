@@ -27,7 +27,7 @@
 - no
 
 
-@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # Help
 - any help
@@ -47,7 +47,7 @@
 - who can help me
 
 
-@ intent Help usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent Help usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # Logout
 - forget me
@@ -57,7 +57,7 @@
 - signout
 
 
-@ intent Logout usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent Logout usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # CancelEvent
 - cancel my {@date=3 o'clock}
@@ -83,7 +83,7 @@
 - let {@contact=bob} know i need to cancel {@date=today}
 
 
-@ intent CancelEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent CancelEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # CreateEvent
 - book a meeting with a title of {@subject=weekly review}
@@ -114,7 +114,7 @@
 - set up time with {@contact=melanie}
 
 
-@ intent CreateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent CreateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetAvailabilityBreaks
 - can i take a break {@date=wednesday}
@@ -139,7 +139,7 @@
 - when is my next gap in meetings
 
 
-@ intent GetAvailabilityBreaks usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetAvailabilityBreaks usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetAvailabilityFirst
 - {@date=friday}'s first meeting
@@ -164,7 +164,7 @@
 - when is my first meeting {@date=today}
 
 
-@ intent GetAvailabilityFirst usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetAvailabilityFirst usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetAvailabilityLast
 - how long is my last meeting
@@ -189,7 +189,7 @@
 - when is my day over on {@date=friday}
 
 
-@ intent GetAvailabilityLast usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetAvailabilityLast usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetEvents
 - do i have an event
@@ -220,7 +220,7 @@
 - what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
 
 
-@ intent GetEvents usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetEvents usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetEventAttendees
 - did anyone respond to my meeting invite
@@ -245,7 +245,7 @@
 - will {@contact=tyler} be at my next event
 
 
-@ intent GetEventAttendees usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetEventAttendees usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetEventDateTime
 - show me the time for the meeting on {@date=tuesday}
@@ -270,7 +270,7 @@
 - when is the {@subject=project review} meeting
 
 
-@ intent GetEventDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetEventDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # GetEventLocation
 - can you tell me the building for the {@subject=team offsite}
@@ -295,7 +295,7 @@
 - where is the {@subject=team check-in} event
 
 
-@ intent GetEventLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent GetEventLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # RespondAccept
 - accept
@@ -320,7 +320,7 @@
 - tell {@contact=john} i can make on {@date=saturday} about {@subject=happy hour} with {@contact=isaac}
 
 
-@ intent RespondAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent RespondAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # RespondDecline
 - can't make the meeting {@date=wednesday at 2pm}
@@ -345,7 +345,7 @@
 - won't make the meeting {@date=next monday afternoon}
 
 
-@ intent RespondDecline usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent RespondDecline usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # RespondTentativelyAccept
 - i might be able to make the {@subject=hackathon} {@date=next week}
@@ -370,12 +370,13 @@
 - tentatively accept the meeting {@date=next week} with {@contact=tyler}
 
 
-@ intent RespondTentativelyAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent RespondTentativelyAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetAttendeesAdd
 - add an attendee
 - add people
-- add more recipients
+- add more recipients to the meeting with {@contact=roberta}
+- add attendees to my meeting on friday
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
 - add {@newContact=jose} to my next meeting
 - add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
@@ -402,7 +403,7 @@
 - send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
 
 
-@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetAttendeesRemove
 - don't add {@currentContact=em} to my event with {@contact=jose} and {@contact=cynthia} called {@subject=team check-in}
@@ -419,12 +420,13 @@
 - remove people from this
 - remove recipients
 - remove someone from this
+- remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
 - remove {@currentContact=rebecca} and {@currentContact=susan}
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
-- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
 - uninvite an attendee
 - uninvite a recipient
 - uninvite people from this meeting
@@ -436,19 +438,19 @@
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
 
 
-@ intent SetAttendeesRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetAttendeesRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetDateTime
 - change my event from {@currentDate=tomorrow} to {@newDate=saturday}
 - change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
 - change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
 - change my meeting with {@contact=elaine} to {@newDate=next week}
-- change my meeting with {@contact=scott} and {@contact=quirine} on {@date=thursday at 11am} to {@newDate=saturday}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
 - change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
 - change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
 - change the date
 - change the time
-- change the date of my event with {@contact=gary} on {@date=monday} named {@subject=lunch} to {@newDate=next month}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
 - change the time of my meeting to {@newDate=6pm}
 - change the date and time of my next meeting to {@newDate=thursday at 11am}
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
@@ -456,7 +458,7 @@
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
 - change the day of the next event to {@newDate=wednesday}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
-- move my meeting on {@date=tuesday} to {@newDate=next week}
+- move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
@@ -467,7 +469,30 @@
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
 
 
-@ intent SetDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+
+# SetDescription
+- add a body
+- add a description
+- add a description to the {@subject=standup}
+- add content
+- add content to the meeting with {@contact=darren}
+- add description to the meeting with {@contact=ryan}, {@contact=ted}, and {@contact=marie} later {@date=today}
+- can you set the meeting content
+- please update the body of this meeting
+- set the body on the meeting {@date=this afternoon}
+- set the description
+- set the description on the {@date=1 o'clock} meeting
+- update the body of the invite
+- update the content
+- update the content of the meeting with {@contact=sharon} and {@contact=ron}
+- update the description on my event
+- update the meeting body
+- update the meeting content for the {@subject=budget review}
+- update the meeting content with {@contact=ryan} {@date=next week}
+
+
+@ intent SetDescription usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetDuration
 - change the event with {@contact=you@test.net} to {@duration=2 hours}
@@ -492,7 +517,7 @@
 - update to {@duration=1 hour and 30 minutes}
 
 
-@ intent SetDuration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetDuration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetLocation
 - change the location of the next event to {@location=123 address st}
@@ -517,7 +542,7 @@
 - update the location to {@location=kitchen}
 
 
-@ intent SetLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetOnlineMeetingAdd
 - add a phone number to the next meeting
@@ -544,7 +569,7 @@
 - make this an online meeting
 
 
-@ intent SetOnlineMeetingAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetOnlineMeetingAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetOnlineMeetingRemove
 - don't add a call to the meeting later
@@ -569,7 +594,7 @@
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
 
 
-@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # SetTitle
 - change the subject
@@ -594,7 +619,7 @@
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
 
 
-@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # UpdateEvent
 - change my next event
@@ -619,19 +644,19 @@
 - update the {@subject=team lunch} on {@date=march 14, 2021}
 
 
-@ intent UpdateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ intent UpdateEvent usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove,Titled
 
-@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 
 > # PREBUILT Entity definitions
@@ -648,7 +673,7 @@
 > # Phrase list definitions
 
 @ phraselist Create(interchangeable) enabledForAllModels = 
-	- create,schedule,book,new,set up
+	- create,schedule,book,new,set up,find time
 
 @ phraselist Update(interchangeable) enabledForAllModels = 
 	- modify,change,update,edit,move,set
@@ -667,6 +692,9 @@
 
 @ phraselist Remove(interchangeable) enabledForAllModels = 
 	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) enabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
 
 
 > # List entities
