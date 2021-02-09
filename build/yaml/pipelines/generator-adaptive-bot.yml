@@ -17,4 +17,4 @@ extends:
       componentType: generator
 
 variables:
-  WorkingDirectory: 'generators/generator-conversational-core'
+  WorkingDirectory: 'generators/generator-adaptive-bot'
