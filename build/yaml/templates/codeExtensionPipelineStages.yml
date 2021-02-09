@@ -1,9 +1,8 @@
-# TODO: NPM pipeline when package is available
+# TODO: NPM pipeline when sample is available
 
 stages:
 - stage: Build_pack
   displayName: Build and pack
-  dependsOn: []
   jobs:
     - job: Build
       steps:
@@ -14,4 +13,3 @@ stages:
       - template: ../tasks/dotnetPackSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
       - template: ../tasks/publishBuildArtifactsBinariesSteps.yml
-      - template: ../tasks/debugWorkspaceSteps.yml
