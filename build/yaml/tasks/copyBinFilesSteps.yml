@@ -1,0 +1,7 @@
+steps:
+- task: CopyFiles@2
+  displayName: 'Copy bin files'
+  inputs:
+    SourceFolder: '$(WorkingDirectory)\bin\Release\netcoreapp3.1'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\binaries'

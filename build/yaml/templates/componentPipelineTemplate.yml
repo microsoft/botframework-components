@@ -1,0 +1,16 @@
+parameters:
+- name: componentType
+  displayName: 'What are the contents of the component?'
+  type: string
+  values:
+  - declarativeAsset
+  - codeExtension
+  - generator
+
+stages:
+  - ${{ if eq(parameters.componentType, 'codeExtension') }}: 
+    - template: ../templates/codeExtensionPipelineStages.yml
+  - ${{ if eq(parameters.componentType, 'declarativeAsset') }}: 
+    - template: ../templates/declarativeAssetPipelineStages.yml
+  - ${{ if eq(parameters.componentType, 'generator') }}: 
+    - template: ../templates/generatorPipelineStages.yml
