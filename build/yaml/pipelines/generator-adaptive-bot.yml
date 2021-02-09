@@ -9,12 +9,12 @@ trigger:
       - preview/*
   paths:
     include:
-      - packages/Welcome
+      - generators/generator-adaptive-bot
 
 extends:
   template: ../templates/componentPipelineTemplate.yml
   parameters:
-      componentType: declarativeAsset
+      componentType: generator
 
 variables:
-  WorkingDirectory: 'packages/Welcome'
+  WorkingDirectory: 'generators/generator-conversational-core'

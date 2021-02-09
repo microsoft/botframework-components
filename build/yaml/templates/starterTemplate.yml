@@ -9,12 +9,12 @@ trigger:
       - preview/*
   paths:
     include:
-      - packages/Welcome
+      - {YOUR_WORKING_DIRECTORY}
 
 extends:
   template: ../templates/componentPipelineTemplate.yml
   parameters:
-      componentType: declarativeAsset
+      componentType: {COMPONENT_TYPE}
 
 variables:
-  WorkingDirectory: 'packages/Welcome'
+  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
