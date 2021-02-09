@@ -2,7 +2,7 @@
 
 stages:
 - stage: Build_pack
-  displayName: Build and pack
+  displayName: Build and package
   jobs:
     - job: Build
       steps:
