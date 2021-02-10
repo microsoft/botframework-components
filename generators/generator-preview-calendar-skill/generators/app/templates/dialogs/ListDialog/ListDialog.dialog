@@ -1,0 +1,345 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "okSVaK",
+    "name": "ListDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "yvK44P"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "i6ahnZ"
+          },
+          "name": "ListDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "ttdzia"
+          },
+          "eventName": "GetChoices"
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "dc3QNs"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "dialog.selectedIndex",
+          "recognizerOptions": {
+            "recognizeOrdinals": true,
+            "recognizeNumbers": true,
+            "noAction": false
+          },
+          "choices": "=dialog.choices",
+          "style": "none",
+          "alwaysPrompt": false,
+          "allowInterruptions": "=#ChoiceInput_Response_dc3QNs == null && (#Next != null || #Previous != null || #Skip != null) && turn.recognized.score > 0.8",
+          "defaultValue": "=null",
+          "maxTurnCount": "=3",
+          "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_dc3QNs()}",
+          "prompt": "${ChoiceInput_Prompt_dc3QNs()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "sfVoHE"
+          },
+          "condition": "dialog.selectedIndex != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "kpv68G"
+              },
+              "property": "dialog.selection",
+              "value": "=dialog.pageItems[int(dialog.selectedIndex) - 1]"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "PNJp3T"
+          },
+          "value": "=dialog.selection"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pjLWu0",
+        "name": "OnNextIntent"
+      },
+      "intent": "Next",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GaeG8U"
+          },
+          "assignments": [
+            {
+              "property": "dialog.pageIndex",
+              "value": "=dialog.pageIndex + 1"
+            },
+            {
+              "property": "dialog.itemIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tdNJ28"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "P1awzy"
+          },
+          "condition": "dialog.pageIndex * dialog.pageSize <  count(dialog.Items)",
+          "actions": [
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "w9anuY"
+              },
+              "activityProcessed": true,
+              "options": {
+                "isFirstTurn": false,
+                "items": "=dialog.items",
+                "actionTitleProperty": "=dialog.actionTitleProperty",
+                "pageIndex": "=dialog.pageIndex",
+                "templates": "=dialog.templates",
+                "additionalOptions": "=dialog.additionalOptions"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lepsYO"
+              },
+              "property": "dialog.pageIndex",
+              "value": "= dialog.pageIndex - 1"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "D6gEbV"
+              },
+              "activity": "${SendActivity_D6gEbV()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "nAbozX",
+        "name": "OnPreviousIntent"
+      },
+      "intent": "Previous",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9QoATl"
+          },
+          "assignments": [
+            {
+              "property": "dialog.pageIndex",
+              "value": "=dialog.pageIndex - 1"
+            },
+            {
+              "property": "dialog.itemIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "UVQphx"
+          },
+          "condition": "dialog.pageIndex >= 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "BC5bV1"
+              },
+              "activityProcessed": true,
+              "options": {
+                "isFirstTurn": false,
+                "items": "=dialog.items",
+                "actionTitleProperty": "=dialog.actionTitleProperty",
+                "pageIndex": "=dialog.pageIndex",
+                "templates": "=dialog.templates",
+                "additionalOptions": "=dialog.additionalOptions"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MgUdSM"
+              },
+              "property": "dialog.pageIndex",
+              "value": "= 0"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "2LMTaY"
+              },
+              "activity": "${SendActivity_2LMTaY()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gVH1hA",
+        "name": "OnSkipIntent"
+      },
+      "intent": "Skip",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "BDsmtE"
+          },
+          "activity": "${SendActivity_BDsmtE()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "piQ9tu"
+          },
+          "value": "=null"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lGWY0z",
+        "name": "OnGetChoicesEvent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "DX1wQt"
+          },
+          "assignments": [
+            {
+              "property": "dialog.pageSize",
+              "value": "=coalesce(dialog.pageSize, 5)"
+            },
+            {
+              "property": "dialog.pageIndex",
+              "value": "=coalesce(dialog.pageIndex, 0)"
+            },
+            {
+              "property": "dialog.itemIndex",
+              "value": "=coalesce(dialog.itemIndex, 0)"
+            },
+            {
+              "property": "dialog.startIndex",
+              "value": "=coalesce(dialog.pageindex * dialog.pageSize, 0)"
+            },
+            {
+              "property": "dialog.pageItems",
+              "value": "=subArray($items, $startIndex, min($startIndex + $pageSize, count($items)))"
+            },
+            {
+              "property": "dialog.pageCount",
+              "value": "=if(count(dialog.items) % dialog.pageSize == 0, count(dialog.items) / dialog.pageSize, round(count(dialog.items) / dialog.pageSize) + 1)"
+            },
+            {
+              "property": "dialog.isFirstTurn",
+              "value": "=coalesce(dialog.isFirstTurn, true)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "DrAjqe"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.pageItems",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "kNUEEQ"
+              },
+              "property": "dialog.pageItems[dialog.foreach.index].index",
+              "value": "=dialog.foreach.index + 1"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Q0pcWI"
+              },
+              "property": "dialog.actionTitle",
+              "value": "=dialog.pageItems[dialog.foreach.index][dialog.actionTitleProperty]"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Ho4bLH"
+              },
+              "property": "dialog.choiceItem",
+              "value": "=json(concat('{ \"value\": \"', dialog.pageItems[dialog.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', dialog.actionTitle, '\" } }'))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "L4FUUg"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=dialog.choiceItem"
+            }
+          ]
+        }
+      ],
+      "event": "GetChoices"
+    }
+  ],
+  "generator": "ListDialog.lg",
+  "recognizer": "ListDialog.lu.qna",
+  "id": "ListDialog"
+}

@@ -1,0 +1,56 @@
+
+# TextInput_Response_gZ1tbS
+- Can you {@EntityOperation={@Add=add}} Rachel
+- Please {@EntityOperation={@Add=include}} a {@EntityName={@TeamsLink=Teams link}}
+- Please {@EntityOperation={@Remove=remove}} the {@EntityName={@TeamsLink=Teams link}}
+- {@EntityOperation={@Change=Reschedule}} my meeting with Ashley to start at 2 PM
+- Update my {@EntityName={@EventLocation=location}} to {@Location=Café Paris}
+- Can you {@EntityOperation={@Change=change}} the {@EntityName={@EventTitle=name}} of my upcoming event to {@Title=Brainstorm}
+- I would like the meeting with Sarah to {@EntityName={@EventDuration=last}} for 1 hour
+- {@EntityOperation={@Change=change}} the {@EntityName=@{EventTitle=title}} to {@Title=Lunch}
+- {@EntityName={@EventDateTime=time}}
+- {@EntityName={@EventDateTime=date}}
+- {@EntityName={@EventDateTime=date time}}
+- {@EntityOperation={@Change=change}} {@EntityName={@EventDateTime=time}}
+- {@EntityOperation={@Add=add}} {@EntityName={@EventAttendee=participant}}
+- {@EntityOperation={@Change=update}} {@EntityName={@EventLocation=location}}
+@ prebuilt personName
+@ prebuilt email
+@ prebuilt datetimeV2
+
+@ ml EntityName
+    - @ ml EventTitle
+    - @ ml EventDateTime
+    - @ ml EventAttendee
+    - @ ml EventLocation
+    - @ ml EventDuration
+    - @ ml TeamsLink
+
+
+@ ml EntityOperation
+    - @ ml Add
+    - @ ml Remove
+    - @ ml Change
+# TextInput_Response_gtOavc
+- It's a {Title=1:1} with Mary
+- Planning for {Title=end of year}
+- Call it {Title=editorial meeting}
+- Please title it {Title=content review}
+- How about {Title=team check-in}
+- Title it {Title=Happy Hour}
+
+
+# TextInput_Response_NdRLDG
+- It holds at {Location=cafe}
+
+
+# Cancel
+- cancel
+- cancel this
+- stop
+- stop this
+- exit
+
+
+# CancelEvent
+- cancel event
