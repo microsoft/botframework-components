@@ -1,0 +1,704 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "Jktlnv",
+    "name": "UpdateSlots",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "pHwoIr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HHN9Ue"
+          },
+          "name": "UpdateSlots.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1ZQTb7"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUpdateEntity",
+          "resultProperty": "dialog.resolveUpdateEntityResult",
+          "options": {
+            "entityNameResult": "=dialog.entityNameResult",
+            "personName": "=dialog.personName",
+            "email": "=dialog.email",
+            "entityOperationResult": "=dialog.entityOperationResult"
+          }
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "G1uYVf"
+          },
+          "value": "=coalesce(dialog.entityName, dialog.resolveUpdateEntityResult.entityName)",
+          "property": "dialog.entityName"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LtgNmI"
+          },
+          "condition": "dialog.entityName == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "gZ1tbS"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_gZ1tbS()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.entityName",
+              "allowInterruptions": "=turn.recognized.score > 0.8 && #TextInput_Response_gZ1tbS == null"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "i6GQWG"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveUpdateEntity",
+              "resultProperty": "dialog.resolveUpdateEntityResult",
+              "options": {}
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "euJ1Gm"
+              },
+              "property": "dialog.entityName",
+              "value": "=toLower(coalesce(dialog.resolveUpdateEntityResult.entityName, dialog.entityName))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "nTMQ5S"
+          },
+          "condition": "dialog.entityName",
+          "cases": [
+            {
+              "value": "title",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "B3s6tU"
+                  },
+                  "eventName": "UpdateEventTitle"
+                }
+              ]
+            },
+            {
+              "value": "datetime",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "002PPJ"
+                  },
+                  "eventName": "UpdateEventDateTime"
+                }
+              ]
+            },
+            {
+              "value": "location",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "P2xySC"
+                  },
+                  "eventName": "UpdateEventLocation"
+                }
+              ]
+            },
+            {
+              "value": "attendee",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "dmVprm"
+                  },
+                  "name": "update attendee"
+                },
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "KjtB11"
+                  },
+                  "condition": "coalesce(dialog.operation, dialog.resolveUpdateEntityResult.entityOperation)",
+                  "cases": [
+                    {
+                      "value": "add",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "YP5tlj"
+                          },
+                          "eventName": "AddAttendee"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "remove",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "wpFsC7"
+                          },
+                          "eventName": "RemoveAttendee"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "4sAtOb"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "teamslink",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "zbOr69"
+                  },
+                  "condition": "coalesce(dialog.operation, dialog.resolveUpdateEntityResult.entityOperation)",
+                  "cases": [
+                    {
+                      "value": "add",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "Yh1JXN"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.newSlotsResult.updateType",
+                              "value": "addTeamsLink"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "value": "remove",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "Kl8S2d"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.newSlotsResult.updateType",
+                              "value": "removeTeamsLink"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "default": []
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "nliwDU"
+                  },
+                  "value": "=dialog.newSlotsResult"
+                }
+              ]
+            },
+            {
+              "value": "duration",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "LY5V7L"
+                  },
+                  "eventName": "UpdateEventDuration"
+                }
+              ]
+            }
+          ],
+          "default": []
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "g1MH3U"
+          },
+          "activityProcessed": true,
+          "options": {
+            "eventInfo": "=$eventInfo"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "vtU7rR",
+        "name": "UpdateEventTitle"
+      },
+      "event": "UpdateEventTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "xmhEEQ"
+          },
+          "name": "UpdateEventTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "aJ1izq"
+          },
+          "property": "dialog.newTitle",
+          "value": "=@Title"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VkHpzJ"
+          },
+          "condition": "dialog.newTitle == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "gtOavc"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_gtOavc()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.newTitle",
+              "outputFormat": "=coalesce(@Title, this.value)",
+              "allowInterruptions": "=#Cancel.score > 0.8"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "hBXBLV"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "title"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=dialog.newTitle"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "xpA7kU"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "qtbZfy",
+        "name": "UpdateEventDateTime"
+      },
+      "event": "UpdateEventDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hZAQqC"
+          },
+          "condition": "dialog.datetime == null",
+          "elseActions": [],
+          "actions": [
+            {
+              "$kind": "Microsoft.DateTimeInput",
+              "$designer": {
+                "id": "fKknY3"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${DateTimeInput_Prompt_fKknY3()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.slots.dateTime",
+              "validations": [],
+              "allowInterruptions": "=turn.recognized.score > 0.8"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "qgP57P"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=turn.activity.text"
+          },
+          "resultProperty": "dialog.newDateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "KiI1oo"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "datetime"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=dialog.newDateTime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "zXh0Zy"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "UvMHGh",
+        "name": "UpdateEventDuration"
+      },
+      "event": "UpdateEventDuration",
+      "actions": [
+        {
+          "$kind": "Microsoft.DateTimeInput",
+          "$designer": {
+            "id": "a700t3"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "prompt": "${DateTimeInput_Prompt_a700t3()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "dialog.newDuration",
+          "value": "= turn.activity.text",
+          "outputFormat": "= this.value[0].Value",
+          "allowInterruptions": "=turn.recognized.score > 0.8"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JVy8LS"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "duration"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=int(dialog.newDuration)/60"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "XZAOot"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "P2N5je",
+        "name": "UpdateEventLocation"
+      },
+      "event": "UpdateEventLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "z8jCtA"
+          },
+          "property": "dialog.newLocation",
+          "value": "=@Location"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6ynhVA"
+          },
+          "condition": "dialog.newLocation == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "NdRLDG"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_NdRLDG()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.newLocation",
+              "outputFormat": "=coalesce(@Location, this.value)",
+              "allowInterruptions": "=turn.recognized.score > 0.8"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "dXhU3T"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "location"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=dialog.newLocation"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Pb5ubc"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "fgwsmR",
+        "name": "AddAttendee"
+      },
+      "event": "AddAttendee",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xrt3QE"
+          },
+          "activityProcessed": true,
+          "dialog": "GetContactDialog",
+          "options": {
+            "emailArray": "=@@personName",
+            "personNameArray": "=@@email"
+          },
+          "resultProperty": "dialog.newAttendee"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IKJYg8"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "addAttendee"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=dialog.newAttendee"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "aHxz3r"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "HkRhi1",
+        "name": "RemoveAttendee"
+      },
+      "event": "RemoveAttendee",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "86WcCk"
+          },
+          "condition": "@personName == null && @email == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "kSb8sd"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "prompt": "${TextInput_Prompt_kSb8sd()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "dialog.removeAttendee",
+              "allowInterruptions": "=turn.recognized.score > 0.8"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "SlvWsi"
+              },
+              "property": "dialog.removeAttendee",
+              "value": "=coalesce(@personName, @email)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Q5umVs"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "removeAttendee"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "=dialog.removeAttendee"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Yijukm"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ZL5bGY",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "xtl9sc"
+          },
+          "activity": "${SendActivity_xtl9sc()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "GYndux"
+          },
+          "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qu3sJ7",
+        "name": "CancelEvent"
+      },
+      "intent": "CancelEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "5Ez2tg"
+          },
+          "assignments": [
+            {
+              "property": "dialog.newSlotsResult.updateType",
+              "value": "attendance"
+            },
+            {
+              "property": "dialog.newSlotsResult.newValue",
+              "value": "cancel"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "bj08J1"
+          },
+          "value": "=dialog.newSlotsResult"
+        }
+      ]
+    }
+  ],
+  "generator": "UpdateSlots.lg",
+  "recognizer": "UpdateSlots.lu.qna",
+  "id": "UpdateSlots"
+}
