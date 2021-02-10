@@ -1,4 +1,4 @@
-# generator-conversational-core [![NPM version][npm-image]][npm-url]
+# generator-conversational-core
 > Yeoman generator for instantiating a bot template using the Conversational Core components.
 
 ## Installation
