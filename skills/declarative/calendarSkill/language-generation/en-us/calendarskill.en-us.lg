@@ -105,8 +105,8 @@
 
 # SendActivity_ZaUzSz()
 [Activity
-    text = ${FirstEventResponseText(dialog.event)}
-    attachments = ${json(EventDetailCard(dialog.event))}
+    text = ${FirstEventResponseText($event)}
+    attachments = ${json(EventDetailCard($event))}
 ]
 # SendActivity_q9fyxf()
 - ${ErrorMessage()}

@@ -14,12 +14,13 @@
 - remove people from this
 - remove recipients
 - remove someone from this
+- remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
 - remove {@currentContact=rebecca} and {@currentContact=susan}
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
-- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
 - uninvite an attendee
 - uninvite a recipient
 - uninvite people from this meeting

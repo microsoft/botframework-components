@@ -80,7 +80,8 @@
 # SetAttendeesAdd
 - add an attendee
 - add people
-- add more recipients
+- add more recipients to the meeting with {@contact=roberta}
+- add attendees to my meeting on friday
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
 - add {@newContact=jose} to my next meeting
 - add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
@@ -124,12 +125,13 @@
 - remove people from this
 - remove recipients
 - remove someone from this
+- remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
 - remove {@currentContact=rebecca} and {@currentContact=susan}
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
-- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
 - uninvite an attendee
 - uninvite a recipient
 - uninvite people from this meeting
@@ -148,12 +150,12 @@
 - change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
 - change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
 - change my meeting with {@contact=elaine} to {@newDate=next week}
-- change my meeting with {@contact=scott} and {@contact=quirine} on {@date=thursday at 11am} to {@newDate=saturday}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
 - change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
 - change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
 - change the date
 - change the time
-- change the date of my event with {@contact=gary} on {@date=monday} named {@subject=lunch} to {@newDate=next month}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
 - change the time of my meeting to {@newDate=6pm}
 - change the date and time of my next meeting to {@newDate=thursday at 11am}
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
@@ -161,7 +163,7 @@
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
 - change the day of the next event to {@newDate=wednesday}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
-- move my meeting on {@date=tuesday} to {@newDate=next week}
+- move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}

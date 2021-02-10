@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# IDoNotKnow()
+-I don't know ${dialog.name}, sorry!
+# SendActivity_A5uu49()
+- ${IDoNotKnow()}
