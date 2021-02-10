@@ -24,15 +24,15 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: dotnet restore
-        working-directory: ./skills/declarative/calendarSkill/runtime
+        working-directory: ./skills/declarative/tests
 
       # Build the entire solution
       - name: Build solution
         run:  dotnet build
-        working-directory: ./skills/declarative/calendarSkill/runtime
+        working-directory: ./skills/declarative/tests
 
       # Run the tests
       - name: Run tests
         run: dotnet test
-        working-directory: ./skills/declarative/calendarSkill/runtime
+        working-directory: ./skills/declarative/tests
 
