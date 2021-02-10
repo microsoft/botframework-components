@@ -6,4 +6,4 @@ steps:
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     nobuild: true
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'off'
