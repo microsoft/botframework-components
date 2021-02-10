@@ -1,6 +1,6 @@
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet pack'
+  displayName: 'Run `dotnet pack`'
   inputs:
     command: 'pack'
     packagesToPack: '$(WorkingDirectory)\*.csproj'

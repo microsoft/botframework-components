@@ -1,6 +1,6 @@
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Run `dotnet build`'
   inputs:
     projects: '$(WorkingDirectory)\*.csproj'
     arguments: '--configuration $(BuildConfiguration) --no-restore'

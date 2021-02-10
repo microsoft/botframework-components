@@ -1,6 +1,6 @@
 steps:
 - task: NuGetCommand@2
-  displayName: 'NuGet pack'
+  displayName: 'Run `nuget pack`'
   inputs:
     command: pack
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
