@@ -4,5 +4,5 @@ steps:
   inputs:
     command: pack
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
-    packDestination: '$(Build.ArtifactStagingDirectory)\nuget'
+    packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: off
