@@ -9,7 +9,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Component.MsGraph</PackageId>
 	<VersionPrefix>1.0.0</VersionPrefix>
-	<VersionSuffix>alpha.1</VersionSuffix>
+	<VersionSuffix>alpha</VersionSuffix>
     <Description>Plugin component for MSGraph custom action</Description>
     <Summary>Plugin component for MSGraph custom action.</Summary>
     <Company>Microsoft</Company>
