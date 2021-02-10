@@ -3,6 +3,6 @@ steps:
   displayName: 'NuGet pack'
   inputs:
     command: pack
-    packagesToPack: '$(WorkingDirectory)/*.nuspec'
+    packagesToPack: '$(WorkingDirectory)\*.nuspec'
     packDestination: '$(Build.ArtifactStagingDirectory)\nuget'
     versioningScheme: off
