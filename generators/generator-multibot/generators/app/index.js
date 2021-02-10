@@ -12,23 +12,12 @@ module.exports = class extends Generator {
     // create parent folder
     fs.mkdirSync(this.options.botName);
 
-    console.log('root', this.destinationRoot());
     // change root folder so both child bots created here.
     this.destinationRoot(path.join(this.destinationRoot(),this.options.botName));
 
   }
 
   initializing() {
-
-    // create root bot
-    // in the future, this might just be a local template rather than pointing at a child template...
-    // this.composeWith(
-    //   require.resolve('generator-conversational-core/generators/app'),
-    //   {
-    //     arguments: this.args,
-    //   }
-    // );
-
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
       require.resolve('generator-adaptive-bot/generators/app'),
