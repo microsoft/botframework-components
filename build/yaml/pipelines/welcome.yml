@@ -11,6 +11,9 @@ trigger:
     include:
       - packages/Welcome
 
+pool: 
+  vmImage: 'windows-2019'
+
 extends:
   template: ../templates/componentPipelineTemplate.yml
   parameters:

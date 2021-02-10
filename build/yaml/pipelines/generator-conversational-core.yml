@@ -11,6 +11,9 @@ trigger:
     include:
       - generators/generator-conversational-core
 
+pool: 
+  vmImage: 'windows-2019'
+  
 extends:
   template: ../templates/componentPipelineTemplate.yml
   parameters:

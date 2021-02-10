@@ -3,6 +3,6 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: restore
-    projects: '$(WorkingDirectory)/*.csproj'
+    projects: '$(WorkingDirectory)\*.csproj'
     feedsToUse: config
-    nugetConfigPath: packages/NuGet.Config
+    nugetConfigPath: packages\NuGet.Config
