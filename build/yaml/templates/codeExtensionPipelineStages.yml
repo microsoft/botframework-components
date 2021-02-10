@@ -11,6 +11,5 @@ stages:
       - template: ../tasks/dotnetBuildSteps.yml
       - template: ../tasks/copyBinFilesSteps.yml
       - template: ../tasks/dotnetPackSteps.yml
-      - template: ../tasks/copyNupkgFilesSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
       - template: ../tasks/publishBuildArtifactsBinariesSteps.yml
