@@ -5,4 +5,5 @@ steps:
     command: 'pack'
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    nobuild: true
     versioningScheme: 'off'
