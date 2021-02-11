@@ -1,0 +1,15 @@
+# TODO: NPM pipeline when sample is available
+
+stages:
+- stage: Build_pack
+  displayName: Build and package
+  jobs:
+    - job: Build
+      steps:
+      - template: ../tasks/useDotNetCore3Steps.yml
+      - template: ../tasks/dotnetRestoreSteps.yml
+      - template: ../tasks/dotnetBuildSteps.yml
+      - template: ../tasks/copyBinFilesSteps.yml
+      - template: ../tasks/dotnetPackSteps.yml
+      - template: ../tasks/publishBuildArtifactsNugetSteps.yml
+      - template: ../tasks/publishBuildArtifactsBinariesSteps.yml

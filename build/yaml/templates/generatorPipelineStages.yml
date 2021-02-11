@@ -1,0 +1,9 @@
+stages:
+- stage: Build_pack
+  displayName: Build and package
+  jobs:
+    - job: NpmPack
+      displayName: Create npm package
+      steps:
+      - template: ../tasks/copyNpmFilesSteps.yml
+      - template: ../tasks/publishBuildArtifactsNpmSteps.yml

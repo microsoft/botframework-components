@@ -1,0 +1,15 @@
+stages:
+- stage: Build_pack
+  displayName: Build and package
+  jobs:
+    - job: NugetPack
+      displayName: Create nuget package
+      steps:
+      # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
+      - template: ../tasks/nugetPackSteps.yml
+      - template: ../tasks/publishBuildArtifactsNugetSteps.yml
+    - job: NpmPack
+      displayName: Create npm package
+      steps:
+      - template: ../tasks/copyNpmFilesSteps.yml
+      - template: ../tasks/publishBuildArtifactsNpmSteps.yml

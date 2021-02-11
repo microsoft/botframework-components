@@ -1,0 +1,24 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - bug/*
+      - main
+      - preview/*
+  paths:
+    include:
+      - packages/HelpAndCancel
+
+pool: 
+  vmImage: 'windows-2019'
+
+extends:
+  template: ../templates/componentPipelineTemplate.yml
+  parameters:
+      componentType: declarativeAsset
+
+variables:
+  WorkingDirectory: 'packages/HelpAndCancel'
+  BuildConfiguration: 'Release'

@@ -1,0 +1,8 @@
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet pack`'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(WorkingDirectory)\*.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    versioningScheme: 'off'
