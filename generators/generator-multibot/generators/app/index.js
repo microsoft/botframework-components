@@ -9,11 +9,11 @@ module.exports = class extends Generator {
 
     this.argument("botName", { type: String, required: true });
 
-    // create parent folder
-    fs.mkdirSync(this.options.botName);
+    // // create parent folder
+    // fs.mkdirSync(this.options.botName);
 
-    // change root folder so both child bots created here.
-    this.destinationRoot(path.join(this.destinationRoot(),this.options.botName));
+    // // change root folder so both child bots created here.
+    // this.destinationRoot(path.join(this.destinationRoot(),this.options.botName));
 
   }
 
