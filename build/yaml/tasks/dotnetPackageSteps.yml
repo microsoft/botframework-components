@@ -1,0 +1,43 @@
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .Net Core sdk 3.1.x'
+  inputs:
+    version: 3.1.x
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet restore`'
+  inputs:
+    command: restore
+    projects: '$(WorkingDirectory)\*.csproj'
+    feedsToUse: config
+    nugetConfigPath: packages\NuGet.Config
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet build`'
+  inputs:
+    projects: '$(WorkingDirectory)\*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
+    workingDirectory: '$(WorkingDirectory)'
+
+steps:
+- task: CopyFiles@2
+  displayName: 'Copy bin files'
+  inputs:
+    SourceFolder: '$(WorkingDirectory)\bin\Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\binaries'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet pack`'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(WorkingDirectory)\*.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    versioningScheme: 'off'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the binaries'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\binaries'    
+    ArtifactName: 'binaries'
+    publishLocation: 'Container'

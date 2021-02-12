@@ -1,7 +1,0 @@
-steps:
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish the binaries'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)\binaries'    
-    ArtifactName: 'binaries'
-    publishLocation: 'Container'

@@ -8,6 +8,7 @@ steps:
       exit 1
     }
   displayName: Check for .nuspec file
+
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
