@@ -382,4 +382,3 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
-/generators/generator-conversational-core/node_modules
