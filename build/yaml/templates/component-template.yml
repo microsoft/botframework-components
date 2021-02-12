@@ -18,6 +18,8 @@ stages:
           - template: ../tasks/dotnet-package-steps.yml
           - template: ../tasks/nuget-build-artifacts-steps.yml
 
+  # Publish both nuget and node packages
+  # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
   - ${{ if eq(parameters.componentType, 'declarativeAsset') }}: 
     - stage: Build_pack
       displayName: Build and package
@@ -25,13 +27,12 @@ stages:
         - job: Nuget_pack
           displayName: Create nuget package
           steps:
-          # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
           - template: ../tasks/nuspec-package-steps.yml
           - template: ../tasks/nuget-build-artifacts-steps.yml
         - job: Npm_pack
           displayName: Create npm package
           steps:
-          - template: ../tasks/npmPackageSteps.yml
+          - template: ../tasks/npm-package-steps.yml
 
   - ${{ if eq(parameters.componentType, 'generator') }}: 
     - stage: Build_pack
@@ -40,4 +41,4 @@ stages:
         - job: NpmPack
           displayName: Create npm package
           steps:
-          - template: ../tasks/npmPackageSteps.yml
+          - template: ../tasks/npm-package-steps.yml
