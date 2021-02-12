@@ -3,7 +3,5 @@ steps:
   displayName: 'Copy npm files'
   inputs:
     SourceFolder: '$(WorkingDirectory)'
-    Contents: |
-      **
-      !*.nuspec
+    Contents: '*.tgz'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\npm'
