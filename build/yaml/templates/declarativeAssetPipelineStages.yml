@@ -2,25 +2,13 @@ stages:
 - stage: Build_pack
   displayName: Build and package
   jobs:
-    - job: NugetPack
+    - job: Nuget_pack
       displayName: Create nuget package
       steps:
       # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
       - template: ../tasks/nugetPackSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
-    - job: NpmPack
+    - job: Npm_pack
       displayName: Create npm package
       steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Install Node.js'
-      - script: |
-          npm install
-        displayName: 'Install dependencies'
-      - script: |
-          npm pack
-        displayName: 'Package package'
-        workingDirectory: '$(WorkingDirectory)'
-      - template: ../tasks/copyNpmFilesSteps.yml
-      - template: ../tasks/publishBuildArtifactsNpmSteps.yml
+      - template: ../tasks/npmPackSteps.yml
