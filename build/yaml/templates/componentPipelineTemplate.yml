@@ -13,4 +13,10 @@ stages:
   - ${{ if eq(parameters.componentType, 'declarativeAsset') }}: 
     - template: ../templates/declarativeAssetPipelineStages.yml
   - ${{ if eq(parameters.componentType, 'generator') }}: 
-    - template: ../templates/generatorPipelineStages.yml
+    - stage: Build_pack
+      displayName: Build and package
+      jobs:
+        - job: NpmPack
+          displayName: Create npm package
+          steps:
+          - template: ../tasks/npmPackageSteps.yml

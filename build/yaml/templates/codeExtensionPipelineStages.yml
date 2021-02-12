@@ -5,6 +5,7 @@ stages:
   displayName: Build and package
   jobs:
     - job: Build
+      displayName: Build and package
       steps:
       - template: ../tasks/dotnetPackageSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
