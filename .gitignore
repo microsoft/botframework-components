@@ -260,12 +260,8 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-/solutions/**/node_modules/
-/templates/**/node_modules/
-/lib/**/node_modules/
-/tools/**/node_modules/
-/skills/**/node_modules/
-/samples/**/node_modules/
+**/node_modules/
+
 
 # Visual Studio 6 build log
 *.plg
@@ -386,3 +382,4 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
+/generators/generator-conversational-core/node_modules
