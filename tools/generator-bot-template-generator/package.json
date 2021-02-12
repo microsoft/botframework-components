@@ -8,7 +8,9 @@
   ],
   "keywords": [
     "bot-template-generator",
-    "microsoft bot template"
+    "microsoft",
+    "bot",
+    "template"
   ],
   "scripts": {
     "test": "jest",

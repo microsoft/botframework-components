@@ -55,7 +55,9 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(),
-      { name: this.props.name }
+      { name: this.props.name,
+        normalizedName: this._normalizeName(this.props.name)
+      }
     );
 
   }
