@@ -2,11 +2,12 @@ steps:
 - powershell: |
     $nuspecExists = Test-Path -Path "$(WorkingDirectory)\*.nuspec"
     if ($nuspecExists) {
-      Write-Host ".nuspec file exists, continue packaging"
+      Write-Host "File exists"
     } else {
-      Write-Host ".nuspec file does NOT exist, exiting"
+      Write-Host "Missing .nuspec file!"
       exit 1
     }
+  displayName: Check for .nuspec file
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
