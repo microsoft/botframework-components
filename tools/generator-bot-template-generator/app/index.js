@@ -3,7 +3,6 @@ const path = require('path');
 const Generator = require('yeoman-generator');
 const askName = require('inquirer-npm-name');
 const _ = require('lodash');
-const extend = require('deep-extend');
 const mkdirp = require('mkdirp');
 
 function makeGeneratorName(name) {
