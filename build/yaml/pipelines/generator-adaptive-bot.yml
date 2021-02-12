@@ -15,7 +15,7 @@ pool:
   vmImage: 'windows-2019'
 
 extends:
-  template: ../templates/componentPipelineTemplate.yml
+  template: ../templates/component-template.yml
   parameters:
       componentType: generator
 
