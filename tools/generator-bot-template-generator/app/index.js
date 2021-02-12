@@ -53,15 +53,6 @@ module.exports = class extends Generator {
     return generatorName;
   }
 
-  _changeFileNames = (generatorName) => {
-    const normalizedName = this._normalizeName(generatorName);
-    console.log(this.destinationPath(path.join('generators', 'app', 'templates', 'knowledge-base', 'en-us', 'emptyBot.en-us.qna')));
-    this.fs.move(
-      this.destinationPath(path.join('generators', 'app', 'templates', 'knowledge-base', 'en-us', 'emptyBot.en-us.qna')),
-      this.destinationPath(path.join('generators', 'app', 'templates', 'knowledge-base', 'en-us', `${normalizedName}.en-us.qna`))
-  );
-  }
-
   writing() {
     this.fs.copyTpl(
       this.templatePath(),
@@ -70,9 +61,5 @@ module.exports = class extends Generator {
     );
 
   }
-  // end() {
-  //   console.log(this.destinationPath());
-  //   this._changeFileNames(this.props.name);
-  // };
 };
 
