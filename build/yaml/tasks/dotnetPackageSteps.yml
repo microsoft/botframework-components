@@ -19,7 +19,6 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --no-restore'
     workingDirectory: '$(WorkingDirectory)'
 
-steps:
 - task: CopyFiles@2
   displayName: 'Copy bin files'
   inputs:
