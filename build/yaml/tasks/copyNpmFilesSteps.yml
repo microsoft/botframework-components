@@ -1,7 +1,0 @@
-steps:
-- task: CopyFiles@2
-  displayName: 'Copy npm files'
-  inputs:
-    SourceFolder: '$(WorkingDirectory)'
-    Contents: '*.tgz'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\npm'
