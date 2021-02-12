@@ -4,8 +4,13 @@ Yeoman generator generating a bot template generator for use with the Microsoft 
 
 ## Getting started
 
+### Starting with published version of generator-bot-template-generator 
 - Install: `npm install -g generator-bot-template-generator`
 - Run: `yo bot-template-generator`
+
+### Starting with local version of generator-bot-template-generator 
+- Navigate to the root dir of your local version of `generator-bot-template-generator` and run `npm install`
+- Navigate to the directory where you want to instantiate your bot template generator and run `yo {path to your local versions of generator-bot-template-generator's ./app/index.js file}`
 
 ## Commands
 
