@@ -22,7 +22,6 @@ module.exports = class extends Generator {
       {
         name: 'name',
         message: 'Your generator name',
-        default: makeGeneratorName(path.basename(process.cwd())),
         filter: makeGeneratorName,
         validate: str => {
           return str.length > 'generator-'.length;
