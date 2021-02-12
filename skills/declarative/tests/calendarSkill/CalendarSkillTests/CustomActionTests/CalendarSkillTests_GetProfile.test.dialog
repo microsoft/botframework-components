@@ -1,0 +1,37 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Get Profile",
+  "httpRequestMocks": [
+    "getProfile.mock"
+  ],
+  "dialog": {
+    "$kind": "Microsoft.AdaptiveDialog",
+    "triggers": [
+      {
+        "$kind": "Microsoft.OnBeginDialog",
+        "actions": [
+          {
+            "$kind": "Microsoft.Graph.User.GetProfile",
+            "resultProperty": "dialog.result",
+            "token": "='token'"
+          },
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "${dialog.result.displayName}"
+          }
+        ]
+      }
+    ]
+  },
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "hello"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Megan Bowen"
+    }
+  ]
+}

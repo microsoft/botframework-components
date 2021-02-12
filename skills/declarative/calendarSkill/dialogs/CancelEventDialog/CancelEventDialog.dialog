@@ -1,0 +1,149 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "T6pvbO",
+    "name": "CancelEventDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "coEW4g"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "j6CfN9"
+          },
+          "name": "CancelEventDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "itkIrW"
+          },
+          "condition": "dialog.event.IsOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "bbFHND"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_bbFHND()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "property": "dialog.confirmation"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "VuNvtg"
+              },
+              "condition": "dialog.confirmation",
+              "actions": [
+                {
+                  "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
+                  "$designer": {
+                    "id": "q0Apso"
+                  },
+                  "token": "=user.token.token",
+                  "eventId": "= dialog.event.id",
+                  "resultProperty": "dialog.result"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "cJ2cuN"
+                  },
+                  "activity": "${SendActivity_cJ2cuN()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "JCItAO"
+                  },
+                  "activity": "${SendActivity_JCItAO()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "AyheDs"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_AyheDs()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or "
+              },
+              "property": "dialog.confirmation"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Y7gQOs"
+              },
+              "condition": "dialog.confirmation",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "aUBh6U"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "RespondToEventDialog",
+                  "options": {
+                    "response": "='declined'",
+                    "event": "=dialog.event"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "iPUM6m"
+                  },
+                  "activity": "${SendActivity_iPUM6m()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "CancelEventDialog.lg",
+  "recognizer": "CancelEventDialog.lu.qna",
+  "id": "CancelEventDialog"
+}

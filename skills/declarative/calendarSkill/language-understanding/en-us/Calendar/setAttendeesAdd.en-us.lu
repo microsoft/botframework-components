@@ -1,0 +1,84 @@
+
+
+# SetAttendeesAdd
+- add an attendee
+- add people
+- add more recipients to the meeting with {@contact=roberta}
+- add attendees to my meeting on friday
+- add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
+- add {@newContact=jose} to my next meeting
+- add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
+- can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
+- forward my meeting on {@date=thursday} to {@newContact=youngjae}
+- forward to more people
+- forward the next event to {@newContact=scott}
+- forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
+- forward this to {@newContact=john}
+- forward to {@newContact=chris} and {@newContact=me@myemail.edu}
+- forward to {@newContact=scott}
+- invite more people
+- invite someone else
+- invite {@newContact=elaine} and {@newContact=morgan}
+- invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
+- invite {@newContact=jose}
+- invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
+- invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
+- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- send this to more people
+- send my {@subject=breakfast} event to {@newContact=gary}
+- send my event titled {@subject=1:1} to {@newContact=chris}
+- send the meeting to {@newContact=morgan}
+- send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+
+@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities

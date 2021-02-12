@@ -1,0 +1,850 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UrfxdD",
+    "name": "ResolveDateTimeDialog"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "42clMH"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "OwPzzJ"
+          },
+          "name": "ResolveDateTimeDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "kxvYi4"
+          },
+          "assignments": [
+            {
+              "property": "dialog.query",
+              "value": "=coalesce(dialog.query, turn.activity.text)"
+            },
+            {
+              "property": "dialog.expectedType",
+              "value": "=coalesce(dialog.expectedType, null)"
+            },
+            {
+              "property": "dialog.minDate",
+              "value": "=coalesce(dialog.minDate, null)"
+            },
+            {
+              "property": "dialog.maxDate",
+              "value": "=coalesce(dialog.maxDate, null)"
+            },
+            {
+              "property": "dialog.minTime",
+              "value": "=coalesce(dialog.minTime, null)"
+            },
+            {
+              "property": "dialog.maxTime",
+              "value": "=coalesce(dialog.maxTime, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Bot.Solutions.RecognizeDateTime",
+          "$designer": {
+            "id": "SZKf8v"
+          },
+          "queryProperty": "=dialog.query",
+          "resultProperty": "dialog.recognitionResults",
+          "timeZoneProperty": "=user.workingHours.timeZone.name"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ksIN1t"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.recognitionResults",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "0FTMUN"
+              },
+              "property": "$resolvedType",
+              "value": "=$foreach.value.Resolution.values[0].type"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "QvhQlR"
+              },
+              "eventName": "CheckExpectedType"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "wUbrlv"
+              },
+              "condition": "count(dialog.foreach.value.Resolution.values) == 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cPoVPR"
+                  },
+                  "property": "dialog.datetimeResolution",
+                  "value": "=dialog.foreach.value.Resolution.values[0]"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "4Hbqwg"
+                  },
+                  "value": "=dialog.datetimeResolution"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "v3P9w2"
+                  },
+                  "cases": [
+                    {
+                      "value": "date",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "NqrxcU"
+                          },
+                          "eventName": "RefineDate",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetime",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "MOsZUP"
+                          },
+                          "eventName": "RefineDateTime",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "time",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "0RrVbm"
+                          },
+                          "eventName": "RefineTime",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "daterange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "iBRM3d"
+                          },
+                          "eventName": "RefineDateRange",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetimerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "vfve3B"
+                          },
+                          "eventName": "RefineDateTimeRange",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "timerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "xpEzrS"
+                          },
+                          "eventName": "RefineTimeRange",
+                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                        }
+                      ]
+                    }
+                  ],
+                  "condition": "$resolvedType",
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "JrfC1C"
+                      },
+                      "activity": "${SendActivity_JrfC1C()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "SsC8fk"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "Ejtr7m"
+                  },
+                  "activityProcessed": true,
+                  "allowLoop": true,
+                  "options": {
+                    "query": "=dialog.selected"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "FxD36G",
+        "name": "RefineDate"
+      },
+      "event": "RefineDate",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8IOu4o"
+          },
+          "name": "ResolveDateTimeDialog.RefineDate"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "a43OOw"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "IQInq1"
+              },
+              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(date(dialog.minDate)))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "GLkygU"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OlWE0O"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Xv3qc4"
+              },
+              "condition": "dialog.foreach.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uYrpos"
+                  },
+                  "property": "dialog.formattedOption",
+                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "z4uPIw"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.choices",
+                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Kxsxdt"
+          },
+          "condition": "dialog.choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "rxH6X0"
+              },
+              "condition": "count(dialog.choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "xntS1t"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_xntS1t()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=dialog.choices",
+                  "property": "dialog.selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cTs1XM"
+                  },
+                  "property": "dialog.selected",
+                  "value": "=dialog.choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "22HYzp"
+              },
+              "activity": "${SendActivity_22HYzp()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "uNlLNa"
+              },
+              "property": "dialog.selected",
+              "value": "=formatDateTime(date(dialog.minDate), \"dddd, MMMM d, yyyy\")"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lwY2oA",
+        "name": "RefineDateTime"
+      },
+      "event": "RefineDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "gXLQ6f"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTime"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "b2a4gT"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "4nSPCc"
+              },
+              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(dialog.minDate))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "DQfu8f"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OifsS5"
+                  },
+                  "property": "dialog.foreach.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "bYsQ7q"
+              },
+              "condition": "dialog.foreach.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uCS9Ou"
+                  },
+                  "property": "dialog.formattedOption",
+                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "FbjTHk"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "dialog.choices",
+                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OqJa6A"
+          },
+          "condition": "dialog.choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QhjFD1"
+              },
+              "condition": "count(dialog.choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "RSIYeJ"
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_RSIYeJ()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=dialog.choices",
+                  "property": "dialog.selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "0uAZcl"
+                  },
+                  "property": "dialog.selected",
+                  "value": "=dialog.choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9oQtz5"
+              },
+              "activity": "${SendActivity_9oQtz5()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "awh8Ju"
+              },
+              "property": "dialog.selected",
+              "value": "=formatDateTime(dialog.minDate, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "wRCfhj",
+        "name": "RefineTime"
+      },
+      "event": "RefineTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IhxIE6"
+          },
+          "name": "ResolveDateTimeDialog.RefineTime"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "UtKCFb"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MmvPBY"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=formatDateTime(dialog.foreach.value.value, \"h:mm tt\")"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "S0x2ix"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "yHRsbS"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_yHRsbS()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=dialog.choices",
+          "property": "dialog.selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "KD16nD",
+        "name": "RefineDateRange"
+      },
+      "event": "RefineDateRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "okdggz"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ZAwl4T"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "PaDCIS"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "8kl6M0"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "kbCCbs"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_kbCCbs()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=dialog.choices",
+          "property": "dialog.selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "RnNzoa",
+        "name": "RefineDateTimeRange"
+      },
+      "event": "RefineDateTimeRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "v5ijYF"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTimeRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Mjqbll"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "xDRpmj"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "tHzvQU"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "QkdpPG"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_QkdpPG()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=dialog.choices",
+          "property": "dialog.selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "EMQruo",
+        "name": "RefineTimeRange"
+      },
+      "event": "RefineTimeRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rV7e9v"
+          },
+          "name": "ResolveDateTimeDialog.RefineTimeRange"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "3eMz8z"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ifIblU"
+              },
+              "property": "dialog.formattedOption",
+              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "oSvcIN"
+              },
+              "changeType": "push",
+              "itemsProperty": "dialog.choices",
+              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "pO5zQk"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_pO5zQk()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=dialog.choices",
+          "property": "dialog.selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "ClNq3i",
+        "name": "CheckExpectedType"
+      },
+      "event": "CheckExpectedType",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VXcLqd"
+          },
+          "condition": "=exists($expectedType) && $resolvedType != $expectedType",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "g2RoUz",
+                "name": "Prompt for textn a diffe"
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_g2RoUz()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "$query"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "hoOdR8"
+              },
+              "activityProcessed": true,
+              "options": {
+                "query": "=$query",
+                "expectedType": "=$expectedType",
+                "minDate": "=$minDate",
+                "maxDate": "=$maxDate",
+                "minTime": "$minTime",
+                "maxTime": "$maxTime"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ResolveDateTimeDialog.lg",
+  "id": "ResolveDateTimeDialog",
+  "recognizer": "ResolveDateTimeDialog.lu.qna"
+}

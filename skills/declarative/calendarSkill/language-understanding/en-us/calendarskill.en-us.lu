@@ -1,0 +1,46 @@
+> General Intent Imports
+[Help](./General/help.en-us.lu)
+[Logout](./General/logout.en-us.lu)
+
+> Calendar Intent Imports
+[CancelEvent](./Calendar/cancelEvent.en-us.lu)
+[CreateEvent](./Calendar/createEvent.en-us.lu)
+[GetAvailabilityBreaks](./Calendar/getAvailabilityBreaks.en-us.lu)
+[GetAvailabilityFirst](./Calendar/getAvailabilityFirst.en-us.lu)
+[GetAvailabilityLast](./Calendar/getAvailabilityLast.en-us.lu)
+[GetEvents](./Calendar/getEvents.en-us.lu)
+[GetEventAttendees](./Calendar/getEventAttendees.en-us.lu)
+[GetEventDateTime](./Calendar/getEventDateTime.en-us.lu)
+[GetEventLocation](./Calendar/getEventLocation.en-us.lu)
+[RespondAccept](./Calendar/respondAccept.en-us.lu)
+[RespondDecline](./Calendar/respondDecline.en-us.lu)
+[RespondTentativelyAccept](./Calendar/respondTentativelyAccept.en-us.lu)
+[SetAttendeesAdd](./Calendar/setAttendeesAdd.en-us.lu)
+[SetAttendeesRemove](./Calendar/setAttendeesRemove.en-us.lu)
+[SetDateTime](./Calendar/setDateTime.en-us.lu)
+[SetDescription](./Calendar/setDescription.en-us.lu)
+[SetDuration](./Calendar/setDuration.en-us.lu)
+[SetLocation](./Calendar/setLocation.en-us.lu)
+[SetOnlineMeetingAdd](./Calendar/setOnlineMeetingAdd.en-us.lu)
+[SetOnlineMeetingRemove](./Calendar/setOnlineMeetingRemove.en-us.lu)
+[SetTitle](./Calendar/setTitle.en-us.lu)
+[UpdateEvent](./Calendar/updateEvent.en-us.lu)
+
+# None
+- 1 hour
+- 3pm to 4pm
+- first
+- john and sarah
+- last
+- monday
+- project review
+- rainbows and butterflies
+- standup
+- team standup
+- today
+- tomorrow
+- tuesday at 4pm
+- tuesday to wednesday
+- tyler, tonya, and abby
+- yes
+- no

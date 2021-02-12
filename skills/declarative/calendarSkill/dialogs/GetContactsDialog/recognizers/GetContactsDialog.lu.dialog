@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_GetContactsDialog",
+  "recognizers": {
+    "en-us": "GetContactsDialog.en-us.lu",
+    "": "GetContactsDialog.en-us.lu"
+  }
+}

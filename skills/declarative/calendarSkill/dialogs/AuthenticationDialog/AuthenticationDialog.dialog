@@ -1,0 +1,60 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "aZc9SE",
+    "name": "AuthenticationDialog",
+    "description": "Authenticates user through AAD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "MnLHqD"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "T2hOJH"
+          },
+          "name": "AuthenticationDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "m7gWCJ"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.oauthConnectionName",
+          "property": "user.token",
+          "title": "Sign in",
+          "text": "Time to sign in with your Microsoft account to access your calendar, and try out our new 🗓 Skill!"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetProfile",
+          "$designer": {
+            "id": "VvX38E"
+          },
+          "resultProperty": "user.profile",
+          "token": "=user.token.token"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
+          "$designer": {
+            "id": "xkrfzQ"
+          },
+          "token": "=user.token.token",
+          "addressProperty": "=user.profile.userPrincipalName",
+          "resultProperty": "user.workingHours"
+        }
+      ]
+    }
+  ],
+  "generator": "AuthenticationDialog.lg",
+  "id": "AuthenticationDialog"
+}

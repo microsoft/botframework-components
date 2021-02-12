@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Decline Event",
+  "httpRequestMocks": [
+    "declineEvent.mock"
+  ],
+  "dialog": {
+    "$kind": "Microsoft.AdaptiveDialog",
+    "triggers": [
+      {
+        "$kind": "Microsoft.OnBeginDialog",
+        "actions": [
+          {
+            "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+            "resultProperty": "dialog.result",
+            "token": "='token'",
+            "eventId": "=0000000000"
+          },
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "${dialog.result}"
+          }
+        ]
+      }
+    ]
+  },
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "hello"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "True"
+    }
+  ]
+}

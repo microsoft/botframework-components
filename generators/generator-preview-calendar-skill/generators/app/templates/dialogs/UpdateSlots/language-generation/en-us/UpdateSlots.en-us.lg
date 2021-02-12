@@ -1,0 +1,47 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+
+# AskForEntity()
+- What do you want to update?
+- What can I update for you?
+- What do you want to change about the event?
+- Tell me what you'd like to update.
+
+# AskForEntityWithEvent()
+[Activity
+    text = ${AskForEntity()}
+    attachments=${json(EventUpdateDetailCard(dialog.eventInfo))}
+]
+
+# TextInput_Prompt_gZ1tbS()
+- IF: ${dialog.eventInfo == null}
+    - ${AskForEntity()}
+- ELSE:
+    - ${AskForEntityWithEvent()}
+# TextInput_Prompt_gtOavc()
+- ${AskForNewValue('title')}
+
+# AskForNewValue(entity)
+- OK, I'll update the ${entity}. What should it be instead?
+- I can do that. What should the ${entity} be instead?
+- OK, for ${entity} what can I update it to?
+- Sure. What should I change the ${entity} to?
+
+# DateTimeInput_Prompt_a700t3()
+- ${AskForNewValue('duration')}
+
+# TextInput_Prompt_NdRLDG()
+- ${AskForNewValue('location')}
+
+# DateTimeInput_Prompt_SSWMA3()
+- OK, how long would you like this meeting to be?
+- OK, what should I set the duration to?
+
+# DateTimeInput_Prompt_fKknY3()
+- ${AskForNewValue('date time')}
+
+# TextInput_Prompt_kSb8sd()
+- Who do you want to remove?
+
+# SendActivity_xtl9sc()
+- ${CancelMessage()}
