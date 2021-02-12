@@ -5,4 +5,4 @@ stages:
     - job: NpmPack
       displayName: Create npm package
       steps:
-      - template: ../tasks/npmPackSteps.yml
+      - template: ../tasks/npmPackageSteps.yml

@@ -6,9 +6,9 @@ stages:
       displayName: Create nuget package
       steps:
       # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-      - template: ../tasks/nuspecPackSteps.yml
+      - template: ../tasks/nuspecPackageSteps.yml
       - template: ../tasks/publishBuildArtifactsNugetSteps.yml
     - job: Npm_pack
       displayName: Create npm package
       steps:
-      - template: ../tasks/npmPackSteps.yml
+      - template: ../tasks/npmPackageSteps.yml
