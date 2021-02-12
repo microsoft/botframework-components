@@ -11,5 +11,9 @@
   "license": "MIT",
   "files": [
     "/exported"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  }
 }
