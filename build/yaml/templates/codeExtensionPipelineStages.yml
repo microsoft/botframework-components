@@ -7,4 +7,4 @@ stages:
     - job: Build
       steps:
       - template: ../tasks/dotnetPackageSteps.yml
-      - template: ../tasks/publishBuildArtifactsBinariesSteps.yml
+      - template: ../tasks/publishBuildArtifactsNugetSteps.yml
