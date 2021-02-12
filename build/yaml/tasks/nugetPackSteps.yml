@@ -1,8 +1,0 @@
-steps:
-- task: NuGetCommand@2
-  displayName: 'Run `nuget pack`'
-  inputs:
-    command: pack
-    packagesToPack: '$(WorkingDirectory)\*.nuspec'
-    packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
-    versioningScheme: off

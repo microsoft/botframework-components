@@ -1,0 +1,16 @@
+steps:
+- powershell: |
+    $nuspecExists = Test-Path -Path "$(WorkingDirectory)\*.nuspec"
+    if ($nuspecExists) {
+      Write-Host ".nuspec file exists, continue packaging"
+    } else {
+      Write-Host ".nuspec file does NOT exist, exiting"
+      exit 1
+    }
+- task: NuGetCommand@2
+  displayName: 'Run `nuget pack`'
+  inputs:
+    command: pack
+    packagesToPack: '$(WorkingDirectory)\*.nuspec'
+    packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    versioningScheme: off
