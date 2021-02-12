@@ -12,7 +12,7 @@ trigger:
       - {YOUR_WORKING_DIRECTORY}
 
 extends:
-  template: ../templates/componentPipelineTemplate.yml
+  template: ../templates/component-template.yml
   parameters:
       componentType: {COMPONENT_TYPE}
 

@@ -1,3 +1,5 @@
+# Checks for required .nuspec file and creates package
+
 steps:
 - powershell: |
     $nuspecExists = Test-Path -Path "$(WorkingDirectory)\*.nuspec"
