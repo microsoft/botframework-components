@@ -16,7 +16,9 @@ module.exports = class extends Generator {
         arguments: this.args,
         packageReferences: [
           // PLACE COMPONENT PACKAGES THAT YOUR BOT TEMPLATE USES HERE
-        ]
+        ],
+        applicationSettingsDirectory: 'settings',
+        includeApplicationSettings: false   
       }
     );
   }
