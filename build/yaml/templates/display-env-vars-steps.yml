@@ -1,3 +1,0 @@
-steps:
-- powershell: 'gci env:* | sort-object name | Format-Table -AutoSize -Wrap'
-  displayName: 'Display env vars'
