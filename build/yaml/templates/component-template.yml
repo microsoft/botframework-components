@@ -16,7 +16,6 @@ stages:
           displayName: Build and package
           steps:
           - template: dotnet-package-steps.yml
-          - template: nuget-build-artifacts-steps.yml
 
   # Publish both nuget and node packages
   # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
@@ -28,7 +27,6 @@ stages:
           displayName: Create nuget package
           steps:
           - template: nuspec-package-steps.yml
-          - template: nuget-build-artifacts-steps.yml
         - job: Npm_pack
           displayName: Create npm package
           steps:
