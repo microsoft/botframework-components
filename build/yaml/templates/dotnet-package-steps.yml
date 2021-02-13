@@ -24,6 +24,7 @@ steps:
   displayName: 'Run `dotnet publish`'
   inputs:
     command: publish
+    publishWebProjects: false
     projects: '$(WorkingDirectory)\*.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\binaries'
     workingDirectory: '$(WorkingDirectory)'
