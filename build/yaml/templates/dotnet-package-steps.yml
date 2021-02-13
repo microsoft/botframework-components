@@ -20,12 +20,13 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --no-restore'
     workingDirectory: '$(WorkingDirectory)'
 
-- task: CopyFiles@2
-  displayName: 'Copy bin files'
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet publish`'
   inputs:
-    SourceFolder: '$(WorkingDirectory)\bin\Release'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\binaries'
+    command: publish
+    projects: '$(WorkingDirectory)\*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-restore --output $(Build.ArtifactStagingDirectory)\binaries'
+    workingDirectory: '$(WorkingDirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run `dotnet pack`'
