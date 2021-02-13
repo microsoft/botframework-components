@@ -17,7 +17,7 @@ steps:
   inputs:
     command: build
     projects: '$(WorkingDirectory)\*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
+    arguments: '--configuration $(BuildConfiguration)'
     workingDirectory: '$(WorkingDirectory)'
 
 - task: DotNetCoreCLI@2
@@ -25,7 +25,7 @@ steps:
   inputs:
     command: publish
     projects: '$(WorkingDirectory)\*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --no-restore --output $(Build.ArtifactStagingDirectory)\binaries'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\binaries'
     workingDirectory: '$(WorkingDirectory)'
 
 - task: DotNetCoreCLI@2
