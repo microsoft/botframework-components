@@ -2,6 +2,42 @@
 [Event](event.en-us.lg)
 [Schedule](schedule.en-us.lg)
 
+# FirstEventResponseText(event)
+- You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
+
+# LastEventResponseText(event)
+- Your day ends at ${BuildTime(event.start.datetime)}. Your last meeting is ${event.Subject}.
+
+# NextEventResponseText(event)
+- Here’s what’s next:
+
+# EventResponseText(event)
+- Here's what I found:
+
+# TimeTillNextMeetingResponseText(diff)
+- You have ${MakeDiffTime(diff)} until your next meeting starts.
+
+# MakeDiffTime(diff)
+- IF: ${ diff < 60 }
+    - ${MakeMinute(diff)}
+- ELSEIF: ${ mod(diff, 60) == 0}
+    - ${MakeHour(diff)}
+- ELSE:
+    - ${MakeHour(diff)} and ${MakeMinute(diff)}
+    
+# MakeMinute(diff)
+- IF: ${ mod(diff, 60) == 1 }
+    - ${mod(diff, 60)} minute
+- ELSE:
+    - ${mod(diff, 60)} minutes
+
+# MakeHour(diff)
+- IF: ${ div(diff, 60) == 1 }
+    - ${div(diff, 60)} hour
+- ELSE:
+    - ${div(diff, 60)} hours
+
+
 # CheckAvailabilityBusyResponseText(events, time)
 - I've found ${count(events)} events for you at ${BuildTime(time)}:
 

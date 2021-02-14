@@ -16,7 +16,7 @@
 - ${CardTemplate(CardHeader(headerIcon, headerTitle, '', ''), template(itemTemplate, item), actionsTemplate)}
 
 # SendActivity_BDsmtE()
-- ${template(dialog.templates.skipResponse)}
+- ${template($templates.skipResponse)}
 
 # SendActivity_2LMTaY()
 - That's the beginning of the list.
@@ -28,25 +28,25 @@
 - OK, let's move on.
 
 # ChoiceInput_Prompt_dc3QNs()
-- IF: ${dialog.isFirstTurn == true}
+- IF: ${$isFirstTurn == true}
     - ${InitialChoicePrompt()}
 - ELSE: 
     - ${RepromptChoicePrompt()}
 
 # InitialChoicePrompt
 [Activity
-    text = ${if(dialog.activePrompt != null, template(dialog.activePrompt), null)}
-    attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
+    text = ${if($activePrompt != null, template($activePrompt), null)}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
 
 # RepromptChoicePrompt
 [Activity
     deliveryMode = update
     id = ${turn.activity.replyToId}
-    attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
 
 # Bot.SendActivityPlus_Activity_UcmH0c()
 [Activity
-    attachments = ${json(ListCard(count(dialog.items), dialog.pageSize, dialog.pageItems, dialog.templates.icon, dialog.templates.title, dialog.templates.item, dialog.templates.actions, dialog.pageIndex + 1, dialog.pageCount))}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
