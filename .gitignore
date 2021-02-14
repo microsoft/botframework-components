@@ -386,3 +386,4 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
+/skills/declarative/tests/calendarSkill/testsettings.development.json

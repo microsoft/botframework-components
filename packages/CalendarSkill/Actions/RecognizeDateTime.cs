@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TimeZoneConverter;
 
 namespace Microsoft.Bot.Component.CalendarSkill.Actions
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Bot.Component.CalendarSkill.Actions
             var queryProperty = QueryProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var culture = GetCulture(dc);
-            var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty));
+            var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TZConvert.GetTimeZoneInfo(timeZoneProperty));
 
             var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, refTime: timeZoneNow);
 
