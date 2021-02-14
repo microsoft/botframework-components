@@ -7,7 +7,7 @@
     }
   },
   "autoEndDialog": true,
-  "defaultResultProperty": "dialog.result",
+  "defaultResultProperty": "$result",
   "triggers": [
     {
       "$kind": "Microsoft.OnConversationUpdateActivity",
@@ -27,7 +27,7 @@
           "$designer": {
             "id": "25rJrE"
           },
-          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -135,7 +135,8 @@
           "$designer": {
             "id": "anTaur"
           },
-          "connectionName": "=settings.oauthConnectionName"
+          "connectionName": "=settings.oauthConnectionName",
+          "userId": "=user.id"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -163,69 +164,11 @@
           "name": "calendarSkill.CreateEvent"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "zgwt1E"
+            "id": "SSALaq"
           },
-          "assignments": [
-            {
-              "property": "$query",
-              "value": "=turn.activity.text"
-            },
-            {
-              "property": "$slots.subject",
-              "value": "=@subject"
-            },
-            {
-              "property": "$slots.location",
-              "value": "=@location"
-            },
-            {
-              "property": "$contactArray",
-              "value": "=@@contact"
-            },
-            {
-              "property": "$emailArray",
-              "value": "=@@email"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "Ynt6v9"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "qXPZii"
-          },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=$query",
-            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
-          },
-          "resultProperty": "$dateTime"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "jWevfz"
-          },
-          "assignments": [
-            {
-              "property": "$slots.start.dateTime",
-              "value": "=coalesce($dateTime.start, $dateTime.value, null)"
-            },
-            {
-              "property": "$slots.end.dateTime",
-              "value": "=coalesce($dateTime.end, null)"
-            }
-          ]
+          "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -235,17 +178,15 @@
           "activityProcessed": true,
           "dialog": "CreateEventDialog",
           "options": {
-            "slots": "=$slots",
-            "contactArray": "=$contactArray",
-            "emailArray": "=$emailArray"
+            "options": "=$options"
           }
         },
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "lqswVn"
+            "id": "YVVKLC"
           },
-          "eventName": "collectFeedback"
+          "eventName": "dialogCompleted"
         }
       ]
     },
@@ -309,14 +250,14 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "dR7iaI"
+            "id": "lgKQMZ"
           },
           "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ejJI56"
+            "id": "u5LsWm"
           },
           "activityProcessed": true,
           "dialog": "GetEventsDialog",
@@ -333,6 +274,14 @@
           },
           "condition": "$event != null",
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "dtnk8r"
+              },
+              "property": "$next",
+              "value": "=$ordinal.relativeTo == 'current'"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -376,77 +325,40 @@
           "name": "calendarSkill.GetEventLocation"
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "wI3ZSM"
+            "id": "7cegzi"
           },
-          "assignments": [
-            {
-              "property": "dialog.query",
-              "value": "=turn.activity.text"
-            },
-            {
-              "property": "dialog.title",
-              "value": "= @Title"
-            },
-            {
-              "property": "dialog.personNameArray",
-              "value": "= @@personName"
-            },
-            {
-              "property": "dialog.ordinal",
-              "value": "= @ordinalV2"
-            }
-          ]
+          "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "qQpGas"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "tkSZUg"
-          },
-          "activityProcessed": true,
-          "dialog": "ResolveDateTimeDialog",
-          "options": {
-            "query": "=dialog.query",
-            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
-          },
-          "resultProperty": "dialog.datetime"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "OI2W95"
+            "id": "AZCY2M"
           },
           "activityProcessed": true,
           "dialog": "GetEventsDialog",
           "options": {
-            "start": "=coalesce(dialog.datetime.Start, dialog.datetime.Value)",
-            "end": "=dialog.datetime.End",
-            "title": "=dialog.title",
-            "personNameArray": "=dialog.personNameArray",
-            "doSelection": true,
-            "turnCount": 0,
-            "futureEventsOnly": true,
-            "type": "=dialog.datetime.type",
-            "ordinal": "=dialog.ordinal"
+            "options": "=$options",
+            "doSelection": "=true"
           },
-          "resultProperty": "dialog.event"
+          "resultProperty": "$event"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "euI1fk"
           },
-          "condition": "dialog.event != null",
+          "condition": "$event != null",
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "qjotzR"
+              },
+              "property": "$next",
+              "value": "=$ordinal.relativeTo == 'current'"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -516,6 +428,14 @@
           },
           "condition": "$event != null",
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "CdhfE5"
+              },
+              "property": "$next",
+              "value": "=$ordinal.relativeTo == 'current'"
+            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -704,7 +624,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "x5L9JP"
+            "id": "bedKqO"
           },
           "activityProcessed": true,
           "dialog": "GetEventsDialog",
@@ -714,156 +634,62 @@
           "resultProperty": "$events"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.Graph.Calendar.FindAvailableTime",
           "$designer": {
-            "id": "erD3KB"
+            "id": "Cb07qI"
           },
-          "name": "Available"
+          "resultProperty": "$result",
+          "inputProperty": "=$events",
+          "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+          "workingHourStartProperty": "=user.workingHours.startTime",
+          "workingHourEndProperty": "=user.workingHours.endTime"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "1ZHBkR"
+            "id": "ijHFYq"
           },
-          "condition": "dialog.datetime.type == 'time' || dialog.datetime.type == 'datetime'",
+          "condition": "$result.availableTimeLength > 0",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.CheckAvailability",
+              "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "iU3Fp9"
+                "id": "q8HuQT"
               },
-              "resultProperty": "dialog.result",
-              "inputProperty": "= dialog.events",
-              "startProperty": "= coalesce(dialog.datetime.Start, dialog.datetime.Value)"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "jdVVSZ"
-              },
-              "name": "Available"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "9IUlyq"
-              },
-              "condition": "count(dialog.result.conflictEvents) == 0",
-              "actions": [
+              "assignments": [
                 {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "85mkZM"
-                  },
-                  "assignments": [
-                    {
-                      "value": {
-                        "start": "= coalesce(dialog.result.previousEvent.end.datetime, '00:00:00')",
-                        "end": "= coalesce(dialog.result.nextEvent.start.datetime, '23:59:59')",
-                        "isFreeTime": true
-                      },
-                      "property": "dialog.freeTime"
-                    },
-                    {
-                      "property": "dialog.availabilityList",
-                      "value": "= where(createArray(dialog.result.previousEvent, dialog.freeTime, dialog.result.nextEvent), x, x!= null)"
-                    }
-                  ]
+                  "property": "$freeTime.start",
+                  "value": "=$result.availableTimeStart"
                 },
                 {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "Tb2nNU"
-                  }
+                  "property": "$freeTime.end",
+                  "value": "=$result.availableTimeEnd"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "U7NzFC"
-                  },
-                  "activity": "${SendActivity_U7NzFC()}"
-                }
-              ],
-              "elseActions": [
+                  "property": "$freeTime.isFreeTime",
+                  "value": "=true"
+                },
                 {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "CjDfqM"
-                  },
-                  "activity": "${SendActivity_CjDfqM()}"
+                  "property": "$availabilityList",
+                  "value": "= where(createArray($result.previousEvent, $freeTime, $result.nextEvent), x, x!= null)"
                 }
               ]
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "QqvaSr"
+              },
+              "activity": "${SendActivity_QqvaSr()}"
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.FindAvailableTime",
+              "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "4VSPdh"
+                "id": "WlmO9l"
               },
-              "resultProperty": "dialog.result",
-              "inputProperty": "= dialog.events",
-              "startProperty": "= coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
-              "workingHourStartProperty": "= user.workingHours.startTime",
-              "workingHourEndProperty": "= user.workingHours.endTime"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "gURfgn"
-              },
-              "name": "Available"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "UaToIW"
-              },
-              "condition": "dialog.result.availableTimeLength > 0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "gJZrue"
-                  },
-                  "assignments": [
-                    {
-                      "value": {
-                        "start": "= dialog.result.availableTimeStart",
-                        "end": "= dialog.result.availableTimeEnd",
-                        "isFreeTime": true
-                      },
-                      "property": "dialog.freeTime"
-                    },
-                    {
-                      "property": "dialog.availabilityList",
-                      "value": "= where(createArray(dialog.result.previousEvent, dialog.freeTime, dialog.result.nextEvent), x, x!= null)"
-                    }
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "J8bx0v"
-                  }
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "HcaLIY"
-                  },
-                  "activity": "${SendActivity_HcaLIY()}"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "QAdvjq"
-                  },
-                  "activity": "${SendActivity_QAdvjq()}"
-                }
-              ]
+              "activity": "${SendActivity_WlmO9l()}"
             }
           ]
         },
@@ -1217,19 +1043,16 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "z90pOz",
-        "name": "OnIntent (LaunchBot)"
+        "name": "OnIntent (LaunchChat)"
       },
       "intent": "LaunchBot",
       "actions": [
         {
-          "$kind": "Microsoft.Bot.SendActivityPlus",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "y4L5ab"
+            "id": "OIka7e"
           },
-          "operationType": "whisper",
-          "activityIdProperty": "turn.activity.replyToId",
-          "whisperToProperty": "turn.activity.from",
-          "activity": "${Bot.SendActivityPlus_Activity_y4L5ab()}"
+          "activity": "${SendActivity_OIka7e()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -1903,14 +1726,14 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "property": "dialog.getSchedule"
+          "property": "$getSchedule"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "zeWmBU"
           },
-          "condition": "dialog.getSchedule == true",
+          "condition": "$getSchedule",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -2027,7 +1850,7 @@
             "query": "=$query",
             "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
-          "resultProperty": "$datetime"
+          "resultProperty": "$dateTime"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -2035,6 +1858,10 @@
             "id": "TLB3n2"
           },
           "assignments": [
+            {
+              "property": "$options.dateTime",
+              "value": "=$dateTime"
+            },
             {
               "property": "$options.start",
               "value": "=coalesce($datetime.start, $datetime.value)"
@@ -2059,15 +1886,51 @@
           "$designer": {
             "id": "U65idk"
           },
-          "name": "Error",
+          "name": "calendarSkill.OnError",
           "value": "=turn.dialogEvent.value"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "ccWEyG"
+            "id": "MFU6ug"
           },
-          "activity": "${SendActivity_ccWEyG()}"
+          "condition": "turn.activity.channelId",
+          "cases": [
+            {
+              "value": "test",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "G7Rfej"
+                  },
+                  "activity": "${SendActivity_G7Rfej()}"
+                }
+              ]
+            },
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "3oPM0a"
+                  },
+                  "value": "=turn.dialogEvent.value",
+                  "name": "Error Trace"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mWnyUh"
+              },
+              "activity": "${SendActivity_mWnyUh()}"
+            }
+          ]
         }
       ]
     }
