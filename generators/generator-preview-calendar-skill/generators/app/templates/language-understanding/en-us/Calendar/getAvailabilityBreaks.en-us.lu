@@ -1,0 +1,73 @@
+
+
+# GetAvailabilityBreaks
+- can i take a break {@date=wednesday}
+- do i have a break before my next meeting
+- do i have a break {@date=this afternoon}
+- do i have any breaks
+- do i have any breaks on {@date=january 3, 2021}
+- do i have any breaks {@date=wednesday}
+- do i have any free time {@date=today}
+- how long until my next meeting
+- how much time do i have until my next meeting
+- tell me when my next break is
+- what breaks do i have {@date=monday}
+- what breaks do i have {@date=tomorrow}
+- what time am i available again
+- when am i free {@date=today}
+- when are my breaks
+- when can i take a break
+- when do i have breaks
+- when do i have breaks {@date=today}
+- when is my next break
+- when is my next gap in meetings
+
+
+@ intent GetAvailabilityBreaks usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities

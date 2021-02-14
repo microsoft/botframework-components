@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_UpdateSlots",
+  "recognizers": {
+    "en-us": "UpdateSlots.en-us.lu",
+    "": "UpdateSlots.en-us.lu"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "generator-conversational-core",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/ConversationalCore/index.js",
   "dependencies": {

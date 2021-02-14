@@ -1,0 +1,262 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "fdv88p",
+    "name": "ResolveUpdateEntity",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "iSq3J9"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2bix37"
+          },
+          "name": "ResolveUpdateEntity.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IhEiVG"
+          },
+          "assignments": [
+            {
+              "property": "dialog.entityNameResult",
+              "value": "=coalesce(dialog.entityNameResult, @@EntityName, [])"
+            },
+            {
+              "property": "dialog.entityOperationResult",
+              "value": "=coalesce(dialog.entityOperationResult, @@EntityOperation, [])"
+            },
+            {
+              "property": "dialog.personName",
+              "value": "=coalesce(dialog.personName, @@personName)"
+            },
+            {
+              "property": "dialog.email",
+              "value": "=coalesce(dialog.email, @@email)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "CGrjrv"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.entityOperationResult",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "GFfrws"
+              },
+              "condition": "dialog.foreach.value.Add!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "KrdOaw"
+                  },
+                  "property": "dialog.result.entityOperation",
+                  "value": "add"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "CSAUdt"
+              },
+              "condition": "dialog.foreach.value.Remove!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "NTC9Dn"
+                  },
+                  "property": "dialog.result.entityOperation",
+                  "value": "remove"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Q9o05M"
+              },
+              "condition": "dialog.foreach.value.Change!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "ObFI95"
+                  },
+                  "property": "dialog.result.entityOperation",
+                  "value": "change"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "0axEcM"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "dialog.entityNameResult",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "PFUR40"
+              },
+              "condition": "dialog.foreach.value.EventTitle!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "3Q5fE1"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "title"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "AsvK4K"
+              },
+              "condition": "dialog.foreach.value.EventDateTime!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "zrAZ5N"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "datetime"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "BA3UQZ"
+              },
+              "condition": "dialog.foreach.value.EventAttendee!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "8YRG0u"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "attendee"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "knQrKS"
+              },
+              "condition": "dialog.foreach.value.EventLocation!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "UpaqRZ"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "location"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "o8qDba"
+              },
+              "condition": "dialog.foreach.value.EventDuration!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "oCj5nT"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "duration"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "VYXoHQ"
+              },
+              "condition": "dialog.foreach.value.TeamsLink!=null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "jYwB99"
+                  },
+                  "property": "dialog.result.entityName",
+                  "value": "teamslink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yiinxB"
+          },
+          "condition": "dialog.result.entityName == null && dialog.result.entityOperation != null && (dialog.personName != null || dialog.email != null)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "LhTKi2"
+              },
+              "property": "dialog.result.entityName",
+              "value": "attendee"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ghO4D6"
+          },
+          "name": "ResolveUpdateEntity.EndOfDialog"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "njtzsi"
+          },
+          "value": "=dialog.result"
+        }
+      ]
+    }
+  ],
+  "generator": "ResolveUpdateEntity.lg",
+  "recognizer": "ResolveUpdateEntity.lu.qna",
+  "id": "ResolveUpdateEntity"
+}

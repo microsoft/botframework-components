@@ -1,0 +1,76 @@
+
+
+# SetOnlineMeetingRemove
+- don't add a call to the meeting later
+- don't add teams to my {@subject=1:1} later
+- don't add teams to my {@subject=happy hour} event
+- don't add teams to my meeting with {@contact=test@email.com} on {@date=monday}
+- don't include a link with the meeting
+- don't include a teams link for the meeting on {@date=april 10th}
+- don't make the meeting virtual
+- remove teams from my {@subject=breakfast} event with {@contact=rebecca}, {@contact=morgan}, and {@contact=morgan} on {@date=thursday}
+- remove teams from my meeting on {@date=friday} with {@contact=john}
+- remove teams from my meeting with {@contact=test@email.com} and {@contact=margaret}
+- remove teams from my next meeting
+- remove teams from my {@subject=standup} event {@date=today}
+- remove the link from
+- remove the link from my meeting with {@contact=tyler}
+- remove the link from the {@subject=planning for end of year} meeting {@date=next month} with {@contact=youngjae}
+- remove the online meeting from the event
+- remove the online meeting from the meeting {@date=tomorrow at noon}
+- remove the online meeting from the next event
+- remove the phone number from the {@subject=team meeting} {@date=next week}
+- remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+
+@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities
