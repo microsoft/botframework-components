@@ -46,7 +46,7 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "change the location to team space"
+      "text": "change the location to seattle"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",

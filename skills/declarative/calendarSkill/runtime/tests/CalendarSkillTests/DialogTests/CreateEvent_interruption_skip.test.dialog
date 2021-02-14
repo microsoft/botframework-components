@@ -33,9 +33,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What is the title of the meeting?",
-        "What is the title?",
-        "What is the meeting about?"
+        "What should I set the title to?"
       ]
     },
     {
@@ -55,9 +53,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What date and time did you have in mind?",
-        "When should the event start?",
-        "And what date?"
+        "When should I schedule it?"
       ]
     },
     {
@@ -67,9 +63,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What location would you like to include?",
-        "What should I set the location to?",
-        "What is the location?"
+        "What should I set the location to?"
       ]
     },
     {
@@ -92,9 +86,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "All right, your event has been created.",
-        "I've added the meeting to your calendar.",
-        "OK, the event has been created for you."
+        "I've created the event."
       ]
     }
   ]
