@@ -145,13 +145,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "BaoiSe"
-          },
-          "name": "TEMP TRACE"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "pNZ1RI"
