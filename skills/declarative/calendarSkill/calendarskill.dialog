@@ -419,7 +419,7 @@
             "options": "=$options",
             "doSelection": "=true"
           },
-          "resultProperty": "$events"
+          "resultProperty": "$event"
         },
         {
           "$kind": "Microsoft.IfCondition",

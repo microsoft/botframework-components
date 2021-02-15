@@ -190,6 +190,25 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
         }
 
         [TestMethod]
+        public async Task GetEventAttendees()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+
+        [TestMethod]
+        public async Task GetEventDateTime()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
+        public async Task GetEventLocation()
+        {
+            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+        }
+
+        [TestMethod]
         public async Task GetEvents_multipleResults()
         {
             await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
