@@ -495,14 +495,21 @@
           "options": {
             "options": "=$options"
           },
-          "resultProperty": "$event"
+          "resultProperty": "$events"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hvkCsY"
+          },
+          "name": "AfterGetEvents"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "eaTVns"
           },
-          "condition": "$event != null",
+          "condition": "$events != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -563,14 +570,14 @@
           "options": {
             "options": "=$options"
           },
-          "resultProperty": "$event"
+          "resultProperty": "$events"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "Au3SAD"
           },
-          "condition": "$event != null",
+          "condition": "$events != null",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",

@@ -3,10 +3,10 @@
 [Schedule](schedule.en-us.lg)
 
 # FirstEventResponseText(event)
-- You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
+- You start ${BuildDate(event.start.dateTime)}, at ${BuildTime(event.start.dateTime)}, with ${event.Subject}.
 
 # LastEventResponseText(event)
-- Your day ends at ${BuildTime(event.start.datetime)}. Your last meeting is ${event.Subject}.
+- Your day ends at ${BuildTime(event.end.dateTime)}. Your last meeting is ${event.Subject}.
 
 # NextEventResponseText(event)
 - Here’s what’s next:
@@ -42,10 +42,10 @@
 - I've found ${count(events)} events for you at ${BuildTime(time)}:
 
 # CheckAvailabilityFreeResponseText(time)
-- You don't have anything scheduled for ${BuildTime(time)}. Would you like to reserve this time?
+- You don't have anything scheduled for ${BuildTime(time)}.
 
 # FoundAvailableTimeResponseText(time)
-- I've found a break in your schedule at ${BuildTime(time)}. Would you like to reserve this time?
+- I've found a break in your schedule at ${BuildTime(time)}.
 
 # FoundNoAvailableTimeResponseText()
 - Looks like you don't have any breaks today during working hours.
@@ -65,10 +65,11 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "25",
+                    "width": "30",
                     "items": [
                         {
                             "type": "TextBlock",
+                            "horizontalAlignment": "Right",
                             "text": "${formatDateTime(item.start, 'h:mm')} - ${formatDateTime(item.end, 'h:mm tt')}",
                             "weight": "Bolder"
                         }
@@ -76,7 +77,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "75",
+                    "width": "70",
                     "items": [
                         {
                             "type": "TextBlock",

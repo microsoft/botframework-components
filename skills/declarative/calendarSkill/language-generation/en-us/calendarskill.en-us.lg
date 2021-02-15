@@ -26,13 +26,13 @@
 
 # SendActivity_ZaUzSz()
 [Activity
-    text = ${FirstEventResponseText($event)}
-    attachments = ${json(EventDetailCard($event))}
+    text = ${FirstEventResponseText(first($events))}
+    attachments = ${json(EventDetailCard(first($events)))}
 ]
 # SendActivity_BwA02G()
 [Activity
-    text = ${LastEventResponseText($event)}
-    attachments = ${json(EventDetailCard($event))}
+    text = ${LastEventResponseText(last($events))}
+    attachments = ${json(EventDetailCard(last($events)))}
 ]
 # SendActivity_AlS4sI()
 [Activity
