@@ -43,8 +43,6 @@
 # SendActivity_klrCg4()
 - ${CancelMessage()}
 
-# SendActivity_vO6n9g()
-- ${CancelMessage()}
 # SendActivity_iHNKPb()
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
 
@@ -93,9 +91,6 @@
     text = ${WelcomeUser()}
     SuggestedActions = New event | What's on today
 ]
-# ConfirmInput_Prompt_Jo3V04()
-- I couldn't find any matching events. Would you like to see your schedule for today instead?
-
 # SendActivity_QqvaSr()
 [Activity
     text = ${FoundAvailableTimeResponseText($freeTime.start)}

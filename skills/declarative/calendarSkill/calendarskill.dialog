@@ -818,34 +818,16 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "1l4OXw"
+            "id": "Ag2PW1"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "SnMEkZ"
-              },
-              "activityProcessed": true,
-              "dialog": "RespondToEventDialog",
-              "options": {
-                "response": "='accepted'",
-                "event": "=$event"
-              }
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "GldAKT"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='accepted'",
+            "event": "=$event"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -892,34 +874,16 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "AJETK3"
+            "id": "f8zk9j"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "67hvUC"
-              },
-              "activityProcessed": true,
-              "dialog": "RespondToEventDialog",
-              "options": {
-                "response": "='declined'",
-                "event": "=$event"
-              }
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "QCK1mh"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='declined'",
+            "event": "=$event"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -966,34 +930,16 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "DLd9Xf"
+            "id": "0niigP"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "GEeaVp"
-              },
-              "activityProcessed": true,
-              "dialog": "RespondToEventDialog",
-              "options": {
-                "response": "='tentativelyAccepted'",
-                "event": "=$event"
-              }
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "IaFbk2"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='tentativelyAccepted'",
+            "event": "=$event"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1693,78 +1639,6 @@
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "ePKk2p"
-          },
-          "activityProcessed": true
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "xhUm7Y",
-        "name": "OnEvent (NoResultsEvent)"
-      },
-      "event": "noResults",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "biXi9i"
-          },
-          "name": "calendarSkill.OnNoResultsEvent"
-        },
-        {
-          "$kind": "Microsoft.ConfirmInput",
-          "$designer": {
-            "id": "Jo3V04"
-          },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": true,
-          "allowInterruptions": false,
-          "prompt": "${ConfirmInput_Prompt_Jo3V04()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
-          },
-          "property": "$getSchedule"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "zeWmBU"
-          },
-          "condition": "$getSchedule",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "VU8D4y"
-              },
-              "activityProcessed": true,
-              "dialog": "GetScheduleDialog"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "vO6n9g"
-              },
-              "activity": "${SendActivity_vO6n9g()}"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.CancelAllDialogs",
-          "$designer": {
-            "id": "wkPHZ4"
           },
           "activityProcessed": true
         }
