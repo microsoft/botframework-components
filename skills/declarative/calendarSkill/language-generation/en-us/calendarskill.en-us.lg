@@ -6,34 +6,6 @@
 # SendActivity_IrC8MR()
 - You're signed out!
 
-# SendActivity_3j3wUV()
-[Activity
-    text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
-]
-
-# SendActivity_kaOafR()
-[Activity
-    text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
-]
-
-# SendActivity_g7immX()
-[Activity
-    text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
-]
-
-# SendActivity_ZaUzSz()
-[Activity
-    text = ${FirstEventResponseText(first($events))}
-    attachments = ${json(EventDetailCard(first($events)))}
-]
-# SendActivity_BwA02G()
-[Activity
-    text = ${LastEventResponseText(last($events))}
-    attachments = ${json(EventDetailCard(last($events)))}
-]
 # SendActivity_AlS4sI()
 [Activity
     text= ${HelpMessage()}
@@ -110,3 +82,32 @@
 
 # SendActivity_G7Rfej()
 - ${turn.dialogEvent.value}
+
+# SendActivity_UKSMPm()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_x7EkgW()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_9Fl4ob()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_YAJvpF()
+[Activity
+    text = ${FirstEventResponseText(first($events))}
+    attachments = ${json(EventDetailCard(first($events)))}
+]
+# SendActivity_IdPxbc()
+[Activity
+    text = ${LastEventResponseText(last($events))}
+    attachments = ${json(EventDetailCard(last($events)))}
+]

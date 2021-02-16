@@ -268,37 +268,19 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "WPSoo1"
+            "id": "yQDiuY"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "dtnk8r"
-              },
-              "property": "$next",
-              "value": "=$ordinal.relativeTo == 'current'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "3j3wUV"
-              },
-              "activity": "${SendActivity_3j3wUV()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "4aXGyB"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "property": "$next",
+          "value": "=$ordinal.relativeTo == 'current'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "UKSMPm"
+          },
+          "activity": "${SendActivity_UKSMPm()}"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -345,37 +327,19 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "euI1fk"
+            "id": "KsRnzh"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "qjotzR"
-              },
-              "property": "$next",
-              "value": "=$ordinal.relativeTo == 'current'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "g7immX"
-              },
-              "activity": "${SendActivity_g7immX()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "ki6G8a"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "property": "$next",
+          "value": "=$ordinal.relativeTo == 'current'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "x7EkgW"
+          },
+          "activity": "${SendActivity_x7EkgW()}"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -422,37 +386,19 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "0hGVZn"
+            "id": "LLBNWr"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "CdhfE5"
-              },
-              "property": "$next",
-              "value": "=$ordinal.relativeTo == 'current'"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "kaOafR"
-              },
-              "activity": "${SendActivity_kaOafR()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "jNzbmc"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "property": "$next",
+          "value": "=$ordinal.relativeTo == 'current'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "9Fl4ob"
+          },
+          "activity": "${SendActivity_9Fl4ob()}"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -498,36 +444,11 @@
           "resultProperty": "$events"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "hvkCsY"
+            "id": "YAJvpF"
           },
-          "name": "AfterGetEvents"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "eaTVns"
-          },
-          "condition": "$events != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "ZaUzSz"
-              },
-              "activity": "${SendActivity_ZaUzSz()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "YozwAS"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activity": "${SendActivity_YAJvpF()}"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -573,29 +494,11 @@
           "resultProperty": "$events"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "Au3SAD"
+            "id": "IdPxbc"
           },
-          "condition": "$events != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "BwA02G"
-              },
-              "activity": "${SendActivity_BwA02G()}"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "iGLw9a"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activity": "${SendActivity_IdPxbc()}"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -745,33 +648,15 @@
           "resultProperty": "$event"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "rJ1FB3"
+            "id": "xe6XTm"
           },
-          "condition": "$event != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "0qrZ1V"
-              },
-              "activityProcessed": true,
-              "dialog": "CancelEventDialog",
-              "options": {
-                "event": "=$event"
-              }
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "sCykKB"
-              },
-              "eventName": "noResults"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "CancelEventDialog",
+          "options": {
+            "event": "=$event"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
