@@ -43,8 +43,6 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
         "OK. I'll invite test name (test@test.com)."
       ]
     },
@@ -61,10 +59,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "I've found multiple suggestions when you can meet with test name:",
-        "I've found the following time when you can meet with test name:",
-        "There are multiple suggestions when you can meet with test name:",
-        "Looks like there are several options when you can meet with test name:"
+        "I've found multiple times when you can meet with test name:"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
@@ -77,17 +72,13 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I’ve added a Teams link for you as well.",
-        "OK, I’ll also include a Teams link.",
-        "Got it. I've also included a Teams meeting."
+        "I've made this a Microsoft Teams meeting."
       ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What location would you like to include?",
-        "What should I set the location to?",
-        "What is the location?"
+        "What should I set the location to?"
       ]
     },
     {
@@ -110,9 +101,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "All right, your event has been created.",
-        "I've added the meeting to your calendar.",
-        "OK, the event has been created for you."
+        "I've created the event."
       ]
     }
   ]

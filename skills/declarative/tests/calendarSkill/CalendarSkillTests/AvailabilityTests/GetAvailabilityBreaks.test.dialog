@@ -25,15 +25,11 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "find my meeting with lidia"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
+      "text": "when do i have breaks tomorrow"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found a meeting on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": "I've found a break in your schedule at 8:00 AM.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],

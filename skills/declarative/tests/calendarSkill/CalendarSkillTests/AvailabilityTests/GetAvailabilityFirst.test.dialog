@@ -4,7 +4,7 @@
   "httpRequestMocks": [
     "getProfile.mock",
     "getWorkingHours.mock",
-    "getEventsOnlineMeeting.mock"
+    "getEvent.mock"
   ],
   "userTokenMocks": [
     "nomagiccode.mock"
@@ -25,15 +25,11 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "where is my meeting with lidia"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
+      "text": "when do i start tomorrow"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "It's on Teams. The meeting is on Thursday, October 15th. It’s at 8:00 AM, Project Team Meeting. The attendees are Lidia Holloway and 4 more. ",
+      "text": "You start Thursday, December 31st, at 7:00 AM, with Project Team Meeting.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],

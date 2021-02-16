@@ -28,13 +28,11 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "new meeting with jane tomorrow at 3pm in seattle titled team meeting"
+      "text": "new meeting with joni tomorrow at 3pm in seattle titled team meeting"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
         "OK. I'll invite test name (test@test.com)."
       ]
     },
@@ -51,9 +49,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I’ve added a Teams link for you as well.",
-        "OK, I’ll also include a Teams link.",
-        "Got it. I've also included a Teams meeting."
+        "I've made this a Microsoft Teams meeting."
       ]
     },
     {
@@ -72,9 +68,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What date and time did you have in mind?",
-        "When should the event start?",
-        "And what date?"
+        "When should I schedule it?"
       ]
     },
     {
@@ -97,9 +91,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "All right, your event has been created.",
-        "I've added the meeting to your calendar.",
-        "OK, the event has been created for you."
+        "I've created the event."
       ]
     }
   ]

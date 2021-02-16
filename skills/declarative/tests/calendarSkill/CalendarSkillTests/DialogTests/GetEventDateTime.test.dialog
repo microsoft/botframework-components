@@ -4,8 +4,7 @@
   "httpRequestMocks": [
     "getProfile.mock",
     "getWorkingHours.mock",
-    "getEventsNotOrganizer.mock",
-    "declineEvent.mock"
+    "getEvent.mock"
   ],
   "userTokenMocks": [
     "nomagiccode.mock"
@@ -26,16 +25,15 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "decline my meeting with lidia"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [ "I'm searching your calendar, this might take a sec…", "This might take a sec...", "Hold on, this is taking a while...", "Hold on, I'm trying to find events that match..."]
+      "text": "when is my meeting tomorrow"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "All right, I’ve declined the meeting named Test Meeting.",
-      "description": "Response to input 1"
+      "text": "Here's what I found:",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ],
+      "description": "Event detail card response"
     }
   ]
 }

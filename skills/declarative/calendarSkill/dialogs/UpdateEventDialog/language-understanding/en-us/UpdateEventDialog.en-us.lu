@@ -1,4 +1,8 @@
-> Calendar intent imports
+> Common intents
+[Cancel](cancel.en-us.lu)
+[Skip](skip.en-us.lu)
+
+> Calendar intents
 [SetAttendeesAdd](setAttendeesAdd.en-us.lu)
 [SetAttendeesRemove](setAttendeesRemove.en-us.lu)
 [SetDateTime](setDateTime.en-us.lu)
@@ -9,15 +13,14 @@
 [SetOnlineMeetingRemove](setOnlineMeetingRemove.en-us.lu)
 [SetTitle](setTitle.en-us.lu)
 
-# Cancel
-- cancel
-- cancel this
-- stop
-- i want to stop
-- nevermind
-- don't do this anymore
-- quit
-- nothing
+# Skip
+- skip adding contacts
+- skip setting the title
+- skip adding a subject
+- skip adding teams
+- skip setting the location
+- none
+- no location
 
 # None
 - title
@@ -27,6 +30,15 @@
 - location
 - description
 - duration
+- yes
+- sure
+- no
+- no thanks
+- Alex
+- John
+- thursday
+- tuesday
+- next week
 - tuesday at 3pm
 - tomorrow
 - next week
