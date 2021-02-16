@@ -10,6 +10,14 @@ trigger:
     include:
       - packages/CalendarSkill
 
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/CalendarSkill
+
 pool: 
   vmImage: 'windows-2019'
   
