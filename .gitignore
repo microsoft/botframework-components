@@ -345,6 +345,7 @@ ASALocalRun/
 **/cognitivemodels.development.json
 **/skills.production.json
 **/skills.development.json
+**/testsettings.development.json
 
 # Local deployment files
 /solutions/**/.deployment
@@ -360,6 +361,9 @@ ASALocalRun/
 **/remove_skill_log.txt
 **/publish_log.txt
 **/.deployment
+
+# Composer generated files
+**/luis.settings.composer.westus.json
 
 # Zip files
 *.7z
@@ -381,9 +385,5 @@ experimental/generator-dotnet-yeoman/node_modules
 # VSCode files
 .vscode/
 
-/skills/declarative/calendarSkill/generated/luis.settings.composer.westus.json
-/skills/declarative/calendarSkill/runtime/tests/testsettings.development.json
-
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
-/skills/declarative/tests/calendarSkill/testsettings.development.json
