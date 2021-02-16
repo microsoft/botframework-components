@@ -1,0 +1,20 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - preview/*
+  paths:
+    include:
+      - {YOUR_WORKING_DIRECTORY}
+
+extends:
+  template: ../templates/component-template.yml
+  parameters:
+      componentType: {COMPONENT_TYPE}
+
+variables:
+  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
+  BuildConfiguration: 'Release'

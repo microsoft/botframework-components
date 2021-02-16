@@ -1,0 +1,22 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - preview/*
+  paths:
+    include:
+      - generators/generator-conversational-core
+
+pool: 
+  vmImage: 'windows-2019'
+  
+extends:
+  template: ../templates/component-template.yml
+  parameters:
+      componentType: generator
+
+variables:
+  WorkingDirectory: 'generators/generator-conversational-core'
