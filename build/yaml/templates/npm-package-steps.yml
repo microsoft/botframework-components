@@ -1,0 +1,29 @@
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '10.x'
+
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
+    npm pack
+  displayName: 'Package package'
+  workingDirectory: '$(WorkingDirectory)'
+
+- task: CopyFiles@2
+  displayName: 'Copy npm files'
+  inputs:
+    SourceFolder: '$(WorkingDirectory)'
+    Contents: '*.tgz'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\npm'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the npm package'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\npm'
+    ArtifactName: 'npm'
+    publishLocation: 'Container'

@@ -5,7 +5,7 @@
     "name": "ResolveDateTimeDialog"
   },
   "autoEndDialog": true,
-  "defaultResultProperty": "dialog.result",
+  "defaultResultProperty": "$result",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
@@ -28,28 +28,28 @@
           },
           "assignments": [
             {
-              "property": "dialog.query",
-              "value": "=coalesce(dialog.query, turn.activity.text, '')"
+              "property": "$query",
+              "value": "=coalesce($query, turn.activity.text, '')"
             },
             {
-              "property": "dialog.expectedType",
-              "value": "=coalesce(dialog.expectedType, null)"
+              "property": "$expectedType",
+              "value": "=coalesce($expectedType, null)"
             },
             {
-              "property": "dialog.minDate",
-              "value": "=coalesce(dialog.minDate, null)"
+              "property": "$minDate",
+              "value": "=coalesce($minDate, null)"
             },
             {
-              "property": "dialog.maxDate",
-              "value": "=coalesce(dialog.maxDate, null)"
+              "property": "$maxDate",
+              "value": "=coalesce($maxDate, null)"
             },
             {
-              "property": "dialog.minTime",
-              "value": "=coalesce(dialog.minTime, null)"
+              "property": "$minTime",
+              "value": "=coalesce($minTime, null)"
             },
             {
-              "property": "dialog.maxTime",
-              "value": "=coalesce(dialog.maxTime, null)"
+              "property": "$maxTime",
+              "value": "=coalesce($maxTime, null)"
             }
           ]
         },
@@ -58,8 +58,8 @@
           "$designer": {
             "id": "SZKf8v"
           },
-          "queryProperty": "=dialog.query",
-          "resultProperty": "dialog.recognitionResults",
+          "queryProperty": "=$query",
+          "resultProperty": "$recognitionResults",
           "timeZoneProperty": "=user.workingHours.timeZone.name"
         },
         {
@@ -67,9 +67,9 @@
           "$designer": {
             "id": "ksIN1t"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
-          "itemsProperty": "dialog.recognitionResults",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
+          "itemsProperty": "$recognitionResults",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -91,22 +91,22 @@
               "$designer": {
                 "id": "wUbrlv"
               },
-              "condition": "count(dialog.foreach.value.Resolution.values) == 1",
+              "condition": "count($foreach.value.Resolution.values) == 1",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "cPoVPR"
                   },
-                  "property": "dialog.datetimeResolution",
-                  "value": "=dialog.foreach.value.Resolution.values[0]"
+                  "property": "$datetimeResolution",
+                  "value": "=$foreach.value.Resolution.values[0]"
                 },
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
                     "id": "4Hbqwg"
                   },
-                  "value": "=dialog.datetimeResolution"
+                  "value": "=$datetimeResolution"
                 }
               ],
               "elseActions": [
@@ -125,7 +125,7 @@
                             "id": "NqrxcU"
                           },
                           "eventName": "RefineDate",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     },
@@ -138,7 +138,7 @@
                             "id": "MOsZUP"
                           },
                           "eventName": "RefineDateTime",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     },
@@ -151,7 +151,7 @@
                             "id": "0RrVbm"
                           },
                           "eventName": "RefineTime",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     },
@@ -164,7 +164,7 @@
                             "id": "iBRM3d"
                           },
                           "eventName": "RefineDateRange",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     },
@@ -177,7 +177,7 @@
                             "id": "vfve3B"
                           },
                           "eventName": "RefineDateTimeRange",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     },
@@ -190,7 +190,7 @@
                             "id": "xpEzrS"
                           },
                           "eventName": "RefineTimeRange",
-                          "eventValue": "=dialog.foreach.value.Resolution.values"
+                          "eventValue": "=$foreach.value.Resolution.values"
                         }
                       ]
                     }
@@ -220,7 +220,7 @@
                   "activityProcessed": true,
                   "allowLoop": true,
                   "options": {
-                    "query": "=dialog.selected"
+                    "query": "=$selected"
                   }
                 }
               ]
@@ -233,7 +233,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "FxD36G",
-        "name": "RefineDate"
+        "name": "OnEvent (RefineDate)"
       },
       "event": "RefineDate",
       "actions": [
@@ -249,8 +249,8 @@
           "$designer": {
             "id": "a43OOw"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -258,14 +258,14 @@
               "$designer": {
                 "id": "IQInq1"
               },
-              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(date(dialog.minDate)))",
+              "condition": "$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime(date($minDate)))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "GLkygU"
                   },
-                  "property": "dialog.foreach.skip",
+                  "property": "$foreach.skip",
                   "value": "=true"
                 }
               ],
@@ -275,7 +275,7 @@
                   "$designer": {
                     "id": "OlWE0O"
                   },
-                  "property": "dialog.foreach.skip",
+                  "property": "$foreach.skip",
                   "value": "=false"
                 }
               ]
@@ -285,15 +285,15 @@
               "$designer": {
                 "id": "Xv3qc4"
               },
-              "condition": "dialog.foreach.skip != true",
+              "condition": "$foreach.skip != true",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "uYrpos"
                   },
-                  "property": "dialog.formattedOption",
-                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy\")"
+                  "property": "$formattedOption",
+                  "value": "=formatDateTime($foreach.value.value, \"dddd, MMMM d, yyyy\")"
                 },
                 {
                   "$kind": "Microsoft.EditArray",
@@ -301,8 +301,8 @@
                     "id": "z4uPIw"
                   },
                   "changeType": "push",
-                  "itemsProperty": "dialog.choices",
-                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+                  "itemsProperty": "$choices",
+                  "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
                 }
               ]
             }
@@ -313,14 +313,14 @@
           "$designer": {
             "id": "Kxsxdt"
           },
-          "condition": "dialog.choices != null",
+          "condition": "$choices != null",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "rxH6X0"
               },
-              "condition": "count(dialog.choices) == 1",
+              "condition": "count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
@@ -339,8 +339,8 @@
                     "inlineOr": " or ",
                     "inlineSeparator": ", "
                   },
-                  "choices": "=dialog.choices",
-                  "property": "dialog.selected",
+                  "choices": "=$choices",
+                  "property": "$selected",
                   "style": "heroCard",
                   "recognizerOptions": {
                     "recognizeOrdinals": true
@@ -353,8 +353,8 @@
                   "$designer": {
                     "id": "cTs1XM"
                   },
-                  "property": "dialog.selected",
-                  "value": "=dialog.choices[0]"
+                  "property": "$selected",
+                  "value": "=$choices[0]"
                 }
               ]
             }
@@ -372,8 +372,8 @@
               "$designer": {
                 "id": "uNlLNa"
               },
-              "property": "dialog.selected",
-              "value": "=formatDateTime(date(dialog.minDate), \"dddd, MMMM d, yyyy\")"
+              "property": "$selected",
+              "value": "=formatDateTime(date($minDate), \"dddd, MMMM d, yyyy\")"
             }
           ]
         }
@@ -383,7 +383,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "lwY2oA",
-        "name": "RefineDateTime"
+        "name": "OnEvent (RefineDateTime)"
       },
       "event": "RefineDateTime",
       "actions": [
@@ -399,8 +399,8 @@
           "$designer": {
             "id": "b2a4gT"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -408,14 +408,14 @@
               "$designer": {
                 "id": "4nSPCc"
               },
-              "condition": "dialog.minDate != null && ticks(formatDateTime(dialog.foreach.value.value)) < ticks(formatDateTime(dialog.minDate))",
+              "condition": "$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime($minDate))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "DQfu8f"
                   },
-                  "property": "dialog.foreach.skip",
+                  "property": "$foreach.skip",
                   "value": "=true"
                 }
               ],
@@ -425,7 +425,7 @@
                   "$designer": {
                     "id": "OifsS5"
                   },
-                  "property": "dialog.foreach.skip",
+                  "property": "$foreach.skip",
                   "value": "=false"
                 }
               ]
@@ -435,15 +435,15 @@
               "$designer": {
                 "id": "bYsQ7q"
               },
-              "condition": "dialog.foreach.skip != true",
+              "condition": "$foreach.skip != true",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "uCS9Ou"
                   },
-                  "property": "dialog.formattedOption",
-                  "value": "=formatDateTime(dialog.foreach.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+                  "property": "$formattedOption",
+                  "value": "=formatDateTime($foreach.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
                 },
                 {
                   "$kind": "Microsoft.EditArray",
@@ -451,8 +451,8 @@
                     "id": "FbjTHk"
                   },
                   "changeType": "push",
-                  "itemsProperty": "dialog.choices",
-                  "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+                  "itemsProperty": "$choices",
+                  "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
                 }
               ]
             }
@@ -463,14 +463,14 @@
           "$designer": {
             "id": "OqJa6A"
           },
-          "condition": "dialog.choices != null",
+          "condition": "$choices != null",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "QhjFD1"
               },
-              "condition": "count(dialog.choices) == 1",
+              "condition": "count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
@@ -489,8 +489,8 @@
                     "inlineOr": " or ",
                     "inlineSeparator": ", "
                   },
-                  "choices": "=dialog.choices",
-                  "property": "dialog.selected",
+                  "choices": "=$choices",
+                  "property": "$selected",
                   "style": "heroCard",
                   "recognizerOptions": {
                     "recognizeOrdinals": true
@@ -503,8 +503,8 @@
                   "$designer": {
                     "id": "0uAZcl"
                   },
-                  "property": "dialog.selected",
-                  "value": "=dialog.choices[0]"
+                  "property": "$selected",
+                  "value": "=$choices[0]"
                 }
               ]
             }
@@ -522,8 +522,8 @@
               "$designer": {
                 "id": "awh8Ju"
               },
-              "property": "dialog.selected",
-              "value": "=formatDateTime(dialog.minDate, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+              "property": "$selected",
+              "value": "=formatDateTime($minDate, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
             }
           ]
         }
@@ -533,7 +533,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "wRCfhj",
-        "name": "RefineTime"
+        "name": "OnEvent (RefineTime)"
       },
       "event": "RefineTime",
       "actions": [
@@ -549,8 +549,8 @@
           "$designer": {
             "id": "UtKCFb"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -558,8 +558,8 @@
               "$designer": {
                 "id": "MmvPBY"
               },
-              "property": "dialog.formattedOption",
-              "value": "=formatDateTime(dialog.foreach.value.value, \"h:mm tt\")"
+              "property": "$formattedOption",
+              "value": "=formatDateTime($foreach.value.value, \"h:mm tt\")"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -567,8 +567,8 @@
                 "id": "S0x2ix"
               },
               "changeType": "push",
-              "itemsProperty": "dialog.choices",
-              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
             }
           ]
         },
@@ -589,8 +589,8 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=dialog.choices",
-          "property": "dialog.selected",
+          "choices": "=$choices",
+          "property": "$selected",
           "style": "heroCard"
         }
       ]
@@ -599,7 +599,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "KD16nD",
-        "name": "RefineDateRange"
+        "name": "OnEvent (RefineDateRange)"
       },
       "event": "RefineDateRange",
       "actions": [
@@ -615,8 +615,8 @@
           "$designer": {
             "id": "ZAwl4T"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -624,8 +624,8 @@
               "$designer": {
                 "id": "PaDCIS"
               },
-              "property": "dialog.formattedOption",
-              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy\"))"
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($foreach.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime($foreach.value.end, \"dddd, MMMM d, yyyy\"))"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -633,8 +633,8 @@
                 "id": "8kl6M0"
               },
               "changeType": "push",
-              "itemsProperty": "dialog.choices",
-              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
             }
           ]
         },
@@ -655,8 +655,8 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=dialog.choices",
-          "property": "dialog.selected",
+          "choices": "=$choices",
+          "property": "$selected",
           "style": "heroCard"
         }
       ]
@@ -665,7 +665,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "RnNzoa",
-        "name": "RefineDateTimeRange"
+        "name": "OnEvent (RefineDateTimeRange)"
       },
       "event": "RefineDateTimeRange",
       "actions": [
@@ -681,8 +681,8 @@
           "$designer": {
             "id": "Mjqbll"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -690,8 +690,8 @@
               "$designer": {
                 "id": "xDRpmj"
               },
-              "property": "dialog.formattedOption",
-              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($foreach.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime($foreach.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -699,8 +699,8 @@
                 "id": "tHzvQU"
               },
               "changeType": "push",
-              "itemsProperty": "dialog.choices",
-              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
             }
           ]
         },
@@ -721,8 +721,8 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=dialog.choices",
-          "property": "dialog.selected",
+          "choices": "=$choices",
+          "property": "$selected",
           "style": "heroCard"
         }
       ]
@@ -731,7 +731,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "EMQruo",
-        "name": "RefineTimeRange"
+        "name": "OnEvent (RefineTimeRange)"
       },
       "event": "RefineTimeRange",
       "actions": [
@@ -747,8 +747,8 @@
           "$designer": {
             "id": "3eMz8z"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "$foreach.index",
+          "value": "$foreach.value",
           "itemsProperty": "turn.dialogEvent.Value",
           "actions": [
             {
@@ -756,8 +756,8 @@
               "$designer": {
                 "id": "ifIblU"
               },
-              "property": "dialog.formattedOption",
-              "value": "=concat(formatDateTime(dialog.foreach.value.start, \"h:mm tt\"), ' - ', formatDateTime(dialog.foreach.value.end, \"h:mm tt\"))"
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($foreach.value.start, \"h:mm tt\"), ' - ', formatDateTime($foreach.value.end, \"h:mm tt\"))"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -765,8 +765,8 @@
                 "id": "oSvcIN"
               },
               "changeType": "push",
-              "itemsProperty": "dialog.choices",
-              "value": "=json(concat('{ \"value\": \"', dialog.formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', dialog.formattedOption, '\", \"value\": \"', dialog.formattedOption,'\" } }'))"
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
             }
           ]
         },
@@ -787,8 +787,8 @@
             "inlineOr": " or ",
             "inlineSeparator": ", "
           },
-          "choices": "=dialog.choices",
-          "property": "dialog.selected",
+          "choices": "=$choices",
+          "property": "$selected",
           "style": "heroCard"
         }
       ]
@@ -797,7 +797,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "ClNq3i",
-        "name": "CheckExpectedType"
+        "name": "OnEvent (CheckExpectedType)"
       },
       "event": "CheckExpectedType",
       "actions": [

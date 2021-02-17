@@ -1,0 +1,1 @@
+{"query":"when do i start tomorrow","prediction":{"topIntent":"GetAvailabilityFirst","intents":{"GetAvailabilityFirst":{"score":0.9906987}},"entities":{"date":["tomorrow"]}}}

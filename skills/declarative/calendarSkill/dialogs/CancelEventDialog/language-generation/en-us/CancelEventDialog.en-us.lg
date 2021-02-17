@@ -1,30 +1,22 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 
-# ConfirmInput_Prompt_bbFHND()
+# ConfirmInput_Prompt_lfDkBw()
 [Activity
-    text = ${CancelEventResponseText(dialog.event)}
-    attachments = ${json(EventDetailCard(dialog.event))}
+    text = Are you sure you want to cancel the event?
+    attachments = ${json(EventDetailCard($event))}
 ]
 
-# CancelEventResponseText(event)
-- OK. Are you sure you want to cancel the event ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}?
-
-# SendActivity_cJ2cuN()
+# SendActivity_W6gQQo()
 - I’ve cancelled the event for you and notified the attendees.
 
-# ConfirmInput_Prompt_AyheDs()
+# SendActivity_uyZBZh()
+- ${CancelMessage()}
+# ConfirmInput_Prompt_Ef32OL()
 [Activity
-    text = ${AskForDecline()}
-    attachments = ${json(EventDetailCard(dialog.event))}
+    text = You are not the owner of the meeting. Would you like to decline the meeting instead?
+    attachments = ${json(EventDetailCard($event))}
 ]
 
-# AskForDecline 
-- I see you are not the owner of the meeting. Would you like to decline the meeting instead?
-- Someone else created this meeting. Would you like to decline it instead?
-
-# SendActivity_JCItAO()
-- Sure.
-
-# SendActivity_iPUM6m()
-- Sure.
+# SendActivity_x08upQ()
+- ${CancelMessage()}

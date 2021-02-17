@@ -4,10 +4,10 @@
 - Who should I remove?
 
 # ContactListPrompt()
-- I've found multiple ${dialog.additionalOptions.contactName}'s:
-- I've found more than one ${dialog.additionalOptions.contactName}'s: 
-- There are multiple ${dialog.additionalOptions.contactName}'s:
-- There seem to be a few ${dialog.additionalOptions.contactName}'s:
+- I've found multiple ${$additionalOptions.contactName}'s:
+- I've found more than one ${$additionalOptions.contactName}'s: 
+- There are multiple ${$additionalOptions.contactName}'s:
+- There seem to be a few ${$additionalOptions.contactName}'s:
 
 # ContactListShowMorePrompt()
 - How about these contacts:

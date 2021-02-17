@@ -13,6 +13,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
+    using TimeZoneConverter;
 
     /// <summary>
     /// This action gets an event from MS Graph by its EventId.
@@ -54,7 +55,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         /// <inheritdoc/>
         internal override async Task<CalendarSkillEventModel> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById((string)parameters["Timezone"]);
+            var timeZone = TZConvert.GetTimeZoneInfo((string)parameters["Timezone"]);
 
             Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken);
 

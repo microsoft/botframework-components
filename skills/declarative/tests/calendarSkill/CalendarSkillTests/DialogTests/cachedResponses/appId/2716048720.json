@@ -1,1 +1,0 @@
-{"query":"new meeting with jane tomorrow at 3pm in seattle titled team meeting","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.989096463}},"entities":{"contact":["jane"],"personName":["jane"],"date":["tomorrow at 3pm"],"location":["seattle"],"geographyV2":[{"value":"seattle","type":"city"}],"subject":["team meeting"]}}}

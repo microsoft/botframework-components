@@ -14,6 +14,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
+    using TimeZoneConverter;
 
     /// <summary>
     /// Custom action to find meeting time that works for attendees using MS Graph.
@@ -66,7 +67,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         {
             var attendees = (List<Attendee>)parameters["Attendees"];
             var duration = (int)parameters["Duration"];
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById((string)parameters["Timezone"]);
+            var timeZone = TZConvert.GetTimeZoneInfo((string)parameters["Timezone"]);
 
             MeetingTimeSuggestionsResult meetingTimesResult = await client.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
                                                                              .Request().PostAsync(cancellationToken);

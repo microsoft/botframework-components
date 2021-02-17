@@ -33,52 +33,16 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         }
 
         /// <summary>
-        /// Gets or sets the event title.
-        /// </summary>
-        [JsonProperty("titleProperty")]
-        public StringExpression TitleProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the event.
-        /// </summary>
-        [JsonProperty("descriptionProperty")]
-        public StringExpression DescriptionProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the start time and date of the event.
-        /// </summary>
-        [JsonProperty("startProperty")]
-        public ObjectExpression<DateTime> StartProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the end time and date of the event.
-        /// </summary>
-        [JsonProperty("endProperty")]
-        public ObjectExpression<DateTime> EndProperty { get; set; }
-
-        /// <summary>
         /// Gets or sets the timezone of the event.
         /// </summary>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the event.
+        /// The event and its property to update in graph.
         /// </summary>
-        [JsonProperty("locationProperty")]
-        public StringExpression LocationProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of attendees in the event.
-        /// </summary>
-        [JsonProperty("attendeesProperty")]
-        public ArrayExpression<Attendee> AttendeesProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the online meeting property for the event.
-        /// </summary>
-        [JsonProperty("isOnlineMeetingProperty")]
-        public BoolExpression IsOnlineMeetingProperty { get; set; }
+        [JsonProperty("eventToCreateProperty")]
+        public ObjectExpression<CalendarSkillEventModel> EventToCreateProperty { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => CreateEventDeclarativeType;
@@ -86,39 +50,33 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         /// <inheritdoc/>
         internal override async Task<Event> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var titleProperty = (string)parameters["Title"];
-            var descriptionProperty = (string)parameters["Description"];
-            var startProperty = (DateTime)parameters["Start"];
-            var endProperty = (DateTime)parameters["End"];
+            var eventToCreateProperty = (CalendarSkillEventModel)parameters["EventToCreate"];
             var timeZoneProperty = (string)parameters["Timezone"];
-            var locationProperty = (string)parameters["Location"];
-            var attendeesProperty = (List<Attendee>)parameters["Attendees"];
-            var isOnlineMeetingProperty = (bool)parameters["IsOnlineMeeting"];
 
             var newEvent = new Event()
             {
-                Subject = titleProperty,
+                Subject = eventToCreateProperty.Subject,
                 Body = new ItemBody()
                 {
                     ContentType = BodyType.Html,
-                    Content = descriptionProperty + CalendarSkillEventModel.CalendarDescriptionString,
+                    Content = eventToCreateProperty.Description + CalendarSkillEventModel.CalendarDescriptionString,
                 },
                 Location = new Location()
                 {
-                    DisplayName = locationProperty,
+                    DisplayName = eventToCreateProperty.Location,
                 },
                 Start = new DateTimeTimeZone()
                 {
-                    DateTime = startProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.Start.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
                 End = new DateTimeTimeZone()
                 {
-                    DateTime = endProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.End.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
-                Attendees = attendeesProperty,
-                IsOnlineMeeting = isOnlineMeetingProperty,
+                Attendees = eventToCreateProperty.Attendees,
+                IsOnlineMeeting = eventToCreateProperty.IsOnlineMeeting,
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
@@ -128,14 +86,8 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         /// <inheritdoc/>
         protected override void PopulateParameters(Builder.Dialogs.Memory.DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("Title", this.TitleProperty.GetValue(state));
-            parameters.Add("Description", this.DescriptionProperty.GetValue(state));
-            parameters.Add("Start", this.StartProperty.GetValue(state));
-            parameters.Add("End", this.EndProperty.GetValue(state));
-            parameters.Add("Timezome", this.TimeZoneProperty.GetValue(state));
-            parameters.Add("Location", this.LocationProperty.GetValue(state));
-            parameters.Add("Attendees", this.AttendeesProperty.GetValue(state));
-            parameters.Add("IsOnlineMeeting", this.IsOnlineMeetingProperty.GetValue(state));
+            parameters.Add("EventToCreate", this.EventToCreateProperty.GetValue(state));
+            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
         }
     }
 }

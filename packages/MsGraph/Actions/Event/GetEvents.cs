@@ -15,6 +15,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
+    using TimeZoneConverter;
 
     /// <summary>
     /// This action gets events from the user's MS Outlook calendar.
@@ -131,7 +132,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
             var maxResults = (int)parameters["MaxResultsProperty"];
             var userEmail = (string)parameters["UserEmailProperty"];
 
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById((string)parameters["TimezoneProperty"]);
+            var timeZone = TZConvert.GetTimeZoneInfo((string)parameters["TimezoneProperty"]);
 
             var titleProperty = (string)parameters["TitleProperty"] ?? string.Empty;
             var locationProperty = (string)parameters["LocationProperty"] ?? string.Empty;
