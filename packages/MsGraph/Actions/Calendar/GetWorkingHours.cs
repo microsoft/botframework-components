@@ -4,12 +4,13 @@
 namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 
@@ -20,25 +21,34 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     public class GetWorkingHours : BaseMsGraphCustomAction<WorkingHours>
     {
         /// <summary>
-        /// The declarative type of the custom action
+        /// The declarative type of the custom action.
         /// </summary>
-        public const string GetWorkingHoursCustomActionDeclarativeType = "Microsoft.Graph.Calendar.GetWorkingHours";
+        private const string GetWorkingHoursCustomActionDeclarativeType = "Microsoft.Graph.Calendar.GetWorkingHours";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetWorkingHours"/> class.
+        /// </summary>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public GetWorkingHours([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
         [JsonProperty("AddressProperty")]
         public StringExpression AddressProperty { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => GetWorkingHoursCustomActionDeclarativeType;
 
-        protected override async Task<WorkingHours> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<WorkingHours> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var addressProperty = this.AddressProperty.GetValue(dcState);
+            var addressProperty = (string)parameters["Address"];
             var startProperty = DateTime.UtcNow.Date;
             var endProperty = startProperty.Date.AddHours(23).AddMinutes(59);
 
@@ -52,6 +62,12 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
             var workingHours = schedule.First().WorkingHours;
 
             return workingHours;
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("Address", this.AddressProperty.GetValue(state));
         }
     }
 }

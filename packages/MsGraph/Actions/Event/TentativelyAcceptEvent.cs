@@ -3,22 +3,28 @@
 
 namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
+    using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Custom action to Graph that allows the caller to tentatively accept an invite
+    /// Tentatively accept an event.
     /// </summary>
     [MsGraphCustomActionRegistration(TentativelyAcceptEvent.TentativelyAcceptEventDeclarativeType)]
     public class TentativelyAcceptEvent : BaseMsGraphCustomAction
     {
-        public const string TentativelyAcceptEventDeclarativeType = "Microsoft.Graph.Calendar.TentativelyAcceptEvent";
+        private const string TentativelyAcceptEventDeclarativeType = "Microsoft.Graph.Calendar.TentativelyAcceptEvent";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TentativelyAcceptEvent"/> class.
+        /// </summary>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public TentativelyAcceptEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -26,26 +32,26 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         }
 
         /// <summary>
-        /// ID of the event of tentatively accept
+        /// Gets or sets the ID of the event of tentatively accept.
         /// </summary>
-        /// <value></value>
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => TentativelyAcceptEventDeclarativeType;
 
-        /// <summary>
-        /// Calls the graph service to tentatively accept the event on the user's behalf
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task CallGraphServiceAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var eventId = this.EventId.GetValue(dc.State);
+            var eventId = (string)parameters["EventId"];
 
             await client.Me.Events[eventId].TentativelyAccept("tentativelyAccept").Request().PostAsync();
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("EventId", this.EventId.GetValue(state));
         }
     }
 }

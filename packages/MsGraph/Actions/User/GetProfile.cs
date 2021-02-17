@@ -3,10 +3,10 @@
 
 namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
+    using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 
@@ -17,17 +17,24 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     [MsGraphCustomActionRegistration(GetProfile.GetProfileDeclarativeType)]
     public class GetProfile : BaseMsGraphCustomAction<User>
     {
-        public const string GetProfileDeclarativeType = "Microsoft.Graph.User.GetProfile";
+        private const string GetProfileDeclarativeType = "Microsoft.Graph.User.GetProfile";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetProfile"/> class.
+        /// </summary>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public GetProfile([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
         {
         }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => GetProfileDeclarativeType;
 
-        protected override async Task<User> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<User> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             return await client.Me.Request().GetAsync(cancellationToken);
         }

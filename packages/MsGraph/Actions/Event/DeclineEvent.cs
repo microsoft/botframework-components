@@ -3,57 +3,55 @@
 
 namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
+    using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Graph;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Custom action that calls MS Graph to decline an event
+    /// Custom action that calls MS Graph to decline an event.
     /// </summary>
     [MsGraphCustomActionRegistration(DeclineEvent.DeclineEventDeclarativeType)]
     public class DeclineEvent : BaseMsGraphCustomAction
     {
         /// <summary>
-        /// Declarative type name fo this custom action, referenced by the Bot Composer
+        /// Declarative type name fo this custom action, referenced by the Bot Composer.
         /// </summary>
-        public const string DeclineEventDeclarativeType = "Microsoft.Graph.Calendar.DeclineEvent";
+        private const string DeclineEventDeclarativeType = "Microsoft.Graph.Calendar.DeclineEvent";
 
         /// <summary>
-        /// Creates an instance of <seealso cref="DeclineEvent" />
+        /// Initializes a new instance of the <see cref="DeclineEvent"/> class.
         /// </summary>
-        /// <param name="callerPath"></param>
-        /// <param name="callerLine"></param>
-        [JsonConstructor]
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         public DeclineEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
         {
         }
 
         /// <summary>
-        /// ID of the event to decline
+        /// Gets or sets the ID of the event to decline.
         /// </summary>
-        /// <value></value>
         [JsonProperty("eventId")]
         public StringExpression EventId { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => DeclineEventDeclarativeType;
 
-        /// <summary>
-        /// Calls the graph service to decline an event
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task CallGraphServiceAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task CallGraphServiceAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var eventId = this.EventId.GetValue(dc.State);
+            await client.Me.Events[(string)parameters["EventId"]].Decline("decline").Request().PostAsync(cancellationToken);
+        }
 
-            await client.Me.Events[eventId].Decline("decline").Request().PostAsync(cancellationToken);
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("EventId", this.EventId.GetValue(state));
         }
     }
 }

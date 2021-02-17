@@ -4,11 +4,12 @@
 namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
 {
     using System;
+    using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
@@ -20,15 +21,15 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     public class GetEventById : BaseMsGraphCustomAction<CalendarSkillEventModel>
     {
         /// <summary>
-        /// Declarative type name for this custom action
+        /// Declarative type name for this custom action.
         /// </summary>
-        public const string GetEventByIdDeclarativeType = "Microsoft.Graph.Calendar.GetEventById";
+        private const string GetEventByIdDeclarativeType = "Microsoft.Graph.Calendar.GetEventById";
 
         /// <summary>
-        /// Creates an instance of <seealso cref="GetEventById" />
+        /// Initializes a new instance of the <see cref="GetEventById"/> class.
         /// </summary>
-        /// <param name="callerPath"></param>
-        /// <param name="callerLine"></param>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public GetEventById([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -36,41 +37,27 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         }
 
         /// <summary>
-        /// Gets or sets the id of the event
+        /// Gets or sets the id of the event.
         /// </summary>
-        /// <value>Id of the event</value>
         [JsonProperty("eventIdProperty")]
         public StringExpression EventIdProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the timezone of the event
+        /// Gets or sets the timezone of the event.
         /// </summary>
-        /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
-        /// <summary>
-        /// Declarative type of this custom action
-        /// </summary>
+        /// <inheritdoc/>
         public override string DeclarativeType => GetEventByIdDeclarativeType;
 
-        /// <summary>
-        /// Gets the event by its id from the Graph service
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task<CalendarSkillEventModel> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<CalendarSkillEventModel> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var eventId = this.EventIdProperty.GetValue(dcState);
-            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById((string)parameters["Timezone"]);
 
-            Event ev = await client.Me.Events[eventId].Request().GetAsync(cancellationToken);
+            Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken);
 
-            var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
             var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
 
@@ -78,6 +65,13 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);
 
             return new CalendarSkillEventModel(ev, TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone));
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("EventId", this.EventIdProperty.GetValue(state));
+            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
         }
     }
 }
