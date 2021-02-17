@@ -16,6 +16,7 @@ stages:
           displayName: Build and package
           steps:
           - template: dotnet-package-steps.yml
+          - template: nuget-signing-steps.yml
 
   # Publish both nuget and node packages
   # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
