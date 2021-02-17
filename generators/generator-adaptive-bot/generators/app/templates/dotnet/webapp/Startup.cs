@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Bot.Builder.Runtime.Extensions;
+using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,9 +19,6 @@ namespace <%= botName %>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
-
-            services.AddSingleton<IConfiguration>(this.Configuration);
-
             services.AddBotRuntime(this.Configuration);
         }
 

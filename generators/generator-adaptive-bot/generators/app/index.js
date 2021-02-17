@@ -111,7 +111,7 @@ module.exports = class extends Generator {
         const platform = this.options.platform;
         const packageReferences = this._formatPackageReferences();
         const settingsDirectory = this.applicationSettingsDirectory === null
-            ? 'null'
+            ? 'string.Empty'
             : `"${this.applicationSettingsDirectory}"`;
 
         this.fs.copyTpl(
