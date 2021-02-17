@@ -2,98 +2,29 @@
 [Event](event.en-us.lg)
 [TimeSuggestionList](timeSuggestionList.en-us.lg)
 
-# SetTitlePrompt()
-- What is the title of the meeting?
-- What is the title?
-- What is the meeting about?
-
-# RemoveAttendeeConfirmation(attendee)
-- I've removed ${coalesce(attendee.Name, attendee.Address)}.
-
-# SetDateTimePrompt()
-- What date and time did you have in mind?
-- When should the event start?
-- And what date?
-
-# SetTimePrompt()
-- At what time?
-- What time works best?
-- And at what time?
-- Got it, and when do you want it to start?
-
-# SetDescriptionPrompt()
-- What is the description?
-
-# SetDurationPrompt()
-- How long should the event last?
-
-# AddOnlineMeetingConfirmation()
-- Sure, I’ve added a Teams link for you as well.
-- OK, I’ll also include a Teams link.
-- Got it. I've also included a Teams meeting.
-
-# RemoveOnlineMeetingConfirmation()
-- I've removed the Teams link from the meeting.
-- I won't add Teams to this meeting.
-
-# SetLocationPrompt()
-- What location would you like to include?
-- What should I set the location to?
-- What is the location?
-
-# CreateEventConfirmPrompt(event)
-[Activity
-    text=Does this look right?
-    attachments=${json(EventConfirmDetailCard(event))}
-]
-
-# CreateEventSuccess()
-- All right, your event has been created.
-- I've added the meeting to your calendar.
-- OK, the event has been created for you.
-
-# CreateEventFailure()
-- Sorry, I can't create event for you now. Please try again later.
-
-# CreateEventRejected()
-- OK, I will not create the event.
-- No problem, the event has not been created.
-
 # SendActivity_44hcCm()
 - ${CancelMessage()}
 
 # TextInput_Prompt_HmkRsB()
-- ${SetTitlePrompt()}
+- What should I set the title to?
 
 # SendActivity_zz0Eaj()
-- ${RemoveAttendeeConfirmation($selectedContact)}
+- I've removed ${coalesce($selectedContact.Name, $selectedContact.Address)}.
 
 # DateTimeInput_Prompt_Avi5yg()
-- ${SetDateTimePrompt()}
-
-# DateTimeInput_Prompt_78fioc()
-- ${SetTimePrompt()}
+- When should I schedule it?
 
 # TextInput_Prompt_68Dudo()
-- ${SetDescriptionPrompt()}
+- What should I set the description to?
 
 # TextInput_Prompt_NBZi0g()
-- ${SetDurationPrompt()}
+- How long should it last?
 
 # SendActivity_PqPtGV()
-- ${AddOnlineMeetingConfirmation()}
+- I've made this a Microsoft Teams meeting.
 
 # SendActivity_wYoWNO()
-- ${RemoveOnlineMeetingConfirmation()}
-
-# TextInput_Prompt_Qi0vNC()
-- ${SetLocationPrompt()}
-
-# SendActivity_ML5sqP()
-- ${CreateEventSuccess()}
-
-# SendActivity_BZkdix()
-- ${CreateEventFailure()}
+- I won't make this a Microsoft Teams meeting.
 
 # ConfirmInput_Prompt_WF6urX()
 - ${CancelConfirmPrompt()}
@@ -104,8 +35,23 @@
 # SendActivity_VLAwOi()
 - ${CancelRejected()}
 
-# ConfirmInput_Prompt_o1UB6n()
-- ${CreateEventConfirmPrompt($slots)}
+# DateTimeInput_Prompt_78fioc()
+- What time?
 
-# SendActivity_111xmA()
-- ${CreateEventRejected()}
+# TextInput_Prompt_IeJvM4()
+- What should I set the location to?
+
+# ConfirmInput_Prompt_ui2fg1()
+[Activity
+    text=Does this look right?
+    attachments=${json(EventConfirmDetailCard($event))}
+]
+
+# SendActivity_5Kxaup()
+- OK, I will not create the event.
+
+# SendActivity_fbCLFM()
+- I've created the event.
+
+# SendActivity_ANQjxk()
+- Something when wrong while creating adding the event to your calendar.

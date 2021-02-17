@@ -3,6 +3,7 @@
     "rootDialog": true,
     "triggers": {
       "": [
+        "AuthenticationDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ]
     }
@@ -52,8 +53,7 @@
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
         "ResolveDateTimeDialog.en-us"
-      ],
-      "Cancel": []
+      ]
     }
   }
 }

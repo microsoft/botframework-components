@@ -1,0 +1,123 @@
+﻿{
+  "$schema": "../../app.schema",
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "method": "GET",
+  "url": "https://graph.microsoft.com/v1.0/me/calendarView*",
+  "responses": [
+    {
+      "content-type": "application/json",
+      "content": {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('d4478b21-9085-4f61-88c9-15e3ee77ddf5')/calendar/calendarView",
+        "value": [
+          {
+            "allowNewTimeProposals": true,
+            "attendees": [
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "LidiaH@M365x320864.OnMicrosoft.com",
+                  "name": "Lidia Holloway",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              },
+              {
+                "status": {
+                  "response": "none",
+                  "time": "0001-01-01T00:00:00+00:00",
+                  "@odata.type": "microsoft.graph.responseStatus"
+                },
+                "type": "required",
+                "emailAddress": {
+                  "address": "MeganB@M365x320864.OnMicrosoft.com",
+                  "name": "Megan Bowen",
+                  "@odata.type": "microsoft.graph.emailAddress"
+                },
+                "@odata.type": "microsoft.graph.attendee"
+              }
+            ],
+            "body": {
+              "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=iso-8859-1\">\r\n</head>\r\n<body>\r\n<div><br>\r\n<br>\r\n<br>\r\n<div style=\"width:100%; height:20px\"><span style=\"white-space:nowrap; color:#5F5F5F; opacity:.36\">________________________________________________________________________________</span>\r\n</div>\r\n<div class=\"me-email-text\" style=\"color:#252424; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">\r\n<div style=\"margin-top:24px; margin-bottom:20px\"><span style=\"font-size:24px; color:#252424\">Microsoft Teams meeting</span>\r\n</div>\r\n<div style=\"margin-bottom:20px\">\r\n<div style=\"margin-top:0px; margin-bottom:0px; font-weight:bold\"><span style=\"font-size:14px; color:#252424\">Join on your computer or mobile app</span>\r\n</div>\r\n<a class=\"me-email-headline\" href=\"https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDBkMmFmODQtY2JjNC00OTc2LTljOWQtN2E0N2RlNjRlNjc1%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%224f208db8-5872-47b1-b9ee-ba8603ddc80b%22%7d\" target=\"_blank\" rel=\"noreferrer noopener\" style=\"font-size:14px; font-family:'Segoe UI Semibold','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif; text-decoration:underline; color:#6264a7\">Click\r\n here to join the meeting</a> </div>\r\n<div style=\"margin-bottom:4px\">\r\n<div style=\"margin-bottom:4px\"><span style=\"font-size:14px; color:#252424; font-weight:bold\">Or call in (audio only)</span>\r\n</div>\r\n<div style=\"margin-bottom:4px\"><a href=\"tel:+12134363272,,771965173# \" style=\"font-size:14px; text-decoration:underline; color:#6264a7\">+1 213-436-3272,,771965173#</a>\r\n<span style=\"font-size:14px; color:#252424\">&nbsp; United States, Los Angeles </span></div>\r\n</div>\r\n<span style=\"font-size:14px; color:#252424\">Phone Conference ID: </span><span style=\"font-size:16px; color:#252424\">771 965 173#\r\n</span>\r\n<div style=\"margin-bottom:20px\"><a class=\"me-email-link\" target=\"_blank\" href=\"https://dialin.teams.microsoft.com/576c8211-dbe8-4a9a-8707-1b52ccc23231?id=771965173\" rel=\"noreferrer noopener\" style=\"font-size:14px; text-decoration:underline; color:#6264a7; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">Find\r\n a local number</a> | <a class=\"me-email-link\" target=\"_blank\" href=\"https://mysettings.lync.com/pstnconferencing\" rel=\"noreferrer noopener\" style=\"font-size:14px; text-decoration:underline; color:#6264a7\">\r\nReset PIN</a> </div>\r\n<div style=\"margin-bottom:24px; margin-top:20px\"><a class=\"me-email-link\" target=\"_blank\" href=\"https://aka.ms/JoinTeamsMeeting\" rel=\"noreferrer noopener\" style=\"font-size:14px; text-decoration:underline; color:#6264a7; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">Learn\r\n More</a> | <a class=\"me-email-link\" target=\"_blank\" href=\"https://teams.microsoft.com/meetingOptions/?organizerId=4f208db8-5872-47b1-b9ee-ba8603ddc80b&amp;tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47&amp;threadId=19_meeting_MDBkMmFmODQtY2JjNC00OTc2LTljOWQtN2E0N2RlNjRlNjc1@thread.v2&amp;messageId=0&amp;language=en-US\" rel=\"noreferrer noopener\" style=\"font-size:14px; text-decoration:underline; color:#6264a7; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">\r\nMeeting options</a> </div>\r\n</div>\r\n<div style=\"font-size:14px; margin-bottom:4px; font-family:'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif\">\r\n</div>\r\n<div style=\"font-size:12px\"></div>\r\n<div style=\"width:100%; height:20px\"><span style=\"white-space:nowrap; color:#5F5F5F; opacity:.36\">________________________________________________________________________________</span>\r\n</div>\r\n</div>\r\n</body>\r\n</html>\r\n",
+              "contentType": "html",
+              "@odata.type": "microsoft.graph.itemBody"
+            },
+            "bodyPreview": "________________________________________________________________________________\r\nMicrosoft Teams meeting\r\nJoin on your computer or mobile app\r\nClick here to join the meeting\r\nOr call in (audio only)\r\n+1 213-436-3272,,771965173#   United States, Los",
+            "end": {
+              "dateTime": "2099-12-31T04:30:00.0000000",
+              "timeZone": "Pacific Standard Time",
+              "@odata.type": "microsoft.graph.dateTimeTimeZone"
+            },
+            "hasAttachments": false,
+            "iCalUId": "040000008200E00074C5B7101A82E00800000000EAF72E7D6FA7D601000000000000000010000000FA56810A8A764A4EB64C163219354173",
+            "importance": "normal",
+            "isAllDay": false,
+            "isCancelled": false,
+            "isOnlineMeeting": true,
+            "isOrganizer": false,
+            "isReminderOn": true,
+            "location": {
+              "address": {
+                "@odata.type": "microsoft.graph.physicalAddress"
+              },
+              "coordinates": {
+                "@odata.type": "microsoft.graph.outlookGeoCoordinates"
+              },
+              "displayName": "",
+              "locationType": "default",
+              "uniqueIdType": "unknown",
+              "@odata.type": "microsoft.graph.location"
+            },
+            "locations": [],
+            "onlineMeeting": {
+              "conferenceId": "771965173",
+              "joinUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDBkMmFmODQtY2JjNC00OTc2LTljOWQtN2E0N2RlNjRlNjc1%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%224f208db8-5872-47b1-b9ee-ba8603ddc80b%22%7d",
+              "tollNumber": "+1 213-436-3272",
+              "@odata.type": "microsoft.graph.onlineMeetingInfo"
+            },
+            "onlineMeetingProvider": "teamsForBusiness",
+            "organizer": {
+              "emailAddress": {
+                "address": "LidiaH@M365x320864.OnMicrosoft.com",
+                "name": "Lidia Holloway",
+                "@odata.type": "microsoft.graph.emailAddress"
+              },
+              "@odata.type": "microsoft.graph.recipient"
+            },
+            "originalEndTimeZone": "China Standard Time",
+            "originalStartTimeZone": "China Standard Time",
+            "reminderMinutesBeforeStart": 15,
+            "responseRequested": true,
+            "responseStatus": {
+              "response": "notResponded",
+              "time": "2099-10-21T08:40:10.986129+00:00",
+              "@odata.type": "microsoft.graph.responseStatus"
+            },
+            "sensitivity": "normal",
+            "showAs": "tentative",
+            "start": {
+              "dateTime": "2099-12-31T04:00:00.0000000",
+              "timeZone": "Pacific Standard Time",
+              "@odata.type": "microsoft.graph.dateTimeTimeZone"
+            },
+            "subject": "Test Meeting",
+            "type": "singleInstance",
+            "webLink": "https://outlook.office365.com/owa/?itemid=AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQBGAAAAAADoe4Tuth0XSai2z9sEhsTuBwBN8odIGmZQQalnLh3DCfMfAAAAAAENAABN8odIGmZQQalnLh3DCfMfAABCjhcxAAA%3D&exvsurl=1&path=/calendar/item",
+            "categories": [],
+            "changeKey": "TfKHSBpmUEGpZy4dwwnzHwAAQn7tEw==",
+            "createdDateTime": "2099-10-21T08:39:52.3888183+00:00",
+            "lastModifiedDateTime": "2099-10-21T09:19:32.9424661+00:00",
+            "id": "AAMkADU5NTVlZTgyLWZhMzQtNDM0OS05Mzc5LTQwMzBmM2Q1YjlhNQBGAAAAAADoe4Tuth0XSai2z9sEhsTuBwBN8odIGmZQQalnLh3DCfMfAAAAAAENAABN8odIGmZQQalnLh3DCfMfAABCjhcxAAA=",
+            "@odata.type": "microsoft.graph.event",
+            "@odata.etag": "W/\"TfKHSBpmUEGpZy4dwwnzHwAAQn7tEw==\"",
+            "isDraft": false
+          }
+        ]
+      }
+    }
+  ]
+}

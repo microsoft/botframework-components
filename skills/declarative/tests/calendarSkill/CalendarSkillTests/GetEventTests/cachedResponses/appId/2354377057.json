@@ -1,0 +1,1 @@
+{"query":"who is coming to my meeting tomorrow","prediction":{"topIntent":"GetEventAttendees","intents":{"GetEventAttendees":{"score":0.9958316}},"entities":{"date":["tomorrow"]}}}
