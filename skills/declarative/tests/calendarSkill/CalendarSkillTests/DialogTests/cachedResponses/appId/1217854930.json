@@ -1,1 +1,0 @@
-{"query":"today","prediction":{"topIntent":"TextInput_Response_a8RIpz","intents":{"TextInput_Response_a8RIpz":{"score":0.9093164}},"entities":{"datetimeV2":[{"type":"date","values":[{"timex":"2021-01-26","resolution":[{"value":"2021-01-26"}]}]}]}}}
