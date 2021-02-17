@@ -1,1 +1,0 @@
-{"query":"new meeting named Team Meeting","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.973753}},"entities":{"subject":["Team Meeting"]}}}
