@@ -1,6 +1,12 @@
-# QNA Empty Bot Template
-Yeoman generator for instantiating a bot template using the generator-empty-bot npm package.
+## QNA Template
 
-When used in Composer this template will instantiate an instance of the empty bot template and then route the user to add the QNA knowledge base through the Composer client.
+Instantiates a Bot Framework bot using the [component model](https://aka.ms/ComponentTemplateDocumentation). This template instantiates an empty bot with the option to configure a QNA source during creation time. Following qna configuration you are left with an empty bot that can handle answering questions that are specified in your qna source.
 
-The resulting bot template will have an empty bot implementation with a QNA intent configured that routes to the users uploaded QNA knowledge base. 
+### Packages
+No packages. 
+
+### Languages
+English.
+
+### Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
