@@ -2,8 +2,7 @@
   "adapter":
   {
     "$kind": "Microsoft.BotCoreAdapter",
-    "middleware": [
-    ]
+    "middleware": []
   },
   "channel": {
     "$kind": "Microsoft.DeclarativeChannelProvider",
@@ -15,6 +14,7 @@
     "applicationPassword": "=MicrosoftAppPassword"
   },
   "defaultLocale": "en-US",
+  "plugins": [],
   "rootDialog": "=defaultRootDialog",
   "storage": {
     "$kind": "Microsoft.MemoryStorage"

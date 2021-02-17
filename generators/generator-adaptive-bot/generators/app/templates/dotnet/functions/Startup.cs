@@ -17,15 +17,10 @@ namespace <%= botName %>
         {
             string applicationRoot = configurationBuilder.GetContext().ApplicationRootPath;
             string settingsDirectory = <%- settingsDirectory %>;
-            bool isDevelopment = string.Equals(
-                configurationBuilder.GetContext().EnvironmentName,
-                Microsoft.Extensions.Hosting.Environments.Development,
-                StringComparison.OrdinalIgnoreCase);
 
             configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(
                 applicationRoot,
-                settingsDirectory,
-                isDevelopment);
+                settingsDirectory);
         }
     }
 }
