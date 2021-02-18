@@ -4,7 +4,7 @@ steps:
      $dateStamp = (Get-Date -format "yyyyMMdd");
      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
 
-     $ppv = $dateStamp + $commitHash;
+     $ppv = $dateStamp + "." + $commitHash;
      Write-Host "##vso[task.setvariable variable=PackageVersion;]$ppv";
      "Resolved PackageVersion = $ppv";
     displayName: 'Resolve package version variables'
@@ -13,6 +13,5 @@ steps:
     displayName: 'Tag build with release and preview versions'
     inputs:
       tags: |
-       Release: $(ReleasePackageVersion)
        Preview: $(PackageVersion)
     continueOnError: true
