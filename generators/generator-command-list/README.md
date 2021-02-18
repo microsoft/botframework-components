@@ -1,10 +1,12 @@
-# generator-command-list
-Yeoman generator for instantiating a bot template using the generator-command-list components.
+## Command List Bot
 
-Bot Framework Composer is configured to consume and instantiate a bot template using this Yeomen generator. 
+Instantiates a Bot Framework bot using the [component model](https://aka.ms/ComponentTemplateDocumentation). This template instantiates a bot built around a set of commands rather than a language recognizer. Includes cards with message back actions for example commands "hello" and "help."
 
-The resulting bot template will have the following packages + routing logic to these packages.
+### Packages
+No packages. 
 
-# packages
+### Languages
+English.
 
-None
+### Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
