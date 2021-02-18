@@ -13,7 +13,7 @@ steps:
      "Resolved PreviewPackageVersion = $ppv";
     displayName: 'Resolve package version variables'
 
-- task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: 'Tag build with release and preview versions'
     inputs:
       tags: |
