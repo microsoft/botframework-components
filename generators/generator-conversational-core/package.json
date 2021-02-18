@@ -1,10 +1,10 @@
 {
   "name": "generator-conversational-core",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/index.js",
   "dependencies": {
-    "generator-adaptive-bot": "^1.0.0-preview.9",
+    "generator-adaptive-bot": "^1.0.0-preview.10",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
