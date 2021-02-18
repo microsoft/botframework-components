@@ -11,6 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.0-daily.preview.20210216.214090.318abab" /><%- packageReferences %>
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.0-rc0" /><%- packageReferences %>
   </ItemGroup>
 </Project>
