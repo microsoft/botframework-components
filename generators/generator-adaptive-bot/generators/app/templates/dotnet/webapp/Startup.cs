@@ -26,7 +26,7 @@ namespace <%= botName %>
 
             // The workaround below will be removed with next SDK patch, when this bug fix gets released: https://github.com/microsoft/botbuilder-dotnet/issues/5239
             // In the meantime, we're guaranteed to have CoreAdapter registered as IBotFrameworkHttpAdapter, so look it up and register it as BotAdapter.
-            services.AddSingleton(sp => (BotAdapter)sp.GetServices<IBotFrameworkHttpAdapter>().First(a => typeof(BotAdapter).IsAssignableFrom(a.GetType())));
+            RegisterCoreBotAdapter(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +42,15 @@ namespace <%= botName %>
                {
                    endpoints.MapControllers();
                });
+        }
+
+        private static BotAdapter RegisterCoreBotAdapter(IServiceCollection services)
+        {
+            const string coreBotAdapterName = "CoreBotAdapter";
+            var adapters = sp.GetServices<IBotFrameworkHttpAdapter>();
+
+            var adapter = (BotAdapter)adapters.Single(a => typeof(BotAdapter).IsAssignableFrom(a.GetType()) && a.GetType().Name.Contains(coreBotAdapterName));
+            services.AddSingleton(adapter);
         }
     }
 }

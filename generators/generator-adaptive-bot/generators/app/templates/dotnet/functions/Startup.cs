@@ -17,7 +17,7 @@ namespace <%= botName %>
 
             // The workaround below will be removed next SDK patch, when this bug fix gets released: https://github.com/microsoft/botbuilder-dotnet/issues/5239
             // In the meantime, we're guaranteed to have CoreAdapter registered as IBotFrameworkHttpAdapter, so look it up and register it as BotAdapter.
-            builder.Services.AddSingleton(sp => (BotAdapter)sp.GetServices<IBotFrameworkHttpAdapter>().First(a => typeof(BotAdapter).IsAssignableFrom(a.GetType())));
+            RegisterCoreBotAdapter(builder.Services);
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder configurationBuilder)
@@ -26,6 +26,15 @@ namespace <%= botName %>
             string settingsDirectory = <%- settingsDirectory %>;
 
             configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
+        }
+
+        private static BotAdapter RegisterCoreBotAdapter(IServiceCollection services)
+        {
+            const string coreBotAdapterName = "CoreBotAdapter";
+            var adapters = sp.GetServices<IBotFrameworkHttpAdapter>();
+
+            var adapter = (BotAdapter)adapters.Single(a => typeof(BotAdapter).IsAssignableFrom(a.GetType()) && a.GetType().Name.Contains(coreBotAdapterName));
+            services.AddSingleton(adapter);
         }
     }
 }
