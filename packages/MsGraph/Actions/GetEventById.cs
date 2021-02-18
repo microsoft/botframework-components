@@ -12,6 +12,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     using Microsoft.Bot.Component.MsGraph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
+    using TimeZoneConverter;
 
     /// <summary>
     /// This action gets an event from MS Graph by its EventId.
@@ -66,7 +67,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
             var dcState = dc.State;
             var eventId = this.EventIdProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneProperty);
+            var timeZone = TZConvert.GetTimeZoneInfo(timeZoneProperty);
 
             Event ev = await client.Me.Events[eventId].Request().GetAsync(cancellationToken);
 

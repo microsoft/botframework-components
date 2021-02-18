@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Schemas\Actions\" />
-  </ItemGroup>
-
 </Project>

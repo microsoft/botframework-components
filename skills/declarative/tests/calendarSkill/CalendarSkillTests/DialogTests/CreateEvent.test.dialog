@@ -33,10 +33,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "What is the title of the meeting?",
-        "What is the title?",
-        "What is the meeting about?",
-        "What do you want to add as a title?"
+        "What should I set the title to?"
       ]
     },
     {
@@ -46,9 +43,6 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Who will join?",
-        "Who do you want to invite?",
-        "What attendees do you want to add?",
         "Who should I invite?"
       ]
     },
@@ -59,19 +53,12 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
         "OK. I'll invite test name (test@test.com)."
       ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Want to include anyone else? (1) Yes or (2) No",
-        "Want to add another attendee? (1) Yes or (2) No",
-        "Should I add anyone else? (1) Yes or (2) No",
-        "Any other attendees? (1) Yes or (2) No",
-        "Want to invite anyone else? (1) Yes or (2) No",
         "Would you like to invite anyone else? (1) Yes or (2) No"
       ]
     },
@@ -82,11 +69,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "I've found multiple suggestions when you can meet with test name:",
-        "I've found multiple suggestions when you can meet with test name:",
-        "I've found the following time when you can meet with test name:",
-        "Looks like there are several options when you can meet with test name:",
-        "There are multiple suggestions when you can meet with test name:"
+        "I've found multiple times when you can meet with test name:"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
@@ -95,31 +78,16 @@
     {
       "$kind": "Microsoft.Test.UserSays",
       "text": "1"
-    },/*
+    },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, let’s continue with the 1st option.",
-        "OK. I'll continue with November 4 at 3:00 PM.",
-        "You got it! I'll schedule this meeting for November 4 at 3:00 PM.",
-        "OK. I'll continue with the 1st option."
-      ]
-    },*/
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Sure, I’ve added a Teams link for you as well.",
-        "OK, I’ll also include a Teams link.",
-        "Got it. I've also included a Teams meeting."
+        "I've made this a Microsoft Teams meeting."
       ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Please let me know what location you would like to include?",
-        "If you want to include a physical location, please call out what I should include for you?",
-        "What location would you like to include?",
-        "What is the location?",
         "What should I set the location to?"
       ]
     },
@@ -130,9 +98,6 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Got it, I will create a meeting on Thursday, December  31st at 1:00 PM, test title. test name will be invited, and it will take place at test location with a Teams link. Does that sound right?",
-        "OK, I want to confirm before saving this meeting. It's on Thursday, December  31st at 1:00 PM, called test title. test name will be invited, and the location is test location with a Teams link included. Do you want to send it?",
-        "Great. It's almost ready to send. To confirm, this meeting is called test title on Thursday, December  31st at 1:00 PM for 1h. It'll take place at test location with a Teams link included, and you've invited test name. Is all of that correct?",
         "Does this look right?"
       ],
       "assertions": [
@@ -146,9 +111,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "All right, your event has been created.",
-        "I've added the meeting to your calendar.",
-        "OK, the event has been created for you."
+        "I've created the event."
       ]
     }
   ]

@@ -31,6 +31,9 @@
     {
       "$kind": "Microsoft.Test.AssertReply",
       "text": "All right, I’ve accepted the meeting named Test Meeting.",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ],
       "description": "Response to input 1"
     }
   ]

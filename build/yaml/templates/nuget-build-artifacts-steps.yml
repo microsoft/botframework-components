@@ -1,0 +1,7 @@
+steps:
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the nuget packages'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    ArtifactName: 'nuget'
+    publishLocation: 'Container'

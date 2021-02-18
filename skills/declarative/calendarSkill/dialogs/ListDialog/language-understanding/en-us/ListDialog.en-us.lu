@@ -1,11 +1,4 @@
 # Next
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-
 - next
 - next page
 - show more
@@ -13,13 +6,6 @@
 - show me more options
 
 # Previous
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-
 - previous
 - previous page
 - last page
@@ -27,13 +13,6 @@
 - show the earlier options
 
 # Skip
-> add some example phrases to trigger this intent:
-> - please tell me the weather
-> - what is the weather like in {city=Seattle}
-
-> entity definitions:
-> @ ml city
-
 - skip
 - skip this
 - skip over this
@@ -45,8 +24,6 @@
 - cancel
 - cancel this
 - never mind
-
-
 
 # ChoiceInput_Response_dc3QNs
 - 1

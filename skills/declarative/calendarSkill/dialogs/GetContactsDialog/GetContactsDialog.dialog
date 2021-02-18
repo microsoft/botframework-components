@@ -6,7 +6,7 @@
     "description": ""
   },
   "autoEndDialog": true,
-  "defaultResultProperty": "dialog.result",
+  "defaultResultProperty": "$result",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
@@ -81,9 +81,17 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "84gSFd"
+                "id": "hIUT1m"
               },
-              "activity": "${SendActivity_84gSFd()}"
+              "activity": "${SendActivity_hIUT1m()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "bQJeWj"
+              },
+              "property": "turn.recognized",
+              "value": "=null"
             },
             {
               "$kind": "Microsoft.RepeatDialog",
@@ -91,11 +99,7 @@
                 "id": "sLro5t"
               },
               "activityProcessed": true,
-              "options": {
-                "$personNameArray": "=null",
-                "$emailArray": "=null",
-                "turn.recognized": "=null"
-              },
+              "options": {},
               "allowLoop": false
             }
           ]

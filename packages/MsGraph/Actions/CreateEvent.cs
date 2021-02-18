@@ -22,6 +22,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         public const string CreateEventDeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CreateEvent"/> class.
         /// Creates a new instance of <seealso cref="CreateEvent" />
         /// </summary>
         /// <param name="callerPath"></param>
@@ -33,34 +34,6 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         }
 
         /// <summary>
-        /// Gets or sets the event title
-        /// </summary>
-        /// <value>Title of the event</value>
-        [JsonProperty("titleProperty")]
-        public StringExpression TitleProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the event.
-        /// </summary>
-        /// <value>Description of the event</value>
-        [JsonProperty("descriptionProperty")]
-        public StringExpression DescriptionProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the start time and date of the event.
-        /// </summary>
-        /// <value>Start time and date of the event</value>
-        [JsonProperty("startProperty")]
-        public ObjectExpression<DateTime> StartProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the end time and date of the event.
-        /// </summary>
-        /// <value>End time and date of the event.</value>
-        [JsonProperty("endProperty")]
-        public ObjectExpression<DateTime> EndProperty { get; set; }
-
-        /// <summary>
         /// Gets or sets the timezone of the event.
         /// </summary>
         /// <value>Timezone of the event</value>
@@ -68,25 +41,11 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the event.
+        /// The event and its property to update in graph.
         /// </summary>
-        /// <value>Location of the event</value>
-        [JsonProperty("locationProperty")]
-        public StringExpression LocationProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of attendees in the event.
-        /// </summary>
-        /// <value>List of attendees to the event.</value>
-        [JsonProperty("attendeesProperty")]
-        public ArrayExpression<Attendee> AttendeesProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the online meeting property for the event.
-        /// </summary>
-        /// <value><c>True</c> if the meeting is an online event, <c>False</c> if otherwise.</value>
-        [JsonProperty("isOnlineMeetingProperty")]
-        public BoolExpression IsOnlineMeetingProperty { get; set; }
+        /// <value></value>
+        [JsonProperty("eventToCreateProperty")]
+        public ObjectExpression<CalendarSkillEventModel> EventToCreateProperty { get; set; }
 
         public override string DeclarativeType => CreateEventDeclarativeType;
 
@@ -100,39 +59,33 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
         protected override async Task<Event> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
         {
             var dcState = dc.State;
-            var titleProperty = this.TitleProperty.GetValue(dcState);
-            var descriptionProperty = this.DescriptionProperty.GetValue(dcState);
-            var startProperty = this.StartProperty.GetValue(dcState);
-            var endProperty = this.EndProperty.GetValue(dcState);
+            var eventToCreateProperty = this.EventToCreateProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var locationProperty = this.LocationProperty.GetValue(dcState);
-            var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
-            var isOnlineMeetingProperty = this.IsOnlineMeetingProperty.GetValue(dcState);
 
             var newEvent = new Event()
             {
-                Subject = titleProperty,
+                Subject = eventToCreateProperty.Subject,
                 Body = new ItemBody()
                 {
                     ContentType = BodyType.Html,
-                    Content = descriptionProperty + CalendarSkillEventModel.CalendarDescriptionString,
+                    Content = eventToCreateProperty.Description + CalendarSkillEventModel.CalendarDescriptionString,
                 },
                 Location = new Location()
                 {
-                    DisplayName = locationProperty,
+                    DisplayName = eventToCreateProperty.Location,
                 },
                 Start = new DateTimeTimeZone()
                 {
-                    DateTime = startProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.Start.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
                 End = new DateTimeTimeZone()
                 {
-                    DateTime = endProperty.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.End.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
-                Attendees = attendeesProperty,
-                IsOnlineMeeting = isOnlineMeetingProperty,
+                Attendees = eventToCreateProperty.Attendees,
+                IsOnlineMeeting = eventToCreateProperty.IsOnlineMeeting,
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
