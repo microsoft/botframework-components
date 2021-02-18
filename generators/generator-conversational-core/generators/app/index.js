@@ -15,20 +15,16 @@ module.exports = class extends Generator {
       {
         arguments: this.args,
         packageReferences: [{
-          name: 'Preview.Bot.Component.GeneralIntent',
-          version: '0.0.1-preview2'
-        }, {
-          name: 'Preview.Bot.Component.GreetingDialog',
-          version: '0.0.1-preview3'
-        }, {
-          name: 'Preview.Bot.Component.OnboardingDialog',
-          version: '0.0.1-preview2'
-        }, {
-          name: 'Preview.Bot.Component.UnknownIntentDialog',
-          version: '0.0.1-preview4'
-        }],
+          name: 'Preview.Bot.Component.HelpAndCancel',
+          version: '0.0.1-preview1'
+          },
+          {
+            name: 'Preview.Bot.Component.Welcome',
+            version: '0.0.1-preview1'
+          },
+        ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false    
+        includeApplicationSettings: false   
       }
     );
   }
