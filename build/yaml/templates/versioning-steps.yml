@@ -3,14 +3,10 @@ steps:
      # Replace {DateStamp} and {CommitHash} tokens with the actual values in vars ReleasePackageVersion and PreviewPackageVersion
      $dateStamp = (Get-Date -format "yyyyMMdd");
      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
-     "Raw ReleasePackageVersion = $(ReleasePackageVersion)";
-     $v = "$(ReleasePackageVersion)".Replace("{DateStamp}",$dateStamp).Replace("{CommitHash}",$commitHash);
-     Write-Host "##vso[task.setvariable variable=ReleasePackageVersion;]$v";
-     "Resolved ReleasePackageVersion = $v";
-     "Raw PreviewPackageVersion = $(PreviewPackageVersion)";
-     $ppv = "$(PreviewPackageVersion)".Replace("{DateStamp}",$dateStamp).Replace("{CommitHash}",$commitHash);
-     Write-Host "##vso[task.setvariable variable=PreviewPackageVersion;]$ppv";
-     "Resolved PreviewPackageVersion = $ppv";
+
+     $ppv = $dateStamp + $commitHash;
+     Write-Host "##vso[task.setvariable variable=PackageVersion;]$ppv";
+     "Resolved PackageVersion = $ppv";
     displayName: 'Resolve package version variables'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
@@ -18,5 +14,5 @@ steps:
     inputs:
       tags: |
        Release: $(ReleasePackageVersion)
-       Preview: $(PreviewPackageVersion)
+       Preview: $(PackageVersion)
     continueOnError: true
