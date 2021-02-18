@@ -1,12 +1,11 @@
-# Generator-conversational-core
-Yeoman generator for instantiating a bot template using the Conversational Core components.
+## Conversational Core
 
-Bot framework Composer is configured to consume and instantiate a bot template using this Yeomen generator. 
+Instantiates a Bot Framework bot using the [component model](https://aka.ms/ComponentTemplateDocumentation) that includes the following packages and respective functionality.
+### Packages
+[General intent handling](https://www.nuget.org/packages/Preview.Bot.Component.GeneralIntent/), [Greeting dialog](https://www.nuget.org/packages/Preview.Bot.Component.GreetingDialog/), [Onboarding dialog](https://www.nuget.org/packages/Preview.Bot.Component.OnboardingDialog/), [Unknown intent dialog](https://www.nuget.org/packages/Preview.Bot.Component.UnknownIntentDialog/).
 
-The resulting bot template will have the following packages + routing logic to these packages.
+### Languages
+English.
 
-# packages
-- Preview.Bot.Component.GeneralIntent
-- Preview.Bot.Component.GreetingDialog
-- Preview.Bot.Component.OnboardingDialog
-- Preview.Bot.Component.UnknownIntentDialog
+### Azure Resource Deployment
+This template does not rely on any additional Azure Resources.

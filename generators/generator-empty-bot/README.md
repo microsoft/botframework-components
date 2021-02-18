@@ -1,10 +1,12 @@
-# generator-empty-bot
-Yeoman generator for instantiating a bot template using the generator-empty-bot components.
+## Empty Bot
 
-Bot framework Composer is configured to consume and instantiate a bot template using this Yeomen generator. 
+Instantiates a Bot Framework bot using the [component model](https://aka.ms/ComponentTemplateDocumentation). This template instantiates an empty bot with no dependent packages.
 
-The resulting bot template will have the following packages + routing logic to these packages.
+### Packages
+No packages. 
 
-# packages
+### Languages
+English.
 
-This empty bot template has no dependent component packages
+### Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
