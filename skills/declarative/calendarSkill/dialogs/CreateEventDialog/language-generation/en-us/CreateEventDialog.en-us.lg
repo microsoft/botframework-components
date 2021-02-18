@@ -44,7 +44,7 @@
 # ConfirmInput_Prompt_ui2fg1()
 [Activity
     text=Does this look right?
-    attachments=${json(EventConfirmDetailCard($event))}
+    attachments=${json(EventDetailEditCard($event))}
 ]
 
 # SendActivity_5Kxaup()

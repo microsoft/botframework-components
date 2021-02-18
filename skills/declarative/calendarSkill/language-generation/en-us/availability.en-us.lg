@@ -1,12 +1,13 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Schedule](schedule.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # FirstEventResponseText(event)
-- You start ${BuildDate(event.start.dateTime)}, at ${BuildTime(event.start.dateTime)}, with ${event.Subject}.
+- You start ${FormatDate(event.start.dateTime)}, at ${FormatTime(event.start.dateTime)}, with ${event.Subject}.
 
 # LastEventResponseText(event)
-- Your day ends at ${BuildTime(event.end.dateTime)}. Your last meeting is ${event.Subject}.
+- Your day ${FormatDate(event.end.dateTime)}, ends at ${FormatTime(event.end.dateTime)}. Your last meeting is ${event.Subject}.
 
 # NextEventResponseText(event)
 - Here’s what’s next:
@@ -14,38 +15,25 @@
 # EventResponseText(event)
 - Here's what I found:
 
-# TimeTillNextMeetingResponseText(diff)
-- You have ${MakeDiffTime(diff)} until your next meeting starts.
+# TimeUntilNextMeetingResponseText(diff)
+- You have ${FormatTimeRemaining(diff)} until your next meeting starts.
 
-# MakeDiffTime(diff)
+# FormatTimeRemaining(diff)
 - IF: ${ diff < 60 }
-    - ${MakeMinute(diff)}
+    - ${Pluralize(div(diff, 60), 'minute', 'minutes')}
 - ELSEIF: ${ mod(diff, 60) == 0}
-    - ${MakeHour(diff)}
+    - ${Pluralize(div(diff, 60), 'hour', 'hours')}
 - ELSE:
-    - ${MakeHour(diff)} and ${MakeMinute(diff)}
-    
-# MakeMinute(diff)
-- IF: ${ mod(diff, 60) == 1 }
-    - ${mod(diff, 60)} minute
-- ELSE:
-    - ${mod(diff, 60)} minutes
-
-# MakeHour(diff)
-- IF: ${ div(diff, 60) == 1 }
-    - ${div(diff, 60)} hour
-- ELSE:
-    - ${div(diff, 60)} hours
-
+    - ${Pluralize(div(diff, 60), 'hour', 'hours')} and ${Pluralize(div(diff, 60), 'minute', 'minutes')}
 
 # CheckAvailabilityBusyResponseText(events, time)
-- I've found ${count(events)} events for you at ${BuildTime(time)}:
+- I've found ${count(events)} events for you at ${FormatTime(time)}:
 
 # CheckAvailabilityFreeResponseText(time)
-- You don't have anything scheduled for ${BuildTime(time)}.
+- You don't have anything scheduled for ${FormatTime(time)}.
 
 # FoundAvailableTimeResponseText(time)
-- I've found a break in your schedule at ${BuildTime(time)}.
+- I've found a break in your schedule at ${FormatTime(time)}.
 
 # FoundNoAvailableTimeResponseText()
 - Looks like you don't have any breaks today during working hours.
@@ -98,11 +86,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "New event",
-            "data": "New event"
-        }
+        ${CreateEventAction()}
     ]
 }
 ```

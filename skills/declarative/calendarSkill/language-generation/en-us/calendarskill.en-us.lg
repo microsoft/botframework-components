@@ -9,7 +9,7 @@
 # SendActivity_AlS4sI()
 [Activity
     text= ${HelpMessage()}
-    SuggestedActions = New event | What's on today
+    SuggestedActions = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_klrCg4()
@@ -21,39 +21,19 @@
 # SendActivity_lqvfia()
 [Activity
     text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    SuggestedActions = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_DGXXhL()
 [HeroCard
    text = Try the calendar skill now!
-   buttons = ${json(LaunchAction())}
+   buttons = ${LaunchCardAction()}
 ]
-
-# LaunchAction()
-- ```
-{
-    "title": "Launch",
-    "type": "postBack",
-    "value": {
-        "data": {
-            "intent": "LaunchChat"
-        }
-    }
-}
-```
 
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
-   buttons = ${OpenSurveyAction()}
-]
-
-# OpenSurveyAction()
-[CardAction
-    type = openUrl
-	title = Provide feedback
-    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+   buttons = ${OpenSurveyCardAction()}
 ]
 
 # SendActivity_OIka7e()
@@ -63,6 +43,7 @@
     text = ${WelcomeUser()}
     SuggestedActions = New event | What's on today
 ]
+
 # SendActivity_QqvaSr()
 [Activity
     text = ${FoundAvailableTimeResponseText($freeTime.start)}
@@ -73,7 +54,7 @@
 # SendActivity_WlmO9l()
 [Activity
     text = ${FoundNoAvailableTimeResponseText()}
-    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), $events), ScheduleList($event), AvailabilityActions()))}
+    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, TimeZoneNow()), $events), ScheduleList($event), AvailabilityActions()))}
     attachmentLayout = carousel
 ]
 
@@ -86,28 +67,29 @@
 # SendActivity_UKSMPm()
 [Activity
     text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_x7EkgW()
 [Activity
     text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_9Fl4ob()
 [Activity
     text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_YAJvpF()
 [Activity
     text = ${FirstEventResponseText(first($events))}
-    attachments = ${json(EventDetailCard(first($events)))}
+    attachments = ${json(EventDetailActionsCard(first($events)))}
 ]
+
 # SendActivity_IdPxbc()
 [Activity
     text = ${LastEventResponseText(last($events))}
-    attachments = ${json(EventDetailCard(last($events)))}
+    attachments = ${json(EventDetailActionsCard(last($events)))}
 ]

@@ -25,7 +25,7 @@
 # SendActivity_F6WlGO()
 [Activity
     text = You are not the meeting organizer.
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_7kNW6V()
@@ -34,7 +34,7 @@
 # ConfirmInput_Prompt_lvMf0G()
 [Activity
     text = Does this look right?
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailEditCard($event))}
 ]
 
 # SendActivity_hNTgiS()

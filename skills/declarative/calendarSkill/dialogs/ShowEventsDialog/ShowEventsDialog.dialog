@@ -37,7 +37,7 @@
               "assignments": [
                 {
                   "property": "$options.start",
-                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
                 }
               ]
             }
@@ -57,45 +57,46 @@
           }
         },
         {
-          "$kind": "Microsoft.SwitchCondition",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "gXYsAM"
+            "id": "H1PRd9"
           },
-          "condition": "count($events)",
-          "cases": [
+          "condition": "=count($events) > 0",
+          "elseActions": [
             {
-              "value": "1",
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "PdNmx7"
+              },
+              "eventName": "NoResults"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "68EKyC"
+              },
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "mD9i7u"
+                  },
+                  "eventName": "ShowResults"
+                }
+              ],
+              "condition": "count($events) == 1 && exists($options.eventId)",
               "actions": [
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "UMFVjb"
+                    "id": "CQZnrZ"
                   },
                   "eventName": "ShowEvent",
                   "eventValue": "=$events[0]"
                 }
               ]
-            },
-            {
-              "value": "0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EmitEvent",
-                  "$designer": {
-                    "id": "ZVS51Y"
-                  },
-                  "eventName": "NoResults"
-                }
-              ]
-            }
-          ],
-          "default": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "pUEjFG"
-              },
-              "eventName": "ShowResults"
             }
           ]
         }

@@ -5,13 +5,12 @@
 
 # ScheduleNoResults()
 [Activity
-    text = ${ScheduleResponseText($options.start, createArray())}
     attachments = ${json(ScheduleNoResultsCard($options.start))}
 ]
 
 # SendActivity_RzDAXK()
 [Activity
-    attachments = ${json(EventDetailCard(turn.dialogEvent.value))}
+    attachments = ${json(EventDetailActionsCard(turn.dialogEvent.value))}
 ]
 
 # SendActivity_vyntiD()
@@ -23,7 +22,7 @@
 
 # SendActivity_8wch3m()
 [Activity
-    text = I found the following events on your schedule.
-    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
+    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date, count($groupedEvents)))))}
     attachmentLayout = carousel
 ]
+

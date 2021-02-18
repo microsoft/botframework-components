@@ -1,6 +1,8 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+[Functions](functions.en-us.lg)
 
 # EventListPrompt()
 - I've found ${count($items)} events that match your request. Please select an option:
@@ -44,7 +46,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
+                            "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
                             "horizontalAlignment": "Right",
                             "weight": "Bolder"
                         }

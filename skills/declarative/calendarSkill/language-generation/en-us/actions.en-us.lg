@@ -1,0 +1,205 @@
+[Functions](functions.en-us.lg)
+
+# CancelEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Cancel",
+    "data": {
+        "intent": "CancelEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# CreateEventAction(dateTime)
+-```
+{
+    "type": "Action.Submit",
+    "title": "New event",
+    "data": {
+        "intent": "CreateEvent",
+        "dateTime": "${dateTime}"
+    }
+}
+```
+
+# CreateEventCardAction()
+[CardAction
+    title = New event
+    type = postBack
+    value = ${{intent: "CreateEvent"}}
+]
+
+# GetEventsAction(dateTime)
+-```
+{
+    "type": "Action.Submit",
+    "title": "${GetEventsActionTitle(dateTime)}",
+    "data": {
+        "intent": "GetEvents",
+        "dateTime": "${dateTime}"
+    }
+}
+```
+
+# GetEventsActionTitle(dateTime)
+- IF: ${date(formatDateTime(dateTime)) == date(TimeZoneNow())}
+    - Show today
+- ELSEIF: ${date(formatDateTime(dateTime)) == date(addDays(TimeZoneNow(), 1))}
+    - Show tomorrow
+- ELSE:
+    - Next day
+
+# GetEventsCardAction(dateTime)
+[CardAction
+    title = Show schedule
+    type = postBack
+    value = ${{ intent: "GetEvents", "dateTime": dateTime }}
+]
+
+# LaunchCardAction()
+[CardAction
+    title = Launch
+    type = postBack
+    value = ${{intent: "LaunchChat"}}
+]
+
+# OpenSurveyCardAction()
+[CardAction
+    type = openUrl
+	title = Provide feedback
+    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+]
+
+# SetAttendeesAddAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add attendees",
+    "data": {
+        "intent": "SetAttendeesAdd",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetAttendeesRemoveAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Remove attendees",
+    "data": {
+        "intent": "SetAttendeesRemove",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetDateTimeAction(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update date and time",
+    "data": {
+        "intent": "SetDateTime",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetDescriptionAction(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update description",
+    "data": {
+        "intent": "SetDescription",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetDuration(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update duration",
+    "data": {
+        "intent": "SetDuration",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetLocationAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update location",
+    "data": {
+        "intent": "SetLocation",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetOnlineMeetingAddAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add Microsoft Teams",
+    "data": {
+        "intent": "SetOnlineMeetingAdd",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# SetOnlineMeetingRemoveAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Remove Microsoft Teams",
+    "data": {
+        "intent": "SetOnlineMeetingRemove",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# RespondAcceptAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Accept",
+    "data": {
+        "intent": "RespondAccept",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# RespondDeclineAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Decline",
+    "data": {
+        "intent": "RespondDecline",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# UpdateEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update",
+    "data": {
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```

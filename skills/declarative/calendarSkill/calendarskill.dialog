@@ -550,7 +550,7 @@
           },
           "resultProperty": "$result",
           "inputProperty": "=$events",
-          "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd'))",
+          "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
           "workingHourStartProperty": "=user.workingHours.startTime",
           "workingHourEndProperty": "=user.workingHours.endTime"
         },
@@ -1545,7 +1545,7 @@
           "assignments": [
             {
               "property": "$query",
-              "value": "=turn.activity.text"
+              "value": "=coalesce(turn.activity.value.dateTime, turn.activity.text)"
             },
             {
               "value": "=turn.activity.value.eventId",
