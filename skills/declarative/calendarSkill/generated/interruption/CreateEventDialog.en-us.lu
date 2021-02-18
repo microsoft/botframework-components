@@ -23,8 +23,6 @@
 - i want to skip
 
 
-@ intent Skip usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
-
 # None
 - yes
 - sure
@@ -36,8 +34,6 @@
 - tuesday
 - next week
 
-
-@ intent None usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
 
 # Cancel
 - cancel
@@ -75,12 +71,11 @@
 - sorry, don't do it
 
 
-@ intent Cancel usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
-
 # SetAttendeesAdd
 - add an attendee
 - add people
-- add more recipients
+- add more recipients to the meeting with {@contact=roberta}
+- add attendees to my meeting on friday
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
 - add {@newContact=jose} to my next meeting
 - add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
@@ -107,7 +102,7 @@
 - send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
 
 
-@ intent SetAttendeesAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetAttendeesAdd usesFeatures Update,Event,Location,Add,Titled
 
 # SetAttendeesRemove
 - don't add {@currentContact=em} to my event with {@contact=jose} and {@contact=cynthia} called {@subject=team check-in}
@@ -124,12 +119,13 @@
 - remove people from this
 - remove recipients
 - remove someone from this
+- remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
 - remove {@currentContact=rebecca} and {@currentContact=susan}
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
-- remove {@currentContact=tyler} from the meeting on {@date=june} {@date=3rd}
+- remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
 - uninvite an attendee
 - uninvite a recipient
 - uninvite people from this meeting
@@ -141,19 +137,19 @@
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
 
 
-@ intent SetAttendeesRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetAttendeesRemove usesFeatures Update,Event,Location,Remove,Titled
 
 # SetDateTime
 - change my event from {@currentDate=tomorrow} to {@newDate=saturday}
 - change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
 - change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
 - change my meeting with {@contact=elaine} to {@newDate=next week}
-- change my meeting with {@contact=scott} and {@contact=quirine} on {@date=thursday at 11am} to {@newDate=saturday}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
 - change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
 - change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
 - change the date
 - change the time
-- change the date of my event with {@contact=gary} on {@date=monday} named {@subject=lunch} to {@newDate=next month}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
 - change the time of my meeting to {@newDate=6pm}
 - change the date and time of my next meeting to {@newDate=thursday at 11am}
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
@@ -161,7 +157,7 @@
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
 - change the day of the next event to {@newDate=wednesday}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
-- move my meeting on {@date=tuesday} to {@newDate=next week}
+- move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
@@ -172,7 +168,7 @@
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
 
 
-@ intent SetDateTime usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetDateTime usesFeatures Update,Event,Location,Titled
 
 # SetDescription
 - add a body
@@ -195,7 +191,7 @@
 - update the meeting content with {@contact=ryan} {@date=next week}
 
 
-@ intent SetDescription usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetDescription usesFeatures Update,Event,Location,Titled
 
 # SetDuration
 - change the event with {@contact=you@test.net} to {@duration=2 hours}
@@ -220,7 +216,7 @@
 - update to {@duration=1 hour and 30 minutes}
 
 
-@ intent SetDuration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetDuration usesFeatures Update,Event,Location,Titled
 
 # SetLocation
 - change the location of the next event to {@location=123 address st}
@@ -245,7 +241,7 @@
 - update the location to {@location=kitchen}
 
 
-@ intent SetLocation usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetLocation usesFeatures Update,Event,Location,Titled
 
 # SetOnlineMeetingAdd
 - add a phone number to the next meeting
@@ -272,7 +268,7 @@
 - make this an online meeting
 
 
-@ intent SetOnlineMeetingAdd usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetOnlineMeetingAdd usesFeatures Update,Event,Location,Add,Titled
 
 # SetOnlineMeetingRemove
 - don't add a call to the meeting later
@@ -297,7 +293,7 @@
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
 
 
-@ intent SetOnlineMeetingRemove usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetOnlineMeetingRemove usesFeatures Update,Event,Location,Remove,Titled
 
 # SetTitle
 - change the subject
@@ -322,19 +318,19 @@
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
 
 
-@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ intent SetTitle usesFeatures Update,Event,Location,Titled
 
 > # Entity definitions
 
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
 
-@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ ml date hasRoles currentDate,newDate
 
-@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ ml duration
 
-@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ ml location usesFeature geographyV2
 
-@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove,Titled
+@ ml subject hasRoles newSubject,currentSubject
 
 
 > # PREBUILT Entity definitions
@@ -350,29 +346,41 @@
 
 > # Phrase list definitions
 
-@ phraselist Create(interchangeable) enabledForAllModels = 
+@ phraselist Create(interchangeable) disabledForAllModels = 
 	- create,schedule,book,new,set up,find time
 
-@ phraselist Update(interchangeable) enabledForAllModels = 
+@ phraselist Update(interchangeable) disabledForAllModels = 
 	- modify,change,update,edit,move,set
 
-@ phraselist Event(interchangeable) enabledForAllModels = 
-	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
 
-@ phraselist Attending(interchangeable) enabledForAllModels = 
+@ phraselist Attending(interchangeable) disabledForAllModels = 
 	- coming,joining,attending,participating in,going to
 
-@ phraselist Location(interchangeable) enabledForAllModels = 
+@ phraselist Location(interchangeable) disabledForAllModels = 
 	- location,room,city
 
-@ phraselist Add(interchangeable) enabledForAllModels = 
+@ phraselist Add(interchangeable) disabledForAllModels = 
 	- add,include,invite
 
-@ phraselist Remove(interchangeable) enabledForAllModels = 
+@ phraselist Remove(interchangeable) disabledForAllModels = 
 	- remove,uninvite,don't add,don't include,un-invite
 
-@ phraselist Titled(interchangeable) enabledForAllModels = 
+@ phraselist Titled(interchangeable) disabledForAllModels = 
 	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels = 
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels = 
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels = 
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup
 
 
 > # List entities

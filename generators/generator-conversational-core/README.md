@@ -1,30 +1,11 @@
-# generator-conversational-core [![NPM version][npm-image]][npm-url]
-> Yeoman generator for instantiating a bot template using the Conversational Core components.
+## Conversational Core
 
-## Installation
+Instantiates a Bot Framework bot using the [component model](https://aka.ms/ComponentTemplateDocumentation) that includes the following packages and respective functionality.
+### Packages
+[General intent handling](https://www.nuget.org/packages/Preview.Bot.Component.GeneralIntent/), [Greeting dialog](https://www.nuget.org/packages/Preview.Bot.Component.GreetingDialog/), [Onboarding dialog](https://www.nuget.org/packages/Preview.Bot.Component.OnboardingDialog/), [Unknown intent dialog](https://www.nuget.org/packages/Preview.Bot.Component.UnknownIntentDialog/).
 
-First, install [Yeoman](http://yeoman.io) and generator-conversational-core using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+### Languages
+English.
 
-```bash
-npm install -g yo
-npm install -g generator-conversational-core
-```
-
-Then generate your new project:
-
-```bash
-yo conversational-core
-```
-
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
-
-## License
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-[npm-image]: https://badge.fury.io/js/generator-conversational-core.svg
-[npm-url]: https://npmjs.org/package/generator-conversational-core
+### Azure Resource Deployment
+This template does not rely on any additional Azure Resources.

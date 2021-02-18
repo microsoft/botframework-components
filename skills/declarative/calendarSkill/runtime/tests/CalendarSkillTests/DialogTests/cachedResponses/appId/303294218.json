@@ -1,1 +1,0 @@
-{"query":"what meetings do i have with adele","prediction":{"topIntent":"GetEvents","intents":{"GetEvents":{"score":0.9874226}},"entities":{"contact":["adele"],"personName":["adele"]}}}

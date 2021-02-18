@@ -1,0 +1,76 @@
+
+
+# RespondTentativelyAccept
+- i might be able to make the {@subject=hackathon} {@date=next week}
+- i might be able to make the meeting {@subject=happy hour}
+- i might be able to make the meeting with {@contact=me@myemail.edu} about {@subject=editorial meeting}
+- i might not make the {@subject=testing meeting} with {@contact=em} and {@contact=darren} {@date=tomorrow morning}
+- i want to tentatively accept the event with {@contact=quirine}
+- i want to tentatively accept the next meeting
+- mark me as tentative for my {@subject=happy hour} meeting on {@date=friday}
+- mark me as tentative for the event with {@contact=scott} and {@contact=em} at {@date=7:30am} titled {@subject=1:1}
+- mark me as tentative for the meeting about {@subject=weekly review} {@date=today}
+- mark me as tentative for the meeting {@date=tuesday afternoon}
+- mark me as tentative for the next event
+- respond tentative to {@newContact=anna}'s meeting {@date=tomorrow at 11}
+- tell {@contact=louis} i'm tentative {@date=today}
+- tell {@contact=monty} i'm tentative for {@date=wednesday}'s sync
+- tell {@contact=susan} i might not make the meeting {@date=today}
+- tentatively accept
+- tentatively accept my {@subject=hair appointment} event
+- tentatively accept my meeting with {@contact=em}
+- tentatively accept the meeting invite from {@contact=alexander}
+- tentatively accept the meeting {@date=next week} with {@contact=tyler}
+
+@ intent RespondTentativelyAccept usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
+
+@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt geographyV2
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) enabledForAllModels = 
+	- create,schedule,book,new,set up
+
+@ phraselist Update(interchangeable) enabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) enabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+
+@ phraselist Attending(interchangeable) enabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) enabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) enabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) enabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+> # List entities
+
+> # RegEx entities

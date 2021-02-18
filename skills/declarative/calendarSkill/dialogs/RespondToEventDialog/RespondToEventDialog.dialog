@@ -6,7 +6,7 @@
     "description": ""
   },
   "autoEndDialog": true,
-  "defaultResultProperty": "dialog.result",
+  "defaultResultProperty": "$result",
   "triggers": [
     {
       "$kind": "Microsoft.OnBeginDialog",
@@ -28,34 +28,17 @@
           "$designer": {
             "id": "T4tAUA"
           },
-          "condition": "dialog.response",
+          "condition": "$response",
           "cases": [
             {
               "value": "accepted",
               "actions": [
                 {
-                  "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+                  "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "K0DIol"
+                    "id": "ez9uAo"
                   },
-                  "resultProperty": "dialog.result",
-                  "token": "=user.token.token",
-                  "eventId": "=dialog.event.Id"
-                },
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "uxKimu"
-                  },
-                  "property": "dialog.event.Response",
-                  "value": "='accepted'"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "FJHk6U"
-                  },
-                  "activity": "${SendActivity_FJHk6U()}"
+                  "eventName": "AcceptEvent"
                 }
               ]
             },
@@ -63,28 +46,11 @@
               "value": "declined",
               "actions": [
                 {
-                  "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+                  "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "OUC9Oc"
+                    "id": "hdHXOC"
                   },
-                  "resultProperty": "dialog.result",
-                  "token": "=user.token.token",
-                  "eventId": "=dialog.event.Id"
-                },
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "n4ICV0"
-                  },
-                  "property": "dialog.event.Response",
-                  "value": "='declined'"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "VOrXqP"
-                  },
-                  "activity": "${SendActivity_VOrXqP()}"
+                  "eventName": "DeclineEvent"
                 }
               ]
             },
@@ -92,39 +58,118 @@
               "value": "tentativelyAccepted",
               "actions": [
                 {
-                  "$kind": "Microsoft.TraceActivity",
+                  "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "jdauNL"
+                    "id": "kvD2EI"
                   },
-                  "name": "Ten"
-                },
-                {
-                  "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
-                  "$designer": {
-                    "id": "DrLdRq"
-                  },
-                  "resultProperty": "dialog.result",
-                  "token": "=user.token.token",
-                  "eventId": "=dialog.event.Id"
-                },
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "hzs1ez"
-                  },
-                  "property": "dialog.event.Response",
-                  "value": "='tentativelyAccepted'"
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "ss6d3v"
-                  },
-                  "activity": "${SendActivity_ss6d3v()}"
+                  "eventName": "TentativelyAcceptEvent"
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "kiO9rd",
+        "name": "OnEvent (AcceptEvent)"
+      },
+      "event": "AcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+          "$designer": {
+            "id": "lE2udT"
+          },
+          "resultProperty": "$result",
+          "token": "=user.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Xs8DT3"
+          },
+          "property": "$event.Response",
+          "value": "='accepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "P5pp9f"
+          },
+          "activity": "${SendActivity_P5pp9f()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JA2lhL",
+        "name": "OnEvent (DeclineEvent)"
+      },
+      "event": "DeclineEvent",
+      "intent": "De",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+          "$designer": {
+            "id": "5nImTk"
+          },
+          "resultProperty": "$result",
+          "token": "=user.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "yzE1s5"
+          },
+          "property": "$event.Response",
+          "value": "='declined'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "3DZbbg"
+          },
+          "activity": "${SendActivity_3DZbbg()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "5YtnVP",
+        "name": "OnEvent (TentativelyAcceptEvent)"
+      },
+      "event": "TentativelyAcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+          "$designer": {
+            "id": "wj0HxG"
+          },
+          "resultProperty": "$result",
+          "token": "=user.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "C0GtDY"
+          },
+          "property": "$event.Response",
+          "value": "='tentativelyAccepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "S2mcC8"
+          },
+          "activity": "${SendActivity_S2mcC8()}"
         }
       ]
     }

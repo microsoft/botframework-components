@@ -1,0 +1,1 @@
+{"query":"change the location to team space","prediction":{"topIntent":"SetLocation","intents":{"SetLocation":{"score":0.961548448}},"entities":{"location":["team"],"newSubject":["team space"]}}}

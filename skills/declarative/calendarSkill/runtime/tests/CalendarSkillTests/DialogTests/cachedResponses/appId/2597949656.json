@@ -1,1 +1,0 @@
-{"query":"1 hour and 30 minutes","prediction":{"topIntent":"SetDuration","intents":{"SetDuration":{"score":0.9634635}},"entities":{"duration":["1 hour and 30 minutes"]}}}

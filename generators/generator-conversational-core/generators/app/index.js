@@ -26,15 +26,18 @@ module.exports = class extends Generator {
         }, {
           name: 'Preview.Bot.Component.UnknownIntentDialog',
           version: '0.0.1-preview4'
-        }]
+        }],
+        applicationSettingsDirectory: 'settings',
+        includeApplicationSettings: false    
       }
     );
   }
   
   writing() {
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
+      { botName: this.options.botName }
     );
   }
 };
