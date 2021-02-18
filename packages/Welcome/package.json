@@ -1,6 +1,6 @@
 {
-  "name": "bot-components-welcome",
-  "version": "1.0.0-preview1",
+  "name": "@microsoft/bot-components-welcome",
+  "version": "1.0.0-preview.1",
   "keywords": [
     "bf-components"
   ],
