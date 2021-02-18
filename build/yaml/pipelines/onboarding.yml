@@ -7,7 +7,7 @@ trigger:
       - main
   paths:
     include:
-      - packages/MsGraph
+      - packages/Onboarding
 
 pr:
   branches:
@@ -15,16 +15,16 @@ pr:
       - main
   paths:
     include:
-      - packages/MsGraph
+      - packages/Onboarding
 
 pool: 
   vmImage: 'windows-2019'
-  
+
 extends:
   template: ../templates/component-template.yml
   parameters:
-      componentType: codeExtension
+      componentType: declarativeAsset
 
 variables:
-  WorkingDirectory: 'packages/MsGraph'
+  WorkingDirectory: 'packages/Onboarding'
   BuildConfiguration: 'Release'

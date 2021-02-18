@@ -7,7 +7,7 @@ trigger:
       - main
   paths:
     include:
-      - packages/Recognizers.Orchestrator
+      - packages/Graph
 
 pr:
   branches:
@@ -15,16 +15,16 @@ pr:
       - main
   paths:
     include:
-      - packages/Recognizers.Orchestrator
+      - packages/Graph
 
 pool: 
   vmImage: 'windows-2019'
-
+  
 extends:
   template: ../templates/component-template.yml
   parameters:
       componentType: codeExtension
 
 variables:
-  WorkingDirectory: 'packages/Recognizers.Orchestrator'
+  WorkingDirectory: 'packages/Graph'
   BuildConfiguration: 'Release'

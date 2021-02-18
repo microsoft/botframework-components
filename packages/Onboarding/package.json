@@ -1,7 +1,9 @@
 {
-  "name": "preview-bot-component-onboardingdialog",
-  "version": "0.0.1-preview2",
-  "keywords": [ "bf-component" ],
+  "name": "bot-components-onboarding",
+  "version": "1.0.0-preview1",
+  "keywords": [
+    "bf-components"
+  ],
   "description": "Dialogs to provide an onboarding experience",
   "main": "index.js",
   "scripts": {
