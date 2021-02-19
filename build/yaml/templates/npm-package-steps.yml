@@ -9,7 +9,7 @@ steps:
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
-- shell: |
+- script: |
     sed -n 's/.*"version": "\(.*\)",/\1/p package.json' 
   condition: ne(variables.DeploymentRing, 'stable')
   workingDirectory: '$(WorkingDirectory)'
