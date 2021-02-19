@@ -6,14 +6,38 @@
   },
   "oauthConnectionName": "Outlook",
   "luis": {
-    "name": "LamilCalendarSkillV2-dev-luis-Authoring",
-    "authoringKey": "71655358a0354839b1ea5554959b4607",
-    "endpointKey": "3d166560e46043628ac5b833b5624319",
+    "name": "calendarSkill",
+    "authoringKey": "00000000000000000000000000000000",
+    "endpointKey": "00000000000000000000000000000000",
     "authoringRegion": "westus",
     "defaultLanguage": "en-us",
     "environment": "composer",
     "endpoint": "https://westus.api.cognitive.microsoft.com",
-    "authoringEndpoint": "https://westus.api.cognitive.microsoft.com"
+    "authoringEndpoint": "https://westus.api.cognitive.microsoft.com",
+    "GetEventsDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "GetContactsDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "calendarskill_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "CreateEventDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "ListDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "UpdateEventDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    }
   },
   "environment": "composer"
 }
