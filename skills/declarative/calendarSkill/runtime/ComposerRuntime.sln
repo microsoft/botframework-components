@@ -10,9 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Composer.CustomAction", "customaction\Microsoft.BotFramework.Composer.CustomAction.csproj", "{EE58DDD7-DE91-4DB0-A6C6-D8182523896B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.MsGraph", "..\..\..\..\packages\MsGraph\Microsoft.Bot.Component.MsGraph.csproj", "{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{D1ABF38A-13AC-4468-823C-B2ECF4DDB555}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.CalendarSkill", "..\..\..\..\packages\CalendarSkill\Microsoft.Bot.Component.CalendarSkill.csproj", "{F8BECA84-0250-4B16-8D33-DA5684A194E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Calendar", "..\..\..\..\packages\Calendar\Microsoft.Bot.Components.Calendar.csproj", "{F8BECA84-0250-4B16-8D33-DA5684A194E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.CalendarSkill.Dialogs.Tests", "..\..\tests\calendarSkill\Microsoft.Bot.CalendarSkill.Dialogs.Tests.csproj", "{751E0E97-5AF1-4152-A537-2A6976359830}"
 EndProject

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.CalendarSkill", "CalendarSkill\Microsoft.Bot.Component.CalendarSkill.csproj", "{84AEC10B-B272-4884-B434-35052B866D60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Calendar", "Calendar\Microsoft.Bot.Components.Calendar.csproj", "{84AEC10B-B272-4884-B434-35052B866D60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Component.MsGraph", "MsGraph\Microsoft.Bot.Component.MsGraph.csproj", "{415A7327-9FA1-4354-8104-5900A8882582}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Graph", "Graph\Microsoft.Bot.Components.Graph.csproj", "{415A7327-9FA1-4354-8104-5900A8882582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Recognizers.Orchestrator", "Recognizers.Orchestrator\Microsoft.Bot.Components.Recognizers.Orchestrator.csproj", "{96DBF818-1B13-479A-B3D8-8932E4215F76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Orchestrator", "Orchestrator\Microsoft.Bot.Components.Orchestrator.csproj", "{96DBF818-1B13-479A-B3D8-8932E4215F76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
