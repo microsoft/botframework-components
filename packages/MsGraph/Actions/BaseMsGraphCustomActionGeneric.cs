@@ -7,11 +7,9 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using AdaptiveExpressions.Properties;
     using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Bot.Builder.TraceExtensions;
     using Microsoft.Graph;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Base MSGraph custom action that returns a typed parameter.
