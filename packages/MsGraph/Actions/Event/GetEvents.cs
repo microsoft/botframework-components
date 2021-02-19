@@ -266,7 +266,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions.MSGraph
             parameters.Add("TimezoneProperty", this.TimeZoneProperty.GetValue(state));
             parameters.Add("OrdinalProperty", this.OrdinalProperty.GetValue(state));
             parameters.Add("DateTimeTypeProperty", this.DateTimeTypeProperty.GetValue(state));
-            parameters.Add("IsFuture", this.FutureEventsOnlyProperty.GetValue(state));
+            parameters.Add("FutureEventsOnlyProperty", this.FutureEventsOnlyProperty.GetValue(state));
             parameters.Add("MaxResultsProperty", this.MaxResultsProperty.GetValue(state));
             parameters.Add("UserEmailProperty", this.UserEmailProperty.GetValue(state));
             parameters.Add("AttendeesProperty", this.AttendeesProperty?.GetValue(state));
