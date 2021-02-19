@@ -15,7 +15,7 @@ steps:
   displayName: 'Run `nuget pack`'
   inputs:
     command: custom
-    arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) OutputDirectory '
+    arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: off
 
 - template: nuget-build-artifacts-steps.yml
