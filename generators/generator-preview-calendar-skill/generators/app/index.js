@@ -15,15 +15,15 @@ module.exports = class extends Generator {
       {
         arguments: this.args,
         packageReferences: [{
-          name: 'Microsoft.Bot.Components.CalendarSkill',
-          version: '1.0.0-alpha.2'
+          name: 'Microsoft.Bot.Components.Calendar',
+          version: '1.0.0-alpha.20210219.eefbca8'
           }],
         pluginDefinitions : [
           {
-            'name': 'Microsoft.BotFramework.CustomAction.CalendarSkill'
+            'name': 'Microsoft.Bot.Components.Calendar'
           },
           {
-            'name': 'Microsoft.BotFramework.CustomAction.MsGraph'
+            'name': 'Microsoft.Bot.Components.Graph'
           },
         ],
         applicationSettingsDirectory: 'settings',
