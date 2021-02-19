@@ -25,7 +25,7 @@ namespace Microsoft.Bot.Component.MsGraph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        public const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 15;
 
         /// <summary>
         /// Gets or sets the name to search for.
