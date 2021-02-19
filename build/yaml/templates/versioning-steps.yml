@@ -1,14 +1,17 @@
 steps:
   - powershell: |
-     Write-Host ${{ parameters.deploymentRing }}
-     $deploymentRing = ${{ parameters.deploymentRing }}
-     Write-Host $deploymentRing
-     $dateStamp = (Get-Date -format "yyyyMMdd");
-     $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+      ${{ format('
+      $deploymentRing= "{0}"
+      ',
+      parameters.deploymentRing) }}
 
-     $ppv = $deploymentRing + "." + $dateStamp + "." + $commitHash;
-     Write-Host "##vso[task.setvariable variable=PackageVersion;]$ppv";
-     "Resolved PackageVersion = $ppv";
+      Write-Host $deploymentRing
+      $dateStamp = (Get-Date -format "yyyyMMdd");
+      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+
+      $ppv = $deploymentRing + "." + $dateStamp + "." + $commitHash;
+      Write-Host "##vso[task.setvariable variable=PackageVersion;]$ppv";
+      "Resolved PackageVersion = $ppv";
     displayName: 'Resolve package version variables'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
