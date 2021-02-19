@@ -43,6 +43,7 @@ module.exports = class extends Generator {
         this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(opts);
         this.includeApplicationSettings = this._validateIncludeApplicationSettings(opts);
         this.packageReferences = this._validatePackageReferences(opts.packageReferences);
+        this.pluginDefinitions = this._validatePluginDefinitions(opts.pluginDefinitions);
     }
 
     _verifyOptions() {
@@ -58,11 +59,10 @@ module.exports = class extends Generator {
 
     _validateApplicationSettingsDirectory(opts) {
         let result = null;
-        if ('applicationSettingsDirectory' in opts) {
-            if (opts.applicationSettingsDirectory &&
-                typeof(opts.applicationSettingsDirectory) === 'string') {
-                result = opts.applicationSettingsDirectory;
-            }
+        if ('applicationSettingsDirectory' in opts &&
+            opts.applicationSettingsDirectory &&
+            typeof opts.applicationSettingsDirectory === 'string') {
+            result = opts.applicationSettingsDirectory;
         }
 
         return result;
@@ -71,7 +71,7 @@ module.exports = class extends Generator {
     _validateIncludeApplicationSettings(opts) {
         let result = true;
         if ('includeApplicationSettings' in opts &&
-            typeof(opts.includeApplicationSettings) === 'boolean') {
+            typeof opts.includeApplicationSettings === 'boolean') {
             result = opts.includeApplicationSettings;
         }
 
@@ -79,16 +79,58 @@ module.exports = class extends Generator {
     }
 
     _validatePackageReferences(packageReferences) {
-        let result = [];
+        let results = [];
         if (Array.isArray(packageReferences)) {
             packageReferences.forEach((reference) => {
-                if (typeof reference == 'object' && reference.name && reference.version) {
-                    result.push(reference);
+                if (typeof reference === 'object' &&
+                    'name' in reference &&
+                    reference.name &&
+                    typeof reference.name === 'string' &&
+                    'version' in reference &&
+                    reference.version &&
+                    typeof reference.version === 'string') {
+
+                    const result = {
+                        name: reference.name,
+                        version: reference.version
+                    };
+
+                    results.push(result);
                 }
             });
         }
 
-        return result;
+        return results;
+    }
+
+    _validatePluginDefinitions(pluginDefinitions) {
+        let results = [];
+        if (Array.isArray(pluginDefinitions)) {
+            pluginDefinitions.forEach((definition) => {
+                if (typeof definition === 'object' &&
+                    'name' in definition &&
+                    definition.name &&
+                    typeof definition.name === 'string') {
+
+                    const result = {
+                        name: definition.name
+                    };
+
+                    if ('settingsPrefix' in definition &&
+                        definition.settingsPrefix &&
+                        typeof definition.settingsPrefix === 'string') {
+
+                        result.settingsPrefix = definition.settingsPrefix;
+                    } else {
+                        result.settingsPrefix = definition.name;
+                    }
+
+                    results.push(result);
+                }
+            });
+        }
+
+        return results;
     }
 
     // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
@@ -103,6 +145,10 @@ module.exports = class extends Generator {
     writing() {
         this._copyDotnetProject();
         this._copyAssets();
+
+        if (this.includeApplicationSettings) {
+            this._writeApplicationSettings();
+        }
     }
 
     _copyDotnetProject() {
@@ -165,9 +211,6 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
 
         const assetFileNames = ['NuGet.config'];
-        if (this.includeApplicationSettings) {
-            assetFileNames.push('appsettings.json');
-        }
 
         for (const assetFileName of assetFileNames) {
             this.fs.copyTpl(
@@ -178,5 +221,21 @@ module.exports = class extends Generator {
                 }
             );
         }
+    }
+
+    _writeApplicationSettings() {
+        const botName = this.options.botName;
+        const fileName = 'appsettings.json';
+
+        const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
+
+        for (const pluginDefinition of this.pluginDefinitions) {
+            appSettings.plugins.push(pluginDefinition);
+        }
+
+        this.fs.writeJSON(
+            this.destinationPath(path.join(botName, fileName)),
+            runtime
+        );
     }
 };
