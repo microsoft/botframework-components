@@ -28,13 +28,15 @@ namespace <%= botName %>
             configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
         }
 
-        private static BotAdapter RegisterCoreBotAdapter(IServiceCollection services)
+        private static void RegisterCoreBotAdapter(IServiceCollection services)
         {
             const string coreBotAdapterName = "CoreBotAdapter";
-            var adapters = sp.GetServices<IBotFrameworkHttpAdapter>();
 
-            var adapter = (BotAdapter)adapters.Single(a => typeof(BotAdapter).IsAssignableFrom(a.GetType()) && a.GetType().Name.Contains(coreBotAdapterName));
-            services.AddSingleton(adapter);
+            services.AddSingleton(sp =>
+            {
+                var adapters = sp.GetServices<IBotFrameworkHttpAdapter>();
+                return (BotAdapter)adapters.Single(a => typeof(BotAdapter).IsAssignableFrom(a.GetType()) && a.GetType().Name.Contains(coreBotAdapterName));
+            });
         }
     }
 }
