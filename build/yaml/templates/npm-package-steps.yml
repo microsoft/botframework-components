@@ -1,8 +1,8 @@
 steps:
 - task: NodeTool@0
-  displayName: 'Install Node.js'
+  displayName: 'Install Node 14.x'
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
 
 - script: |
     npm install
