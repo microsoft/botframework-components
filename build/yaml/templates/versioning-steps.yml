@@ -1,18 +1,39 @@
 steps:
+  - ${{ if eq(parameters.deploymentRing, 'alpha') }}: 
+    - powershell: |
+        $deploymentRing = 'alpha';
+        Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+
+  - ${{ if eq(parameters.deploymentRing, 'preview') }}: 
+    - powershell: |
+        $deploymentRing = 'preview';
+        Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+
+  - ${{ if eq(parameters.deploymentRing, 'release') }}: 
+    - powershell: |
+        $deploymentRing = '';
+        Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+
   - powershell: |
-      $deploymentRing =  '$(DeploymentRing)'
+      $deploymentRing =  '$(DeploymentRing)';
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
 
-      $pv = $deploymentRing + "." + $dateStamp + "." + $commitHash;
-      Write-Host "##vso[task.setvariable variable=PackageVersion;]$pv";
-      "Resolved PackageVersion = $pv";
+      if ($deploymentRing -eq 'release') {
+        $vs = $dateStamp + "." + $commitHash;
+      } else {
+        $vs = $deploymentRing + "." + $dateStamp + "." + $commitHash;
+      }
+
+      $vs = $deploymentRing + "." + $dateStamp + "." + $commitHash;
+      Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
+      "Resolved VersionSuffix = $vs";
     displayName: 'Resolve package version variables'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: 'Tag build with version'
     inputs:
       tags: |
-       Preview: $(PackageVersion)
+       Preview: $(VersionSuffix)
     continueOnError: true
     enabled: false
