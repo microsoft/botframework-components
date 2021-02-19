@@ -1,12 +1,13 @@
 steps:
   - powershell: |
       "Deployment Ring = $(DeploymentRing)";
+      $deploymentRing = '$(DeploymentRing)';
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      if ($(DeploymentRing) -ne 'release') {
-        $vs = $(DeploymentRing) + "." + $vs;
+      if ($deploymentRing -ne 'release') {
+        $vs = $deploymentRing + "." + $vs;
       } 
 
       Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
