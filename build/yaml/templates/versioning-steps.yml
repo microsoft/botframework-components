@@ -15,7 +15,7 @@ steps:
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
 
   - powershell: |
-      $deploymentRing =  '$(DeploymentRing)';
+      $deploymentRing =  $(DeploymentRing);
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
 
