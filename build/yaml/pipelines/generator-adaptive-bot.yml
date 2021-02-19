@@ -27,3 +27,4 @@ extends:
 
 variables:
   WorkingDirectory: 'generators/generator-adaptive-bot'
+  DeploymentRing: 'preview'

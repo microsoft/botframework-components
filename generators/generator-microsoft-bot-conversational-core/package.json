@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/generator-microsoft-bot-conversational-core",
-  "version": "1.0.0-preview.1",
+  "version": "1.0.0",
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/index.js",
   "dependencies": {

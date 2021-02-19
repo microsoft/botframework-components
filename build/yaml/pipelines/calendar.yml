@@ -28,3 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/Calendar'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'alpha'
