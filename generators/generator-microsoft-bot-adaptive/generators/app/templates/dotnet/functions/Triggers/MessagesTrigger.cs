@@ -60,7 +60,7 @@ namespace <%= botName %>.Triggers
             {
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.
-                await _adapter.ProcessAsync(req, req.HttpContext.Response, _bot).ConfigureAwait(false);
+                await adapter.ProcessAsync(req, req.HttpContext.Response, _bot).ConfigureAwait(false);
 
                 if (req.HttpContext.Response.IsSuccessStatusCode())
                 {
