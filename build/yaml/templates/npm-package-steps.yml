@@ -11,12 +11,11 @@ steps:
 
     "VERSION: $($packageJsonData.version)"
     "SUFFIX: $(VersionSuffix)";
-    $version = $($packageJsonData.version) + "-" + "$(VersionSuffix)";
+    $packageJsonData.version += "-" + "$(VersionSuffix)";
 
-    # Replace matched version
-    (Get-Content package.json) `
-        -replace "(?<=""version""\:\s*"")([\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)*(?="",)", "$version"` |
-      Out-File package.json -encoding utf8
+    # Convert back into package.json
+    $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
   displayName: 'Replace version in package.json'
   condition: ne(variables.DeploymentRing, 'stable')
   workingDirectory: $(WorkingDirectory)
