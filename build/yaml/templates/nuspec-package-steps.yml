@@ -15,7 +15,8 @@ steps:
   displayName: 'Run `nuget pack`'
   inputs:
     command: custom
-    arguments: 'pack $(WorkingDirectory)\*.nuspec -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
+    arguments: 'pack -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
+    basePath: '$(WorkingDirectory)'
     versioningScheme: off
 
 - template: nuget-build-artifacts-steps.yml
