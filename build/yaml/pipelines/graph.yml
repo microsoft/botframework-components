@@ -7,7 +7,7 @@ trigger:
       - main
   paths:
     include:
-      - packages/Calendar
+      - packages/Graph
 
 pr:
   branches:
@@ -15,7 +15,7 @@ pr:
       - main
   paths:
     include:
-      - packages/Calendar
+      - packages/Graph
 
 pool: 
   vmImage: 'windows-2019'
@@ -26,5 +26,5 @@ extends:
       componentType: codeExtension
 
 variables:
-  WorkingDirectory: 'packages/Calendar'
+  WorkingDirectory: 'packages/Graph'
   BuildConfiguration: 'Release'
