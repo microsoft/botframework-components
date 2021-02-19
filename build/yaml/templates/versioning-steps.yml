@@ -1,6 +1,6 @@
 steps:
   - powershell: |
-      Write-Host ${{ variables.DeploymentRing}}
+      Write-Host $env.DeploymentRing
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
