@@ -53,8 +53,6 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
         "OK. I'll invite test name (test@test.com)."
       ]
     },

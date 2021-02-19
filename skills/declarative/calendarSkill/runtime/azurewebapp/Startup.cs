@@ -24,8 +24,8 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Integration.AspNet.Core.Skills;
 using Microsoft.Bot.Builder.Skills;
-using Microsoft.Bot.Component.CalendarSkill;
-using Microsoft.Bot.Component.MsGraph;
+using Microsoft.Bot.Components.Calendar;
+using Microsoft.Bot.Components.Graph;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Microsoft.BotFramework.Composer.Core;
@@ -147,8 +147,8 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             ComponentRegistration.Add(new LuisComponentRegistration());
 
             // This is for custom action component registration.
-            ComponentRegistration.Add(new MSGraphComponentRegistration());
-            ComponentRegistration.Add(new CalendarCustomActionComponentRegistration());
+            ComponentRegistration.Add(new GraphComponentRegistration());
+            ComponentRegistration.Add(new CalendarComponentRegistration());
             ComponentRegistration.Add(new CustomActionComponentRegistration());
 
             // Register the skills client and skills request handler.

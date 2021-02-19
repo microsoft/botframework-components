@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Microsoft.Bot.Components.Welcome</id>
+        <version>1.0.0-preview</version>
+        <authors>Microsoft</authors>
+        <owners>Microsoft</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>First version of welcome package</releaseNotes>
+        <description>Dialogs to provide a Welcome experience for new and returning users</description>
+        <tags>bf-components conversationalcore welcome preview</tags>
+        <dependencies>
+            <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.12.0-rc0.preview" />
+        </dependencies>
+    </metadata>
+
+    <files>
+        <file src="exported\**\*.*" target="exported" />
+    </files>
+</package>

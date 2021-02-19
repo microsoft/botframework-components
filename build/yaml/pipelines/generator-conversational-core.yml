@@ -5,11 +5,18 @@ trigger:
   branches:
     include:
       - main
-      - preview/*
   paths:
     include:
       - generators/generator-conversational-core
 
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - generators/generator-conversational-core
+ 
 pool: 
   vmImage: 'windows-2019'
   

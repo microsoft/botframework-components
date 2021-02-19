@@ -60,3 +60,7 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 
 # CancelRejected()
 - Let's keep going.
+
+# ErrorMessage()
+- Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today?
+- Something seems to be going wrong. I can tell you more about your meetings today if you like?

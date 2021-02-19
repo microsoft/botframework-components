@@ -5,10 +5,17 @@ trigger:
   branches:
     include:
       - main
-      - preview/*
   paths:
     include:
-      - packages/CalendarSkill
+      - packages/Calendar
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/Calendar
 
 pool: 
   vmImage: 'windows-2019'
@@ -19,5 +26,5 @@ extends:
       componentType: codeExtension
 
 variables:
-  WorkingDirectory: 'packages/CalendarSkill'
+  WorkingDirectory: 'packages/Calendar'
   BuildConfiguration: 'Release'
