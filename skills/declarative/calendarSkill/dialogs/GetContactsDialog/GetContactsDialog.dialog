@@ -129,22 +129,6 @@
           "name": "GetContactsDialog.OnEvent_SetContactQuery"
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "1yGoeO"
-          },
-          "assignments": [
-            {
-              "property": "$emailArray",
-              "value": "=coalesce($emailArray, @@email)"
-            },
-            {
-              "property": "$contactArray",
-              "value": "=coalesce($contactArray, @@contact)"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "pNZ1RI"
@@ -604,9 +588,21 @@
             },
             {
               "property": "$contactArray",
-              "value": "=@@contact"
+              "value": "=if(exists(@@contact) && exists(@@personName), unique(union(@@contact, @@personName)), @@contact)"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "B2tJQf"
+          },
+          "activityProcessed": true,
+          "options": {
+            "contacts": "=$contacts",
+            "emailArray": "=$emailArray",
+            "contactArray": "=$contactArray"
+          }
         }
       ]
     }

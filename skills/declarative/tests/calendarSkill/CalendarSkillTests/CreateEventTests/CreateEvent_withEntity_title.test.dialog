@@ -41,15 +41,9 @@
       "text": "test"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "OK. I'll invite test name (test@test.com)."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Would you like to invite anyone else? (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "contains(text, 'Would you like to invite anyone else?')"
       ]
     },
     {

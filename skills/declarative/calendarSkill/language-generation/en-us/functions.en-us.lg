@@ -26,3 +26,6 @@
     - ${formatDateTime(start, 'h:mm')} - ${formatDateTime(end, 'h:mm tt')}
 - ELSE: 
     - ${formatDateTime(start, 'h:mm tt')} - ${formatDateTime(end, 'h:mm tt')}
+
+# CapitalizeFirstLetter(string)
+- ${toUpper(substring(string, 0, 1))}${substring(string, 1, length(string) - 1)}

@@ -21,48 +21,84 @@
     "items": [
         {
             "type": "ColumnSet",
+            "spacing":"none",
             "columns": [
                 {
                     "type": "Column",
-                    "width": 10,
-                    "spacing":"none",
-                    "verticalContentAlignment": "center",
+                    "width": 5,
+                    "verticalContentAlignment": "Center",
                     "items": [
                         {
                             "type": "Image",
                             "url": "${icon}",
-                            "horizontalAlignment": "Center"
+                            "horizontalAlignment": "Center",
+                            "width": "18px",
+                            "height": "18px"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": ${if(counter != '', 60, 90)},
-                    "spacing":"small",
-                    "verticalContentAlignment": "center",
+                    "width": 65,
+                    "verticalContentAlignment": "Center",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${title}",
-                            "size": "Large",
+                            "size": "Medium",
                             "weight": "Bolder"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": "${subtitle}",
-                            "spacing": "None"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": ${if(counter != '', 30, 0)},
+                    "width": 30,
                     "verticalContentAlignment": "Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${counter}",
-                            "horizontalAlignment": "Right"
+                            "horizontalAlignment": "Right",
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# CardHeaderSmall(icon, title, subtitle, counter)
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 5,
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${icon}",
+                            "horizontalAlignment": "Center",
+                            "width": "18px",
+                            "height": "18px"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 95,
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${title}",
+                            "size": "Medium"
                         }
                     ]
                 }

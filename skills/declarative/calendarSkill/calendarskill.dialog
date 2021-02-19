@@ -1557,7 +1557,7 @@
             },
             {
               "property": "$options.contactArray",
-              "value": "=@@contact"
+              "value": "=if(exists(@@contact) && exists(@@personName), unique(union(@@contact, @@personName)), @@contact)"
             },
             {
               "property": "$options.emailArray",

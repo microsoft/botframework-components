@@ -30,7 +30,7 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "medium",
+    "spacing": "Small",
     "selectAction": {
         "type": "Action.Submit",
         "title": "selectOption",

@@ -31,15 +31,9 @@
       "text": "new meeting with joni tomorrow at 3pm in seattle titled team meeting"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "OK. I'll invite test name (test@test.com)."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Would you like to invite anyone else? (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "contains(text, 'Would you like to invite anyone else?')"
       ]
     },
     {
@@ -76,15 +70,9 @@
       "text": "add joni"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "OK. I'll invite test2 name (test2@test.com)."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Would you like to invite anyone else? (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "contains(text, 'Would you like to invite anyone else?')"
       ]
     },
     {

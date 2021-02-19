@@ -181,7 +181,7 @@
             "recognizeOrdinals": true,
             "recognizeNumbers": true
           },
-          "style": "suggestedAction"
+          "style": "heroCard"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -428,7 +428,8 @@
           "recognizerOptions": {
             "recognizeOrdinals": true,
             "recognizeNumbers": true
-          }
+          },
+          "style": "heroCard"
         },
         {
           "$kind": "Microsoft.IfCondition",

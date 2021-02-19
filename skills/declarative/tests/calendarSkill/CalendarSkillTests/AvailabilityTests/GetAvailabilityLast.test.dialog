@@ -29,7 +29,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Your day ends at 8:30 AM. Your last meeting is Project Team Meeting.",
+      "text": "Your day Thursday, December 31st, ends at 8:30 AM. Your last meeting is Project Team Meeting.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],

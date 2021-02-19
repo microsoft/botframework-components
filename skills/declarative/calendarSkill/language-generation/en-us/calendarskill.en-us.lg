@@ -7,9 +7,9 @@
 - You're signed out!
 
 # SendActivity_AlS4sI()
-[Activity
+[HeroCard
     text= ${HelpMessage()}
-    SuggestedActions = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_klrCg4()
@@ -19,9 +19,9 @@
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
 
 # SendActivity_lqvfia()
-[Activity
+[HeroCard
     text = ${WelcomeUser()}
-    SuggestedActions = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_DGXXhL()
