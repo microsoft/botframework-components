@@ -13,7 +13,7 @@ steps:
   displayName: Check for .nuspec file
 
 - task: NuGetCommand@2
-  displayName: 'Run `nuget pack`'
+  displayName: 'Run `nuget pack` with version suffix'
   condition: ne(variables.DeploymentRing, 'release')
   inputs:
     command: custom
