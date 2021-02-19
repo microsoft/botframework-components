@@ -28,3 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/Graph'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'alpha'

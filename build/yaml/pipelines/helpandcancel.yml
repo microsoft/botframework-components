@@ -28,3 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/HelpAndCancel'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'preview'
