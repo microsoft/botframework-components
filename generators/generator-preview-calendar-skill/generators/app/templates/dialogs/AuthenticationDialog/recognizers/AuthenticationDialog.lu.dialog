@@ -1,5 +1,5 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_ResolveUpdateEntity",
+  "id": "LUIS_AuthenticationDialog",
   "recognizers": {}
 }
