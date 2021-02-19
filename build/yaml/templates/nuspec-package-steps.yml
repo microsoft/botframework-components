@@ -1,4 +1,5 @@
-# Checks for required .nuspec file and creates package
+# Checks for required .nuspec file and creates package.
+# Pipelines have to run the `nuget pack` task differently based on if the package is in preview or release.
 
 steps:
 - powershell: |
@@ -13,9 +14,19 @@ steps:
 
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
+  condition: ne(variables.DeploymentRing, 'release')
   inputs:
     command: custom
     arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
+    versioningScheme: off
+
+- task: NuGetCommand@2
+  displayName: 'Run `nuget pack`'
+  condition: eq(variables.DeploymentRing, 'release')
+  inputs:
+    command: pack
+    packagesToPack: '$(WorkingDirectory)\*.nuspec'
+    packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: off
 
 - template: nuget-build-artifacts-steps.yml
