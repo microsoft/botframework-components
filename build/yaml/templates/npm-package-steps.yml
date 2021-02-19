@@ -9,10 +9,20 @@ steps:
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
-- script: |
-    sed -n 's/.*"version": "\(.*\)",/\1/p package.json' 
+- powershell: |
+    # Get existing version from package.json
+    $packageJson = Get-Content package.json;
+    $packageJsonData = $packageJson | ConvertFrom-Json;
+
+    "Appending version $($packageJsonData.version) and suffix $(VersionSuffix)";
+    $version = $packageJsonData.version + "." + $(VersionSuffix);
+
+    # Replace matched version
+    (Get-Content package.json) `
+        -replace "(?<=""version""\:\s*"")([\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)*(?="",)", "$version"` |
+      Out-File package.json
+  displayName: Replace version in package.json
   condition: ne(variables.DeploymentRing, 'stable')
-  workingDirectory: '$(WorkingDirectory)'
 
 - script: |
     npm pack
