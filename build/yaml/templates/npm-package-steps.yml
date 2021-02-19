@@ -23,6 +23,7 @@ steps:
       Out-File package.json
   displayName: 'Replace version in package.json'
   condition: ne(variables.DeploymentRing, 'stable')
+  workingDirectory: $(WorkingDirectory)
 
 - script: |
     npm pack
