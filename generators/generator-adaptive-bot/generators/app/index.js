@@ -164,7 +164,7 @@ module.exports = class extends Generator {
     _copyAssets() {
         const botName = this.options.botName;
 
-        const assetFileNames = ['NuGet.config', 'runtime.json'];
+        const assetFileNames = ['NuGet.config'];
         if (this.includeApplicationSettings) {
             assetFileNames.push('appsettings.json');
         }
