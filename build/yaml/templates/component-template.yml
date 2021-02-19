@@ -7,14 +7,6 @@ parameters:
   - codeExtension
   - generator
 
-- name: deploymentRing
-  displayName: 'What deployment ring is the package in?'
-  type: string
-  values:
-  - alpha
-  - preview
-  - release
-
 stages:
   - ${{ if eq(parameters.componentType, 'codeExtension') }}: 
     - stage: Build_pack

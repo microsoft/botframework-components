@@ -24,8 +24,8 @@ extends:
   template: ../templates/component-template.yml
   parameters:
       componentType: codeExtension
-      deploymentRing: alpha
 
 variables:
   WorkingDirectory: 'packages/MsGraph'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'alpha'
