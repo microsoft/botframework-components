@@ -143,7 +143,6 @@ module.exports = class extends Generator {
     writing() {
         this._copyDotnetProject();
         this._copyAssets();
-        this._writeRuntimeJson();
     }
 
     _copyDotnetProject() {
@@ -219,21 +218,5 @@ module.exports = class extends Generator {
                 }
             );
         }
-    }
-
-    _writeRuntimeJson() {
-        const botName = this.options.botName;
-        const fileName = 'runtime.json';
-
-        const runtime = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
-
-        for (const pluginDefinition of this.pluginDefinitions) {
-            runtime.plugins.push(pluginDefinition);
-        }
-
-        this.fs.writeJSON(
-            this.destinationPath(path.join(botName, fileName)),
-            runtime
-        );
     }
 };
