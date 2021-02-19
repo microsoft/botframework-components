@@ -5,8 +5,18 @@ steps:
     versionSpec: '14.x'
 
 - script: |
+    npm i npm-version-suffix
+  displayName: 'npm install npm-version-suffix'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
     npm install
   displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
+    npm run add-suffix
+  displayName: 'Add version suffix'
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
