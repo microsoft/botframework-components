@@ -28,4 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/Welcome'
   BuildConfiguration: 'Release'  
-  DeploymentRing: 'release'
+  DeploymentRing: 'stable'
