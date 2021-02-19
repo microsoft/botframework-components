@@ -27,3 +27,4 @@ extends:
 
 variables:
   WorkingDirectory: 'generators/generator-conversational-core'
+  DeploymentRing: 'preview'
