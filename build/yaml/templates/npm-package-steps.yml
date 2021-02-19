@@ -9,7 +9,7 @@ steps:
     $packageJson = Get-Content package.json;
     $packageJsonData = $packageJson | ConvertFrom-Json;
 
-    "VERSION: $($packageJsonData.version)"
+    "VERSION: $($packageJsonData.version)";
     "SUFFIX: $(VersionSuffix)";
     $packageJsonData.version += "-" + "$(VersionSuffix)";
 
