@@ -6,7 +6,7 @@ steps:
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      if ($deploymentRing -ne "stable") {
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
         $vs = $deploymentRing + "." + $vs;
         Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
         "Resolved VersionSuffix = $vs";
