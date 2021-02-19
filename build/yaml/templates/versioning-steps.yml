@@ -1,34 +1,34 @@
 steps:
   - ${{ if eq(parameters.deploymentRing, 'alpha') }}: 
     - powershell: |
+        Write-Host "ALPHA"
         $deploymentRing = 'alpha';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
         Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - ${{ if eq(parameters.deploymentRing, 'preview') }}: 
     - powershell: |
+        Write-Host "PREVIEW"
         $deploymentRing = 'preview';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
         Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - ${{ if eq(parameters.deploymentRing, 'release') }}: 
     - powershell: |
-        $deploymentRing = '';
+        Write-Host "RELEASE"
+        $deploymentRing = 'release';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
         Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - powershell: |
-      $deploymentRing =  $(DeploymentRing);
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+      $vs = $dateStamp + "." + $commitHash;
 
-      if ($deploymentRing -eq 'release') {
-        $vs = $dateStamp + "." + $commitHash;
-      } else {
-        $vs = $deploymentRing + "." + $dateStamp + "." + $commitHash;
-      }
+      if ($deploymentRing -ne 'release') {
+        $vs = $deploymentRing + "." + $vs;
+      } 
 
-      $vs = $deploymentRing + "." + $dateStamp + "." + $commitHash;
       Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
       "Resolved VersionSuffix = $vs";
     displayName: 'Resolve package version variables'
