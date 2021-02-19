@@ -4,11 +4,6 @@ steps:
   inputs:
     versionSpec: '14.x'
 
-- script: |
-    npm install
-  displayName: 'Install dependencies'
-  workingDirectory: '$(WorkingDirectory)'
-
 - powershell: |
     # Get existing version from package.json
     $packageJson = Get-Content package.json;
@@ -25,6 +20,11 @@ steps:
   displayName: 'Replace version in package.json'
   condition: ne(variables.DeploymentRing, 'stable')
   workingDirectory: $(WorkingDirectory)
+  
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
 
 - script: |
     npm pack
