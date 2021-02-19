@@ -1,0 +1,1 @@
+{"query":"invite allan to this","prediction":{"topIntent":"SetAttendeesAdd","intents":{"SetAttendeesAdd":{"score":0.8300239}},"entities":{"newContact":["allan"],"geographyV2":[{"value":"allan","type":"poi"}],"personName":["allan"]}}}
