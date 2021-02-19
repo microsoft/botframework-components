@@ -10,7 +10,7 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm i -g npm-version-suffix
+    npm i npm-version-suffix
   displayName: 'Install npm-version-suffix'
   condition: ne(variables.DeploymentRing, 'stable')
   workingDirectory: '$(WorkingDirectory)'
