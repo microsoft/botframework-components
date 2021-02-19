@@ -14,8 +14,8 @@ steps:
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
-    command: pack
-    arguments: '-Suffix $(VersionSuffix)'
+    command: custom
+    arguments: 'pack -Suffix $(VersionSuffix)'
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
     packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: off
