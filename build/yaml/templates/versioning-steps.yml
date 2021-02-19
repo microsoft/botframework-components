@@ -1,9 +1,10 @@
 steps:
   - powershell: |
+     $deploymentRing = ${{ parameters.deploymentRing }}
      $dateStamp = (Get-Date -format "yyyyMMdd");
      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
 
-     $ppv = $dateStamp + "." + $commitHash;
+     $ppv = $deploymentRing + "." + $dateStamp + "." + $commitHash;
      Write-Host "##vso[task.setvariable variable=PackageVersion;]$ppv";
      "Resolved PackageVersion = $ppv";
     displayName: 'Resolve package version variables'
