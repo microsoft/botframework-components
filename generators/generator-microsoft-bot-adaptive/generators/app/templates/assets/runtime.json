@@ -2,8 +2,7 @@
   "adapter":
   {
     "$kind": "Microsoft.BotCoreAdapter",
-    "middleware": [
-    ]
+    "middleware": []
   },
   "channel": {
     "$kind": "Microsoft.DeclarativeChannelProvider",
