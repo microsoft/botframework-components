@@ -5,19 +5,26 @@ steps:
     versionSpec: '14.x'
 
 - script: |
-    npm i npm-version-suffix
-  displayName: 'npm install npm-version-suffix'
-  workingDirectory: '$(WorkingDirectory)'
-
-- script: |
     npm install
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
     npm i npm-version-suffix
+  displayName: 'Install npm-version-suffix'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
     npm i npm-add-script
+  displayName: 'Install npm-add-script'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
     npmAddScript -k add-suffix -v "cross-env SUFFIX=$(VersionSuffix) node ./node_modules/npm-version-suffix/run-add-suffix.js"
+  displayName: 'Run npm-add-script with version suffix'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
     npm run add-suffix
   displayName: 'Add version suffix'
   workingDirectory: '$(WorkingDirectory)'
