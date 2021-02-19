@@ -15,6 +15,9 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
+    npm i npm-version-suffix
+    npm i npm-add-script
+    npmAddScript -k add-suffix -v "cross-env SUFFIX=$(VersionSuffix) node ./node_modules/npm-version-suffix/run-add-suffix.js"
     npm run add-suffix
   displayName: 'Add version suffix'
   workingDirectory: '$(WorkingDirectory)'
