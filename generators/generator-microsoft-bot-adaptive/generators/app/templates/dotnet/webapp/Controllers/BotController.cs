@@ -45,10 +45,8 @@ namespace <%= botName %>.Controllers
             {
                 throw new ArgumentNullException(nameof(route));
             }
-
-            IBotFrameworkHttpAdapter adapter;
-
-            if (_adapters.TryGetValue(route, out adapter))
+            
+            if (_adapters.TryGetValue(route, out IBotFrameworkHttpAdapter adapter))
             {
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.

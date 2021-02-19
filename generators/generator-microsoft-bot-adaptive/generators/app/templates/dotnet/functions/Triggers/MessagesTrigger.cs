@@ -54,9 +54,7 @@ namespace <%= botName %>.Triggers
                 throw new ArgumentNullException(nameof(route));
             }
 
-            IBotFrameworkHttpAdapter adapter;
-
-            if (_adapters.TryGetValue(route, out adapter))
+            if (_adapters.TryGetValue(route, out IBotFrameworkHttpAdapter adapter))
             {
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.
@@ -72,10 +70,8 @@ namespace <%= botName %>.Triggers
                     StatusCode = req.HttpContext.Response.StatusCode,
                 };
             }
-            else
-            {
-                throw new KeyNotFoundException($"No adapter registered and enabled for route {route}.");
-            }
+
+            throw new KeyNotFoundException($"No adapter registered and enabled for route {route}.");
         }
     }
 }
