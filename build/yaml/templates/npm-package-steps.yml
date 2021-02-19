@@ -21,7 +21,7 @@ steps:
     (Get-Content package.json) `
         -replace "(?<=""version""\:\s*"")([\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)([\.]{1}[\d]+)*(?="",)", "$version"` |
       Out-File package.json
-  displayName: Replace version in package.json
+  displayName: 'Replace version in package.json'
   condition: ne(variables.DeploymentRing, 'stable')
 
 - script: |
