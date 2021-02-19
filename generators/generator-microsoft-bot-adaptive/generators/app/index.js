@@ -230,7 +230,7 @@ module.exports = class extends Generator {
         const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
 
         for (const pluginDefinition of this.pluginDefinitions) {
-            appSettings.plugins.push(pluginDefinition);
+            appSettings.runtimeSettings.plugins.push(pluginDefinition);
         }
 
         this.fs.writeJSON(
