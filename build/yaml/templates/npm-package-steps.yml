@@ -10,12 +10,12 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm i npm-version-suffix
+    npm i -g npm-version-suffix
   displayName: 'Install npm-version-suffix'
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm i npm-add-script
+    npm i -g npm-add-script
   displayName: 'Install npm-add-script'
   workingDirectory: '$(WorkingDirectory)'
 
