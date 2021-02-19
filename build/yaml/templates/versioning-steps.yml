@@ -1,17 +1,17 @@
 steps:
   - powershell: |
       "Deployment Ring = $(DeploymentRing)";
-      $deploymentRing = '$(DeploymentRing)';
+      $deploymentRing = "$(DeploymentRing)";
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      if ($deploymentRing -ne 'release') {
+      if ($deploymentRing -ne "release") {
         $vs = $deploymentRing + "." + $vs;
+        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
+        "Resolved VersionSuffix = $vs";
       } 
-
-      Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
-      "Resolved VersionSuffix = $vs";
+      # TODO: Follow up with versioning for release ring
     displayName: 'Resolve package version variables'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
