@@ -30,3 +30,8 @@ jobs:
       - name: Build solution
         run:  dotnet build
         working-directory: ./skills/declarative/tests
+
+      # Run the tests
+      - name: Run tests
+        run: dotnet test
+        working-directory: ./skills/declarative/tests
