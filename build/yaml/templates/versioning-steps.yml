@@ -13,11 +13,3 @@ steps:
       } 
       # TODO: Follow up with versioning for release ring
     displayName: 'Resolve package version variables'
-
-  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: 'Tag build with version'
-    inputs:
-      tags: |
-       Preview: $(VersionSuffix)
-    continueOnError: true
-    enabled: false
