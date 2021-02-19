@@ -3,16 +3,19 @@ steps:
     - powershell: |
         $deploymentRing = 'alpha';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+        Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - ${{ if eq(parameters.deploymentRing, 'preview') }}: 
     - powershell: |
         $deploymentRing = 'preview';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+        Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - ${{ if eq(parameters.deploymentRing, 'release') }}: 
     - powershell: |
         $deploymentRing = '';
         Write-Host "##vso[task.setvariable variable=DeploymentRing;]$deploymentRing";
+        Write-Host "Set environment variable to ($env:DeploymentRing)"
 
   - powershell: |
       $deploymentRing =  $(DeploymentRing);
