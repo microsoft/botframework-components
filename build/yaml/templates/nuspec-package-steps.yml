@@ -1,4 +1,5 @@
-# Checks for required .nuspec file and creates package
+# Checks for required .nuspec file and creates package.
+# Pipelines have to run the `nuget pack` task differently based on if the package is in alpha/preview or stable.
 
 steps:
 - powershell: |
@@ -12,7 +13,15 @@ steps:
   displayName: Check for .nuspec file
 
 - task: NuGetCommand@2
+  displayName: 'Run `nuget pack` with version suffix'
+  condition: ne(variables.DeploymentRing, 'stable')
+  inputs:
+    command: custom
+    arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
+
+- task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
+  condition: eq(variables.DeploymentRing, 'stable')
   inputs:
     command: pack
     packagesToPack: '$(WorkingDirectory)\*.nuspec'

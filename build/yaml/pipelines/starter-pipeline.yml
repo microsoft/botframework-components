@@ -25,3 +25,4 @@ extends:
 variables:
   WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
   BuildConfiguration: 'Release'
+  DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable

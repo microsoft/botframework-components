@@ -28,3 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/Orchestrator'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'preview'
