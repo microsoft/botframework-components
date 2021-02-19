@@ -1,6 +1,5 @@
 steps:
   - powershell: |
-     # Replace {DateStamp} and {CommitHash} tokens with the actual values in vars ReleasePackageVersion and PreviewPackageVersion
      $dateStamp = (Get-Date -format "yyyyMMdd");
      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
 
@@ -10,8 +9,9 @@ steps:
     displayName: 'Resolve package version variables'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: 'Tag build with release and preview versions'
+    displayName: 'Tag build with version'
     inputs:
       tags: |
        Preview: $(PackageVersion)
     continueOnError: true
+    enabled: false
