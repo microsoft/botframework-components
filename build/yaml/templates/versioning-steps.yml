@@ -5,8 +5,8 @@ steps:
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      if ($deploymentRing -ne 'release') {
-        $vs = $deploymentRing + "." + $vs;
+      if ($(DeploymentRing) -ne 'release') {
+        $vs = $(DeploymentRing) + "." + $vs;
       } 
 
       Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
