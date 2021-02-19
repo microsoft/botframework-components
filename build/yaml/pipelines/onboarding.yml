@@ -28,3 +28,4 @@ extends:
 variables:
   WorkingDirectory: 'packages/Onboarding'
   BuildConfiguration: 'Release'
+  DeploymentRing: 'preview'

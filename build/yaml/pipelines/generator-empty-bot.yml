@@ -27,3 +27,4 @@ extends:
 
 variables:
   WorkingDirectory: 'generators/generator-empty-bot'
+  DeploymentRing: 'preview'

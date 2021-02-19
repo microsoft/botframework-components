@@ -4,6 +4,22 @@ steps:
   inputs:
     versionSpec: '14.x'
 
+- powershell: |
+    # Get existing version from package.json
+    $packageJson = Get-Content package.json;
+    $packageJsonData = $packageJson | ConvertFrom-Json;
+
+    "VERSION: $($packageJsonData.version)";
+    "SUFFIX: $(VersionSuffix)";
+    $packageJsonData.version += "-" + "$(VersionSuffix)";
+
+    # Convert back into package.json
+    $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
+  displayName: 'Replace version in package.json'
+  condition: ne(variables.DeploymentRing, 'stable')
+  workingDirectory: $(WorkingDirectory)
+  
 - script: |
     npm install
   displayName: 'Install dependencies'
@@ -11,7 +27,7 @@ steps:
 
 - script: |
     npm pack
-  displayName: 'Package package'
+  displayName: 'Generate package'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2
