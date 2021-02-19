@@ -10,7 +10,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Components.Graph.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using TimeZoneConverter;
 
 namespace Microsoft.Bot.Components.Graph.Actions
 {
@@ -67,7 +66,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             var dcState = dc.State;
             var eventId = this.EventIdProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var timeZone = TZConvert.GetTimeZoneInfo(timeZoneProperty);
+            var timeZone = GraphUtils.ConvertTimeZoneFormat(timeZoneProperty);
 
             Event ev = await client.Me.Events[eventId].Request().GetAsync(cancellationToken);
 

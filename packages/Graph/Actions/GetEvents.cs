@@ -13,7 +13,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Components.Graph.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using TimeZoneConverter;
 
 namespace Microsoft.Bot.Components.Graph.Actions
 {
@@ -133,7 +132,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             var endProperty = this.EndProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
             var ordinalProperty = this.OrdinalProperty.GetValue(dcState);
-            var timeZone = TZConvert.GetTimeZoneInfo(timeZoneProperty);
+            var timeZone = GraphUtils.ConvertTimeZoneFormat(timeZoneProperty);
             var dateTimeTypeProperty = this.DateTimeTypeProperty.GetValue(dcState);
             var isFuture = this.FutureEventsOnlyProperty.GetValue(dcState);
             var maxResults = this.MaxResultsProperty.GetValue(dcState);

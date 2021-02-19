@@ -12,7 +12,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Components.Graph.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
-using TimeZoneConverter;
 
 namespace Microsoft.Bot.Components.Graph.Actions
 {
@@ -67,7 +66,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
             var duration = this.DurationProperty.GetValue(dcState);
             var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var timeZone = TZConvert.GetTimeZoneInfo(timeZoneProperty);
+            var timeZone = GraphUtils.ConvertTimeZoneFormat(timeZoneProperty);
             var attendees = attendeesProperty;
 
             MeetingTimeSuggestionsResult meetingTimesResult = await client.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
