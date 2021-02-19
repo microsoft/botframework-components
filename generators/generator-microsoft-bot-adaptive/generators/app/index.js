@@ -121,6 +121,8 @@ module.exports = class extends Generator {
                         typeof definition.settingsPrefix === 'string') {
 
                         result.settingsPrefix = definition.settingsPrefix;
+                    } else {
+                        result.settingsPrefix = definition.name;
                     }
 
                     results.push(result);
@@ -143,6 +145,10 @@ module.exports = class extends Generator {
     writing() {
         this._copyDotnetProject();
         this._copyAssets();
+
+        if (this.includeApplicationSettings) {
+            this._writeApplicationSettings();
+        }
     }
 
     _copyDotnetProject() {
@@ -205,9 +211,6 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
 
         const assetFileNames = ['NuGet.config'];
-        if (this.includeApplicationSettings) {
-            assetFileNames.push('appsettings.json');
-        }
 
         for (const assetFileName of assetFileNames) {
             this.fs.copyTpl(
@@ -218,5 +221,21 @@ module.exports = class extends Generator {
                 }
             );
         }
+    }
+
+    _writeApplicationSettings() {
+        const botName = this.options.botName;
+        const fileName = 'appsettings.json';
+
+        const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
+
+        for (const pluginDefinition of this.pluginDefinitions) {
+            appSettings.runtimeSettings.plugins.push(pluginDefinition);
+        }
+
+        this.fs.writeJSON(
+            this.destinationPath(path.join(botName, fileName)),
+            runtime
+        );
     }
 };

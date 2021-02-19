@@ -20,10 +20,12 @@ module.exports = class extends Generator {
           }],
         pluginDefinitions : [
           {
-            'name': 'Microsoft.BotFramework.CustomAction.CalendarSkill'
+            'name': 'Microsoft.BotFramework.CustomAction.CalendarSkill',
+            'settingsPrefix': 'Microsoft.BotFramework.CustomAction.CalendarSkill'
           },
           {
-            'name': 'Microsoft.BotFramework.CustomAction.MsGraph'
+            'name': 'Microsoft.BotFramework.CustomAction.MsGraph',
+            'settingsPrefix': 'Microsoft.BotFramework.CustomAction.MsGraph'
           },
         ],
         applicationSettingsDirectory: 'settings',
