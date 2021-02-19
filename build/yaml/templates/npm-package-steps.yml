@@ -15,7 +15,7 @@ steps:
     $packageJsonData = $packageJson | ConvertFrom-Json;
 
     "Appending version $($packageJsonData.version) and suffix $(VersionSuffix)";
-    $version = $packageJsonData.version + "." + $(VersionSuffix);
+    $version = $($packageJsonData.version) + "." + "$(VersionSuffix)";
 
     # Replace matched version
     (Get-Content package.json) `
