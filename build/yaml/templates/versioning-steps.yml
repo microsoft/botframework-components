@@ -7,9 +7,14 @@ steps:
       $vs = $dateStamp + "." + $commitHash;
 
       if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-        $vs = $deploymentRing + "." + $vs;
-        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$vs";
-        "Resolved VersionSuffix = $vs";
+        $nugetVersionSuffix = $deploymentRing + "." + $vs;
+        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
+        "Resolved VersionSuffix = $nugetVersionSuffix";
+        
+        # npm uses a slightly different version suffix pattern, so calculate that separately.
+        $npmVersionSuffix = $deploymentRing + "-" + $vs;
+        Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
+        "Resolved NpmVersionSuffix = $npmVersionSuffix";
       } 
       # TODO: Follow up with versioning for release ring
     displayName: 'Resolve package version variables'

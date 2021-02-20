@@ -11,7 +11,7 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
+      require.resolve('generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
         packageReferences: [{

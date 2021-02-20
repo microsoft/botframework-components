@@ -7,7 +7,7 @@ trigger:
       - main
   paths:
     include:
-      - generators/generator-conversational-core
+      - generators/generator-microsoft-bot-adaptive
 
 pr:
   branches:
@@ -15,16 +15,16 @@ pr:
       - main
   paths:
     include:
-      - generators/generator-conversational-core
- 
+      - generators/generator-microsoft-bot-adaptive
+
 pool: 
   vmImage: 'windows-2019'
-  
+
 extends:
   template: ../templates/component-template.yml
   parameters:
       componentType: generator
 
 variables:
-  WorkingDirectory: 'generators/generator-conversational-core'
+  WorkingDirectory: 'generators/generator-microsoft-bot-adaptive'
   DeploymentRing: 'preview'
