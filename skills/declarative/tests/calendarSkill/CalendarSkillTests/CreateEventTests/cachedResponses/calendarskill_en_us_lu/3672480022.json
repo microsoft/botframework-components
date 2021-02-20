@@ -1,0 +1,1 @@
+{"query":"Seattle","prediction":{"topIntent":"Logout","intents":{"Logout":{"score":0.5077334}},"entities":{"geographyV2":[{"value":"Seattle","type":"city"}]}}}
