@@ -10,8 +10,8 @@ steps:
     $packageJsonData = $packageJson | ConvertFrom-Json;
 
     "VERSION: $($packageJsonData.version)";
-    "SUFFIX: $(VersionSuffix)";
-    $packageJsonData.version += "-" + "$(VersionSuffix)";
+    "SUFFIX: $(NpmVersionSuffix)";
+    $packageJsonData.version += "-" + "$(NpmVersionSuffix)";
 
     # Convert back into package.json
     $packageJsonData | ConvertTo-Json |
