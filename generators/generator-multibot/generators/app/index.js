@@ -19,6 +19,7 @@ module.exports = class extends Generator {
         arguments: this.args,
         pluginDefinitions: [{
           name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
+          settingsPrefix: 'Microsoft.Bot.Components.Recognizers.Orchestrator'
         }],
         packageReferences: [{
           name: 'Preview.Bot.Component.HelpAndCancel',

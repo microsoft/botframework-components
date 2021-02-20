@@ -121,6 +121,8 @@ module.exports = class extends Generator {
                         typeof definition.settingsPrefix === 'string') {
 
                         result.settingsPrefix = definition.settingsPrefix;
+                    } else {
+                        result.settingsPrefix = definition.name;
                     }
 
                     results.push(result);
@@ -143,7 +145,10 @@ module.exports = class extends Generator {
     writing() {
         this._copyDotnetProject();
         this._copyAssets();
-        this._writeRuntimeJson();
+
+        if (this.includeApplicationSettings) {
+            this._writeApplicationSettings();
+        }
     }
 
     _copyDotnetProject() {
@@ -152,7 +157,7 @@ module.exports = class extends Generator {
         const platform = this.options.platform;
         const packageReferences = this._formatPackageReferences();
         const settingsDirectory = this.applicationSettingsDirectory === null
-            ? 'null'
+            ? 'string.Empty'
             : `"${this.applicationSettingsDirectory}"`;
 
         this.fs.copyTpl(
@@ -206,9 +211,6 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
 
         const assetFileNames = ['NuGet.config'];
-        if (this.includeApplicationSettings) {
-            assetFileNames.push('appsettings.json');
-        }
 
         for (const assetFileName of assetFileNames) {
             this.fs.copyTpl(
@@ -221,14 +223,14 @@ module.exports = class extends Generator {
         }
     }
 
-    _writeRuntimeJson() {
+    _writeApplicationSettings() {
         const botName = this.options.botName;
-        const fileName = 'runtime.json';
+        const fileName = 'appsettings.json';
 
-        const runtime = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
+        const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
 
         for (const pluginDefinition of this.pluginDefinitions) {
-            runtime.plugins.push(pluginDefinition);
+            appSettings.runtimeSettings.plugins.push(pluginDefinition);
         }
 
         this.fs.writeJSON(
