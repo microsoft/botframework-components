@@ -20,10 +20,12 @@ module.exports = class extends Generator {
           }],
         pluginDefinitions : [
           {
-            'name': 'Microsoft.Bot.Components.Calendar'
+            'name': 'Microsoft.Bot.Components.Calendar',
+            'settingsPrefix': 'Microsoft.Bot.Components.Calendar'
           },
           {
-            'name': 'Microsoft.Bot.Components.Graph'
+            'name': 'Microsoft.Bot.Components.Graph',
+            'settingsPrefix': 'Microsoft.Bot.Components.Graph'
           },
         ],
         applicationSettingsDirectory: 'settings',
