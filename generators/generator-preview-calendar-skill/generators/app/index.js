@@ -11,12 +11,12 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
+      require.resolve('generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
         packageReferences: [{
           name: 'Microsoft.Bot.Components.Calendar',
-          version: '1.0.0-preview1'
+          version: '1.0.0-alpha.20210219.eefbca8'
           }],
         pluginDefinitions : [
           {

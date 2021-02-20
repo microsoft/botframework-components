@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/generator-microsoft-bot-empty",
-  "version": "1.0.0-preview-20210219.c75d357",
+  "version": "1.0.0",
   "description": "",
   "main": "./generators/app/templates/index.js",
   "dependencies": {
