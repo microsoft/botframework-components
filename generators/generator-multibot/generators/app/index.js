@@ -14,7 +14,7 @@ module.exports = class extends Generator {
   initializing() {
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
+      require.resolve('generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
         pluginDefinitions: [{
