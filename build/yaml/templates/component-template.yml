@@ -30,6 +30,7 @@ stages:
           steps:
           - template: versioning-steps.yml
           - template: nuspec-package-steps.yml
+          - template: nuget-signing-steps.yml
         - job: Npm_pack
           displayName: Create npm package
           steps:
