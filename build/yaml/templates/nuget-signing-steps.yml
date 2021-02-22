@@ -48,7 +48,7 @@ steps:
 - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
   displayName: 'ESRP Signing - authenticode (CP-230012)'
   inputs:
-    ConnectedServiceName: 'ESRP Code Signing Connection 2020a'
+    ConnectedServiceName: 'botframework-components-esrp'
     FolderPath: '$(Build.ArtifactStagingDirectory)\Signing'
     signConfigType: inlineSignParams
     inlineOperation: |
