@@ -1,0 +1,730 @@
+[Common](common.en-us.lg)
+
+# EventDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventDetailActions(event))}
+
+# EventConfirmDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventConfirmAction(event))}
+
+# EventRespondDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventRespondAction(event))}
+
+# EventUpdateDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventUpdateAction())}
+
+# EventDetailHeader(event)
+- ${CardHeader(EventIconUrl(), event.Subject, "", "")}
+
+# EventDetailBody(event)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "items": [
+        ${EventDateTimeContainer(event)}
+        ${EventResponseContainer(event)}
+        ${EventAttendeeContainer(event)}
+        ${EventLocationContainer(event)}
+        ${EventContentContainer(event)}
+    ]
+}
+```
+
+# EventDateTimeContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 5,
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${DateTimeIconUrl()}",
+                    "horizontalAlignment": "Center",
+                    "height": "15px",
+                    "width": "15px"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": ${if(event.isRecurring, 90, 95)},
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "inlines": [
+                        {
+                            "type": "TextRun",
+                            "text": "${formatDateTime(event.start.dateTime, 'h:mm')} - ${formatDateTime(event.end.dateTime, 'h:mm tt')} ",
+                            "size": "Medium",
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextRun",
+                            "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": ${if(event.isRecurring, 5, 0)},
+            "isVisible": "${event.isRecurring}",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${RecurringIconUrl()}",
+                    "horizontalAlignment": "Right"
+                }
+            ]
+        }
+    ]
+},
+```
+
+# EventResponseContainer(event)
+- IF: ${ event.Response == 'organizer' }    
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You are the organizer"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Accepted, owned by ${event.organizer.emailAddress.name}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${TentativeIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Tentative"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'declined' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${DeclinedIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Declined"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'notResponded' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${NoResponseIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You have not responded"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    -
+
+# EventAttendeeContainer(event)
+- IF: ${ event.attendees != null && count(event.attendees) > 1 }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "top",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "top",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "wrap": "True",
+                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
+    -  ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Attendees[0].EmailAddress.Name}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    - 
+
+# EventLocationContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 5,
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${LocationIconUrl()} ",
+                    "height": "15px",
+                    "width": "15px",
+                    "spacing": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "95",
+            "items": [
+                ${EventLocationItems(event)}
+            ]
+        }
+    ]
+},
+```
+
+# EventLocationItems(event)
+- IF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting"
+    }
+    ```
+- ELSE: 
+    -```
+    {
+        "type": "TextBlock",
+        "text": "No location provided."
+    }
+    ```
+
+# EventContentContainer(event)
+- IF: ${ event.Description != null && event.Description != '' }
+    - ```
+    {
+        "type": "Container",
+        "id": "eventContentContainer",
+        "separator": true,
+        "spacing": "medium",
+        "isVisible": "false",
+        "items": [
+            {
+                "type":"TextBlock",
+                "text":"${event.description}",
+                "wrap": true
+            }
+        ]
+    },
+    ${ToggleButtonContainer('eventContentContainer')}
+    ```
+- ELSE:
+    -
+
+
+# EventTitleContainer(event)
+-  ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 5,
+            "items": [
+                {
+                        "type": "Image",
+                        "url": "${TitleIconUrl()}",
+                        "height": "15px",
+                        "width": "15px",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 95,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}"
+                }
+            ]
+        }
+    ]
+},
+```
+
+# AddParticipantAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add participant",
+    "data": {
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}",
+        "entityName": "attendee",
+        "operation": "add"
+    }
+}
+```
+
+# UpdateEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update event",
+    "data": {
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# AcceptEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Accept event",
+    "data": {
+        "intent": "AcceptEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# DeclineEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Decline event",
+    "data": {
+        "intent": "DeclineEvent",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# AddTeamsLinkAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add Teams link",
+    "data": {
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}",
+        "entityName": "teamslink",
+        "operation": "add"
+    }
+}
+```
+
+# AddLocationAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add location",
+    "data": {
+        "intent": "AddLocation",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# UpdateLocationAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update location",
+    "data": {
+        "intent": "UpdateLocation",
+        "eventId": "${event.Id}"
+    }
+}
+```
+
+# ShowCalendarAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "My Calendar",
+    "data": {
+        "intent": "GetEvents"
+    }
+}
+```
+
+# NewEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "New event",
+    "data": {
+        "intent": "CreateEvent"
+    }
+}
+```
+
+# EventDetailActions(event)
+- IF: ${event.Response == 'organizer' && event.Location != null && event.Location != '' && event.isOnlineMeeting == false}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+           ${AddParticipantAction(event)},
+           ${UpdateEventAction(event)},
+           ${AddTeamsLinkAction(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location == null || event.Location == '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${AddParticipantAction(event)},
+            ${UpdateEventAction(event)},
+            ${AddLocationAction(event)}
+        ]
+    }
+    ```
+-ELSEIF: ${event.Response == 'organizer' && (event.Location != null && event.Location != '') && event.isOnlineMeeting == true}
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${AddParticipantAction(event)},
+            ${UpdateEventAction(event)},
+            ${UpdateLocationAction(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${DeclineEventAction(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' || event.Response == 'notResponded' }
+    -```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${AcceptEventAction(event)},
+            ${DeclineEventAction(event)}
+        ]
+    }
+    ```
+- ELSE:
+    -```
+    {
+        "type": "ActionSet",
+        "actions": []
+    }
+    ```
+
+# EventConfirmAction(event)
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Confirm",
+            "data": ${BuildCardActionData('Yes')}
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Cancel",
+            "data": ${BuildCardActionData('Cancel')}
+        }
+    ]
+}
+```
+
+# EventRespondAction(event)
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${ShowCalendarAction(event)},
+        ${NewEventAction(event)}
+    ]
+}
+```
+
+# BuildDate(date)
+- ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+
+# BuildTime(time)
+- ${formatDateTime(time, 'h:mm tt')}
+
+# BuildLocation(event)
+- IF: ${(event.Location == null || event.Location == "") && event.isOnlineMeeting }
+    - It's on Teams.
+- ELSEIF: ${event.Location == null || event.Location == ""}
+    - No location provided.
+- ELSEIF: ${event.isOnlineMeeting}
+    - The meeting location is ${event.Location} and contains a Teams link.
+- ELSE:
+    - The meeting location is ${event.Location}.
+
+# WithLocation(event)
+- IF: ${event.Location == null || event.Location == "" || event.Location == "Online Meeting"}
+    - on Microsoft Teams.
+- ELSEIF: ${event.isOnlineMeeting}
+    - in ${event.Location} and on Microsoft Teams.
+- ELSE:
+    - in ${event.Location}.
+
+# BuildAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - No attendees.
+- ELSEIF: ${count(event.Attendees) == 1}
+    - The attendee is ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - The attendees are ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - The attendees are ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
+
+# WithAttendees(event, maxShow)
+- IF: ${event.Attendees==null || count(event.Attendees)==0}
+    - .
+- ELSEIF: ${count(event.Attendees) == 1}
+    - , with ${event.Attendees[0].EmailAddress.Name}.
+- ELSEIF: ${count(event.Attendees) <= maxShow}
+    - , with ${join(select(take(event.Attendees, count(event.Attendees)-1), x, x.EmailAddress.Name), ', ')} and ${last(event.Attendees).EmailAddress.Name}.
+- ELSE:
+    - , with ${join(select(take(event.Attendees, maxShow), x, x.EmailAddress.Name), ', ')} and ${count(event.Attendees) - maxShow} more.
+
+# EventUpdateAction()
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+    ]
+}
+```

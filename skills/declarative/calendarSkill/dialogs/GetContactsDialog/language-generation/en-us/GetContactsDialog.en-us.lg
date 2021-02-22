@@ -1,0 +1,15 @@
+[import](common.lg)
+
+# TextInput_Prompt_sFm17r()
+- Who should I invite?
+
+# ConfirmInput_Prompt_pjKHu4()
+- Would you like to invite anyone else?
+
+# SendActivity_VTKaKJ()
+- OK. I'll invite ${GetContactsList($contacts)}.
+
+# GetContactsList(contacts)
+- ${join(select(contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), ', ')}
+# SendActivity_hIUT1m()
+- I couldn't find any matching contacts. Can you try providing the first and last name or email address?

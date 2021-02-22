@@ -1,0 +1,1 @@
+{"query":"megan","prediction":{"topIntent":"Cancel","intents":{"Cancel":{"score":0.31584543}},"entities":{"contact":["megan"],"personName":["megan"]}}}

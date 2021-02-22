@@ -1,0 +1,29 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Schedule](schedule.en-us.lg)
+[Event List](eventList.en-us.lg)
+
+# ScheduleNoResults()
+[Activity
+    text = ${ScheduleResponseText($options.start, createArray())}
+    attachments = ${json(ScheduleNoResultsCard($options.start))}
+]
+
+# SendActivity_RzDAXK()
+[Activity
+    attachments = ${json(EventDetailCard(turn.dialogEvent.value))}
+]
+
+# SendActivity_vyntiD()
+- IF: ${ exists($options.start) }
+    - ${ScheduleNoResults()}
+- ELSE:
+    - I couldn't find any events matching your criteria.
+
+
+# SendActivity_8wch3m()
+[Activity
+    text = I found the following events on your schedule.
+    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
+    attachmentLayout = carousel
+]

@@ -1,39 +1,17 @@
 [
   {
-    "name": "Preview.Bot.Component.GeneralIntent",
-    "version": "0.0.1-preview2",
+    "name": "Preview.Bot.Component.Cancel",
+    "version": "0.0.1-preview1",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
     "authors": [
       "Bot Framework"
     ],
-    "description": "Dialogs to provide general intent handling - like help and cancel"
+    "description": "Dialog to provide \"cancel\" utterance handling"
   },
   {
-    "name": "preview-bot-component-generalintent",
-    "version": "0.0.1-preview2",
-    "source": "npm",
-    "language": "js",
-    "category": "Conversational Core",
-    "authors": [
-      "Bot Framework"
-    ],
-    "description": "Dialogs to provide general intent handling - like help and cancel"
-  },
-  {
-    "name": "Preview.Bot.Component.GreetingDialog",
-    "version": "0.0.1-preview3",
-    "source": "nuget",
-    "language": "c#",
-    "category": "Conversational Core",
-    "authors": [
-      "Bot Framework"
-    ],
-    "description": "Dialogs to provide a greeting experience"
-  },
-  {
-    "name": "preview-bot-component-greetingdialog",
+    "name": "preview-bot-component-cancel",
     "version": "0.0.1-preview1",
     "source": "npm",
     "language": "js",
@@ -41,7 +19,29 @@
     "authors": [
       "Bot Framework"
     ],
-    "description": "Dialogs to provide a greeting experience"
+    "description": "Dialog to provide \"cancel\" utterance handling"
+  },
+  {
+    "name": "Preview.Bot.Component.Help",
+    "version": "0.0.1-preview1",
+    "source": "nuget",
+    "language": "c#",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialog to provide \"help\" utterance handling"
+  },
+  {
+    "name": "preview-bot-component-help",
+    "version": "0.0.1-preview1",
+    "source": "npm",
+    "language": "js",
+    "category": "Conversational Core",
+    "authors": [
+      "Bot Framework"
+    ],
+    "description": "Dialog to provide \"help\" utterance handling"
   },
   {
     "name": "Preview.Bot.Component.OnboardingDialog",
@@ -66,18 +66,18 @@
     "description": "Dialogs to provide an onboarding experience"
   },
   {
-    "name": "Preview.Bot.Component.UnknownIntentDialog",
-    "version": "0.0.1-preview4",
+    "name": "Preview.Bot.Component.Welcome",
+    "version": "0.0.1-preview1",
     "source": "nuget",
     "language": "c#",
     "category": "Conversational Core",
     "authors": [
       "Bot Framework"
     ],
-    "description": "Dialogs to provide a fallback experience"
+    "description": "Dialogs to provide a Welcome experience"
   },
   {
-    "name": "preview-bot-component-unknownintentdialog",
+    "name": "preview-bot-component-welcome",
     "version": "0.0.1-preview1",
     "source": "npm",
     "language": "js",
@@ -85,6 +85,6 @@
     "authors": [
       "Bot Framework"
     ],
-    "description": "Dialogs to provide a fallback experience"
+    "description": "Dialogs to provide a Welcome experience"
   }
 ]

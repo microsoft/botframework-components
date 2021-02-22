@@ -1,0 +1,18 @@
+> Common intents
+[Cancel](cancel.en-us.lu)
+
+# TextInput_Response_Fej6Ub
+- with {@contact=allan} and {@contact=alex}
+- the one with {@contact=elaine} next week
+- the event with test@email.com
+- {@contact=Sally}'s meeting friday morning
+- the one titled {@subject=lunch}
+- {@subject=project review} on thursday
+- the {@subject=design review} on tuesday at 11am
+- wednesday at 3pm
+- january 3rd
+- 4:30pm
+
+@ ml contact
+@ ml subject
+@ prebuilt email

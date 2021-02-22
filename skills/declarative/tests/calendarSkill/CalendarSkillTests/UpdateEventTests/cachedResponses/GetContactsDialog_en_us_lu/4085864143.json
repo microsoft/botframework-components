@@ -1,0 +1,1 @@
+{"query":"test","prediction":{"topIntent":"Cancel","intents":{"Cancel":{"score":0.216212764}},"entities":{"personName":["test"]}}}

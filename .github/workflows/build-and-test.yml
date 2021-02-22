@@ -1,0 +1,37 @@
+name: Build & Test for Calendar V2
+
+on:
+  push:
+    branches: [ "calendarSkill_v2", "main" ]
+  pull_request:
+    branches: [ "calendarSkill_v2", "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Checks out code base
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Setup .NET Core
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+    
+      # Install dependencies
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ./skills/declarative/tests
+
+      # Build the entire solution
+      - name: Build solution
+        run:  dotnet build
+        working-directory: ./skills/declarative/tests
+
+      # Run the tests
+      - name: Run tests
+        run: dotnet test
+        working-directory: ./skills/declarative/tests

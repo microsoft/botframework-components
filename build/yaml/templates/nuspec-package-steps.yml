@@ -1,0 +1,31 @@
+# Checks for required .nuspec file and creates package.
+# Pipelines have to run the `nuget pack` task differently based on if the package is in alpha/preview or stable.
+
+steps:
+- powershell: |
+    $nuspecExists = Test-Path -Path "$(WorkingDirectory)\*.nuspec"
+    if ($nuspecExists) {
+      Write-Host "File exists"
+    } else {
+      Write-Host "Missing .nuspec file!"
+      exit 1
+    }
+  displayName: Check for .nuspec file
+
+- task: NuGetCommand@2
+  displayName: 'Run `nuget pack` with version suffix'
+  condition: ne(variables.DeploymentRing, 'stable')
+  inputs:
+    command: custom
+    arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
+
+- task: NuGetCommand@2
+  displayName: 'Run `nuget pack`'
+  condition: eq(variables.DeploymentRing, 'stable')
+  inputs:
+    command: pack
+    packagesToPack: '$(WorkingDirectory)\*.nuspec'
+    packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
+    versioningScheme: off
+
+- template: nuget-build-artifacts-steps.yml
