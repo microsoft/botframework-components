@@ -9,7 +9,7 @@ steps:
      outputpackages\*.nupkg
      outputpackages\*.snupkg
      !outputpackages\*.symbols.nupkg
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\Signing'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\signing'
     flattenFolders: true
 
 - task: PowerShell@2
@@ -17,13 +17,13 @@ steps:
   inputs:
     targetType: filePath
     filePath: ./build/ExtractCompressNuGet.ps1
-    arguments: '$(Build.ArtifactStagingDirectory)\Signing  -Extract'
+    arguments: '$(Build.ArtifactStagingDirectory)\signing  -Extract'
 
 - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
   displayName: 'ESRP Signing - strong name (CP-233863-SN)'
   inputs:
     ConnectedServiceName: 'botframework-components-esrp'
-    FolderPath: '$(Build.ArtifactStagingDirectory)\Signing'
+    FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     signConfigType: inlineSignParams
     inlineOperation: |
      [
@@ -49,7 +49,7 @@ steps:
   displayName: 'ESRP Signing - authenticode (CP-230012)'
   inputs:
     ConnectedServiceName: 'botframework-components-esrp'
-    FolderPath: '$(Build.ArtifactStagingDirectory)\Signing'
+    FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     signConfigType: inlineSignParams
     inlineOperation: |
      [
@@ -96,14 +96,14 @@ steps:
   inputs:
     targetType: filePath
     filePath: ./build/ExtractCompressNuGet.ps1
-    arguments: '$(Build.ArtifactStagingDirectory)\Signing -Compress'
+    arguments: '$(Build.ArtifactStagingDirectory)\signing -Compress'
 
 
 - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
   displayName: 'ESRP Signing - *.nupkg,*.snupkg (CP-401405)'
   inputs:
     ConnectedServiceName: 'botframework-components-esrp'
-    FolderPath: '$(Build.ArtifactStagingDirectory)\Signing'
+    FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     Pattern: '*.nupkg,*.snupkg'
     signConfigType: inlineSignParams
     inlineOperation: |
@@ -128,16 +128,16 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy *.nupkg,*.snupkg files to publish'
   inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)\Signing'
+    SourceFolder: '$(Build.ArtifactStagingDirectory)\signing'
     Contents: |
      *.nupkg
      *.snupkg
      !*.symbols.nupkg
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\Publish'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\publish'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Push *.nupkg,*.snupkg files to Artifacts Packages'
+  displayName: 'Publish the nuget packages'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)\Publish'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\publish'
     ArtifactName: 'nuget'
     publishLocation: 'Container'

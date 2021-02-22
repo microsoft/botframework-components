@@ -27,5 +27,3 @@ steps:
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
     packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: off
-
-- template: nuget-build-artifacts-steps.yml
