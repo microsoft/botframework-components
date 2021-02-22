@@ -27,4 +27,5 @@ extends:
 
 variables:
   WorkingDirectory: 'packages/Welcome'
-  BuildConfiguration: 'Release'
+  BuildConfiguration: 'Release'  
+  DeploymentRing: 'preview'

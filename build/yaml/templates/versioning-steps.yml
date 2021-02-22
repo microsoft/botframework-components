@@ -1,0 +1,20 @@
+steps:
+  - powershell: |
+      "Deployment Ring = $(DeploymentRing)";
+      $deploymentRing = "$(DeploymentRing)";
+      $dateStamp = (Get-Date -format "yyyyMMdd");
+      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+      $vs = $dateStamp + "." + $commitHash;
+
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+        $nugetVersionSuffix = $deploymentRing + "." + $vs;
+        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
+        "Resolved VersionSuffix = $nugetVersionSuffix";
+        
+        # npm uses a slightly different version suffix pattern, so calculate that separately.
+        $npmVersionSuffix = $deploymentRing + "-" + $vs;
+        Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
+        "Resolved NpmVersionSuffix = $npmVersionSuffix";
+      } 
+      # TODO: Follow up with versioning for release ring
+    displayName: 'Resolve package version variables'

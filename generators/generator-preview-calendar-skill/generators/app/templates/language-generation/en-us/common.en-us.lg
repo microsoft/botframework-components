@@ -51,3 +51,16 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - OK, I will stop.
 - Got it, I'll stop here.
 - OK, no problem. I know I'm not perfect yet. 
+
+# CancelConfirmPrompt()
+- Are you sure you want to cancel? Your progress will be lost.
+
+# CancelApproved()
+- Ok, I'll cancel this.
+
+# CancelRejected()
+- Let's keep going.
+
+# ErrorMessage()
+- Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today?
+- Something seems to be going wrong. I can tell you more about your meetings today if you like?

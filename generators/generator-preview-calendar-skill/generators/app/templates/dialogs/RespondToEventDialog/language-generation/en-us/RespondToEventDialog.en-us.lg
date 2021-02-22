@@ -1,21 +1,20 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 
-# SendActivity_FJHk6U()
-[Activity
-    Text = ${RespondEventResponseText("accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_VOrXqP()
-[Activity
-    Text = ${RespondEventResponseText("declined", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-# SendActivity_ss6d3v()
-[Activity
-    Text = ${RespondEventResponseText("tentatively accepted", dialog.event)}
-    attachments = ${json(EventRespondDetailCard(dialog.event))}
-]
-
 # RespondEventResponseText(action, event)
 - All right, I’ve ${action} the meeting named ${event.Subject}.
+# SendActivity_P5pp9f()
+[Activity
+    Text = ${RespondEventResponseText("accepted", $event)}
+    attachments = ${json(EventRespondDetailCard($event))}
+]
+# SendActivity_3DZbbg()
+[Activity
+    Text = ${RespondEventResponseText("declined", $event)}
+    attachments = ${json(EventRespondDetailCard($event))}
+]
+# SendActivity_S2mcC8()
+[Activity
+    Text = ${RespondEventResponseText("tentatively accepted", $event)}
+    attachments = ${json(EventRespondDetailCard($event))}
+]

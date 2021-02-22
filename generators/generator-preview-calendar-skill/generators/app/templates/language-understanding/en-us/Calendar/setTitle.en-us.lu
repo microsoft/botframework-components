@@ -1,5 +1,3 @@
-
-
 # SetTitle
 - change the subject
 - change the subject of the meeting with {@contact=youngjae} and {@contact=elaine} to {@newSubject=standup}
@@ -22,55 +20,57 @@
 - update the subject of the next event to {@newSubject=standup}
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
 
-@ intent SetTitle usesFeatures Create,Update,Event,Attending,Location,Add,Remove
-
-> # Entity definitions
-
-@ ml contact hasRoles currentContact,newContact usesFeatures email,personName,Create,Update,Event,Attending,Location,Add,Remove
-
-@ ml date hasRoles currentDate,newDate usesFeatures Create,Update,Event,Attending,Location,Add,Remove
-
-@ ml duration usesFeatures Create,Update,Event,Attending,Location,Add,Remove
-
-@ ml location usesFeatures geographyV2,Create,Update,Event,Attending,Location,Add,Remove
-
-@ ml subject hasRoles newSubject,currentSubject usesFeatures Create,Update,Event,Attending,Location,Add,Remove
-
+@ intent SetTitle usesFeatures Update,Event,Location,Titled
 
 > # PREBUILT Entity definitions
 
 @ prebuilt email
-
 @ prebuilt geographyV2
-
 @ prebuilt ordinalV2
-
 @ prebuilt personName
 
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
 
 > # Phrase list definitions
 
-@ phraselist Create(interchangeable) enabledForAllModels = 
-	- create,schedule,book,new,set up
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
 
-@ phraselist Update(interchangeable) enabledForAllModels = 
+@ phraselist Update(interchangeable) disabledForAllModels = 
 	- modify,change,update,edit,move,set
 
-@ phraselist Event(interchangeable) enabledForAllModels = 
-	- meeting,time,appointment,conference,discussion,meetings,events,appointments
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
 
-@ phraselist Attending(interchangeable) enabledForAllModels = 
+@ phraselist Attending(interchangeable) disabledForAllModels = 
 	- coming,joining,attending,participating in,going to
 
-@ phraselist Location(interchangeable) enabledForAllModels = 
+@ phraselist Location(interchangeable) disabledForAllModels = 
 	- location,room,city
 
-@ phraselist Add(interchangeable) enabledForAllModels = 
+@ phraselist Add(interchangeable) disabledForAllModels = 
 	- add,include,invite
 
-@ phraselist Remove(interchangeable) enabledForAllModels = 
+@ phraselist Remove(interchangeable) disabledForAllModels = 
 	- remove,uninvite,don't add,don't include,un-invite
 
-> # List entities
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
 
-> # RegEx entities
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup
