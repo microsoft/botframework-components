@@ -1,1 +1,0 @@
-{"query":"Remove teams from my meeting on Tuesday","prediction":{"topIntent":"SetOnlineMeetingRemove","intents":{"SetOnlineMeetingRemove":{"score":0.975497961}},"entities":{"date":["Tuesday"]}}}

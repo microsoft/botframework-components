@@ -725,21 +725,6 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Add participant",
-            "data": ${BuildCardActionData('Add participant')}
-        },
-        {
-            "type": "Action.Submit",
-            "title": "Update location",
-            "data": ${BuildCardActionData('Update location')}
-        },
-        {
-            "type": "Action.Submit",
-            "title": "Cancel event",
-            "data": ${BuildCardActionData('Cancel event')}
-        }
     ]
 }
 ```

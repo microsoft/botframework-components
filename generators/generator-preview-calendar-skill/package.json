@@ -1,10 +1,10 @@
 {
-  "name": "generator-preview-calendar-skill",
-  "version": "0.0.1-preview1",
-  "description": "Preview calendar skill for TESTING ONLY",
-  "main": "./generators/app/templates/ConversationalCore/index.js",
+  "name": "@microsoft/generator-microsoft-bot-calendar",
+  "version": "0.0.1",
+  "description": "Preview calendar bot for TESTING ONLY",
+  "main": "./generators/app/index.js",
   "dependencies": {
-    "generator-adaptive-bot": "^1.0.0-preview.8",
+    "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210219.c75d357",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

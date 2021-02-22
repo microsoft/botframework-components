@@ -15,6 +15,7 @@ stages:
         - job: Build
           displayName: Build and package
           steps:
+          - template: versioning-steps.yml
           - template: dotnet-package-steps.yml
           - template: nuget-signing-steps.yml
 
@@ -27,10 +28,12 @@ stages:
         - job: Nuget_pack
           displayName: Create nuget package
           steps:
+          - template: versioning-steps.yml
           - template: nuspec-package-steps.yml
         - job: Npm_pack
           displayName: Create npm package
           steps:
+          - template: versioning-steps.yml
           - template: npm-package-steps.yml
 
   - ${{ if eq(parameters.componentType, 'generator') }}: 
@@ -40,4 +43,5 @@ stages:
         - job: NpmPack
           displayName: Create npm package
           steps:
+          - template: versioning-steps.yml
           - template: npm-package-steps.yml

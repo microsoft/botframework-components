@@ -14,23 +14,24 @@ module.exports = class extends Generator {
   initializing() {
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
+      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
         pluginDefinitions: [{
-          name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
+          name: 'Microsoft.Bot.Components.Orchestrator',
+          settingsPrefix: 'Microsoft.Bot.Components.Orchestrator'
         }],
         packageReferences: [{
-          name: 'Preview.Bot.Component.HelpAndCancel',
-          version: '0.0.1-preview1'
+          name: 'Microsoft.Bot.Components.HelpAndCancel',
+          version: '1.0.0-preview.20210219.eefbca8'
           },
           {
-          name: 'Preview.Bot.Component.Welcome',
-          version: '0.0.1-preview1'
+          name: 'Microsoft.Bot.Components.Welcome',
+          version: '1.0.0-preview.20210219.eefbca8'
           },
           {
-          name: 'Microsoft.Bot.Components.Recognizers.Orchestrator',
-          version: '1.0.0-preview.2'
+          name: 'Microsoft.Bot.Components.Orchestrator',
+          version: '1.0.0-preview.20210219.897f7db'
           },
         ],
         applicationSettingsDirectory: 'settings',
@@ -38,10 +39,9 @@ module.exports = class extends Generator {
       }
     );
 
-
     // create skill, this derives from a separate template
     this.composeWith(
-      require.resolve('generator-preview-calendar-skill/generators/app'),
+      require.resolve('@microsoft/generator-microsoft-bot-calendar/generators/app'),
       {
         arguments: ['calendar'],
       }

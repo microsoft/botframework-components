@@ -1,0 +1,1 @@
+{"query":"remove an attendee","prediction":{"topIntent":"SetAttendeesRemove","intents":{"SetAttendeesRemove":{"score":0.9384715}},"entities":{}}}
