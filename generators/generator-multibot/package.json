@@ -1,11 +1,11 @@
 {
   "name": "generator-multibot",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/ConversationalCore/index.js",
   "dependencies": {
-    "generator-adaptive-bot": "^1.0.0-preview.9",
-    "generator-conversational-core": "^1.0.0",
+    "generator-microsoft-bot-adaptive": "^1.0.0-preview-20210219.c75d357",
+    "generator-microsoft-bot-conversational-core": "^1.0.0-preview-20210219.916e9f9",
     "generator-preview-calendar-skill": "file:../generator-preview-calendar-skill",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"

@@ -1,0 +1,24 @@
+{
+  "name": "@microsoft/generator-microsoft-bot-conversational-core",
+  "version": "1.0.0",
+  "description": "Preview conversational core package for TESTING ONLY",
+  "main": "./generators/app/templates/index.js",
+  "dependencies": {
+    "generator-microsoft-bot-adaptive": "^1.0.0-preview-20210219.c75d357",
+    "yeoman-generator": "^2.0.5",
+    "yeoman-test": "^1.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "conversationalcore",
+    "yeoman-generator"
+  ],
+  "author": "Bot Framework",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  }
+}

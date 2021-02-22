@@ -4,8 +4,8 @@ using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
-using Microsoft.Bot.Component.CalendarSkill;
-using Microsoft.Bot.Component.MsGraph;
+using Microsoft.Bot.Components.Calendar;
+using Microsoft.Bot.Components.Graph;
 using Microsoft.BotFramework.Composer.CustomAction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,8 +38,8 @@ namespace Microsoft.BotFramework.Composer.Tests
             ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
-            ComponentRegistration.Add(new MSGraphComponentRegistration());
-            ComponentRegistration.Add(new CalendarCustomActionComponentRegistration());
+            ComponentRegistration.Add(new GraphComponentRegistration());
+            ComponentRegistration.Add(new CalendarComponentRegistration());
             ComponentRegistration.Add(new CustomActionComponentRegistration());
         }
 
