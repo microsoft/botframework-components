@@ -210,12 +210,12 @@ module.exports = class extends Generator {
     _copyAssets() {
         const botName = this.options.botName;
 
-        const assetFileNames = ['NuGet.config'];
+        const assetNames = ['NuGet.config', 'schemas'];
 
-        for (const assetFileName of assetFileNames) {
+        for (const assetName of assetNames) {
             this.fs.copyTpl(
-                this.templatePath(path.join('assets', assetFileName)),
-                this.destinationPath(path.join(botName, assetFileName)),
+                this.templatePath(path.join('assets', assetName)),
+                this.destinationPath(path.join(botName, assetName)),
                 {
                     botName
                 }
@@ -235,7 +235,7 @@ module.exports = class extends Generator {
 
         this.fs.writeJSON(
             this.destinationPath(path.join(botName, fileName)),
-            runtime
+            appSettings
         );
     }
 };
