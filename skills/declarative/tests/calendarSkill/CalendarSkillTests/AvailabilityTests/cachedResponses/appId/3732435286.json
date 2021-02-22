@@ -1,1 +1,0 @@
-{"query":"when am I done tomorrow","prediction":{"topIntent":"GetAvailabilityLast","intents":{"GetAvailabilityLast":{"score":0.933537066}},"entities":{"date":["tomorrow"]}}}

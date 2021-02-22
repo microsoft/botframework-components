@@ -356,6 +356,7 @@ ASALocalRun/
 **/remove_skill_log.txt
 **/publish_log.txt
 **/.deployment
+**/deployment_settings.json
 
 # Composer generated files
 **/luis.settings.composer.westus.json
