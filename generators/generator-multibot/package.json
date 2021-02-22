@@ -5,7 +5,7 @@
   "main": "./generators/app/index.js",
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210219.c75d357",
-    "@microsoft/generator-microsoft-bot-calendar": "file:../generator-preview-calendar-skill",
+    "@microsoft/generator-microsoft-bot-calendar": "^0.0.1",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
