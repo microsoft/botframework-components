@@ -2,7 +2,7 @@
   "name": "@microsoft/generator-microsoft-bot-empty",
   "version": "1.0.0",
   "description": "",
-  "main": "./generators/app/templates/index.js",
+  "main": "./generators/app/index.js",
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210222.7175ca8",
     "yeoman-generator": "^2.0.5",
