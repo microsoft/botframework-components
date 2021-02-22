@@ -6,9 +6,9 @@ steps:
   inputs:
     SourceFolder: '$(Build.StagingDirectory)\outputpackages'
     Contents: |
-     outputpackages\*.nupkg
-     outputpackages\*.snupkg
-     !outputpackages\*.symbols.nupkg
+     *.nupkg
+     *.snupkg
+     !*.symbols.nupkg
     TargetFolder: '$(Build.ArtifactStagingDirectory)\signing'
     flattenFolders: true
 
