@@ -1,14 +1,4 @@
-# Checks for required .nuspec file and creates package.
-# Pipelines have to run the `nuget pack` task differently based on if the package is in alpha/preview or stable.
-
 steps:
-- powershell: |
-    $packageVersion = "$[dependencies.Versioning.outputs['NugetPackageVersion']]";
-    "NUGET PACKAGE VERSION = $packageVersion"
-
-    Write-Host "##vso[task.setvariable variable=PackageVersion;$packageVersion";
-  displayName: Check for .nuspec file
-
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
