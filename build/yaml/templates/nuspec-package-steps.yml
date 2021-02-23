@@ -13,15 +13,7 @@ steps:
   displayName: Check for .nuspec file
 
 - task: NuGetCommand@2
-  displayName: 'Run `nuget pack` with version suffix'
-  condition: ne(variables.DeploymentRing, 'stable')
-  inputs:
-    command: custom
-    arguments: 'pack $(WorkingDirectory) -Suffix $(VersionSuffix) -OutputDirectory $(Build.ArtifactStagingDirectory)\outputpackages'
-
-- task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
-  condition: eq(variables.DeploymentRing, 'stable')
   inputs:
     command: pack
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
