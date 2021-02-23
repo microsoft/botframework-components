@@ -1,3 +1,7 @@
+# Resolve package version variables: Get the version suffix based on deployment ring, concatenated with dateStamp and commitHash
+# Resolve Node version: Get version from package.json and suffix, if provided, and set 
+# Resolve .csproj version: 
+
 steps:
   - powershell: |
       "Deployment Ring = $(DeploymentRing)";
@@ -16,12 +20,10 @@ steps:
         Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
         "Resolved NpmVersionSuffix = $npmVersionSuffix";
       } 
-      # TODO: Follow up with versioning for release ring
     displayName: 'Resolve package version variables'
 
-    # Get package version for Node package
     # TODO: CodedExtension is only enabled for dotnet projects, this likely needs
-    # refactoring when we have a sample JS plugin to test with.
+    # refactoring when we have a sample Node coded extension to test with.
   - powershell: |
       $deploymentRing = "$(DeploymentRing)";
 
@@ -40,7 +42,7 @@ steps:
         }
 
         "VERSION = $packageVersion";
-        Write-Host "##vso[task.setvariable variable=PackageVersion;]$packageVersion";
+        Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
         
         # Convert back into package.json
         $packageJsonData.version = $packageVersion;
@@ -51,18 +53,42 @@ steps:
         exit 1
       }
 
-    displayName: 'Replace version in package.json'
-    condition: ne('${{ parameters.deploymentRing }}', 'codedExtension')
+    displayName: 'Resolve Node version'
     workingDirectory: $(WorkingDirectory)
+    condition: ne('${{ parameters.componentType }}', 'codedExtension')
 
-# CSPROJ
+  - powershell: |
+      $deploymentRing = "$(DeploymentRing)";
 
-# NUSPEC
+      if (Test-Path -Path *.nuspec) {
+        # Get existing version from .nuspec
+        $xml = [Xml] (Get-Content ./*.nuspec)
+        $versionPrefix = [Version] $xml.Package.MetaData.Version
+
+        "VERSION PREFIX = $versionPrefix";
+
+        # Apply version suffix if provided
+        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+          "VERSION SUFFIX = $(VersionSuffix)";
+          $packageVersion += "-" + "$(VersionSuffix)";
+        }
+
+        "VERSION = $packageVersion";
+        Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+      } else {
+          Write-Host "MISSING .NUSPEC"
+          exit 1
+      }
+    displayName: 'Resolve .nuspec version'
+    workingDirectory: $(WorkingDirectory)
+    condition: eq('${{ parameters.componentType }}', 'declarativeAsset')
 
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: tag build
-    inputs:
-      tags: $(PackageVersion)
+    displayName: Tag build
+    inputs: 
+      tags: |
+        NPM: $(NpmPackageVersion)
+        NuGet: $(NugetPackageVersion)
     continueOnError: true
     condition: and(succeeded(), eq(variables['System.PullRequest.IsFork'], 'false'))
