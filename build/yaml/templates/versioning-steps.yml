@@ -23,6 +23,8 @@ steps:
     # TODO: CodedExtension is only enabled for dotnet projects, this likely needs
     # refactoring when we have a sample JS plugin to test with.
   - powershell: |
+      $deploymentRing = "$(DeploymentRing)";
+
       if (Test-Path -Path package.json) {
         # Get existing version from package.json
         $packageJson = Get-Content package.json;
@@ -32,7 +34,7 @@ steps:
         "VERSION PREFIX = $packageVersion";
 
         # Apply version suffix if provided
-        if ($(DeploymentRing).ToLowerInvariant() -ne "stable") {
+        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
           "VERSION SUFFIX = $(NpmVersionSuffix)";
           $packageVersion += "-" + "$(NpmVersionSuffix)";
         }
