@@ -29,15 +29,15 @@ steps:
         $packageJsonData = $packageJson | ConvertFrom-Json;
         $packageVersion = $packageJsonData.version
 
-        "VERSION PREFIX: $packageVersion)";
+        "VERSION PREFIX = $packageVersion";
 
         # Apply version suffix if provided
-        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-          "VERSION SUFFIX: $(NpmVersionSuffix)";
+        if ($(DeploymentRing).ToLowerInvariant() -ne "stable") {
+          "VERSION SUFFIX = $(NpmVersionSuffix)";
           $packageVersion += "-" + "$(NpmVersionSuffix)";
         }
 
-        "VERSION: $packageVersion";
+        "VERSION = $packageVersion";
         Write-Host "##vso[task.setvariable variable=PackageVersion;]$packageVersion";
         
         # Convert back into package.json
