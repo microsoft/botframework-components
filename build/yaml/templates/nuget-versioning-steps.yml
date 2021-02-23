@@ -17,7 +17,7 @@ steps:
       if ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
         if (Test-Path -Path *.nuspec) {
           $xml = [Xml] (Get-Content ./*.nuspec)
-          $packageVersion = [Version] $xml.Package.MetaData.Version
+          $packageVersion = $xml.Package.MetaData.Version
 
           "Version Prefix = $packageVersion";
 
@@ -25,6 +25,7 @@ steps:
            if ($deploymentRing.ToLowerInvariant() -ne "stable") {
              $nugetVersionSuffix = $deploymentRing + "." + $vs;
              "Version Suffix = $nugetVersionSuffix";
+             $packageVersion = $packageVersion + "-" + $nugetVersionSuffix;
 
              Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
 
