@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "uuid": "^8.3.1",
+    "xml2js": "^0.4.23",
     "yeoman-generator": "^1.1.1"
   },
   "author": "Bot Framework",
