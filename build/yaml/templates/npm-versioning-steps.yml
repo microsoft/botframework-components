@@ -28,10 +28,10 @@ steps:
             # npm uses a slightly different version suffix pattern, so calculate that separately.
             $npmVersionSuffix = $deploymentRing + "-" + $vs;
             "Version Suffix = $npmVersionSuffix";
-            $packageVersion += "-" + $npmVersionSuffix;
+            $packageVersion = $packageVersion + "-" + $npmVersionSuffix;
           }
 
-          "VERSION = $packageVersion";
+          "Version = $packageVersion";
           Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
         
           # Convert back into package.json
@@ -39,7 +39,7 @@ steps:
           $packageJsonData | ConvertTo-Json |
           Out-File package.json -Encoding utf8
         } else {
-          Write-Host "MISSING PACKAGE.JSON"
+          Write-Host "Missing package.json"
           exit 1
         }
       }

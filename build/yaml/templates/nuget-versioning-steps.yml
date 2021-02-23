@@ -28,7 +28,7 @@ steps:
 
              Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
 
-             $packageVersion += "-" + $nugetVersionSuffix;
+             $packageVersion = $packageVersion "-" + $nugetVersionSuffix;
            }
 
           Write-Host "##vso[task.setvariable variable=NugetPackageVersion;isOutput=true]$packageVersion";
