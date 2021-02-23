@@ -2,7 +2,7 @@
   "$schema": "../../app.schema",
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "method": "GET",
-  "url": "https://graph.microsoft.com:443/v1.0/me",
+  "url": "https://graph.microsoft.com:443/beta/me",
   "responses": [
     {
       "content-type": "application/json",
