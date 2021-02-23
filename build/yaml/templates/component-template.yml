@@ -1,6 +1,6 @@
 stages:
-  - stage: Build_pack
-    displayName: Build and package
+  - stage: Build_pack_code
+    displayName: Build and package code
     condition: eq(variables.ComponentType, 'codeExtension')
     jobs:
       - job: Build
@@ -11,8 +11,8 @@ stages:
 
   # Publish both nuget and node packages
   # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-  - stage: Build_pack
-    displayName: Build and package
+  - stage: Build_pack_assets
+    displayName: Build and package declarative assets
     condition: eq(variables.ComponentType, 'declarativeAsset')
     jobs:
       - job: Nuget_pack
@@ -26,8 +26,8 @@ stages:
         - template: versioning-steps.yml
         - template: npm-package-steps.yml
 
-  - stage: Build_pack
-    displayName: Build and package
+  - stage: Build_pack_generators
+    displayName: Build and package generator
     condition: eq(variables.ComponentType, 'generator')
     jobs:
       - job: NpmPack
