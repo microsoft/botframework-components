@@ -1,36 +1,37 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Components.Graph.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
-namespace Microsoft.Bot.Components.Graph.Actions
+namespace Microsoft.Bot.Component.Graph.Actions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
+    using Microsoft.Bot.Components.Graph;
+    using Microsoft.Bot.Components.Graph.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// Custom action to find meeting time that works for attendees using MS Graph
+    /// Custom action to find meeting time that works for attendees using MS Graph.
     /// </summary>
     [GraphCustomActionRegistration(FindMeetingTimes.FindMeetingTimesDeclarativeType)]
     public class FindMeetingTimes : BaseMsGraphCustomAction<List<CalendarSkillTimeSlotModel>>
     {
         /// <summary>
-        /// Declarative type for the custom action
+        /// Declarative type for the custom action.
         /// </summary>
-        public const string FindMeetingTimesDeclarativeType = "Microsoft.Graph.Calendar.FindMeetingTimes";
+        private const string FindMeetingTimesDeclarativeType = "Microsoft.Graph.Calendar.FindMeetingTimes";
 
         /// <summary>
-        /// Creates an instance of <seealso cref="FindMeetingTimes" />
+        /// Initializes a new instance of the <see cref="FindMeetingTimes"/> class.
         /// </summary>
-        /// <param name="callerPath"></param>
-        /// <param name="callerLine"></param>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public FindMeetingTimes([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -38,36 +39,35 @@ namespace Microsoft.Bot.Components.Graph.Actions
         }
 
         /// <summary>
-        /// Gets or sets the list of attendees to the meeting
+        /// Gets or sets the list of attendees to the meeting.
         /// </summary>
-        /// <value>The list of attendees to the meeting</value>
+        /// <value>The list of attendees to the meeting.</value>
         [JsonProperty("attendeesProperty")]
         public ObjectExpression<List<Attendee>> AttendeesProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration of the meeting
+        /// Gets or sets the duration of the meeting.
         /// </summary>
-        /// <value>The duration of th meeting</value>
+        /// <value>The duration of th meeting.</value>
         [JsonProperty("durationProperty")]
         public IntExpression DurationProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the timezone in which to find meeting times for
+        /// Gets or sets the timezone in which to find meeting times for.
         /// </summary>
-        /// <value>The timezone for the search query</value>
+        /// <value>The timezone for the search query.</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
+        /// <inheritdoc />
         public override string DeclarativeType => FindMeetingTimesDeclarativeType;
 
-        protected override async Task<List<CalendarSkillTimeSlotModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc />
+        internal override async Task<List<CalendarSkillTimeSlotModel>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
-            var duration = this.DurationProperty.GetValue(dcState);
-            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
-            var timeZone = GraphUtils.ConvertTimeZoneFormat(timeZoneProperty);
-            var attendees = attendeesProperty;
+            var attendees = (List<Attendee>)parameters["Attendees"];
+            var duration = (int)parameters["Duration"];
+            var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["Timezone"]);
 
             MeetingTimeSuggestionsResult meetingTimesResult = await client.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
                                                                              .Request().PostAsync(cancellationToken);
@@ -88,6 +88,14 @@ namespace Microsoft.Bot.Components.Graph.Actions
             }
 
             return results.OrderBy(s => s.Start).ToList();
+        }
+
+        /// <inheritdoc />
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("Attendees", this.AttendeesProperty.GetValue(state));
+            parameters.Add("Duration", this.DurationProperty.GetValue(state));
+            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
         }
     }
 }
