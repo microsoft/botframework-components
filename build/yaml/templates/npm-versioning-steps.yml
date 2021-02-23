@@ -16,15 +16,9 @@ steps:
 
 
       # Configure version suffix based on deployment ring
-      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-        $nugetVersionSuffix = $deploymentRing + "." + $vs;
-        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
-        "Resolved VersionSuffix = $nugetVersionSuffix";
-        
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {        
         # npm uses a slightly different version suffix pattern, so calculate that separately.
         $npmVersionSuffix = $deploymentRing + "-" + $vs;
-        # Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
-        # "Resolved NpmVersionSuffix = $npmVersionSuffix";
       }
 
       # If declarative assets or generator, get and set version from package.json
@@ -58,44 +52,9 @@ steps:
     displayName: 'Resolve package version variables'
     workingDirectory: $(WorkingDirectory)
 
-  - powershell: |
-      $deploymentRing = "$(DeploymentRing)";
-
-      if (Test-Path -Path *.nuspec) {
-        # Get existing version from .nuspec
-        $xml = [Xml] (Get-Content ./*.nuspec)
-        $versionPrefix = [Version] $xml.Package.MetaData.Version
-
-        "VERSION PREFIX = $versionPrefix";
-
-        # Apply version suffix if provided
-        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-          "VERSION SUFFIX = $(VersionSuffix)";
-          $packageVersion += "-" + "$(VersionSuffix)";
-        }
-
-        "VERSION = $packageVersion";
-        Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
-      } else {
-          Write-Host "MISSING .NUSPEC"
-          exit 1
-      }
-    displayName: 'Resolve .nuspec version'
-    workingDirectory: $(WorkingDirectory)
-    condition: eq(variables.ComponentType, 'declarativeAsset')
-
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: Tag build for NPM
     inputs: 
       tags: |
         NPM: $(NpmPackageVersion)
     continueOnError: true
-    condition: and(succeeded(), ne(variables['NpmPackageVersion'], ''))
-
-  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: Tag build for Nuget
-    inputs: 
-      tags: |
-        NuGet: $(NugetPackageVersion)
-    continueOnError: true
-    condition: and(succeeded(), ne(variables['NugetPackageVersion'], ''))

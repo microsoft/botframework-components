@@ -1,0 +1,57 @@
+# Resolve package version variables: Get the version suffix based on deployment ring, concatenated with dateStamp and commitHash
+# Resolve Node version: Get version from package.json and suffix, if provided, and set 
+# Resolve .csproj version: 
+
+steps:
+  - powershell: |
+      "Deployment Ring = $(DeploymentRing)";
+      $deploymentRing = "$(DeploymentRing)";
+
+      "Component Type = $(ComponentType)";
+      $componentType = "$(ComponentType)";
+
+      $dateStamp = (Get-Date -format "yyyyMMdd");
+      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+      $vs = $dateStamp + "." + $commitHash;
+
+      # Configure version suffix based on deployment ring
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+        $nugetVersionSuffix = $deploymentRing + "." + $vs;
+        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
+        "Resolved VersionSuffix = $nugetVersionSuffix";
+      }
+    displayName: 'Resolve package version variables'
+    workingDirectory: $(WorkingDirectory)
+
+  - powershell: |
+      $deploymentRing = "$(DeploymentRing)";
+
+      if (Test-Path -Path *.nuspec) {
+        # Get existing version from .nuspec
+        $xml = [Xml] (Get-Content ./*.nuspec)
+        $versionPrefix = [Version] $xml.Package.MetaData.Version
+
+        "VERSION PREFIX = $versionPrefix";
+
+        # Apply version suffix if provided
+        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+          "VERSION SUFFIX = $(VersionSuffix)";
+          $packageVersion += "-" + "$(VersionSuffix)";
+        }
+
+        "VERSION = $packageVersion";
+        Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+      } else {
+          Write-Host "MISSING .NUSPEC"
+          exit 1
+      }
+    displayName: 'Resolve .nuspec version'
+    workingDirectory: $(WorkingDirectory)
+    condition: eq(variables.ComponentType, 'declarativeAsset')
+
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+    displayName: Tag build for Nuget
+    inputs: 
+      tags: |
+        NuGet: $(NugetPackageVersion)
+    continueOnError: true
