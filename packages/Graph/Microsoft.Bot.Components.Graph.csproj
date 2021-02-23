@@ -19,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="0.38.0-preview" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.0-rc1.preview" />
-    <PackageReference Include="TimeZoneConverter" Version="3.4.0" />
     
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.66">
       <PrivateAssets>all</PrivateAssets>

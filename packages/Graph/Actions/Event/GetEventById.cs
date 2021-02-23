@@ -14,7 +14,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using Microsoft.Bot.Components.Graph.Models;
     using Microsoft.Graph;
     using Newtonsoft.Json;
-    using TimeZoneConverter;
 
     /// <summary>
     /// This action gets an event from MS Graph by its EventId.
