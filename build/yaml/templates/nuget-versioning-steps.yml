@@ -14,13 +14,6 @@ steps:
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      # Configure version suffix based on deployment ring
-      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-        $nugetVersionSuffix = $deploymentRing + "." + $vs;
-        Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
-        "Resolved VersionSuffix = $nugetVersionSuffix";
-      }
-
       if ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
         if (Test-Path -Path *.nuspec) {
           $xml = [Xml] (Get-Content ./*.nuspec)
@@ -28,13 +21,18 @@ steps:
 
           "Version Prefix = $packageVersion";
 
-          if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-            "Version Suffix = $(VersionSuffix)";
-            $packageVersion += "-" + "$(VersionSuffix)";
-          }
-          
+           # Configure version suffix based on deployment ring
+           if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+             $nugetVersionSuffix = $deploymentRing + "." + $vs;
+             "Version Suffix = $nugetVersionSuffix";
+
+             Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
+
+             $packageVersion += "-" + $nugetVersionSuffix;
+           }
+
           Write-Host "##vso[task.setvariable variable=NugetPackageVersion;isOutput=true]$packageVersion";
-          "VERSION = $packageVersion";
+          "Version = $packageVersion";
         } else {
             Write-Host "Missing .nuspec"
             exit 1

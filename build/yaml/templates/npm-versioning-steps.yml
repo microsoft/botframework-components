@@ -14,13 +14,6 @@ steps:
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-
-      # Configure version suffix based on deployment ring
-      if ($deploymentRing.ToLowerInvariant() -ne "stable") {        
-        # npm uses a slightly different version suffix pattern, so calculate that separately.
-        $npmVersionSuffix = $deploymentRing + "-" + $vs;
-      }
-
       # If declarative assets or generator, get and set version from package.json
       if ($componentType.ToLowerInvariant() -eq "declarativeAsset" -Or $componentType.ToLowerInvariant() -eq "generator" ) {
         if (Test-Path -Path package.json) {
@@ -28,11 +21,12 @@ steps:
           $packageJson = Get-Content package.json;
           $packageJsonData = $packageJson | ConvertFrom-Json;
           $packageVersion = $packageJsonData.version
-
           "Version Prefix = $packageVersion";
 
-          # Apply version suffix if it exists
+          # Configure version suffix based on deployment ring
           if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+            # npm uses a slightly different version suffix pattern, so calculate that separately.
+            $npmVersionSuffix = $deploymentRing + "-" + $vs;
             "Version Suffix = $npmVersionSuffix";
             $packageVersion += "-" + $npmVersionSuffix;
           }
