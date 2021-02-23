@@ -234,6 +234,8 @@ module.exports = class extends Generator {
     }
 
     _writeNugetConfig() {
+        const done = this.async();
+
         const botName = this.options.botName;
         const fileName = 'NuGet.config';
 
@@ -245,6 +247,8 @@ module.exports = class extends Generator {
         const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
 
         xml2js.parseString(nugetConfig, (err, result) => {
+            if (err) return done(err);
+
             delete result.configuration.packageSources[0].clear;
 
             const builder = new xml2js.Builder({
@@ -257,6 +261,8 @@ module.exports = class extends Generator {
             this.fs.write(
                 this.destinationPath(path.join(botName, fileName)),
                 builder.buildObject(result));
+
+            done();
         });
     }
 };
