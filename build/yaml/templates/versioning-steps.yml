@@ -6,10 +6,16 @@ steps:
   - powershell: |
       "Deployment Ring = $(DeploymentRing)";
       $deploymentRing = "$(DeploymentRing)";
+
+      "Component Type = $(ComponentType)";
+      $componentType = "$(ComponentType)";
+
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
+
+      # Configure version suffix based on deployment ring
       if ($deploymentRing.ToLowerInvariant() -ne "stable") {
         $nugetVersionSuffix = $deploymentRing + "." + $vs;
         Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
@@ -17,45 +23,41 @@ steps:
         
         # npm uses a slightly different version suffix pattern, so calculate that separately.
         $npmVersionSuffix = $deploymentRing + "-" + $vs;
-        Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
-        "Resolved NpmVersionSuffix = $npmVersionSuffix";
-      } 
-    displayName: 'Resolve package version variables'
-
-    # TODO: CodedExtension is only enabled for dotnet projects, this likely needs
-    # refactoring when we have a sample Node coded extension to test with.
-  - powershell: |
-      $deploymentRing = "$(DeploymentRing)";
-
-      if (Test-Path -Path package.json) {
-        # Get existing version from package.json
-        $packageJson = Get-Content package.json;
-        $packageJsonData = $packageJson | ConvertFrom-Json;
-        $packageVersion = $packageJsonData.version
-
-        "VERSION PREFIX = $packageVersion";
-
-        # Apply version suffix if provided
-        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-          "VERSION SUFFIX = $(NpmVersionSuffix)";
-          $packageVersion += "-" + "$(NpmVersionSuffix)";
-        }
-
-        "VERSION = $packageVersion";
-        Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
-        
-        # Convert back into package.json
-        $packageJsonData.version = $packageVersion;
-        $packageJsonData | ConvertTo-Json |
-        Out-File package.json -Encoding utf8
-      } else {
-        Write-Host "MISSING PACKAGE.JSON"
-        exit 1
+        # Write-Host "##vso[task.setvariable variable=NpmVersionSuffix;]$npmVersionSuffix";
+        # "Resolved NpmVersionSuffix = $npmVersionSuffix";
       }
 
-    displayName: 'Resolve Node version'
-    workingDirectory: $(WorkingDirectory)
-    condition: ne(variables.ComponentType, 'codedExtension')
+      # If declarative assets or generator, get and set version from package.json
+      if ($componentType.ToLowerInvariant() -eq "declarativeAsset" -Or $componentType.ToLowerInvariant() -eq "generator" ) {
+        if (Test-Path -Path package.json) {
+          # Get existing version from package.json
+          $packageJson = Get-Content package.json;
+          $packageJsonData = $packageJson | ConvertFrom-Json;
+          $packageVersion = $packageJsonData.version
+
+          "VERSION PREFIX = $packageVersion";
+
+          # Apply version suffix if it exists
+          if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+            "VERSION SUFFIX = $npmVersionSuffix";
+            $packageVersion += "-" + "$(NpmVersionSuffix)";
+          }
+
+          "VERSION = $packageVersion";
+          Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
+        
+          # Convert back into package.json
+          $packageJsonData.version = $packageVersion;
+          $packageJsonData | ConvertTo-Json |
+          Out-File package.json -Encoding utf8
+        } else {
+          Write-Host "MISSING PACKAGE.JSON"
+          exit 1
+        }
+      }
+      
+      # If a package.json exists, get version and apply
+    displayName: 'Resolve package version variables'
 
   - powershell: |
       $deploymentRing = "$(DeploymentRing)";
@@ -84,7 +86,7 @@ steps:
     condition: eq(variables.ComponentType, 'declarativeAsset')
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: Tag build
+    displayName: Tag build for NPM
     inputs: 
       tags: |
         NPM: $(NpmPackageVersion)
@@ -92,7 +94,7 @@ steps:
     condition: and(succeeded(), ne(variables['NpmPackageVersion'], ''))
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: Tag build
+    displayName: Tag build for Nuget
     inputs: 
       tags: |
         NuGet: $(NugetPackageVersion)
