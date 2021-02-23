@@ -55,7 +55,7 @@ steps:
 
     displayName: 'Resolve Node version'
     workingDirectory: $(WorkingDirectory)
-    condition: ne(parameters.componentType, 'codedExtension')
+    condition: ne(variables.ComponentType, 'codedExtension')
 
   - powershell: |
       $deploymentRing = "$(DeploymentRing)";
@@ -81,7 +81,7 @@ steps:
       }
     displayName: 'Resolve .nuspec version'
     workingDirectory: $(WorkingDirectory)
-    condition: eq(parameters.componentType, 'declarativeAsset')
+    condition: eq(variables.ComponentType, 'declarativeAsset')
 
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0

@@ -22,10 +22,9 @@ pool:
 
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      componentType: codeExtension
 
 variables:
   WorkingDirectory: 'packages/Orchestrator'
   BuildConfiguration: 'Release'
   DeploymentRing: 'preview'
+  ComponentType: 'codeExtension'

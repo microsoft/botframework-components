@@ -22,9 +22,8 @@ pool:
 
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      componentType: generator
 
 variables:
   WorkingDirectory: 'generators/generator-microsoft-bot-empty'
   DeploymentRing: 'preview'
+  ComponentType: 'generator'

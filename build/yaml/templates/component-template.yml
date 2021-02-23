@@ -1,14 +1,5 @@
-parameters:
-- name: componentType
-  displayName: 'What type of component?'
-  type: string
-  values:
-  - declarativeAsset
-  - codeExtension
-  - generator
-
 stages:
-  - ${{ if eq(parameters.componentType, 'codeExtension') }}: 
+  - ${{ if eq(variables.ComponentType, 'codeExtension') }}: 
     - stage: Build_pack
       displayName: Build and package
       jobs:
@@ -20,7 +11,7 @@ stages:
 
   # Publish both nuget and node packages
   # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-  - ${{ if eq(parameters.componentType, 'declarativeAsset') }}: 
+  - ${{ if eq(variables.ComponentType, 'declarativeAsset') }}: 
     - stage: Build_pack
       displayName: Build and package
       jobs:
@@ -35,7 +26,7 @@ stages:
           - template: versioning-steps.yml
           - template: npm-package-steps.yml
 
-  - ${{ if eq(parameters.componentType, 'generator') }}: 
+  - ${{ if eq(variables.ComponentType, 'generator') }}: 
     - stage: Build_pack
       displayName: Build and package
       jobs:
