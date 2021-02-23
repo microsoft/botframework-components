@@ -237,6 +237,11 @@ module.exports = class extends Generator {
         const botName = this.options.botName;
         const fileName = 'NuGet.config';
 
+        // Due to security checks, all NuGet.config files committed to the repo must possess the <clear/>
+        // element to ensure only a single feed is utilized. This would be fine in a build context, but
+        // is not desired for scaffolding. To avoid triggering security checks, we need to manipulate
+        // the document and remove the element before outputting to the target location.
+
         const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
 
         xml2js.parseString(nugetConfig, (err, result) => {
