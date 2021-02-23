@@ -1,6 +1,6 @@
 steps:
 - powershell: |
-    Write-Host "$env:PackageVersion"
+    Write-Host "$(PackageVersion)"
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:

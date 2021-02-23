@@ -16,7 +16,8 @@ stages:
         condition: eq(variables.ComponentType, 'declarativeAsset')
         dependsOn: Versioning
         variables:
-        PackageVersion: $[ dependencies.Versioning.outputs['NugetPackageVersion'] ]
+         - name: PackageVersion
+           value: $[ dependencies.Versioning.outputs['NugetPackageVersion'] ]
         steps:
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
