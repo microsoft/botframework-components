@@ -1,7 +1,7 @@
 stages:
   - stage: Build_pack
     jobs:
-      - job: Versioning
+      - job: Set_version
         displayName: Resolve versions
         steps:
         - template: nuget-versioning-steps.yml
@@ -9,15 +9,18 @@ stages:
         displayName: Build and package from .NET project file
         condition: eq(variables.ComponentType, 'codeExtension')
         dependsOn: Versioning
+        variables:
+         - name: PackageVersion
+           value: $[ dependencies.Set_version.outputs['PackageVersion'] ]
         steps:
         - template: dotnet-package-steps.yml
       - job: Build_pack_nuspec
         displayName: Build and package from .nuspec file
         condition: eq(variables.ComponentType, 'declarativeAsset')
-        dependsOn: Versioning
+        dependsOn: Set_version
         variables:
          - name: PackageVersion
-           value: $[ dependencies.Versioning.outputs['NugetPackageVersion'] ]
+           value: $[ dependencies.Set_version.outputs['PackageVersion'] ]
         steps:
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm

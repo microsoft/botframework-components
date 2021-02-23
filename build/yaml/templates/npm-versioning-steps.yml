@@ -32,7 +32,7 @@ steps:
           }
 
           "Version = $packageVersion";
-          Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
+          Write-Host "##vso[task.setvariable variable=PackageVersion;]$packageVersion";
         
           # Convert back into package.json
           $packageJsonData.version = $packageVersion;

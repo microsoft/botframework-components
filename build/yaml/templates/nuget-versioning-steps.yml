@@ -28,7 +28,7 @@ steps:
              $packageVersion +=  "-" + $nugetVersionSuffix;
            }
 
-          Write-Host "##vso[task.setvariable variable=NugetPackageVersion;isOutput=true]$packageVersion";
+          Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
           "Version = $packageVersion";
         } else {
             Write-Host "Missing .nuspec"
