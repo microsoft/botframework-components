@@ -55,9 +55,8 @@ steps:
           exit 1
         }
       }
-      
-      # If a package.json exists, get version and apply
     displayName: 'Resolve package version variables'
+    workingDirectory: $(WorkingDirectory)
 
   - powershell: |
       $deploymentRing = "$(DeploymentRing)";
