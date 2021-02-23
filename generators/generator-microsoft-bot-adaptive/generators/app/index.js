@@ -144,7 +144,8 @@ module.exports = class extends Generator {
 
     writing() {
         this._copyDotnetProject();
-        this._copyAssets();
+        this._copySchemas();
+        this._writeNugetConfig();
 
         if (this.includeApplicationSettings) {
             this._writeApplicationSettings();
@@ -167,13 +168,11 @@ module.exports = class extends Generator {
                 botName,
                 packageReferences,
                 settingsDirectory
-            }
-        );
+            });
 
         this.fs.move(
             this.destinationPath(path.join(botName, 'botName.csproj')),
-            this.destinationPath(path.join(botName, `${botName}.csproj`))
-        );
+            this.destinationPath(path.join(botName, `${botName}.csproj`)));
 
         this._copyDotnetSolutionFile();
     }
@@ -203,24 +202,19 @@ module.exports = class extends Generator {
                 botProjectGuid,
                 solutionGuid,
                 projectType
-            }
-        );
+            });
     }
 
-    _copyAssets() {
+    _copySchemas() {
         const botName = this.options.botName;
+        const directoryName = 'schemas';
 
-        const assetNames = ['NuGet.config', 'schemas'];
-
-        for (const assetName of assetNames) {
-            this.fs.copyTpl(
-                this.templatePath(path.join('assets', assetName)),
-                this.destinationPath(path.join(botName, assetName)),
-                {
-                    botName
-                }
-            );
-        }
+        this.fs.copyTpl(
+            this.templatePath(path.join('assets', directoryName)),
+            this.destinationPath(path.join(botName, directoryName)),
+            {
+                botName
+            });
     }
 
     _writeApplicationSettings() {
@@ -235,7 +229,24 @@ module.exports = class extends Generator {
 
         this.fs.writeJSON(
             this.destinationPath(path.join(botName, fileName)),
-            appSettings
-        );
+            appSettings);
+    }
+
+    _writeNugetConfig() {
+        const botName = this.options.botName;
+        const fileName = 'NuGet.config';
+
+        const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
+
+        const parser = new DOMParser();
+        const document = parser.parseFromString(nugetConfig, 'application/xml');
+        const packageSources = document.getElementsByTagName('packageSources')[0];
+        packageSources.replaceChildren(packageSources.childNodes[1]);
+
+        serializer = new XMLSerializer();
+
+        this.fs.write(
+            this.destinationPath(path.join(botName, fileName)),
+            serializer.serializeToString(document));
     }
 };
