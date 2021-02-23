@@ -1,21 +1,25 @@
 stages:
   - stage: Build_pack
     jobs:
-      - job: Build_pack_dotnet
-        displayName: Build and package from .NET project file
-        condition: eq(variables.ComponentType, 'codeExtension')
+      - job: Versioning
+        displayName: Resolve versions
         steps:
         - template: versioning-steps.yml
+      - job: Build_pack_dotnet
+        displayName: Build and package from .NET project file
+        dependsOn: Versioning
+        condition: eq(variables.ComponentType, 'codeExtension')
+        steps:
         - template: dotnet-package-steps.yml
       - job: Build_pack_nuspec
         displayName: Build and package from .nuspec file
+        dependsOn: Versioning
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
-        - template: versioning-steps.yml
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
         displayName: Build and package from Node package.json file
+        dependsOn: Versioning
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
-        - template: versioning-steps.yml
         - template: npm-package-steps.yml
