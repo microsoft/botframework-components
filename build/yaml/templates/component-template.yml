@@ -8,11 +8,13 @@ stages:
       - job: Build_pack_dotnet
         displayName: Build and package from .NET project file
         condition: eq(variables.ComponentType, 'codeExtension')
+        dependsOn: Versioning
         steps:
         - template: dotnet-package-steps.yml
       - job: Build_pack_nuspec
         displayName: Build and package from .nuspec file
         condition: eq(variables.ComponentType, 'declarativeAsset')
+        dependsOn: Versioning
         steps:
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
