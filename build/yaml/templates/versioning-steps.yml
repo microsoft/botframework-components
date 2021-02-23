@@ -18,3 +18,49 @@ steps:
       } 
       # TODO: Follow up with versioning for release ring
     displayName: 'Resolve package version variables'
+
+    # Get package version for Node package
+    # TODO: CodedExtension is only enabled for dotnet projects, this likely needs
+    # refactoring when we have a sample JS plugin to test with.
+  - powershell: |
+      if (Test-Path -Path package.json) {
+        # Get existing version from package.json
+        $packageJson = Get-Content package.json;
+        $packageJsonData = $packageJson | ConvertFrom-Json;
+        $packageVersion = $packageJsonData.version
+
+        "VERSION PREFIX: $packageVersion)";
+
+        # Apply version suffix if provided
+        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+          "VERSION SUFFIX: $(NpmVersionSuffix)";
+          $packageVersion += "-" + "$(NpmVersionSuffix)";
+        }
+
+        "VERSION: $packageVersion";
+        Write-Host "##vso[task.setvariable variable=PackageVersion;]$packageVersion";
+        
+        # Convert back into package.json
+        $packageJsonData.version = $packageVersion;
+        $packageJsonData | ConvertTo-Json |
+        Out-File package.json -Encoding utf8
+      } else {
+        Write-Host "MISSING PACKAGE.JSON"
+        exit 1
+      }
+
+    displayName: 'Replace version in package.json'
+    condition: ne('${{ parameters.deploymentRing }}', 'codedExtension')
+    workingDirectory: $(WorkingDirectory)
+
+# CSPROJ
+
+# NUSPEC
+
+
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+    displayName: tag build
+    inputs:
+      tags: $(PackageVersion)
+    continueOnError: true
+    condition: and(succeeded(), eq(variables['System.PullRequest.IsFork'], 'false'))
