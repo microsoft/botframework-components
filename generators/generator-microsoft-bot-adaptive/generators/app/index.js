@@ -4,6 +4,7 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const xml2js = require('xml2js');
 
 const INTEGRATION_WEBAPP = 'webapp';
 const INTEGRATION_FUNCTIONS = 'functions';
@@ -238,15 +239,19 @@ module.exports = class extends Generator {
 
         const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
 
-        const parser = new DOMParser();
-        const document = parser.parseFromString(nugetConfig, 'application/xml');
-        const packageSources = document.getElementsByTagName('packageSources')[0];
-        packageSources.replaceChildren(packageSources.childNodes[1]);
+        xml2js.parseString(nugetConfig, (err, result) => {
+            delete result.configuration.packageSources[0].clear;
 
-        serializer = new XMLSerializer();
+            const builder = new xml2js.Builder({
+                xmldec: {
+                    version: '1.0',
+                    encoding: 'utf-8'
+                }
+            });
 
-        this.fs.write(
-            this.destinationPath(path.join(botName, fileName)),
-            serializer.serializeToString(document));
+            this.fs.write(
+                this.destinationPath(path.join(botName, fileName)),
+                builder.buildObject(result));
+        });
     }
 };
