@@ -28,7 +28,7 @@ steps:
             # npm uses a slightly different version suffix pattern, so calculate that separately.
             $npmVersionSuffix = $deploymentRing + "-" + $vs;
             "Version Suffix = $npmVersionSuffix";
-            $packageVersion = $packageVersion + "-" + $npmVersionSuffix;
+            $packageVersion += "-" + $npmVersionSuffix;
           }
 
           "Version = $packageVersion";

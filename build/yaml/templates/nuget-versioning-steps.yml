@@ -25,11 +25,9 @@ steps:
            if ($deploymentRing.ToLowerInvariant() -ne "stable") {
              $nugetVersionSuffix = $deploymentRing + "." + $vs;
              "Version Suffix = $nugetVersionSuffix";
-             $packageVersion = $packageVersion + "-" + $nugetVersionSuffix;
-
              Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
 
-             $packageVersion = $packageVersion + "-" + $nugetVersionSuffix;
+             $packageVersion +=  "-" + $nugetVersionSuffix;
            }
 
           Write-Host "##vso[task.setvariable variable=NugetPackageVersion;isOutput=true]$packageVersion";
