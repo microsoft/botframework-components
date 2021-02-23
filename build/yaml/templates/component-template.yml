@@ -1,37 +1,21 @@
 stages:
-  - stage: Build_pack_code
-    displayName: Build and package code
-    condition: eq(variables.ComponentType, 'codeExtension')
+  - stage: Build_pack
     jobs:
-      - job: Build
-        displayName: Build and package
+      - job: Build_pack_dotnet
+        displayName: Build and package .NET
+        condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: versioning-steps.yml
         - template: dotnet-package-steps.yml
-
-  # Publish both nuget and node packages
-  # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-  - stage: Build_pack_assets
-    displayName: Build and package declarative assets
-    condition: eq(variables.ComponentType, 'declarativeAsset')
-    jobs:
-      - job: Nuget_pack
-        displayName: Create nuget package
+      - job: Build_pack_nuspec
+        displayName: Build and package nuspec
+        condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: versioning-steps.yml
         - template: nuspec-package-steps.yml
-      - job: Npm_pack
+      - job: Build_pack_npm
         displayName: Create npm package
-        steps:
-        - template: versioning-steps.yml
-        - template: npm-package-steps.yml
-
-  - stage: Build_pack_generators
-    displayName: Build and package generator
-    condition: eq(variables.ComponentType, 'generator')
-    jobs:
-      - job: NpmPack
-        displayName: Create npm package
+        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: versioning-steps.yml
         - template: npm-package-steps.yml
