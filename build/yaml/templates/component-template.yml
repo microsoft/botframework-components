@@ -1,37 +1,37 @@
 stages:
-  - ${{ if eq(variables.ComponentType, 'codeExtension') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: Build
-          displayName: Build and package
-          steps:
-          - template: versioning-steps.yml
-          - template: dotnet-package-steps.yml
+  - stage: Build_pack
+    displayName: Build and package
+    condition: eq(variables.ComponentType, 'codeExtension')
+    jobs:
+      - job: Build
+        displayName: Build and package
+        steps:
+        - template: versioning-steps.yml
+        - template: dotnet-package-steps.yml
 
   # Publish both nuget and node packages
   # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-  - ${{ if eq(variables.ComponentType, 'declarativeAsset') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: Nuget_pack
-          displayName: Create nuget package
-          steps:
-          - template: versioning-steps.yml
-          - template: nuspec-package-steps.yml
-        - job: Npm_pack
-          displayName: Create npm package
-          steps:
-          - template: versioning-steps.yml
-          - template: npm-package-steps.yml
+  - stage: Build_pack
+    displayName: Build and package
+    condition: eq(variables.ComponentType, 'declarativeAsset')
+    jobs:
+      - job: Nuget_pack
+        displayName: Create nuget package
+        steps:
+        - template: versioning-steps.yml
+        - template: nuspec-package-steps.yml
+      - job: Npm_pack
+        displayName: Create npm package
+        steps:
+        - template: versioning-steps.yml
+        - template: npm-package-steps.yml
 
-  - ${{ if eq(variables.ComponentType, 'generator') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: NpmPack
-          displayName: Create npm package
-          steps:
-          - template: versioning-steps.yml
-          - template: npm-package-steps.yml
+  - stage: Build_pack
+    displayName: Build and package
+    condition: eq(variables.ComponentType, 'generator')
+    jobs:
+      - job: NpmPack
+        displayName: Create npm package
+        steps:
+        - template: versioning-steps.yml
+        - template: npm-package-steps.yml
