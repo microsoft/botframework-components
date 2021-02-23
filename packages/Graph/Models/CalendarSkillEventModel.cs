@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
 namespace Microsoft.Bot.Components.Graph.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     public class CalendarSkillEventModel
     {
         public const string CalendarDescriptionString = "<br /><br /><span>📆 </span><span style =\"font-style: italic; font-family: 'Segoe UI', Calibri, sans-serif\">This event was created using the Calendar Skill.</span>";

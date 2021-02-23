@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
