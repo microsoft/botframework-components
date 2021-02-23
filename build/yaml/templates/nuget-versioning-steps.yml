@@ -4,11 +4,11 @@
 
 steps:
   - powershell: |
-      "Deployment Ring = $(DeploymentRing)";
       $deploymentRing = "$(DeploymentRing)";
+      "Deployment Ring = $deploymentRing";
 
-      "Component Type = $(ComponentType)";
       $componentType = "$(ComponentType)";
+      "Component Type = $componentType";
 
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
@@ -17,37 +17,32 @@ steps:
       # Configure version suffix based on deployment ring
       if ($deploymentRing.ToLowerInvariant() -ne "stable") {
         $nugetVersionSuffix = $deploymentRing + "." + $vs;
-        Write-Host "##vso[task.setvariable variable=VersionSuffix;]$nugetVersionSuffix";
+        Write-Host "##vso[task.setvariable variable=VersionSuffix;isOutput=true]$nugetVersionSuffix";
         "Resolved VersionSuffix = $nugetVersionSuffix";
+      }
+
+      if ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
+        if (Test-Path -Path *.nuspec) {
+          $xml = [Xml] (Get-Content ./*.nuspec)
+          $packageVersion = [Version] $xml.Package.MetaData.Version
+
+          "Version Prefix = $packageVersion";
+
+          if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+            "Version Suffix = $(VersionSuffix)";
+            $packageVersion += "-" + "$(VersionSuffix)";
+          }
+          
+          Write-Host "##vso[task.setvariable variable=NugetPackageVersion;isOutput=true]$packageVersion";
+          "VERSION = $packageVersion";
+        } else {
+            Write-Host "Missing .nuspec"
+            exit 1
+        }
       }
     displayName: 'Resolve package version variables'
     workingDirectory: $(WorkingDirectory)
-
-  - powershell: |
-      $deploymentRing = "$(DeploymentRing)";
-
-      if (Test-Path -Path *.nuspec) {
-        # Get existing version from .nuspec
-        $xml = [Xml] (Get-Content ./*.nuspec)
-        $versionPrefix = [Version] $xml.Package.MetaData.Version
-
-        "VERSION PREFIX = $versionPrefix";
-
-        # Apply version suffix if provided
-        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-          "VERSION SUFFIX = $(VersionSuffix)";
-          $packageVersion += "-" + "$(VersionSuffix)";
-        }
-
-        "VERSION = $packageVersion";
-        Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
-      } else {
-          Write-Host "MISSING .NUSPEC"
-          exit 1
-      }
-    displayName: 'Resolve .nuspec version'
-    workingDirectory: $(WorkingDirectory)
-    condition: eq(variables.ComponentType, 'declarativeAsset')
+    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: Tag build for Nuget

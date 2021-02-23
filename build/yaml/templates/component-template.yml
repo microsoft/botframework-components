@@ -1,17 +1,19 @@
 stages:
   - stage: Build_pack
     jobs:
+      - job: Versioning
+        displayName: Resolve versions
+        steps:
+        - template: nuget-versioning-steps.yml
       - job: Build_pack_dotnet
         displayName: Build and package from .NET project file
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
-        - template: nuget-versioning-steps.yml
         - template: dotnet-package-steps.yml
       - job: Build_pack_nuspec
         displayName: Build and package from .nuspec file
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
-        - template: nuget-versioning-steps.yml
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
         displayName: Build and package from Node package.json file

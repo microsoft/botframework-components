@@ -4,11 +4,11 @@
 
 steps:
   - powershell: |
-      "Deployment Ring = $(DeploymentRing)";
       $deploymentRing = "$(DeploymentRing)";
+      "Deployment Ring = $deploymentRing";
 
-      "Component Type = $(ComponentType)";
       $componentType = "$(ComponentType)";
+      "Component Type = $componentType";
 
       $dateStamp = (Get-Date -format "yyyyMMdd");
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
@@ -29,11 +29,11 @@ steps:
           $packageJsonData = $packageJson | ConvertFrom-Json;
           $packageVersion = $packageJsonData.version
 
-          "VERSION PREFIX = $packageVersion";
+          "Version Prefix = $packageVersion";
 
           # Apply version suffix if it exists
           if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-            "VERSION SUFFIX = $npmVersionSuffix";
+            "Version Suffix = $npmVersionSuffix";
             $packageVersion += "-" + $npmVersionSuffix;
           }
 
