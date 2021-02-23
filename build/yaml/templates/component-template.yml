@@ -1,5 +1,5 @@
 stages:
-  - ${{ if eq(variables['ComponentType', 'codeExtension') }}: 
+  - ${{ if eq(variables['ComponentType'], 'codeExtension') }}: 
     - stage: Build_pack
       displayName: Build and package
       jobs:
