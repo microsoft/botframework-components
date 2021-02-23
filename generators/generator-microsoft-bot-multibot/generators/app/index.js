@@ -23,15 +23,15 @@ module.exports = class extends Generator {
         }],
         packageReferences: [{
           name: 'Microsoft.Bot.Components.HelpAndCancel',
-          version: '1.0.0-preview.20210219.eefbca8'
+          version: '1.0.0-preview.20210222.79f4c33'
           },
           {
           name: 'Microsoft.Bot.Components.Welcome',
-          version: '1.0.0-preview.20210219.eefbca8'
+          version: '1.0.0-preview.20210222.79f4c33'
           },
           {
           name: 'Microsoft.Bot.Components.Orchestrator',
-          version: '1.0.0-preview.20210219.897f7db'
+          version: '1.0.0-preview.20210222.79f4c33'
           },
         ],
         applicationSettingsDirectory: 'settings',
