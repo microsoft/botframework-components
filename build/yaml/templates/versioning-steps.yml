@@ -40,7 +40,7 @@ steps:
           # Apply version suffix if it exists
           if ($deploymentRing.ToLowerInvariant() -ne "stable") {
             "VERSION SUFFIX = $npmVersionSuffix";
-            $packageVersion += "-" + "$(NpmVersionSuffix)";
+            $packageVersion += "-" + $npmVersionSuffix;
           }
 
           "VERSION = $packageVersion";
