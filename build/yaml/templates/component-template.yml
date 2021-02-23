@@ -14,7 +14,7 @@ stages:
         - template: versioning-steps.yml
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
-        displayName: Build and package from package.json file
+        displayName: Build and package from Node package.json file
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: versioning-steps.yml

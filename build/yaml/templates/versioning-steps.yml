@@ -83,12 +83,18 @@ steps:
     workingDirectory: $(WorkingDirectory)
     condition: eq(variables.ComponentType, 'declarativeAsset')
 
-
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: Tag build
     inputs: 
       tags: |
         NPM: $(NpmPackageVersion)
+    continueOnError: true
+    condition: and(succeeded(), ne(variables['NpmPackageVersion'], ''))
+
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+    displayName: Tag build
+    inputs: 
+      tags: |
         NuGet: $(NugetPackageVersion)
     continueOnError: true
-    condition: and(succeeded(), eq(variables['System.PullRequest.IsFork'], 'false'))
+    condition: and(succeeded(), ne(variables['NugetPackageVersion'], ''))
