@@ -1,10 +1,11 @@
 {
-  "name": "@microsoft/generator-microsoft-bot-conversational-core",
-  "version": "1.0.0",
-  "description": "Preview conversational core package for TESTING ONLY",
-  "main": "./generators/app/templates/index.js",
+  "name": "@microsoft/generator-microsoft-bot-multibot",
+  "version": "0.0.1",
+  "description": "Preview multi-bot template for TESTING ONLY",
+  "main": "./generators/app/index.js",
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210222.fbfbf89",
+    "@microsoft/generator-microsoft-bot-calendar": "^0.0.1",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
