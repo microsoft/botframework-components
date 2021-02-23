@@ -7,7 +7,7 @@
     {
       "content-type": "application/json",
       "content": {
-        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "@odata.context": "https://graph.microsoft.com/beta/$metadata#users/$entity",
         "businessPhones": [
           "+1 412 555 0109"
         ],
