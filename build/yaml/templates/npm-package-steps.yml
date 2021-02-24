@@ -4,6 +4,11 @@ steps:
   inputs:
     versionSpec: '14.x'
 
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
 - powershell: |
     if (Test-Path -Path package.json) {
       # Get package.json ojbect
@@ -25,11 +30,6 @@ steps:
     }
     displayName: 'Set package.json version with NpmPackageVersion'
     workingDirectory: $(WorkingDirectory)
-  
-- script: |
-    npm install
-  displayName: 'Install dependencies'
-  workingDirectory: '$(WorkingDirectory)'
 
 - script: |
     npm pack
