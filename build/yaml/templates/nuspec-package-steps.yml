@@ -1,8 +1,4 @@
 steps:
-- script: echo $(PackageVersion)
-- powershell: |
-    Write-Host "##vso[task.setvariable variable=PackageVersion;]$env:PackageVersion";
-
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
