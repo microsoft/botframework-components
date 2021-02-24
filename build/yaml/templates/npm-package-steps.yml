@@ -6,14 +6,16 @@ steps:
 
 - powershell: |
     if (Test-Path -Path package.json) {
-      # Get existing version from package.json
+      # Get package.json ojbect
       $packageJson = Get-Content package.json;
       $packageJsonData = $packageJson | ConvertFrom-Json;
       "Provided version = $packageJsonData.version";
 
+      # Get variable passed from Setup stage
       $packageVersion = "$(NpmPackageVersion)";
-      "Writing version $packageVersion to package.json"
+
       # Convert back into package.json
+      "Writing version $packageVersion to package.json"
       $packageJsonData.version = $packageVersion;
       $packageJsonData | ConvertTo-Json |
       Out-File package.json -Encoding utf8
