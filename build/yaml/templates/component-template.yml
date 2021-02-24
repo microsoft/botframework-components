@@ -19,9 +19,9 @@ stages:
         condition: eq(variables.ComponentType, 'declarativeAsset')
         dependsOn: Set_version
         variables:
-         - name: PackageVersion
-           value: $[ dependencies.Set_version.outputs['PackageVersion'] ]
+          PackageVersion: $[ dependencies.Set_version.outputs['PackageVersion'] ]
         steps:
+        - script: echo $(PackageVersion)
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
         displayName: Build and package from Node package.json file
