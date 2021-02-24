@@ -36,6 +36,7 @@ steps:
         }
       }
     displayName: 'Resolve package version variables'
+    name: SetVersion
     workingDirectory: '$(WorkingDirectory)'
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
