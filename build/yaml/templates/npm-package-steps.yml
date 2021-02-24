@@ -22,7 +22,7 @@ steps:
         exit 1
       }
     }
-    displayName: 'Resolve package version variables'
+    displayName: 'Set package.json version with NpmPackageVersion variable'
     workingDirectory: $(WorkingDirectory)
   
 - script: |
