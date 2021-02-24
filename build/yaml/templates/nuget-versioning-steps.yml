@@ -18,25 +18,33 @@ steps:
         if (Test-Path -Path *.nuspec) {
           $xml = [Xml] (Get-Content ./*.nuspec)
           $packageVersion = $xml.Package.MetaData.Version
-
-          "Version Prefix = $packageVersion";
-
-           # Configure version suffix based on deployment ring
-           if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-             $nugetVersionSuffix = $deploymentRing + "." + $vs;
-             "Version Suffix = $nugetVersionSuffix";
-             $packageVersion +=  "-" + $nugetVersionSuffix;
-           }
-
-          Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
-          Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
-
-          "Version = $packageVersion";
         } else {
             Write-Host "Missing .nuspec"
             exit 1
         }
+      } elseif ($componentType.ToLowerInvariant() -eq "codeExtension") {
+        if (Test-Path -Path *.csproj) {
+          $xml = [Xml] (Get-Content ./*.csproj)
+          $packageVersion = $xml.Project.PropertyGroup.VersionPrefix
+        } else {
+            Write-Host "Missing .csproj"
+            exit 1
+        }
       }
+
+      "Version Prefix = $packageVersion";
+
+      # Configure version suffix based on deployment ring
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+        $nugetVersionSuffix = $deploymentRing + "." + $vs;
+        "Version Suffix = $nugetVersionSuffix";
+        $packageVersion +=  "-" + $nugetVersionSuffix;
+      }
+
+      Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+      Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
+
+      "Version = $packageVersion";
     displayName: 'Resolve package version variables'
     name: SetVersion
     workingDirectory: $(WorkingDirectory)
