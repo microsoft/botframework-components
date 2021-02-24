@@ -1,13 +1,13 @@
 stages:
   - stage: Setup
     jobs:       
-      - job: resolve_nuget_version
-        displayName: Resolve NuGet version
+      - job: setup_nuget_version
+        displayName: NuGet version
         condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
         steps:
         - template: nuget-versioning-steps.yml
-      - job: resolve_npm_version
-        displayName: Resolve Node version
+      - job: setup_npm_version
+        displayName: Node version
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-versioning-steps.yml
@@ -15,21 +15,21 @@ stages:
     displayName: Build and package
     dependsOn: Setup
     variables:
-      PackageVersion: $[ stageDependencies.Setup.resolve_nuget_version.outputs['SetVersion.PackageVersion'] ]
-      NpmPackageVersion: $[ stageDependencies.Setup.resolve_npm_version.outputs['SetVersion.PackageVersion'] ]
+      PackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
+      NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
     jobs:
       - job: build_pack_dotnet
-        displayName: Build and package from .NET project file
+        displayName: .NET project file
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: dotnet-package-steps.yml
       - job: build_pack_nuspec
-        displayName: Build and package from .nuspec file
+        displayName: .nuspec file
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuspec-package-steps.yml
       - job: build_pack_npm
-        displayName: Build and package from Node package.json file
+        displayName: Node package.json file
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-package-steps.yml
