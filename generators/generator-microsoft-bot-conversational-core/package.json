@@ -9,7 +9,7 @@
     "yeoman-test": "^1.9.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --ext .js,.ts"
   },
   "keywords": [
     "conversationalcore",
