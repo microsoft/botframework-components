@@ -20,7 +20,6 @@ steps:
     } else {
         Write-Host "Missing package.json"
         exit 1
-      }
     }
     displayName: 'Set package.json version with NpmPackageVersion variable'
     workingDirectory: $(WorkingDirectory)
