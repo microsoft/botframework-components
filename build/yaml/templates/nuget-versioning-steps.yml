@@ -25,7 +25,7 @@ steps:
       }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
         if (Test-Path -Path *.nuspec) {
           $xml = [Xml] (Get-Content ./*.nuspec)
-          $packageVersion = $xml.Package.MetaData.Version
+          $packageVersion = $xml.Package.MetaData.Version.Trim()
         } else {
             Write-Host "Missing .nuspec"
             exit 1
