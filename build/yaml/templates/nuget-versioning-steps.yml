@@ -38,12 +38,14 @@ steps:
         }
       }
     displayName: 'Resolve package version variables'
+    name: SetVersion
     workingDirectory: $(WorkingDirectory)
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
-
+  - script: echo $(SetVersion.PackageVersion)
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
     displayName: Tag build for Nuget
     inputs: 
       tags: |
         NugetPackageVersion: $(NugetPackageVersion)
+        PackageVersion: $(PackageVersion)
     continueOnError: true
