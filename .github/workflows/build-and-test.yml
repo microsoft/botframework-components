@@ -7,6 +7,34 @@ on:
     branches: [ "calendarSkill_v2", "main" ]
 
 jobs:
+  lint:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use node 12.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+
+      - name: Set yarn cache dir
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Set up caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: windows-latest-node12.x-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Lint packages
+        run: yarn lint
+
   build:
     runs-on: windows-latest
 
