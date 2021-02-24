@@ -1,7 +1,3 @@
-# Resolve package version variables: Get the version suffix based on deployment ring, concatenated with dateStamp and commitHash
-# Resolve Node version: Get version from package.json and suffix, if provided, and set 
-# Resolve .csproj version: 
-
 steps:
   - powershell: |
       $deploymentRing = "$(DeploymentRing)";

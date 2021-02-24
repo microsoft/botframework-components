@@ -22,6 +22,6 @@ extends:
 
 variables:
   BuildConfiguration: 'Release'
-  ComponentType: 'YOUR_COMPONENT_TYPE' #codeExtension, declarativeAsset, or generator
+  ComponentType: '{YOUR_COMPONENT_TYPE}' #codeExtension, declarativeAsset, or generator
   DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
   WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'

@@ -26,4 +26,4 @@ extends:
 variables:
   ComponentType: 'generator'
   DeploymentRing: 'preview'
-  WorkingDirectory: 'generators/generator-microsoft-bot-adaptive''
+  WorkingDirectory: 'generators/generator-microsoft-bot-adaptive'
