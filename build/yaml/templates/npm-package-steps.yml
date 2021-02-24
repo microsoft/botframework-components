@@ -28,8 +28,8 @@ steps:
         Write-Host "Missing package.json"
         exit 1
     }
-    displayName: 'Set package.json version with NpmPackageVersion'
-    workingDirectory: $(WorkingDirectory)
+  displayName: 'Set package.json version with NpmPackageVersion'
+  workingDirectory: '$(WorkingDirectory)'
 
 - script: |
     npm pack

@@ -47,7 +47,7 @@ steps:
       "Version = $packageVersion";
     displayName: 'Resolve package version variables'
     name: SetVersion
-    workingDirectory: $(WorkingDirectory)
+    workingDirectory: '$(WorkingDirectory)'
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
 
   - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
