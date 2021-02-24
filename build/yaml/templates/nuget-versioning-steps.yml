@@ -14,15 +14,7 @@ steps:
       $commitHash = "$(Build.SourceVersion)".SubString(0,7);
       $vs = $dateStamp + "." + $commitHash;
 
-      if ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
-        if (Test-Path -Path *.nuspec) {
-          $xml = [Xml] (Get-Content ./*.nuspec)
-          $packageVersion = $xml.Package.MetaData.Version
-        } else {
-            Write-Host "Missing .nuspec"
-            exit 1
-        }
-      } elseif ($componentType.ToLowerInvariant() -eq "codeExtension") {
+      if ($componentType.ToLowerInvariant() -eq "codeExtension") {
         if (Test-Path -Path *.csproj) {
           $xml = [Xml] (Get-Content ./*.csproj)
           $packageVersion = $xml.Project.PropertyGroup.VersionPrefix
@@ -30,7 +22,15 @@ steps:
             Write-Host "Missing .csproj"
             exit 1
         }
-      }
+      }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
+        if (Test-Path -Path *.nuspec) {
+          $xml = [Xml] (Get-Content ./*.nuspec)
+          $packageVersion = $xml.Package.MetaData.Version
+        } else {
+            Write-Host "Missing .nuspec"
+            exit 1
+        }
+      } 
 
       "Version Prefix = $packageVersion";
 
