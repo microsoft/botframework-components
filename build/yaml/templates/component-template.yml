@@ -20,7 +20,6 @@ stages:
         variables:
           PackageVersion: $[ dependencies.ResolveVerison.outputs['SetVersion.PackageVersion'] ]
         steps:
-        - script: echo $(PackageVersion)
         - template: nuspec-package-steps.yml
       - job: Build_pack_npm
         displayName: Build and package from Node package.json file
