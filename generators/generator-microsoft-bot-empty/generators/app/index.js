@@ -5,18 +5,31 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument("botName", { type: String, required: true });
+    this.argument('botName', { type: String, required: true });
     
+    this.option('integration', {
+        desc: 'The host integration to use.',
+        type: String,
+        alias: 'i'
+    });
+
+    this.option('platform', {
+        desc: 'The programming platform to use.',
+        type: String,
+        alias: 'p'
+    });
   }
 
   initializing() {
     this.composeWith(
       require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
       {
-        arguments: this.args,
-        packageReferences: [],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
+        arguments: this.args,
+        includeApplicationSettings: false,
+        integration: this.options.integration,
+        packageReferences: [],
+        platform: this.options.platform,
       }
     );
   }
