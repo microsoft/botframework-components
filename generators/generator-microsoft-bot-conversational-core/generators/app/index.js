@@ -5,30 +5,32 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument("botName", { type: String, required: true });
-    
+    this.argument('botName', { type: String, required: true });
   }
 
   initializing() {
     this.composeWith(
-      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
+      require.resolve(
+        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+      ),
       {
         arguments: this.args,
-        packageReferences: [{
-          name: 'Microsoft.Bot.Components.HelpAndCancel',
-          version: '1.0.0-preview.20210222.79f4c33'
+        packageReferences: [
+          {
+            name: 'Microsoft.Bot.Components.HelpAndCancel',
+            version: '1.0.0-preview.20210222.79f4c33',
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210222.79f4c33'
+            version: '1.0.0-preview.20210222.79f4c33',
           },
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
+        includeApplicationSettings: false,
       }
     );
   }
-  
+
   writing() {
     this.fs.copyTpl(
       this.templatePath(),
