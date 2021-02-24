@@ -10,6 +10,7 @@ stages:
         steps:
         - template: npm-versioning-steps.yml
   - stage: Build_pack
+    displayName: Build and package
     dependsOn: Setup
     variables:
       PackageVersion: $[ stageDependencies.Setup.ResolveNugetVersion.outputs['SetVersion.PackageVersion'] ]
