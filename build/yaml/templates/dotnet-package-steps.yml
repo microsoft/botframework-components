@@ -43,6 +43,6 @@ steps:
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackageVersion'
+    versionEnvVar: 'NugetPackageVersion'
 
 - template: nuget-build-artifacts-steps.yml

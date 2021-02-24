@@ -15,7 +15,7 @@ stages:
     displayName: Build and package
     dependsOn: Setup
     variables:
-      PackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
+      NugetPackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
       NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
     jobs:
       - job: build_pack_dotnet

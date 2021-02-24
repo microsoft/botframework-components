@@ -6,6 +6,6 @@ steps:
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
     packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: 'PackageVersion'
+    versionEnvVar: 'NugetPackageVersion'
 
 - template: nuget-build-artifacts-steps.yml
