@@ -12,7 +12,7 @@ steps:
       "Provided version = $packageJsonData.version";
 
       $packageVersion = "$(NpmPackageVersion)";
-      "Resolved version = $packageVersion"
+      "Writing version $packageVersion to package.json"
       # Convert back into package.json
       $packageJsonData.version = $packageVersion;
       $packageJsonData | ConvertTo-Json |
@@ -21,7 +21,7 @@ steps:
         Write-Host "Missing package.json"
         exit 1
     }
-    displayName: 'Set package.json version with NpmPackageVersion variable'
+    displayName: 'Set package.json version with NpmPackageVersion'
     workingDirectory: $(WorkingDirectory)
   
 - script: |
