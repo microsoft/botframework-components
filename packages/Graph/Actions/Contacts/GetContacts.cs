@@ -1,34 +1,36 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Components.Graph.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
-namespace Microsoft.Bot.Components.Graph.Actions
+namespace Microsoft.Bot.Component.Graph.Actions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
+    using Microsoft.Bot.Components.Graph;
+    using Microsoft.Bot.Components.Graph.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// Custom action to get contacts for the user from MS Graph
+    /// Custom action to get contacts for the user from MS Graph.
     /// </summary>
     [GraphCustomActionRegistration(GetContacts.GetContactsDeclarativeType)]
     public class GetContacts : BaseMsGraphCustomAction<List<CalendarSkillContactModel>>
     {
-        public const string GetContactsDeclarativeType = "Microsoft.Graph.Calendar.GetContacts";
+        private const string GetContactsDeclarativeType = "Microsoft.Graph.Calendar.GetContacts";
 
         /// <summary>
-        /// Creates an instance of <seealso cref="GetContacts" />
+        /// Initializes a new instance of the <see cref="GetContacts"/> class.
         /// </summary>
-        /// <param name="callerPath"></param>
-        /// <param name="callerLine"></param>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public GetContacts([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -36,25 +38,18 @@ namespace Microsoft.Bot.Components.Graph.Actions
         }
 
         /// <summary>
-        /// Gets or sets the name of the contact to search
+        /// Gets or sets the name of the contact to search.
         /// </summary>
-        /// <value></value>
         [JsonProperty("nameProperty")]
         public StringExpression NameProperty { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => GetContactsDeclarativeType;
 
-        /// <summary>
-        /// Gets the list of contacts
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task<List<CalendarSkillContactModel>> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<List<CalendarSkillContactModel>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var name = this.NameProperty.GetValue(dcState);
+            var name = (string)parameters["Name"];
             var results = new List<CalendarSkillContactModel>();
 
             var optionList = new List<QueryOption>();
@@ -97,7 +92,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
                 {
                     var emailAddresses = new List<string>();
 
-                    foreach (var email in person.ScoredEmailAddresses)
+                    foreach (var email in person.EmailAddresses)
                     {
                         // If the email address isn't already included in the contacts list, add it
                         if (!existingResult.Contains(email.Address) && this.IsEmail(email.Address))
@@ -122,6 +117,12 @@ namespace Microsoft.Bot.Components.Graph.Actions
             results.AddRange(contactsResult);
 
             return results;
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("Name", this.NameProperty.GetValue(state));
         }
 
         private bool IsEmail(string emailString)

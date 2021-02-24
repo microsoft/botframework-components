@@ -1,32 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Components.Graph.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
-namespace Microsoft.Bot.Components.Graph.Actions
+namespace Microsoft.Bot.Component.Graph.Actions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Components.Graph;
+    using Microsoft.Bot.Components.Graph.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Custom action for creating a new event in MS Graph.
     /// </summary>
     [GraphCustomActionRegistration(CreateEvent.CreateEventDeclarativeType)]
     public class CreateEvent : BaseMsGraphCustomAction<Event>
     {
-        public const string CreateEventDeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";
+        private const string CreateEventDeclarativeType = "Microsoft.Graph.Calendar.CreateEvent";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateEvent"/> class.
-        /// Creates a new instance of <seealso cref="CreateEvent" />
         /// </summary>
-        /// <param name="callerPath"></param>
-        /// <param name="callerLine"></param>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public CreateEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -36,31 +36,23 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// <summary>
         /// Gets or sets the timezone of the event.
         /// </summary>
-        /// <value>Timezone of the event</value>
         [JsonProperty("timeZoneProperty")]
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
         /// The event and its property to update in graph.
         /// </summary>
-        /// <value></value>
         [JsonProperty("eventToCreateProperty")]
         public ObjectExpression<CalendarSkillEventModel> EventToCreateProperty { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => CreateEventDeclarativeType;
 
-        /// <summary>
-        /// Calls Graph service to create a calendar event.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task<Event> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<Event> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var eventToCreateProperty = this.EventToCreateProperty.GetValue(dcState);
-            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
+            var eventToCreateProperty = (CalendarSkillEventModel)parameters["EventToCreate"];
+            var timeZoneProperty = (string)parameters["Timezone"];
 
             var newEvent = new Event()
             {
@@ -90,6 +82,13 @@ namespace Microsoft.Bot.Components.Graph.Actions
             };
 
             return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(Builder.Dialogs.Memory.DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("EventToCreate", this.EventToCreateProperty.GetValue(state));
+            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
         }
     }
 }

@@ -1,12 +1,12 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "Method": "",
-  "Url": "https://graph.microsoft.com/v1.0/me/*findMeetingTimes",
+  "Url": "https://graph.microsoft.com/beta/me/*findMeetingTimes",
   "responses": [
     {
       "content-type": "application/json",
       "content": {
-        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.meetingTimeSuggestionsResult",
+        "@odata.context": "https://graph.microsoft.com/beta/$metadata#microsoft.graph.meetingTimeSuggestionsResult",
         "emptySuggestionsReason": "",
         "meetingTimeSuggestions": [
           {

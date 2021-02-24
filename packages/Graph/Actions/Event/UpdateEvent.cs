@@ -1,19 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Components.Graph.Models;
-using Microsoft.Graph;
-using Newtonsoft.Json;
-
-namespace Microsoft.Bot.Components.Graph.Actions
+namespace Microsoft.Bot.Component.Graph.Actions
 {
+    using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.Dialogs.Memory;
+    using Microsoft.Bot.Components.Graph;
+    using Microsoft.Bot.Components.Graph.Models;
+    using Microsoft.Graph;
+    using Newtonsoft.Json;
+
     /// <summary>
-    /// Updates the event using MS Graph service
+    /// Updates the event using MS Graph service.
     /// </summary>
     [GraphCustomActionRegistration(UpdateEvent.UpdateEventDeclarativeType)]
     public class UpdateEvent : BaseMsGraphCustomAction<Event>
@@ -21,8 +23,13 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// <summary>
         /// Declarative type of this custom action.
         /// </summary>
-        public const string UpdateEventDeclarativeType = "Microsoft.Graph.Calendar.UpdateEvent";
+        private const string UpdateEventDeclarativeType = "Microsoft.Graph.Calendar.UpdateEvent";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateEvent"/> class.
+        /// </summary>
+        /// <param name="callerPath">Caller path.</param>
+        /// <param name="callerLine">Caller line.</param>
         [JsonConstructor]
         public UpdateEvent([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(callerPath, callerLine)
@@ -30,25 +37,18 @@ namespace Microsoft.Bot.Components.Graph.Actions
         }
 
         /// <summary>
-        /// The event and its property to update in graph.
+        /// Gets or sets the event and its property to update in graph.
         /// </summary>
-        /// <value></value>
         [JsonProperty("eventToUpdateProperty")]
         public ObjectExpression<CalendarSkillEventModel> EventToUpdateProperty { get; set; }
 
+        /// <inheritdoc/>
         public override string DeclarativeType => UpdateEventDeclarativeType;
 
-        /// <summary>
-        /// Calls the MS graph service to update an event's detail.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="dc"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        protected override async Task<Event> CallGraphServiceWithResultAsync(GraphServiceClient client, DialogContext dc, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        internal override async Task<Event> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            var dcState = dc.State;
-            var eventToUpdateProperty = this.EventToUpdateProperty.GetValue(dcState);
+            var eventToUpdateProperty = (CalendarSkillEventModel)parameters["CalendarSkillEvent"];
 
             var eventToUpdate = new Event()
             {
@@ -71,6 +71,12 @@ namespace Microsoft.Bot.Components.Graph.Actions
             };
 
             return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
+        {
+            parameters.Add("CalendarSkillEvent", this.EventToUpdateProperty.GetValue(state));
         }
     }
 }

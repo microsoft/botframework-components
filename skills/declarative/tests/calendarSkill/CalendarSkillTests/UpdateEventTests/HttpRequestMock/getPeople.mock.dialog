@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "Method": "",
-  "Url": "https://graph.microsoft.com/v1.0/me/people*",
+  "Url": "https://graph.microsoft.com/beta/me/people*",
   "Responses": [
     {
       "Content": {
@@ -22,18 +22,19 @@
             "profession": null,
             "userPrincipalName": null,
             "imAddress": null,
-            "scoredEmailAddresses": [
-                {
-                    "address": "test@test.com",
-                    "relevanceScore": 248762882,
-                    "selectionLikelihood": "notSpecified"
-                }
+            "emailAddresses": [
+              {
+                "address": "test@test.com",
+                "relevanceScore": 248762882
+              }
             ],
             "phones": [],
-            "personType": {
-                "class": "Person",
-                "subclass": "ImplicitContact"
-            }
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
           }
         ]
       }
@@ -57,18 +58,19 @@
             "profession": null,
             "userPrincipalName": null,
             "imAddress": null,
-            "scoredEmailAddresses": [
-                {
-                    "address": "test2@test.com",
-                    "relevanceScore": 248762881,
-                    "selectionLikelihood": "notSpecified"
-                }
+            "emailAddresses": [
+              {
+                "address": "test2@test.com",
+                "relevanceScore": 248762881
+              }
             ],
             "phones": [],
-            "personType": {
-                "class": "Person",
-                "subclass": "ImplicitContact"
-            }
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
           }
         ]
       }
@@ -92,18 +94,19 @@
             "profession": null,
             "userPrincipalName": null,
             "imAddress": null,
-            "scoredEmailAddresses": [
-                {
-                    "address": "test@test.com",
-                    "relevanceScore": 248762882,
-                    "selectionLikelihood": "notSpecified"
-                }
+            "emailAddresses": [
+              {
+                "address": "test@test.com",
+                "relevanceScore": 248762882
+              }
             ],
             "phones": [],
-            "personType": {
-                "class": "Person",
-                "subclass": "ImplicitContact"
-            }
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
           }
         ]
       }
@@ -127,18 +130,19 @@
             "profession": null,
             "userPrincipalName": null,
             "imAddress": null,
-            "scoredEmailAddresses": [
-                {
-                    "address": "test2@test.com",
-                    "relevanceScore": 248762881,
-                    "selectionLikelihood": "notSpecified"
-                }
+            "emailAddresses": [
+              {
+                "address": "test2@test.com",
+                "relevanceScore": 248762881
+              }
             ],
             "phones": [],
-            "personType": {
-                "class": "Person",
-                "subclass": "ImplicitContact"
-            }
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
           }
         ]
       }
