@@ -29,6 +29,8 @@ steps:
            }
 
           Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+          Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
+
           "Version = $packageVersion";
         } else {
             Write-Host "Missing .nuspec"
@@ -43,5 +45,5 @@ steps:
     displayName: Tag build for Nuget
     inputs: 
       tags: |
-        NuGet: $(NugetPackageVersion)
+        NugetPackageVersion: $(NugetPackageVersion)
     continueOnError: true

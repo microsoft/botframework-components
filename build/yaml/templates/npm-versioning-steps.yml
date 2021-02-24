@@ -32,7 +32,7 @@ steps:
           }
 
           "Version = $packageVersion";
-          Write-Host "##vso[task.setvariable variable=PackageVersion;]$packageVersion";
+          Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
         
           # Convert back into package.json
           $packageJsonData.version = $packageVersion;
@@ -50,5 +50,5 @@ steps:
     displayName: Tag build for NPM
     inputs: 
       tags: |
-        NPM: $(NpmPackageVersion)
+        NpmPackageVersion: $(NpmPackageVersion)
     continueOnError: true
