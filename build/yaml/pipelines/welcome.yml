@@ -24,7 +24,7 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  WorkingDirectory: 'packages/Welcome'
   BuildConfiguration: 'Release'  
-  DeploymentRing: 'preview'
   ComponentType: 'declarativeAsset'
+  DeploymentRing: 'preview'
+  WorkingDirectory: 'packages/Welcome'

@@ -24,7 +24,7 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  WorkingDirectory: 'packages/Calendar'
   BuildConfiguration: 'Release'
-  DeploymentRing: 'alpha'
   ComponentType: 'codeExtension'
+  DeploymentRing: 'alpha'
+  WorkingDirectory: 'packages/Calendar'

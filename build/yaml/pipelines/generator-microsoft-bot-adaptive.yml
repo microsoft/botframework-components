@@ -24,6 +24,6 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  WorkingDirectory: 'generators/generator-microsoft-bot-adaptive'
-  DeploymentRing: 'preview'
   ComponentType: 'generator'
+  DeploymentRing: 'preview'
+  WorkingDirectory: 'generators/generator-microsoft-bot-adaptive''

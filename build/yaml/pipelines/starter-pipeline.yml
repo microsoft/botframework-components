@@ -21,7 +21,7 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
   BuildConfiguration: 'Release'
-  DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
   ComponentType: 'YOUR_COMPONENT_TYPE' #codeExtension, declarativeAsset, or generator
+  DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
+  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
