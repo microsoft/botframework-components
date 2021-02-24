@@ -10,8 +10,7 @@ stages:
         condition: eq(variables.ComponentType, 'codeExtension')
         dependsOn: ResolveVerison
         variables:
-         - name: PackageVersion
-           value: $[ dependencies.ResolveVerison.outputs['SetVersion.PackageVersion'] ]
+                   PackageVersion: $[ dependencies.ResolveVerison.outputs['SetVersion.PackageVersion'] ]
         steps:
         - template: dotnet-package-steps.yml
       - job: Build_pack_nuspec
