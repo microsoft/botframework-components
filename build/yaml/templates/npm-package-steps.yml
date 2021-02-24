@@ -3,6 +3,27 @@ steps:
   displayName: 'Install Node 14.x'
   inputs:
     versionSpec: '14.x'
+
+- powershell: |
+    if (Test-Path -Path package.json) {
+      # Get existing version from package.json
+      $packageJson = Get-Content package.json;
+      $packageJsonData = $packageJson | ConvertFrom-Json;
+      "Provided version = $packageJsonData.version";
+
+      $packageVersion = "$(NpmPackageVersion)";
+      "Resolved version = $packageVersion"
+      # Convert back into package.json
+      $packageJsonData.version = $packageVersion;
+      $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
+    } else {
+        Write-Host "Missing package.json"
+        exit 1
+      }
+    }
+    displayName: 'Resolve package version variables'
+    workingDirectory: $(WorkingDirectory)
   
 - script: |
     npm install
