@@ -17,7 +17,7 @@ steps:
       if ($componentType.ToLowerInvariant() -eq "codeExtension") {
         if (Test-Path -Path *.csproj) {
           $xml = [Xml] (Get-Content ./*.csproj)
-          $packageVersion = $xml.Project.PropertyGroup.VersionPrefix
+          $packageVersion = $xml.Project.PropertyGroup.VersionPrefix.Trim()
         } else {
             Write-Host "Missing .csproj"
             exit 1
@@ -25,7 +25,7 @@ steps:
       }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
         if (Test-Path -Path *.nuspec) {
           $xml = [Xml] (Get-Content ./*.nuspec)
-          $packageVersion = "$xml.Package.MetaData.Version"
+          $packageVersion = $xml.Package.MetaData.Version
         } else {
             Write-Host "Missing .nuspec"
             exit 1
