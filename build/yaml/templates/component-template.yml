@@ -1,14 +1,18 @@
 stages:
   - stage: Setup
     jobs:       
-      - job: ResolveVersion
-        displayName: Resolve versions
+      - job: ResolveNugetVersion
+        displayName: Resolve NuGet version
         steps:
         - template: nuget-versioning-steps.yml
+      - job: ResolveNpmVersion
+        displayName: Resolve Node version
+        steps:
+        - template: npm-versioning-steps.yml
   - stage: Build_pack
     dependsOn: Setup
     variables:
-      PackageVersion: $[ stageDependencies.Setup.ResolveVersion.outputs['SetVersion.PackageVersion'] ]
+      PackageVersion: $[ stageDependencies.Setup.ResolveNugetVersion.outputs['SetVersion.PackageVersion'] ]
     jobs:
       - job: Build_pack_dotnet
         displayName: Build and package from .NET project file
@@ -24,5 +28,4 @@ stages:
         displayName: Build and package from Node package.json file
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
-        - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
