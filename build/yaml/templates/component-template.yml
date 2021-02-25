@@ -1,46 +1,35 @@
-parameters:
-- name: componentType
-  displayName: 'What type of component?'
-  type: string
-  values:
-  - declarativeAsset
-  - codeExtension
-  - generator
-
 stages:
-  - ${{ if eq(parameters.componentType, 'codeExtension') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: Build
-          displayName: Build and package
-          steps:
-          - template: versioning-steps.yml
-          - template: dotnet-package-steps.yml
-
-  # Publish both nuget and node packages
-  # Use `nuget` instead of `dotnet` due to dependency on .nuspec file
-  - ${{ if eq(parameters.componentType, 'declarativeAsset') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: Nuget_pack
-          displayName: Create nuget package
-          steps:
-          - template: versioning-steps.yml
-          - template: nuspec-package-steps.yml
-        - job: Npm_pack
-          displayName: Create npm package
-          steps:
-          - template: versioning-steps.yml
-          - template: npm-package-steps.yml
-
-  - ${{ if eq(parameters.componentType, 'generator') }}: 
-    - stage: Build_pack
-      displayName: Build and package
-      jobs:
-        - job: NpmPack
-          displayName: Create npm package
-          steps:
-          - template: versioning-steps.yml
-          - template: npm-package-steps.yml
+  - stage: Setup
+    jobs:       
+      - job: setup_nuget_version
+        displayName: NuGet version
+        condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
+        steps:
+        - template: nuget-versioning-steps.yml
+      - job: setup_npm_version
+        displayName: Node version
+        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+        steps:
+        - template: npm-versioning-steps.yml
+  - stage: Build_pack
+    displayName: Build and package
+    dependsOn: Setup
+    variables:
+      NugetPackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
+      NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
+    jobs:
+      - job: build_pack_dotnet
+        displayName: .NET project file
+        condition: eq(variables.ComponentType, 'codeExtension')
+        steps:
+        - template: dotnet-package-steps.yml
+      - job: build_pack_nuspec
+        displayName: .nuspec file
+        condition: eq(variables.ComponentType, 'declarativeAsset')
+        steps:
+        - template: nuspec-package-steps.yml
+      - job: build_pack_npm
+        displayName: Node package.json file
+        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+        steps:
+        - template: npm-package-steps.yml

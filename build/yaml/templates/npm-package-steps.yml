@@ -4,25 +4,30 @@ steps:
   inputs:
     versionSpec: '14.x'
 
-- powershell: |
-    # Get existing version from package.json
-    $packageJson = Get-Content package.json;
-    $packageJsonData = $packageJson | ConvertFrom-Json;
-
-    "VERSION: $($packageJsonData.version)";
-    "SUFFIX: $(NpmVersionSuffix)";
-    $packageJsonData.version += "-" + "$(NpmVersionSuffix)";
-
-    # Convert back into package.json
-    $packageJsonData | ConvertTo-Json |
-      Out-File package.json -Encoding utf8
-  displayName: 'Replace version in package.json'
-  condition: ne(variables.DeploymentRing, 'stable')
-  workingDirectory: $(WorkingDirectory)
-  
 - script: |
     npm install
   displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
+- powershell: |
+    if (Test-Path -Path package.json) {
+      # Get package.json ojbect
+      $packageJson = Get-Content package.json;
+      $packageJsonData = $packageJson | ConvertFrom-Json;
+
+      # Get variable passed from Setup stage
+      $packageVersion = "$(NpmPackageVersion)";
+
+      # Convert back into package.json
+      "Writing version $packageVersion to package.json"
+      $packageJsonData.version = $packageVersion;
+      $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
+    } else {
+        Write-Host "Missing package.json"
+        exit 1
+    }
+  displayName: 'Set package.json version with NpmPackageVersion'
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
