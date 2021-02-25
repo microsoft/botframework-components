@@ -40,5 +40,8 @@
     <!-- Disable warning for SA0001 "XML comment analysis is disabled due to project configuration" which is not true -->
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
     <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 </Project>
