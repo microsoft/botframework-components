@@ -14,8 +14,6 @@ steps:
       # Get package.json ojbect
       $packageJson = Get-Content package.json;
       $packageJsonData = $packageJson | ConvertFrom-Json;
-      $packageJsonDataVersion = $packageJsonData.version;
-      "Provided version = $packageJsonDataVersion";
 
       # Get variable passed from Setup stage
       $packageVersion = "$(NpmPackageVersion)";
