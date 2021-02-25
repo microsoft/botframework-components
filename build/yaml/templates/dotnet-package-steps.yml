@@ -41,6 +41,7 @@ steps:
   inputs:
     command: 'pack'
     includesymbols: true
+    includesource: true
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
