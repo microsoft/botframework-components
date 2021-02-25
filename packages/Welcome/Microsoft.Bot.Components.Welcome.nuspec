@@ -5,6 +5,7 @@
         <version>1.0.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
+		<copyright>© Microsoft Corporation. All rights reserved.</copyright>
 		<licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
