@@ -5,8 +5,11 @@
         <version>1.0.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>first version of onboarding package</releaseNotes>
+		<copyright>© Microsoft Corporation. All rights reserved.</copyright>
+		<licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
+		<releaseNotes>first version of onboarding package</releaseNotes>
         <description>Dialogs to provide an onboarding experience</description>
         <tags>bf-components conversationalcore onboarding preview</tags>
         <dependencies>

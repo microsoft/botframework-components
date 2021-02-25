@@ -5,8 +5,11 @@
         <version>1.0.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>First version of HelpAndCancel package</releaseNotes>
+		<copyright>© Microsoft Corporation. All rights reserved.</copyright>
+		<licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
+		<releaseNotes>First version of HelpAndCancel package</releaseNotes>
         <description>Dialog to provide "help" and "cancel" utterance handling</description>
         <tags>bf-components conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
