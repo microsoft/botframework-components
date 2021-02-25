@@ -1,6 +1,5 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
-[Schedule](schedule.en-us.lg)
 [Availability](availability.en-us.lg)
 
 # SendActivity_IrC8MR()
@@ -8,7 +7,7 @@
 
 # SendActivity_AlS4sI()
 [HeroCard
-    text= ${HelpMessage()}
+    text = ${HelpMessage()}
     buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
@@ -40,8 +39,7 @@
 [Activity
     to = turn.activity.from
     deliveryMode = whisper
-    text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    attachments = ${json(SendActivity_lqvfia())}
 ]
 
 # SendActivity_QqvaSr()
@@ -92,4 +90,13 @@
 [Activity
     text = ${LastEventResponseText(last($events))}
     attachments = ${json(EventDetailActionsCard(last($events)))}
+]
+# SendActivity_2q5Pi3()
+- ${turn.dialogEvent.value}
+
+# SendActivity_WgFfpN()
+[Activity
+    to = turn.activity.from
+    deliveryMode = whisper
+    attachments = ${json(SendActivity_lqvfia())}
 ]

@@ -36,7 +36,10 @@
 - ${count(events)} ${Pluralize(count(events), 'event', 'events')}
 
 # ScheduleList(items)
-- ${ExpandableListCardBody(foreach(items, item, ScheduleItem(item)), 5)}
+- IF: ${count(items) == 0}
+    - ${ScheduleNoResultsBody()}
+- ELSE: 
+    - ${ExpandableListCardBody(foreach(items, item, ScheduleItem(item)), 5)}
 
 # ScheduleItem(item)
 - ```
@@ -57,24 +60,30 @@
             "columns": [
                 {
                     "type": "Column",
+                    "verticalContentAlignment": "Top",
+                    "spacing": "Small",
                     "width": "25",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
                             "weight": "Bolder",
-                            "horizontalAlignment": "Right"
+                            "horizontalAlignment": "Right",
+                            "size": "${BodySize()}"
                         }
                     ]
                 },
                 {
                     "type": "Column",
+                    "verticalContentAlignment": "Top",
+                    "spacing": "Small",
                     "width": "75",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${item.Subject}",
-                            "spacing": "Small"
+                            "size": "${BodySize()}",
+                            "wrap": "true"
                         }
                     ]
                 }
@@ -84,9 +93,6 @@
 }
 ```
 
-# ScheduleNoResultsCard(date)
-- ${CardTemplate(ScheduleHeader(date, createArray()), ScheduleNoResultsBody(), ScheduleActions(date, 1))}
-
 # ScheduleNoResultsBody
 - ```
 {
@@ -95,6 +101,7 @@
         {
             "type": "TextBlock",
             "text": "You have no meetings, congrats!",
+            "size": "${BodySize()}",
             "spacing": "Medium"
         }
     ],

@@ -7,7 +7,10 @@
     "title": "Cancel",
     "data": {
         "intent": "CancelEvent",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -19,7 +22,10 @@
     "title": "New event",
     "data": {
         "intent": "CreateEvent",
-        "dateTime": "${dateTime}"
+        "dateTime": "${dateTime}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -27,8 +33,8 @@
 # CreateEventCardAction()
 [CardAction
     title = New event
-    type = postBack
-    value = ${{intent: "CreateEvent"}}
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ intent: "CreateEvent" }}
 ]
 
 # GetEventsAction(dateTime)
@@ -38,7 +44,10 @@
     "title": "${GetEventsActionTitle(dateTime)}",
     "data": {
         "intent": "GetEvents",
-        "dateTime": "${dateTime}"
+        "dateTime": "${dateTime}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -53,16 +62,16 @@
 
 # GetEventsCardAction(dateTime)
 [CardAction
-    title = Show schedule
-    type = postBack
-    value = ${{ intent: "GetEvents", "dateTime": dateTime }}
+    title = ${GetEventsActionTitle(dateTime)}
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ intent: "GetEvents", dateTime: dateTime }}
 ]
 
 # LaunchCardAction()
 [CardAction
     title = Launch
-    type = postBack
-    value = ${{intent: "LaunchChat"}}
+    type = ${if(turn.activity.channelId == 'msteams', 'messageBack', 'postBack')}
+    value = ${{ intent: "LaunchChat" }}
 ]
 
 # OpenSurveyCardAction()
@@ -79,7 +88,10 @@
     "title": "Add attendees",
     "data": {
         "intent": "SetAttendeesAdd",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -91,7 +103,10 @@
     "title": "Remove attendees",
     "data": {
         "intent": "SetAttendeesRemove",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -103,7 +118,10 @@
     "title": "Update date and time",
     "data": {
         "intent": "SetDateTime",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -115,7 +133,10 @@
     "title": "Update description",
     "data": {
         "intent": "SetDescription",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -127,7 +148,10 @@
     "title": "Update duration",
     "data": {
         "intent": "SetDuration",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -139,7 +163,10 @@
     "title": "Update location",
     "data": {
         "intent": "SetLocation",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -151,7 +178,10 @@
     "title": "Add Microsoft Teams",
     "data": {
         "intent": "SetOnlineMeetingAdd",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -163,7 +193,10 @@
     "title": "Remove Microsoft Teams",
     "data": {
         "intent": "SetOnlineMeetingRemove",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -175,7 +208,10 @@
     "title": "Accept",
     "data": {
         "intent": "RespondAccept",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -187,7 +223,10 @@
     "title": "Decline",
     "data": {
         "intent": "RespondDecline",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
     }
 }
 ```
@@ -199,7 +238,70 @@
     "title": "Update",
     "data": {
         "intent": "UpdateEvent",
-        "eventId": "${event.Id}"
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# ChooseDateAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Choose your own date and time",
+    "data": {
+        "intent": "Skip",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# TryAgainAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Try Again",
+    "data": {
+        "intent": "Retry",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# BuildSubmitAction(text, value)
+- IF: ${ turn.activity.channelId == "msteams"}
+    - ${TeamsSubmitAction(text, value)}
+- ELSE: 
+    - ${SubmitAction(text, value)}
+
+
+# TeamsSubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "msteams": {
+            "type": "messageBack",
+            "text": "${value}"
+        }
+    }
+}
+```
+
+# SubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": { 
+        "value": "${value}"
     }
 }
 ```

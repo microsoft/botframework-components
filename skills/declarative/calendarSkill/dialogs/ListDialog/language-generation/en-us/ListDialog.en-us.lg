@@ -7,13 +7,13 @@
 - ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount), template(actionsTemplate))}
 
 # ListCardHeader(icon, title, totalItemCount)
-- ${CardHeaderSmall(template(icon), template(title), "", concat(totalItemCount, " results"))}
+- ${CardHeader(template(icon), template(title), "", concat(totalItemCount, " results"))}
 
 # ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount)
 - ${PaginatedListCardBody(totalItemCount, pageSize, foreach(pageItems, item, template(itemTemplate, item)), pageIndex, pageCount)}
 
 # SelectedItemCard(item, headerIcon, headerTitle, itemTemplate, actionsTemplate)
-- ${CardTemplate(CardHeaderSmall(headerIcon, headerTitle, '', ''), template(itemTemplate, item), actionsTemplate)}
+- ${CardTemplate(CardHeader(headerIcon, headerTitle, '', ''), template(itemTemplate, item), actionsTemplate)}
 
 # SendActivity_BDsmtE()
 - ${template($templates.skipResponse)}

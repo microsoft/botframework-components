@@ -4,7 +4,7 @@
 # ChoiceInput_Prompt_VRSPsi()
 [Activity
     text = What would you like to change?
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailUpdateCard($event))}
 ]
 
 # TextInput_Prompt_QxL9wg()
@@ -72,6 +72,3 @@
 
 # SendActivity_lgaJK3()
 - ${CancelRejected()}
-
-# DateTimeInput_UnrecognizedPrompt_b0tmn4()
--

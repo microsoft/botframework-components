@@ -10,8 +10,11 @@
 # EventDetailEditCard(event)
 - ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), CreateEventActions(event))}
 
+# EventDetailUpdateCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), UpdateEventActions(event))}
+
 # EventDetailHeader(event)
-- ${CardHeaderSmall(EventIconUrl(), event.Subject, "", "")}
+- ${CardHeader(EventIconUrl(), event.Subject, "", "")}
 
 # EventDetailBody(event)
 - ```
@@ -42,8 +45,8 @@
                 {
                         "type": "Image",
                         "url": "${TitleIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                 }
@@ -56,7 +59,8 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${event.Subject}"
+                    "text": "${event.Subject}",
+                    "size": "${BodySize()}"
                 }
             ]
         }
@@ -68,6 +72,7 @@
 - ```
 {
     "type": "ColumnSet",
+    "spacing": "Small",
     "columns": [
         {
             "type": "Column",
@@ -78,8 +83,8 @@
                     "type": "Image",
                     "url": "${DateTimeIconUrl()}",
                     "horizontalAlignment": "Center",
-                    "height": "18px",
-                    "width": "18px"
+                    "height": "${IconSize()}",
+                    "width": "${IconSize()}"
                 }
             ]
         },
@@ -101,7 +106,7 @@
                                 {
                                     "type": "TextBlock",
                                     "text": "${FormatTimeRange(event.start.dateTime, event.end.dateTime)}",
-                                    "size": "Medium",
+                                    "size": "${BodySize()}",
                                     "weight": "Bolder"
                                 }
                             ]
@@ -113,7 +118,8 @@
                             "items": [
                                 {
                                     "type": "TextBlock",
-                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}"
+                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}",
+                                    "size": "${BodySize()}",
                                 }
                             ]
                         }
@@ -143,6 +149,7 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -152,8 +159,8 @@
                     {
                         "type": "Image",
                         "url": "${AcceptedIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "horizontalAlignment": "Center"
                     }
                 ]
@@ -165,7 +172,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "You are the organizer"
+                        "text": "You are the organizer",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -176,6 +184,7 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -185,8 +194,8 @@
                     {
                         "type": "Image",
                         "url": "${AcceptedIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -199,7 +208,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "Accepted, owned by ${event.organizer.emailAddress.name}"
+                        "text": "Accepted, owned by ${event.organizer.emailAddress.name}",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -210,6 +220,7 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -219,8 +230,8 @@
                     {
                         "type": "Image",
                         "url": "${TentativeIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -233,7 +244,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "Tentative"
+                        "text": "Tentative",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -244,6 +256,7 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -253,8 +266,8 @@
                     {
                         "type": "Image",
                         "url": "${DeclinedIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -267,7 +280,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "Declined"
+                        "text": "Declined",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -278,6 +292,7 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -287,8 +302,8 @@
                     {
                         "type": "Image",
                         "url": "${NoResponseIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -301,7 +316,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "You have not responded"
+                        "text": "You have not responded",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -316,17 +332,18 @@
     - ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
-                "verticalContentAlignment": "Center",
+                "verticalContentAlignment": "Top",
                 "width": 5,
                 "items": [
                     {
                         "type": "Image",
                         "url": "${ContactIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -334,13 +351,14 @@
             },
             {
                 "type": "Column",
-                "verticalContentAlignment": "Center",
+                "verticalContentAlignment": "Top",
                 "width": 95,
                 "items": [
                     {
                         "type": "TextBlock",
                         "wrap": "True",
-                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}"
+                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -351,6 +369,7 @@
     -  ```
     {
         "type": "ColumnSet",
+        "spacing": "Small",
         "columns": [
             {
                 "type": "Column",
@@ -360,8 +379,8 @@
                     {
                         "type": "Image",
                         "url": "${ContactIconUrl()}",
-                        "height": "18px",
-                        "width": "18px",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
                         "spacing": "Small",
                         "horizontalAlignment": "Center"
                     }
@@ -374,7 +393,8 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "${event.Attendees[0].EmailAddress.Name}"
+                        "text": "${event.Attendees[0].EmailAddress.Name}",
+                        "size": "${BodySize()}"
                     }
                 ]
             }
@@ -388,6 +408,7 @@
 - ```
 {
     "type": "ColumnSet",
+    "spacing": "Small",
     "columns": [
         {
             "type": "Column",
@@ -397,8 +418,8 @@
                 {
                     "type": "Image",
                     "url": "${LocationIconUrl()} ",
-                    "height": "18px",
-                    "width": "18px",
+                    "height": "${IconSize()}",
+                    "width": "${IconSize()}",
                     "spacing": "Small",
                     "horizontalAlignment": "Center"
                 }
@@ -421,50 +442,58 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${event.Location}"
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
     },
     {
         "type": "TextBlock",
-        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})",
+        "size": "${BodySize()}"
     }
     ```
 - ELSEIF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting }
     - ```
     {
         "type": "TextBlock",
-        "text": "${event.Location}"
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
     },
     {
         "type": "TextBlock",
-        "text": "Microsoft Teams Meeting"
+        "text": "Microsoft Teams Meeting",
+        "size": "${BodySize()}"
     }
     ```
 - ELSEIF: ${ event.location != null && event.location != '' }
     - ```
     {
         "type": "TextBlock",
-        "text": "${event.Location}"
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
     }
     ```
 - ELSEIF: ${ event.isOnlineMeeting && event.isCurrentEvent }
     - ```
     {
         "type": "TextBlock",
-        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})"
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})",
+        "size": "${BodySize()}"
     }
     ```
 - ELSEIF: ${ event.isOnlineMeeting }
     - ```
     {
         "type": "TextBlock",
-        "text": "Microsoft Teams Meeting"
+        "text": "Microsoft Teams Meeting",
+        "size": "${BodySize()}"
     }
     ```
 - ELSE: 
     -```
     {
         "type": "TextBlock",
-        "text": "No location provided."
+        "text": "No location provided.",
+        "size": "${BodySize()}"
     }
     ```
 
@@ -481,7 +510,8 @@
             {
                 "type":"TextBlock",
                 "text":"${event.description}",
-                "wrap": true
+                "wrap": true,
+                "size": "${BodySize()}"
             }
         ]
     },
@@ -532,3 +562,20 @@
     ]
 }
 ```
+
+# UpdateEventActions(event)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${BuildSubmitAction("Title", "title")},
+        ${BuildSubmitAction("Attendees", "attendees")},
+        ${BuildSubmitAction("Date and time", "datetime")},
+        ${BuildSubmitAction("Location", "location")},
+        ${BuildSubmitAction("Description", "description")},
+        ${BuildSubmitAction("Duration", "duration")},
+        ${BuildSubmitAction("Microsoft Teams", "onlineMeeting")}
+    ]
+}
+```
+

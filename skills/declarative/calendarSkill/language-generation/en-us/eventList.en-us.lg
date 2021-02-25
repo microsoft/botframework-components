@@ -48,6 +48,7 @@
                             "type": "TextBlock",
                             "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -59,7 +60,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }

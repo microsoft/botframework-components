@@ -53,25 +53,31 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "30",
+                    "width": "25",
+                    "spacing": "Small",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "horizontalAlignment": "Right",
                             "text": "${formatDateTime(item.start, 'h:mm')} - ${formatDateTime(item.end, 'h:mm tt')}",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": "70",
+                    "width": "75",
+                    "spacing": "Small",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "[Available]",
                             "spacing": "Small",
-                            "color": "Good"
+                            "color": "Good",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }

@@ -217,11 +217,11 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "$actionTitleProperty"
+                  "value": "=$actionTitleProperty"
                 },
                 {
                   "property": "$listOptions.activePrompt",
-                  "value": "$activePrompt"
+                  "value": "=$activePrompt"
                 },
                 {
                   "property": "$listOptions.templates",
@@ -234,6 +234,10 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "=false"
                 }
               ]
             },
@@ -300,7 +304,7 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "wjAVvg"
+                "id": "wV2hXD"
               },
               "assignments": [
                 {
@@ -309,11 +313,11 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "$actionTitleProperty"
+                  "value": "=$actionTitleProperty"
                 },
                 {
                   "property": "$listOptions.activePrompt",
-                  "value": "$activePrompt"
+                  "value": "=$activePrompt"
                 },
                 {
                   "property": "$listOptions.templates",
@@ -326,6 +330,10 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "value": "=false",
+                  "property": "$listOptions.isFirstTurn"
                 }
               ]
             },

@@ -40,6 +40,7 @@
                             "type": "TextBlock",
                             "text": "${FormatTimeRange(item.Start, item.End)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -51,7 +52,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }
@@ -71,13 +73,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Choose your own date and time",
-            "data": {
-                "intent": "Skip"
-            }
-        }
+        ${ChooseDateAction()}
     ]
 }
 ```

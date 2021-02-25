@@ -72,6 +72,21 @@
           "itemsProperty": "$recognitionResults",
           "actions": [
             {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "vwdsTV"
+              },
+              "condition": "toLower($foreach.value.text) == \"my day\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ContinueLoop",
+                  "$designer": {
+                    "id": "fGXsPA"
+                  }
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "0FTMUN"

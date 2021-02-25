@@ -27,6 +27,18 @@
 - no
 
 
+# Cancel
+- cancel
+- cancel this
+- I want to cancel
+- quit
+- stop
+- never mind
+- i want to stop
+- don't do that
+- stop it
+
+
 # Help
 - can you help please
 - help
@@ -266,19 +278,26 @@
 - lookup meetings with {@contact=susan}, {@contact=youngjae}, and {@contact=you@test.net}
 - read me my calendar
 - read me my calendar next
+- show {@date=today}
+- show {@date=tomorrow}
 - show my calendar
 - show my calendar on {@date=sunday} with {@contact=rebecca} and {@contact=chris}
+- show my schedule for {@date=this week}
 - what do i have planned
 - what do i have planned on {@date=friday}
 - what do i have scheduled
+- what do i have scheduled {@date=today}
 - what do i have scheduled called {@subject=editorial meeting} {@date=today} with {@contact=scott}
 - what do i have scheduled named {@subject=weekly review}
 - what do i have {@date=this week}
 - what is on
 - what is on with {@contact=isaac} {@date=today at 3}
 - what time do i start on {@date=thursday at 11am} named {@subject=project sync} with {@contact=you@test.net} and {@contact=scott}
+- what's on
 - what's on my calendar
 - what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
+- what's on my schedule {@date=today}
+- what's on {@date=today}
 
 
 @ intent GetEvents usesFeatures Event,Location,Titled,Show
@@ -361,6 +380,7 @@
 # SetAttendeesAdd
 - add an attendee
 - add people
+- add {@newContact=thomas} and {@newContact=ryan}
 - add more recipients to the meeting with {@contact=roberta}
 - add attendees to my meeting on friday
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}

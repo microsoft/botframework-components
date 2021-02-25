@@ -883,7 +883,7 @@
         "id": "z90pOz",
         "name": "OnIntent (LaunchChat)"
       },
-      "intent": "LaunchBot",
+      "intent": "LaunchChat",
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
@@ -1695,10 +1695,18 @@
                 "id": "mWnyUh"
               },
               "activity": "${SendActivity_mWnyUh()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "2q5Pi3"
+              },
+              "activity": "${SendActivity_2q5Pi3()}"
             }
           ]
         }
-      ]
+      ],
+      "runOnce": true
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

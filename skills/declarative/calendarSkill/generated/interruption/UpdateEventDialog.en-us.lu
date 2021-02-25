@@ -63,6 +63,7 @@
 # SetAttendeesAdd
 - add an attendee
 - add people
+- add {@newContact=thomas} and {@newContact=ryan}
 - add more recipients to the meeting with {@contact=roberta}
 - add attendees to my meeting on friday
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}

@@ -6,7 +6,9 @@
   "description": "Accept a event using the Microsoft Graph API.",
   "required": [
     "token",
-    "events"
+    "eventsProperty",
+    "startProperty",
+    "endProperty"
   ],
   "properties": {
     "id": {
@@ -21,6 +23,18 @@
       "examples": [
         "dialog.contosodata"
       ]
+    },
+    "startProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Start",
+      "description": "Event range start.",
+      "examples": []
+    },
+    "endProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "End",
+      "description": "Event range end.",
+      "examples": []
     },
     "eventsProperty": {
       "$ref": "schema:#/definitions/valueExpression",

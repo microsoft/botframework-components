@@ -181,7 +181,7 @@
             "recognizeOrdinals": true,
             "recognizeNumbers": true
           },
-          "style": "heroCard"
+          "style": "none"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -587,7 +587,7 @@
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
           "prompt": "${DateTimeInput_Prompt_b0tmn4()}",
-          "unrecognizedPrompt": "${DateTimeInput_UnrecognizedPrompt_b0tmn4()}",
+          "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "property": "turn.query",
@@ -1083,9 +1083,11 @@
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
-          "property": "$confirmUpdate"
+          "property": "$confirmUpdate",
+          "style": "none"
         },
         {
           "$kind": "Microsoft.IfCondition",

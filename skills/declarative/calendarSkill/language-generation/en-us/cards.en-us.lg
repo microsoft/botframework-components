@@ -1,5 +1,20 @@
 [Icons](icons.en-us.lg)
 
+# IconSize
+- 18px
+
+# IconSizeSmall
+- 14px
+
+# TitleSize
+- Medium
+
+# SubtitleSize
+- Small
+
+# BodySize
+- Small
+
 # CardTemplate(header, body, actions)
 -```
 {
@@ -26,38 +41,40 @@
                 {
                     "type": "Column",
                     "width": 5,
-                    "verticalContentAlignment": "Center",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "Image",
                             "url": "${icon}",
                             "horizontalAlignment": "Center",
-                            "width": "18px",
-                            "height": "18px"
+                            "width": "${IconSize()}",
+                            "height": "${IconSize()}"
                         }
                     ]
                 },
                 {
                     "type": "Column",
                     "width": 65,
-                    "verticalContentAlignment": "Center",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${title}",
-                            "size": "Medium",
+                            "wrap": true,
+                            "size": "${TitleSize()}",
                             "weight": "Bolder"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": 30,
+                    "width": ${if(counter != '', 30, 0)},
                     "verticalContentAlignment": "Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${counter}",
+                            "size": "${SubtitleSize()}",
                             "horizontalAlignment": "Right",
                         }
                     ]
@@ -68,42 +85,19 @@
 }
 ```
 
-# CardHeaderSmall(icon, title, subtitle, counter)
+# TextCard(text, actions)
 - ```
 {
-    "type": "Container",
-    "items": [
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
         {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": 5,
-                    "verticalContentAlignment": "center",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${icon}",
-                            "horizontalAlignment": "Center",
-                            "width": "18px",
-                            "height": "18px"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": 95,
-                    "verticalContentAlignment": "center",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "${title}",
-                            "size": "Medium"
-                        }
-                    ]
-                }
-            ]
-        }
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true
+        },
+        ${actions}
     ]
 }
 ```
@@ -195,7 +189,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
                 "title": "collapse"
             },
             "altText": "collapsed",
-            "width": "20px",
+            "width": "${IconSize()}",
             "horizontalAlignment": "center",
             "separator": true
         },
@@ -213,7 +207,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
                 "title": "collapse"
             },
             "altText": "collapsed",
-            "width": "20px",
+            "width": "${IconSize()}",
             "isVisible": false,
             "horizontalAlignment": "center"
         }

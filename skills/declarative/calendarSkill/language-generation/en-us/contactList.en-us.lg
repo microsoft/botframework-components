@@ -35,11 +35,13 @@
         {
             "type": "TextBlock",
             "text": "${item.name}",
+            "size": "${BodySize()}",
             "weight": "Bolder"
         },
         {
             "type": "TextBlock",
             "text": "${item.email}",
+            "size": "${BodySize()}",
             "spacing": "Small"
         }
     ],
@@ -56,11 +58,6 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Try Again",
-            "data": ${BuildCardActionData('Try again')}
-        }
     ]
 }
 ```
