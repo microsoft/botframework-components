@@ -17,6 +17,7 @@
 	<PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
 	<RequireLicenseAcceptance>true</RequireLicenseAcceptance>
 	<PackageProjectUrl>https://github.com/Microsoft/botframework-components</PackageProjectUrl>
+    <PackageTags>bf-components</PackageTags>
 	<SignAssembly>true</SignAssembly>
 	<AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
 	<DelaySign>true</DelaySign>  
