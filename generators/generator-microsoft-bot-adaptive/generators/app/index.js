@@ -4,6 +4,7 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const xml2js = require('xml2js');
 
 const INTEGRATION_WEBAPP = 'webapp';
 const INTEGRATION_FUNCTIONS = 'functions';
@@ -144,7 +145,8 @@ module.exports = class extends Generator {
 
     writing() {
         this._copyDotnetProject();
-        this._copyAssets();
+        this._copySchemas();
+        this._writeNugetConfig();
 
         if (this.includeApplicationSettings) {
             this._writeApplicationSettings();
@@ -167,13 +169,11 @@ module.exports = class extends Generator {
                 botName,
                 packageReferences,
                 settingsDirectory
-            }
-        );
+            });
 
         this.fs.move(
             this.destinationPath(path.join(botName, 'botName.csproj')),
-            this.destinationPath(path.join(botName, `${botName}.csproj`))
-        );
+            this.destinationPath(path.join(botName, `${botName}.csproj`)));
 
         this._copyDotnetSolutionFile();
     }
@@ -203,24 +203,19 @@ module.exports = class extends Generator {
                 botProjectGuid,
                 solutionGuid,
                 projectType
-            }
-        );
+            });
     }
 
-    _copyAssets() {
+    _copySchemas() {
         const botName = this.options.botName;
+        const directoryName = 'schemas';
 
-        const assetNames = ['NuGet.config', 'schemas'];
-
-        for (const assetName of assetNames) {
-            this.fs.copyTpl(
-                this.templatePath(path.join('assets', assetName)),
-                this.destinationPath(path.join(botName, assetName)),
-                {
-                    botName
-                }
-            );
-        }
+        this.fs.copyTpl(
+            this.templatePath(path.join('assets', directoryName)),
+            this.destinationPath(path.join(botName, directoryName)),
+            {
+                botName
+            });
     }
 
     _writeApplicationSettings() {
@@ -235,7 +230,39 @@ module.exports = class extends Generator {
 
         this.fs.writeJSON(
             this.destinationPath(path.join(botName, fileName)),
-            appSettings
-        );
+            appSettings);
+    }
+
+    _writeNugetConfig() {
+        const done = this.async();
+
+        const botName = this.options.botName;
+        const fileName = 'NuGet.config';
+
+        // Due to security checks, all NuGet.config files committed to the repo must possess the <clear/>
+        // element to ensure only a single feed is utilized. This would be fine in a build context, but
+        // is not desired for scaffolding. To avoid triggering security checks, we need to manipulate
+        // the document and remove the element before outputting to the target location.
+
+        const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
+
+        xml2js.parseString(nugetConfig, (err, result) => {
+            if (err) return done(err);
+
+            delete result.configuration.packageSources[0].clear;
+
+            const builder = new xml2js.Builder({
+                xmldec: {
+                    version: '1.0',
+                    encoding: 'utf-8'
+                }
+            });
+
+            this.fs.write(
+                this.destinationPath(path.join(botName, fileName)),
+                builder.buildObject(result));
+
+            done();
+        });
     }
 };

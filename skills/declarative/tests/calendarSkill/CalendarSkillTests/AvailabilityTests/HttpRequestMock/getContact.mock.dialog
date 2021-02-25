@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "Method": "",
-  "Url": "https://graph.microsoft.com/v1.0/me/contacts*",
+  "Url": "https://graph.microsoft.com/beta/me/contacts*",
   "Responses": [
     {
       "Content": {
