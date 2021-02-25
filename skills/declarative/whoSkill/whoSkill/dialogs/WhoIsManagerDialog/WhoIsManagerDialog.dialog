@@ -1,0 +1,32 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "TiCQ7a",
+    "name": "WhoIsManagerDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "75076Z"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "RzfXyy"
+          },
+          "activity": "${SendActivity_RzfXyy()}"
+        }
+      ]
+    }
+  ],
+  "generator": "WhoIsManagerDialog.lg",
+  "recognizer": "WhoIsManagerDialog.lu.qna",
+  "id": "WhoIsManagerDialog"
+}
