@@ -14,9 +14,9 @@
     <Authors>Microsoft</Authors>
     <Product>Microsoft Bot Builder SDK</Product>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
-	<LicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</LicenseUrl>
+	<PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
 	<RequireLicenseAcceptance>true</RequireLicenseAcceptance>
-	<ProjectUrl>https://github.com/Microsoft/botframework-components</ProjectUrl>
+	<PackageProjectUrl>https://github.com/Microsoft/botframework-components</PackageProjectUrl>
 	<SignAssembly>true</SignAssembly>
 	<AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
 	<DelaySign>true</DelaySign>  
