@@ -1,0 +1,32 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "1dAZlt",
+    "name": "WhoIsPersonDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "XToxGY"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "jXHLy5"
+          },
+          "activity": "${SendActivity_jXHLy5()}"
+        }
+      ]
+    }
+  ],
+  "generator": "WhoIsPersonDialog.lg",
+  "recognizer": "WhoIsPersonDialog.lu.qna",
+  "id": "WhoIsPersonDialog"
+}
