@@ -44,5 +44,3 @@ steps:
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'NugetPackageVersion'
-
-- template: nuget-build-artifacts-steps.yml
