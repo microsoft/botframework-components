@@ -7,7 +7,8 @@
         <owners>Microsoft</owners>
 		<licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <releaseNotes>First version of welcome package</releaseNotes>
+		<projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
+		<releaseNotes>First version of welcome package</releaseNotes>
         <description>Dialogs to provide a Welcome experience for new and returning users</description>
         <tags>bf-components conversationalcore welcome preview</tags>
         <dependencies>
