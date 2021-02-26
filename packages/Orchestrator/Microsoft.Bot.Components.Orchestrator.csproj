@@ -6,6 +6,7 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>Plugin component for Microsoft.Bot.Builder.Integration.Runtime to register Orchestrator adaptive recognizer.</Description>
     <Summary>Plugin component for Microsoft.Bot.Builder.Integration.Runtime to register Orchestrator adaptive recognizer.</Summary>
+    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
