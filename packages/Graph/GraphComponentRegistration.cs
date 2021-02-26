@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Dialogs.Debugging;
-using Microsoft.Bot.Builder.Dialogs.Declarative;
-using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
-using Newtonsoft.Json;
-
 namespace Microsoft.Bot.Components.Graph
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Microsoft.Bot.Builder;
+    using Microsoft.Bot.Builder.Dialogs.Debugging;
+    using Microsoft.Bot.Builder.Dialogs.Declarative;
+    using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
+    using Newtonsoft.Json;
+
     public class GraphComponentRegistration : ComponentRegistration, IComponentDeclarativeTypes
     {
         public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)

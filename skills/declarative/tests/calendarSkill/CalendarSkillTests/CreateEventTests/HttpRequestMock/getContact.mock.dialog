@@ -1,7 +1,7 @@
 {
   "$kind": "Microsoft.Test.HttpRequestSequenceMock",
   "Method": "",
-  "Url": "https://graph.microsoft.com/v1.0/me/contacts*",
+  "Url": "https://graph.microsoft.com/beta/me/contacts*",
   "Responses": [
     {
       "Content": {
@@ -40,14 +40,17 @@
             "personalNotes": "",
             "children": [],
             "emailAddresses": [
-                {
-                    "name": "test name",
-                    "address": "test@test.com"
-                }
+              {
+                "name": "test name",
+                "address": "test@test.com"
+              }
             ],
-            "homeAddress": {},
-            "businessAddress": {},
-            "otherAddress": {}
+            "gender": null,
+            "isFavorite": false,
+            "postalAddresses": [],
+            "flag": {
+              "flagStatus": "notFlagged"
+            }
           }
         ]
       }
@@ -89,14 +92,17 @@
             "personalNotes": "",
             "children": [],
             "emailAddresses": [
-                {
-                    "name": "test2@test.com",
-                    "address": "test2@test.com"
-                }
+              {
+                "name": "test2@test.com",
+                "address": "test2@test.com"
+              }
             ],
-            "homeAddress": {},
-            "businessAddress": {},
-            "otherAddress": {}
+            "gender": null,
+            "isFavorite": false,
+            "postalAddresses": [],
+            "flag": {
+              "flagStatus": "notFlagged"
+            }
           }
         ]
       }
@@ -138,14 +144,17 @@
             "personalNotes": "",
             "children": [],
             "emailAddresses": [
-                {
-                    "name": "test@test.com",
-                    "address": "test@test.com"
-                }
+              {
+                "name": "test@test.com",
+                "address": "test@test.com"
+              }
             ],
-            "homeAddress": {},
-            "businessAddress": {},
-            "otherAddress": {}
+            "gender": null,
+            "isFavorite": false,
+            "postalAddresses": [],
+            "flag": {
+              "flagStatus": "notFlagged"
+            }
           }
         ]
       }
@@ -187,14 +196,17 @@
             "personalNotes": "",
             "children": [],
             "emailAddresses": [
-                {
-                    "name": "test2@test.com",
-                    "address": "test2@test.com"
-                }
+              {
+                "name": "test2@test.com",
+                "address": "test2@test.com"
+              }
             ],
-            "homeAddress": {},
-            "businessAddress": {},
-            "otherAddress": {}
+            "gender": null,
+            "isFavorite": false,
+            "postalAddresses": [],
+            "flag": {
+              "flagStatus": "notFlagged"
+            }
           }
         ]
       }

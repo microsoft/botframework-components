@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# SendActivity_RzfXyy()
+[Activity
+    Text = Sorry! I don't know the manager of ${dialog.nameEntity}.
+]

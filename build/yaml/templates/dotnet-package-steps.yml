@@ -42,6 +42,5 @@ steps:
     command: 'pack'
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
-    versioningScheme: 'off'
-
-- template: nuget-build-artifacts-steps.yml
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'NugetPackageVersion'
