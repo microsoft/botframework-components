@@ -12,10 +12,11 @@
 
 # SendActivity_uyZBZh()
 - ${CancelMessage()}
+
 # ConfirmInput_Prompt_Ef32OL()
 [Activity
     text = You are not the owner of the meeting. Would you like to decline the meeting instead?
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_x08upQ()

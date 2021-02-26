@@ -451,7 +451,7 @@
             {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-                "id": "ASDwpo"
+                "id": "X3qUs9"
               },
               "condition": "$dateTime.type",
               "cases": [
@@ -461,37 +461,46 @@
                     {
                       "$kind": "Microsoft.DateTimeInput",
                       "$designer": {
-                        "id": "78fioc"
+                        "id": "2NG4Aa"
                       },
                       "disabled": false,
                       "maxTurnCount": 3,
-                      "alwaysPrompt": true,
-                      "prompt": "${DateTimeInput_Prompt_78fioc()}",
                       "unrecognizedPrompt": "",
                       "invalidPrompt": "",
                       "defaultValueResponse": "",
                       "property": "turn.query",
-                      "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != DateTimeInput_Response_SOJEYp) || exists(turn.activity.value.intent)"
+                      "allowInterruptions": "=(turn.recognized.score > 0.8 && turn.recognized.intent != DateTimeInput_Response_SOJEYp) || exists(turn.activity.value.intent)",
+                      "outputFormat": "=turn.activity.text",
+                      "alwaysPrompt": true,
+                      "prompt": "${DateTimeInput_Prompt_2NG4Aa()}"
                     },
                     {
                       "$kind": "Microsoft.BeginDialog",
                       "$designer": {
-                        "id": "l8QaRW"
+                        "id": "lzkSlO"
                       },
                       "activityProcessed": true,
                       "dialog": "ResolveDateTimeDialog",
                       "options": {
-                        "query": "=turn.activity.text"
+                        "query": "=$query"
                       },
                       "resultProperty": "$time"
                     },
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "8M5K2T"
+                        "id": "LxQRGE"
                       },
-                      "property": "$event.start.dateTime",
-                      "value": "=formatTicks(ticks(startOfDay(formatDateTime($dateTime.value))) + (ticks(formatDateTime($time.value)) - ticks(startOfDay(formatDateTime($time.value)))))"
+                      "assignments": [
+                        {
+                          "property": "$event.start.dateTime",
+                          "value": "=formatTicks(ticks(startOfDay(formatDateTime($dateTime.value))) + (ticks(formatDateTime($time.value)) - ticks(startOfDay(formatDateTime($time.value)))))"
+                        },
+                        {
+                          "property": "$event.end.dateTime",
+                          "value": "=addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration)))"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -499,12 +508,20 @@
                   "value": "time",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "2mPRlR"
+                        "id": "9tDiHc"
                       },
-                      "property": "$event.start.dateTime",
-                      "value": "=formatDateTime($dateTime.value)"
+                      "assignments": [
+                        {
+                          "property": "$event.start.dateTime",
+                          "value": "=formatDateTime($dateTime.value)"
+                        },
+                        {
+                          "property": "$event.end.dateTime",
+                          "value": "=addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration)))"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -512,12 +529,20 @@
                   "value": "datetime",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "r9xE83"
+                        "id": "pyce29"
                       },
-                      "property": "$event.start.dateTime",
-                      "value": "=formatDateTime($dateTime.value)"
+                      "assignments": [
+                        {
+                          "property": "$event.start.dateTime",
+                          "value": "=formatDateTime($dateTime.value)"
+                        },
+                        {
+                          "property": "$event.end.dateTime",
+                          "value": "=addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration)))"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -527,7 +552,7 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "l2Xxd1"
+                        "id": "HaeNdD"
                       },
                       "assignments": [
                         {
@@ -548,7 +573,7 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "9YYJDp"
+                        "id": "W2uKi1"
                       },
                       "assignments": [
                         {
@@ -569,7 +594,7 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "XhOzrf"
+                        "id": "rmuq0u"
                       },
                       "assignments": [
                         {
@@ -589,7 +614,7 @@
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "gxjLH8"
+                    "id": "TDQ38l"
                   }
                 }
               ]
@@ -608,26 +633,9 @@
                 },
                 {
                   "property": "$event.end.dateTime",
-                  "value": "=$options.end"
+                  "value": "=coalesce($options.end, addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration))))"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "OlaFLm"
-          },
-          "condition": "=not(exists($event.end.dateTime))",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "1H4f3Z"
-              },
-              "property": "$event.end.dateTime",
-              "value": "=addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration)))"
             }
           ]
         }

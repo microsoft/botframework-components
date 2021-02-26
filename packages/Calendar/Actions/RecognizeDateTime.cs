@@ -48,7 +48,7 @@ namespace Microsoft.Bot.Components.Calendar.Actions
             var culture = GetCulture(dc);
             var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, GraphUtils.ConvertTimeZoneFormat(timeZoneProperty));
 
-            var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, refTime: timeZoneNow);
+            var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, DateTimeOptions.CalendarMode, refTime: timeZoneNow);
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(RecognizeDateTime), results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);
