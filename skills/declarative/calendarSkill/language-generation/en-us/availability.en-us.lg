@@ -54,7 +54,6 @@
                 {
                     "type": "Column",
                     "width": "25",
-                    "spacing": "Small",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {
@@ -69,13 +68,11 @@
                 {
                     "type": "Column",
                     "width": "75",
-                    "spacing": "Small",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "[Available]",
-                            "spacing": "Small",
                             "color": "Good",
                             "size": "${BodySize()}"
                         }

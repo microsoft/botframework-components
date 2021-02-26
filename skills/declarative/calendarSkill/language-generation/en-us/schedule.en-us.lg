@@ -61,7 +61,6 @@
                 {
                     "type": "Column",
                     "verticalContentAlignment": "Top",
-                    "spacing": "Small",
                     "width": "25",
                     "items": [
                         {
@@ -76,7 +75,6 @@
                 {
                     "type": "Column",
                     "verticalContentAlignment": "Top",
-                    "spacing": "Small",
                     "width": "75",
                     "items": [
                         {
