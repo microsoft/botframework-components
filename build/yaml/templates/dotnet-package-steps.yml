@@ -42,6 +42,7 @@ steps:
     command: 'pack'
     includesymbols: true
     includesource: true
+    buildProperties: 'SymbolPackageFormat=snupkg'
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
