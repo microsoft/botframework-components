@@ -17,7 +17,7 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
@@ -26,7 +26,6 @@
     <!-- Rules found at: https://aka.ms/Microsoft-NuGet-Compliance -->
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/microsoft/botframework-sdk/master/icon.png</PackageIconUrl>
-    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/Microsoft/botbuilder-components</RepositoryUrl>
@@ -43,8 +42,4 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(GeneratePackageOnBuild)' == 'True'">
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
 </Project>
