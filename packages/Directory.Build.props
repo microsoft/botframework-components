@@ -10,16 +10,6 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
-
   <PropertyGroup>
     <!-- Rules found at: https://aka.ms/Microsoft-NuGet-Compliance -->
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components</PackageProjectUrl>
