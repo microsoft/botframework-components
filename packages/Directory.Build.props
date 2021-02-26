@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AssemblyOriginatorKeyFile>\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
