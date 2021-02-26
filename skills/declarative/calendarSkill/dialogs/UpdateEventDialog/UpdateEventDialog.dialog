@@ -1004,7 +1004,8 @@
           },
           "property": "turn.isOnlineMeeting",
           "value": "=$options.updateValue",
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)"
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "style": "heroCard"
         },
         {
           "$kind": "Microsoft.SetProperty",
