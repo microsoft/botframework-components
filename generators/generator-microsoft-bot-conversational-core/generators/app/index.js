@@ -16,11 +16,11 @@ module.exports = class extends Generator {
         arguments: this.args,
         packageReferences: [{
           name: 'Microsoft.Bot.Components.HelpAndCancel',
-          version: '1.0.0-preview.20210222.79f4c33'
+          version: '1.0.0-preview.20210226.36f4e45'
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210222.79f4c33'
+            version: '1.0.0-preview.20210226.36f4e45'
           },
         ],
         applicationSettingsDirectory: 'settings',
