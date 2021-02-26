@@ -40,9 +40,7 @@ steps:
   displayName: 'Run `dotnet pack`'
   inputs:
     command: 'pack'
-    includesymbols: true
     includesource: true
-    buildProperties: 'SymbolPackageFormat=snupkg'
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
