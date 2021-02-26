@@ -2,7 +2,7 @@
   "name": "@microsoft/bot-components-onboarding",
   "version": "1.0.0",
   "keywords": [
-    "bf-components"
+    "bf-component"
   ],
   "description": "Dialogs to provide an onboarding experience",
   "main": "index.js",
