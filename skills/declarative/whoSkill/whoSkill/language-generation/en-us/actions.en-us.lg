@@ -1,0 +1,58 @@
+ # GetManagerAction(userId)
+ - ```
+ {
+    "type": "Action.Submit",
+    "title": "Manager",
+    "data": {
+        "intent": "GetManager",
+        "userId": "${userId}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+ ```
+
+ # GetCollaboratorsAction(userId)
+ - ```
+{
+    "type": "Action.Submit",
+    "title": "Collaborators",
+    "data": {
+        "intent": "GetCollaborators",
+        "userId": "${userId}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+ ```
+
+# GetPeersAction(userId)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Peers",
+    "data": {
+        "intent": "GetPeers",
+        "userId": "${userId}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# TryAgainAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Try again",
+    "data": {
+        "intent": "GetProfile",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```

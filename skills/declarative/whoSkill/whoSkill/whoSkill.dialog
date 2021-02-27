@@ -24,22 +24,12 @@
           "name": "whoSkill.Greeting"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "8IgEJK"
+            "id": "OgF5rd"
           },
-          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
-          "actions": [],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "wkHAkx"
-              },
-              "activityProcessed": true,
-              "dialog": "AuthenticationDialog"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
         },
         {
           "$kind": "Microsoft.SendActivity",

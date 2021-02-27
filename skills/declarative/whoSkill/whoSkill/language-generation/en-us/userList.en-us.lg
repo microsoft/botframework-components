@@ -1,0 +1,78 @@
+[Common](common.en-us.lg)
+[Actions](actions.en-us.lg)
+
+# UserListPrompt()
+- I found multiple matches for **Name**. Please pick one:
+
+# UserListShowMorePrompt()
+- 
+
+# UserListSkipResponse()
+- 
+
+# UserListDefaultValueResponse()
+- 
+
+# UserListTitle
+- Colleagues
+
+# UserListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": "${item.index}"
+    },
+    "items": [
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${item.photoUrl}",
+                            "style": "Person"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 90,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.displayName}",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.role}",
+                            "wrap": true,
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# UserListActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${TryAgainAction()}
+    ]
+}
+```
