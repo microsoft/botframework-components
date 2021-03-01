@@ -24,13 +24,13 @@ namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
             var rootFolder = Path.Combine(TestUtils.GetProjectPath(), @"..\..\calendarSkill");
             var testFolder = Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(GetEventTests));
             Configuration = new ConfigurationBuilder()
-                .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
                 .AddInMemoryCollection(new Dictionary<string, string>
                     {
                         { "root", rootFolder},
                         { "luis:resources", testFolder },
                     })
                 .UseLuisSettings()
+                .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
                 .Build();
 
             ResourceExplorer = new ResourceExplorer()

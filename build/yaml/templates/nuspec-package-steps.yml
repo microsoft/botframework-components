@@ -1,22 +1,10 @@
-# Checks for required .nuspec file and creates package
-
 steps:
-- powershell: |
-    $nuspecExists = Test-Path -Path "$(WorkingDirectory)\*.nuspec"
-    if ($nuspecExists) {
-      Write-Host "File exists"
-    } else {
-      Write-Host "Missing .nuspec file!"
-      exit 1
-    }
-  displayName: Check for .nuspec file
-
 - task: NuGetCommand@2
   displayName: 'Run `nuget pack`'
   inputs:
     command: pack
+    includeSymbols: true
     packagesToPack: '$(WorkingDirectory)\*.nuspec'
     packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
-    versioningScheme: off
-
-- template: nuget-build-artifacts-steps.yml
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'NugetPackageVersion'

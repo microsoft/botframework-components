@@ -9,9 +9,30 @@ steps:
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
+- powershell: |
+    if (Test-Path -Path package.json) {
+      # Get package.json ojbect
+      $packageJson = Get-Content package.json;
+      $packageJsonData = $packageJson | ConvertFrom-Json;
+
+      # Get variable passed from Setup stage
+      $packageVersion = "$(NpmPackageVersion)";
+
+      # Convert back into package.json
+      "Writing version $packageVersion to package.json"
+      $packageJsonData.version = $packageVersion;
+      $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
+    } else {
+        Write-Host "Missing package.json"
+        exit 1
+    }
+  displayName: 'Set package.json version with NpmPackageVersion'
+  workingDirectory: '$(WorkingDirectory)'
+
 - script: |
     npm pack
-  displayName: 'Package package'
+  displayName: 'Generate package'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2

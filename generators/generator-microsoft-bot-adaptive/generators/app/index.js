@@ -4,6 +4,7 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const xml2js = require('xml2js');
 
 const INTEGRATION_WEBAPP = 'webapp';
 const INTEGRATION_FUNCTIONS = 'functions';
@@ -43,6 +44,7 @@ module.exports = class extends Generator {
         this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(opts);
         this.includeApplicationSettings = this._validateIncludeApplicationSettings(opts);
         this.packageReferences = this._validatePackageReferences(opts.packageReferences);
+        this.pluginDefinitions = this._validatePluginDefinitions(opts.pluginDefinitions);
     }
 
     _verifyOptions() {
@@ -58,11 +60,10 @@ module.exports = class extends Generator {
 
     _validateApplicationSettingsDirectory(opts) {
         let result = null;
-        if ('applicationSettingsDirectory' in opts) {
-            if (opts.applicationSettingsDirectory &&
-                typeof(opts.applicationSettingsDirectory) === 'string') {
-                result = opts.applicationSettingsDirectory;
-            }
+        if ('applicationSettingsDirectory' in opts &&
+            opts.applicationSettingsDirectory &&
+            typeof opts.applicationSettingsDirectory === 'string') {
+            result = opts.applicationSettingsDirectory;
         }
 
         return result;
@@ -71,7 +72,7 @@ module.exports = class extends Generator {
     _validateIncludeApplicationSettings(opts) {
         let result = true;
         if ('includeApplicationSettings' in opts &&
-            typeof(opts.includeApplicationSettings) === 'boolean') {
+            typeof opts.includeApplicationSettings === 'boolean') {
             result = opts.includeApplicationSettings;
         }
 
@@ -79,16 +80,58 @@ module.exports = class extends Generator {
     }
 
     _validatePackageReferences(packageReferences) {
-        let result = [];
+        let results = [];
         if (Array.isArray(packageReferences)) {
             packageReferences.forEach((reference) => {
-                if (typeof reference == 'object' && reference.name && reference.version) {
-                    result.push(reference);
+                if (typeof reference === 'object' &&
+                    'name' in reference &&
+                    reference.name &&
+                    typeof reference.name === 'string' &&
+                    'version' in reference &&
+                    reference.version &&
+                    typeof reference.version === 'string') {
+
+                    const result = {
+                        name: reference.name,
+                        version: reference.version
+                    };
+
+                    results.push(result);
                 }
             });
         }
 
-        return result;
+        return results;
+    }
+
+    _validatePluginDefinitions(pluginDefinitions) {
+        let results = [];
+        if (Array.isArray(pluginDefinitions)) {
+            pluginDefinitions.forEach((definition) => {
+                if (typeof definition === 'object' &&
+                    'name' in definition &&
+                    definition.name &&
+                    typeof definition.name === 'string') {
+
+                    const result = {
+                        name: definition.name
+                    };
+
+                    if ('settingsPrefix' in definition &&
+                        definition.settingsPrefix &&
+                        typeof definition.settingsPrefix === 'string') {
+
+                        result.settingsPrefix = definition.settingsPrefix;
+                    } else {
+                        result.settingsPrefix = definition.name;
+                    }
+
+                    results.push(result);
+                }
+            });
+        }
+
+        return results;
     }
 
     // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
@@ -102,7 +145,12 @@ module.exports = class extends Generator {
 
     writing() {
         this._copyDotnetProject();
-        this._copyAssets();
+        this._copySchemas();
+        this._writeNugetConfig();
+
+        if (this.includeApplicationSettings) {
+            this._writeApplicationSettings();
+        }
     }
 
     _copyDotnetProject() {
@@ -111,7 +159,7 @@ module.exports = class extends Generator {
         const platform = this.options.platform;
         const packageReferences = this._formatPackageReferences();
         const settingsDirectory = this.applicationSettingsDirectory === null
-            ? 'null'
+            ? 'string.Empty'
             : `"${this.applicationSettingsDirectory}"`;
 
         this.fs.copyTpl(
@@ -121,13 +169,11 @@ module.exports = class extends Generator {
                 botName,
                 packageReferences,
                 settingsDirectory
-            }
-        );
+            });
 
         this.fs.move(
             this.destinationPath(path.join(botName, 'botName.csproj')),
-            this.destinationPath(path.join(botName, `${botName}.csproj`))
-        );
+            this.destinationPath(path.join(botName, `${botName}.csproj`)));
 
         this._copyDotnetSolutionFile();
     }
@@ -157,26 +203,66 @@ module.exports = class extends Generator {
                 botProjectGuid,
                 solutionGuid,
                 projectType
-            }
-        );
+            });
     }
 
-    _copyAssets() {
+    _copySchemas() {
         const botName = this.options.botName;
+        const directoryName = 'schemas';
 
-        const assetFileNames = ['NuGet.config', 'runtime.json'];
-        if (this.includeApplicationSettings) {
-            assetFileNames.push('appsettings.json');
+        this.fs.copyTpl(
+            this.templatePath(path.join('assets', directoryName)),
+            this.destinationPath(path.join(botName, directoryName)),
+            {
+                botName
+            });
+    }
+
+    _writeApplicationSettings() {
+        const botName = this.options.botName;
+        const fileName = 'appsettings.json';
+
+        const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
+
+        for (const pluginDefinition of this.pluginDefinitions) {
+            appSettings.runtimeSettings.plugins.push(pluginDefinition);
         }
 
-        for (const assetFileName of assetFileNames) {
-            this.fs.copyTpl(
-                this.templatePath(path.join('assets', assetFileName)),
-                this.destinationPath(path.join(botName, assetFileName)),
-                {
-                    botName
+        this.fs.writeJSON(
+            this.destinationPath(path.join(botName, fileName)),
+            appSettings);
+    }
+
+    _writeNugetConfig() {
+        const done = this.async();
+
+        const botName = this.options.botName;
+        const fileName = 'NuGet.config';
+
+        // Due to security checks, all NuGet.config files committed to the repo must possess the <clear/>
+        // element to ensure only a single feed is utilized. This would be fine in a build context, but
+        // is not desired for scaffolding. To avoid triggering security checks, we need to manipulate
+        // the document and remove the element before outputting to the target location.
+
+        const nugetConfig = this.fs.read(this.templatePath(path.join('assets', fileName)));
+
+        xml2js.parseString(nugetConfig, (err, result) => {
+            if (err) return done(err);
+
+            delete result.configuration.packageSources[0].clear;
+
+            const builder = new xml2js.Builder({
+                xmldec: {
+                    version: '1.0',
+                    encoding: 'utf-8'
                 }
-            );
-        }
+            });
+
+            this.fs.write(
+                this.destinationPath(path.join(botName, fileName)),
+                builder.buildObject(result));
+
+            done();
+        });
     }
 };

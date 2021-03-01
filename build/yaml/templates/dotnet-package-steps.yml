@@ -40,8 +40,8 @@ steps:
   displayName: 'Run `dotnet pack`'
   inputs:
     command: 'pack'
+    includesource: true
     packagesToPack: '$(WorkingDirectory)\*.csproj'
     packDirectory: '$(Build.ArtifactStagingDirectory)\outputpackages'
-    versioningScheme: 'off'
-
-- template: nuget-build-artifacts-steps.yml
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'NugetPackageVersion'

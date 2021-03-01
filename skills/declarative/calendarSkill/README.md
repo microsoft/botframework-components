@@ -88,4 +88,3 @@ To get a new token:
 * Copy the value of the accessToken from the terminal and into the publish `accessToken` field in the profile in Composer.
 
 
-## 

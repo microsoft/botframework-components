@@ -1,0 +1,250 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "4ImDL3",
+    "name": "ShowEventsDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "ApwwL4"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ojtPG0"
+          },
+          "name": "ShowEventsDialog.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "KVS04C"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "qcMK71"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                }
+              ]
+            }
+          ],
+          "condition": "count(where(flatten($options), o, exists(o))) == 0"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lJZRDn"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "resultProperty": "$events",
+          "options": {
+            "options": "=$options"
+          }
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "gXYsAM"
+          },
+          "condition": "count($events)",
+          "cases": [
+            {
+              "value": "1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "UMFVjb"
+                  },
+                  "eventName": "ShowEvent",
+                  "eventValue": "=$events[0]"
+                }
+              ]
+            },
+            {
+              "value": "0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "ZVS51Y"
+                  },
+                  "eventName": "NoResults"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "pUEjFG"
+              },
+              "eventName": "ShowResults"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "PIPYJh",
+        "name": "OnEvent (ShowResults)"
+      },
+      "event": "ShowResults",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "PtMYK2"
+          },
+          "name": "ShowEventsDialog.OnEvent_ShowResults"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Xad3Vv"
+          },
+          "condition": "exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "5xtEZ7"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$events"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "EventListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "EventListIconUrl",
+                    "title": "EventListTitle",
+                    "item": "EventListItem",
+                    "actions": "EventListActions",
+                    "initialPrompt": "EventListPrompt",
+                    "showMorePrompt": "EventListShowMorePrompt",
+                    "skipResponse": "EventListSkipResponse",
+                    "defaultValueResponse": "EventListDefaultValueResponse"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "0x0N4G"
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "options": "=$listOptions",
+              "resultProperty": "$selectedEvent"
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "uBSpR2"
+              },
+              "eventName": "ShowEvent",
+              "eventValue": "=$selectedEvent"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GroupEventsByDate",
+              "$designer": {
+                "id": "CHMoK5"
+              },
+              "resultProperty": "$groupedEvents ",
+              "eventsProperty": "=$events"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8wch3m"
+              },
+              "activity": "${SendActivity_8wch3m()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Dj14rv",
+        "name": "OnEvent (ShowEvent)"
+      },
+      "event": "ShowEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uyCvgr"
+          },
+          "name": "ShowEventsDialog.OnEvent_ShowEvent"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "RzDAXK"
+          },
+          "activity": "${SendActivity_RzDAXK()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "qVGMrV",
+        "name": "OnEvent (NoResults)"
+      },
+      "event": "NoResults",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "O60mMM"
+          },
+          "name": "ShowEventsDialog.OnEvent_NoResults"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "vyntiD"
+          },
+          "activity": "${SendActivity_vyntiD()}"
+        }
+      ]
+    }
+  ],
+  "generator": "ShowEventsDialog.lg",
+  "recognizer": "ShowEventsDialog.lu.qna",
+  "id": "ShowEventsDialog"
+}

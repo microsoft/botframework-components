@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Bot.Builder.Runtime.Extensions;
+using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -17,14 +17,10 @@ namespace <%= botName %>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, builder) =>
                 {
-                    IHostEnvironment env = hostingContext.HostingEnvironment;
                     string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
                     string settingsDirectory = <%- settingsDirectory %>;
 
-                    builder.AddBotRuntimeConfiguration(
-                        applicationRoot,
-                        settingsDirectory,
-                        env.IsDevelopment());
+                    builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
 
                     builder.AddCommandLine(args);
                 })

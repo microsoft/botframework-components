@@ -1,0 +1,147 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "whoSkill",
+      "description": "",
+      "id": "Kyymuy"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5oW8CV"
+          },
+          "name": "whoSkill.Greeting"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "8IgEJK"
+          },
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType!='personal'",
+          "actions": [],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "wkHAkx"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "TXYwSy"
+          },
+          "activity": "${SendActivity_TXYwSy()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GRE2OG",
+        "name": "WhoIsPersonTrigger"
+      },
+      "intent": "WhoIsPersonTrigger",
+      "entities": [
+        "nameEntity"
+      ],
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "HfnTV7"
+          },
+          "property": "dialog.nameEntity",
+          "value": "=@nameEntity"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "U3dC5A"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=dialog.nameEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "xAkucD",
+        "name": "WhoIsManagerTrigger"
+      },
+      "intent": "WhoIsManagerTrigger",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "9K4Lqb"
+          },
+          "property": "dialog.nameEntity",
+          "value": "=@nameEntity"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3vIVVS"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsManagerDialog",
+          "options": {
+            "nameEntity": "=dialog.nameEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "Czo7cS"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "aDUbIy"
+          },
+          "activityProcessed": true,
+          "dialog": "UnknownIntentDialog"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "whoSkill.lg",
+  "id": "whoSkill",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "WhoIsPersonTrigger",
+        "pattern": "Who is the person (?<nameEntity>.*)"
+      },
+      {
+        "intent": "WhoIsManagerTrigger",
+        "pattern": "Who is the manager of (?<nameEntity>.*)"
+      }
+    ]
+  }
+}

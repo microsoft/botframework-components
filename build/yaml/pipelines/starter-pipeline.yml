@@ -19,9 +19,9 @@ pr:
 
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      componentType: {COMPONENT_TYPE}
 
 variables:
-  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
   BuildConfiguration: 'Release'
+  ComponentType: '{YOUR_COMPONENT_TYPE}' #codeExtension, declarativeAsset, or generator
+  DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
+  WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'

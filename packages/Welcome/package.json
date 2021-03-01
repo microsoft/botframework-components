@@ -1,8 +1,8 @@
 {
   "name": "@microsoft/bot-components-welcome",
-  "version": "1.0.0-preview",
+  "version": "1.0.0",
   "keywords": [
-    "bf-components"
+    "bf-component"
   ],
   "description": "Dialogs to provide a Welcome experience for new and returning users",
   "main": "index.js",

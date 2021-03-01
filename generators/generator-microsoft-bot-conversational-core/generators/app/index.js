@@ -11,16 +11,16 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
+      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
         packageReferences: [{
-          name: 'Preview.Bot.Component.HelpAndCancel',
-          version: '0.0.1-preview1'
+          name: 'Microsoft.Bot.Components.HelpAndCancel',
+          version: '1.0.0-preview.20210226.87f28fe'
           },
           {
-            name: 'Preview.Bot.Component.Welcome',
-            version: '0.0.1-preview1'
+            name: 'Microsoft.Bot.Components.Welcome',
+            version: '1.0.0-preview.20210226.87f28fe'
           },
         ],
         applicationSettingsDirectory: 'settings',

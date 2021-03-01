@@ -1,0 +1,29 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - generators/generator-microsoft-bot-conversational-core
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - generators/generator-microsoft-bot-conversational-core
+ 
+pool: 
+  vmImage: 'windows-2019'
+  
+extends:
+  template: ../templates/component-template.yml
+
+variables:
+  ComponentType: 'generator'
+  DeploymentRing: 'preview'
+  WorkingDirectory: 'generators/generator-microsoft-bot-conversational-core'

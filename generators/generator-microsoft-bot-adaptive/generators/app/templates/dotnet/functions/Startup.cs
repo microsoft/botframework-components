@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Bot.Builder.Runtime.Extensions;
+using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
 
 [assembly: FunctionsStartup(typeof(<%= botName %>.Startup))]
 
@@ -17,15 +17,8 @@ namespace <%= botName %>
         {
             string applicationRoot = configurationBuilder.GetContext().ApplicationRootPath;
             string settingsDirectory = <%- settingsDirectory %>;
-            bool isDevelopment = string.Equals(
-                configurationBuilder.GetContext().EnvironmentName,
-                Microsoft.Extensions.Hosting.Environments.Development,
-                StringComparison.OrdinalIgnoreCase);
 
-            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(
-                applicationRoot,
-                settingsDirectory,
-                isDevelopment);
+            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
         }
     }
 }

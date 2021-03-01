@@ -1,0 +1,59 @@
+{
+  "calendarskill.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "": [
+        "AuthenticationDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ]
+    }
+  },
+  "CreateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "GetContactsDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "GetContactsDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ListDialog.en-us"
+      ],
+      "Skip": []
+    }
+  },
+  "GetEventsDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "ResolveDateTimeDialog.en-us",
+        "ListDialog.en-us"
+      ]
+    }
+  },
+  "ListDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "Next": [],
+      "Previous": [],
+      "Skip": []
+    }
+  },
+  "UpdateEventDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "": [
+        "GetEventsDialog.en-us",
+        "GetContactsDialog.en-us",
+        "ListDialog.en-us",
+        "ResolveDateTimeDialog.en-us"
+      ]
+    }
+  }
+}

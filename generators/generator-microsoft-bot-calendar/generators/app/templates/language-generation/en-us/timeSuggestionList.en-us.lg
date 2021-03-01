@@ -1,0 +1,82 @@
+[Cards](cards.en-us.lg)
+
+# TimeSuggestionListPrompt()
+- IF: ${count($additionalOptions.attendees) == 1}
+    - I've found multiple times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+- ELSE:
+    - I have found multiple times:
+
+# TimeSuggestionListShowMorePrompt()
+- How about these new suggestions:
+
+# TimeSuggestionListSkipResponse()
+- 
+
+# TimeSuggestionListDefaultValueResponse()
+- 
+
+# TimeSuggestionNumericalChoiceResponse()
+- Sure, let’s continue with the ${addOrdinal(int($selectedIndex))} option.
+
+# TimeSuggestionListTitle
+- Suggested times
+
+# TimeSuggestionListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Medium",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.Start, 'h:mm')} - ${formatDateTime(item.End, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "selectAction": {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": ${BuildCardActionData(item.index)}
+    }
+}
+```
+
+# TimeSuggestionListActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Choose your own date and time",
+            "data": {
+                "intent": "Skip"
+            }
+        }
+    ]
+}
+```

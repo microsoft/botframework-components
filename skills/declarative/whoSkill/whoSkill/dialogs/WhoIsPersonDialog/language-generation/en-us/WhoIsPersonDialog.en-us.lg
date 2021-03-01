@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# SendActivity_jXHLy5()
+[Activity
+    Text = Sorry, I don't know this ${dialog.nameEntity}
+]

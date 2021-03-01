@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.TraceExtensions;
+using Microsoft.Bot.Components.Graph;
 using Microsoft.Recognizers.Text.DateTime;
 using Newtonsoft.Json;
-using TimeZoneConverter;
 
 namespace Microsoft.Bot.Components.Calendar.Actions
 {
@@ -46,9 +46,9 @@ namespace Microsoft.Bot.Components.Calendar.Actions
             var queryProperty = QueryProperty.GetValue(dcState);
             var timeZoneProperty = TimeZoneProperty.GetValue(dcState);
             var culture = GetCulture(dc);
-            var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TZConvert.GetTimeZoneInfo(timeZoneProperty));
+            var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, GraphUtils.ConvertTimeZoneFormat(timeZoneProperty));
 
-            var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, refTime: timeZoneNow);
+            var results = DateTimeRecognizer.RecognizeDateTime(queryProperty, culture, DateTimeOptions.CalendarMode, refTime: timeZoneNow);
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(nameof(RecognizeDateTime), results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);

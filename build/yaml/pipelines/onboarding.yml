@@ -22,9 +22,9 @@ pool:
 
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      componentType: declarativeAsset
 
 variables:
-  WorkingDirectory: 'packages/Onboarding'
   BuildConfiguration: 'Release'
+  ComponentType: 'declarativeAsset'
+  DeploymentRing: 'preview'
+  WorkingDirectory: 'packages/Onboarding'

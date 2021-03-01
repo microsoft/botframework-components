@@ -1,8 +1,8 @@
 {
   "name": "@microsoft/bot-components-helpandcancel",
-  "version": "1.0.0-preview",
+  "version": "1.0.0",
   "keywords": [
-    "bf-components"
+    "bf-component"
   ],
   "description": "Dialog to provide \"help\" and \"cancel\" utterance handling",
   "main": "index.js",

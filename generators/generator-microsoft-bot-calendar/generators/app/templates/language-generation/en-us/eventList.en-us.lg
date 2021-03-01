@@ -1,0 +1,72 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Cards](cards.en-us.lg)
+
+# EventListPrompt()
+- I've found ${count($items)} events that match your request. Please select an option:
+- I've found ${count($items)} events that match your request. Please select an option:
+- There are ${count($items)} events that match your search. Please select an option:
+- ${count($items)} events match your search criteria. Please select an option:
+- You have ${count($items)} events that match your search. Please select an option:
+
+# EventListShowMorePrompt()
+- How about these options:
+- What about these options:
+- Sure, relevant options are: 
+
+# EventListSkipResponse()
+- Sure. Let's move on.
+
+# EventListDefaultValueResponse()
+- OK, let's move on. 
+
+# EventListTitle
+- Find Event
+
+# EventListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "medium",
+    "selectAction": {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": ${BuildCardActionData(item.index)}
+    },
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
+                            "horizontalAlignment": "Right",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
+                            "spacing": "Small"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${EventTitleContainer(item)}
+    ]
+}
+```
+
+# EventListActions()
+- 
