@@ -31,7 +31,7 @@
       ]
     },
     "userId": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "UserId",
       "description": "Id of user",
       "examples": [
