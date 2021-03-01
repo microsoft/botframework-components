@@ -39,7 +39,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the max number of results to return.
         /// </summary>
         [JsonProperty("MaxCount")]
-        public StringExpression MaxCountProperty { get; set; }
+        public IntExpression MaxCountProperty { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
@@ -66,10 +66,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string nameToSearch = this.NameToSearchForProperty.GetValue(state);
             int maxCount = DefaultMaxCount;
 
-            if (this.MaxCountProperty == null || !int.TryParse(this.MaxCountProperty.GetValue(state), out maxCount))
+            if (this.MaxCountProperty != null)
             {
                 // The TryParse will reset the value to 0 if parse fail
-                maxCount = DefaultMaxCount;
+                maxCount = this.MaxCountProperty.GetValue(state);
             }
 
             parameters.Add("NameToSearch", nameToSearch);

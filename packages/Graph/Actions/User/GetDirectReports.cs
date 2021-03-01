@@ -39,7 +39,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the max number of results to return.
         /// </summary>
         [JsonProperty("MaxCount")]
-        public StringExpression MaxCount { get; set; }
+        public IntExpression MaxCount { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
@@ -64,10 +64,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 throw new ArgumentNullException(nameof(this.UserId));
             }
 
-            if (this.MaxCount == null || !int.TryParse(this.MaxCount.GetValue(state), out int maxCount))
+            int maxCount = DefaultMaxCount;
+
+            if (this.MaxCount != null)
             {
                 // The TryParse will reset the value to 0 if parse fail
-                maxCount = DefaultMaxCount;
+                maxCount = this.MaxCount.GetValue(state);
             }
 
             string userId = this.UserId.GetValue(state);

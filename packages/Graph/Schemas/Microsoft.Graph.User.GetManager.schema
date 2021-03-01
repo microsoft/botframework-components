@@ -2,10 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Get People That Works With Me",
-  "description": "Get people that I frequently collaborate with using the Microsoft Graph API.",
+  "title": "Microsoft Graph - Get Manager of a User",
+  "description": "Get the manager of a user in the organization using the Microsoft Graph API.",
   "required": [
-    "token"
+    "token",
+    "userId"
   ],
   "properties": {
     "id": {
@@ -29,12 +30,12 @@
         "user.token.token"
       ]
     },
-    "maxCount": {
-      "$ref": "schema:#/definitions/integerExpression",
-      "title": "Max Count",
-      "description": "Max number of results to return",
+    "userId": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "UserId",
+      "description": "Id of user",
       "examples": [
-        "dialog.worksWithMe.maxCount"
+        "dialog.user.id"
       ]
     }
   }
