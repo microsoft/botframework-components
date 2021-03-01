@@ -307,13 +307,6 @@
           "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
           "userEmailProperty": "=user.profile.mail",
           "maxResultsProperty": "=25"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "YShyWY"
-          },
-          "name": "AfterGetEvents"
         }
       ]
     },

@@ -10,13 +10,9 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>Plugin component for MSGraph custom action</Description>
     <Summary>Plugin component for MSGraph custom action.</Summary>
-    <Company>Microsoft</Company>
-    <Authors>Microsoft</Authors>
-    <Product>Microsoft Bot Builder SDK</Product>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
-    <SignAssembly>true</SignAssembly>
+	<SignAssembly>true</SignAssembly>
 	<AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
-	<DelaySign>true</DelaySign>  
+	<DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>

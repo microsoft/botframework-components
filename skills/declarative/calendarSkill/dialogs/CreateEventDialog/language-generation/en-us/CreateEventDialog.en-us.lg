@@ -35,16 +35,13 @@
 # SendActivity_VLAwOi()
 - ${CancelRejected()}
 
-# DateTimeInput_Prompt_78fioc()
-- What time?
-
 # TextInput_Prompt_IeJvM4()
 - What should I set the location to?
 
 # ConfirmInput_Prompt_ui2fg1()
 [Activity
     text=Does this look right?
-    attachments=${json(EventConfirmDetailCard($event))}
+    attachments=${json(EventDetailEditCard($event))}
 ]
 
 # SendActivity_5Kxaup()
@@ -55,3 +52,6 @@
 
 # SendActivity_ANQjxk()
 - Something when wrong while creating adding the event to your calendar.
+
+# DateTimeInput_Prompt_2NG4Aa()
+- What time?

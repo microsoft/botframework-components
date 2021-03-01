@@ -25,7 +25,8 @@
       "": [
         "ListDialog.en-us"
       ],
-      "Skip": []
+      "Skip": [],
+      "SetAttendeesAdd": []
     }
   },
   "GetEventsDialog.en-us": {

@@ -5,10 +5,13 @@
         <version>1.0.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+        <licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
         <releaseNotes>First version of welcome package</releaseNotes>
         <description>Dialogs to provide a Welcome experience for new and returning users</description>
-        <tags>bf-components conversationalcore welcome preview</tags>
+        <tags>bf-component conversationalcore welcome preview</tags>
         <dependencies>
             <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.12.0-rc1.preview" />
         </dependencies>

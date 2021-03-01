@@ -1,4 +1,5 @@
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # TimeSuggestionListPrompt()
 - IF: ${count($additionalOptions.attendees) == 1}
@@ -26,7 +27,7 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "Medium",
+    "spacing": "Small",
     "items": [
         {
             "type": "ColumnSet",
@@ -37,8 +38,9 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${formatDateTime(item.Start, 'h:mm')} - ${formatDateTime(item.End, 'h:mm tt')}",
+                            "text": "${FormatTimeRange(item.Start, item.End)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -50,7 +52,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }
@@ -70,13 +73,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Choose your own date and time",
-            "data": {
-                "intent": "Skip"
-            }
-        }
+        ${ChooseDateAction()}
     ]
 }
 ```
