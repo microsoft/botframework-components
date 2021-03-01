@@ -24,24 +24,19 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n"
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.text == '\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n'"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
       "text": "add allan to my meeting on tuesday"
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Sure, I'll continue with test name (test@test.com).",
-        "Got it. I'll move forward with test name (test@test.com).",
-        "OK. I'll invite test name (test@test.com)."
-      ]
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Would you like to invite anyone else? (1) Yes or (2) No"
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "contains(attachments[0].content.body[0].text, 'Would you like to invite anyone else?')"
       ]
     },
     {
@@ -61,7 +56,7 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "Does this look right? (1) Yes or (2) No"
+        "Does this look right?"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"

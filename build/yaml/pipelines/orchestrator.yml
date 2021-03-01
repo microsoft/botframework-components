@@ -1,0 +1,30 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/Orchestrator
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/Orchestrator
+
+pool: 
+  vmImage: 'windows-2019'
+
+extends:
+  template: ../templates/component-template.yml
+
+variables:
+  BuildConfiguration: 'Release'
+  ComponentType: 'codeExtension'
+  DeploymentRing: 'preview'
+  WorkingDirectory: 'packages/Orchestrator'

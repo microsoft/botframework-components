@@ -1,210 +1,102 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
-[Schedule](schedule.en-us.lg)
 [Availability](availability.en-us.lg)
 
 # SendActivity_IrC8MR()
 - You're signed out!
 
-# SendActivity_Yrs4gn()
-[Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), GetEventTitleResponseText(dialog.event))}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-
-# ErrorMessage()
-- Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today?
-- Something seems to be going wrong. I can tell you more about your meetings today if you like?
-
-# SendActivity_GGU1vZ()
-- ${ErrorMessage()}
-
-# GetEventTitleResponseText(event)
-- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 1)} 
-
-# GetEventTimeResponseText(event)
-- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 1)} 
-
-# GetEventAttendeesResponseText(event)
-- I found a meeting titled ${event.Subject} on ${BuildDate(event.start.datetime)} at ${BuildTime(event.start.datetime)}. ${BuildAttendees(event, 3)} 
-
-# GetEventLocationResponseText(event)
-- ${BuildLocation(event)} The meeting is on ${BuildDate(event.start.datetime)}. It’s at ${BuildTime(event.start.datetime)}, ${event.Subject}. ${BuildAttendees(event, 1)} 
-
-# FirstEventResponseText(event)
-- You start ${BuildDate(event.start.datetime)}, at ${BuildTime(event.start.datetime)}, with ${event.Subject}.
-
-# LastEventResponseText(event)
-- Your day ends at ${BuildTime(event.start.datetime)}. Your last meeting is ${event.Subject}.
-
-# NextEventResponseText(event)
-- Here’s what’s next:
-
-# EventResponseText(event)
-- Here's what I found:
-
-# TimeTillNextMeetingResponseText(diff)
-- You have ${MakeDiffTime(diff)} until your next meeting starts.
-
-# MakeDiffTime(diff)
-- IF: ${ diff < 60 }
-    - ${MakeMinute(diff)}
-- ELSEIF: ${ mod(diff, 60) == 0}
-    - ${MakeHour(diff)}
-- ELSE:
-    - ${MakeHour(diff)} and ${MakeMinute(diff)}
-    
-# MakeMinute(diff)
-- IF: ${ mod(diff, 60) == 1 }
-    - ${mod(diff, 60)} minute
-- ELSE:
-    - ${mod(diff, 60)} minutes
-
-# MakeHour(diff)
-- IF: ${ div(diff, 60) == 1 }
-    - ${div(diff, 60)} hour
-- ELSE:
-    - ${div(diff, 60)} hours
-
-# SendActivity_3j3wUV()
-[Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-
-# SendActivity_MvzrwE()
-- ${ErrorMessage()}
-
-# SendActivity_kaOafR()
-[Activity
-    text = ${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-
-# SendActivity_g7immX()
-[Activity
-    text =${if(dialog.ordinal.relativeTo=='current', NextEventResponseText(dialog.event), EventResponseText())}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-
-# SendActivity_QaDvyy()
-[HeroCard
-   text = Let us know what you think!
-   buttons = ${OpenSurveyAction()}
-]
-
-# OpenSurveyAction()
-[CardAction
-    type = openUrl
-	title = Provide feedback
-    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
-]
-
-# SendActivity_Er6JaO()
-- ${WelcomeUser()}
-
-# SendActivity_ZaUzSz()
-[Activity
-    text = ${FirstEventResponseText($event)}
-    attachments = ${json(EventDetailCard($event))}
-]
-# SendActivity_q9fyxf()
-- ${ErrorMessage()}
-
-# SendActivity_BwA02G()
-[Activity
-    text = ${LastEventResponseText(dialog.event)}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-# SendActivity_CjDfqM()
-[Activity
-    text = ${CheckAvailabilityBusyResponseText(dialog.result.conflictEvents, dialog.datetime.value)}
-    attachments = ${json(CardTemplate(ScheduleHeader(dialog.result.conflictEvents[0].start.datetime, dialog.result.conflictEvents), ScheduleList(dialog.result.conflictEvents), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
-# SendActivity_U7NzFC()
-[Activity
-    text = ${CheckAvailabilityFreeResponseText(dialog.datetime.value)}
-    attachments = ${json(CardTemplate(ScheduleHeader(dialog.datetime.value, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
-# SendActivity_HcaLIY()
-[Activity
-    text = ${FoundAvailableTimeResponseText(dialog.freeTime.start)}
-    attachments = ${json(CardTemplate(ScheduleHeader(dialog.freeTime.start, dialog.events), AvailabilityList(dialog.availabilityList), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
-# SendActivity_QAdvjq()
-[Activity
-    text = ${FoundNoAvailableTimeResponseText()}
-    attachments = ${json(CardTemplate(ScheduleHeader(coalesce(dialog.datetime.Start, dialog.datetime.Value, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), dialog.events), ScheduleList(dialog.even), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
-
-# SendActivity_mBdBjm()
-[Activity
-    text = ${TimeTillNextMeetingResponseText(dialog.timediff)}
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-# SendActivity_tjRpuP()
-[Activity
-    text = You are still in a meeting now.
-    attachments = ${json(EventDetailCard(dialog.event))}
-]
-
 # SendActivity_AlS4sI()
-[Activity
-    text= ${HelpMessage()}
-    SuggestedActions = New event | What's on today
+[HeroCard
+    text = ${HelpMessage()}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_klrCg4()
 - ${CancelMessage()}
 
-# SendActivity_F3GXHj()
-- Sorry, that feature is not supported yet.
-
-
-# ConfirmInput_Prompt_Jo3V04()
-- ${ErrorMessage()}
-
-# SendActivity_vO6n9g()
-- OK, no problem.
-- OK, let me know if I can help you out with anything else.
-- OK, I'm here if you need me.
-
-# SendActivity_ccWEyG()
-- ${GeneralErrorMessage()}
-
 # SendActivity_iHNKPb()
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
 
 # SendActivity_lqvfia()
-[Activity
+[HeroCard
     text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
 ]
 
 # SendActivity_DGXXhL()
 [HeroCard
    text = Try the calendar skill now!
-   buttons = ${LaunchAction()}
+   buttons = ${LaunchCardAction()}
 ]
 
-# LaunchAction
-[CardAction
-title = Launch
-type = postBack
-value = Launch
+# SendActivity_QaDvyy()
+[HeroCard
+   text = Let us know what you think!
+   buttons = ${OpenSurveyCardAction()}
 ]
 
-# Bot.SendActivityPlus_Activity_y4L5ab()
+# SendActivity_OIka7e()
 [Activity
-    text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    to = turn.activity.from
+    deliveryMode = whisper
+    attachments = ${json(SendActivity_lqvfia())}
 ]
 
-# SendActivity_57zVnQ()
+# SendActivity_QqvaSr()
 [Activity
-    attachments = ${json(EventDetailCard(turn.dialogEvent.value))}
+    text = ${FoundAvailableTimeResponseText($freeTime.start)}
+    attachments = ${json(CardTemplate(ScheduleHeader($freeTime.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_WlmO9l()
+[Activity
+    text = ${FoundNoAvailableTimeResponseText()}
+    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, TimeZoneNow()), $events), ScheduleList($event), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_mWnyUh()
+- ${GeneralErrorMessage()}
+
+# SendActivity_G7Rfej()
+- ${turn.dialogEvent.value}
+
+# SendActivity_UKSMPm()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_x7EkgW()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_9Fl4ob()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_YAJvpF()
+[Activity
+    text = ${FirstEventResponseText(first($events))}
+    attachments = ${json(EventDetailActionsCard(first($events)))}
+]
+
+# SendActivity_IdPxbc()
+[Activity
+    text = ${LastEventResponseText(last($events))}
+    attachments = ${json(EventDetailActionsCard(last($events)))}
+]
+# SendActivity_2q5Pi3()
+- ${turn.dialogEvent.value}
+
+# SendActivity_WgFfpN()
+[Activity
+    to = turn.activity.from
+    deliveryMode = whisper
+    attachments = ${json(SendActivity_lqvfia())}
 ]

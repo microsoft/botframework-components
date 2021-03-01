@@ -1,0 +1,113 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Schedule](schedule.en-us.lg)
+[Availability](availability.en-us.lg)
+
+# SendActivity_IrC8MR()
+- You're signed out!
+
+# SendActivity_AlS4sI()
+[Activity
+    text= ${HelpMessage()}
+    SuggestedActions = New event | What's on today
+]
+
+# SendActivity_klrCg4()
+- ${CancelMessage()}
+
+# SendActivity_iHNKPb()
+- Sorry, I'm not sure what you mean. Can you try rephrasing?
+
+# SendActivity_lqvfia()
+[Activity
+    text = ${WelcomeUser()}
+    SuggestedActions = New event | What's on today
+]
+
+# SendActivity_DGXXhL()
+[HeroCard
+   text = Try the calendar skill now!
+   buttons = ${json(LaunchAction())}
+]
+
+# LaunchAction()
+- ```
+{
+    "title": "Launch",
+    "type": "postBack",
+    "value": {
+        "data": {
+            "intent": "LaunchChat"
+        }
+    }
+}
+```
+
+# SendActivity_QaDvyy()
+[HeroCard
+   text = Let us know what you think!
+   buttons = ${OpenSurveyAction()}
+]
+
+# OpenSurveyAction()
+[CardAction
+    type = openUrl
+	title = Provide feedback
+    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+]
+
+# SendActivity_OIka7e()
+[Activity
+    to = turn.activity.from
+    deliveryMode = whisper
+    text = ${WelcomeUser()}
+    SuggestedActions = New event | What's on today
+]
+# SendActivity_QqvaSr()
+[Activity
+    text = ${FoundAvailableTimeResponseText($freeTime.start)}
+    attachments = ${json(CardTemplate(ScheduleHeader($freeTime.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_WlmO9l()
+[Activity
+    text = ${FoundNoAvailableTimeResponseText()}
+    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), $events), ScheduleList($event), AvailabilityActions()))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_mWnyUh()
+- ${GeneralErrorMessage()}
+
+# SendActivity_G7Rfej()
+- ${turn.dialogEvent.value}
+
+# SendActivity_UKSMPm()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_x7EkgW()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_9Fl4ob()
+[Activity
+    text = ${if($next, NextEventResponseText($event), EventResponseText())}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_YAJvpF()
+[Activity
+    text = ${FirstEventResponseText(first($events))}
+    attachments = ${json(EventDetailCard(first($events)))}
+]
+# SendActivity_IdPxbc()
+[Activity
+    text = ${LastEventResponseText(last($events))}
+    attachments = ${json(EventDetailCard(last($events)))}
+]

@@ -1,16 +1,15 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+[Functions](functions.en-us.lg)
 
 # EventListPrompt()
-- IF: ${ dialog.items == null || count(dialog.items) <= 1 }
-    - Something must be wrong.
-- ELSE:
-    - I've found ${count(dialog.items)} events that match your request. Please select an option:
-    - I've found ${count(dialog.items)} events that match your request. Please select an option:
-    - There are ${count(dialog.items)} events that match your search. Please select an option:
-    - ${count(dialog.items)} events match your search criteria. Please select an option:
-    - You have ${count(dialog.items)} events that match your search. Please select an option:
+- I've found ${count($items)} events that match your request. Please select an option:
+- I've found ${count($items)} events that match your request. Please select an option:
+- There are ${count($items)} events that match your search. Please select an option:
+- ${count($items)} events match your search criteria. Please select an option:
+- You have ${count($items)} events that match your search. Please select an option:
 
 # EventListShowMorePrompt()
 - How about these options:
@@ -31,7 +30,7 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "medium",
+    "spacing": "Small",
     "selectAction": {
         "type": "Action.Submit",
         "title": "selectOption",
@@ -47,8 +46,9 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${formatDateTime(item.start.dateTime, 'h:mm')} - ${formatDateTime(item.end.dateTime, 'h:mm tt')}",
+                            "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -60,7 +60,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }

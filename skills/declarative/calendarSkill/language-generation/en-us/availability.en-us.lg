@@ -1,15 +1,39 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Schedule](schedule.en-us.lg)
+[Actions](actions.en-us.lg)
+
+# FirstEventResponseText(event)
+- You start ${FormatDate(event.start.dateTime)}, at ${FormatTime(event.start.dateTime)}, with ${event.Subject}.
+
+# LastEventResponseText(event)
+- Your day ${FormatDate(event.end.dateTime)}, ends at ${FormatTime(event.end.dateTime)}. Your last meeting is ${event.Subject}.
+
+# NextEventResponseText(event)
+- Here’s what’s next:
+
+# EventResponseText(event)
+- Here's what I found:
+
+# TimeUntilNextMeetingResponseText(diff)
+- You have ${FormatTimeRemaining(diff)} until your next meeting starts.
+
+# FormatTimeRemaining(diff)
+- IF: ${ diff < 60 }
+    - ${Pluralize(div(diff, 60), 'minute', 'minutes')}
+- ELSEIF: ${ mod(diff, 60) == 0}
+    - ${Pluralize(div(diff, 60), 'hour', 'hours')}
+- ELSE:
+    - ${Pluralize(div(diff, 60), 'hour', 'hours')} and ${Pluralize(div(diff, 60), 'minute', 'minutes')}
 
 # CheckAvailabilityBusyResponseText(events, time)
-- I've found ${count(events)} events for you at ${BuildTime(time)}:
+- I've found ${count(events)} events for you at ${FormatTime(time)}:
 
 # CheckAvailabilityFreeResponseText(time)
-- You don't have anything scheduled for ${BuildTime(time)}. Would you like to reserve this time?
+- You don't have anything scheduled for ${FormatTime(time)}.
 
 # FoundAvailableTimeResponseText(time)
-- I've found a break in your schedule at ${BuildTime(time)}. Would you like to reserve this time?
+- I've found a break in your schedule at ${FormatTime(time)}.
 
 # FoundNoAvailableTimeResponseText()
 - Looks like you don't have any breaks today during working hours.
@@ -30,10 +54,13 @@
                 {
                     "type": "Column",
                     "width": "25",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
+                            "horizontalAlignment": "Right",
                             "text": "${formatDateTime(item.start, 'h:mm')} - ${formatDateTime(item.end, 'h:mm tt')}",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -41,12 +68,13 @@
                 {
                     "type": "Column",
                     "width": "75",
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "[Available]",
-                            "spacing": "Small",
-                            "color": "Good"
+                            "color": "Good",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }
@@ -61,11 +89,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "New event",
-            "data": "New event"
-        }
+        ${CreateEventAction()}
     ]
 }
 ```

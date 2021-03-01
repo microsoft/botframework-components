@@ -35,4 +35,3 @@ jobs:
       - name: Run tests
         run: dotnet test
         working-directory: ./skills/declarative/tests
-

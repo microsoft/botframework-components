@@ -1,6 +1,7 @@
 [Icons](icons.en-us.lg)
 [Functions](functions.en-us.lg)
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # WelcomeUser()
 - IF: ${user.profile.displayName != null}
@@ -21,6 +22,17 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - Hello, I'm here for you to help with planning your day.
 - I'm here to help with your calendar.
 
+# HelpActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${CreateEventAction()},
+        ${GetEventsAction(startOfDay(TimeZoneNow()))}
+    ]
+}
+```
+
 # EndMessage
 - You've made it to the end 👏, thank you for helping us out!
 
@@ -29,28 +41,12 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 
-# ContactConfirmWithOne(attendees)
-- IF: ${ attendees == null || count(attendees) == 0 }
-    - no attendees
-- ELSE IF: ${ count(attendees) == 1 }
-    - ${attendees[0].emailAddress.name}
-- ELSE:
-    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1} more
-
-# ContactConfirmWithTwo(attendees)
-- IF: ${ attendees == null || count(attendees) == 0 }
-    - no attendees
-- ELSE IF: ${ count(attendees) <= 2 }
-    - ${join(select(attendees, x, x.emailAddress.name), ', ')}
-- ELSE:
-    - ${attendees[0].emailAddress.name}, ${attendees[1].emailAddress.name} and ${count(attendees) - 2} more
-
 # CancelMessage
 - OK, no problem.
-- Sure. I'll cancel.
 - OK, I will stop.
-- Got it, I'll stop here.
 - OK, no problem. I know I'm not perfect yet. 
+- Sure. I'll cancel.
+- Got it, I'll stop here.
 
 # CancelConfirmPrompt()
 - Are you sure you want to cancel? Your progress will be lost.
@@ -60,3 +56,7 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 
 # CancelRejected()
 - Let's keep going.
+
+# ErrorMessage()
+- Hmm. I still can't find the event you're looking for. Want to hear more about your meetings today?
+- Something seems to be going wrong. I can tell you more about your meetings today if you like?

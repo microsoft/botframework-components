@@ -1,23 +1,14 @@
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # TimeSuggestionListPrompt()
-- IF: ${count(dialog.additionalOptions.attendees) == 1}
-    - I've found multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - I've found the following time when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - There are multiple suggestions when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
-    - Looks like there are several options when you can meet with ${dialog.additionalOptions.attendees[0].emailAddress.name}:
+- IF: ${count($additionalOptions.attendees) == 1}
+    - I've found multiple times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
 - ELSE:
-    - I have found multiple suggestions:
-    - There are multiple suggestions:
-    - I found more than one suggestion:
-    - Hmm. I've found multiple suggestions:
-    - There seem to be a few suggestions:
-    - Looks like there are several suggestions:
+    - I have found multiple times:
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:
-- What about these new suggestions:
-- Sure, new relevant sugggestions are: 
 
 # TimeSuggestionListSkipResponse()
 - 
@@ -26,10 +17,7 @@
 - 
 
 # TimeSuggestionNumericalChoiceResponse()
-- Sure, let’s continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
-- OK. I'll continue with ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
-- You got it! I'll schedule this meeting for ${formatDateTime(dialog.selection.start, 'MMMM d')} at ${formatDateTime(dialog.selection.start, 'h:mm tt')}.
-- OK. I'll continue with the ${addOrdinal(int(dialog.selectedIndex))} option.
+- Sure, let’s continue with the ${addOrdinal(int($selectedIndex))} option.
 
 # TimeSuggestionListTitle
 - Suggested times
@@ -39,7 +27,7 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "Medium",
+    "spacing": "Small",
     "items": [
         {
             "type": "ColumnSet",
@@ -50,8 +38,9 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${formatDateTime(item.Start, 'h:mm')} - ${formatDateTime(item.End, 'h:mm tt')}",
+                            "text": "${FormatTimeRange(item.Start, item.End)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -63,7 +52,8 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }
@@ -83,13 +73,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Choose your own date and time",
-            "data": {
-                "intent": "Skip"
-            }
-        }
+        ${ChooseDateAction()}
     ]
 }
 ```

@@ -1,5 +1,20 @@
 [Icons](icons.en-us.lg)
 
+# IconSize
+- 18px
+
+# IconSizeSmall
+- 14px
+
+# TitleSize
+- Medium
+
+# SubtitleSize
+- Small
+
+# BodySize
+- Small
+
 # CardTemplate(header, body, actions)
 -```
 {
@@ -21,36 +36,33 @@
     "items": [
         {
             "type": "ColumnSet",
+            "spacing":"none",
             "columns": [
                 {
                     "type": "Column",
-                    "width": 10,
-                    "spacing":"none",
-                    "verticalContentAlignment": "center",
+                    "width": 5,
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "Image",
                             "url": "${icon}",
-                            "horizontalAlignment": "Center"
+                            "horizontalAlignment": "Center",
+                            "width": "${IconSize()}",
+                            "height": "${IconSize()}"
                         }
                     ]
                 },
                 {
                     "type": "Column",
-                    "width": ${if(counter != '', 60, 90)},
-                    "spacing":"small",
-                    "verticalContentAlignment": "center",
+                    "width": 65,
+                    "verticalContentAlignment": "Top",
                     "items": [
                         {
                             "type": "TextBlock",
                             "text": "${title}",
-                            "size": "Large",
+                            "wrap": true,
+                            "size": "${TitleSize()}",
                             "weight": "Bolder"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": "${subtitle}",
-                            "spacing": "None"
                         }
                     ]
                 },
@@ -62,12 +74,30 @@
                         {
                             "type": "TextBlock",
                             "text": "${counter}",
-                            "horizontalAlignment": "Right"
+                            "size": "${SubtitleSize()}",
+                            "horizontalAlignment": "Right",
                         }
                     ]
                 }
             ]
         }
+    ]
+}
+```
+
+# TextCard(text, actions)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true
+        },
+        ${actions}
     ]
 }
 ```
@@ -159,7 +189,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
                 "title": "collapse"
             },
             "altText": "collapsed",
-            "width": "20px",
+            "width": "${IconSize()}",
             "horizontalAlignment": "center",
             "separator": true
         },
@@ -177,7 +207,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
                 "title": "collapse"
             },
             "altText": "collapsed",
-            "width": "20px",
+            "width": "${IconSize()}",
             "isVisible": false,
             "horizontalAlignment": "center"
         }

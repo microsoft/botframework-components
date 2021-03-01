@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Graph - Create Event",
+  "description": "Create a calendar event using the Microsoft Graph API.",
+  "type": "object",
+  "required": [
+    "token",
+    "eventToCreateProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result Property",
+      "description": "Result Property (named location to store information).",
+      "examples": []
+    },
+    "token": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph API authentication token.",
+      "examples": []
+    },
+    "eventToCreateProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Event to create",
+      "description": "Event to create.",
+      "examples": []
+    },
+    "timeZoneProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "TimeZone",
+      "description": "Timezone.",
+      "examples": []
+    }
+  }
+}

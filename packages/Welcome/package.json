@@ -1,12 +1,21 @@
 {
-  "name": "preview-bot-component-welcome",
-  "version": "0.0.1-preview1",
-  "keywords": ["bf-component"],
+  "name": "@microsoft/bot-components-welcome",
+  "version": "1.0.0",
+  "keywords": [
+    "bf-component"
+  ],
   "description": "Dialogs to provide a Welcome experience for new and returning users",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bot Framework",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "/exported"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  }
 }

@@ -4,7 +4,7 @@
 # ChoiceInput_Prompt_VRSPsi()
 [Activity
     text = What would you like to change?
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailUpdateCard($event))}
 ]
 
 # TextInput_Prompt_QxL9wg()
@@ -25,7 +25,7 @@
 # SendActivity_F6WlGO()
 [Activity
     text = You are not the meeting organizer.
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_7kNW6V()
@@ -34,7 +34,7 @@
 # ConfirmInput_Prompt_lvMf0G()
 [Activity
     text = Does this look right?
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailEditCard($event))}
 ]
 
 # SendActivity_hNTgiS()
@@ -72,6 +72,3 @@
 
 # SendActivity_lgaJK3()
 - ${CancelRejected()}
-
-# DateTimeInput_UnrecognizedPrompt_b0tmn4()
--

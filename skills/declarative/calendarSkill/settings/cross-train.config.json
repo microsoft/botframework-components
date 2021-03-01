@@ -3,6 +3,7 @@
     "rootDialog": true,
     "triggers": {
       "": [
+        "AuthenticationDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ]
     }
@@ -24,7 +25,8 @@
       "": [
         "ListDialog.en-us"
       ],
-      "Skip": []
+      "Skip": [],
+      "SetAttendeesAdd": []
     }
   },
   "GetEventsDialog.en-us": {
@@ -52,8 +54,7 @@
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
         "ResolveDateTimeDialog.en-us"
-      ],
-      "Cancel": []
+      ]
     }
   }
 }
