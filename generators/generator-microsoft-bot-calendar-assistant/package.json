@@ -1,7 +1,7 @@
 {
-  "name": "@microsoft/generator-microsoft-bot-multibot",
+  "name": "@microsoft/generator-microsoft-bot-calendar-assistant",
   "version": "0.0.1",
-  "description": "Preview multi-bot template for TESTING ONLY",
+  "description": "Preview Calendar Assistant template for TESTING ONLY",
   "main": "./generators/app/index.js",
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210226.e5782e2",
