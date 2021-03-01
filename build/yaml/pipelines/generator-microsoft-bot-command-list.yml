@@ -1,0 +1,29 @@
+name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - generators/generator-microsoft-bot-command-list
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - generators/generator-microsoft-bot-command-list
+ 
+pool: 
+  vmImage: 'windows-2019'
+  
+extends:
+  template: ../templates/component-template.yml
+  parameters:
+      componentType: generator
+
+variables:
+  WorkingDirectory: 'generators/generator-microsoft-bot-command-list'
