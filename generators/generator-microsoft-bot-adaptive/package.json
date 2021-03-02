@@ -30,6 +30,6 @@
     "prettier": "latest"
   },
   "scripts": {
-    "lint": "eslint -c ../../.eslintrc.json ."
+    "lint": "eslint -c .eslintrc.json ."
   }
 }
