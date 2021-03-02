@@ -141,6 +141,88 @@
           "activity": "${SendActivity_QxqZcj()}"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "cuN0XW",
+        "name": "WhoIsDirectReportTrigger"
+      },
+      "intent": "WhoIsDirectReportTrigger",
+      "entities": [
+        "nameEntity"
+      ],
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "IcdxX7"
+          },
+          "property": "dialog.nameEntity",
+          "value": "=@nameEntity"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Y2hy7l"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsDirectReportDialog",
+          "options": {
+            "nameEntity": "=dialog.nameEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qzK1HD",
+        "name": "WhoIsPeerTrigger"
+      },
+      "intent": "WhoIsPeerTrigger",
+      "entities": [
+        "nameEntity"
+      ],
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "ETsHZi"
+          },
+          "property": "dialog.nameEntity",
+          "value": "=@nameEntity"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fJItRK"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPeerDialog",
+          "options": {
+            "nameEntity": "=dialog.nameEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "blfdn9",
+        "name": "WhoWorksWithMe"
+      },
+      "intent": "WhoWorksWithMe",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "io3AVP"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoWorksWithMeDialog"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
@@ -156,6 +238,18 @@
       {
         "intent": "WhoIsManagerTrigger",
         "pattern": "Who is the manager of (?<nameEntity>.*)"
+      },
+      {
+        "intent": "WhoIsDirectReportTrigger",
+        "pattern": "Who are the direct reports of (?<nameEntity>.*)"
+      },
+      {
+        "intent": "WhoIsPeerTrigger",
+        "pattern": "Who are the peers of (?<nameEntity>.*)"
+      },
+      {
+        "intent": "WhoWorksWithMe",
+        "pattern": "Who works with me"
       }
     ]
   }

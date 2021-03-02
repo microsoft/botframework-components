@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# SendActivity_hZFfyN()
+[Activity
+    Text = ${dialog.Result}
+]

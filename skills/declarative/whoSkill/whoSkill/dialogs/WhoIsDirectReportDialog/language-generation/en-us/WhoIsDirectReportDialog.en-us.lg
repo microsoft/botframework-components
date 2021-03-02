@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# SendActivity_erQVCV()
+[Activity
+    Text = ${dialog.Result}
+]
