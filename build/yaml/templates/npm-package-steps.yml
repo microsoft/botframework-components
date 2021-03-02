@@ -5,7 +5,7 @@ steps:
     versionSpec: '14.x'
 
 - script: |
-    npm install
+    yarn
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
@@ -31,12 +31,12 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm pack
+    yarn pack
   displayName: 'Generate package'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2
-  displayName: 'Copy npm files'
+  displayName: 'Copy packages'
   inputs:
     SourceFolder: '$(WorkingDirectory)'
     Contents: '*.tgz'
