@@ -56,7 +56,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-adaptive@^1.0.0-preview-20210226.e5782e2, @microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive":
+"@microsoft/generator-microsoft-bot-adaptive@workspace:*, @microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive"
   dependencies:
@@ -70,18 +70,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-calendar-assistant@workspace:generators/generator-microsoft-bot-calendar-assistant"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": ^1.0.0-preview-20210226.e5782e2
-    "@microsoft/generator-microsoft-bot-calendar": ^0.0.1-preview-20210301.79c8ef3
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*"
+    "@microsoft/generator-microsoft-bot-calendar": "workspace:*"
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-calendar@^0.0.1-preview-20210301.79c8ef3, @microsoft/generator-microsoft-bot-calendar@workspace:generators/generator-microsoft-bot-calendar":
+"@microsoft/generator-microsoft-bot-calendar@workspace:*, @microsoft/generator-microsoft-bot-calendar@workspace:generators/generator-microsoft-bot-calendar":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-calendar@workspace:generators/generator-microsoft-bot-calendar"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": ^1.0.0-preview-20210226.e5782e2
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*"
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -91,7 +91,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-command-list@workspace:generators/generator-microsoft-bot-command-list"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": ^1.0.0-preview-20210226.e5782e2
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*"
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -101,7 +101,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-conversational-core@workspace:generators/generator-microsoft-bot-conversational-core"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": ^1.0.0-preview-20210226.e5782e2
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*"
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -111,7 +111,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-empty@workspace:generators/generator-microsoft-bot-empty"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": ^1.0.0-preview-20210226.e5782e2
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*"
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
