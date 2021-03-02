@@ -383,3 +383,12 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
+
+# Ignore correct yarn files (no zero install support)
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

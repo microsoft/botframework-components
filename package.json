@@ -1,0 +1,9 @@
+{
+  "name": "@microsoft/botframework-components",
+  "private": true,
+  "workspaces": [
+    "generators/*",
+    "packages/*",
+    "skills/declarative/*"
+  ]
+}
