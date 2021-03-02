@@ -16,14 +16,14 @@ pr:
   paths:
     include:
       - generators/generator-microsoft-bot-command-list
- 
+
 pool: 
   vmImage: 'windows-2019'
-  
+
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      componentType: generator
 
 variables:
+  ComponentType: 'generator'
+  DeploymentRing: 'preview'
   WorkingDirectory: 'generators/generator-microsoft-bot-command-list'
