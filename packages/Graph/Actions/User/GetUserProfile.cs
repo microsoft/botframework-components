@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetUserProfileDeclarativeType = "Microsoft.Graph.Calendar.GetUserProfile";
+        private const string GetUserProfileDeclarativeType = "Microsoft.Graph.User.GetUserProfile";
 
         /// <summary>
         /// Gets or sets the max number of results to return.

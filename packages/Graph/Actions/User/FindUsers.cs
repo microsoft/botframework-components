@@ -21,7 +21,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        public const string FindUsersDeclarativeType = "Microsoft.Graph.Calendar.FindUsers";
+        public const string FindUsersDeclarativeType = "Microsoft.Graph.User.FindUsers";
 
         /// <summary>
         /// Default max number of results to return.

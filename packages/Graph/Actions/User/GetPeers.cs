@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetPeersDeclarativeType = "Microsoft.Graph.Calendar.GetPeers";
+        private const string GetPeersDeclarativeType = "Microsoft.Graph.User.GetPeers";
 
         /// <summary>
         /// Default max number of results to return.

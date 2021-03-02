@@ -21,7 +21,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.Calendar.GetWorksWithMe";
+        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.User.GetWorksWithMe";
 
         /// <summary>
         /// Default max number of results to return.

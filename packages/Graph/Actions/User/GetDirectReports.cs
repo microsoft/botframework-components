@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetDirectReportsDeclarativeType = "Microsoft.Graph.Calendar.GetDirectReports";
+        private const string GetDirectReportsDeclarativeType = "Microsoft.Graph.User.GetDirectReports";
 
         /// <summary>
         /// Default max number of results to return.
