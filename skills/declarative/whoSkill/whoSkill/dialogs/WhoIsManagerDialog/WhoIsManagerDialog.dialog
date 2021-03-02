@@ -17,11 +17,42 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "KLzE1d"
+          },
+          "activityProcessed": true,
+          "dialog": "FindPersonDialog",
+          "resultProperty": "dialog.userId",
+          "options": {
+            "nameEntity": "=dialog.nameEntity"
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "7cRLxV"
+          },
+          "name": "UserId",
+          "label": "UserId",
+          "value": "=dialog.userId",
+          "valueType": "String"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetManager",
+          "$designer": {
+            "id": "wHoNHt"
+          },
+          "resultProperty": "dialog.Result",
+          "token": "=user.token.token",
+          "userId": "=dialog.userId"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "RzfXyy"
+            "id": "nh7pn0"
           },
-          "activity": "${SendActivity_RzfXyy()}"
+          "activity": "${SendActivity_nh7pn0()}"
         }
       ]
     }

@@ -1,6 +1,6 @@
 [import](common.lg)
 
-# SendActivity_jXHLy5()
+# SendActivity_ryFbw6()
 [Activity
-    Text = Sorry, I don't know this ${dialog.nameEntity}
+    Text = ${dialog.Result}
 ]

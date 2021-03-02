@@ -1,0 +1,40 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "d3kkFE",
+    "name": "FindPersonDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "PzW7Ou"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "hNKTvd"
+          },
+          "property": "dialog.userId",
+          "value": "4cb80718-9dbd-4309-a5fd-753958148291"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "t5WNI5"
+          },
+          "value": "=dialog.userId"
+        }
+      ]
+    }
+  ],
+  "generator": "FindPersonDialog.lg",
+  "recognizer": "FindPersonDialog.lu.qna",
+  "id": "FindPersonDialog"
+}
