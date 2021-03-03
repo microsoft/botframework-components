@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 'use strict';
+
 const Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
@@ -17,6 +18,7 @@ module.exports = class extends Generator {
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
       {
+        ...this.flags,
         arguments: this.args,
         packageReferences: [],
         applicationSettingsDirectory: 'settings',
