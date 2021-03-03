@@ -6,11 +6,11 @@ To work with components from Composer while this feature is in preview, you'll n
 
 ## Table of Contents
 
-1. [Overview](~/docs/overview.md)
-2. [Extending your bot using packages](~/docs/extending-with-packages.md)
-3. [Extending your bot with code](~/docs/extending-with-code.md)
-4. [Creating your own packages](~/docs/creating-packages.md)
-5. [Creating your own templates](~/docs/creating-templates.md)
+1. [Overview](/docs/overview.md)
+2. [Extending your bot using packages](/docs/extending-with-packages.md)
+3. [Extending your bot with code](/docs/extending-with-code.md)
+4. [Creating your own packages](/docs/creating-packages.md)
+5. [Creating your own templates](/docs/creating-templates.md)
 
 ## Adaptive Runtime
 

@@ -27,12 +27,12 @@ Our [yeoman](https://yeoman.io) generators for scaffolding bot projects.
 
 | Name         | Description |
 |:------------:|-------------|
-|[Empty bot](~/generators/generator-microsoft-bot-empty) ) | The base empty bot |
-|[Conversational Core](~/generators/generator-microsoft-bot-conversational-core) | Basic conversational bot with NLP. |
-|[Command list](~/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards |
-|[Calendar](~/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars |
-|[Adaptive](~/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project |
-|[Calendar Assistant](~/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator |
+|[Empty bot](/generators/generator-microsoft-bot-empty) ) | The base empty bot |
+|[Conversational Core](/generators/generator-microsoft-bot-conversational-core) | Basic conversational bot with NLP. |
+|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards |
+|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars |
+|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project |
+|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator |
 
 ### Packages
 
@@ -40,16 +40,16 @@ Bits of bots that you can add to your bot project.
 
 | Name         |Type   | Description |
 |:------------:|:------|-------------|
-|[Welcome](~/packages/Welcome) | Dialogs | Declarative assets supporting scenarios that welcome new and returning users. |
-|[HelpAndCancel](~/packages/HelpAndCancel) | Dialogs | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
-|[Onboarding](~/packages/onboarding) | Dialogs |Declarative assets supporting a first time user experience. |
-|[Calendar](~/packages/Calendar) | Custom Actions |Custom actions supporting Calendar scenarios. |
-|[Graph](~/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API|
-|[Orchestrator](~/packages/Orchestrator) | Recognizer | Plugin to register the Orchestrator recognizer with the runtime. |
+|[Welcome](/packages/Welcome) | Dialogs | Declarative assets supporting scenarios that welcome new and returning users. |
+|[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
+|[Onboarding](/packages/onboarding) | Dialogs |Declarative assets supporting a first time user experience. |
+|[Calendar](/packages/Calendar) | Custom Actions |Custom actions supporting Calendar scenarios. |
+|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API|
+|[Orchestrator](/packages/Orchestrator) | Recognizer | Plugin to register the Orchestrator recognizer with the runtime. |
 
 ### Virtual Assistant skills (Legacy)
 
-You can find the list of Virtual Assistant skills [here](~/skills/csharp/readme.md).
+You can find the list of Virtual Assistant skills [here](/skills/csharp/readme.md).
 
 ## Need Help?
 
