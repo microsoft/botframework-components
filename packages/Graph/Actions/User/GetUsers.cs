@@ -15,13 +15,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// <summary>
     /// Find users using Microsoft Graph
     /// </summary>
-    [GraphCustomActionRegistration(FindUsers.FindUsersDeclarativeType)]
-    public class FindUsers : BaseMsGraphCustomAction<IEnumerable<User>>
+    [GraphCustomActionRegistration(GetUser.FindUsersDeclarativeType)]
+    public class GetUsers : BaseMsGraphCustomAction<IEnumerable<User>>
     {
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        public const string FindUsersDeclarativeType = "Microsoft.Graph.User.FindUsers";
+        public const string FindUsersDeclarativeType = "Microsoft.Graph.User.GetUsers";
 
         /// <summary>
         /// Default max number of results to return.
@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public IntExpression MaxCountProperty { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetUsers.FindUsersDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<User>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)

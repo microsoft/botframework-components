@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
-  "title": "Microsoft Graph - Find users",
+  "title": "Microsoft Graph - Get users",
   "description": "Finds users in an organization using the Microsoft Graph API.",
   "required": [
     "token",
