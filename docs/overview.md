@@ -18,7 +18,7 @@ At the core of the component model is the adaptive runtime - an extensible, conf
 
 ## Packages
 
-Packages are bits of a bot you want to share/import like declarative dialog assets, coded dialogs, custom adapters, middleware or custom actions. They are just regular NuGet or npm packages (depending on the code language for your bot). You'll use the Bot Framework CLI tool to merge the package's declarative contents with your bot (package management in Composer will handle this for you, or you could do it yourself using the Bot Framework CLI tool). They can be made up of any combination of declarative assets (.dialog, .lu, .lg, .qna files), coded extensions (custom actions, middleware, adapters), or just plain old package libraries.
+Packages are bits of a bot you want to share/import like declarative dialog assets, coded dialogs, custom adapters, or custom actions. They are just regular NuGet or npm packages (depending on the code language for your bot). You'll use the Bot Framework CLI tool to merge the package's declarative contents with your bot (package management in Composer will handle this for you, or you could do it yourself using the Bot Framework CLI tool). They can be made up of any combination of declarative assets (.dialog, .lu, .lg, .qna files), coded extensions (custom actions, adapters), or just plain old package libraries.
 
 ## Templates
 
