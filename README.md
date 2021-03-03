@@ -17,7 +17,7 @@ This repository contains the source code for *components* published by Microsoft
 
 ## Documentation
 
-We document working with components [here][./docs/overview.md], and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
+We document working with components [here](/docs/overview.md), and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
 
 ## Index of Content
 
