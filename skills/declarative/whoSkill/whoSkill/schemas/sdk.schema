@@ -158,9 +158,6 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
     },
     {
-      "$ref": "#/definitions/Microsoft.Graph.User.FindUsers"
-    },
-    {
       "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
     },
     {
@@ -174,6 +171,9 @@
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.User.GetUserProfile"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
@@ -4447,75 +4447,6 @@
         }
       }
     },
-    "Microsoft.Graph.User.FindUsers": {
-      "$role": "implements(Microsoft.IDialog)",
-      "type": "object",
-      "title": "Microsoft Graph - Find users",
-      "description": "Finds users in an organization using the Microsoft Graph API.",
-      "required": [
-        "token",
-        "nameToSearchFor",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
-        },
-        "token": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
-          "examples": [
-            "user.token.token"
-          ]
-        },
-        "maxCount": {
-          "$ref": "#/definitions/integerExpression",
-          "title": "Max Count",
-          "description": "Max number of results to return",
-          "examples": [
-            "dialog.worksWithMe.maxCount"
-          ]
-        },
-        "nameToSearchFor": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Search Name",
-          "description": "Name of the user",
-          "examples": [
-            "dialog.user.name"
-          ]
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.User.FindUsers"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
     "Microsoft.Graph.User.GetDirectReports": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
@@ -4717,7 +4648,7 @@
     },
     "Microsoft.Graph.User.GetProfile": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Graph - Get User Profile",
+      "title": "Microsoft Graph - Get Signed-in User's Profile",
       "description": "Get user profile from the Microsoft Graph API.",
       "type": "object",
       "required": [
@@ -4766,7 +4697,7 @@
     "Microsoft.Graph.User.GetUserProfile": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
-      "title": "Microsoft Graph - Get User Profile",
+      "title": "Microsoft Graph - Get Profile of A User",
       "description": "Get a user profile using the Microsoft Graph API.",
       "required": [
         "token",
@@ -4816,6 +4747,75 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.Graph.User.GetUserProfile"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetUsers": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get users",
+      "description": "Finds users in an organization using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "nameToSearchFor",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "maxCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Count",
+          "description": "Max number of results to return",
+          "examples": [
+            "dialog.worksWithMe.maxCount"
+          ]
+        },
+        "nameToSearchFor": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Search Name",
+          "description": "Name of the user",
+          "examples": [
+            "dialog.user.name"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetUsers"
         },
         "$designer": {
           "title": "Designer information",
@@ -5254,9 +5254,6 @@
           "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
         },
         {
-          "$ref": "#/definitions/Microsoft.Graph.User.FindUsers"
-        },
-        {
           "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
         },
         {
@@ -5270,6 +5267,9 @@
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.User.GetUserProfile"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
