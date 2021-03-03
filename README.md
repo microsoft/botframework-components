@@ -1,6 +1,5 @@
 ---
-title:  'Building bots from building blocks'
-author: 'clearab'
+title:  'Bot Framework Components'
 ---
 # Bot Framework Components
 
@@ -16,79 +15,52 @@ This repository contains the source code for *components* published by Microsoft
 * Publish a suite of packages, templates, and skills bot developers can use to build their bots from.
 * Publish components that demonstrate conversational design best practices.
 
-## Adaptive Runtime
+## Documentation
 
-At the core of the component model is the adaptive runtime - an extensible, configurable runtime that is treated as a black box to bot developers and taken as a dependency. The runtime provides extensibility points to add additional functionality by importing packages, connection to skills, or adding your own functionality.
-
-## Packages
-
-Packages are bits of a bot you want to share/import like declarative dialog assets, coded dialogs, custom adapters, middleware or custom actions. They are just packages  - NuGet / npm etc based on the code-language of your bot. You'll use the Bot Framework CLI tool to merge the package's declarative contents with your bot (package management in Composer will handle this for you). They can be made up of any combination of declarative assets (.dialog, .lu, .lg, .qna files) or coded extensions (custom actions, middleware, adapters).
-
-In addition to the packages published by the Bot Framework team, you'll be able to create and share your own packages. We plan to provide tooling to make the entire package management lifecycle as simple as possible, from discovery and inclusion, to creation and publishing. Some examples of packages include:
-
-* Common conversational constructs like greeting, cancel, help, unknown intent.
-* Bundles of custom actions for working with an API like MS Graph, Dynamics, the Power Platform or GitHub.
-* Vertically aligned solutions containing a combination of custom actions and adaptive assets like human hand-off, or working with your calendar.
-* Bundles of custom actions for working with specific types of data or operations, like math functions or working with dates.
-* Meta-packages, that just take dependencies on a bunch of other packages to group functionality for simpler management.
-
-## Templates
-
-Getting started templates will be created on top of the component model. They will be built primarily by composing packages - ensuring that no matter which template you start from you'll have the flexibility to grow and develop your bot to meet your needs.
-
-For example, the Conversational Core template will take a dependency on two packages - welcome and  help & cancel. It will also include a root dialog that wires up the dialogs in those packages as well as a dialog for handling unkown intents. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
-
-## Skills
-
-Skills are separate bots you connect your bot to in order to process messages for you. The skill manifest establishes a contract other bots can follow - defining messages and events the skill can handle and any data that will be returned when the skill completes its interaction with your user.
+We document working with components [here](/docs/overview.md), and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
 
 ## Index of Content
 
 ### Templates
 
-| Name         | Description |  C#  | JavaScript |
-|:------------:|-------------|------|------------|
-|Echo Bot | The base empty bot | `someplace` | `someplace` |
+Our [yeoman](https://yeoman.io) generators for scaffolding bot projects.
+
+| Name         | Description |
+|:------------:|-------------|
+|[Empty bot](/generators/generator-microsoft-bot-empty) ) | The base empty bot |
+|[Conversational Core](/generators/generator-microsoft-bot-conversational-core) | Basic conversational bot with NLP. |
+|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards |
+|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars |
+|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project |
+|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator |
 
 ### Packages
 
-| Name         | Description |  C#  | JavaScript |
-|:------------:|-------------|------|------------|
-|Welcome | Simple dialog that triggers on conversation start | `someplace` | `someplace` |
+Bits of bots that you can add to your bot project.
 
-### Virtual Assistant skills
+| Name         |Type   | Description |
+|:------------:|:------|-------------|
+|[Welcome](/packages/Welcome) | Dialogs | Declarative assets supporting scenarios that welcome new and returning users. |
+|[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
+|[Onboarding](/packages/onboarding) | Dialogs |Declarative assets supporting a first time user experience. |
+|[Calendar](/packages/Calendar) | Custom Actions |Custom actions supporting Calendar scenarios. |
+|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API|
+|[Orchestrator](/packages/Orchestrator) | Recognizer | Plugin to register the Orchestrator recognizer with the runtime. |
 
-The experimental/sample skills listed below are designed to work with the [Virtual Assistant](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) bot template.
+### Virtual Assistant skills (Legacy)
 
-| Name | Description |  
-|:------------:|------------| 
-|[CalendarSkill (Preview)](https://aka.ms/bfcalendarskill) | Add calendar capabilities to your Assistant. Powered by Microsoft Graph and Google. |
-|[EmailSkill (Preview)](https://aka.ms/bfemailskill) | Add email capabilities to your Assistant. Powered by Microsoft Graph and Google. |
-|[ToDoSkill (Preview)](https://aka.ms/bftodoskill) | Add task management capabilities to your Assistant. Powered by Microsoft Graph. |
-|[PointOfInterestSkill (Preview)](https://aka.ms/bfpoiskill) | Find points of interest and directions. Powered by Azure Maps and FourSquare. |
-|[AutomotiveSkill (Preview)](https://aka.ms/bfautoskill) | Add automotive management capabilities to your Assistant |
-|[BingSearchSkill (Preview)](https://aka.ms/bfbingsearchskill) | Add searching capabilities to your Assistant. Powered by Microsoft Bing. |
-|[HospitalitySkill (Preview)](https://aka.ms/bfhospitalityskill) | Add hospitality capabilities to your Assistant. |
-|[ITSMSkill (Preview)](https://aka.ms/bfitsmskill) | Add ticket and knowledge base related capabilities to your Assistant. Powered by ServiceNow. |
-|[MusicSkill (Preview)](https://aka.ms/bfmusicskill) | Add music capabilities to your Assistant. Powered by Spotify. |
-|[NewsSkill (Preview)](https://aka.ms/bfnewsskill) | Add news capabilities to your Assistant. Powered by Bing News Cognitive Services. |
-|[PhoneSkill (Preview)](https://aka.ms/bfphoneskill) | Add phone capabilities to your Assistant. |
-|[RestaurantBookingSkill (Preview)](https://aka.ms/bfrestaurantbookingskill) | Add hospitality capabilities to your Assistant. |
-|[WeatherSkill (Preview)](https://aka.ms/bfweatherskill) | Add weather capabilities to your Assistant. Powered by AccuWeather. |
-
-## Documentation
-
-We document working with components [here][./docs/overview.md], and you can find the full documentation for the Bot Framework SDK & Composer [here](https://aka.ms/botdocs).
+You can find the list of Virtual Assistant skills [here](/skills/csharp/readme.md).
 
 ## Need Help?
 
-If you have any questions please start with [Stack Overflow](https://stackoverflow.com/questions/tagged/botframework) where we're happy to help. Please use this GitHub Repos issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-skills/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-skills/issues/new?assignees=&labels=Type%3A+Feature&template=feature_request.md&title=).
+Please use this GitHub Repositories issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Feature&template=feature_request.md&title=).
 
 ## Contributing
 
-We welcome contributions to this repository! Please see our [wiki](https://github.com/microsoft/botframework-components/wiki) for details on how to contribute. If you'd like to contribute a completely new package or template, please use our [community repo](https://github.com/BotBuilderCommunity/).
+We welcome contributions to this repository! Please see our [wiki](https://github.com/microsoft/botframework-components/wiki) for details on how to contribute. If you'd like to contribute a completely new package or template, please use our [community repo](https://github.com/BotBuilderCommunity/) and we can help publish them for you, or feel free to blaze your own trail and publish them independently.
 
 ## Reporting Security Issues
+
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
 
 ## License
