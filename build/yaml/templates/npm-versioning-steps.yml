@@ -45,3 +45,10 @@ steps:
       tags: |
         NpmPackageVersion: $(NpmPackageVersion)
     continueOnError: true
+
+  - script: |
+     cd ..
+     dir *.* /s
+    displayName: 'Dir workspace'
+    continueOnError: true
+    condition: succeededOrFailed()

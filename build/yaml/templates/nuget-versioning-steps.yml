@@ -54,3 +54,10 @@ steps:
       tags: |
         NugetPackageVersion: $(NugetPackageVersion)
     continueOnError: true
+
+  - script: |
+     cd ..
+     dir *.* /s
+    displayName: 'Dir workspace'
+    continueOnError: true
+    condition: succeededOrFailed()

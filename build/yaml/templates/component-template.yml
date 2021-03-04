@@ -1,3 +1,6 @@
+variables:
+- template: shared-variables.yml
+
 stages:
   - stage: Setup
     jobs:       

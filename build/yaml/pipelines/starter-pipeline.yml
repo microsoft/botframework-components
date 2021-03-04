@@ -9,7 +9,6 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  BuildConfiguration: 'Release'
   ComponentType: '{YOUR_COMPONENT_TYPE}' #codeExtension, declarativeAsset, or generator
   DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
   WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
