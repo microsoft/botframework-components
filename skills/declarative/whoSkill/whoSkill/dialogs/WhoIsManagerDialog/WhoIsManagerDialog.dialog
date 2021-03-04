@@ -58,9 +58,6 @@
     }
   ],
   "generator": "WhoIsManagerDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": []
-  },
+  "recognizer": "WhoIsManagerDialog.lu.qna",
   "id": "WhoIsManagerDialog"
 }

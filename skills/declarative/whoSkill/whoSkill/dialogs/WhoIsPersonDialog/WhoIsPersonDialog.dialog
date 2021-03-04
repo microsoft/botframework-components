@@ -58,9 +58,6 @@
     }
   ],
   "generator": "WhoIsPersonDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": []
-  },
+  "recognizer": "WhoIsPersonDialog.lu.qna",
   "id": "WhoIsPersonDialog"
 }

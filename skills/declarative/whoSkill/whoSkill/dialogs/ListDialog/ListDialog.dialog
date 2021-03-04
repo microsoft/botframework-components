@@ -384,22 +384,6 @@
     }
   ],
   "generator": "ListDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": [
-      {
-        "intent": "Next",
-        "pattern": "next"
-      },
-      {
-        "intent": "Previous",
-        "pattern": "previous"
-      },
-      {
-        "intent": "Skip",
-        "pattern": "skip"
-      }
-    ]
-  },
+  "recognizer": "ListDialog.lu.qna",
   "id": "ListDialog"
 }
