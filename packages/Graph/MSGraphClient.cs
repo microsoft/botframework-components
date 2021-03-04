@@ -10,10 +10,16 @@ namespace Microsoft.Bot.Components.Graph
     using Microsoft.Graph;
 
     /// <summary>
-    /// Client to call MS Graph service
+    /// Client to call MS Graph service.
     /// </summary>
     public class MSGraphClient
     {
+        /// <summary>
+        /// Gets the authenticated <see cref="GraphServiceClient"/>.
+        /// </summary>
+        /// <param name="accessToken">OAuth access token</param>
+        /// <param name="httpClient">Instance of <see cref="HttpClient"/> to use.</param>
+        /// <returns>Instance of <see cref="GraphServiceClient"/>.</returns>
         public static GraphServiceClient GetAuthenticatedClient(string accessToken, HttpClient httpClient)
         {
             var client = new GraphServiceClient(httpClient);
@@ -31,6 +37,11 @@ namespace Microsoft.Bot.Components.Graph
             return client;
         }
 
+        /// <summary>
+        /// Handle exceptions from graph API.
+        /// </summary>
+        /// <param name="ex">Instance of the <see cref="ServiceException"/> to handle.</param>
+        /// <returns>The exception to return.</returns>
         public static Exception HandleGraphAPIException(ServiceException ex)
         {
             // TODO: Why do we throw a very generic exception when there is a much better

@@ -14,7 +14,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Get profile of a user's manager in Graph
+    /// Get profile of a user's manager in Graph.
     /// </summary>
     [GraphCustomActionRegistration(GetManager.GetManagerDeclarativeType)]
     public class GetManager : BaseMsGraphCustomAction<DirectoryObject>
@@ -53,6 +53,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
+        }
+
+        /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // Not found is a perfectly valid error in the case the person is
+            // top of the org chart. In this case we can just return a default(DirectoryObject) == null
+            // back to the caller.
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
         }
     }
 }

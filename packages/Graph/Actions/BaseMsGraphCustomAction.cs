@@ -75,7 +75,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
             catch (ServiceException ex)
             {
-                throw MSGraphClient.HandleGraphAPIException(ex);
+                this.HandleServiceException(ex);
             }
 
             // Write Trace Activity for the http request and response values
@@ -109,6 +109,15 @@ namespace Microsoft.Bot.Component.Graph.Actions
         protected virtual void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
             // Do nothing in default implementation.
+        }
+
+        /// <summary>
+        /// Handler for <see cref="ServiceException"/>.
+        /// </summary>
+        /// <param name="ex">Exception to handle.</param>
+        protected virtual void HandleServiceException(ServiceException ex)
+        {
+            throw MSGraphClient.HandleGraphAPIException(ex);
         }
     }
 }

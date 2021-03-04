@@ -77,5 +77,17 @@ namespace Microsoft.Bot.Component.Graph.Actions
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
         }
+
+        /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // Not found is a perfectly valid error in the case the person is
+            // bottom of the org chart. In this case we can just return a default(DirectoryObject) == null
+            // back to the caller.
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
+        }
     }
 }

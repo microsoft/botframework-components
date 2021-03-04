@@ -47,7 +47,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             this.PopulateParameters(dc.State, parameters);
 
-            T result;
+            T result = default(T);
 
             try
             {
@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
             catch (ServiceException ex)
             {
-                throw MSGraphClient.HandleGraphAPIException(ex);
+                this.HandleServiceException(ex);
             }
 
             // Write Trace Activity for the http request and response values
