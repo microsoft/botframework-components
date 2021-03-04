@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public IntExpression MaxCount { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetDirectReports.GetDirectReportsDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<DirectoryObject>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)

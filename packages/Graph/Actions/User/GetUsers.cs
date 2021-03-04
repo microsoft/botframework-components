@@ -15,7 +15,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// <summary>
     /// Find users using Microsoft Graph
     /// </summary>
-    [GraphCustomActionRegistration(GetUser.FindUsersDeclarativeType)]
+    [GraphCustomActionRegistration(GetUsers.FindUsersDeclarativeType)]
     public class GetUsers : BaseMsGraphCustomAction<IEnumerable<User>>
     {
         /// <summary>

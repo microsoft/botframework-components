@@ -29,7 +29,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         private const int DefaultMaxCount = 15;
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetWorksWithMe.GetWorksWithMeDeclarativeType;
 
         /// <summary>
         /// Gets or sets the max number of results to return.

@@ -31,7 +31,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression UserId { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetManager.GetManagerDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<DirectoryObject> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)

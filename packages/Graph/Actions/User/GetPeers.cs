@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression UserId { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetPeers.GetPeersDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<DirectoryObject>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
