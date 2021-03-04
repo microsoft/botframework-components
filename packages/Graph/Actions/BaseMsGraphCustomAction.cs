@@ -171,19 +171,30 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <param name="exCaught">The exception caught.</param>
         protected void FireTelemetryEvent(long latency, Exception exCaught)
         {
-            var metric = new Dictionary<string, double>();
-            metric.Add(this.TelemetryLatencyPropertyName, Convert.ToDouble(latency));
+            try
+            {
+                var metric = new Dictionary<string, double>();
+                metric.Add(this.TelemetryLatencyPropertyName, Convert.ToDouble(latency));
 
-            var properties = new Dictionary<string, string>();
-            properties.Add($"{this.TelemetryExceptionPropertyName}-Message", exCaught.Message);
-            properties.Add($"{this.TelemetryExceptionPropertyName}-StackTrace", exCaught.StackTrace);
-            properties.Add($"{this.TelemetryExceptionPropertyName}-ExceptionType", exCaught.GetType().FullName);
+                var properties = new Dictionary<string, string>();
 
-            // Log the latency and any exception that we caught.
-            // Telemetry client is something that is handled by the base Dialog class, and by extension the SDK
-            // platform itself. If the bot has telemetry enabled with the instrumentation key, then this would 
-            // automatically show up on their Application Insight monitoring log events.
-            this.TelemetryClient.TrackEvent(this.TelemetryEventName, properties, metric);
+                if (exCaught != null)
+                {
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-Message", exCaught.Message);
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-StackTrace", exCaught.StackTrace);
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-ExceptionType", exCaught.GetType().FullName);
+                }
+
+                // Log the latency and any exception that we caught.
+                // Telemetry client is something that is handled by the base Dialog class, and by extension the SDK
+                // platform itself. If the bot has telemetry enabled with the instrumentation key, then this would 
+                // automatically show up on their Application Insight monitoring log events.
+                this.TelemetryClient.TrackEvent(this.TelemetryEventName, properties, metric);
+            }
+            catch
+            {
+                // If exception is found, don't do anything to crash the bot. This isn't quite that important.
+            }
         }
 
         /// <summary>
