@@ -1,0 +1,118 @@
+[Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
+
+# ProfileCard()
+- ${CardTemplate(ProfileHeader(profile), ProfileBody(profile), ProfileActions(profile))}
+
+# ProfileHeader(profile)
+- ${CardHeader(profile.iconUrl, profile.displayName, "", "")}
+
+# ProfileBody(profile)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "items": [
+        ${ProfileProperty(profile.role)}
+        ${ProfileProperty(profile.email)}
+        ${ProfileProperty(profile.phone)}
+        ${ProfileProperty(profile.location)}
+        ${ProfileContactButtons(profile)}
+    ]
+}
+```
+
+# ProfileProperty(text)
+- ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "Center",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${text}",
+                    "size": "Small"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# ProfileContactButtons(profile)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${ChatIconUrl()}",
+                    "width": "${IconSize()}",
+                    "height": "${IconSize()}",
+                    "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.email}"
+                    }
+                }
+            ],
+            "spacing": "Medium"
+        },
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${MailIconUrl()}",
+                    "width": "${IconSize()}",
+                    "height": "${IconSize()}",
+                    "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "url": "mailto:${profile.email}"
+                    }
+                }
+            ],
+            "spacing": "Medium"
+        },
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${PhoneIconUrl()}",
+                    "width": "${IconSize()}",
+                    "height": "${IconSize()}",
+                    "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.email}"
+                    }
+                }
+            ],
+            "spacing": "Medium"
+        }
+    ]
+}
+```
+
+# ProfileActions(profile)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${GetManagerAction(profile.userId)},
+        ${GetCollaboratorsAction(profile.userId)},
+        ${GetPeersAction(profile.userId)}
+    ]
+}
+```

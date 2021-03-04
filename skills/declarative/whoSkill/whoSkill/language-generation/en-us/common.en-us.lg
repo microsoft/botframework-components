@@ -1,3 +1,6 @@
+[Icons](icons.en-us.lg)
+[Cards](cards.en-us.lg)
+
 # WelcomeUser()
 - IF: ${user.profile.displayName != null}
 - ```
