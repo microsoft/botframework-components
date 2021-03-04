@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -49,13 +50,28 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             T result = default(T);
 
+            Stopwatch sw = new Stopwatch();
+            Exception exCaught = null;
+
             try
             {
                 result = await this.CallGraphServiceWithResultAsync(graphClient, parameters, cancellationToken);
             }
             catch (ServiceException ex)
             {
+                exCaught = ex;
+
                 this.HandleServiceException(ex);
+            }
+            catch (Exception ex)
+            {
+                exCaught = ex;
+            }
+            finally
+            {
+                sw.Stop();
+
+                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
             }
 
             // Write Trace Activity for the http request and response values
