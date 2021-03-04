@@ -5,5 +5,11 @@
     "generators/*",
     "packages/*",
     "skills/declarative/*"
-  ]
+  ],
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  },
+  "scripts": {
+    "wsrun": "wsrun -t"
+  }
 }
