@@ -1,21 +1,6 @@
-name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
-
-trigger:
-  batch: true
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - generators/generator-microsoft-bot-calendar
-
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - generators/generator-microsoft-bot-calendar
+name: $(Build.BuildId)
+trigger: none
+pr: none
 
 pool: 
   vmImage: 'windows-2019'
