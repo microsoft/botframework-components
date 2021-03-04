@@ -1,3 +1,0 @@
-variables:
-  BuildConfiguration: 'Release'
-  BuildPlatform: anycpu

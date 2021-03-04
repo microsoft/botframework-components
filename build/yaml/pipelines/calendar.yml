@@ -9,7 +9,8 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-- template: ../templates/shared-variables.yml
+  BuildConfiguration: 'Release'
+  BuildPlatform: anycpu
   ComponentType: 'codeExtension'
   DeploymentRing: 'alpha'
   WorkingDirectory: 'packages/Calendar'

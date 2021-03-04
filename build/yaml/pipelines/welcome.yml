@@ -9,6 +9,8 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
+  BuildConfiguration: 'Release'
+  BuildPlatform: anycpu
   ComponentType: 'declarativeAsset'
   DeploymentRing: 'preview'
   WorkingDirectory: 'packages/Welcome'

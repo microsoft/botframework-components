@@ -9,6 +9,8 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
+  BuildConfiguration: 'Release'
+  BuildPlatform: anycpu
   ComponentType: '{YOUR_COMPONENT_TYPE}' #codeExtension, declarativeAsset, or generator
   DeploymentRing: '{YOUR_DEPLOYMENT_RING}' #alpha, preview, or stable
   WorkingDirectory: '{YOUR_WORKING_DIRECTORY}'
