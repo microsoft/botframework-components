@@ -1,0 +1,14 @@
+{
+  "name": "<%= name %>",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./generators/app/templates/index.js",
+  "dependencies": {
+    "generator-adaptive-bot": "^1.0.0-preview.9",
+    "yeoman-generator": "^2.0.5",
+    "yeoman-test": "^1.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

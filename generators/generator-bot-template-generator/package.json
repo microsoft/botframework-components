@@ -1,0 +1,68 @@
+{
+  "name": "generator-bot-template-generator",
+  "version": "0.0.1",
+  "description": "Generate a bot template generator for use with Microsoft Bot Framework",
+  "author": "Microsoft",
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "bot-template-generator",
+    "microsoft",
+    "bot",
+    "template"
+  ],
+  "scripts": {
+    "test": "jest",
+    "pretest": "eslint . --fix",
+    "prepublishOnly": "yarn audit"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "inquirer-npm-name": "^3.0.0",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "yeoman-generator": "^3.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-xo-space": "^0.20.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "jest": "^23.5.0",
+    "jest-cli": "^23.5.0",
+    "prettier": "^1.10.2",
+    "yeoman-assert": "^3.1.0",
+    "yeoman-test": "^1.7.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "xo-space/esnext",
+      "prettier"
+    ],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "printWidth": 90
+        }
+      ]
+    },
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "templates"
+    ]
+  }
+}
