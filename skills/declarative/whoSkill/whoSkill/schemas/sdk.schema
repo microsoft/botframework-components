@@ -176,7 +176,7 @@
       "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
     },
     {
-      "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
+      "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
     },
     {
       "$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -4824,13 +4824,14 @@
         }
       }
     },
-    "Microsoft.Graph.User.GetWorksWithMe": {
+    "Microsoft.Graph.User.GetWorksWith": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
       "title": "Microsoft Graph - Get People That Works With Me",
       "description": "Get people that I frequently collaborate with using the Microsoft Graph API.",
       "required": [
         "token",
+        "userId",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4870,12 +4871,20 @@
             "dialog.worksWithMe.maxCount"
           ]
         },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.User.GetWorksWithMe"
+          "const": "Microsoft.Graph.User.GetWorksWith"
         },
         "$designer": {
           "title": "Designer information",
@@ -5272,7 +5281,7 @@
           "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
         },
         {
-          "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
+          "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
         },
         {
           "$ref": "#/definitions/Microsoft.HttpRequest"
