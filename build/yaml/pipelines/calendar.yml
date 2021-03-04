@@ -7,7 +7,9 @@ pool:
   
 extends:
   template: ../templates/component-template.yml
-  variables:
-    ComponentType: 'codeExtension'
-    DeploymentRing: 'alpha'
-    WorkingDirectory: 'packages/Calendar'
+
+variables:
+- template: ../templates/shared-variables.yml
+  ComponentType: 'codeExtension'
+  DeploymentRing: 'alpha'
+  WorkingDirectory: 'packages/Calendar'
