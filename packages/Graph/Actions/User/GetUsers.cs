@@ -15,13 +15,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// <summary>
     /// Find users using Microsoft Graph
     /// </summary>
-    [GraphCustomActionRegistration(FindUsers.FindUsersDeclarativeType)]
-    public class FindUsers : BaseMsGraphCustomAction<IEnumerable<User>>
+    [GraphCustomActionRegistration(GetUsers.FindUsersDeclarativeType)]
+    public class GetUsers : BaseMsGraphCustomAction<IEnumerable<User>>
     {
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        public const string FindUsersDeclarativeType = "Microsoft.Graph.Calendar.FindUsers";
+        public const string FindUsersDeclarativeType = "Microsoft.Graph.User.GetUsers";
 
         /// <summary>
         /// Default max number of results to return.
@@ -39,10 +39,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the max number of results to return.
         /// </summary>
         [JsonProperty("MaxCount")]
-        public StringExpression MaxCountProperty { get; set; }
+        public IntExpression MaxCountProperty { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetUsers.FindUsersDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<User>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
@@ -66,10 +66,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string nameToSearch = this.NameToSearchForProperty.GetValue(state);
             int maxCount = DefaultMaxCount;
 
-            if (this.MaxCountProperty == null || !int.TryParse(this.MaxCountProperty.GetValue(state), out maxCount))
+            if (this.MaxCountProperty != null)
             {
                 // The TryParse will reset the value to 0 if parse fail
-                maxCount = DefaultMaxCount;
+                maxCount = this.MaxCountProperty.GetValue(state);
             }
 
             parameters.Add("NameToSearch", nameToSearch);

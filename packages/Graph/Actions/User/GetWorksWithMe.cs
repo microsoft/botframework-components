@@ -21,7 +21,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.Calendar.GetWorksWithMe";
+        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.User.GetWorksWithMe";
 
         /// <summary>
         /// Default max number of results to return.
@@ -29,13 +29,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
         private const int DefaultMaxCount = 15;
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetWorksWithMe.GetWorksWithMeDeclarativeType;
 
         /// <summary>
         /// Gets or sets the max number of results to return.
         /// </summary>
         [JsonProperty("MaxCount")]
-        public StringExpression MaxCount { get; set; }
+        public IntExpression MaxCount { get; set; }
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<Person>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
@@ -49,10 +49,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc />
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            if (this.MaxCount == null || !int.TryParse(this.MaxCount.GetValue(state), out int maxCount))
+            int maxCount = DefaultMaxCount;
+
+            if (this.MaxCount != null)
             {
                 // The TryParse will reset the value to 0 if parse fail
-                maxCount = DefaultMaxCount;
+                maxCount = this.MaxCount.GetValue(state);
             }
 
             parameters.Add("MaxResults", maxCount);

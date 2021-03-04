@@ -1,7 +1,7 @@
 [Common](common.en-us.lg)
 [Profile](profile.en-us.lg)
 
-# SendActivity_jXHLy5()
+# SendActivity_ryFbw6()
 [Activity
-    Text = Sorry, I don't know this ${dialog.nameEntity}
+    Text = ${dialog.Result}
 ]

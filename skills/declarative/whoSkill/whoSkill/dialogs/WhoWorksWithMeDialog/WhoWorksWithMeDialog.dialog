@@ -1,0 +1,40 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "nfUy4u",
+    "name": "WhoWorksWithMeDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "7urTxr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Graph.User.GetWorksWithMe",
+          "$designer": {
+            "id": "rWsOlL"
+          },
+          "resultProperty": "dialog.Result",
+          "token": "=user.token.token"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "rxl68t"
+          },
+          "activity": "${SendActivity_rxl68t()}"
+        }
+      ]
+    }
+  ],
+  "generator": "WhoWorksWithMeDialog.lg",
+  "recognizer": "WhoWorksWithMeDialog.lu.qna",
+  "id": "WhoWorksWithMeDialog"
+}

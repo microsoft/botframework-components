@@ -1,6 +1,6 @@
 [Common](common.en-us.lg)
 
-# SendActivity_RzfXyy()
+# SendActivity_nh7pn0()
 [Activity
-    Text = Sorry! I don't know the manager of ${dialog.nameEntity}.
+    Text = ${dialog.Result}
 ]

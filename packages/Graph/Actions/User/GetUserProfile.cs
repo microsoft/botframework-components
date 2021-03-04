@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetUserProfileDeclarativeType = "Microsoft.Graph.Calendar.GetUserProfile";
+        private const string GetUserProfileDeclarativeType = "Microsoft.Graph.User.GetUserProfile";
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -31,7 +31,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression UserId { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetUserProfile.GetUserProfileDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<Profile> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)

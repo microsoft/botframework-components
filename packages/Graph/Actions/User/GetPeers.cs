@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetPeersDeclarativeType = "Microsoft.Graph.Calendar.GetPeers";
+        private const string GetPeersDeclarativeType = "Microsoft.Graph.User.GetPeers";
 
         /// <summary>
         /// Default max number of results to return.
@@ -33,7 +33,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the max number of results to return.
         /// </summary>
         [JsonProperty("MaxCount")]
-        public StringExpression MaxCount { get; set; }
+        public IntExpression MaxCount { get; set; }
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression UserId { get; set; }
 
         /// <inheritdoc/>
-        public override string DeclarativeType => FindUsers.FindUsersDeclarativeType;
+        public override string DeclarativeType => GetPeers.GetPeersDeclarativeType;
 
         /// <inheritdoc/>
         internal override async Task<IEnumerable<DirectoryObject>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
@@ -68,10 +68,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 throw new ArgumentNullException(nameof(this.UserId));
             }
 
-            if (this.MaxCount == null || !int.TryParse(this.MaxCount.GetValue(state), out int maxCount))
+            int maxCount = DefaultMaxCount;
+
+            if (this.MaxCount != null)
             {
                 // The TryParse will reset the value to 0 if parse fail
-                maxCount = DefaultMaxCount;
+                maxCount = this.MaxCount.GetValue(state);
             }
 
             string userId = this.UserId.GetValue(state);

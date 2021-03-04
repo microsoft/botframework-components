@@ -1,0 +1,50 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "type": "object",
+  "title": "Microsoft Graph - Get users",
+  "description": "Finds users in an organization using the Microsoft Graph API.",
+  "required": [
+    "token",
+    "nameToSearchFor"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+      "examples": [
+        "dialog.contosodata"
+      ]
+    },
+    "token": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Token",
+      "description": "Microsoft Graph Authentication Token",
+      "examples": [
+        "user.token.token"
+      ]
+    },
+    "maxCount": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Max Count",
+      "description": "Max number of results to return",
+      "examples": [
+        "dialog.worksWithMe.maxCount"
+      ]
+    },
+    "nameToSearchFor": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Search Name",
+      "description": "Name of the user",
+      "examples": [
+        "dialog.user.name"
+      ]
+    }
+  }
+}

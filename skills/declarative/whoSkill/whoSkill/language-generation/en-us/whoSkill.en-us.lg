@@ -2,3 +2,7 @@
 
 # SendActivity_TXYwSy()
 -${WelcomeUser()}
+# SendActivity_QxqZcj()
+[Activity
+    Text = ${turn.dialogEvent}
+]

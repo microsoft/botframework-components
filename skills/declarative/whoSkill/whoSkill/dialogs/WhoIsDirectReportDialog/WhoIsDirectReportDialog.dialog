@@ -1,0 +1,63 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "TRNmes",
+    "name": "WhoIsDirectReportDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "WRPVvN"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "17pomb"
+          },
+          "activityProcessed": true,
+          "dialog": "FindPersonDialog",
+          "resultProperty": "dialog.userId",
+          "options": {
+            "nameEntity": "dialog.nameEntity"
+          }
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5T5gHY"
+          },
+          "name": "UserId",
+          "label": "UserId",
+          "valueType": "String",
+          "value": "=dialog.userId"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetDirectReports",
+          "$designer": {
+            "id": "AdQtbk"
+          },
+          "resultProperty": "dialog.Result",
+          "token": "=user.token.token",
+          "userId": "=dialog.userId"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "erQVCV"
+          },
+          "activity": "${SendActivity_erQVCV()}"
+        }
+      ]
+    }
+  ],
+  "generator": "WhoIsDirectReportDialog.lg",
+  "recognizer": "WhoIsDirectReportDialog.lu.qna",
+  "id": "WhoIsDirectReportDialog"
+}
