@@ -55,6 +55,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             try
             {
+                sw.Start();
                 result = await this.CallGraphServiceWithResultAsync(graphClient, parameters, cancellationToken);
             }
             catch (ServiceException ex)
