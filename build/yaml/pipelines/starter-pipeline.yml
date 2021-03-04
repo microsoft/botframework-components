@@ -2,6 +2,9 @@ name: $(Build.BuildId)
 trigger: none
 pr: none
 
+pool: 
+  vmImage: $[ coalesce( variables['VMImage'], 'windows-2019' ) ] # or 'windows-latest' or 'vs2017-win2016'
+
 extends:
   template: ../templates/component-template.yml
 
