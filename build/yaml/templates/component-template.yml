@@ -13,7 +13,7 @@ stages:
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: pack_npm
-        displayName: Resolve version and publish package
+        displayName: Publish package
         steps:
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
@@ -23,7 +23,7 @@ stages:
     condition: eq(variables.ComponentType, 'codeExtension')
     jobs:
       - job: build_dotnet
-        displayName: Build .csproj file with dotnet cli
+        displayName: Build .csproj file with dotnet
         steps:
         - template: dotnet-build-steps.yml
   - stage: stage_package_nuget
@@ -39,7 +39,7 @@ stages:
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: job_pack_nuspec
-        displayName: Package .nuspec with nuget cli
+        displayName: Package .nuspec with nuget
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuget-versioning-steps.yml
