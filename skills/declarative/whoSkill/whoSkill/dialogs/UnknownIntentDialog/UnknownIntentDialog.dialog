@@ -27,9 +27,6 @@
     }
   ],
   "generator": "UnknownIntentDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": []
-  },
+  "recognizer": "UnknownIntentDialog.lu.qna",
   "id": "UnknownIntentDialog"
 }

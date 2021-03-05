@@ -43,31 +43,207 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "GRE2OG",
-        "name": "WhoIsPersonTrigger"
+        "id": "blfdn9",
+        "name": "OnIntent (GetCollaborators)"
       },
-      "intent": "WhoIsPersonTrigger",
-      "entities": [
-        "nameEntity"
-      ],
+      "intent": "GetCollaborators",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "HfnTV7"
+            "id": "rIjVl9"
           },
-          "property": "dialog.nameEntity",
-          "value": "=@nameEntity"
+          "name": "whoSkill.GetCollaborators"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "LvPia7"
+          },
+          "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "U3dC5A"
+            "id": "io3AVP"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoWorksWithMeDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "bK5x7C",
+        "name": "OnIntent (GetDepartment)"
+      },
+      "intent": "GetDepartment",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CtN0JN"
+          },
+          "name": "whoSkill.GetDepartment"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "JgLgyA"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "OlaCZn"
           },
           "activityProcessed": true,
           "dialog": "WhoIsPersonDialog",
           "options": {
-            "nameEntity": "=dialog.nameEntity"
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "cuN0XW",
+        "name": "OnIntent (GetDirectReports)"
+      },
+      "intent": "GetDirectReports",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "UIBrQZ"
+          },
+          "name": "whoSkill.GetDirectReports"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "5ppP1M"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Y2hy7l"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsDirectReportDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "22Refo",
+        "name": "OnIntent (GetEmailAddress)"
+      },
+      "intent": "GetEmailAddress",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "LLDQcc"
+          },
+          "name": "whoSkill.GetEmailAddress"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "caV2Vr"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Bhz0b5"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pjrr7d",
+        "name": "OnIntent (GetJobTitle)"
+      },
+      "intent": "GetJobTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "S2lRYi"
+          },
+          "name": "whoSkill.GetJobTitle"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "zmuz7l"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xiISoH"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AUBLiD",
+        "name": "OnIntent (GetLocation)"
+      },
+      "intent": "GetLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "AF2A5j"
+          },
+          "name": "whoSkill.GetLocation"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "sIrh3H"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "pOJdPA"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
           }
         }
       ]
@@ -76,17 +252,23 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "xAkucD",
-        "name": "WhoIsManagerTrigger"
+        "name": "OnIntent (GetManager)"
       },
-      "intent": "WhoIsManagerTrigger",
+      "intent": "GetManager",
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "9K4Lqb"
+            "id": "QPzd0I"
           },
-          "property": "dialog.nameEntity",
-          "value": "=@nameEntity"
+          "name": "whoSkill.GetManager"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "2AokNp"
+          },
+          "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -96,33 +278,162 @@
           "activityProcessed": true,
           "dialog": "WhoIsManagerDialog",
           "options": {
-            "nameEntity": "=dialog.nameEntity"
+            "nameEntity": "=$options.contactEntity"
           }
         }
       ]
     },
     {
-      "$kind": "Microsoft.OnUnknownIntent",
+      "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "Czo7cS"
+        "id": "qzK1HD",
+        "name": "OnIntent (GetPeers)"
       },
+      "intent": "GetPeers",
+      "entities": [],
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "v9syx2"
+          },
+          "name": "whoSkill.GetPeers"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "VWyqgw"
+          },
+          "eventName": "SetOptions"
+        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "aDUbIy"
+            "id": "fJItRK"
           },
           "activityProcessed": true,
-          "dialog": "UnknownIntentDialog"
+          "dialog": "WhoIsPeerDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "8zzS4g",
+        "name": "OnIntent (GetPhoneNumber)"
+      },
+      "intent": "GetPhoneNumber",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "1ZZm4i"
+          },
+          "name": "whoSkill.GetPhoneNumber"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "bCD1pL"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sr38K1"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GRE2OG",
+        "name": "OnIntent (GetProfile)"
+      },
+      "intent": "GetProfile",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wiVPuM"
+          },
+          "name": "whoSkill.GetProfile"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "h88r5H"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "U3dC5A"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JlhWE9",
+        "name": "OnEvent (SetOptions)"
+      },
+      "event": "SetOptions",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JGABEb"
+          },
+          "assignments": [
+            {
+              "property": "$options.contactEntity",
+              "value": "=coalesce(@contact, @email, @personName)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "TDHKsS"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
         }
       ]
     },
     {
       "$kind": "Microsoft.OnError",
       "$designer": {
-        "id": "0XJm0e"
+        "id": "0XJm0e",
+        "name": "OnError"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "BnGy6N"
+          },
+          "name": "whoSkill.OnError"
+        },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
@@ -133,84 +444,18 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnIntent",
+      "$kind": "Microsoft.OnUnknownIntent",
       "$designer": {
-        "id": "cuN0XW",
-        "name": "WhoIsDirectReportTrigger"
+        "id": "ONiLWO"
       },
-      "intent": "WhoIsDirectReportTrigger",
-      "entities": [
-        "nameEntity"
-      ],
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "IcdxX7"
-          },
-          "property": "dialog.nameEntity",
-          "value": "=@nameEntity"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "Y2hy7l"
-          },
-          "activityProcessed": true,
-          "dialog": "WhoIsDirectReportDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "qzK1HD",
-        "name": "WhoIsPeerTrigger"
-      },
-      "intent": "WhoIsPeerTrigger",
-      "entities": [
-        "nameEntity"
-      ],
-      "actions": [
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "ETsHZi"
-          },
-          "property": "dialog.nameEntity",
-          "value": "=@nameEntity"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "fJItRK"
-          },
-          "activityProcessed": true,
-          "dialog": "WhoIsPeerDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "blfdn9",
-        "name": "WhoWorksWithMe"
-      },
-      "intent": "WhoWorksWithMe",
       "actions": [
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "io3AVP"
+            "id": "ydQ6tJ"
           },
           "activityProcessed": true,
-          "dialog": "WhoWorksWithMeDialog"
+          "dialog": "UnknownIntentDialog"
         }
       ]
     }
@@ -218,29 +463,5 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "whoSkill.lg",
   "id": "whoSkill",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": [
-      {
-        "intent": "WhoIsPersonTrigger",
-        "pattern": "Who is the person (?<nameEntity>.*)"
-      },
-      {
-        "intent": "WhoIsManagerTrigger",
-        "pattern": "Who is the manager of (?<nameEntity>.*)"
-      },
-      {
-        "intent": "WhoIsDirectReportTrigger",
-        "pattern": "Who are the direct reports of (?<nameEntity>.*)"
-      },
-      {
-        "intent": "WhoIsPeerTrigger",
-        "pattern": "Who are the peers of (?<nameEntity>.*)"
-      },
-      {
-        "intent": "WhoWorksWithMe",
-        "pattern": "Who works with me"
-      }
-    ]
-  }
+  "recognizer": "whoSkill.lu.qna"
 }
