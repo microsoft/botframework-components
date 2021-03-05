@@ -1,5 +1,6 @@
 parameters:
 - name: PublishPackageArtifacts # packaging steps are enabled in ADO
+  displayName: 'Publish packages to Build Artifacts'
   type: boolean
   default: false
 
