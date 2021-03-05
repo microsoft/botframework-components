@@ -42,7 +42,7 @@ steps:
 - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
   displayName: Tag build for NPM
   inputs: 
-  tags: |
+    tags: |
       NpmPackageVersion: $(NpmPackageVersion)
   continueOnError: true
 
