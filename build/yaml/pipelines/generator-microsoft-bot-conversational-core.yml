@@ -7,10 +7,9 @@ pool:
   
 extends:
   template: ../templates/component-template.yml
-  parameters:
-      PublishPackageArtifacts: false # parameter is set in ADO
 
 variables:
   ComponentType: generator
   DeploymentRing: preview
+  # PublishPackageArtifacts: # set in ADO
   WorkingDirectory: generators/generator-microsoft-bot-conversational-core

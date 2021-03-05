@@ -8,11 +8,12 @@ pool:
 extends:
   template: ../templates/component-template.yml
   parameters:
-      PublishPackageArtifacts: false # parameter is set in ADO
+      PublishPackageArtifacts: # parameter is set in ADO
 
 variables:
   BuildConfiguration: 'Release'
   BuildPlatform: anycpu
   ComponentType: YOUR_COMPONENT_TYPE # codeExtension, declarativeAsset, or generator
   DeploymentRing: YOUR_DEPLOYMENT_RING # alpha, preview, or stable
+  # PublishPackageArtifacts: # set in ADO
   WorkingDirectory: YOUR_WORKING_DIRECTORY
