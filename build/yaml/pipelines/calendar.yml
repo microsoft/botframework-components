@@ -13,4 +13,5 @@ variables:
   BuildPlatform: anycpu
   ComponentType: codeExtension
   DeploymentRing: alpha
+  PublishPackage: false
   WorkingDirectory: packages/Calendar

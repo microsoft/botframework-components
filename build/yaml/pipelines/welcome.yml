@@ -13,4 +13,5 @@ variables:
   BuildPlatform: anycpu
   ComponentType: declarativeAsset
   DeploymentRing: preview
+  PublishPackage: false
   WorkingDirectory: packages/Welcome

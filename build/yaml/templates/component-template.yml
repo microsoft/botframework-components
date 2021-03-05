@@ -4,16 +4,16 @@ stages:
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: job_build_npm
-        displayName: Build Node package
+        displayName: Build Node project
         steps:
         - template: npm-build-steps.yml 
   - stage: stage_package_node
     displayName: 'Node: Version & Pack'
     dependsOn: stage_build_node
-    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq(variables.PublishPackage, true))
     jobs:
       - job: pack_npm
-        displayName: Publish package
+        displayName: Pack Node project
         steps:
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
@@ -23,23 +23,23 @@ stages:
     condition: eq(variables.ComponentType, 'codeExtension')
     jobs:
       - job: build_dotnet
-        displayName: Build .csproj file with dotnet
+        displayName: Build .csproj with dotnet
         steps:
         - template: dotnet-build-steps.yml
   - stage: stage_package_nuget
     displayName: '.NET: Version, Sign & Pack'
     dependsOn: stage_build_nuget
-    condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
+    condition: and(or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset')), eq(variables.PublishPackage, true))
     jobs:
       - job: job_pack_dotnet
-        displayName: Package .csproj with dotnet cli
+        displayName: Pack .csproj with dotnet cli
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: nuget-versioning-steps.yml
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: job_pack_nuspec
-        displayName: Package .nuspec with nuget
+        displayName: Pack .nuspec with nuget
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuget-versioning-steps.yml
