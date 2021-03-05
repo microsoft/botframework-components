@@ -9,6 +9,6 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  ComponentType: 'generator'
-  DeploymentRing: 'preview'
-  WorkingDirectory: 'generators/generator-microsoft-bot-command-list'
+  ComponentType: generator
+  DeploymentRing: preview
+  WorkingDirectory: generators/generator-microsoft-bot-command-list

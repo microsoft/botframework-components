@@ -9,8 +9,8 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  BuildConfiguration: 'Release'
+  BuildConfiguration: Release
   BuildPlatform: anycpu
-  ComponentType: 'codeExtension'
-  DeploymentRing: 'preview'
-  WorkingDirectory: 'packages/Orchestrator'
+  ComponentType: codeExtension
+  DeploymentRing: preview
+  WorkingDirectory: packages/Orchestrator
