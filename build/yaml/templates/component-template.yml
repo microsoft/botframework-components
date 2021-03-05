@@ -15,7 +15,7 @@ stages:
   - stage: stage_package_node
     displayName: 'Node: Version & Pack'
     dependsOn: stage_build_node
-    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq('{{ parameters.PublishPackageArtifacts }}', true)
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq('{{ parameters.PublishPackageArtifacts }}', true))
     jobs:
       - job: pack_npm
         displayName: Pack Node project
