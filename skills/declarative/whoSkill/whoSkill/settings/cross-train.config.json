@@ -1,0 +1,10 @@
+{
+  "ListDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "Next": [],
+      "Previous": [],
+      "Skip": []
+    }
+  }
+}

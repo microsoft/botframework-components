@@ -5,7 +5,3 @@
     Text = No peer found for the person!
 ]
 
-# SendActivity_8EwDyZ()
-[Activity
-    Text = ${dialog.Result}
-]

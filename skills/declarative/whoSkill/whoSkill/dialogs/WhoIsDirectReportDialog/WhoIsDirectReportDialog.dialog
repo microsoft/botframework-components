@@ -53,6 +53,14 @@
             "id": "erQVCV"
           },
           "activity": "${SendActivity_erQVCV()}"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "cGZEZi"
+          },
+          "activityProcessed": true,
+          "dialog": "ListDialog"
         }
       ]
     }

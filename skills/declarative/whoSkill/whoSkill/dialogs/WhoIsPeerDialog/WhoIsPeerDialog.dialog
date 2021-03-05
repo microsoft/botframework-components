@@ -64,11 +64,68 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.TraceActivity",
               "$designer": {
-                "id": "8EwDyZ"
+                "id": "VAyKI0"
               },
-              "activity": "${SendActivity_8EwDyZ()}"
+              "name": "Result",
+              "label": "Result",
+              "valueType": "string",
+              "value": "=dialog.Result"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "0p2D2S"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$Result"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "UserListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "actions": "UserListActions",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "R3KvEI"
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "options": "=$listOptions",
+              "resultProperty": "$selectedUser"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "tVPM2s"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "userId": "=$selectedUser.Id"
+              }
             }
           ]
         }
