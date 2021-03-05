@@ -43,24 +43,20 @@
           "$designer": {
             "id": "AdQtbk"
           },
-          "resultProperty": "dialog.Result",
+          "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=dialog.userId"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "erQVCV"
-          },
-          "activity": "${SendActivity_erQVCV()}"
+          "userId": "=$userId"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "cGZEZi"
+            "id": "PupWRK"
           },
           "activityProcessed": true,
-          "dialog": "ListDialog"
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result"
+          }
         }
       ]
     }

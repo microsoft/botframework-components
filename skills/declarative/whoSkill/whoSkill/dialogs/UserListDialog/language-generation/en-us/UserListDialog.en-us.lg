@@ -1,0 +1,6 @@
+[import](common.lg)
+
+# SendActivity_vnTSDc()
+[Activity
+    Text = Sorry no user was found for ${dialog.queryType}.
+]

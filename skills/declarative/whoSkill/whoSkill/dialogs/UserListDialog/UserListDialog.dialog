@@ -1,0 +1,107 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "uuf2U2",
+    "name": "UserListDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "XcOKoq"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yjqnnW"
+          },
+          "condition": "=exists($UserList)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "vnTSDc"
+              },
+              "activity": "${SendActivity_vnTSDc()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "aX6mMt"
+              },
+              "name": "UserList",
+              "label": "UserList",
+              "valueType": "string",
+              "value": "=$UserList"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "3IciB4"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$UserList"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "UserListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ChatIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "actions": "UserListActions",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "E0yEeY"
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "options": "=$listOptions",
+              "resultProperty": "$SelectedUser"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "73AoRG"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "userId": "=$SelectedUser.Id"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "UserListDialog.lg",
+  "recognizer": "UserListDialog.lu.qna",
+  "id": "UserListDialog"
+}
