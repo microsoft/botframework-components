@@ -15,13 +15,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// <summary>
     /// Get people who works with me from Graph.
     /// </summary>
-    [GraphCustomActionRegistration(GetWorksWithMe.GetWorksWithMeDeclarativeType)]
-    public class GetWorksWithMe : BaseMsGraphCustomAction<IEnumerable<Person>>
+    [GraphCustomActionRegistration(GetWorksWith.GetWorksWithMeDeclarativeType)]
+    public class GetWorksWith : BaseMsGraphCustomAction<IEnumerable<Person>>
     {
         /// <summary>
         /// Declarative type for the custom action.
         /// </summary>
-        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.User.GetWorksWithMe";
+        private const string GetWorksWithMeDeclarativeType = "Microsoft.Graph.User.GetWorksWith";
 
         /// <summary>
         /// Default max number of results to return.
@@ -29,7 +29,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         private const int DefaultMaxCount = 15;
 
         /// <inheritdoc/>
-        public override string DeclarativeType => GetWorksWithMe.GetWorksWithMeDeclarativeType;
+        public override string DeclarativeType => GetWorksWith.GetWorksWithMeDeclarativeType;
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -37,11 +37,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("MaxCount")]
         public IntExpression MaxCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the user id.
+        /// </summary>
+        [JsonProperty("UserId")]
+        public StringExpression UserId { get; set; }
+
         /// <inheritdoc/>
         internal override async Task<IEnumerable<Person>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
+            string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
-            IUserPeopleCollectionPage result = await client.Me.People.Request().Top(maxCount).GetAsync();
+            IUserPeopleCollectionPage result = await client.Users[userId].People.Request().Top(maxCount).GetAsync();
 
             return result.CurrentPage;
         }
@@ -57,6 +64,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCount.GetValue(state);
             }
 
+            string userId = this.UserId.GetValue(state);
+
+            parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
         }
     }

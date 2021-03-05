@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -52,6 +53,42 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public abstract string DeclarativeType { get; }
 
         /// <summary>
+        /// Gets the telemetry event name.
+        /// </summary>
+        [JsonIgnore]
+        public string TelemetryEventName
+        {
+            get
+            {
+                return $"Graph_{this.DeclarativeType}";
+            }
+        }
+
+        /// <summary>
+        /// Gets the latency property name in the custom metrics property in App Insight.
+        /// </summary>
+        [JsonIgnore]
+        public string TelemetryLatencyPropertyName
+        {
+            get
+            {
+                return $"GraphLatency_{this.DeclarativeType}";
+            }
+        }
+
+        /// <summary>
+        /// Gets the exception proeprty name in the custom property in App Insight.
+        /// </summary>
+        [JsonIgnore]
+        public string TelemetryExceptionPropertyName
+        {
+            get
+            {
+                return $"GraphException_{this.DeclarativeType}";
+            }
+        }
+
+        /// <summary>
         /// Beings the dialog.
         /// </summary>
         /// <param name="dc">Dialog context.</param>
@@ -69,13 +106,29 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             this.PopulateParameters(dc.State, parameters);
 
+            Stopwatch sw = new Stopwatch();
+            Exception exCaught = null;
+
             try
             {
+                sw.Start();
                 await this.CallGraphServiceAsync(graphClient, parameters, cancellationToken);
             }
             catch (ServiceException ex)
             {
-                throw MSGraphClient.HandleGraphAPIException(ex);
+                exCaught = ex;
+
+                this.HandleServiceException(ex);
+            }
+            catch (Exception ex)
+            {
+                exCaught = ex;
+            }
+            finally
+            {
+                sw.Stop();
+
+                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
             }
 
             // Write Trace Activity for the http request and response values
@@ -109,6 +162,48 @@ namespace Microsoft.Bot.Component.Graph.Actions
         protected virtual void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
             // Do nothing in default implementation.
+        }
+
+        /// <summary>
+        /// Fires the telemetry event to App Insight.
+        /// </summary>
+        /// <param name="latency">Latency of the call.</param>
+        /// <param name="exCaught">The exception caught.</param>
+        protected void FireTelemetryEvent(long latency, Exception exCaught)
+        {
+            try
+            {
+                var metric = new Dictionary<string, double>();
+                metric.Add(this.TelemetryLatencyPropertyName, Convert.ToDouble(latency));
+
+                var properties = new Dictionary<string, string>();
+
+                if (exCaught != null)
+                {
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-Message", exCaught.Message);
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-StackTrace", exCaught.StackTrace);
+                    properties.Add($"{this.TelemetryExceptionPropertyName}-ExceptionType", exCaught.GetType().FullName);
+                }
+
+                // Log the latency and any exception that we caught.
+                // Telemetry client is something that is handled by the base Dialog class, and by extension the SDK
+                // platform itself. If the bot has telemetry enabled with the instrumentation key, then this would 
+                // automatically show up on their Application Insight monitoring log events.
+                this.TelemetryClient.TrackEvent(this.TelemetryEventName, properties, metric);
+            }
+            catch
+            {
+                // If exception is found, don't do anything to crash the bot. This isn't quite that important.
+            }
+        }
+
+        /// <summary>
+        /// Handler for <see cref="ServiceException"/>.
+        /// </summary>
+        /// <param name="ex">Exception to handle.</param>
+        protected virtual void HandleServiceException(ServiceException ex)
+        {
+            throw MSGraphClient.HandleGraphAPIException(ex);
         }
     }
 }
