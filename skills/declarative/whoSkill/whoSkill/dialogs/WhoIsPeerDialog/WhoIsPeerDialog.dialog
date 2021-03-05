@@ -48,11 +48,29 @@
           "userId": "=dialog.userId"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "hZFfyN"
+            "id": "dkXxCq"
           },
-          "activity": "${SendActivity_hZFfyN()}"
+          "condition": "=exists(dialog.Result)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AgG0Wu"
+              },
+              "activity": "${SendActivity_AgG0Wu()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8EwDyZ"
+              },
+              "activity": "${SendActivity_8EwDyZ()}"
+            }
+          ]
         }
       ]
     }

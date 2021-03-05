@@ -102,37 +102,6 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnUnknownIntent",
-      "$designer": {
-        "id": "Czo7cS"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "aDUbIy"
-          },
-          "activityProcessed": true,
-          "dialog": "UnknownIntentDialog"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnError",
-      "$designer": {
-        "id": "0XJm0e"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "QxqZcj"
-          },
-          "activity": "${SendActivity_QxqZcj()}"
-        }
-      ]
-    },
-    {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "cuN0XW",
@@ -211,6 +180,37 @@
           },
           "activityProcessed": true,
           "dialog": "WhoWorksWithMeDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "Czo7cS"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "aDUbIy"
+          },
+          "activityProcessed": true,
+          "dialog": "UnknownIntentDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "0XJm0e"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "QxqZcj"
+          },
+          "activity": "${SendActivity_QxqZcj()}"
         }
       ]
     }

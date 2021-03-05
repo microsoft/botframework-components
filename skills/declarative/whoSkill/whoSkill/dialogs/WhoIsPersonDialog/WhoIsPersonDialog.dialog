@@ -39,6 +39,15 @@
           "value": "=dialog.userId"
         },
         {
+          "$kind": "Microsoft.Graph.Photo.GetPhoto",
+          "$designer": {
+            "id": "rYukBT"
+          },
+          "resultProperty": "dialog.ResultPhoto",
+          "token": "=user.token.token",
+          "userId": "=dialog.userId"
+        },
+        {
           "$kind": "Microsoft.Graph.User.GetUserProfile",
           "$designer": {
             "id": "ZW7CBi"
@@ -46,6 +55,16 @@
           "token": "=user.token.token",
           "userId": "=dialog.userId",
           "resultProperty": "dialog.Result"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YumZ1w"
+          },
+          "name": "JsonResult",
+          "label": "JsonResult",
+          "valueType": "String",
+          "value": "=dialog.Result"
         },
         {
           "$kind": "Microsoft.SendActivity",

@@ -1,6 +1,11 @@
 [import](common.lg)
 
-# SendActivity_hZFfyN()
+# SendActivity_AgG0Wu()
+[Activity
+    Text = No peer found for the person!
+]
+
+# SendActivity_8EwDyZ()
 [Activity
     Text = ${dialog.Result}
 ]

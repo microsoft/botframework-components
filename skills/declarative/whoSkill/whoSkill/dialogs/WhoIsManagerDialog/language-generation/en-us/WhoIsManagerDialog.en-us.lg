@@ -1,6 +1,11 @@
 [Common](common.en-us.lg)
 
-# SendActivity_nh7pn0()
+# SendActivity_lgZtQO()
+[Activity
+    Text = No manager found!
+]
+
+# SendActivity_uGwaHG()
 [Activity
     Text = ${dialog.Result}
 ]
