@@ -2,6 +2,13 @@
   "whoSkill.en-us": {
     "rootDialog": true,
     "triggers": {
+      "": [
+        "AuthenticationDialog.en-us",
+        "UnknownIntentDialog.en-us"
+      ],
+      "GetCollaborators": [
+        "WhoWorksWithMeDialog.en-us"
+      ],
       "GetDepartment": [
         "WhoIsPersonDialog.en-us"
       ],
@@ -28,10 +35,6 @@
       ],
       "GetProfile": [
         "WhoIsPersonDialog.en-us"
-      ],
-      "": [
-        "AuthenticationDialog.en-us",
-        "UnknownIntentDialog.en-us"
       ]
     }
   },

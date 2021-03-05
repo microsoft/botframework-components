@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
@@ -17,7 +18,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// Get profile of a user's manager in Graph.
     /// </summary>
     [GraphCustomActionRegistration(GetDirectReports.GetDirectReportsDeclarativeType)]
-    public class GetDirectReports : BaseMsGraphCustomAction<IEnumerable<DirectoryObject>>
+    public class GetDirectReports : BaseMsGraphCustomAction<IEnumerable<User>>
     {
         /// <summary>
         /// Declarative type for the custom action.
@@ -45,7 +46,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public override string DeclarativeType => GetDirectReports.GetDirectReportsDeclarativeType;
 
         /// <inheritdoc/>
-        internal override async Task<IEnumerable<DirectoryObject>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
+        internal override async Task<IEnumerable<User>> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
@@ -53,7 +54,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             IUserDirectReportsCollectionWithReferencesPage result = await client.Users[userId].DirectReports.Request().Top(maxCount).GetAsync();
 
             // Again only return the top N results but discard the other pages if the manager has more than N direct reports
-            return result.CurrentPage;
+            return result.CurrentPage.Cast<User>();
         }
 
         /// <inheritdoc />

@@ -1,6 +1,2 @@
 [import](common.lg)
 
-# SendActivity_rxl68t()
-[Activity
-    Text = ${dialog.Result}
-]

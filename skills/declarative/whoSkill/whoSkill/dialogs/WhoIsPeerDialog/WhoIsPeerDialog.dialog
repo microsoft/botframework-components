@@ -48,11 +48,16 @@
           "userId": "=dialog.userId"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "hZFfyN"
+            "id": "Ldr65P"
           },
-          "activity": "${SendActivity_hZFfyN()}"
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "queryType": "Peer"
+          }
         }
       ]
     }

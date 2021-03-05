@@ -17,19 +17,36 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.Graph.User.GetWorksWithMe",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "rWsOlL"
+            "id": "MKsN65"
           },
-          "resultProperty": "dialog.Result",
-          "token": "=user.token.token"
+          "activityProcessed": true,
+          "dialog": "FindPersonDialog",
+          "options": {
+            "nameEntity": "=$nameEntity"
+          },
+          "resultProperty": "$UserId"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.Graph.User.GetWorksWith",
           "$designer": {
-            "id": "rxl68t"
+            "id": "0jrRb0"
           },
-          "activity": "${SendActivity_rxl68t()}"
+          "token": "=user.token.token",
+          "resultProperty": "$Result",
+          "userId": "=$UserId"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wHB39C"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result"
+          }
         }
       ]
     }
