@@ -40,7 +40,6 @@ steps:
     }
 
     Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
-    Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
 
     "Version = $packageVersion";
   displayName: 'Resolve package version variables'
