@@ -1,23 +1,41 @@
 stages:
   - stage: build_node
     displayName: Build Node project
+    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: build_npm
         displayName: Build node package
-        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-build-steps.yml 
   - stage: build_nuget
     displayName: Build .NET project
+    dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
+    condition: eq(variables.ComponentType, 'codeExtension')
     jobs:
       - job: build_dotnet
         displayName: Build .csproj file with dotnet cli
-        condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: dotnet-build-steps.yml
+  - stage: package_node
+    displayName: Publish Node package
+    dependsOn: build_node
+    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+    jobs:
+      - job: setup_npm_version
+        displayName: Resolve Node package version
+        steps:
+        - template: npm-versioning-steps.yml
+      - job: pack_npm
+        displayName: Node package.json file
+        dependsOn: ['setup_npm_version']
+        variables:
+          NpmPackageVersion: $[ dependencies.setup_npm_version.outputs['PackageVersion'] ]
+        steps:
+        - template: npm-package-steps.yml
   - stage: package_nuget
     displayName: Sign & Publish .NET package
     dependsOn: build_nuget
+    condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
     jobs:
       - job: setup_nuget_version
         displayName: Resolve NuGet package version
@@ -42,20 +60,3 @@ stages:
         steps:
         - template: nuspec-package-steps.yml
         - template: nuget-signing-steps.yml
-  - stage: package_npm
-    displayName: Publish Node package
-    dependsOn: build_node
-    jobs:
-      - job: setup_npm_version
-        displayName: Resolve Node package version
-        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
-        steps:
-        - template: npm-versioning-steps.yml
-      - job: pack_npm
-        displayName: Node package.json file
-        dependsOn: ['setup_npm_version']
-        variables:
-          NpmPackageVersion: $[ dependencies.setup_npm_version.outputs['PackageVersion'] ]
-        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
-        steps:
-        - template: npm-package-steps.yml
