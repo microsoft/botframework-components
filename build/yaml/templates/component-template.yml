@@ -17,7 +17,7 @@ stages:
     dependsOn: Setup
     jobs:
       - job: build_dotnet
-        displayName: Build .csproj file using dotnet cli
+        displayName: Build .csproj file with dotnet cli
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: dotnet-build-steps.yml

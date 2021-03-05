@@ -1,5 +1,20 @@
 steps:  
 - task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet publish`'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '$(WorkingDirectory)\*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\bin'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the binaries'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\bin'    
+    ArtifactName: 'bin'
+    publishLocation: 'Container'
+
+- task: DotNetCoreCLI@2
   displayName: 'Run `dotnet pack`'
   inputs:
     command: 'pack'
