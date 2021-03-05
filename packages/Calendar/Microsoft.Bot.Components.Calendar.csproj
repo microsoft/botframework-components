@@ -11,9 +11,6 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>Plugin component for Calendaring custom action</Description>
     <Summary>Plugin component for Calendaring custom action.</Summary>
-	<SignAssembly>true</SignAssembly>
-	<AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
-	<DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
