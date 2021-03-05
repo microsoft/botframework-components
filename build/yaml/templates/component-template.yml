@@ -20,7 +20,7 @@ stages:
         displayName: Build .csproj file using dotnet cli
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
-        - template: dotnet-package-steps.yml
+        - template: dotnet-build-steps.yml
       - job: build_npm
         displayName: Build node package
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
@@ -28,15 +28,16 @@ stages:
         - template: npm-build-steps.yml
   - stage: Pack
     displayName: Publish packages
-    dependsOn: Setup
+    dependsOn: Build
     variables:
       NugetPackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
       NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
     jobs:
       - job: pack_dotnet
-        displayName: .NET project file
+        displayName: 
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
+        - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: pack_nuspec
         displayName: .nuspec file
