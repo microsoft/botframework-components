@@ -12,26 +12,39 @@ stages:
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-versioning-steps.yml
-  - stage: Build_pack
-    displayName: Build and package
+  - stage: Build
+    displayName: Build project
+    dependsOn: Setup
+    jobs:
+      - job: build_dotnet
+        displayName: Build .csproj file using dotnet cli
+        condition: eq(variables.ComponentType, 'codeExtension')
+        steps:
+        - template: dotnet-package-steps.yml
+      - job: build_npm
+        displayName: Build node package
+        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+        steps:
+        - template: npm-build-steps.yml
+  - stage: Pack
+    displayName: Publish packages
     dependsOn: Setup
     variables:
       NugetPackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
       NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
     jobs:
-      - job: build_pack_dotnet
+      - job: pack_dotnet
         displayName: .NET project file
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
-        - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
-      - job: build_pack_nuspec
+      - job: pack_nuspec
         displayName: .nuspec file
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuspec-package-steps.yml
         - template: nuget-signing-steps.yml
-      - job: build_pack_npm
+      - job: pack_npm
         displayName: Node package.json file
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:

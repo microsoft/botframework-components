@@ -1,14 +1,4 @@
 steps:
-- task: NodeTool@0
-  displayName: 'Install Node 14.x'
-  inputs:
-    versionSpec: '14.x'
-
-- script: |
-    npm install
-  displayName: 'Install dependencies'
-  workingDirectory: '$(WorkingDirectory)'
-
 - powershell: |
     if (Test-Path -Path package.json) {
       # Get package.json ojbect
