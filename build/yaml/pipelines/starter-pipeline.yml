@@ -13,5 +13,4 @@ variables:
   BuildPlatform: anycpu
   ComponentType: YOUR_COMPONENT_TYPE # codeExtension, declarativeAsset, or generator
   DeploymentRing: YOUR_DEPLOYMENT_RING # alpha, preview, or stable
-  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: YOUR_WORKING_DIRECTORY

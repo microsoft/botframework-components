@@ -13,5 +13,4 @@ variables:
   BuildPlatform: anycpu
   ComponentType: declarativeAsset
   DeploymentRing: preview
-  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: packages/HelpAndCancel

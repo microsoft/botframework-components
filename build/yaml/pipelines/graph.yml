@@ -13,5 +13,4 @@ variables:
   BuildPlatform: anycpu
   ComponentType: codeExtension
   DeploymentRing: alpha
-  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: packages/Graph

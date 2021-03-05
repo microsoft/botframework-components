@@ -11,5 +11,4 @@ extends:
 variables:
   ComponentType: generator
   DeploymentRing: preview
-  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: generators/generator-microsoft-bot-calendar-assistant

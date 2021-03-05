@@ -1,3 +1,8 @@
+parameters:
+- name: PublishPackageArtifacts # packaging steps are enabled in ADO
+  typee: boolean
+  default: false
+
 stages:
   - stage: stage_build_node
     displayName: 'Node: Build'
@@ -10,7 +15,7 @@ stages:
   - stage: stage_package_node
     displayName: 'Node: Version & Pack'
     dependsOn: stage_build_node
-    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq(variables.PublishPackageArtifacts, 'true'))
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq(parameters.PublishPackageArtifacts, true')
     jobs:
       - job: pack_npm
         displayName: Pack Node project
@@ -29,7 +34,7 @@ stages:
   - stage: stage_package_nuget
     displayName: '.NET: Version, Sign & Pack'
     dependsOn: stage_build_nuget
-    condition: and(or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset')), eq(variables.PublishPackageArtifacts, 'true'))
+    condition: and(or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset')), eq(parameters.PublishPackageArtifacts, true))
     jobs:
       - job: job_pack_dotnet
         displayName: Pack .csproj with dotnet cli
