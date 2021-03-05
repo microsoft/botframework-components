@@ -11,41 +11,44 @@ stages:
         displayName: Build node package
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
-        - template: npm-build-steps.yml
-  - stage: Setup
-    displayName: Setup for packaging
-    jobs:       
+        - template: npm-build-steps.yml 
+  - stage: Pack
+    displayName: Publish packages
+    dependsOn: Build
+    jobs:
       - job: setup_nuget_version
         displayName: Resolve NuGet package version
         condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
         steps:
         - template: nuget-versioning-steps.yml
-      - job: setup_npm_version
-        displayName: Resolve Node package version
-        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
-        steps:
-        - template: npm-versioning-steps.yml
-  - stage: Pack
-    displayName: Publish packages
-    dependsOn: Setup
-    variables:
-      NugetPackageVersion: $[ stageDependencies.Setup.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
-      NpmPackageVersion: $[ stageDependencies.Setup.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
-    jobs:
       - job: pack_dotnet
         displayName: Package .csproj with dotnet cli
+        dependsOn: ['setup_nuget_version']
+        variables:
+          NugetPackageVersion: $[ dependencies.setup_nuget_version.outputs['PackageVersion'] ]
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: pack_nuspec
         displayName: Package .nuspec with nuget cli
+        dependsOn: ['setup_nuget_version']
+        variables:
+          NugetPackageVersion: $[ dependencies.setup_nuget_version.outputs['PackageVersion'] ]
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuspec-package-steps.yml
         - template: nuget-signing-steps.yml
+      - job: setup_npm_version
+        displayName: Resolve Node package version
+        condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+        steps:
+        - template: npm-versioning-steps.yml
       - job: pack_npm
         displayName: Node package.json file
+        dependsOn: ['setup_npm_version']
+        variables:
+          NpmPackageVersion: $[ dependencies.setup_npm_version.outputs['PackageVersion'] ]
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-package-steps.yml
