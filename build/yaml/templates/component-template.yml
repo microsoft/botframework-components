@@ -1,6 +1,6 @@
 stages:
   - stage: stage_build_node
-    displayName: Node - Build
+    displayName: 'Node: Build'
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: job_build_npm
@@ -8,7 +8,7 @@ stages:
         steps:
         - template: npm-build-steps.yml 
   - stage: stage_package_node
-    displayName: Node - Version & Publish
+    displayName: 'Node: Version & Pack'
     dependsOn: stage_build_node
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
@@ -18,7 +18,7 @@ stages:
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
   - stage: stage_build_nuget
-    displayName: .NET - Build
+    displayName: '.NET: Build'
     dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
     condition: eq(variables.ComponentType, 'codeExtension')
     jobs:
@@ -27,7 +27,7 @@ stages:
         steps:
         - template: dotnet-build-steps.yml
   - stage: stage_package_nuget
-    displayName: .NET - Version, Sign & Publish
+    displayName: '.NET: Version, Sign & Pack'
     dependsOn: stage_build_nuget
     condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
     jobs:
