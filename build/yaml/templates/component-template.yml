@@ -1,6 +1,6 @@
 parameters:
 - name: PublishPackageArtifacts # packaging steps are enabled in ADO
-  typee: boolean
+  type: boolean
   default: false
 
 stages:
