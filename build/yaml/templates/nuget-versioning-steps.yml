@@ -1,63 +1,58 @@
 steps:
-  - powershell: |
-      $deploymentRing = "$(DeploymentRing)";
-      "Deployment Ring = $deploymentRing";
+- powershell: |
+    $deploymentRing = "$(DeploymentRing)";
+    "Deployment Ring = $deploymentRing";
 
-      $componentType = "$(ComponentType)";
-      "Component Type = $componentType";
+    $componentType = "$(ComponentType)";
+    "Component Type = $componentType";
 
-      $dateStamp = (Get-Date -format "yyyyMMdd");
-      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
-      $vs = $dateStamp + "." + $commitHash;
+    $dateStamp = (Get-Date -format "yyyyMMdd");
+    $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+    $vs = $dateStamp + "." + $commitHash;
 
-      if ($componentType.ToLowerInvariant() -eq "codeExtension") {
-        if (Test-Path -Path *.csproj) {
-          $xml = [Xml] (Get-Content ./*.csproj)
-          $packageVersion = [string] $xml.Project.PropertyGroup.VersionPrefix
-        } else {
-            Write-Host "Missing .csproj"
-            exit 1
-        }
-      }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
-        if (Test-Path -Path *.nuspec) {
-          $xml = [Xml] (Get-Content ./*.nuspec)
-          $packageVersion = [string] $xml.Package.MetaData.Version
-        } else {
-            Write-Host "Missing .nuspec"
-            exit 1
-        }
+    if ($componentType.ToLowerInvariant() -eq "codeExtension") {
+      if (Test-Path -Path *.csproj) {
+        $xml = [Xml] (Get-Content ./*.csproj)
+        $packageVersion = [string] $xml.Project.PropertyGroup.VersionPrefix
+      } else {
+          Write-Host "Missing .csproj"
+          exit 1
       }
-
-      # Remove any whitespace from parse version
-      $packageVersion = $packageVersion.Trim();
-      "Version Prefix = $packageVersion";
-
-      # Configure version suffix based on deployment ring
-      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-        $nugetVersionSuffix = $deploymentRing + "." + $vs;
-        "Version Suffix = $nugetVersionSuffix";
-        $packageVersion +=  "-" + $nugetVersionSuffix;
+    }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
+      if (Test-Path -Path *.nuspec) {
+        $xml = [Xml] (Get-Content ./*.nuspec)
+        $packageVersion = [string] $xml.Package.MetaData.Version
+      } else {
+          Write-Host "Missing .nuspec"
+          exit 1
       }
+    }
 
-      Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
-      Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
+    # Remove any whitespace from parse version
+    $packageVersion = $packageVersion.Trim();
+    "Version Prefix = $packageVersion";
 
-      "Version = $packageVersion";
-    displayName: 'Resolve package version variables'
-    name: SetVersion
-    workingDirectory: '$(WorkingDirectory)'
-    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
+    # Configure version suffix based on deployment ring
+    if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+      $nugetVersionSuffix = $deploymentRing + "." + $vs;
+      "Version Suffix = $nugetVersionSuffix";
+      $packageVersion +=  "-" + $nugetVersionSuffix;
+    }
 
-  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: Tag build for Nuget
-    inputs: 
-      tags: |
-        NugetPackageVersion: $(NugetPackageVersion)
-    continueOnError: true
+    Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+    Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
 
-  - script: |
-     cd ..
-     dir *.* /s
-    displayName: 'Dir workspace'
-    continueOnError: true
-    condition: succeededOrFailed()
+    "Version = $packageVersion";
+  displayName: 'Resolve package version variables'
+  name: SetVersion
+  workingDirectory: '$(WorkingDirectory)'
+  condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
+
+- task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+  displayName: Tag build for Nuget
+  inputs: 
+    tags: |
+      NugetPackageVersion: $(NugetPackageVersion)
+  continueOnError: true
+
+- template: debug-workspace-steps.yml

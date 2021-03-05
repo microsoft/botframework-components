@@ -8,3 +8,5 @@ steps:
     packDestination: '$(Build.ArtifactStagingDirectory)\outputpackages'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'NugetPackageVersion'
+  
+- template: debug-workspace-steps.yml
