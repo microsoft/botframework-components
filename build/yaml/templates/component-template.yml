@@ -4,18 +4,9 @@ stages:
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: job_build_npm
-        displayName: Build node package
+        displayName: Build Node package
         steps:
         - template: npm-build-steps.yml 
-  - stage: stage_build_nuget
-    displayName: Build .NET project
-    dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
-    condition: eq(variables.ComponentType, 'codeExtension')
-    jobs:
-      - job: build_dotnet
-        displayName: Build .csproj file with dotnet cli
-        steps:
-        - template: dotnet-build-steps.yml
   - stage: stage_package_node
     displayName: Publish Node package
     dependsOn: stage_build_node
@@ -26,6 +17,15 @@ stages:
         steps:
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
+  - stage: stage_build_nuget
+    displayName: Build .NET project
+    dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
+    condition: eq(variables.ComponentType, 'codeExtension')
+    jobs:
+      - job: build_dotnet
+        displayName: Build .csproj file with dotnet cli
+        steps:
+        - template: dotnet-build-steps.yml
   - stage: stage_package_nuget
     displayName: Sign & Publish .NET package
     dependsOn: stage_build_nuget
@@ -33,6 +33,7 @@ stages:
     jobs:
       - job: job_pack_dotnet
         displayName: Package .csproj with dotnet cli
+        condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: nuget-versioning-steps.yml
         - template: dotnet-package-steps.yml
