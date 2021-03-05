@@ -1,13 +1,13 @@
 stages:
-  - stage: build_node
+  - stage: stage_build_node
     displayName: Build Node project
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
-      - job: build_npm
+      - job: job_build_npm
         displayName: Build node package
         steps:
         - template: npm-build-steps.yml 
-  - stage: build_nuget
+  - stage: stage_build_nuget
     displayName: Build .NET project
     dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
     condition: eq(variables.ComponentType, 'codeExtension')
@@ -16,9 +16,9 @@ stages:
         displayName: Build .csproj file with dotnet cli
         steps:
         - template: dotnet-build-steps.yml
-  - stage: package_node
+  - stage: stage_package_node
     displayName: Publish Node package
-    dependsOn: build_node
+    dependsOn: stage_build_node
     condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
     jobs:
       - job: setup_npm_version
@@ -29,33 +29,33 @@ stages:
         displayName: Node package.json file
         dependsOn: ['setup_npm_version']
         variables:
-          NpmPackageVersion: $[ dependencies.setup_npm_version.outputs['PackageVersion'] ]
+          NpmPackageVersion: $[ dependencies.setup_npm_version.outputs['SetVersion.PackageVersion'] ]
         steps:
         - template: npm-package-steps.yml
-  - stage: package_nuget
+  - stage: stage_package_nuget
     displayName: Sign & Publish .NET package
-    dependsOn: build_nuget
+    dependsOn: stage_build_nuget
     condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
     jobs:
-      - job: setup_nuget_version
+      - job: job_setup_nuget_version
         displayName: Resolve NuGet package version
         condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
         steps:
         - template: nuget-versioning-steps.yml
-      - job: pack_dotnet
+      - job: job_pack_dotnet
         displayName: Package .csproj with dotnet cli
-        dependsOn: ['setup_nuget_version']
+        dependsOn: ['job_setup_nuget_version']
         variables:
-          NugetPackageVersion: $[ dependencies.setup_nuget_version.outputs['PackageVersion'] ]
+          NugetPackageVersion: $[ dependencies.job_setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
-      - job: pack_nuspec
+      - job: job_pack_nuspec
         displayName: Package .nuspec with nuget cli
-        dependsOn: ['setup_nuget_version']
+        dependsOn: ['job_setup_nuget_version']
         variables:
-          NugetPackageVersion: $[ dependencies.setup_nuget_version.outputs['PackageVersion'] ]
+          NugetPackageVersion: $[ dependencies.setup_nuget_version.outputs['SetVersion.PackageVersion'] ]
         condition: eq(variables.ComponentType, 'declarativeAsset')
         steps:
         - template: nuspec-package-steps.yml
