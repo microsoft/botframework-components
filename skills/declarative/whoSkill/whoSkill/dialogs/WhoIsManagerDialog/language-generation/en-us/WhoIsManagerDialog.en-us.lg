@@ -7,5 +7,6 @@
 
 # SendActivity_uGwaHG()
 [Activity
-    Text = ${dialog.Result}
+    Text = ${dialog.Result.Id}
 ]
+

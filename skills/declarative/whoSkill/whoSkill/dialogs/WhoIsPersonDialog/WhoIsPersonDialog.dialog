@@ -17,16 +17,37 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "d9PSPx"
+            "id": "rqPdz8"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          },
-          "resultProperty": "dialog.userId"
+          "condition": "= not(exists(dialog.userId))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "YfiAYu"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "dialog.userId",
+              "options": {
+                "nameEntity": "=dialog.nameEntity"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "hwsKVX"
+              },
+              "valueType": "String",
+              "label": "FoundId",
+              "name": "FoundId",
+              "value": "=dialog.userId"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",

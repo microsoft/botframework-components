@@ -69,6 +69,17 @@
                 "id": "uGwaHG"
               },
               "activity": "${SendActivity_uGwaHG()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "K7Ibr0"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "userId": "=dialog.Result.Id"
+              }
             }
           ]
         }
