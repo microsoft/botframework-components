@@ -13,5 +13,5 @@ variables:
   BuildPlatform: anycpu
   ComponentType: declarativeAsset
   DeploymentRing: preview
-  PublishPackage: false # packaging steps are enabled in ADO
+  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: packages/Onboarding

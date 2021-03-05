@@ -13,5 +13,5 @@ variables:
   BuildPlatform: anycpu
   ComponentType: codeExtension
   DeploymentRing: alpha
-  PublishPackage: false # packaging steps are enabled in ADO
+  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: packages/Calendar

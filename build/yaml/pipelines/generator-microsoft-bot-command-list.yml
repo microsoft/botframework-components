@@ -11,5 +11,5 @@ extends:
 variables:
   ComponentType: generator
   DeploymentRing: preview
-  PublishPackage: false # packaging steps are enabled in ADO
+  PublishPackageArtifacts: false # packaging steps are enabled in ADO
   WorkingDirectory: generators/generator-microsoft-bot-command-list
