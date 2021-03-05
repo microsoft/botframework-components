@@ -1,6 +1,6 @@
 name: $(Build.BuildId)
-trigger: none
-pr: none
+trigger: none  # ci trigger is set in ADO
+pr: none # pr trigger is set in ADO
 
 pool: 
   vmImage: $[ coalesce( variables['VMImage'], 'windows-2019' ) ] # or 'windows-latest' or 'vs2017-win2016'
@@ -13,4 +13,5 @@ variables:
   BuildPlatform: anycpu
   ComponentType: declarativeAsset
   DeploymentRing: preview
+  PublishPackage: false # packaging steps are enabled in ADO
   WorkingDirectory: packages/HelpAndCancel
