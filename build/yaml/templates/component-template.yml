@@ -1,13 +1,14 @@
 stages:
   - stage: Setup
+    displayName: Setup for packaging
     jobs:       
       - job: setup_nuget_version
-        displayName: NuGet version
+        displayName: Resolve NuGet version
         condition: or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset'))
         steps:
         - template: nuget-versioning-steps.yml
       - job: setup_npm_version
-        displayName: Node version
+        displayName: Resolve Node version
         condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
         steps:
         - template: npm-versioning-steps.yml
