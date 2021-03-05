@@ -30,9 +30,4 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
-
 </Project>
