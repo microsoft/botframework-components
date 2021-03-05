@@ -11,7 +11,7 @@ Write-Host "Running schema merge on $runtime runtime."
 if (Test-Path $SCHEMA_FILE -PathType leaf) { Move-Item -Force -Path $SCHEMA_FILE -Destination $BACKUP_SCHEMA_FILE }
 if (Test-Path $UISCHEMA_FILE -PathType leaf) { Move-Item -Force -Path $UISCHEMA_FILE -Destination $BACKUP_UISCHEMA_FILE }
 
-bf dialog:merge "*.schema" "!sdk-backup.schema" "*.uischema" "!sdk-backup.uischema" "!sdk.override.uischema" "../runtime/$runtime/*.csproj" "D:\Work\Botframework-Components\packages\Graph\Microsoft.Bot.Components.Graph.csproj" -o $SCHEMA_FILE
+bf dialog:merge "*.schema" "!sdk-backup.schema" "*.uischema" "!sdk-backup.uischema" "!sdk.override.uischema" "../runtime/$runtime/*.csproj" -o $SCHEMA_FILE
 
 if (Test-Path $SCHEMA_FILE -PathType leaf)
 {
