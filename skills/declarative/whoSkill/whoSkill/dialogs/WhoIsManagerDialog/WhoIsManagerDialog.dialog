@@ -64,13 +64,6 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "uGwaHG"
-              },
-              "activity": "${SendActivity_uGwaHG()}"
-            },
-            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "K7Ibr0"

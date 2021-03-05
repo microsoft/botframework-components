@@ -5,8 +5,3 @@
     Text = No manager found!
 ]
 
-# SendActivity_uGwaHG()
-[Activity
-    Text = ${dialog.Result.Id}
-]
-
