@@ -60,7 +60,6 @@
                         {
                             "type": "TextBlock",
                             "text": "${title}",
-                            "wrap": true,
                             "size": "${TitleSize()}",
                             "weight": "Bolder"
                         }

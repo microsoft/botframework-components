@@ -81,7 +81,8 @@
                             "type": "TextBlock",
                             "text": "${item.Subject}",
                             "size": "${BodySize()}",
-                            "wrap": "true"
+                            "wrap": "true",
+                            "maxLines": 2
                         }
                     ]
                 }
