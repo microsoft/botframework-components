@@ -130,7 +130,7 @@
         {
             "type": "Column",
             "width": ${if(event.isRecurring, 5, 0)},
-            "isVisible": "${event.isRecurring}",
+            "isVisible": "${if(exists(event.isRecurring), event.isRecurring, false)}",
             "verticalContentAlignment": "Center",
             "items": [
                 {

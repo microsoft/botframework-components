@@ -90,11 +90,43 @@
           ]
         },
         {
-          "$kind": "Microsoft.EmitEvent",
+          "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "zJ63LA"
+            "id": "bnSGew"
           },
-          "eventName": "SetLocation"
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": "=if(turn.skip, 1, 3)",
+          "alwaysPrompt": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "prompt": "${ConfirmInput_Prompt_bnSGew()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "turn.addLocation",
+          "value": "=if(exists(coalesce($options.location, @location)), true, null)",
+          "defaultValue": false,
+          "allowInterruptions": "=#Skip.score > 0.8 || #Cancel.score > 0.8 || exists(turn.activity.value.intent)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "QBgXJe"
+          },
+          "condition": "turn.addLocation",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "YeMPBz"
+              },
+              "eventName": "SetLocation"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -311,76 +343,94 @@
           "timeZoneProperty": "=user.workingHours.timeZone.name"
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "GXltMW"
-          },
-          "assignments": [
-            {
-              "property": "$listOptions.items",
-              "value": "=$timeslots"
-            },
-            {
-              "property": "$listOptions.actionTitleProperty",
-              "value": "index"
-            },
-            {
-              "property": "$listOptions.activePrompt",
-              "value": "TimeSuggestionListPrompt"
-            },
-            {
-              "property": "$listOptions.templates",
-              "value": {
-                "icon": "TimeSlotIconUrl",
-                "title": "TimeSuggestionListTitle",
-                "item": "TimeSuggestionListItem",
-                "actions": "TimeSuggestionListActions",
-                "initialPrompt": "TimeSuggestionListPrompt",
-                "showMorePrompt": "TimeSuggestionListShowMorePrompt",
-                "skipResponse": "TimeSuggestionListSkipResponse",
-                "defaultValueResponse": "TimeSuggestionListDefaultValueResponse",
-                "numericalChoiceResponse": "TimeSuggestionNumericalChoiceResponse"
-              },
-              "additionalOptions": {}
-            },
-            {
-              "property": "$listOptions.additionalOptions",
-              "value": {
-                "attendees": "=$event.attendees"
-              }
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "OKwaeW"
-          },
-          "activityProcessed": true,
-          "dialog": "ListDialog",
-          "options": "=$listOptions",
-          "resultProperty": "$selectedTimeSlot"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "8UYg0q"
+            "id": "dEqthR"
           },
-          "condition": "=exists($selectedTimeSlot)",
+          "condition": "=count($timeslots) > 0",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "PSMGrc"
+                "id": "4OsSFV"
               },
               "assignments": [
                 {
-                  "property": "$event.start.dateTime",
-                  "value": "=$selectedTimeSlot.Start"
+                  "property": "$listOptions.items",
+                  "value": "=$timeslots"
                 },
                 {
-                  "property": "$event.end.dateTime",
-                  "value": "=$selectedTimeSlot.End"
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "TimeSuggestionListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "TimeSlotIconUrl",
+                    "title": "TimeSuggestionListTitle",
+                    "item": "TimeSuggestionListItem",
+                    "actions": "TimeSuggestionListActions",
+                    "initialPrompt": "TimeSuggestionListPrompt",
+                    "showMorePrompt": "TimeSuggestionListShowMorePrompt",
+                    "skipResponse": "TimeSuggestionListSkipResponse",
+                    "defaultValueResponse": "TimeSuggestionListDefaultValueResponse",
+                    "numericalChoiceResponse": "TimeSuggestionNumericalChoiceResponse"
+                  },
+                  "additionalOptions": {}
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "attendees": "=$event.attendees"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "T6SeFe"
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "options": "=$listOptions",
+              "resultProperty": "$selectedTimeSlot"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "KkltGp"
+              },
+              "condition": "=exists($selectedTimeSlot)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "tqufQn"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$event.start.dateTime",
+                      "value": "=$selectedTimeSlot.Start"
+                    },
+                    {
+                      "property": "$event.end.dateTime",
+                      "value": "=$selectedTimeSlot.End"
+                    }
+                  ]
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "xRlF1S"
+                  },
+                  "eventName": "SetDateTime"
                 }
               ]
             }
@@ -389,7 +439,7 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "P8mLoH"
+                "id": "dcTvpp"
               },
               "eventName": "SetDateTime"
             }
@@ -417,7 +467,7 @@
           "$designer": {
             "id": "PQ31QI"
           },
-          "condition": "=not(exists($options.start))",
+          "condition": "=not(exists($options.start) && exists($options.end))",
           "actions": [
             {
               "$kind": "Microsoft.DateTimeInput",
@@ -433,7 +483,8 @@
               "defaultValueResponse": "",
               "property": "turn.query",
               "validations": [],
-              "allowInterruptions": "=(not(exists(#SetDateTime)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)"
+              "allowInterruptions": "=(not(exists(#SetDateTime)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
+              "value": "=$options.start"
             },
             {
               "$kind": "Microsoft.BeginDialog",
@@ -443,7 +494,7 @@
               "activityProcessed": true,
               "dialog": "ResolveDateTimeDialog",
               "options": {
-                "query": "=turn.activity.text",
+                "query": "=coalesce($options.start, turn.activity.text)",
                 "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
               },
               "resultProperty": "$dateTime"
@@ -633,7 +684,7 @@
                 },
                 {
                   "property": "$event.end.dateTime",
-                  "value": "=coalesce($options.end, addMinutes(formatDateTime($event.start.dateTime), int(coalesce($options.duration, settings.defaultValue.duration))))"
+                  "value": "=$options.end"
                 }
               ]
             }
@@ -811,13 +862,13 @@
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "IeJvM4"
+            "id": "1LdFal"
           },
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
           "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
-          "prompt": "${TextInput_Prompt_IeJvM4()}",
+          "prompt": "${TextInput_Prompt_1LdFal()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
@@ -827,7 +878,7 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "5AMXeT"
+            "id": "gZsMiE"
           },
           "property": "$event.location",
           "value": "=turn.location"
@@ -941,31 +992,51 @@
           "name": "CreateEventDialog.OnEvent_Cancel"
         },
         {
-          "$kind": "Microsoft.ConfirmInput",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "WF6urX"
+            "id": "dcLkuQ"
           },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${ConfirmInput_Prompt_WF6urX()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or "
-          },
-          "property": "$cancelConfirmed"
+          "condition": "=count(where(flatten($options), o, exists(o))) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.ConfirmInput",
+              "$designer": {
+                "id": "tdkXGI"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${ConfirmInput_Prompt_tdkXGI()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or "
+              },
+              "property": "turn.cancelConfirmed"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "gb3Lhc"
+              },
+              "property": "turn.cancelConfirmed",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "yNtkcF"
           },
-          "condition": "=$cancelConfirmed",
+          "condition": "=turn.cancelConfirmed",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -1434,6 +1505,13 @@
           },
           "property": "turn.skip",
           "value": "=true"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "kxcU0a"
+          },
+          "name": "CreateEventDialog.AfterSkip"
         }
       ]
     },

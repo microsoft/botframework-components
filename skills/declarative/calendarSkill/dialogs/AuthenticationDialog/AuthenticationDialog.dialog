@@ -36,21 +36,39 @@
           "text": "Time to sign in with your Microsoft account to access your calendar, and try out our new 🗓 Skill!"
         },
         {
-          "$kind": "Microsoft.Graph.User.GetProfile",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "VvX38E"
+            "id": "zXbLp8"
           },
-          "resultProperty": "user.profile",
-          "token": "=user.token.token"
+          "condition": "=not(exists(user.profile))",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.User.GetProfile",
+              "$designer": {
+                "id": "mR0Tzk"
+              },
+              "resultProperty": "user.profile",
+              "token": "=user.token.token"
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "xkrfzQ"
+            "id": "c5FmdF"
           },
-          "token": "=user.token.token",
-          "addressProperty": "=user.profile.userPrincipalName",
-          "resultProperty": "user.workingHours"
+          "condition": "=not(exists(user.workingHours))",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
+              "$designer": {
+                "id": "4d4VCn"
+              },
+              "token": "=user.token.token",
+              "addressProperty": "=user.profile.userPrincipalName",
+              "resultProperty": "user.workingHours"
+            }
+          ]
         }
       ]
     }

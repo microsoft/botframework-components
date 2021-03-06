@@ -53,7 +53,7 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "25",
+                    "width": "105px",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {
@@ -67,7 +67,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "75",
+                    "width": "stretch",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {

@@ -385,7 +385,7 @@
                     {
                       "property": "$listOptions.additionalOptions",
                       "value": {
-                        "contactName": "=$foreach.searchResultValue.Name"
+                        "contactName": "=titleCase(turn.dialogEvent.value)"
                       }
                     }
                   ]

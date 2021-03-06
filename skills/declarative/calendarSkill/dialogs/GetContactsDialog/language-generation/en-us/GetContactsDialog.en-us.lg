@@ -12,11 +12,14 @@
 ]
 
 # ContactConfirmation(contacts)
-- ```
-Would you like to invite anyone else?
+- IF: ${count(contacts) == 1}
+    - I've added ${concat(contacts[0].EmailAddress.Name, ' (', contacts[0].EmailAddress.Address, ')')}. Would you like to invite anyone else?
+- ELSE: 
+    - ```
+    Would you like to invite anyone else?
 
-\n * ${GetContactsList(contacts)}
-```
+    \n * ${GetContactsList(contacts)}
+    ```
 
 # GetContactsList(contacts)
 - ${join(select(contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), ' \n\n * ')}

@@ -66,6 +66,16 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
+        "Would you like to add a location? (1) Yes or (2) No"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
         "What should I set the location to?"
       ]
     },

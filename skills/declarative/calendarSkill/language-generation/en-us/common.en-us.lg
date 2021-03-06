@@ -41,10 +41,9 @@ You can ask the bot calendar related questions in this Teams chat modality (ps. 
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 
-# CancelMessage
+# CancelMessage()
 - OK, no problem.
 - OK, I will stop.
-- OK, no problem. I know I'm not perfect yet. 
 - Sure. I'll cancel.
 - Got it, I'll stop here.
 

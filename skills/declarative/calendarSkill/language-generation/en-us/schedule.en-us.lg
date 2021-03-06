@@ -61,7 +61,7 @@
                 {
                     "type": "Column",
                     "verticalContentAlignment": "Top",
-                    "width": "25",
+                    "width": "105px",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -75,7 +75,7 @@
                 {
                     "type": "Column",
                     "verticalContentAlignment": "Top",
-                    "width": "75",
+                    "width": "stretch",
                     "items": [
                         {
                             "type": "TextBlock",
