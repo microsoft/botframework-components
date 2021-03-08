@@ -68,7 +68,11 @@
             "id": "io3AVP"
           },
           "activityProcessed": true,
-          "dialog": "WhoWorksWithMeDialog"
+          "dialog": "WhoWorksWithMeDialog",
+          "options": {
+            "UserId": "=$options.userId",
+            "nameEntity": "=$options.nameEntity"
+          }
         }
       ]
     },
@@ -278,10 +282,12 @@
           "activityProcessed": true,
           "dialog": "WhoIsManagerDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "userId": "=$options.userId"
           }
         }
-      ]
+      ],
+      "entities": []
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -314,7 +320,8 @@
           "activityProcessed": true,
           "dialog": "WhoIsPeerDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "userId": "=$options.userId"
           }
         }
       ]
@@ -407,6 +414,10 @@
             {
               "property": "$options.contactEntity",
               "value": "=coalesce(@contact, @email, @personName)"
+            },
+            {
+              "property": "$options.userId",
+              "value": "=turn.activity.value.userId"
             }
           ]
         },

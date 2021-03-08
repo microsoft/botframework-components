@@ -32,7 +32,7 @@
               "dialog": "FindPersonDialog",
               "resultProperty": "dialog.userId",
               "options": {
-                "nameEntity": "=dialog.nameEntity"
+                "nameEntity": "=$nameEntity"
               }
             }
           ],

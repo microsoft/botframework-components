@@ -17,16 +17,25 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "MKsN65"
+            "id": "TZDg2m"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=$nameEntity"
-          },
-          "resultProperty": "$UserId"
+          "condition": "=not(exists($userId))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "EicuKU"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              },
+              "resultProperty": "$UserId"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.Graph.User.GetWorksWith",
@@ -46,7 +55,37 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result"
-          }
+          },
+          "resultProperty": "$DetailUserId"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cKj8jy"
+          },
+          "condition": "=exists($DetailUserId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Q24GGv"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "UserId": "=$DetailUserId"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mfLqxa"
+              },
+              "activity": "${SendActivity_mfLqxa()}"
+            }
+          ]
         }
       ]
     }

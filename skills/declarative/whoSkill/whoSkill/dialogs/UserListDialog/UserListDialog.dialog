@@ -22,15 +22,7 @@
             "id": "yjqnnW"
           },
           "condition": "=exists($UserList)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "vnTSDc"
-              },
-              "activity": "${SendActivity_vnTSDc()}"
-            }
-          ],
+          "elseActions": [],
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
@@ -84,19 +76,15 @@
               "dialog": "ListDialog",
               "options": "=$listOptions",
               "resultProperty": "$SelectedUser"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "73AoRG"
-              },
-              "activityProcessed": true,
-              "dialog": "WhoIsPersonDialog",
-              "options": {
-                "userId": "=$SelectedUser.Id"
-              }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "8PYkyW"
+          },
+          "value": "=$SelectedUser.Id"
         }
       ]
     }
