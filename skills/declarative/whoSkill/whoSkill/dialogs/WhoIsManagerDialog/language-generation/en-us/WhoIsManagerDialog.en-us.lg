@@ -2,7 +2,11 @@
 
 # SendActivity_lgZtQO()
 [Activity
-    Text = No manager found!
+    Text = I found that **${dialog.UserFound.displayName}** does not have a manager.
 ]
 
 
+# SendActivity_f1nPCd()
+[Activity
+    Text = The manager of **${dialog.UserFound.displayName}** is:
+]

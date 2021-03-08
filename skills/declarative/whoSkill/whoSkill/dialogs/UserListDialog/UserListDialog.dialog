@@ -25,57 +25,66 @@
           "elseActions": [],
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "aX6mMt"
+                "id": "rhHgeG"
               },
-              "name": "UserList",
-              "label": "UserList",
-              "valueType": "string",
-              "value": "=$UserList"
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "3IciB4"
-              },
-              "assignments": [
+              "condition": "= count($UserList) > 1",
+              "actions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$UserList"
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "3tcM1L"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$UserList"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "UserListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "ChatIconUrl",
+                        "title": "UserListTitle",
+                        "item": "UserListItem",
+                        "actions": "UserListActions",
+                        "initialPrompt": "UserListPrompt",
+                        "showMorePrompt": "UserListShowMorePrompt",
+                        "skipResponse": "UserListSkipResponse",
+                        "defaultValueResponse": "UserListDefaultValueResponse"
+                      }
+                    }
+                  ]
                 },
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
-                },
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "myWIkJ"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "resultProperty": "$SelectedUser",
+                  "options": "=$listOptions"
+                }
+              ],
+              "elseActions": [
                 {
-                  "property": "$listOptions.activePrompt",
-                  "value": "UserListPrompt"
-                },
-                {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "ChatIconUrl",
-                    "title": "UserListTitle",
-                    "item": "UserListItem",
-                    "actions": "UserListActions",
-                    "initialPrompt": "UserListPrompt",
-                    "showMorePrompt": "UserListShowMorePrompt",
-                    "skipResponse": "UserListSkipResponse",
-                    "defaultValueResponse": "UserListDefaultValueResponse"
-                  }
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VBAEXN"
+                  },
+                  "property": "$SelectedUser",
+                  "value": "= $UserList[0]"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "E0yEeY"
-              },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "options": "=$listOptions",
-              "resultProperty": "$SelectedUser"
             }
           ]
         },
@@ -84,7 +93,7 @@
           "$designer": {
             "id": "8PYkyW"
           },
-          "value": "=$SelectedUser.Id"
+          "value": "=$SelectedUser"
         }
       ]
     }

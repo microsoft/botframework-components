@@ -23,10 +23,10 @@
           },
           "activityProcessed": true,
           "dialog": "FindPersonDialog",
-          "resultProperty": "dialog.userId",
           "options": {
             "nameEntity": "=$nameEntity"
-          }
+          },
+          "resultProperty": "$UserToSearchFor"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -45,7 +45,7 @@
           },
           "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=$userId"
+          "userId": "=$UserToSearchFor.Id"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -57,14 +57,14 @@
           "options": {
             "UserList": "=$Result"
           },
-          "resultProperty": "$DetailUserId"
+          "resultProperty": "$DirectReportUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "WUuhtm"
           },
-          "condition": "=exists($DetailUserId)",
+          "condition": "=exists($DirectReportUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -74,7 +74,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "userId": "=$DetailUserId"
+                "userId": "=$DirectReportUser.Id"
               }
             }
           ],

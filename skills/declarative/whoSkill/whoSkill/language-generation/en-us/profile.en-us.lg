@@ -109,9 +109,9 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${GetManagerAction(dialog.userId)},
-        ${GetCollaboratorsAction(dialog.userId)},
-        ${GetPeersAction(dialog.userId)}
+        ${GetManagerAction(dialog.UserFound)},
+        ${GetCollaboratorsAction(dialog.UserFound)},
+        ${GetPeersAction(dialog.UserFound)}
     ]
 }
 ```

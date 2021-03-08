@@ -283,7 +283,7 @@
           "dialog": "WhoIsManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "userId": "=$options.userId"
+            "UserFound": "=$options.user"
           }
         }
       ],
@@ -416,8 +416,8 @@
               "value": "=coalesce(@contact, @email, @personName)"
             },
             {
-              "property": "$options.userId",
-              "value": "=turn.activity.value.userId"
+              "property": "$options.user",
+              "value": "=turn.activity.value.user"
             }
           ]
         },
