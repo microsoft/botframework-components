@@ -1,0 +1,12 @@
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node 14.x'
+  inputs:
+    versionSpec: '14.x'
+
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
+- template: debug-workspace-steps.yml

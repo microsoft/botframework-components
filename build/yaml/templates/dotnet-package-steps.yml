@@ -1,25 +1,4 @@
-steps:
-- task: UseDotNet@2
-  displayName: 'Use .Net Core sdk 3.1.x'
-  inputs:
-    version: 3.1.x
-
-- task: DotNetCoreCLI@2
-  displayName: 'Run `dotnet restore`'
-  inputs:
-    command: restore
-    projects: '$(WorkingDirectory)\*.csproj'
-    feedsToUse: config
-    nugetConfigPath: packages\NuGet.Config
-
-- task: DotNetCoreCLI@2
-  displayName: 'Run `dotnet build`'
-  inputs:
-    command: build
-    projects: '$(WorkingDirectory)\*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-    workingDirectory: '$(WorkingDirectory)'
-
+steps:  
 - task: DotNetCoreCLI@2
   displayName: 'Run `dotnet publish`'
   inputs:
@@ -27,7 +6,6 @@ steps:
     publishWebProjects: false
     projects: '$(WorkingDirectory)\*.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\bin'
-    workingDirectory: '$(WorkingDirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish the binaries'
@@ -35,7 +13,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)\bin'    
     ArtifactName: 'bin'
     publishLocation: 'Container'
-    
+
 - task: DotNetCoreCLI@2
   displayName: 'Run `dotnet pack`'
   inputs:
