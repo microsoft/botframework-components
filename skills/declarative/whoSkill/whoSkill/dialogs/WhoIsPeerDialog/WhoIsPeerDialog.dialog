@@ -24,7 +24,7 @@
           "activityProcessed": true,
           "dialog": "FindPersonDialog",
           "options": {
-            "nameEntity": "=dialog.nameEntity"
+            "nameEntity": "=$nameEntity"
           },
           "resultProperty": "dialog.userId"
         },
@@ -57,6 +57,18 @@
           "options": {
             "UserList": "=$Result",
             "queryType": "Peer"
+          },
+          "resultProperty": "$DetailUserId"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FPxJmj"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "UserId": "=$DetailUserId"
           }
         }
       ]

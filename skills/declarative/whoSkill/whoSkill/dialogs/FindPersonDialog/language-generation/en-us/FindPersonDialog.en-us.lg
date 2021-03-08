@@ -1,2 +1,7 @@
 [import](common.lg)
 
+
+# SendActivity_m3GPMj()
+[Activity
+    Text = Looking for ${dialog.nameEntity}
+]

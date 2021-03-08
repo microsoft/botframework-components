@@ -46,6 +46,18 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result"
+          },
+          "resultProperty": "$DetailUserId"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7GWNdL"
+          },
+          "activityProcessed": true,
+          "dialog": "WhoIsPersonDialog",
+          "options": {
+            "UserId": "=$DetailUserId"
           }
         }
       ]
