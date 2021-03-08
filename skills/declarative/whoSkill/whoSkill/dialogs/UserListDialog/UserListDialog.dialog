@@ -22,15 +22,7 @@
             "id": "yjqnnW"
           },
           "condition": "=exists($UserList)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "vnTSDc"
-              },
-              "activity": "${SendActivity_vnTSDc()}"
-            }
-          ],
+          "elseActions": [],
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",

@@ -60,15 +60,33 @@
           "resultProperty": "$DetailUserId"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "B4uKtY"
+            "id": "WUuhtm"
           },
-          "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
-          "options": {
-            "UserId": "=$DetailUserId"
-          }
+          "condition": "=exists($DetailUserId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ARtyS5"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "userId": "=$DetailUserId"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UTkQ6k"
+              },
+              "activity": "${SendActivity_UTkQ6k()}"
+            }
+          ]
         }
       ]
     }
