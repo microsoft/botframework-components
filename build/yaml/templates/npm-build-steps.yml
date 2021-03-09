@@ -5,7 +5,7 @@ steps:
     versionSpec: '14.x'
 
 - script: |
-    npm install
+    yarn --immutable
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
