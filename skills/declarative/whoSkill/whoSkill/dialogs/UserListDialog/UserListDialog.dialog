@@ -29,7 +29,7 @@
               "$designer": {
                 "id": "rhHgeG"
               },
-              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == false)",
+              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == \"false\")",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperties",
