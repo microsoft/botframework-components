@@ -1,11 +1,11 @@
 [Common](common.en-us.lg)
 [UserList](userList.en-us.lg)
 
-# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount)
-- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount), template(actionsTemplate))}
+# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount, scenario)
+- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount, scenario), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount), template(actionsTemplate))}
 
-# ListCardHeader(icon, title, totalItemCount)
-- ${CardHeader(template(icon), template(title), "", concat(totalItemCount, " results"))}
+# ListCardHeader(icon, title, totalItemCount, scenario)
+- ${CardHeader(template(icon), template(title, scenario), "", concat(totalItemCount, " results"))}
 
 # ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount)
 - ${PaginatedListCardBody(totalItemCount, pageSize, foreach(pageItems, item, template(itemTemplate, item)), pageIndex, pageCount)}
@@ -27,24 +27,24 @@
 
 # ChoiceInput_Prompt_dc3QNs()
 - IF: ${$isFirstTurn == true}
-    - ${InitialChoicePrompt()}
+    - ${InitialChoicePrompt(dialog.Scenario, dialog.User, dialog.choices)}
 - ELSE: 
-    - ${RepromptChoicePrompt()}
-
-# InitialChoicePrompt
+    - ${RepromptChoicePrompt(dialog.Scenario, dialog.User, dialog.choices)}
+    
+# InitialChoicePrompt(Scenario, User, Items)
 [Activity
     text = ${if($activePrompt != null, template($activePrompt), null)}
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount, Scenario))}
 ]
 
-# RepromptChoicePrompt
+# RepromptChoicePrompt(Scenario, User, Items)
 [Activity
     deliveryMode = update
     id = ${turn.activity.replyToId}
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount, Scenario))}
 ]
 
 # Bot.SendActivityPlus_Activity_UcmH0c()
 [Activity
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount, ""))}
 ]

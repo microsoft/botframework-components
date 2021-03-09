@@ -125,6 +125,12 @@
             "id": "ryFbw6"
           },
           "activity": "${SendActivity_ryFbw6()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "XYzO24"
+          }
         }
       ]
     }

@@ -103,6 +103,12 @@
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "zzebs7"
+          }
         }
       ]
     }

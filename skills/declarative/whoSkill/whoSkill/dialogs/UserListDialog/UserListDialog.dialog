@@ -29,7 +29,7 @@
               "$designer": {
                 "id": "rhHgeG"
               },
-              "condition": "= count($UserList) > 1",
+              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == false)",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperties",
@@ -61,6 +61,14 @@
                         "skipResponse": "UserListSkipResponse",
                         "defaultValueResponse": "UserListDefaultValueResponse"
                       }
+                    },
+                    {
+                      "property": "$listOptions.Scenario",
+                      "value": "=$Scenario"
+                    },
+                    {
+                      "property": "$listOptions.User",
+                      "value": "=$User"
                     }
                   ]
                 },

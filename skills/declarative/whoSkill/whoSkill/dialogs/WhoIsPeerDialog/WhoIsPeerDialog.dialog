@@ -75,7 +75,9 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result",
-            "queryType": "Peer"
+            "Scenario": "Peers",
+            "User": "=$UserFound",
+            "AutoChooseFirst": "false"
           },
           "resultProperty": "$DetailUser"
         },
@@ -94,7 +96,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserId": "=$DetailUser.Id"
+                "UserFound": "=$DetailUser"
               }
             }
           ],
@@ -107,6 +109,12 @@
               "activity": "${SendActivity_7uCWqD()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YtwbHP"
+          }
         }
       ]
     }

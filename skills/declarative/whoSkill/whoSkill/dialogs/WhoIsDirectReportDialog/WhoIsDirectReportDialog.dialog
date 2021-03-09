@@ -55,7 +55,10 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result"
+            "UserList": "=$Result",
+            "User": "=$UserToSearchFor",
+            "Scenario": "DirectReports",
+            "AutoChooseFirst": "false"
           },
           "resultProperty": "$DirectReportUser"
         },
@@ -74,7 +77,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "userId": "=$DirectReportUser.Id"
+                "UserFound": "=$DirectReportUser"
               }
             }
           ],
@@ -87,6 +90,12 @@
               "activity": "${SendActivity_UTkQ6k()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "0nZUOA"
+          }
         }
       ]
     }

@@ -54,7 +54,10 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result"
+            "UserList": "=$Result",
+            "User": "=$UserFound",
+            "Scenario": "Collaborator",
+            "AutoChooseFirst": "false"
           },
           "resultProperty": "$DetailUser"
         },
@@ -73,7 +76,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserId": "=$DetailUser.Id"
+                "UserFound": "=DetailUser"
               }
             }
           ],
@@ -86,6 +89,12 @@
               "activity": "${SendActivity_mfLqxa()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Stpfkh"
+          }
         }
       ]
     }

@@ -1,8 +1,33 @@
 [Common](common.en-us.lg)
 [Actions](actions.en-us.lg)
 
-# UserListPrompt()
-- I found ${count($items)} collegues. Please pick one:
+# UserListPrompt(Scenario, User, Items)
+- IF: ${count(Items) > 1}
+    - ${MultipleResultFound(Scenario, count(Items), User)}
+- ELSE:
+    - ${SingleResultFound(Scenario, User)}
+
+#SingleResultFound(Scenario, User)
+- SWITCH: ${Scenario}
+- CASE: ${"Collaborator"}
+    - I found 1 collegue that collaborates with ${User.displayName}.
+- CASE: ${"Peers"}
+    - I found 1 collegues that share the same manager as ${User.displayName}.
+- CASE: ${"DirectReports"}
+    - I found 1 collegue that reports to ${User.displayName}.
+- DEFAULT:
+    - I found one result:
+
+#MultipleResultFound(Scenario, TotalCount, User)
+- SWITCH: ${Scenario}
+- CASE: ${"Collaborator"}
+    - I found ${TotalCount} collegues that collaborates with ${User.displayName}.
+- CASE: ${"Peers"}
+    - There are ${TotalCount} collegues that share the same manager as ${User.displayName}.
+- CASE: ${"DirectReports"}
+    - There are ${TotalCount} people that are part of ${User.displayName}'s team.
+- DEFAULT:
+    - I found multiple results:
 
 # UserListShowMorePrompt()
 - How about these options?
@@ -13,8 +38,16 @@
 # UserListDefaultValueResponse()
 - OK, let's move on.
 
-# UserListTitle
-- Colleagues
+# UserListTitle(Scenario)
+- SWITCH: ${Scenario}
+- CASE: ${"Collaborator"}
+    - Collaborators
+- CASE: ${"Peers"}
+    - Peers
+- CASE: ${"DirectReports"}
+    - Team
+- DEFAULT:
+    - Collegues
 
 # UserListItem(item)
 - ```

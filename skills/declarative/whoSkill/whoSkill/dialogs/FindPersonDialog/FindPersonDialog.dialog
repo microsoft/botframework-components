@@ -33,7 +33,8 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result"
+            "UserList": "=$Result",
+            "AutoChooseFirst": "true"
           },
           "resultProperty": "$SelectedUser"
         },
