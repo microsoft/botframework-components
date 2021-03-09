@@ -234,6 +234,10 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "false"
                 }
               ]
             },
@@ -326,6 +330,10 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "=false"
                 }
               ]
             },
