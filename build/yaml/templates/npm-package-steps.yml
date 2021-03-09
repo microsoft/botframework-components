@@ -21,12 +21,12 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm pack
+    yarn pack
   displayName: 'Generate package'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2
-  displayName: 'Copy npm files'
+  displayName: 'Copy packages'
   inputs:
     SourceFolder: '$(WorkingDirectory)'
     Contents: '*.tgz'

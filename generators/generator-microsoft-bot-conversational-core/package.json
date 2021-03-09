@@ -4,7 +4,7 @@
   "description": "Preview conversational core package for TESTING ONLY",
   "main": "./generators/app/templates/index.js",
   "dependencies": {
-    "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210226.e5782e2",
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:*",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
