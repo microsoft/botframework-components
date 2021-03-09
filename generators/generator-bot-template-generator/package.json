@@ -13,8 +13,8 @@
     "template"
   ],
   "scripts": {
+    "lint": "eslint -c ../../.eslintrc.json .",
     "test": "jest",
-    "pretest": "eslint . --fix",
     "prepublishOnly": "yarn audit"
   },
   "engines": {
@@ -27,37 +27,14 @@
     "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
-    "eslint": "^5.3.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-xo-space": "^0.20.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
-    "prettier": "^1.10.2",
+    "prettier": "latest",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "xo-space/esnext",
-      "prettier"
-    ],
-    "env": {
-      "jest": true,
-      "node": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "printWidth": 90
-        }
-      ]
-    },
-    "plugins": [
-      "prettier"
-    ]
   },
   "jest": {
     "testEnvironment": "node",

@@ -10,6 +10,6 @@
     "wsrun": "^5.2.4"
   },
   "scripts": {
-    "wsrun": "wsrun -t"
+    "lint": "wsrun -m lint"
   }
 }

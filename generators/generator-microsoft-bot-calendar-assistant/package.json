@@ -9,8 +9,14 @@
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint -c ../../.eslintrc.json ."
   },
   "keywords": [
     "conversationalcore",
