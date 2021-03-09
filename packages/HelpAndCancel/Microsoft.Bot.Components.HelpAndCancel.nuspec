@@ -13,7 +13,7 @@
         <description>Dialog to provide "help" and "cancel" utterance handling</description>
         <tags>bf-component conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.12.0-rc1.preview" />
+            <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.12.0-preview" />
         </dependencies>
     </metadata>
 
