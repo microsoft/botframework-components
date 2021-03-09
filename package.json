@@ -6,10 +6,7 @@
     "packages/*",
     "skills/declarative/*"
   ],
-  "devDependencies": {
-    "wsrun": "^5.2.4"
-  },
   "scripts": {
-    "lint": "wsrun -m lint"
+    "lint": "yarn workspaces foreach run lint"
   }
 }
