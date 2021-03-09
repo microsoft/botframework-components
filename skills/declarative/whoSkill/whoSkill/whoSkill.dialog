@@ -446,6 +446,16 @@
           "name": "whoSkill.OnError"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NfAZge"
+          },
+          "name": "Error",
+          "label": "Error",
+          "valueType": "string",
+          "value": "=turn.dialogEvent"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "QxqZcj"
