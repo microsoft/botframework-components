@@ -76,7 +76,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserFound": "=DetailUser"
+                "UserFound": "=$DetailUser"
               }
             }
           ],
