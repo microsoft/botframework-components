@@ -49,7 +49,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
 
-            IUserPeopleCollectionRequest request = client.Users[userId].People.Request();
+            // Ensure we filter out groups, meeting rooms, etc. which are not actually people
+            IUserPeopleCollectionRequest request = client.Users[userId].People.Request().Filter("personType eq 'Person' and mailboxType eq 'Mailbox'");
 
             if (maxCount > 0)
             {
