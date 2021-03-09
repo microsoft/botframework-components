@@ -27,9 +27,9 @@
 
 # ChoiceInput_Prompt_dc3QNs()
 - IF: ${$isFirstTurn == true}
-    - ${InitialChoicePrompt(dialog.Scenario, dialog.User, dialog.choices)}
+    - ${InitialChoicePrompt(dialog.Scenario, dialog.User, dialog.items)}
 - ELSE: 
-    - ${RepromptChoicePrompt(dialog.Scenario, dialog.User, dialog.choices)}
+    - ${RepromptChoicePrompt(dialog.Scenario, dialog.User, dialog.items)}
     
 # InitialChoicePrompt(Scenario, User, Items)
 [Activity
