@@ -28,7 +28,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <summary>
         /// Gets or sets the max number of results to return.

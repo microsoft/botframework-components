@@ -26,7 +26,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetWorksWith.GetWorksWithMeDeclarativeType;
@@ -48,7 +48,15 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
-            IUserPeopleCollectionPage result = await client.Users[userId].People.Request().Top(maxCount).GetAsync();
+
+            IUserPeopleCollectionRequest request = client.Users[userId].People.Request();
+
+            if (maxCount > 0)
+            {
+                request = request.Top(maxCount);
+            }
+
+            IUserPeopleCollectionPage result = await request.GetAsync();
 
             return result.CurrentPage;
         }
