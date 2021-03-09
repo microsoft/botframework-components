@@ -5,7 +5,7 @@ steps:
     versionSpec: '14.x'
 
 - script: |
-    yarn --frozen-lockfile
+    yarn --immutable
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
