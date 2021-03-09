@@ -1,30 +1,17 @@
-name: $(Build.DefinitionName)-$(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
-
-trigger:
-  batch: true
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - packages/HelpAndCancel
-
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - packages/HelpAndCancel
+name: $(Build.BuildId)
+trigger: none  # ci trigger is set in ADO
+pr: none # pr trigger is set in ADO
 
 pool: 
-  vmImage: 'windows-2019'
+  vmImage: $[ coalesce( variables['VMImage'], 'windows-2019' ) ] # or 'windows-latest' or 'vs2017-win2016'
 
 extends:
   template: ../templates/component-template.yml
 
 variables:
-  BuildConfiguration: 'Release'
-  ComponentType: 'declarativeAsset'
-  DeploymentRing: 'preview'
-  WorkingDirectory: 'packages/HelpAndCancel'
+  BuildConfiguration: Release
+  BuildPlatform: anycpu
+  ComponentType: declarativeAsset
+  DeploymentRing: preview
+  # PublishPackageArtifacts: # set in ADO
+  WorkingDirectory: packages/HelpAndCancel

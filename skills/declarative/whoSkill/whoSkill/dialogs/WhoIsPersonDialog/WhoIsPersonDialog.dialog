@@ -17,16 +17,37 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "d9PSPx"
+            "id": "rqPdz8"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          },
-          "resultProperty": "dialog.userId"
+          "condition": "= not(exists(dialog.userId))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "YfiAYu"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "dialog.userId",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "hwsKVX"
+              },
+              "valueType": "String",
+              "label": "FoundId",
+              "name": "FoundId",
+              "value": "=dialog.userId"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -39,6 +60,15 @@
           "value": "=dialog.userId"
         },
         {
+          "$kind": "Microsoft.Graph.Photo.GetPhoto",
+          "$designer": {
+            "id": "rYukBT"
+          },
+          "resultProperty": "dialog.ResultPhoto",
+          "token": "=user.token.token",
+          "userId": "=dialog.userId"
+        },
+        {
           "$kind": "Microsoft.Graph.User.GetUserProfile",
           "$designer": {
             "id": "ZW7CBi"
@@ -46,6 +76,16 @@
           "token": "=user.token.token",
           "userId": "=dialog.userId",
           "resultProperty": "dialog.Result"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YumZ1w"
+          },
+          "name": "JsonResult",
+          "label": "JsonResult",
+          "valueType": "String",
+          "value": "=dialog.Result"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -58,9 +98,6 @@
     }
   ],
   "generator": "WhoIsPersonDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": []
-  },
+  "recognizer": "WhoIsPersonDialog.lu.qna",
   "id": "WhoIsPersonDialog"
 }

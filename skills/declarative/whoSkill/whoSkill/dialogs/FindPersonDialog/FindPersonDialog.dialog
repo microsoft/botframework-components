@@ -17,19 +17,39 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "hNKTvd"
+            "id": "m3GPMj"
           },
-          "property": "dialog.userId",
-          "value": "4cb80718-9dbd-4309-a5fd-753958148291"
+          "activity": "${SendActivity_m3GPMj()}"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetUsers",
+          "$designer": {
+            "id": "KiEzol"
+          },
+          "resultProperty": "$Result",
+          "token": "=user.token.token",
+          "nameToSearchFor": "=$nameEntity"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "q12nrf"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result"
+          },
+          "resultProperty": "$SelectedUserId"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "t5WNI5"
           },
-          "value": "=dialog.userId"
+          "value": "=$SelectedUserId"
         }
       ]
     }

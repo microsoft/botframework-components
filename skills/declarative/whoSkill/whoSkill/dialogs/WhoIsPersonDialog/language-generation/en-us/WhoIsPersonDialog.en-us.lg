@@ -1,7 +1,12 @@
 [Common](common.en-us.lg)
 [Profile](profile.en-us.lg)
 
+
+
 # SendActivity_ryFbw6()
 [Activity
-    Text = ${dialog.Result}
+    Attachments = ${SendActivity_ryFbw6_attachment_7Dz895()}
 ]
+
+# SendActivity_ryFbw6_attachment_7Dz895()
+- ${json(ProfileCard(dialog.Result))}

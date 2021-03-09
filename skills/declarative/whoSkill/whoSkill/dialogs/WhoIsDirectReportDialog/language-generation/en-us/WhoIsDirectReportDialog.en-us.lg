@@ -1,6 +1,7 @@
 [import](common.lg)
 
-# SendActivity_erQVCV()
+
+# SendActivity_UTkQ6k()
 [Activity
-    Text = ${dialog.Result}
+    Text = Sorry this person has no direct report it seems!
 ]

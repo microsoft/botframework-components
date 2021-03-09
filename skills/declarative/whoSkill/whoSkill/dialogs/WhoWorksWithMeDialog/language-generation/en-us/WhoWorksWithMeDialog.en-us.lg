@@ -1,6 +1,7 @@
 [import](common.lg)
 
-# SendActivity_rxl68t()
+
+# SendActivity_mfLqxa()
 [Activity
-    Text = ${dialog.Result}
+    Text = Sorry we couldn't find collaborator for this person!
 ]

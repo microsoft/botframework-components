@@ -1,0 +1,3 @@
+# prevent appsettings.development.json get checked in
+**/appsettings.development.json
+**/node_modules

@@ -1,47 +1,48 @@
 steps:
-  - powershell: |
-      $deploymentRing = "$(DeploymentRing)";
-      "Deployment Ring = $deploymentRing";
+- powershell: |
+    $deploymentRing = "$(DeploymentRing)";
+    "Deployment Ring = $deploymentRing";
 
-      $componentType = "$(ComponentType)";
-      "Component Type = $componentType";
+    $componentType = "$(ComponentType)";
+    "Component Type = $componentType";
 
-      $dateStamp = (Get-Date -format "yyyyMMdd");
-      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
-      $vs = $dateStamp + "." + $commitHash;
+    $dateStamp = (Get-Date -format "yyyyMMdd");
+    $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+    $vs = $dateStamp + "." + $commitHash;
 
-      # If declarative assets or generator, get and set version from package.json
-      if ($componentType.ToLowerInvariant() -eq "declarativeAsset" -Or $componentType.ToLowerInvariant() -eq "generator" ) {
-        if (Test-Path -Path package.json) {
-          # Get existing version from package.json
-          $packageJson = Get-Content package.json;
-          $packageJsonData = $packageJson | ConvertFrom-Json;
-          $packageVersion = $packageJsonData.version
-          "Version Prefix = $packageVersion";
+    # If declarative assets or generator, get and set version from package.json
+    if ($componentType.ToLowerInvariant() -eq "declarativeAsset" -Or $componentType.ToLowerInvariant() -eq "generator" ) {
+      if (Test-Path -Path package.json) {
+        # Get existing version from package.json
+        $packageJson = Get-Content package.json;
+        $packageJsonData = $packageJson | ConvertFrom-Json;
+        $packageVersion = $packageJsonData.version
+        "Version Prefix = $packageVersion";
 
-          # Configure version suffix based on deployment ring
-          if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-            # npm uses a slightly different version suffix pattern, so calculate that separately.
-            $npmVersionSuffix = $deploymentRing + "-" + $vs;
-            "Version Suffix = $npmVersionSuffix";
-            $packageVersion += "-" + $npmVersionSuffix;
-          }
-
-          "Version = $packageVersion";
-          Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
-          Write-Host "##vso[task.setvariable variable=PackageVersion;isOutput=true]$packageVersion";
-        } else {
-          Write-Host "Missing package.json"
-          exit 1
+        # Configure version suffix based on deployment ring
+        if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+          # npm uses a slightly different version suffix pattern, so calculate that separately.
+          $npmVersionSuffix = $deploymentRing + "-" + $vs;
+          "Version Suffix = $npmVersionSuffix";
+          $packageVersion += "-" + $npmVersionSuffix;
         }
-      }
-    displayName: 'Resolve package version variables'
-    name: SetVersion
-    workingDirectory: '$(WorkingDirectory)'
 
-  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-    displayName: Tag build for NPM
-    inputs: 
-      tags: |
-        NpmPackageVersion: $(NpmPackageVersion)
-    continueOnError: true
+        "Version = $packageVersion";
+        Write-Host "##vso[task.setvariable variable=NpmPackageVersion;]$packageVersion";
+      } else {
+        Write-Host "Missing package.json"
+        exit 1
+      }
+    }
+  displayName: 'Resolve package version variables'
+  name: SetVersion
+  workingDirectory: '$(WorkingDirectory)'
+
+- task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+  displayName: Tag build for NPM
+  inputs: 
+    tags: |
+      NpmPackageVersion: $(NpmPackageVersion)
+  continueOnError: true
+
+- template: debug-workspace-steps.yml

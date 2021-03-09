@@ -30,7 +30,7 @@ steps:
   displayName: 'ESRP Signing - strong name (CP-233863-SN)'
   condition: eq(variables.ComponentType, 'codeExtension')
   inputs:
-    ConnectedServiceName: 'botframework-components-esrp'
+    ConnectedServiceName: 'ESRP Code Signing Connection 2020a'
     FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     signConfigType: inlineSignParams
     inlineOperation: |
@@ -58,7 +58,7 @@ steps:
   displayName: 'ESRP Signing - authenticode (CP-230012)'
   condition: eq(variables.ComponentType, 'codeExtension')
   inputs:
-    ConnectedServiceName: 'botframework-components-esrp'
+    ConnectedServiceName: 'ESRP Code Signing Connection 2020a'
     FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     signConfigType: inlineSignParams
     inlineOperation: |
@@ -113,7 +113,7 @@ steps:
 - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
   displayName: 'ESRP Signing - *.nupkg,*.snupkg (CP-401405)'
   inputs:
-    ConnectedServiceName: 'botframework-components-esrp'
+    ConnectedServiceName: 'ESRP Code Signing Connection 2020a'
     FolderPath: '$(Build.ArtifactStagingDirectory)\signing'
     Pattern: '*.nupkg,*.snupkg'
     signConfigType: inlineSignParams
@@ -152,3 +152,5 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)\publish'
     ArtifactName: 'nuget'
     publishLocation: 'Container'
+
+- template: debug-workspace-steps.yml

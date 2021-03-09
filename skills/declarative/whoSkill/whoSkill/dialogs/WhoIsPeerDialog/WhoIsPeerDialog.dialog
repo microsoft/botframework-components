@@ -17,16 +17,35 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "a4tby4"
+            "id": "ooNnhY"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          },
-          "resultProperty": "dialog.userId"
+          "condition": "=not(exists($userId))",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "vjgu3O"
+              },
+              "name": "UserIdAlreadyExists",
+              "value": "=$userId"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "lVW6uP"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "$userId",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -48,11 +67,46 @@
           "userId": "=dialog.userId"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "hZFfyN"
+            "id": "Ldr65P"
           },
-          "activity": "${SendActivity_hZFfyN()}"
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "queryType": "Peer"
+          },
+          "resultProperty": "$DetailUserId"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2bT4YD"
+          },
+          "condition": "=exists($DetailUserId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "yuDqlV"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "UserId": "=$DetailUserId"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "7uCWqD"
+              },
+              "activity": "${SendActivity_7uCWqD()}"
+            }
+          ]
         }
       ]
     }
