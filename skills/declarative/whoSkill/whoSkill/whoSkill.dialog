@@ -321,7 +321,7 @@
           "dialog": "WhoIsPeerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "userId": "=$options.userId"
+            "UserFound": "=$options.user"
           }
         }
       ]
