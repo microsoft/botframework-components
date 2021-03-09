@@ -70,7 +70,7 @@
           "activityProcessed": true,
           "dialog": "WhoWorksWithMeDialog",
           "options": {
-            "UserId": "=$options.userId",
+            "UserFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"
           }
         }

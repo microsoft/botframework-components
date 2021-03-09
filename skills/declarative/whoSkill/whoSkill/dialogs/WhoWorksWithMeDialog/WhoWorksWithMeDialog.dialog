@@ -44,7 +44,7 @@
           },
           "token": "=user.token.token",
           "resultProperty": "$Result",
-          "userId": "=$UserId"
+          "userId": "=$UserFound.Id"
         },
         {
           "$kind": "Microsoft.BeginDialog",
