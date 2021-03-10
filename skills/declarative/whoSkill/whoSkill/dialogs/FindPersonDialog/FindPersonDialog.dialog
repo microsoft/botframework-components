@@ -17,13 +17,6 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "m3GPMj"
-          },
-          "activity": "${SendActivity_m3GPMj()}"
-        },
-        {
           "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
             "id": "KiEzol"
@@ -40,16 +33,17 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result"
+            "UserList": "=$Result",
+            "AutoChooseFirst": "true"
           },
-          "resultProperty": "$SelectedUserId"
+          "resultProperty": "$SelectedUser"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "t5WNI5"
           },
-          "value": "=$SelectedUserId"
+          "value": "=$SelectedUser"
         }
       ]
     }

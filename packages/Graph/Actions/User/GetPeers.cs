@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
@@ -27,7 +28,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -59,7 +60,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
             };
 
             GetDirectReports directReportActions = new GetDirectReports();
-            return await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken);
+            IEnumerable<DirectoryObject> result = await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken);
+
+            return result.Where(obj => obj.Id != (string)parameters["UserId"]);
         }
 
         /// <inheritdoc />

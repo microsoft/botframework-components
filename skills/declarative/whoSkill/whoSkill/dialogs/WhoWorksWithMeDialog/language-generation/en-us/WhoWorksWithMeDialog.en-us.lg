@@ -3,5 +3,6 @@
 
 # SendActivity_mfLqxa()
 [Activity
-    Text = Sorry we couldn't find collaborator for this person!
+    Text = I found that ${dialog.UserFound.names[0].displayName} does not have collaborator.
 ]
+

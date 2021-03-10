@@ -3,5 +3,6 @@
 
 # SendActivity_UTkQ6k()
 [Activity
-    Text = Sorry this person has no direct report it seems!
+    Text = I found that ${dialog.UserToSearchFor.names[0].displayName} does not have direct reports.
 ]
+
