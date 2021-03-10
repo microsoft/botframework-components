@@ -35,7 +35,9 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result",
-            "AutoChooseFirst": "true"
+            "AutoChooseFirst": "true",
+            "Scenario": "PersonSearch",
+            "User": "=$nameEntity"
           },
           "resultProperty": "$SelectedUser"
         },
