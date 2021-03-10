@@ -257,7 +257,7 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "email"
+                  "value": "name"
                 },
                 {
                   "property": "$listOptions.activePrompt",
@@ -275,6 +275,10 @@
                     "skipResponse": "ContactListSkipResponse",
                     "defaultValueResponse": "ContactListDefaultValueResponse"
                   }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
                 }
               ]
             },
@@ -387,6 +391,10 @@
                   "value": {
                     "attendees": "=$event.attendees"
                   }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
                 }
               ]
             },
@@ -470,34 +478,53 @@
           "condition": "=not(exists($options.start) && exists($options.end))",
           "actions": [
             {
-              "$kind": "Microsoft.DateTimeInput",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "Avi5yg"
+                "id": "MGvqYl"
               },
-              "disabled": false,
-              "maxTurnCount": "=if(turn.skip, 1, 3)",
-              "alwaysPrompt": false,
-              "prompt": "${DateTimeInput_Prompt_Avi5yg()}",
-              "unrecognizedPrompt": "",
-              "invalidPrompt": "",
-              "defaultValueResponse": "",
-              "property": "turn.query",
-              "validations": [],
-              "allowInterruptions": "=(not(exists(#SetDateTime)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
-              "value": "=$options.start"
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "3RkRs1"
-              },
-              "activityProcessed": true,
-              "dialog": "ResolveDateTimeDialog",
-              "options": {
-                "query": "=coalesce($options.start, turn.activity.text)",
-                "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
-              },
-              "resultProperty": "$dateTime"
+              "condition": "not(exists($options.dateTime))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.DateTimeInput",
+                  "$designer": {
+                    "id": "aB5ltS"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": "=if(turn.skip, 1, 3)",
+                  "alwaysPrompt": false,
+                  "prompt": "${DateTimeInput_Prompt_aB5ltS()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "turn.query",
+                  "validations": [],
+                  "allowInterruptions": "=(not(exists(#SetDateTime)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
+                  "value": "=$options.start"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "3JlLSV"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ResolveDateTimeDialog",
+                  "options": {
+                    "query": "=coalesce($options.start, turn.activity.text)",
+                    "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                  },
+                  "resultProperty": "$dateTime"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "EvRX4w"
+                  },
+                  "property": "$dateTime",
+                  "value": "=$options.dateTime"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.SwitchCondition",
@@ -906,7 +933,7 @@
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "property": "turn.createConfirmResult",
-          "allowInterruptions": "=turn.recognized.score > 0.6 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
           "style": "none",
           "maxTurnCount": "=$turnCount",
           "choiceOptions": {
@@ -914,7 +941,8 @@
             "inlineOrMore": ", or ",
             "inlineOr": " or ",
             "inlineSeparator": ", "
-          }
+          },
+          "defaultValue": false
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -1145,7 +1173,7 @@
             },
             {
               "property": "$options.contactArray",
-              "value": "=@@contact"
+              "value": "=@@newContact"
             }
           ]
         },
@@ -1196,7 +1224,7 @@
             },
             {
               "property": "$options.contactArray",
-              "value": "=@@contact"
+              "value": "=@@currentContact"
             }
           ]
         },

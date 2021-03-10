@@ -122,7 +122,7 @@
                 "title": "Title",
                 "type": "postBack",
                 "value": "title"
-              }
+                }
             },
             {
               "value": "attendees",
@@ -493,7 +493,7 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "email"
+                  "value": "name"
                 },
                 {
                   "property": "$listOptions.activePrompt",
@@ -511,6 +511,10 @@
                     "skipResponse": "ContactListSkipResponse",
                     "defaultValueResponse": "ContactListDefaultValueResponse"
                   }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
                 }
               ]
             },
@@ -1088,7 +1092,8 @@
             "inlineSeparator": ", "
           },
           "property": "$confirmUpdate",
-          "style": "none"
+          "style": "none",
+          "defaultValue": false
         },
         {
           "$kind": "Microsoft.IfCondition",

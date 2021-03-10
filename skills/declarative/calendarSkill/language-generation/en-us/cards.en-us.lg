@@ -306,20 +306,6 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     }
     ```
     
-# BuildCardActionData(text)
-- IF: ${turn.activity.channelId == 'msteams'}
-    - ```
-    {
-        "msteams": {
-            "type": "messageBack",
-            "text": "${text}"
-        }
-    }
-    ```
-- ELSE: 
-    - "${text}"
-
-
 # CardActionTemplate(type, title, value)
 [CardAction
     type = ${type}

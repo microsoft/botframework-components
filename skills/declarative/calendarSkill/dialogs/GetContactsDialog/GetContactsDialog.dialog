@@ -363,7 +363,7 @@
                     },
                     {
                       "property": "$listOptions.actionTitleProperty",
-                      "value": "email"
+                      "value": "name"
                     },
                     {
                       "property": "$listOptions.activePrompt",
@@ -387,6 +387,10 @@
                       "value": {
                         "contactName": "=titleCase(turn.dialogEvent.value)"
                       }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=true"
                     }
                   ]
                 },

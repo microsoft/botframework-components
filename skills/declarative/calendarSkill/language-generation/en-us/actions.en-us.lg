@@ -53,7 +53,7 @@
 ```
 
 # GetEventsActionTitle(dateTime)
-- IF: ${date(formatDateTime(dateTime)) == date(TimeZoneNow())}
+- IF: ${ dateTime == '' }
     - Show today
 - ELSEIF: ${date(formatDateTime(dateTime)) == date(addDays(TimeZoneNow(), 1))}
     - Show tomorrow
@@ -80,6 +80,21 @@
 	title = Provide feedback
     value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
 ]
+
+# SelectEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Select event",
+    "data": {
+        "intent": "GetEvents",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
 
 # SetAttendeesAddAction(event)
 -```
@@ -275,7 +290,7 @@
 ```
 
 # BuildSubmitAction(text, value)
-- IF: ${ turn.activity.channelId == "msteams"}
+- IF: ${ turn.activity.channelId == "msteams" }
     - ${TeamsSubmitAction(text, value)}
 - ELSE: 
     - ${SubmitAction(text, value)}

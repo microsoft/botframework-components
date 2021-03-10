@@ -45,11 +45,7 @@
             "spacing": "Small"
         }
     ],
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": ${BuildCardActionData(item.email)}
-    }
+    "selectAction": ${BuildSubmitAction(item.name, item.index)}
 }
 ```
 

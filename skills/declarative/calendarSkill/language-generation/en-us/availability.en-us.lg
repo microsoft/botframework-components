@@ -46,7 +46,6 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "medium",
     "items": [
         {
             "type": "ColumnSet",

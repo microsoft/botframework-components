@@ -24,7 +24,7 @@
 
 # SendActivity_F6WlGO()
 [Activity
-    text = You are not the meeting organizer.
+    text = Apparently, you are not the organizer of this meeting.
     attachments = ${json(EventDetailActionsCard($event))}
 ]
 

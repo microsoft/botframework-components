@@ -11,9 +11,6 @@
 # SendActivity_zz0Eaj()
 - I've removed ${coalesce($selectedContact.Name, $selectedContact.Address)}.
 
-# DateTimeInput_Prompt_Avi5yg()
-- When should I schedule it?
-
 # TextInput_Prompt_68Dudo()
 - What should I set the description to?
 
@@ -57,3 +54,6 @@
 
 # TextInput_Prompt_1LdFal()
 - What should I set the location to?
+
+# DateTimeInput_Prompt_aB5ltS()
+- When should I schedule it?

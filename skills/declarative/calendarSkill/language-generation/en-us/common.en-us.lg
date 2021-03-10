@@ -6,13 +6,13 @@
 # WelcomeUser()
 - IF: ${user.profile.displayName != null}
 - ```
-Hi ${user.profile.displayName} 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!
+Hi ${user.profile.displayName} 🖐, thank you for helping out the Pre-built Experiences team with this dogfood for calendar skill!
 
 You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
 ```
 - ELSE: 
 - ```
-Hi there 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!
+Hi there 🖐, thank you for helping the Pre-built Experiences team out with this dogfood for calendar skill!
     
 You can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
 ```
