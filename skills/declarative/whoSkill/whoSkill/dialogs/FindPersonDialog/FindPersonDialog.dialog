@@ -23,7 +23,8 @@
           },
           "resultProperty": "$Result",
           "token": "=user.token.token",
-          "nameToSearchFor": "=$nameEntity"
+          "nameToSearchFor": "=$nameEntity",
+          "maxCount": 16
         },
         {
           "$kind": "Microsoft.BeginDialog",
