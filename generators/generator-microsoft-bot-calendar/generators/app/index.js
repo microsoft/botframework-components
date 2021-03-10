@@ -16,7 +16,7 @@ module.exports = class extends Generator {
         arguments: this.args,
         packageReferences: [{
           name: 'Microsoft.Bot.Components.Calendar',
-          version: '1.0.0-alpha.20210301.e173970'
+          version: '1.0.0-alpha.20210310.8ee9434'
           }],
         pluginDefinitions : [
           {
