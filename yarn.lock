@@ -69,6 +69,46 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core"
+  dependencies:
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
+  dependencies:
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker"
+  dependencies:
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-who@workspace:generators/generator-bot-who":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-who@workspace:generators/generator-bot-who"
+  dependencies:
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
 "@microsoft/generator-microsoft-bot-adaptive@workspace:^1.0.0-preview, @microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive"
