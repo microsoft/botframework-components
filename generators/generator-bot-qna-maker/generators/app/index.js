@@ -16,15 +16,7 @@ module.exports = class extends Generator {
       require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
       {
         arguments: this.args,
-        packageReferences: [{
-          name: 'Microsoft.Bot.Components.HelpAndCancel',
-          version: '1.0.0-preview.20210310.8ee9434'
-          },
-          {
-            name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434'
-          }
-        ],
+        packageReferences: [],
         applicationSettingsDirectory: 'settings',
         includeApplicationSettings: false   
       }
@@ -36,7 +28,7 @@ module.exports = class extends Generator {
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+          botName: this.options.botName
       }
     );
   }
