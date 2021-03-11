@@ -17,8 +17,7 @@ module.exports = class extends Generator {
       {
         arguments: this.args,
         packageReferences: [],
-        applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
+        applicationSettingsDirectory: 'settings'
       }
     );
   }

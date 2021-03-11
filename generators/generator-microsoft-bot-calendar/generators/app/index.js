@@ -33,7 +33,18 @@ module.exports = class extends Generator {
           }
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false
+        modifyApplicationSettings: (appSettings) => {
+          Object.assign(
+            appSettings,
+            {
+              oauthConnectionName: 'Outlook',
+              defaultValue: {
+                duration: 30
+              }
+            });
+
+          appSettings.runtimeSettings.features.setSpeak = true;
+        }
       }
     );
   }
