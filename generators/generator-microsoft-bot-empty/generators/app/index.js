@@ -3,27 +3,22 @@
 
 'use strict';
 
-const Generator = require('yeoman-generator');
+const {
+  BaseGenerator,
+} = require('@microsoft/generator-microsoft-bot-adaptive');
 
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
-
-    this.argument('botName', { type: String, required: true });
-  }
-
+module.exports = class extends BaseGenerator {
   initializing() {
     this.composeWith(
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
-      {
-        ...this.flags,
+      Object.assign(this.options, {
         arguments: this.args,
         packageReferences: [],
         applicationSettingsDirectory: 'settings',
         includeApplicationSettings: false,
-      }
+      })
     );
   }
 

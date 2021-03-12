@@ -2,21 +2,18 @@
 // Licensed under the MIT License.
 
 'use strict';
-const Generator = require('yeoman-generator');
 
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
+const {
+  BaseGenerator,
+} = require('@microsoft/generator-microsoft-bot-adaptive');
 
-    this.argument('botName', { type: String, required: true });
-  }
-
+module.exports = class extends BaseGenerator {
   initializing() {
     this.composeWith(
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
-      {
+      Object.assign(this.options, {
         arguments: this.args,
         packageReferences: [
           {
@@ -30,7 +27,7 @@ module.exports = class extends Generator {
         ],
         applicationSettingsDirectory: 'settings',
         includeApplicationSettings: false,
-      }
+      })
     );
   }
 

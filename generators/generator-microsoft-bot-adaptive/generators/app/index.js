@@ -1,77 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const Generator = require('yeoman-generator');
-const { v4: uuidv4 } = require('uuid');
 const xml2js = require('xml2js');
+const { BaseGenerator, integrations, platforms } = require('../../index');
+const { v4: uuidv4 } = require('uuid');
 
-const INTEGRATION_WEBAPP = 'webapp';
-const INTEGRATION_FUNCTIONS = 'functions';
-
-const PLATFORM_DOTNET = 'dotnet';
-const PLATFORM_JS = 'js';
-const PLATFORM_JAVA = 'java';
-const PLATFORM_PYTHON = 'python';
-
-const PROJECT_TYPEID_WEBAPP = '9A19103F-16F7-4668-BE54-9A1E7A4F7556';
-const PROJECT_TYPEID_FUNCTION = 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC';
-
-module.exports = class extends Generator {
+module.exports = class extends BaseGenerator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument('botName', {
-      type: String,
-      required: true,
-    });
-
-    this.option('integration', {
-      desc: `The host integration to use:  ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`,
-      type: String,
-      default: INTEGRATION_WEBAPP,
-      alias: 'i',
-    });
-
-    this.option('platform', {
-      desc: `The programming platform to use: ${PLATFORM_DOTNET} ${PLATFORM_JS}`,
-      type: String,
-      default: PLATFORM_DOTNET,
-      alias: 'p',
-    });
-
-    this._verifyOptions();
     this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(
       opts
     );
+
     this.includeApplicationSettings = this._validateIncludeApplicationSettings(
       opts
     );
+
     this.packageReferences = this._validatePackageReferences(
       opts.packageReferences
     );
+
     this.pluginDefinitions = this._validatePluginDefinitions(
       opts.pluginDefinitions
     );
-  }
-
-  _verifyOptions() {
-    if (
-      this.options.integration.toLowerCase() != INTEGRATION_WEBAPP &&
-      this.options.integration.toLowerCase() != INTEGRATION_FUNCTIONS
-    ) {
-      this.env.error(
-        `--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`
-      );
-    }
-
-    if (
-      this.options.platform !== PLATFORM_DOTNET &&
-      this.options.platform !== PLATFORM_JS
-    ) {
-      this.env.error(
-        `--platform must be: ${PLATFORM_DOTNET} or ${PLATFORM_JS}`
-      );
-    }
   }
 
   _validateApplicationSettingsDirectory(opts) {
@@ -176,7 +128,7 @@ module.exports = class extends Generator {
 
   _copyProject() {
     switch (this.options.platform) {
-      case PLATFORM_DOTNET: {
+      case platforms.dotnet: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'string.Empty',
           includeAssets: ['schemas'],
@@ -193,7 +145,7 @@ module.exports = class extends Generator {
         return;
       }
 
-      case PLATFORM_JS: {
+      case platforms.js: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'process.cwd()',
           includeAssets: ['schemas'],
@@ -255,10 +207,10 @@ module.exports = class extends Generator {
     const botProjectGuid = uuidv4().toUpperCase();
     const solutionGuid = uuidv4().toUpperCase();
 
-    const projectType =
-      integration == INTEGRATION_WEBAPP
-        ? PROJECT_TYPEID_WEBAPP
-        : PROJECT_TYPEID_FUNCTION;
+    const projectType = {
+      [integrations.functions]: 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC',
+      [integrations.webapp]: '9A19103F-16F7-4668-BE54-9A1E7A4F7556',
+    }[integration];
 
     this.fs.copyTpl(
       this.templatePath(platform, 'botName.sln'),
@@ -276,8 +228,8 @@ module.exports = class extends Generator {
     const { botName, integration } = this.options;
 
     const integrationName = {
-      [INTEGRATION_FUNCTIONS]: 'azure-functions',
-      [INTEGRATION_WEBAPP]: 'restify',
+      [integrations.functions]: 'azure-functions',
+      [integrations.webapp]: 'restify',
     }[integration];
 
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
