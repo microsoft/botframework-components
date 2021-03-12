@@ -30,7 +30,7 @@ module.exports = class extends Generator {
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }
