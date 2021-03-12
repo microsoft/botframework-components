@@ -618,43 +618,25 @@
           "$designer": {
             "id": "Cb07qI"
           },
-          "resultProperty": "$result",
+          "resultProperty": "$availabilityList",
           "inputProperty": "=$events",
           "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
           "workingHourStartProperty": "=user.workingHours.startTime",
           "workingHourEndProperty": "=user.workingHours.endTime"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "fF6viC"
+          }
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "ijHFYq"
           },
-          "condition": "$result.availableTimeLength > 0",
+          "condition": "count($availabilityList) > 0",
           "actions": [
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "q8HuQT"
-              },
-              "assignments": [
-                {
-                  "property": "$freeTime.start",
-                  "value": "=$result.availableTimeStart"
-                },
-                {
-                  "property": "$freeTime.end",
-                  "value": "=$result.availableTimeEnd"
-                },
-                {
-                  "property": "$freeTime.isFreeTime",
-                  "value": "=true"
-                },
-                {
-                  "property": "$availabilityList",
-                  "value": "= where(createArray($result.previousEvent, $freeTime, $result.nextEvent), x, x!= null)"
-                }
-              ]
-            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {

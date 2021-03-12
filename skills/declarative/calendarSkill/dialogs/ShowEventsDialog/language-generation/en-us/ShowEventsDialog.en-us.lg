@@ -1,6 +1,7 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Schedule](schedule.en-us.lg)
+[EventList](eventList.en-us.lg)
 
 # SendActivity_8wch3m()
 - ${SendScheduleCard()}
@@ -26,3 +27,6 @@
     attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
     attachmentLayout = carousel
 ]
+
+# SendActivity_lZl77c()
+- ${SendScheduleCard()}

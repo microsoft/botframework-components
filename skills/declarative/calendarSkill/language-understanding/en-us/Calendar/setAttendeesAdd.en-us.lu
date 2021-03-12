@@ -15,6 +15,9 @@
 - forward this to {@newContact=john}
 - forward to {@newContact=chris} and {@newContact=me@myemail.edu}
 - forward to {@newContact=scott}
+- include {@newContact=quirine}
+- include {@newContact=john}, {@newContact=jacob}, and {@newContact=amy}
+- include {@newContact=lauren} and {@newContact=pooja}
 - invite more people
 - invite someone else
 - invite {@newContact=elaine} and {@newContact=morgan}

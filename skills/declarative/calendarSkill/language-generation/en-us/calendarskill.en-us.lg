@@ -44,17 +44,12 @@
 
 # SendActivity_QqvaSr()
 [Activity
-    text = ${FoundAvailableTimeResponseText($freeTime.start)}
-    attachments = ${json(CardTemplate(ScheduleHeader($freeTime.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
+    attachments = ${json(CardTemplate(ScheduleHeader($options.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
     attachmentLayout = carousel
 ]
 
 # SendActivity_WlmO9l()
-[Activity
-    text = ${FoundNoAvailableTimeResponseText()}
-    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, TimeZoneNow()), $events), ScheduleList($event), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
+- You don't have anything schedule on ${CapitalizeFirstLetter(FormatDate($options.start))}.
 
 # SendActivity_mWnyUh()
 - ${GeneralErrorMessage()}

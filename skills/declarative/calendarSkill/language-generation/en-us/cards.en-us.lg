@@ -107,7 +107,6 @@
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(pageItems, ',')}
         ]
@@ -118,7 +117,6 @@
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(pageItems, ',')}
         ]
@@ -132,7 +130,6 @@
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(itemElements, ',')}
         ]
@@ -143,7 +140,6 @@
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(take(itemElements, pageSize), ',')}
         ]
@@ -157,7 +153,6 @@
     "type": "Container",
     "id": "additionalItemsContainer",
     "separator": true,
-    "spacing": "medium",
     "isVisible": false,
     "items": [
         ${join(skip(itemElements, pageSize), ',')}

@@ -64,6 +64,9 @@
 - forward this to {@newContact=john}
 - forward to {@newContact=chris} and {@newContact=me@myemail.edu}
 - forward to {@newContact=scott}
+- include {@newContact=quirine}
+- include {@newContact=john}, {@newContact=jacob}, and {@newContact=amy}
+- include {@newContact=lauren} and {@newContact=pooja}
 - invite more people
 - invite someone else
 - invite {@newContact=elaine} and {@newContact=morgan}
@@ -77,6 +80,13 @@
 - send my event titled {@subject=1:1} to {@newContact=chris}
 - send the meeting to {@newContact=morgan}
 - send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+- no, add {@newContact=sarah}
+- no, add elaine to this too
+- no, invite {@newContact=michelle}
+- no, i want to add {@newContact=richard} to this
+- yes, but add {@newContact=darren} too
+- yes, but i need to add {@newContact=ryan}
+- sure, but send it to {@newContact=thomas} and {@newContact=xi}
 
 
 @ intent SetAttendeesAdd usesFeatures Update,Event,Location,Add,Titled
@@ -110,8 +120,13 @@
 - uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
 - uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
 - uninvite {@currentContact=morgan} from my event {@date=tomorrow}
-- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite {@currentContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+- no, remove {@currentContact=thomas} from this
+- no, i need to take out {@currentContact=john}
+- yes, but remove {@currentContact=georgie}
+- yeah, but take out {@currentContact=fred}
+- its ok, but take out {@currentContact=harry}
 
 
 @ intent SetAttendeesRemove usesFeatures Update,Event,Location,Remove,Titled
@@ -132,17 +147,19 @@
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
 - change the date of the meeting to {@newDate=wednesday}
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
-- change the day of the next event to {@newDate=wednesday}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
 - move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
 - reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
-- set the meeting time to {@newDate=3:30}
 - update my meeting to start at {@newDate=noon on saturday}
 - update my meeting with {@contact=elaine} to {@newDate=monday at 2}
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
+- no, set the meeting time to {@newDate=3:30}
+- no, change it to {@newDate=tuesday}
+- yes, but can you change the time
+- yes, but change it to {@date=monday at 3:30pm}
 
 
 @ intent SetDateTime usesFeatures Update,Event,Location,Titled
@@ -166,6 +183,10 @@
 - update the meeting body
 - update the meeting content for the {@subject=budget review}
 - update the meeting content with {@contact=ryan} {@date=next week}
+- no, change the description
+- no, add a description
+- yes, but can i set the description
+- sure, but I need to add a description
 
 
 @ intent SetDescription usesFeatures Update,Event,Location,Titled
@@ -189,8 +210,10 @@
 - update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
 - update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
 - update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
-- update the meeting to last {@duration=an hour and a half}
-- update to {@duration=1 hour and 30 minutes}
+- no, update the meeting to last {@duration=an hour and a half}
+- no, update to {@duration=1 hour and 30 minutes}
+- yes, but set to {@duration=1 hour}
+- sure, and make the meeting last {@duration=30 min}
 
 
 @ intent SetDuration usesFeatures Update,Event,Location,Titled
@@ -216,6 +239,10 @@
 - update the location of the meeting with {@contact=jose} and {@contact=em} on {@date=thursday at 11am} to {@location=room 345}
 - update the location of the meeting with {@contact=susan} and {@contact=john}
 - update the location to {@location=kitchen}
+- no, update the location to {@location=room 345}
+- no, make the location {@location=best buy}
+- yes, but let's update the location
+- yes, but set the location
 
 
 @ intent SetLocation usesFeatures Update,Event,Location,Titled
@@ -243,6 +270,10 @@
 - make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
 - make the {@subject=standup} a virtual meeting {@date=today}
 - make this an online meeting
+- no, add a meeting link too
+- no, I want this to me a teams meeting
+- yes, and add teams
+- yes, but add a link as well
 
 
 @ intent SetOnlineMeetingAdd usesFeatures Update,Event,Location,Add,Titled
@@ -268,6 +299,10 @@
 - remove the online meeting from the next event
 - remove the phone number from the {@subject=team meeting} {@date=next week}
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+- no, remove the teams link
+- no i don't want teams
+- yes, but take teams out
+- yes but no online meeting
 
 
 @ intent SetOnlineMeetingRemove usesFeatures Update,Event,Location,Remove,Titled
@@ -293,6 +328,10 @@
 - update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
 - update the subject of the next event to {@newSubject=standup}
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+- no, change the title please
+- no i want the title to be {@newSubject=podcast recording}
+- yes but change the title to be {@newSubject=design meeting}
+- yes except the title is wrong
 
 
 @ intent SetTitle usesFeatures Update,Event,Location,Titled

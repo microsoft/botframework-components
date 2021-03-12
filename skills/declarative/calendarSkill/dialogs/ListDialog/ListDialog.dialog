@@ -54,7 +54,7 @@
               "choices": "=$choices",
               "style": "none",
               "alwaysPrompt": false,
-              "allowInterruptions": "=(exists(#Next) || exists(#Previous) || exists(#Skip)) && turn.recognized.score > 0.8",
+              "allowInterruptions": "=(exists(#Next) || exists(#Previous) || exists(#Skip) || exists(#Cancel) ) && turn.recognized.score > 0.8",
               "defaultValue": "=null",
               "maxTurnCount": "=3",
               "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_VygDK3()}",
@@ -441,6 +441,37 @@
             "id": "piQ9tu"
           },
           "value": "=null"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "DogtGR",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pzG3IA"
+          },
+          "name": "ListDialog.OnIntent_Cancel"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "nRdr1W"
+          },
+          "activity": "${SendActivity_nRdr1W()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "rKJlTu"
+          },
+          "activityProcessed": true
         }
       ]
     }

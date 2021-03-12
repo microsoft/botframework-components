@@ -79,28 +79,37 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "hIUT1m"
+                "id": "PnFGCH"
               },
-              "activity": "${SendActivity_hIUT1m()}"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "bQJeWj"
-              },
-              "property": "turn.recognized",
-              "value": "=null"
-            },
-            {
-              "$kind": "Microsoft.RepeatDialog",
-              "$designer": {
-                "id": "sLro5t"
-              },
-              "activityProcessed": true,
-              "options": {},
-              "allowLoop": false
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "vTHytL"
+                  },
+                  "activity": "${SendActivity_vTHytL()}"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "aXrouE"
+                  },
+                  "property": "turn.recognized",
+                  "value": "=null"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "tpK6Kl"
+                  },
+                  "activityProcessed": true,
+                  "options": {},
+                  "allowLoop": false
+                }
+              ],
+              "condition": "not(exists(#Skip))"
             }
           ]
         },
@@ -405,18 +414,27 @@
                   "options": "=$listOptions"
                 },
                 {
-                  "$kind": "Microsoft.SetProperties",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "EzpNnb"
+                    "id": "FhQCO3"
                   },
-                  "assignments": [
+                  "condition": "=$selectedContact != null",
+                  "actions": [
                     {
-                      "property": "$contact.EmailAddress.Name",
-                      "value": "=$selectedContact.name"
-                    },
-                    {
-                      "property": "$contact.EmailAddress.Address",
-                      "value": "=$selectedContact.email"
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "5aONuR"
+                      },
+                      "assignments": [
+                        {
+                          "property": "$contact.EmailAddress.Name",
+                          "value": "=$selectedContact.name"
+                        },
+                        {
+                          "property": "$contact.EmailAddress.Address",
+                          "value": "=$selectedContact.email"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -441,13 +459,22 @@
               ]
             },
             {
-              "$kind": "Microsoft.EditArray",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "GWzWOZ"
+                "id": "MhszJk"
               },
-              "changeType": "push",
-              "itemsProperty": "$contacts",
-              "value": "=$contact"
+              "actions": [
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "8TzLR5"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "$contacts",
+                  "value": "=$contact"
+                }
+              ],
+              "condition": "=$contact != null"
             }
           ],
           "elseActions": [
@@ -488,7 +515,7 @@
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=turn.recognized.score > 0.5 || exists(turn.activity.value.intent)",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
@@ -582,6 +609,13 @@
       "intent": "SetAttendeesAdd",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pL6yTk"
+          },
+          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "Yt83Kf"
@@ -593,7 +627,7 @@
             },
             {
               "property": "$contactArray",
-              "value": "=if(exists(@@contact) && exists(@@personName), unique(union(@@contact, @@personName)), @@contact)"
+              "value": "=unique(union(coalesce(@@contact, []), coalesce(@@newContact, []), coalesce(@@personName, [])))"
             }
           ]
         },
@@ -610,6 +644,15 @@
           }
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "NkFGP3",
+        "name": "OnEvent (SetOptions)"
+      },
+      "event": "SetOptions",
+      "actions": []
     }
   ],
   "generator": "GetContactsDialog.lg",
