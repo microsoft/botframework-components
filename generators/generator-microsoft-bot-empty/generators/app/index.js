@@ -13,22 +13,24 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
+      require.resolve(
+        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+      ),
       {
         arguments: this.args,
         packageReferences: [],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
+        includeApplicationSettings: false,
       }
     );
   }
-  
+
   writing() {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }
