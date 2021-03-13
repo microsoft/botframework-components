@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,39 +56,80 @@ namespace Microsoft.Bot.Components.Calendar.Actions
             var workingHourEndProperty = WorkingHourEndProperty.GetValue(dcState);
             DateTime workingTimeStart = startProperty.Value.Date + workingHourStartProperty.Value.TimeOfDay;
             DateTime workingTimeEnd = startProperty.Value.Date + workingHourEndProperty.Value.TimeOfDay;
-            DateTime availableTimeStart = startProperty.Value > workingTimeStart ? startProperty.Value : workingTimeStart;
-            DateTime availableTimeEnd = workingTimeEnd;
-            CalendarSkillEventModel previousEvent = null;
-            CalendarSkillEventModel nextEvent = null;
+
+            var results = new List<dynamic>();
 
             if (events != null)
             {
-                foreach (var ev in events)
+                foreach (var item in events)
                 {
-                    var start = DateTime.Parse(ev.Start.DateTime);
-                    var end = DateTime.Parse(ev.End.DateTime);
-                    if (start > availableTimeStart)
+                    var evStart = DateTime.Parse(item.Start.DateTime);
+                    var evEnd = DateTime.Parse(item.End.DateTime);
+
+                    if (events.IndexOf(item) == 0)
                     {
-                        nextEvent = ev;
-                        availableTimeEnd = start;
-                        break;
+                        if (evStart > workingTimeStart)
+                        {
+                            // if so, add free block to list from working hours start to start of first event
+                            results.Add(new
+                            {
+                                type = "free",
+                                value = new
+                                {
+                                    start = workingTimeStart,
+                                    end = evStart,
+                                    duration = evStart - workingTimeStart
+                                }
+                            });
+                        }
                     }
                     else
                     {
-                        previousEvent = ev;
-                        availableTimeStart = end;
+                        // check if there is time between the previous event and the current one
+                        if (evStart > results.Last().end && evEnd > results.Last().end)
+                        {
+                            // if so, add to list
+                            results.Add(new
+                            {
+                                type = "free",
+                                value = new
+                                {
+                                    start = results.Last().end,
+                                    end = evStart,
+                                    duration = results.Last().end - evStart
+                                }
+                            });
+                        }
+                    }
+
+                    // add the event item
+                    results.Add(new
+                    {
+                        type = "event",
+                        start = evStart,
+                        end = evEnd,
+                        value = item,
+                    });
+
+                    if (events.IndexOf(item) == events.Count - 1)
+                    {
+                        if (evEnd < workingTimeEnd)
+                        {
+                            // if so, add free block to list from end of last meeting to end of working hours
+                            results.Add(new
+                            {
+                                type = "free",
+                                value = new
+                                {
+                                    start = evEnd,
+                                    end = workingTimeEnd,
+                                    duration = workingTimeEnd - evEnd
+                                }
+                            });
+                        }
                     }
                 }
             }
-
-            var results = new
-            {
-                previousEvent,
-                nextEvent,
-                availableTimeStart,
-                availableTimeEnd,
-                availableTimeLength = availableTimeEnd > availableTimeStart ? (int)(availableTimeEnd - availableTimeStart).TotalMinutes : 0
-            };
 
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(DeclarativeType, results, valueType: DeclarativeType, label: DeclarativeType).ConfigureAwait(false);

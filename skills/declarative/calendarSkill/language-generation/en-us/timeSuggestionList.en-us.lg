@@ -60,11 +60,7 @@
             ]
         }
     ],
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": ${BuildCardActionData(item.index)}
-    }
+    "selectAction": ${BuildSubmitAction(item.Start, item.index)}
 }
 ```
 

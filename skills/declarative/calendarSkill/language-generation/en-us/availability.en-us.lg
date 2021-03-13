@@ -39,21 +39,21 @@
 - Looks like you don't have any breaks today during working hours.
 
 # AvailabilityList(items)
-- ${ExpandableListCardBody(foreach(items, item, if(item.isFreeTime==true, AvailabilityItem(item), ScheduleItem(item))), 5)}
+- ${ExpandableListCardBody(foreach(items, item, if(item.type == "free", AvailabilityItem(item.value), ScheduleItem(item.value))), 5)}
 
 # AvailabilityItem(item)
 - ```
 {
     "type": "Container",
     "separator": true,
-    "spacing": "medium",
+    "selectAction": ${CreateEventAction(item.start)},
     "items": [
         {
             "type": "ColumnSet",
             "columns": [
                 {
                     "type": "Column",
-                    "width": "25",
+                    "width": "105px",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {
@@ -67,7 +67,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "75",
+                    "width": "stretch",
                     "verticalContentAlignment": "Top",
                     "items": [
                         {
