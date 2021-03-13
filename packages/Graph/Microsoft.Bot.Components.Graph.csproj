@@ -16,10 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Graph.Beta" Version="0.38.0-preview" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.0-rc1.preview" />
+    <PackageReference Include="Microsoft.Graph.Beta" Version="0.39.0-preview" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.1-preview" />
     
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.66">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

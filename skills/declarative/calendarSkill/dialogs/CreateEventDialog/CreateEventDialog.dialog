@@ -1301,6 +1301,10 @@
             {
               "property": "$options.end",
               "value": "=coalesce($dateTime.end, null)"
+            },
+            {
+              "property": "$options.dateTime",
+              "value": "=coalesce($dateTime, null)"
             }
           ]
         },
