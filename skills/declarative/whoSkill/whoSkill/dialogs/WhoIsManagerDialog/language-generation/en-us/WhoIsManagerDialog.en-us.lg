@@ -1,6 +1,12 @@
 [Common](common.en-us.lg)
 
-# SendActivity_nh7pn0()
+# SendActivity_lgZtQO()
 [Activity
-    Text = ${dialog.Result}
+    Text = I found that **${dialog.UserFound.displayName}** does not have a manager.
+]
+
+
+# SendActivity_f1nPCd()
+[Activity
+    Text = The manager of **${dialog.UserFound.displayName}** is:
 ]

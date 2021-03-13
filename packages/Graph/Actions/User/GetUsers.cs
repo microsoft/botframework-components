@@ -26,7 +26,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <summary>
         /// Gets or sets the name to search for.
@@ -52,7 +52,15 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             string filterClause = $"startsWith(displayName, '{nameToSearch}') or startsWith(surname, '{nameToSearch}') or startsWith(givenname, '{nameToSearch}')";
 
-            IGraphServiceUsersCollectionPage result = await client.Users.Request().Filter(filterClause).Top(maxCount).GetAsync(cancellationToken);
+            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause);
+
+            // Apply the Top() filter if there is a value to apply
+            if (maxCount > 0)
+            {
+                request = request.Top(maxCount);
+            }
+
+            IGraphServiceUsersCollectionPage result = await request.GetAsync(cancellationToken);
 
             // The "Top" clause in Graph is just more about max number of results per page.
             // This is unlike SQL where by the results are capped to max. In this case we will just

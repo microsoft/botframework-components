@@ -17,19 +17,36 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
-            "id": "hNKTvd"
+            "id": "KiEzol"
           },
-          "property": "dialog.userId",
-          "value": "4cb80718-9dbd-4309-a5fd-753958148291"
+          "resultProperty": "$Result",
+          "token": "=user.token.token",
+          "nameToSearchFor": "=$nameEntity",
+          "maxCount": 16
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "q12nrf"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "AutoChooseFirst": "true",
+            "Scenario": "PersonSearch",
+            "User": "=$nameEntity"
+          },
+          "resultProperty": "$SelectedUser"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "t5WNI5"
           },
-          "value": "=dialog.userId"
+          "value": "=$SelectedUser"
         }
       ]
     }

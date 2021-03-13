@@ -4,5 +4,6 @@
 -${WelcomeUser()}
 # SendActivity_QxqZcj()
 [Activity
-    Text = ${turn.dialogEvent}
+    Text = An error was encountered
 ]
+

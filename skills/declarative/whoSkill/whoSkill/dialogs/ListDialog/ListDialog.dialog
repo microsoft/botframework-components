@@ -234,6 +234,14 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "false"
+                },
+                {
+                  "property": "$listOptions.Scenario",
+                  "value": "=$scenario"
                 }
               ]
             },
@@ -326,6 +334,14 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "=false"
+                },
+                {
+                  "property": "$listOptions.Scenario",
+                  "value": "=$Scenario"
                 }
               ]
             },
@@ -384,22 +400,6 @@
     }
   ],
   "generator": "ListDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": [
-      {
-        "intent": "Next",
-        "pattern": "next"
-      },
-      {
-        "intent": "Previous",
-        "pattern": "previous"
-      },
-      {
-        "intent": "Skip",
-        "pattern": "skip"
-      }
-    ]
-  },
+  "recognizer": "ListDialog.lu.qna",
   "id": "ListDialog"
 }

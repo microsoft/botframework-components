@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
@@ -27,7 +28,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -50,7 +51,15 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
 
-            IUserDirectReportsCollectionWithReferencesPage result = await client.Users[userId].DirectReports.Request().Top(maxCount).GetAsync();
+            // Create the request first then apply the Top() after
+            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request();
+
+            if (maxCount > 0)
+            {
+                request = request.Top(maxCount);
+            }
+
+            IUserDirectReportsCollectionWithReferencesPage result = await request.GetAsync();
 
             // Again only return the top N results but discard the other pages if the manager has more than N direct reports
             return result.CurrentPage;
@@ -76,6 +85,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+        }
+
+        /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // Not found is a perfectly valid error in the case the person is
+            // bottom of the org chart. In this case we can just return a default(DirectoryObject) == null
+            // back to the caller.
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
         }
     }
 }

@@ -23,10 +23,10 @@
           },
           "activityProcessed": true,
           "dialog": "FindPersonDialog",
-          "resultProperty": "dialog.userId",
           "options": {
-            "nameEntity": "dialog.nameEntity"
-          }
+            "nameEntity": "=$nameEntity"
+          },
+          "resultProperty": "$UserToSearchFor"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -43,16 +43,60 @@
           "$designer": {
             "id": "AdQtbk"
           },
-          "resultProperty": "dialog.Result",
+          "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=dialog.userId"
+          "userId": "=$UserToSearchFor.Id",
+          "maxCount": 15
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "erQVCV"
+            "id": "PupWRK"
           },
-          "activity": "${SendActivity_erQVCV()}"
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "User": "=$UserToSearchFor",
+            "Scenario": "DirectReports",
+            "AutoChooseFirst": "false"
+          },
+          "resultProperty": "$DirectReportUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "WUuhtm"
+          },
+          "condition": "=exists($DirectReportUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ARtyS5"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "UserFound": "=$DirectReportUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UTkQ6k"
+              },
+              "activity": "${SendActivity_UTkQ6k()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "0nZUOA"
+          }
         }
       ]
     }

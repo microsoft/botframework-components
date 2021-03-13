@@ -2,22 +2,21 @@
 [Actions](actions.en-us.lg)
 [Icons](icons.en-us.lg)
 
-# ProfileCard()
+# ProfileCard(profile)
 - ${CardTemplate(ProfileHeader(profile), ProfileBody(profile), ProfileActions(profile))}
 
 # ProfileHeader(profile)
-- ${CardHeader(profile.iconUrl, profile.displayName, "", "")}
-
+- ${CardHeader(dialog.ResultPhoto, profile.names.displayName, "", "")}
 # ProfileBody(profile)
 - ```
 {
     "type": "Container",
     "separator": true,
     "items": [
-        ${ProfileProperty(profile.role)}
-        ${ProfileProperty(profile.email)}
-        ${ProfileProperty(profile.phone)}
-        ${ProfileProperty(profile.location)}
+        ${ProfileProperty(profile.positions[0].detail.jobTitle)},
+        ${ProfileProperty(profile.emails[0].address)},
+        ${ProfileProperty(profile.phones[0].number)},
+        ${ProfileProperty(profile.positions[0].detail.company.officeLocation)},
         ${ProfileContactButtons(profile)}
     ]
 }
@@ -61,7 +60,7 @@
                     "height": "${IconSize()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.email}"
+                        "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.emails[0].address}"
                     }
                 }
             ],
@@ -78,7 +77,7 @@
                     "height": "${IconSize()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "mailto:${profile.email}"
+                        "url": "mailto:${profile.emails[0].address}"
                     }
                 }
             ],
@@ -95,7 +94,7 @@
                     "height": "${IconSize()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.email}"
+                        "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.emails[0].address}"
                     }
                 }
             ],
@@ -110,9 +109,9 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${GetManagerAction(profile.userId)},
-        ${GetCollaboratorsAction(profile.userId)},
-        ${GetPeersAction(profile.userId)}
+        ${GetManagerAction(dialog.UserFound)},
+        ${GetCollaboratorsAction(dialog.UserFound)},
+        ${GetPeersAction(dialog.UserFound)}
     ]
 }
 ```

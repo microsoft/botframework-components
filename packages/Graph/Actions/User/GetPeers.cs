@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
@@ -27,7 +28,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <summary>
         /// Gets or sets the max number of results to return.
@@ -52,12 +53,16 @@ namespace Microsoft.Bot.Component.Graph.Actions
             DirectoryObject manager = await managerAction.CallGraphServiceWithResultAsync(client, parameters, cancellationToken);
 
             // Now get the manager's direct report to get the user's peers
-            Dictionary<string, object> newParameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            newParameters.Add("UserId", manager.Id);
-            newParameters.Add("MaxResults", parameters["MaxResults"]);
+            var newParameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "UserId", manager.Id },
+                { "MaxResults", parameters["MaxResults"] },
+            };
 
             GetDirectReports directReportActions = new GetDirectReports();
-            return await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken);
+            IEnumerable<DirectoryObject> result = await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken);
+
+            return result.Where(obj => obj.Id != (string)parameters["UserId"]);
         }
 
         /// <inheritdoc />
@@ -80,6 +85,17 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+        }
+
+        /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // It is possible someone traverse to top of org chart to find the peers (e.g. CEO doens't have peers)
+            // So in this case we will just return null to indicate nothing was found for peers.
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
         }
     }
 }

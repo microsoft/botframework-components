@@ -158,6 +158,9 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
     },
     {
+      "$ref": "#/definitions/Microsoft.Graph.Photo.GetPhoto"
+    },
+    {
       "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
     },
     {
@@ -176,7 +179,7 @@
       "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
     },
     {
-      "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
+      "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
     },
     {
       "$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -4447,6 +4450,63 @@
         }
       }
     },
+    "Microsoft.Graph.Photo.GetPhoto": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Graph - Get Profile Photo",
+      "description": "Get user profile photo from the Microsoft Graph API.",
+      "type": "object",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result Property",
+          "description": "Result Property (named location to store information).",
+          "examples": []
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph API authentication token.",
+          "examples": []
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.userId"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Photo.GetPhoto"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.Graph.User.GetDirectReports": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
@@ -4824,13 +4884,14 @@
         }
       }
     },
-    "Microsoft.Graph.User.GetWorksWithMe": {
+    "Microsoft.Graph.User.GetWorksWith": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
       "title": "Microsoft Graph - Get People That Works With Me",
       "description": "Get people that I frequently collaborate with using the Microsoft Graph API.",
       "required": [
         "token",
+        "userId",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4870,12 +4931,20 @@
             "dialog.worksWithMe.maxCount"
           ]
         },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.User.GetWorksWithMe"
+          "const": "Microsoft.Graph.User.GetWorksWith"
         },
         "$designer": {
           "title": "Designer information",
@@ -5254,6 +5323,9 @@
           "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
         },
         {
+          "$ref": "#/definitions/Microsoft.Graph.Photo.GetPhoto"
+        },
+        {
           "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
         },
         {
@@ -5272,7 +5344,7 @@
           "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
         },
         {
-          "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWithMe"
+          "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
         },
         {
           "$ref": "#/definitions/Microsoft.HttpRequest"

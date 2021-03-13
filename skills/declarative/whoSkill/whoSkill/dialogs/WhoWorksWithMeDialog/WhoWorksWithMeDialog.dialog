@@ -17,19 +17,85 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.Graph.User.GetWorksWithMe",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "rWsOlL"
+            "id": "TZDg2m"
           },
-          "resultProperty": "dialog.Result",
-          "token": "=user.token.token"
+          "condition": "=not(exists($UserFound))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "EicuKU"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              },
+              "resultProperty": "$UserFound"
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.Graph.User.GetWorksWith",
           "$designer": {
-            "id": "rxl68t"
+            "id": "0jrRb0"
           },
-          "activity": "${SendActivity_rxl68t()}"
+          "token": "=user.token.token",
+          "resultProperty": "$Result",
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wHB39C"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "User": "=$UserFound",
+            "Scenario": "Collaborator",
+            "AutoChooseFirst": "false"
+          },
+          "resultProperty": "$DetailUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cKj8jy"
+          },
+          "condition": "=exists($DetailUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Q24GGv"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "UserFound": "=$DetailUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mfLqxa"
+              },
+              "activity": "${SendActivity_mfLqxa()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Stpfkh"
+          }
         }
       ]
     }

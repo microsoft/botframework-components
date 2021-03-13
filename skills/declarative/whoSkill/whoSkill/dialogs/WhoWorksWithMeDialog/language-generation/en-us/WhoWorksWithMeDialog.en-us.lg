@@ -1,6 +1,8 @@
 [import](common.lg)
 
-# SendActivity_rxl68t()
+
+# SendActivity_mfLqxa()
 [Activity
-    Text = ${dialog.Result}
+    Text = I found that ${dialog.UserFound.names[0].displayName} does not have collaborator.
 ]
+

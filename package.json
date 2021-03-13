@@ -1,0 +1,12 @@
+{
+  "name": "@microsoft/botframework-components",
+  "private": true,
+  "workspaces": [
+    "generators/*",
+    "packages/*",
+    "skills/declarative/*"
+  ],
+  "scripts": {
+    "lint": "yarn workspaces foreach run lint"
+  }
+}

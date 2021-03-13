@@ -1,0 +1,165 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "uuf2U2",
+    "name": "UserListDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "XcOKoq"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yjqnnW"
+          },
+          "condition": "=exists($UserList) && $UserList != null && count($UserList) > 0",
+          "elseActions": [],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "rhHgeG"
+              },
+              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == \"false\")",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "DLV52r"
+                  },
+                  "eventName": "GetPhotosForUsers"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "3tcM1L"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$UserList"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "UserListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "ChatIconUrl",
+                        "title": "UserListTitle",
+                        "item": "UserListItem",
+                        "actions": "UserListActions",
+                        "initialPrompt": "UserListPrompt",
+                        "showMorePrompt": "UserListShowMorePrompt",
+                        "skipResponse": "UserListSkipResponse",
+                        "defaultValueResponse": "UserListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.Scenario",
+                      "value": "=$Scenario"
+                    },
+                    {
+                      "property": "$listOptions.User",
+                      "value": "=$User"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "myWIkJ"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "resultProperty": "$SelectedUser",
+                  "options": "=$listOptions"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VBAEXN"
+                  },
+                  "property": "$SelectedUser",
+                  "value": "= $UserList[0]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "8PYkyW"
+          },
+          "value": "=$SelectedUser"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "CzptJy",
+        "name": "OnIntent (GetPhotosForUsers)"
+      },
+      "event": "GetPhotosForUsers",
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "2MNt9J"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "$UserList",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "oHX6DZ"
+              },
+              "name": "GetPhotoForId",
+              "value": "=$foreach.value.Id"
+            },
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "2OTcYV"
+              },
+              "token": "=user.token.token",
+              "resultProperty": "$ResultPhoto",
+              "userId": "=$foreach.value.Id"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Zw7HZf"
+              },
+              "property": "$UserList[$foreach.index].Photo",
+              "value": "=$ResultPhoto"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "UserListDialog.lg",
+  "recognizer": "UserListDialog.lu.qna",
+  "id": "UserListDialog"
+}

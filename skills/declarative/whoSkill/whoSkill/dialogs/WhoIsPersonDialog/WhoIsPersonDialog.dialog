@@ -17,50 +17,143 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "d9PSPx"
+            "id": "rqPdz8"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          },
-          "resultProperty": "dialog.userId"
+          "condition": "= not(exists($UserFound))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "YfiAYu"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "$UserFound",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "m4XKv3"
+              },
+              "property": "$WasUserFoundSupplied",
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "hwsKVX"
+              },
+              "valueType": "String",
+              "label": "FoundId",
+              "name": "FoundId",
+              "value": "=dialog.userId"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "9DAueZ"
+              },
+              "property": "$WasUserFoundSupplied",
+              "value": true
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "b9hhH2"
+            "id": "hFpZL4"
           },
-          "name": "UserId",
-          "label": "UserId",
-          "valueType": "String",
-          "value": "=dialog.userId"
+          "condition": "= $UserFound != null && exists($UserFound)",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "b9hhH2"
+              },
+              "name": "UserId",
+              "label": "UserId",
+              "valueType": "String",
+              "value": "=dialog.userId"
+            },
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "rYukBT"
+              },
+              "resultProperty": "dialog.ResultPhoto",
+              "token": "=user.token.token",
+              "userId": "=$UserFound.Id"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "ZW7CBi"
+              },
+              "token": "=user.token.token",
+              "userId": "=$UserFound.Id",
+              "resultProperty": "dialog.Result"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "YumZ1w"
+              },
+              "name": "JsonResult",
+              "label": "JsonResult",
+              "valueType": "String",
+              "value": "=dialog.Result"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "TXZ2C6"
+              },
+              "condition": "=$WasUserFoundSupplied == true",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "dTcyKk"
+                  },
+                  "activity": "${SendActivity_dTcyKk()}"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ryFbw6"
+              },
+              "activity": "${SendActivity_ryFbw6()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lcoztE"
+              },
+              "activity": "${SendActivity_lcoztE()}"
+            }
+          ]
         },
         {
-          "$kind": "Microsoft.Graph.User.GetUserProfile",
+          "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "ZW7CBi"
-          },
-          "token": "=user.token.token",
-          "userId": "=dialog.userId",
-          "resultProperty": "dialog.Result"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "ryFbw6"
-          },
-          "activity": "${SendActivity_ryFbw6()}"
+            "id": "XYzO24"
+          }
         }
       ]
     }
   ],
   "generator": "WhoIsPersonDialog.lg",
-  "recognizer": {
-    "$kind": "Microsoft.RegexRecognizer",
-    "intents": []
-  },
+  "recognizer": "WhoIsPersonDialog.lu.qna",
   "id": "WhoIsPersonDialog"
 }

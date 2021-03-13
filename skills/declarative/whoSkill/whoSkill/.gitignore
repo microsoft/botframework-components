@@ -1,2 +1,3 @@
 # prevent appsettings.json get checked in
 **/appsettings.json
+**/generated/**

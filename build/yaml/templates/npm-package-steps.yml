@@ -1,14 +1,4 @@
 steps:
-- task: NodeTool@0
-  displayName: 'Install Node 14.x'
-  inputs:
-    versionSpec: '14.x'
-
-- script: |
-    npm install
-  displayName: 'Install dependencies'
-  workingDirectory: '$(WorkingDirectory)'
-
 - powershell: |
     if (Test-Path -Path package.json) {
       # Get package.json ojbect
@@ -31,12 +21,12 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    npm pack
+    yarn pack
   displayName: 'Generate package'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2
-  displayName: 'Copy npm files'
+  displayName: 'Copy packages'
   inputs:
     SourceFolder: '$(WorkingDirectory)'
     Contents: '*.tgz'
@@ -48,3 +38,5 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)\npm'
     ArtifactName: 'npm'
     publishLocation: 'Container'
+
+- template: debug-workspace-steps.yml

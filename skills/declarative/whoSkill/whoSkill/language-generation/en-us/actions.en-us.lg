@@ -1,11 +1,11 @@
- # GetManagerAction(userId)
+ # GetManagerAction(user)
  - ```
  {
     "type": "Action.Submit",
     "title": "Manager",
     "data": {
         "intent": "GetManager",
-        "userId": "${userId}",
+        "user": ${user},
         "msteams": {
             "type": "messageBack"
         }
@@ -13,14 +13,14 @@
 }
  ```
 
- # GetCollaboratorsAction(userId)
+ # GetCollaboratorsAction(user)
  - ```
 {
     "type": "Action.Submit",
     "title": "Collaborators",
     "data": {
         "intent": "GetCollaborators",
-        "userId": "${userId}",
+        "user": ${user},
         "msteams": {
             "type": "messageBack"
         }
@@ -28,14 +28,14 @@
 }
  ```
 
-# GetPeersAction(userId)
+# GetPeersAction(user)
 - ```
 {
     "type": "Action.Submit",
     "title": "Peers",
     "data": {
         "intent": "GetPeers",
-        "userId": "${userId}",
+        "user": ${user},
         "msteams": {
             "type": "messageBack"
         }

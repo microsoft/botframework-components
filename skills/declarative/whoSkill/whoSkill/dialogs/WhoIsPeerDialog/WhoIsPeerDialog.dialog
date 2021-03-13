@@ -17,26 +17,45 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "a4tby4"
+            "id": "ooNnhY"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=dialog.nameEntity"
-          },
-          "resultProperty": "dialog.userId"
+          "condition": "=not(exists($UserFound))",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "vjgu3O"
+              },
+              "name": "UserAlreadyProvided",
+              "value": "=$UserFound"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "lVW6uP"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "$UserFound",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "rHT96x"
           },
-          "name": "UserId",
-          "label": "UserId",
+          "name": "UserFound",
+          "label": "UserFound",
           "valueType": "String",
-          "value": "=dialog.userId"
+          "value": "=dialog.UserFound"
         },
         {
           "$kind": "Microsoft.Graph.User.GetPeers",
@@ -45,14 +64,58 @@
           },
           "resultProperty": "dialog.Result",
           "token": "=user.token.token",
-          "userId": "=dialog.userId"
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "hZFfyN"
+            "id": "Ldr65P"
           },
-          "activity": "${SendActivity_hZFfyN()}"
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "UserList": "=$Result",
+            "Scenario": "Peers",
+            "User": "=$UserFound",
+            "AutoChooseFirst": "false"
+          },
+          "resultProperty": "$DetailUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2bT4YD"
+          },
+          "condition": "=exists($DetailUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "yuDqlV"
+              },
+              "activityProcessed": true,
+              "dialog": "WhoIsPersonDialog",
+              "options": {
+                "UserFound": "=$DetailUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "7uCWqD"
+              },
+              "activity": "${SendActivity_7uCWqD()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YtwbHP"
+          }
         }
       ]
     }

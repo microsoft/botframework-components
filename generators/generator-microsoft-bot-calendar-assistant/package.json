@@ -4,13 +4,19 @@
   "description": "Preview Calendar Assistant template for TESTING ONLY",
   "main": "./generators/app/index.js",
   "dependencies": {
-    "@microsoft/generator-microsoft-bot-adaptive": "^1.0.0-preview-20210226.e5782e2",
-    "@microsoft/generator-microsoft-bot-calendar": "^0.0.1-preview-20210301.79c8ef3",
+    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
+    "@microsoft/generator-microsoft-bot-calendar": "workspace:^0.0.1-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint -c ../../.eslintrc.json ."
   },
   "keywords": [
     "conversationalcore",
