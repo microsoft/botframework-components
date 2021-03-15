@@ -1,4 +1,4 @@
-steps:
+gteps:
 - task: NodeTool@0
   displayName: 'Install Node 14.x'
   inputs:
@@ -7,11 +7,6 @@ steps:
 - script: |
     yarn --immutable
   displayName: 'Install dependencies'
-  workingDirectory: '$(WorkingDirectory)'
-
-- script: |
-    yarn lint
-  displayName: 'Lint code'
   workingDirectory: '$(WorkingDirectory)'
 
 - template: debug-workspace-steps.yml
