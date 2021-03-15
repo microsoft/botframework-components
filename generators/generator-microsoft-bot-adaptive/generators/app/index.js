@@ -13,8 +13,9 @@ module.exports = class extends BaseGenerator {
     Object.assign(
       this,
       {
-        applicationSettingsDirectory: null,
+        applicationSettingsDirectory: '',
         includeApplicationSettings: true,
+        overwriteApplicationSettings: true,
         packageReferences: [],
         pluginDefinitions: [],
       },
@@ -22,6 +23,7 @@ module.exports = class extends BaseGenerator {
         .Record({
           applicationSettingsDirectory: rt.String,
           includeApplicationSettings: rt.Boolean,
+          overwriteApplicationSettings: rt.Boolean,
           packageReferences: rt.Array(
             rt.Record({
               name: rt.String,
@@ -52,17 +54,34 @@ module.exports = class extends BaseGenerator {
   writing() {
     this._copyProject();
 
-    if (this.includeApplicationSettings) {
-      this._writeApplicationSettings();
+    if (this.overwriteApplicationSettings) {
+      this._overwriteApplicationSettings();
     }
   }
 
   _copyProject() {
+    const { applicationSettingsDirectory, botName } = this.options;
+
+    const includeAssets = [
+      { source: 'schemas', dest: this.destinationPath(botName, 'schemas') },
+    ];
+
+    if (this.includeApplicationSettings) {
+      includeAssets.push({
+        source: 'appsettings.json',
+        dest: this.destinationPath(
+          botName,
+          applicationSettingsDirectory,
+          'appsettings.json'
+        ),
+      });
+    }
+
     switch (this.options.platform) {
       case platforms.dotnet: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'string.Empty',
-          includeAssets: ['schemas'],
+          includeAssets,
           templateContext: {
             packageReferences: this._formatDotnetPackageReferences(
               this.packageReferences
@@ -79,7 +98,7 @@ module.exports = class extends BaseGenerator {
       case platforms.js: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'process.cwd()',
-          includeAssets: ['schemas'],
+          includeAssets,
         });
 
         this._writeJsPackageJson();
@@ -96,10 +115,9 @@ module.exports = class extends BaseGenerator {
   }) {
     const { botName, integration, platform } = this.options;
 
-    const settingsDirectory =
-      this.applicationSettingsDirectory === null
-        ? defaultSettingsDirectory
-        : `"${this.applicationSettingsDirectory}"`;
+    const settingsDirectory = this.applicationSettingsDirectory
+      ? `"${this.applicationSettingsDirectory}"`
+      : defaultSettingsDirectory;
 
     this.fs.copyTpl(
       this.templatePath(platform, integration),
@@ -107,10 +125,10 @@ module.exports = class extends BaseGenerator {
       Object.assign({}, templateContext, { botName, settingsDirectory })
     );
 
-    for (const assetFileName of includeAssets) {
+    for (const { source, dest } of includeAssets) {
       this.fs.copyTpl(
-        this.templatePath('assets', assetFileName),
-        this.destinationPath(botName, assetFileName),
+        this.templatePath('assets', source),
+        dest,
         Object.assign({}, templateContext, { botName })
       );
     }
@@ -189,17 +207,62 @@ module.exports = class extends BaseGenerator {
     });
   }
 
-  _writeApplicationSettings() {
-    const { botName } = this.options;
-    const fileName = 'appsettings.json';
+  _overwriteApplicationSettings() {
+    const { applicationSettingsDirectory, botName, platform } = this.options;
 
-    const appSettings = this.fs.readJSON(this.templatePath('assets', fileName));
+    const appSettings = this.fs.readJSON(
+      this.destinationPath(
+        botName,
+        applicationSettingsDirectory,
+        'appsettings.json'
+      )
+    );
 
-    for (const pluginDefinition of this.pluginDefinitions) {
-      appSettings.runtimeSettings.plugins.push(pluginDefinition);
+    switch (platform) {
+      case platforms.dotnet:
+        Object.assign(appSettings.runtime, {
+          command: `dotnet run --project ${botName}.csproj`,
+          key: 'adaptive-runtime-dotnet-webapp',
+        });
+
+        break;
+
+      case platforms.js:
+        Object.assign(appSettings.runtime, {
+          command: 'node index.js',
+          key: 'node-azurewebapp',
+        });
+
+        break;
+
+      default:
+        throw new Error(`Unrecognized platform ${platform}`);
     }
 
-    this.fs.writeJSON(this.destinationPath(botName, fileName), appSettings);
+    for (const { name } of this.packageReferences) {
+      appSettings.runtimeSettings.plugins.push({
+        name,
+        settingsPrefix: name,
+      });
+    }
+
+    for (const { name, settingsPrefix } of this.pluginDefinitions) {
+      appSettings.runtimeSettings.plugins.push({
+        name,
+        settingsPrefix: settingsPrefix || name,
+      });
+    }
+
+    console.log(appSettings.runtimeSettings.plugins);
+
+    this.fs.writeJSON(
+      this.destinationPath(
+        botName,
+        applicationSettingsDirectory,
+        'appsettings.json'
+      ),
+      appSettings
+    );
   }
 
   _writeDotnetNugetConfig() {
