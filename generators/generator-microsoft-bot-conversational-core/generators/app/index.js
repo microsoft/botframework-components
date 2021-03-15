@@ -17,7 +17,7 @@ const packageReferences = {
     ],
   },
   [platforms.js]: {
-    version: 'workspace:*',
+    version: 'latest',
     packages: [
       '@microsoft/bot-components-helpandcancel',
       '@microsoft/bot-components-welcome',
