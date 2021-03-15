@@ -5,6 +5,7 @@
 
 const {
   BaseGenerator,
+  platforms,
 } = require('@microsoft/generator-microsoft-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
@@ -23,12 +24,40 @@ module.exports = class extends BaseGenerator {
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(this.options.botName),
-      {
-        botName: this.options.botName,
-      }
+    const { botName, platform } = this.options;
+
+    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
+      botName,
+    });
+
+    const appSettings = this.fs.readJSON(
+      this.templatePath('settings', 'appsettings.json')
+    );
+
+    switch (platform) {
+      case platforms.dotnet:
+        Object.assign(appSettings.runtime, {
+          command: `dotnet run --project ${botName}.csproj`,
+          key: 'adaptive-runtime-dotnet-webapp',
+        });
+
+        break;
+
+      case platforms.js:
+        Object.assign(appSettings.runtime, {
+          command: 'node index.js',
+          key: 'node-azurewebapp',
+        });
+
+        break;
+
+      default:
+        throw new Error(`Unrecognized platform ${platform}`);
+    }
+
+    this.fs.writeJSON(
+      this.destinationPath(botName, 'settings', 'appsettings.json'),
+      appSettings
     );
   }
 };

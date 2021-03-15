@@ -16,7 +16,7 @@ module.exports = class extends BaseGenerator {
         applicationSettingsDirectory: null,
         includeApplicationSettings: true,
         packageReferences: [],
-        pluginDefinitions: []
+        pluginDefinitions: [],
       },
       rt
         .Record({
@@ -163,9 +163,18 @@ module.exports = class extends BaseGenerator {
       [integrations.webapp]: 'restify',
     }[integration];
 
+    const scripts =
+      integration === integrations.webapp
+        ? {
+            build: 'echo done',
+            start: 'node index.js',
+          }
+        : undefined;
+
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
       name: botName,
       private: true,
+      scripts,
       dependencies: Object.assign(
         {},
         this.packageReferences.reduce(
@@ -173,6 +182,7 @@ module.exports = class extends BaseGenerator {
           {}
         ),
         {
+          minimist: 'latest',
           [`botbuilder-runtime-integration-${integrationName}`]: 'next',
         }
       ),
