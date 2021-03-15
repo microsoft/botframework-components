@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Yeoman generator for creating an Adaptive Bot application built on top of the Microsoft Bot Framework SDK and runtime.",
   "files": [
+    "*.js",
     "generators"
   ],
   "keywords": [
