@@ -6,40 +6,38 @@ const xml2js = require('xml2js');
 const { BaseGenerator, integrations, platforms } = require('../../index');
 const { v4: uuidv4 } = require('uuid');
 
+const options = rt.Record({
+  applicationSettingsDirectory: rt.String,
+  includeApplicationSettings: rt.Boolean,
+  overwriteApplicationSettings: rt.Boolean,
+  packageReferences: rt.Array(
+    rt.Record({
+      name: rt.String,
+      version: rt.String,
+    })
+  ),
+  pluginDefinitions: rt.Array(
+    rt.Record({
+      name: rt.String,
+      settingsPrefix: rt.String.Or(rt.Undefined),
+    })
+  ),
+});
+
+const defaultOptions = {
+  applicationSettingsDirectory: undefined,
+  includeApplicationSettings: true,
+  overwriteApplicationSettings: true,
+  packageReferences: [],
+  pluginDefinitions: [],
+};
+
 module.exports = class extends BaseGenerator {
   constructor(args, opts) {
     super(args, opts);
 
-    Object.assign(
-      this,
-      {
-        applicationSettingsDirectory: '',
-        includeApplicationSettings: true,
-        overwriteApplicationSettings: true,
-        packageReferences: [],
-        pluginDefinitions: [],
-      },
-      rt
-        .Record({
-          applicationSettingsDirectory: rt.String,
-          includeApplicationSettings: rt.Boolean,
-          overwriteApplicationSettings: rt.Boolean,
-          packageReferences: rt.Array(
-            rt.Record({
-              name: rt.String,
-              version: rt.String,
-            })
-          ),
-          pluginDefinitions: rt.Array(
-            rt.Record({
-              name: rt.String,
-              settingsPrefix: rt.String.Or(rt.Undefined),
-            })
-          ),
-        })
-        .asPartial()
-        .check(opts)
-    );
+    // Performs type checking of options, properly defaulting them as well
+    Object.assign(this, defaultOptions, options.asPartial().check(opts));
   }
 
   // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
@@ -60,7 +58,7 @@ module.exports = class extends BaseGenerator {
   }
 
   _copyProject() {
-    const { applicationSettingsDirectory, botName } = this.options;
+    const { applicationSettingsDirectory = '.', botName } = this.options;
 
     const includeAssets = [
       { source: 'schemas', dest: this.destinationPath(botName, 'schemas') },
@@ -109,15 +107,16 @@ module.exports = class extends BaseGenerator {
   }
 
   _copyPlatformTemplate({
+    defaultSettingsDirectory,
     includeAssets = [],
     templateContext = {},
-    defaultSettingsDirectory = '',
   }) {
     const { botName, integration, platform } = this.options;
 
-    const settingsDirectory = this.applicationSettingsDirectory
-      ? `"${this.applicationSettingsDirectory}"`
-      : defaultSettingsDirectory;
+    const settingsDirectory =
+      this.applicationSettingsDirectory != null
+        ? `"${this.applicationSettingsDirectory}"`
+        : defaultSettingsDirectory;
 
     this.fs.copyTpl(
       this.templatePath(platform, integration),
@@ -208,7 +207,11 @@ module.exports = class extends BaseGenerator {
   }
 
   _overwriteApplicationSettings() {
-    const { applicationSettingsDirectory, botName, platform } = this.options;
+    const {
+      applicationSettingsDirectory = '.',
+      botName,
+      platform,
+    } = this.options;
 
     const appSettings = this.fs.readJSON(
       this.destinationPath(
