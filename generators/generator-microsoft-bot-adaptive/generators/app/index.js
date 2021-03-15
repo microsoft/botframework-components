@@ -256,8 +256,6 @@ module.exports = class extends BaseGenerator {
       });
     }
 
-    console.log(appSettings.runtimeSettings.plugins);
-
     this.fs.writeJSON(
       this.destinationPath(
         botName,
