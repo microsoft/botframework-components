@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+const rt = require('runtypes');
 const xml2js = require('xml2js');
 const { BaseGenerator, integrations, platforms } = require('../../index');
 const { v4: uuidv4 } = require('uuid');
@@ -9,104 +10,34 @@ module.exports = class extends BaseGenerator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(
-      opts
+    Object.assign(
+      this,
+      {
+        applicationSettingsDirectory: null,
+        includeApplicationSettings: true,
+        packageReferences: [],
+        pluginDefinitions: []
+      },
+      rt
+        .Record({
+          applicationSettingsDirectory: rt.String,
+          includeApplicationSettings: rt.Boolean,
+          packageReferences: rt.Array(
+            rt.Record({
+              name: rt.String,
+              version: rt.String,
+            })
+          ),
+          pluginDefinitions: rt.Array(
+            rt.Record({
+              name: rt.String,
+              settingsPrefix: rt.String.Or(rt.Undefined),
+            })
+          ),
+        })
+        .asPartial()
+        .check(opts)
     );
-
-    this.includeApplicationSettings = this._validateIncludeApplicationSettings(
-      opts
-    );
-
-    this.packageReferences = this._validatePackageReferences(
-      opts.packageReferences
-    );
-
-    this.pluginDefinitions = this._validatePluginDefinitions(
-      opts.pluginDefinitions
-    );
-  }
-
-  _validateApplicationSettingsDirectory(opts) {
-    let result = null;
-    if (
-      'applicationSettingsDirectory' in opts &&
-      opts.applicationSettingsDirectory &&
-      typeof opts.applicationSettingsDirectory === 'string'
-    ) {
-      result = opts.applicationSettingsDirectory;
-    }
-
-    return result;
-  }
-
-  _validateIncludeApplicationSettings(opts) {
-    let result = true;
-    if (
-      'includeApplicationSettings' in opts &&
-      typeof opts.includeApplicationSettings === 'boolean'
-    ) {
-      result = opts.includeApplicationSettings;
-    }
-
-    return result;
-  }
-
-  _validatePackageReferences(packageReferences) {
-    let results = [];
-    if (Array.isArray(packageReferences)) {
-      packageReferences.forEach((reference) => {
-        if (
-          typeof reference === 'object' &&
-          'name' in reference &&
-          reference.name &&
-          typeof reference.name === 'string' &&
-          'version' in reference &&
-          reference.version &&
-          typeof reference.version === 'string'
-        ) {
-          const result = {
-            name: reference.name,
-            version: reference.version,
-          };
-
-          results.push(result);
-        }
-      });
-    }
-
-    return results;
-  }
-
-  _validatePluginDefinitions(pluginDefinitions) {
-    let results = [];
-    if (Array.isArray(pluginDefinitions)) {
-      pluginDefinitions.forEach((definition) => {
-        if (
-          typeof definition === 'object' &&
-          'name' in definition &&
-          definition.name &&
-          typeof definition.name === 'string'
-        ) {
-          const result = {
-            name: definition.name,
-          };
-
-          if (
-            'settingsPrefix' in definition &&
-            definition.settingsPrefix &&
-            typeof definition.settingsPrefix === 'string'
-          ) {
-            result.settingsPrefix = definition.settingsPrefix;
-          } else {
-            result.settingsPrefix = definition.name;
-          }
-
-          results.push(result);
-        }
-      });
-    }
-
-    return results;
   }
 
   // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)

@@ -161,6 +161,7 @@ __metadata:
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
     prettier: latest
+    runtypes: ^5.0.2
     uuid: ^8.3.1
     xml2js: ^0.4.23
     yeoman-generator: ^1.1.1
@@ -7416,6 +7417,13 @@ resolve@1.1.7:
   version: 5.0.1
   resolution: "runtypes@npm:5.0.1"
   checksum: 02c0d08213f7d40fd969db8007422e4b70a14d149d248d5274c1646e8e47e80bfa2e8c58f94cac72b9498f9b2f3e4a01e1cb77f6f633118c7ed87a491d628259
+  languageName: node
+  linkType: hard
+
+"runtypes@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "runtypes@npm:5.0.2"
+  checksum: 75eb308c0d7aa303955ee14605512a4ef2922d23a5bad2aadb4b4f0eee580cf2a0b2a35a6803bccdc56dcc3d8c3aeab7c2ab39c23ad20a209a09f2f8f25de4ba
   languageName: node
   linkType: hard
 
