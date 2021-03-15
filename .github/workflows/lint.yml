@@ -1,4 +1,4 @@
-name: Lint Workspaces
+game: Lint Workspaces
 
 on:
   push:
@@ -19,14 +19,10 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: yarn cache dir
-        id: yarn-cache-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - uses: actions/cache@v2
         with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node12.x-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: .yarn/cache
+          key: windows-latest-node12.x-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: yarn
         run: yarn --immutable
