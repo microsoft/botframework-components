@@ -1,9 +1,9 @@
 [Common](common.en-us.lg)
 [Actions](actions.en-us.lg)
 
-# UserListPrompt(Scenario, User, Items)
+#UserListPrompt(Scenario, User, Items, HasOverflowingResult)
 - IF: ${count(Items) > 1}
-    - ${MultipleResultFound(Scenario, count(Items), User)}
+    - ${MultipleResultFound(Scenario, count(Items), User, HasOverflowingResult)}
 - ELSE:
     - ${SingleResultFound(Scenario, User)}
 
@@ -18,7 +18,7 @@
 - DEFAULT:
     - I found one result:
 
-#MultipleResultFound(Scenario, TotalCount, User)
+#MultipleResultFound(Scenario, TotalCount, User, HasOverflowingResult)
 - SWITCH: ${Scenario}
 - CASE: ${"Collaborator"}
     - I found ${TotalCount} collegues that collaborates with **${User.displayName}**.
@@ -27,9 +27,15 @@
 - CASE: ${"DirectReports"}
     - There are ${TotalCount} people that are part of **${User.displayName}**'s team.
 - CASE: ${"PersonSearch"}
-    - I found multiple matches for **${User}**. Please pick one:
+    - Hello
 - DEFAULT:
     - I found multiple results:
+
+#MultiplePersonSearchResult(User, HasOverflowingResult)
+- IF: ${HasOverflowingResult == true}
+    - I found many matches for **${User}**.
+- ELSE:
+    - I found multiple matches for **${User}**. Please pick one:
 
 # UserListShowMorePrompt()
 - How about these options?

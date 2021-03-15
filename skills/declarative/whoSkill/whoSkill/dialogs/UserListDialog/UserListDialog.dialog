@@ -32,6 +32,42 @@
               "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == \"false\")",
               "actions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "HVAJ57"
+                  },
+                  "condition": "=count($UserList) > 15",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "rdyKuK"
+                      },
+                      "property": "$HasOverflowingResult",
+                      "value": true
+                    },
+                    {
+                      "$kind": "Microsoft.EditArray",
+                      "$designer": {
+                        "id": "A3mnR9"
+                      },
+                      "changeType": "pop",
+                      "itemsProperty": "$UserList",
+                      "resultProperty": "$UserPopped"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "pf8h1d"
+                      },
+                      "property": "$HasOverflowingResult",
+                      "value": false
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
                     "id": "DLV52r"
@@ -76,6 +112,10 @@
                     {
                       "property": "$listOptions.User",
                       "value": "=$User"
+                    },
+                    {
+                      "property": "$listOptions.HasOverflowingResult",
+                      "value": "=$HasOverflowingResult"
                     }
                   ]
                 },
