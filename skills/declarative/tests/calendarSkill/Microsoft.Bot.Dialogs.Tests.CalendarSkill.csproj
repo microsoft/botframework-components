@@ -20,6 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
     <ProjectReference Include="..\..\calendarSkill\runtime\customaction\Microsoft.BotFramework.Composer.CustomAction.csproj" />
+    <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\packages\Calendar\Microsoft.Bot.Components.Calendar.csproj" />
   </ItemGroup>
 
   <ItemGroup>
