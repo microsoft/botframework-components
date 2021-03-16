@@ -8,13 +8,7 @@ const {
 } = require('@microsoft/generator-microsoft-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
-  writing() {
-    const { botName } = this.options;
-
-    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
-      botName,
-    });
-
+  initializing() {
     this.composeWith(
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
@@ -22,8 +16,15 @@ module.exports = class extends BaseGenerator {
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false,
       })
     );
+  }
+
+  writing() {
+    const { botName } = this.options;
+
+    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
+      botName,
+    });
   }
 };

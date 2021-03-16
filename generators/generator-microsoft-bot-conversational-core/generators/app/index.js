@@ -26,14 +26,8 @@ const packageReferences = {
 };
 
 module.exports = class extends BaseGenerator {
-  writing() {
-    const { botName, platform } = this.options;
-
-    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
-      botName,
-    });
-
-    const { packages, version } = packageReferences[platform];
+  initializing() {
+    const { packages, version } = packageReferences[this.options.platform];
 
     this.composeWith(
       require.resolve(
@@ -42,9 +36,16 @@ module.exports = class extends BaseGenerator {
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false,
         packageReferences: packages.map((name) => ({ name, version })),
       })
     );
+  }
+
+  writing() {
+    const { botName } = this.options;
+
+    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
+      botName,
+    });
   }
 };

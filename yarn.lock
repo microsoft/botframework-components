@@ -118,6 +118,10 @@ __metadata:
   resolution: "@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core"
   dependencies:
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -128,6 +132,10 @@ __metadata:
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -138,6 +146,10 @@ __metadata:
   resolution: "@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker"
   dependencies:
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -148,6 +160,10 @@ __metadata:
   resolution: "@microsoft/generator-bot-who@workspace:generators/generator-bot-who"
   dependencies:
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -202,6 +218,10 @@ __metadata:
   resolution: "@microsoft/generator-microsoft-bot-command-list@workspace:generators/generator-microsoft-bot-command-list"
   dependencies:
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown

@@ -8,8 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const options = rt.Record({
   applicationSettingsDirectory: rt.String,
-  includeApplicationSettings: rt.Boolean,
-  overwriteApplicationSettings: rt.Boolean,
+  modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
     rt.Record({
       name: rt.String,
@@ -26,8 +25,7 @@ const options = rt.Record({
 
 const defaultOptions = {
   applicationSettingsDirectory: undefined,
-  includeApplicationSettings: true,
-  overwriteApplicationSettings: true,
+  modifyApplicationSettings: undefined,
   packageReferences: [],
   pluginDefinitions: [],
 };
@@ -51,29 +49,11 @@ module.exports = class extends BaseGenerator {
 
   writing() {
     this._copyProject();
-
-    if (this.overwriteApplicationSettings) {
-      this._overwriteApplicationSettings();
-    }
+    this._writeApplicationSettings();
   }
 
   _copyProject() {
-    const { applicationSettingsDirectory = '.', botName } = this.options;
-
-    const includeAssets = [
-      { source: 'schemas', dest: this.destinationPath(botName, 'schemas') },
-    ];
-
-    if (this.includeApplicationSettings) {
-      includeAssets.push({
-        source: 'appsettings.json',
-        dest: this.destinationPath(
-          botName,
-          applicationSettingsDirectory,
-          'appsettings.json'
-        ),
-      });
-    }
+    const includeAssets = ['schemas'];
 
     switch (this.options.platform) {
       case platforms.dotnet: {
@@ -124,10 +104,10 @@ module.exports = class extends BaseGenerator {
       Object.assign({}, templateContext, { botName, settingsDirectory })
     );
 
-    for (const { source, dest } of includeAssets) {
+    for (const path of includeAssets) {
       this.fs.copyTpl(
-        this.templatePath('assets', source),
-        dest,
+        this.templatePath('assets', path),
+        this.destinationPath(botName, path),
         Object.assign({}, templateContext, { botName })
       );
     }
@@ -211,7 +191,7 @@ module.exports = class extends BaseGenerator {
     });
   }
 
-  _overwriteApplicationSettings() {
+  _writeApplicationSettings() {
     const {
       applicationSettingsDirectory = '.',
       botName,
@@ -219,11 +199,7 @@ module.exports = class extends BaseGenerator {
     } = this.options;
 
     const appSettings = this.fs.readJSON(
-      this.destinationPath(
-        botName,
-        applicationSettingsDirectory,
-        'appsettings.json'
-      )
+      this.templatePath('assets', 'appsettings.json')
     );
 
     switch (platform) {
