@@ -74,6 +74,24 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
         [TestInitialize]
         public void TestInitialize()
         {
+            // IMPROTANT!!! Order matter here. The component registration has to happen before
+            // the ResourceExplorer's RegisterType because internally it registers all the type
+            // only once. Since ComponentRegistration is a static/singleton, if the RegisterType
+            // happens before this, it would cause either the first test to fail in a set or test
+            // to fail if run individually.
+
+            // Include the base set of components
+            // Individual test classes should add its own set of custom actions
+            // and other components required for testing
+            ComponentRegistration.Add(new DeclarativeComponentRegistration());
+            ComponentRegistration.Add(new AdaptiveComponentRegistration());
+            ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
+            ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
+            ComponentRegistration.Add(new LuisComponentRegistration());
+            ComponentRegistration.Add(new QnAMakerComponentRegistration());
+
+            this.InitializeTest();
+
             Configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                     {
@@ -88,18 +106,6 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
            .AddFolder(this.RelativeRootFolder, monitorChanges: false)
            .AddFolder(this.RelativeTestResourceFolder, monitorChanges: false)
            .RegisterType(LuisAdaptiveRecognizer.Kind, typeof(MockLuisRecognizer), new MockLuisLoader(Configuration));
-
-            // Include the base set of components
-            // Individual test classes should add its own set of custom actions
-            // and other components required for testing
-            ComponentRegistration.Add(new DeclarativeComponentRegistration());
-            ComponentRegistration.Add(new AdaptiveComponentRegistration());
-            ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
-            ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
-            ComponentRegistration.Add(new LuisComponentRegistration());
-            ComponentRegistration.Add(new QnAMakerComponentRegistration());
-
-            this.InitializeTest();
         }
 
         /// <summary>
