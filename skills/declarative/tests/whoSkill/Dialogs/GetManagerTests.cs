@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft.Bot.WhoSkill.Dialogs.Tests
 {
     [TestClass]
-    public class GetManagerTests
+    public class GetManagerTests : WhoSkillDialogTestBase
     {
         [TestMethod]
         public void GetManager_HappyPath()

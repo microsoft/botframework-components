@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft.Bot.WhoSkill.Dialogs.Tests
 {
     [TestClass]
-    public class GetUsersTests
+    public class GetUsersTests : WhoSkillDialogTestBase
     {
         [TestMethod]
         public void GetUsers_OneFound()
