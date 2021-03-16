@@ -15,74 +15,74 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         [TestMethod]
         public async Task CalendarSkillTests_GetProfile()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_AcceptEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_TentativelyAcceptEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
 
         [TestMethod]
         public async Task CalendarSkillTests_DeclineEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_DeleteEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_GetEvents()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_GetWorkingHours()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_SettingsTest()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_CreateEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_UpdateEvent()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_GetContacts()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CalendarSkillTests_FindMeetingTimes()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
     }
 }

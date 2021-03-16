@@ -123,7 +123,7 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
         /// <param name="configuration"></param>
         /// <param name="testName"></param>
         /// <returns></returns>
-        protected async Task RunTestScript(string resourceId = null, [CallerMemberName] string testName = null)
+        protected async Task RunTestScriptAsync(string resourceId = null, [CallerMemberName] string testName = null)
         {
             var script = ResourceExplorer.LoadType<TestScript>(resourceId ?? $"{testName}.test.dialog");
             script.Configuration = Configuration ?? new ConfigurationBuilder().AddInMemoryCollection().Build();

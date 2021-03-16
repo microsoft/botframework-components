@@ -15,31 +15,31 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         [TestMethod]
         public async Task RespondToEvent_Accept()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task RespondToEvent_Decline()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task RespondToEvent_TentativelyAccept()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CancelEvent_asAttendee()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CancelEvent_asOrganizer()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
     }
 }

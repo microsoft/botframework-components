@@ -15,139 +15,139 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         [TestMethod]
         public async Task UpdateEvent_basic_attendees()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_datetime()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_description()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_duration()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_location()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_onlineMeeting()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_basic_title()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setAttendeesAdd()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setAttendeesRemove()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setDateTime()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setDescription()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setDuration()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setLocation()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setOnlineMeeting()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_interruption_setTitle()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setAttendeesAdd()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setAttendeesRemove()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setDateTime()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setDescription()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setDuration()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setLocation()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setOnlineMeeting()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task UpdateEvent_trigger_setTitle()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
     }
 }

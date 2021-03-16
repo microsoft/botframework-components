@@ -15,49 +15,49 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         [TestMethod]
         public async Task GetEventAttendees()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEventDateTime()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEventLocation()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEvents_multipleResults()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEvents_noResults()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEvents_singleResult()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEvents_withEntity_contact()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetEvents_withEntity_datetime()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
     }
 }

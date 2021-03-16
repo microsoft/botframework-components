@@ -15,19 +15,19 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         [TestMethod]
         public async Task GetAvailabilityBreaks()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetAvailabilityFirst()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task GetAvailabilityLast()
         {
-            await this.RunTestScript();
+            await this.RunTestScriptAsync();
         }
     }
 }
