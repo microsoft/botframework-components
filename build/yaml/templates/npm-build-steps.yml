@@ -1,4 +1,4 @@
-gteps:
+steps:
 - task: NodeTool@0
   displayName: 'Install Node 14.x'
   inputs:
