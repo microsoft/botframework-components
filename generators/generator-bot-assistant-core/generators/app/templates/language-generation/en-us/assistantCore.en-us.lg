@@ -2,3 +2,11 @@
 
 # SendActivity_Welcome
 - ${WelcomeUser()}
+
+# TextInput_Prompt_gWdJbl()
+[Activity
+    Attachments = ${json(AdaptiveCardJson())}
+]
+
+# SendActivity_WTfZCN()
+- Sure, no worries.
