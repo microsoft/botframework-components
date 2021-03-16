@@ -1,5 +1,6 @@
 # GetAvailabilityLast
 - how long is my last meeting
+- last meeting {@date=today}
 - tell me my last meeting
 - tell me my last meeting next {@date=wednesday}
 - tell me when i'll be done with meetings

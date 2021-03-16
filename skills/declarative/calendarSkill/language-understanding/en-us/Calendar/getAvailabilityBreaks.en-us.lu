@@ -1,4 +1,6 @@
 # GetAvailabilityBreaks
+- am i available {@date=this afternoon}
+- am i free at {@date=5 pm today}
 - can i take a break {@date=wednesday}
 - do i have a break before my next meeting
 - do i have a break {@date=this afternoon}
@@ -13,6 +15,7 @@
 - what breaks do i have {@date=tomorrow}
 - what time am i available again
 - when am i free {@date=today}
+- when am i free {@date=tomorrow}
 - when are my breaks
 - when can i take a break
 - when do i have breaks

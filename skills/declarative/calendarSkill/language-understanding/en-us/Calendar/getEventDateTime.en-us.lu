@@ -6,10 +6,12 @@
 - what time is my next meeting
 - what time is the event
 - what time is the meeting {@date=this evening}
+- when am i meeting {@contact=vivek}
 - when am i meeting with {@contact=shauna} {@date=this week}
 - when is my event with {@contact=cynthia}, {@contact=isaac}, and {@contact=elaine} {@date=next month} about {@subject=team check-in}
 - when is my {@subject=lunch} event
 - when is my meeting {@date=tomorrow at noon} with {@contact=me@myemail.edu} and {@contact=morgan}
+- when is my meeting with {@contact=alex}
 - when is my meeting with {@contact=chris} and {@contact=me@myemail.edu}
 - when is my meeting with {@contact=tyler} and {@contact=tyler}
 - when is my next meeting
@@ -18,7 +20,12 @@
 - when is the meeting titled {@subject=hair appointment} {@date=tomorrow at noon}
 - when is the meeting with will and {@contact=dan} {@date=this week}
 - when is the next {@subject=project review} meeting
+- when is the next {@subject=skill best practices working session} meeting
 - when is the {@subject=project review} meeting
+- when are my meetings with {@contact=chris}
+- when are my meetings with {@contact=jing-kane}
+- when are my meetings with {@contact=yue}
+- when's my next meeting with {@contact=kevin endres}?
 
 @ intent GetEventDateTime usesFeatures Event,Titled,Show
 
