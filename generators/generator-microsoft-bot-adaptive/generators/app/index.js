@@ -44,7 +44,7 @@ module.exports = class extends Generator {
     this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(
       opts
     );
-    this.includeApplicationSettings = this._validateIncludeApplicationSettings(
+    this.modifyApplicationSettings = this._validateModifyApplicationSettings(
       opts
     );
     this.packageReferences = this._validatePackageReferences(
@@ -83,16 +83,15 @@ module.exports = class extends Generator {
     return result;
   }
 
-  _validateIncludeApplicationSettings(opts) {
-    let result = true;
+  _validateModifyApplicationSettings(opts) {
     if (
-      'includeApplicationSettings' in opts &&
-      typeof opts.includeApplicationSettings === 'boolean'
+      'modifyApplicationSettings' in opts &&
+      typeof opts.modifyApplicationSettings === 'function'
     ) {
-      result = opts.includeApplicationSettings;
+      return opts.modifyApplicationSettings;
     }
 
-    return result;
+    return null;
   }
 
   _validatePackageReferences(packageReferences) {
@@ -166,10 +165,7 @@ module.exports = class extends Generator {
     this._copyDotnetProject();
     this._copySchemas();
     this._writeNugetConfig();
-
-    if (this.includeApplicationSettings) {
-      this._writeApplicationSettings();
-    }
+    this._writeApplicationSettings();
   }
 
   _copyDotnetProject() {
@@ -249,18 +245,31 @@ module.exports = class extends Generator {
     const botName = this.options.botName;
     const fileName = 'appsettings.json';
 
+    const filePath = path.join(
+      botName,
+      this.applicationSettingsDirectory
+        ? this.applicationSettingsDirectory
+        : '',
+      fileName
+    );
+
     const appSettings = this.fs.readJSON(
       this.templatePath(path.join('assets', fileName))
     );
+
+    appSettings.luis.name = botName;
+    appSettings.runtime.command = `dotnet run --project ${botName}.csproj`;
+    appSettings.runtime.key = 'adaptive-runtime-dotnet-webapp';
 
     for (const pluginDefinition of this.pluginDefinitions) {
       appSettings.runtimeSettings.plugins.push(pluginDefinition);
     }
 
-    this.fs.writeJSON(
-      this.destinationPath(path.join(botName, fileName)),
-      appSettings
-    );
+    if (this.modifyApplicationSettings) {
+      this.modifyApplicationSettings(appSettings);
+    }
+
+    this.fs.writeJSON(filePath, appSettings);
   }
 
   _writeNugetConfig() {

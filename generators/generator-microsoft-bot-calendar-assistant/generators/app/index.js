@@ -40,7 +40,13 @@ module.exports = class extends Generator {
           },
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false,
+        modifyApplicationSettings: (appSettings) => {
+          Object.assign(appSettings, {
+            skillHostEndpoint: 'http://localhost:3980/api/skills',
+          });
+
+          appSettings.runtimeSettings.features.setSpeak = true;
+        },
       }
     );
 
@@ -59,7 +65,9 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
-      { botName: this.options.botName }
+      {
+        botName: this.options.botName,
+      }
     );
   }
 };
