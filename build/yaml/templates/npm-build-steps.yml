@@ -9,9 +9,4 @@ steps:
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
-- script: |
-    yarn lint
-  displayName: 'Lint code'
-  workingDirectory: '$(WorkingDirectory)'
-
 - template: debug-workspace-steps.yml
