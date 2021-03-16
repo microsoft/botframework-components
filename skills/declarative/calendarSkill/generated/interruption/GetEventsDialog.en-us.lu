@@ -2,22 +2,49 @@
 > LUIS application information
 > !# @app.versionId = 0.1
 > !# @app.culture = en-us
-> !# @app.luis_schema_version = 3.2.0
+> !# @app.luis_schema_version = 7.0.0
 
 
 > # Intent definitions
 
 # TextInput_Response_Fej6Ub
-- with {@contact=allan} and {@contact=alex}
-- the one with {@contact=elaine} next week
-- the event with test@email.com
-- {@contact=Sally}'s meeting friday morning
+- {@date=3:30}
+- {@date=4:30pm}
+- attendees {@contact=william} and {@contact=patrick}
+- {@contact=bill robinson} and {@contact=moira michelson}
+- date of {@date=monday at 9am}
+- {@subject=design session}
+- {@date=january 3rd}
+- {@contact=julie}
+- {@contact=marcie} and {@contact=jack}
+- {@contact=mary cheng}, {@contact=theodore lee}, and {@contact=alia hazem}
+- my second meeting {@date=today}
+- {@date=next wednesday}
+- {@date=next week}
+- {@date=noon today}
+- {@subject=project review}
+- {@subject=project review} on {@date=thursday}
+- {@contact=sally}'s meeting {@date=friday morning}
+- {@subject=team status reports}
+- the {@subject=best practices meeting} with {@contact=nora} and {@contact=beckett}
+- the {@subject=design review} on {@date=tuesday at 11am}
+- the event with {@contact=test@email.com}
+- the one on monday
+- the one on tuesday
+- the one this {@date=afternoon}
+- the one titled {@subject=cui editorial}
 - the one titled {@subject=lunch}
-- {@subject=project review} on thursday
-- the {@subject=design review} on tuesday at 11am
-- wednesday at 3pm
-- january 3rd
-- 4:30pm
+- the one with {@contact=elaine} next week
+- the third one
+- the title {@subject=therapist's appointment}
+- the {@subject=vet appointment}
+- title {@subject=calendar test meeting}
+- {@date=today at 5}
+- {@date=tomorrow}
+- {@date=wednesday at 3pm}
+- with {@contact=allan}
+- with {@contact=allan} and {@contact=alex}
+- with the subject of {@subject=dermatologist's appointment}
 
 
 # Cancel
@@ -34,7 +61,9 @@
 
 > # Entity definitions
 
-@ ml contact
+@ ml contact usesFeatures email,personName
+
+@ ml date
 
 @ ml subject
 
@@ -42,6 +71,10 @@
 > # PREBUILT Entity definitions
 
 @ prebuilt email
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
 
 
 > # Phrase list definitions

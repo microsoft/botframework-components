@@ -49,34 +49,49 @@
 
 # SetAttendeesAdd
 - add an attendee
-- add people
-- add {@newContact=thomas} and {@newContact=ryan}
-- add more recipients to the meeting with {@contact=roberta}
-- add attendees to my meeting on friday
+- add attendees to my meeting on {@date=friday}
 - add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
 - add {@newContact=jose} to my next meeting
+- add more recipients to the meeting with {@contact=roberta}
+- add people
+- add {@newContact=phoebe} to my meeting with {@contact=lauren} at {@date=5 pm}
+- add {@newContact=samantha} to my {@date=5pm today}
 - add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
+- add {@newContact=thomas} and {@newContact=ryan}
 - can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
+- can you change the attendee to {@newContact=lauren}
+- change attendees
 - forward my meeting on {@date=thursday} to {@newContact=youngjae}
-- forward to more people
 - forward the next event to {@newContact=scott}
 - forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
 - forward this to {@newContact=john}
 - forward to {@newContact=chris} and {@newContact=me@myemail.edu}
+- forward to more people
 - forward to {@newContact=scott}
-- invite more people
-- invite someone else
+- include {@newContact=john}, {@newContact=jacob}, and {@newContact=amy}
+- include {@newContact=lauren} and {@newContact=pooja}
+- include {@newContact=quirine}
 - invite {@newContact=elaine} and {@newContact=morgan}
 - invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
 - invite {@newContact=jose}
 - invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
+- invite more people
 - invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
+- invite someone else
 - invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
-- send this to more people
+- no, add elaine to this too
+- no, add {@newContact=sarah}
+- no, i want to add {@newContact=richard} to this
+- no, invite {@newContact=michelle}
+- please add {@newContact=qiong} to the meeting
 - send my {@subject=breakfast} event to {@newContact=gary}
 - send my event titled {@subject=1:1} to {@newContact=chris}
 - send the meeting to {@newContact=morgan}
+- send this to more people
 - send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+- sure, but send it to {@newContact=thomas} and {@newContact=xi}
+- yes, but add {@newContact=darren} too
+- yes, but i need to add {@newContact=ryan}
 
 
 @ intent SetAttendeesAdd usesFeatures Update,Event,Location,Add,Titled
@@ -92,26 +107,32 @@
 - don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
 - edit attendees
 - edit recipients list
+- its ok, but take out {@currentContact=harry}
+- no, i need to take out {@currentContact=john}
+- no, remove {@currentContact=thomas} from this
 - remove an attendee
-- remove people from this
-- remove recipients
-- remove someone from this
 - remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
+- remove {@currentContact=lauren} from my {@date=5 pm}
+- remove people from this
 - remove {@currentContact=rebecca} and {@currentContact=susan}
+- remove recipients
+- remove someone from this
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
 - remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
-- uninvite an attendee
 - uninvite a recipient
-- uninvite people from this meeting
+- uninvite an attendee
 - uninvite {@currentContact=cynthia}
 - uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
 - uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
 - uninvite {@currentContact=morgan} from my event {@date=tomorrow}
-- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite people from this meeting
+- uninvite {@currentContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+- yeah, but take out {@currentContact=fred}
+- yes, but remove {@currentContact=georgie}
 
 
 @ intent SetAttendeesRemove usesFeatures Update,Event,Location,Remove,Titled
@@ -123,26 +144,31 @@
 - change my meeting with {@contact=elaine} to {@newDate=next week}
 - change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
 - change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
-- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
 - change the date
-- change the time
-- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
-- change the time of my meeting to {@newDate=6pm}
 - change the date and time of my next meeting to {@newDate=thursday at 11am}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
 - change the date of the meeting to {@newDate=wednesday}
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
-- change the day of the next event to {@newDate=wednesday}
+- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
+- change the time
+- change the time of my meeting to {@newDate=6pm}
+- change to {@newDate=2 am}
+- make {@currentDate=tomorrows} friday meeting {@currentDate=at 2} {@newDate=30 minutes later}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
 - move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
+- move tomorrows physical therapy meeting to {@newDate=noon}
+- no, change it to {@newDate=tuesday}
+- no, set the meeting time to {@newDate=3:30}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
 - reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
-- set the meeting time to {@newDate=3:30}
 - update my meeting to start at {@newDate=noon on saturday}
 - update my meeting with {@contact=elaine} to {@newDate=monday at 2}
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
+- yes, but can you change the time
+- yes, but change it to {@date=monday at 3:30pm}
 
 
 @ intent SetDateTime usesFeatures Update,Event,Location,Titled
@@ -171,26 +197,34 @@
 @ intent SetDescription usesFeatures Update,Event,Location,Titled
 
 # SetDuration
+- change meeting to {@duration=1 hr}
+- change the duration to {@duration=one hour}
 - change the event with {@contact=you@test.net} to {@duration=2 hours}
+- change to {@duration=1hr}
 - change to {@duration=3 hrs}
 - extend the event to {@duration=1 hour and 30 minutes}
 - extend the {@subject=standup} to {@duration=2 hours}
+- i want it to go for {@duration=half an hour}
 - make it {@duration=1 hour}
 - make it {@duration=1 hour and 30 minutes}
+- make it last {@duration=three and a half hours}
 - make my meeting with {@contact=thomas} {@duration=1 hour}
 - make the meeting last {@duration=30 min}
+- no, update the meeting to last {@duration=an hour and a half}
+- no, update to {@duration=1 hour and 30 minutes}
 - set the duration of my meeting
 - set the event to {@duration=1 hour and 30 minutes}
 - set the length the event with {@contact=rebecca}
 - set this to {@duration=15 min}
 - set to {@duration=1 hour}
 - shorten the {@subject=team meeting} to {@duration=half an hour}
+- sure, and make the meeting last {@duration=30 min}
+- the meeting should last for {@duration=two hours}
 - update my event on {@date=monday} with {@contact=john} to {@duration=15 min}
 - update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
 - update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
 - update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
-- update the meeting to last {@duration=an hour and a half}
-- update to {@duration=1 hour and 30 minutes}
+- yes, but set to {@duration=1 hour}
 
 
 @ intent SetDuration usesFeatures Update,Event,Location,Titled
