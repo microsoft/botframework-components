@@ -132,7 +132,7 @@
             },
             {
               "property": "$parameters.subject",
-              "value": "=coalesce($options.subject, @subject)"
+              "value": "=coalesce($options.subject, @subject, $options.queryText)"
             },
             {
               "property": "$parameters.attendees",
@@ -145,6 +145,10 @@
             {
               "property": "$parameters.ordinal",
               "value": "=coalesce($options.ordinal, @ordinal)"
+            },
+            {
+              "property": "$parameters.dateTimeType",
+              "value": "=$options.dateTime.type"
             }
           ]
         },
@@ -181,7 +185,7 @@
                 "query": "=$query",
                 "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
               },
-              "resultProperty": "$datetime"
+              "resultProperty": "$dateTime"
             },
             {
               "$kind": "Microsoft.SetProperties",
@@ -191,11 +195,32 @@
               "assignments": [
                 {
                   "property": "$options.start",
-                  "value": "=coalesce($datetime.start, $datetime.value)"
+                  "value": "=coalesce($dateTime.start, $dateTime.value)"
                 },
                 {
                   "property": "$options.end",
-                  "value": "=$datetime.end"
+                  "value": "=$dateTime.end"
+                },
+                {
+                  "property": "$options.dateTime",
+                  "value": "=$dateTime"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "nfaMkj"
+              },
+              "condition": "not(exists(@@contact)) && not(exists(@@email)) && not(exists(@subject)) && not(exists($options.start)) && not(exists($options.end))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "KVhPIl"
+                  },
+                  "property": " $options.queryText",
+                  "value": "=$query"
                 }
               ]
             },
@@ -231,7 +256,7 @@
                 },
                 {
                   "property": "$parameters.end",
-                  "value": "=convertFromUTC(addDays(utcNow(), 28), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                  "value": "=convertFromUTC(addDays(utcNow(), 14), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
                 }
               ]
             }
@@ -298,7 +323,7 @@
           "token": "=user.token.token",
           "endProperty": "=$parameters.end",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
-          "dateTimeTypeProperty": "=coalesce($type, \"date\")",
+          "dateTimeTypeProperty": "=coalesce($parameters.dateTimeType, \"date\")",
           "startProperty": "=$parameters.start",
           "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
           "userEmailProperty": "=user.profile.mail",
@@ -371,6 +396,10 @@
                     "skipResponse": "EventListSkipResponse",
                     "defaultValueResponse": "EventListDefaultValueResponse"
                   }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
                 }
               ]
             },
@@ -383,6 +412,22 @@
               "dialog": "ListDialog",
               "options": "=$listOptions",
               "resultProperty": "$selectedEvent"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QAnsVO"
+              },
+              "condition": "=$selectedEvent == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "x4SpLm"
+                  },
+                  "eventName": "Cancel"
+                }
+              ]
             }
           ],
           "actions": [
@@ -550,16 +595,33 @@
       "intent": "Cancel",
       "actions": [
         {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mrBR6n"
+          },
+          "eventName": "Cancel"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lxR3u1",
+        "name": "OnEvent (Cancel)"
+      },
+      "event": "Cancel",
+      "actions": [
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "2g36du"
+            "id": "qyvf70"
           },
-          "activity": "${SendActivity_2g36du()}"
+          "activity": "${SendActivity_qyvf70()}"
         },
         {
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "VzuSwc"
+            "id": "eBStwi"
           },
           "activityProcessed": true
         }

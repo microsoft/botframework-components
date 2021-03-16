@@ -21,6 +21,10 @@
 - make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
 - make the {@subject=standup} a virtual meeting {@date=today}
 - make this an online meeting
+- no, add a meeting link too
+- no, I want this to me a teams meeting
+- yes, and add teams
+- yes, but add a link as well
 
 @ intent SetOnlineMeetingAdd usesFeatures Update,Event,Location,Add,Titled
 
