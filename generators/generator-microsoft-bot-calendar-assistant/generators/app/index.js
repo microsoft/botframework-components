@@ -22,33 +22,31 @@ module.exports = class extends Generator {
         pluginDefinitions: [
           {
             name: 'Microsoft.Bot.Components.Orchestrator',
-            settingsPrefix: 'Microsoft.Bot.Components.Orchestrator'
-          }
+            settingsPrefix: 'Microsoft.Bot.Components.Orchestrator',
+          },
         ],
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-preview.20210310.8ee9434'
+            version: '1.0.0-preview.20210310.8ee9434',
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434'
+            version: '1.0.0-preview.20210310.8ee9434',
           },
           {
             name: 'Microsoft.Bot.Components.Orchestrator',
-            version: '1.0.0-preview.20210310.8ee9434'
-          }
+            version: '1.0.0-preview.20210310.8ee9434',
+          },
         ],
         applicationSettingsDirectory: 'settings',
         modifyApplicationSettings: (appSettings) => {
-          Object.assign(
-            appSettings,
-            {
-              skillHostEndpoint: 'http://localhost:3980/api/skills'
-            });
+          Object.assign(appSettings, {
+            skillHostEndpoint: 'http://localhost:3980/api/skills',
+          });
 
           appSettings.runtimeSettings.features.setSpeak = true;
-        }
+        },
       }
     );
 
@@ -58,7 +56,7 @@ module.exports = class extends Generator {
         '@microsoft/generator-microsoft-bot-calendar/generators/app'
       ),
       {
-        arguments: ['calendar']
+        arguments: ['calendar'],
       }
     );
   }
@@ -68,7 +66,7 @@ module.exports = class extends Generator {
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }

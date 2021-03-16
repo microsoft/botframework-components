@@ -23,21 +23,21 @@ module.exports = class extends Generator {
 
     this.argument('botName', {
       type: String,
-      required: true
+      required: true,
     });
 
     this.option('integration', {
       desc: `The host integration to use:  ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`,
       type: String,
       default: INTEGRATION_WEBAPP,
-      alias: 'i'
+      alias: 'i',
     });
 
     this.option('platform', {
       desc: `The programming platform to use: ${PLATFORM_DOTNET}`,
       type: String,
       default: PLATFORM_DOTNET,
-      alias: 'p'
+      alias: 'p',
     });
 
     this._verifyOptions();
@@ -109,7 +109,7 @@ module.exports = class extends Generator {
         ) {
           const result = {
             name: reference.name,
-            version: reference.version
+            version: reference.version,
           };
 
           results.push(result);
@@ -131,7 +131,7 @@ module.exports = class extends Generator {
           typeof definition.name === 'string'
         ) {
           const result = {
-            name: definition.name
+            name: definition.name,
           };
 
           if (
@@ -184,7 +184,7 @@ module.exports = class extends Generator {
       {
         botName,
         packageReferences,
-        settingsDirectory
+        settingsDirectory,
       }
     );
 
@@ -223,7 +223,7 @@ module.exports = class extends Generator {
         botName,
         botProjectGuid,
         solutionGuid,
-        projectType
+        projectType,
       }
     );
   }
@@ -236,7 +236,7 @@ module.exports = class extends Generator {
       this.templatePath(path.join('assets', directoryName)),
       this.destinationPath(path.join(botName, directoryName)),
       {
-        botName
+        botName,
       }
     );
   }
@@ -244,14 +244,18 @@ module.exports = class extends Generator {
   _writeApplicationSettings() {
     const botName = this.options.botName;
     const fileName = 'appsettings.json';
-    
+
     const filePath = path.join(
       botName,
-      this.applicationSettingsDirectory ? this.applicationSettingsDirectory : '',
+      this.applicationSettingsDirectory
+        ? this.applicationSettingsDirectory
+        : '',
       fileName
     );
 
-    const appSettings = this.fs.readJSON(this.templatePath(path.join('assets', fileName)));
+    const appSettings = this.fs.readJSON(
+      this.templatePath(path.join('assets', fileName))
+    );
 
     appSettings.luis.name = botName;
     appSettings.runtime.command = `dotnet run --project ${botName}.csproj`;
@@ -291,8 +295,8 @@ module.exports = class extends Generator {
       const builder = new xml2js.Builder({
         xmldec: {
           version: '1.0',
-          encoding: 'utf-8'
-        }
+          encoding: 'utf-8',
+        },
       });
 
       this.fs.write(

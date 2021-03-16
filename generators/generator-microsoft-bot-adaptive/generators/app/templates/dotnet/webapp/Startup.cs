@@ -31,6 +31,7 @@ namespace <%= botName %>
             }
         
             app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseWebSockets();
             app.UseRouting();
             app.UseAuthorization();

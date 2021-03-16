@@ -21,32 +21,30 @@ module.exports = class extends Generator {
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
-            version: '1.0.0-alpha.20210310.8ee9434'
-          }
+            version: '1.0.0-alpha.20210310.8ee9434',
+          },
         ],
         pluginDefinitions: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
-            settingsPrefix: 'Microsoft.Bot.Components.Calendar'
+            settingsPrefix: 'Microsoft.Bot.Components.Calendar',
           },
           {
             name: 'Microsoft.Bot.Components.Graph',
-            settingsPrefix: 'Microsoft.Bot.Components.Graph'
-          }
+            settingsPrefix: 'Microsoft.Bot.Components.Graph',
+          },
         ],
         applicationSettingsDirectory: 'settings',
         modifyApplicationSettings: (appSettings) => {
-          Object.assign(
-            appSettings,
-            {
-              oauthConnectionName: 'Outlook',
-              defaultValue: {
-                duration: 30
-              }
-            });
+          Object.assign(appSettings, {
+            oauthConnectionName: 'Outlook',
+            defaultValue: {
+              duration: 30,
+            },
+          });
 
           appSettings.runtimeSettings.features.setSpeak = true;
-        }
+        },
       }
     );
   }
@@ -56,7 +54,7 @@ module.exports = class extends Generator {
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }
