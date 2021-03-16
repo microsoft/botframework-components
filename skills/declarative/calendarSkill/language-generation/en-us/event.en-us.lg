@@ -130,7 +130,7 @@
         {
             "type": "Column",
             "width": ${if(event.isRecurring, 5, 0)},
-            "isVisible": "${event.isRecurring}",
+            "isVisible": "${if(exists(event.isRecurring), event.isRecurring, false)}",
             "verticalContentAlignment": "Center",
             "items": [
                 {
@@ -568,13 +568,13 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Title", "title")},
         ${BuildSubmitAction("Attendees", "attendees")},
         ${BuildSubmitAction("Date and time", "datetime")},
-        ${BuildSubmitAction("Location", "location")},
-        ${BuildSubmitAction("Description", "description")},
         ${BuildSubmitAction("Duration", "duration")},
-        ${BuildSubmitAction("Microsoft Teams", "onlineMeeting")}
+        ${BuildSubmitAction("Description", "description")},
+        ${BuildSubmitAction("Title", "title")},
+        ${BuildSubmitAction("Location", "location")},
+        ${BuildSubmitAction("Teams link", "onlineMeeting")}
     ]
 }
 ```

@@ -19,6 +19,10 @@
 - update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
 - update the subject of the next event to {@newSubject=standup}
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+- no, change the title please
+- no i want the title to be {@newSubject=podcast recording}
+- yes but change the title to be {@newSubject=design meeting}
+- yes except the title is wrong
 
 @ intent SetTitle usesFeatures Update,Event,Location,Titled
 

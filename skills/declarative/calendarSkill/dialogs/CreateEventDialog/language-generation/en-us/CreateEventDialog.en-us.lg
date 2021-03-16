@@ -11,9 +11,6 @@
 # SendActivity_zz0Eaj()
 - I've removed ${coalesce($selectedContact.Name, $selectedContact.Address)}.
 
-# DateTimeInput_Prompt_Avi5yg()
-- When should I schedule it?
-
 # TextInput_Prompt_68Dudo()
 - What should I set the description to?
 
@@ -26,17 +23,11 @@
 # SendActivity_wYoWNO()
 - I won't make this a Microsoft Teams meeting.
 
-# ConfirmInput_Prompt_WF6urX()
-- ${CancelConfirmPrompt()}
-
 # SendActivity_VzJCSo()
 - ${CancelApproved()}
 
 # SendActivity_VLAwOi()
 - ${CancelRejected()}
-
-# TextInput_Prompt_IeJvM4()
-- What should I set the location to?
 
 # ConfirmInput_Prompt_ui2fg1()
 [Activity
@@ -53,5 +44,16 @@
 # SendActivity_ANQjxk()
 - Something when wrong while creating adding the event to your calendar.
 
+# ConfirmInput_Prompt_tdkXGI()
+- ${CancelConfirmPrompt()}
+
 # DateTimeInput_Prompt_2NG4Aa()
 - What time?
+# ConfirmInput_Prompt_bnSGew()
+- Would you like to add a location?
+
+# TextInput_Prompt_1LdFal()
+- What should I set the location to?
+
+# DateTimeInput_Prompt_aB5ltS()
+- When should I schedule it?

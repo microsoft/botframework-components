@@ -15,3 +15,8 @@
 [Activity
     Text = Here is what I found for **${dialog.Result.names[0].displayName}**:
 ]
+
+# SendActivity_lcoztE()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]

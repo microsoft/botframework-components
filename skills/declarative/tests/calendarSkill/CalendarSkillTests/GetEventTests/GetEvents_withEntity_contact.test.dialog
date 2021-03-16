@@ -23,7 +23,7 @@
       "$kind": "Microsoft.Test.AssertReply",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
-        "attachments[0].content.text == '\r\nHi Megan Bowen 🖐, thank you for helping the VA Skills team out with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n'"
+        "attachments[0].content.text == '\r\nHi Megan Bowen 🖐, thank you for helping out the Pre-built Experiences team with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n'"
       ]
     },
     {
@@ -33,27 +33,16 @@
     {
       "$kind": "Microsoft.Test.AssertReplyOneOf",
       "text": [
-        "I've found 2 events that match your request. Please select an option:",
-        "I've found 2 events that match your request. Please select an option:",
-        "There are 2 events that match your search. Please select an option:",
-        "2 events match your search criteria. Please select an option:",
-        "You have 2 events that match your search. Please select an option:"
+        "I've found 2 events that match your request:",
+        "I've found 2 events that match your request:",
+        "There are 2 events that match your search:",
+        "2 events match your search criteria:",
+        "You have 2 events that match your search:"
       ],
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
       "description": "Find event list card response"
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "1"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReply",
-      "assertions": [
-        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ],
-      "description": "Event detail card response"
     }
   ]
 }

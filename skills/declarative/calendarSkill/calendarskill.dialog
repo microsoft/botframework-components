@@ -88,7 +88,7 @@
           "activityProcessed": true
         }
       ],
-      "condition": "turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -113,7 +113,7 @@
           "activity": "${SendActivity_AlS4sI()}"
         }
       ],
-      "condition": "turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -146,7 +146,7 @@
           "activity": "${SendActivity_IrC8MR()}"
         }
       ],
-      "condition": "turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -188,7 +188,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -230,7 +231,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -289,7 +291,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -348,7 +351,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -407,7 +411,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -430,6 +435,27 @@
             "id": "lzThvt"
           },
           "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "rsg9n8"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "wxfA8N"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "not(exists($options.start))"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -457,7 +483,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -480,6 +507,27 @@
             "id": "YEmMof"
           },
           "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VxCYVO"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "0FHA3C"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "not(exists($options.start))"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -507,7 +555,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -532,6 +581,27 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "v97tES"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "TKz0HS"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "not(exists($options.start))"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "bedKqO"
@@ -548,43 +618,25 @@
           "$designer": {
             "id": "Cb07qI"
           },
-          "resultProperty": "$result",
+          "resultProperty": "$availabilityList",
           "inputProperty": "=$events",
           "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
           "workingHourStartProperty": "=user.workingHours.startTime",
           "workingHourEndProperty": "=user.workingHours.endTime"
         },
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "fF6viC"
+          }
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "ijHFYq"
           },
-          "condition": "$result.availableTimeLength > 0",
+          "condition": "count($availabilityList) > 0",
           "actions": [
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "q8HuQT"
-              },
-              "assignments": [
-                {
-                  "property": "$freeTime.start",
-                  "value": "=$result.availableTimeStart"
-                },
-                {
-                  "property": "$freeTime.end",
-                  "value": "=$result.availableTimeEnd"
-                },
-                {
-                  "property": "$freeTime.isFreeTime",
-                  "value": "=true"
-                },
-                {
-                  "property": "$availabilityList",
-                  "value": "= where(createArray($result.previousEvent, $freeTime, $result.nextEvent), x, x!= null)"
-                }
-              ]
-            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -610,7 +662,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -665,7 +718,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -721,7 +775,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -777,7 +832,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -833,7 +889,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -875,7 +932,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -893,10 +951,11 @@
           "activity": "${SendActivity_OIka7e()}"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "pqtmHa"
-          }
+            "id": "jNhIrI"
+          },
+          "activityProcessed": true
         }
       ]
     },
@@ -960,7 +1019,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1022,7 +1082,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1080,7 +1141,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1134,7 +1196,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1192,7 +1255,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1250,7 +1314,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1308,7 +1373,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1366,7 +1432,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -1424,7 +1491,8 @@
           },
           "eventName": "dialogCompleted"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.1"
     },
     {
       "$kind": "Microsoft.OnUnknownIntent",
@@ -1569,7 +1637,7 @@
             },
             {
               "property": "$options.ordinal",
-              "value": "=@ordinal"
+              "value": "=@ordinalV2"
             },
             {
               "property": "$options.currentSubject",
@@ -1617,6 +1685,23 @@
             "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
           "resultProperty": "$dateTime"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Ra5sQD"
+          },
+          "condition": "=contains($dateTime.text, 'next') && ($options.ordinal.offset == 1 && $options.ordinal.relativeTo == 'current')",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "6LKW0L"
+              },
+              "property": "$options.ordinal",
+              "value": "=null"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",

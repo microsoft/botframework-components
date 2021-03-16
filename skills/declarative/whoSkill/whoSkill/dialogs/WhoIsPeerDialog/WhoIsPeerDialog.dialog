@@ -28,8 +28,8 @@
               "$designer": {
                 "id": "vjgu3O"
               },
-              "name": "UserIdAlreadyExists",
-              "value": "=$userId"
+              "name": "UserAlreadyProvided",
+              "value": "=$UserFound"
             }
           ],
           "actions": [
@@ -52,10 +52,10 @@
           "$designer": {
             "id": "rHT96x"
           },
-          "name": "UserId",
-          "label": "UserId",
+          "name": "UserFound",
+          "label": "UserFound",
           "valueType": "String",
-          "value": "=dialog.userId"
+          "value": "=dialog.UserFound"
         },
         {
           "$kind": "Microsoft.Graph.User.GetPeers",
@@ -64,7 +64,8 @@
           },
           "resultProperty": "dialog.Result",
           "token": "=user.token.token",
-          "userId": "=$UserFound.Id"
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
         },
         {
           "$kind": "Microsoft.BeginDialog",

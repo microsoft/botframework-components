@@ -3,20 +3,22 @@
 # TextInput_Prompt_sFm17r()
 - Who should I invite?
 
-# SendActivity_hIUT1m()
-- I couldn't find any matching contacts. Can you try providing the first and last name or email address?
-
 # ConfirmInput_Prompt_pjKHu4()
 [Activity
     attachments = ${json(TextCard(ContactConfirmation($contacts), ContactConfirmationActions()))}
 ]
 
 # ContactConfirmation(contacts)
-- ```
-Would you like to invite anyone else?
+- IF: ${contacts == null || count(contacts) == 0}
+    - Would you like to invite anyone else?
+- ELSEIF: ${count(contacts) == 1}
+    - I've added ${concat(contacts[0].EmailAddress.Name, ' (', contacts[0].EmailAddress.Address, ')')}. Would you like to invite anyone else?
+- ELSE: 
+    - ```
+    Would you like to invite anyone else?
 
-\n * ${GetContactsList(contacts)}
-```
+    \n * ${GetContactsList(contacts)}
+    ```
 
 # GetContactsList(contacts)
 - ${join(select(contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), ' \n\n * ')}
@@ -31,3 +33,5 @@ Would you like to invite anyone else?
     ]
 }
 ```
+# SendActivity_vTHytL()
+- I couldn't find any matching contacts. Can you try providing the first and last name or email address?

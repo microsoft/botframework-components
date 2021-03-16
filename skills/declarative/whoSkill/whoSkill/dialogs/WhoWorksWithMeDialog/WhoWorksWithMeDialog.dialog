@@ -44,7 +44,8 @@
           },
           "token": "=user.token.token",
           "resultProperty": "$Result",
-          "userId": "=$UserFound.Id"
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
         },
         {
           "$kind": "Microsoft.BeginDialog",
