@@ -9,6 +9,8 @@ const flags = minimist(process.argv.slice(1));
 const options = {};
 if (flags.port) {
     options.port = flags.port;
+} else if (process.env.PORT) {
+    options.port = parseInt(process.env.PORT, 10);
 }
 
 start(process.cwd(), <%- settingsDirectory %>, options).catch((err) => {
