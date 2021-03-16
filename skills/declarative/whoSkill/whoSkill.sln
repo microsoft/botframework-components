@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "whoSkill", "whoSkill\whoSki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.WhoSkill.Dialogs.Tests", "..\tests\whoSkill\Microsoft.Bot.WhoSkill.Dialogs.Tests.csproj", "{2C0048D5-3392-4001-9FE0-F4911204934D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Dialogs.Tests.WhoSkill", "..\tests\whoSkill\Microsoft.Bot.Dialogs.Tests.WhoSkill.csproj", "{2C0048D5-3392-4001-9FE0-F4911204934D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

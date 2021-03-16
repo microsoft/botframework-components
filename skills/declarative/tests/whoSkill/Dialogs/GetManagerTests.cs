@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Microsoft.Bot.WhoSkill.Dialogs.Tests
+namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 {
     [TestClass]
     public class GetManagerTests : WhoSkillDialogTestBase
