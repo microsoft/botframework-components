@@ -195,6 +195,7 @@ module.exports = class extends BaseGenerator {
     const {
       applicationSettingsDirectory = '.',
       botName,
+      integration,
       platform,
     } = this.options;
 
@@ -202,26 +203,13 @@ module.exports = class extends BaseGenerator {
       this.templatePath('assets', 'appsettings.json')
     );
 
-    switch (platform) {
-      case platforms.dotnet:
-        Object.assign(appSettings.runtime, {
-          command: `dotnet run --project ${botName}.csproj`,
-          key: 'adaptive-runtime-dotnet-webapp',
-        });
+    appSettings.luis.name = botName;
 
-        break;
-
-      case platforms.js:
-        Object.assign(appSettings.runtime, {
-          command: 'node index.js',
-          key: 'node-azurewebapp',
-        });
-
-        break;
-
-      default:
-        throw new Error(`Unrecognized platform ${platform}`);
-    }
+    appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
+    appSettings.runtime.command = {
+      [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
+      [platforms.js]: 'node index.js',
+    }[platform];
 
     for (const { name } of this.packageReferences) {
       appSettings.runtimeSettings.plugins.push({
