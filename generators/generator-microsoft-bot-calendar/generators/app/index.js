@@ -21,18 +21,18 @@ module.exports = class extends Generator {
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
-            version: '1.0.0-alpha.20210310.8ee9434',
-          },
+            version: '1.0.0-alpha.20210310.8ee9434'
+          }
         ],
         pluginDefinitions: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
-            settingsPrefix: 'Microsoft.Bot.Components.Calendar',
+            settingsPrefix: 'Microsoft.Bot.Components.Calendar'
           },
           {
             name: 'Microsoft.Bot.Components.Graph',
-            settingsPrefix: 'Microsoft.Bot.Components.Graph',
-          },
+            settingsPrefix: 'Microsoft.Bot.Components.Graph'
+          }
         ],
         applicationSettingsDirectory: 'settings',
         modifyApplicationSettings: (appSettings) => {
@@ -55,7 +55,9 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
-      { botName: this.options.botName }
+      {
+        botName: this.options.botName
+      }
     );
   }
 };

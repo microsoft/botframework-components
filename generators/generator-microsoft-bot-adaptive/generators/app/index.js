@@ -23,28 +23,25 @@ module.exports = class extends Generator {
 
     this.argument('botName', {
       type: String,
-      required: true,
+      required: true
     });
 
     this.option('integration', {
       desc: `The host integration to use:  ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`,
       type: String,
       default: INTEGRATION_WEBAPP,
-      alias: 'i',
+      alias: 'i'
     });
 
     this.option('platform', {
       desc: `The programming platform to use: ${PLATFORM_DOTNET}`,
       type: String,
       default: PLATFORM_DOTNET,
-      alias: 'p',
+      alias: 'p'
     });
 
     this._verifyOptions();
     this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(
-      opts
-    );
-    this.includeApplicationSettings = this._validateIncludeApplicationSettings(
       opts
     );
     this.modifyApplicationSettings = this._validateModifyApplicationSettings(
@@ -86,18 +83,6 @@ module.exports = class extends Generator {
     return result;
   }
 
-  _validateIncludeApplicationSettings(opts) {
-    let result = true;
-    if (
-      'includeApplicationSettings' in opts &&
-      typeof opts.includeApplicationSettings === 'boolean'
-    ) {
-      result = opts.includeApplicationSettings;
-    }
-
-    return result;
-  }
-
   _validateModifyApplicationSettings(opts) {
     if (
       'modifyApplicationSettings' in opts &&
@@ -124,7 +109,7 @@ module.exports = class extends Generator {
         ) {
           const result = {
             name: reference.name,
-            version: reference.version,
+            version: reference.version
           };
 
           results.push(result);
@@ -146,7 +131,7 @@ module.exports = class extends Generator {
           typeof definition.name === 'string'
         ) {
           const result = {
-            name: definition.name,
+            name: definition.name
           };
 
           if (
@@ -180,10 +165,7 @@ module.exports = class extends Generator {
     this._copyDotnetProject();
     this._copySchemas();
     this._writeNugetConfig();
-
-    if (this.includeApplicationSettings) {
-      this._writeApplicationSettings();
-    }
+    this._writeApplicationSettings();
   }
 
   _copyDotnetProject() {
@@ -202,7 +184,7 @@ module.exports = class extends Generator {
       {
         botName,
         packageReferences,
-        settingsDirectory,
+        settingsDirectory
       }
     );
 
@@ -241,7 +223,7 @@ module.exports = class extends Generator {
         botName,
         botProjectGuid,
         solutionGuid,
-        projectType,
+        projectType
       }
     );
   }
@@ -254,7 +236,7 @@ module.exports = class extends Generator {
       this.templatePath(path.join('assets', directoryName)),
       this.destinationPath(path.join(botName, directoryName)),
       {
-        botName,
+        botName
       }
     );
   }
@@ -309,8 +291,8 @@ module.exports = class extends Generator {
       const builder = new xml2js.Builder({
         xmldec: {
           version: '1.0',
-          encoding: 'utf-8',
-        },
+          encoding: 'utf-8'
+        }
       });
 
       this.fs.write(

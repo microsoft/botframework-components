@@ -22,22 +22,22 @@ module.exports = class extends Generator {
         pluginDefinitions: [
           {
             name: 'Microsoft.Bot.Components.Orchestrator',
-            settingsPrefix: 'Microsoft.Bot.Components.Orchestrator',
-          },
+            settingsPrefix: 'Microsoft.Bot.Components.Orchestrator'
+          }
         ],
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-preview.20210310.8ee9434',
+            version: '1.0.0-preview.20210310.8ee9434'
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434',
+            version: '1.0.0-preview.20210310.8ee9434'
           },
           {
             name: 'Microsoft.Bot.Components.Orchestrator',
-            version: '1.0.0-preview.20210310.8ee9434',
-          },
+            version: '1.0.0-preview.20210310.8ee9434'
+          }
         ],
         applicationSettingsDirectory: 'settings',
         modifyApplicationSettings: (appSettings) => {
@@ -58,7 +58,7 @@ module.exports = class extends Generator {
         '@microsoft/generator-microsoft-bot-calendar/generators/app'
       ),
       {
-        arguments: ['calendar'],
+        arguments: ['calendar']
       }
     );
   }
@@ -67,7 +67,9 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
-      { botName: this.options.botName }
+      {
+        botName: this.options.botName
+      }
     );
   }
 };

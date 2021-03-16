@@ -19,7 +19,7 @@ module.exports = class extends Generator {
       {
         arguments: this.args,
         packageReferences: [],
-        applicationSettingsDirectory: 'settings',
+        applicationSettingsDirectory: 'settings'
       }
     );
   }
@@ -29,7 +29,7 @@ module.exports = class extends Generator {
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName,
+        botName: this.options.botName
       }
     );
   }
