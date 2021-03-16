@@ -46,6 +46,10 @@
 - 3pm
 - monday
 - wednesday
+- new meeting with allan on monday at 10am
+- find my meetings with elaine
+- get my schedule
+- what's on today
 
 
 # Cancel
@@ -205,6 +209,10 @@
 - update the meeting body
 - update the meeting content for the {@subject=budget review}
 - update the meeting content with {@contact=ryan} {@date=next week}
+- no, change the description
+- no, add a description
+- yes, but can i set the description
+- sure, but I need to add a description
 
 
 @ intent SetDescription usesFeatures Update,Event,Location,Titled
@@ -263,6 +271,10 @@
 - update the location of the meeting with {@contact=jose} and {@contact=em} on {@date=thursday at 11am} to {@location=room 345}
 - update the location of the meeting with {@contact=susan} and {@contact=john}
 - update the location to {@location=kitchen}
+- no, update the location to {@location=room 345}
+- no, make the location {@location=best buy}
+- yes, but let's update the location
+- yes, but set the location
 
 
 @ intent SetLocation usesFeatures Update,Event,Location,Titled
@@ -290,6 +302,10 @@
 - make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
 - make the {@subject=standup} a virtual meeting {@date=today}
 - make this an online meeting
+- no, add a meeting link too
+- no, I want this to me a teams meeting
+- yes, and add teams
+- yes, but add a link as well
 
 
 @ intent SetOnlineMeetingAdd usesFeatures Update,Event,Location,Add,Titled
@@ -315,6 +331,10 @@
 - remove the online meeting from the next event
 - remove the phone number from the {@subject=team meeting} {@date=next week}
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+- no, remove the teams link
+- no i don't want teams
+- yes, but take teams out
+- yes but no online meeting
 
 
 @ intent SetOnlineMeetingRemove usesFeatures Update,Event,Location,Remove,Titled
@@ -340,6 +360,10 @@
 - update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
 - update the subject of the next event to {@newSubject=standup}
 - update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+- no, change the title please
+- no i want the title to be {@newSubject=podcast recording}
+- yes but change the title to be {@newSubject=design meeting}
+- yes except the title is wrong
 
 
 @ intent SetTitle usesFeatures Update,Event,Location,Titled
@@ -404,7 +428,7 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what
 
 
 > # List entities
