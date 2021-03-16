@@ -17,13 +17,16 @@ namespace <%= botName %>.Controllers
     {
         private readonly Dictionary<string, IBotFrameworkHttpAdapter> _adapters = new Dictionary<string, IBotFrameworkHttpAdapter>();
         private readonly IBot _bot;
+        private readonly ILogger<BotController> _logger;
 
         public BotController(
-            IEnumerable<IBotFrameworkHttpAdapter> adapters, 
-            IEnumerable<AdapterSettings> adapterSettings, 
-            IBot bot)
+            IEnumerable<IBotFrameworkHttpAdapter> adapters,
+            IEnumerable<AdapterSettings> adapterSettings,
+            IBot bot,
+            ILogger<BotController> logger)
         {
             _bot = bot ?? throw new ArgumentNullException(nameof(bot));
+            _logger = logger;
 
             foreach (var adapter in adapters ?? throw new ArgumentNullException(nameof(adapters)))
             {
@@ -43,17 +46,24 @@ namespace <%= botName %>.Controllers
         {
             if (string.IsNullOrEmpty(route))
             {
+                _logger.LogError($"PostAsync: No route provided.");
                 throw new ArgumentNullException(nameof(route));
             }
-            
+
             if (_adapters.TryGetValue(route, out IBotFrameworkHttpAdapter adapter))
             {
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.LogInformation($"PostAsync: routed '{route}' to {adapter.GetType().Name}");
+                }
+
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.
                 await adapter.ProcessAsync(Request, Response, _bot).ConfigureAwait(false);
             }
             else
             {
+                _logger.LogError($"PostAsync: No adapter registered and enabled for route {route}.");
                 throw new KeyNotFoundException($"No adapter registered and enabled for route {route}.");
             }
         }

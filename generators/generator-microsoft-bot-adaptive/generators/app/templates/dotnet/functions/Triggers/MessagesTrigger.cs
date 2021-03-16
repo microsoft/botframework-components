@@ -18,13 +18,16 @@ namespace <%= botName %>.Triggers
     {
         private readonly Dictionary<string, IBotFrameworkHttpAdapter> _adapters = new Dictionary<string, IBotFrameworkHttpAdapter>();
         private readonly IBot _bot;
+        private readonly ILogger<BotController> _logger;
 
         public MessagesTrigger(
-            IEnumerable<IBotFrameworkHttpAdapter> adapters, 
-            IEnumerable<AdapterSettings> adapterSettings, 
-            IBot bot)
+            IEnumerable<IBotFrameworkHttpAdapter> adapters,
+            IEnumerable<AdapterSettings> adapterSettings,
+            IBot bot,
+            ILogger<MessagesTrigger> logger)
         {
             _bot = bot ?? throw new ArgumentNullException(nameof(bot));
+            _logger = logger;
 
             foreach (var adapter in adapters ?? throw new ArgumentNullException(nameof(adapters)))
             {
@@ -51,11 +54,17 @@ namespace <%= botName %>.Triggers
         {
             if (string.IsNullOrEmpty(route))
             {
+                _logger.LogError($"RunAsync: No route provided.");
                 throw new ArgumentNullException(nameof(route));
             }
 
             if (_adapters.TryGetValue(route, out IBotFrameworkHttpAdapter adapter))
             {
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.LogInformation($"RunAsync: routed '{route}' to {adapter.GetType().Name}");
+                }
+
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.
                 await adapter.ProcessAsync(req, req.HttpContext.Response, _bot).ConfigureAwait(false);
@@ -64,13 +73,14 @@ namespace <%= botName %>.Triggers
                 {
                     return new OkResult();
                 }
-                
+
                 return new ContentResult()
                 {
                     StatusCode = req.HttpContext.Response.StatusCode,
                 };
             }
 
+            _logger.LogError($"RunAsync: No adapter registered and enabled for route {route}.");
             throw new KeyNotFoundException($"No adapter registered and enabled for route {route}.");
         }
     }
