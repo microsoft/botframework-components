@@ -27,7 +27,7 @@
 - CASE: ${"DirectReports"}
     - There are ${TotalCount} people that are part of **${User.displayName}**'s team.
 - CASE: ${"PersonSearch"}
-    - Hello
+    - ${MultiplePersonSearchResult(User, HasOverflowingResult)}
 - DEFAULT:
     - I found multiple results:
 
