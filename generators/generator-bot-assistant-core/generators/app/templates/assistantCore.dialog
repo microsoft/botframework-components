@@ -198,6 +198,28 @@
           "knowledgeBaseId": "=settings.qna.knowledgebaseid"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "OCgnRt",
+        "name": "OnError"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "mM3nez"
+          },
+          "activity": "${SendActivity_mM3nez()}"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Z0xhJ8"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
