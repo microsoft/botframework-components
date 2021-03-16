@@ -32,6 +32,12 @@
 - what's on my calendar with {@contact=margaret} and {@contact=you@test.net} with a title of {@subject=planning for end of year}
 - what's on my schedule {@date=today}
 - what's on {@date=today}
+- what's my next event
+- what do i have next
+- what is my next event
+- what is my next meeting
+- what's up next
+- whats my next meeting
 
 @ intent GetEvents usesFeatures Event,Location,Titled,Show
 
@@ -86,4 +92,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

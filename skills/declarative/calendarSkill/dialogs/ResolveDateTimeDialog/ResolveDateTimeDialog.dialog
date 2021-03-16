@@ -76,7 +76,7 @@
               "$designer": {
                 "id": "vwdsTV"
               },
-              "condition": "toLower($foreach.value.text) == \"my day\"",
+              "condition": "toLower($foreach.value.text) == \"my day\" || $foreach.value.typeName == \"datetimeV2.set\"",
               "actions": [
                 {
                   "$kind": "Microsoft.ContinueLoop",
@@ -93,6 +93,29 @@
               },
               "property": "$resolvedType",
               "value": "=$foreach.value.Resolution.values[0].type"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "et2uFP"
+              },
+              "index": "dialog.foreach.index2",
+              "value": "dialog.foreach.value2",
+              "itemsProperty": "$foreach.value.Resolution.values",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "ATOu0j"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$foreach.value.Resolution.values[$foreach.index2].text",
+                      "value": "=$foreach.value.text"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "$kind": "Microsoft.EmitEvent",

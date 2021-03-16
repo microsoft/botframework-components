@@ -392,3 +392,6 @@ experimental/generator-dotnet-yeoman/node_modules
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+# Ignore package lock files
+package-lock.json

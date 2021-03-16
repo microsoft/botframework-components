@@ -141,7 +141,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             // if start date is not provided, default to DateTime.Now
             var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
 
-            // if datetime field just contains time but no date, use date today at use's timezone
+            // if datetime field just contains date but no time, use today's date as the datetime range
             if (!dateTimeTypeProperty.Contains("date"))
             {
                 if (startProperty != null)
@@ -231,31 +231,33 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 parsedEvents = parsedEvents.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
             }
 
-            // Get result by order
-            if (parsedEvents.Any() && ordinalProperty != null)
-            {
-                long offset = -1;
-                if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
-                {
-                    offset = ordinalProperty.Offset - 1;
-                }
-                else if (ordinalProperty.RelativeTo == "end")
-                {
-                    offset = parsedEvents.Count - ordinalProperty.Offset - 1;
-                }
-
-                if (offset >= 0 && offset < parsedEvents.Count)
-                {
-                    parsedEvents = new List<CalendarSkillEventModel>() { parsedEvents[(int)offset] };
-                }
-            }
-
-            // TODO: Support for events that last all day or span multiple days. Needs design
-            return parsedEvents
+            parsedEvents = parsedEvents
                 .Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime).Date >= startProperty.Value.Date)
                 .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
                 .Take(maxResults)
                 .ToList();
+
+            // Get result by order
+            if (parsedEvents.Any() && ordinalProperty != null)
+            {
+                long itemIndex = -1;
+                if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
+                {
+                    itemIndex = ordinalProperty.Offset - 1;
+                }
+                else if (ordinalProperty.RelativeTo == "end")
+                {
+                    itemIndex = parsedEvents.Count - ordinalProperty.Offset - 1;
+                }
+
+                if (itemIndex >= 0 && itemIndex < parsedEvents.Count)
+                {
+                    parsedEvents = new List<CalendarSkillEventModel>() { parsedEvents[(int)itemIndex] };
+                }
+            }
+
+            // TODO: Support for events that last all day or span multiple days. Needs design
+            return parsedEvents;
         }
 
         /// <inheritdoc/>

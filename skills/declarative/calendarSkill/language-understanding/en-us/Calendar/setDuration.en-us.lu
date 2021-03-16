@@ -17,8 +17,10 @@
 - update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
 - update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
 - update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
-- update the meeting to last {@duration=an hour and a half}
-- update to {@duration=1 hour and 30 minutes}
+- no, update the meeting to last {@duration=an hour and a half}
+- no, update to {@duration=1 hour and 30 minutes}
+- yes, but set to {@duration=1 hour}
+- sure, and make the meeting last {@duration=30 min}
 
 @ intent SetDuration usesFeatures Update,Event,Location,Titled
 

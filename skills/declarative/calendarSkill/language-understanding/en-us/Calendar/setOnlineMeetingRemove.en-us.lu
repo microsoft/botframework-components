@@ -19,6 +19,10 @@
 - remove the online meeting from the next event
 - remove the phone number from the {@subject=team meeting} {@date=next week}
 - remove the teams call from the {@subject=team lunch} on {@date=wednesday}
+- no, remove the teams link
+- no i don't want teams
+- yes, but take teams out
+- yes but no online meeting
 
 @ intent SetOnlineMeetingRemove usesFeatures Update,Event,Location,Remove,Titled
 

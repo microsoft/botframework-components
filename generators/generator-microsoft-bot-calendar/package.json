@@ -2,23 +2,29 @@
   "name": "@microsoft/generator-microsoft-bot-calendar",
   "version": "0.0.1",
   "description": "Preview calendar bot for TESTING ONLY",
+  "keywords": [
+    "conversationalcore",
+    "yeoman-generator"
+  ],
+  "license": "ISC",
+  "author": "Bot Framework",
   "main": "./generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "lint": "eslint -c ../../.eslintrc.json ."
+  },
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "conversationalcore",
-    "yeoman-generator"
-  ],
-  "author": "Bot Framework",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botframework-components.git"
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest"
   }
 }

@@ -13,37 +13,48 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
+      require.resolve(
+        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+      ),
       {
         arguments: this.args,
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
-            version: '1.0.0-alpha.20210310.8ee9434'
-          }
+            version: '1.0.0-alpha.20210310.8ee9434',
+          },
         ],
-        pluginDefinitions : [
+        pluginDefinitions: [
           {
-            'name': 'Microsoft.Bot.Components.Calendar',
-            'settingsPrefix': 'Microsoft.Bot.Components.Calendar'
+            name: 'Microsoft.Bot.Components.Calendar',
+            settingsPrefix: 'Microsoft.Bot.Components.Calendar',
           },
           {
-            'name': 'Microsoft.Bot.Components.Graph',
-            'settingsPrefix': 'Microsoft.Bot.Components.Graph'
-          }
+            name: 'Microsoft.Bot.Components.Graph',
+            settingsPrefix: 'Microsoft.Bot.Components.Graph',
+          },
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false
+        modifyApplicationSettings: (appSettings) => {
+          Object.assign(appSettings, {
+            oauthConnectionName: 'Outlook',
+            defaultValue: {
+              duration: 30,
+            },
+          });
+
+          appSettings.runtimeSettings.features.setSpeak = true;
+        },
       }
     );
   }
-  
+
   writing() {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }

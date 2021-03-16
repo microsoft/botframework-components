@@ -5,24 +5,20 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument("botName", { type: String, required: true });
-    
+    this.argument('botName', { type: String, required: true });
   }
 
   initializing() {
-    this.composeWith(
-      require.resolve('generator-adaptive-bot/generators/app'),
-      {
-        arguments: this.args,
-        packageReferences: [
-          // PLACE COMPONENT PACKAGES THAT YOUR BOT TEMPLATE USES HERE
-        ],
-        applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
-      }
-    );
+    this.composeWith(require.resolve('generator-adaptive-bot/generators/app'), {
+      arguments: this.args,
+      packageReferences: [
+        // PLACE COMPONENT PACKAGES THAT YOUR BOT TEMPLATE USES HERE
+      ],
+      applicationSettingsDirectory: 'settings',
+      includeApplicationSettings: false,
+    });
   }
-  
+
   writing() {
     this.fs.copyTpl(
       this.templatePath(),

@@ -19,6 +19,10 @@
 - update the location of the meeting with {@contact=jose} and {@contact=em} on {@date=thursday at 11am} to {@location=room 345}
 - update the location of the meeting with {@contact=susan} and {@contact=john}
 - update the location to {@location=kitchen}
+- no, update the location to {@location=room 345}
+- no, make the location {@location=best buy}
+- yes, but let's update the location
+- yes, but set the location
 
 @ intent SetLocation usesFeatures Update,Event,Location,Titled
 

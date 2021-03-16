@@ -43,7 +43,8 @@
     "triggers": {
       "Next": [],
       "Previous": [],
-      "Skip": []
+      "Skip": [],
+      "Cancel": []
     }
   },
   "UpdateEventDialog.en-us": {
