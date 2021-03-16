@@ -296,17 +296,26 @@
           },
           "resultProperty": "$events",
           "token": "=user.token.token",
-          "titleProperty": "=$parameters.subject",
-          "locationProperty": "=$parameters.location",
-          "attendeesProperty": "=$parameters.attendees",
           "endProperty": "=$parameters.end",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "dateTimeTypeProperty": "=coalesce($type, \"date\")",
           "startProperty": "=$parameters.start",
-          "ordinalProperty": "=$ordinal",
           "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
           "userEmailProperty": "=user.profile.mail",
           "maxResultsProperty": "=25"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.FilterEvents",
+          "$designer": {
+            "id": "uI3CaY"
+          },
+          "resultProperty": "$events",
+          "token": "=user.token.token",
+          "eventsProperty": "=$events",
+          "titleProperty": "=$parameters.subject",
+          "locationProperty": "=$parameters.location",
+          "attendeesProperty": "=$parameters.attendees",
+          "ordinalProperty": "=$parameters.ordinal"
         }
       ]
     },
