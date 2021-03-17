@@ -8,7 +8,7 @@ const flags = minimist(process.argv.slice(1));
 
 const options = {};
 
-const [port] = [flags.port, process.env.port, process.env.PORT].filter(
+const port = [flags.port, process.env.port, process.env.PORT].find(
   (port) => port != null
 );
 
