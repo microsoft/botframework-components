@@ -3,8 +3,11 @@
 
 namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 {
+    using Microsoft.Graph;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Threading.Tasks;
 
     [TestClass]
     public class GetManagerTests : WhoSkillTestBase
@@ -12,18 +15,31 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), nameof(GetManagerTests));
 
         [TestMethod]
-        public void GetManager_HappyPath()
+        public async Task GetManager_HappyPath()
         {
+            Profile manager = this.AddUserProfile("Megan Bowen", "megan@contoso.com", "425-111-1111", "City Center", "Software Engineer", addToSearchResult: false);
+            Profile me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
+
+            // Setup the tree
+            this.SetupUserRequest(manager, null, new List<Profile>() { me });
+            this.SetupUserRequest(me, manager, null);
+
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
-        public void GetManager_UserNotFound()
+        public async Task GetManager_UserNotFound()
         {
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
-        public void GetManager_NoManager()
+        public async Task GetManager_NoManager()
         {
+            Profile me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
+            this.SetupUserRequest(me, null, null);
+
+            await this.RunTestScriptAsync();
         }
     }
 }

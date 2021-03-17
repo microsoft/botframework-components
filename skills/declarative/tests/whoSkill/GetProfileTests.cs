@@ -15,7 +15,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         [TestMethod]
         public async Task GetProfile_HappyPath()
         {
-            this.AddUserProfile("Thomas Chung", "thomas@contoso.com", "425-111-1111", "City Center", "Software Engineer");
+            this.SetupUserRequest(this.AddUserProfile("Thomas Chung", "thomas@contoso.com", "425-111-1111", "City Center", "Software Engineer"));
 
             await this.RunTestScriptAsync();
         }
@@ -23,10 +23,10 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         [TestMethod]
         public async Task GetProfile_HappyPath_MultipleUsers()
         {
-            this.AddUserProfile("Thomas A Chung", "thomasa@contoso.com", "425-111-1111", "City Center", "Software Engineer");
-            this.AddUserProfile("Thomas B Chung", "thomasb@contoso.com", "425-222-2222", "City Center", "Software Engineer II");
-            this.AddUserProfile("Thomas C Chung", "thomasc@contoso.com", "425-333-3333", "City Center", "PM");
-            this.AddUserProfile("Thomas D Chung", "thomasd@contoso.com", "425-444-4444", "City Center", "Designer");
+            this.SetupUserRequest(this.AddUserProfile("Thomas A Chung", "thomasa@contoso.com", "425-111-1111", "City Center", "Software Engineer"));
+            this.SetupUserRequest(this.AddUserProfile("Thomas B Chung", "thomasb@contoso.com", "425-222-2222", "City Center", "Software Engineer II"));
+            this.SetupUserRequest(this.AddUserProfile("Thomas C Chung", "thomasc@contoso.com", "425-333-3333", "City Center", "PM"));
+            this.SetupUserRequest(this.AddUserProfile("Thomas D Chung", "thomasd@contoso.com", "425-444-4444", "City Center", "Designer"));
 
             await this.RunTestScriptAsync();
         }

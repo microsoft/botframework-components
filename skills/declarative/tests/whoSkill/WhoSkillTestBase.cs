@@ -12,6 +12,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading;
 
@@ -27,13 +28,10 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             private set;
         }
 
-        protected Dictionary<string, Profile> TestProfiles
-        {
-            get;
-            private set;
-        }
-
-        private Mock<IGraphServiceClient> testGraphClient;
+        /// <summary>
+        /// Mock test client for graph
+        /// </summary>
+        private Mock<IGraphServiceClient> testGraphClient = new Mock<IGraphServiceClient>();
 
         /// <inheritdoc />
         protected override void InitializeTest()
@@ -42,7 +40,6 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
             this.testGraphClient = new Mock<IGraphServiceClient>();
             this.TestUsers = new List<User>();
-            this.TestProfiles = new Dictionary<string, Profile>(StringComparer.OrdinalIgnoreCase);
 
             this.SetupSearch();
 
@@ -57,7 +54,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         /// <param name="phoneNumber"></param>
         /// <param name="officeLocation"></param>
         /// <param name="jobTitle"></param>
-        protected void AddUserProfile(string name, string email, string phoneNumber, string officeLocation, string jobTitle)
+        protected Profile AddUserProfile(string name, string email, string phoneNumber, string officeLocation, string jobTitle, bool addToSearchResult= true)
         {
             Profile profile = new Profile
             {
@@ -73,13 +70,15 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             profile.Emails.Add(new ItemEmail() { Address = email });
             profile.Phones.Add(new ItemPhone() { Number = phoneNumber });
 
-            this.TestUsers.Add(new User() { DisplayName = name, JobTitle = jobTitle, Id = profile.Id });
-            this.TestProfiles.Add(profile.Id, profile);
+            if (addToSearchResult)
+            {
+                this.TestUsers.Add(new User() { DisplayName = name, JobTitle = jobTitle, Id = profile.Id });
+            }
 
-            this.SetupUserRequest(profile);
+            return profile;
         }
 
-        private void SetupUserRequest(Profile profile)
+        protected void SetupUserRequest(Profile profile, Profile manager = null, IEnumerable<Profile> directReports = null)
         {
             var profileRequest = new Mock<IProfileRequest>();
             profileRequest.Setup(req => req.GetAsync()).ReturnsAsync(profile);
@@ -88,6 +87,39 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             var userRequestBuilder = new Mock<IUserRequestBuilder>();
             userRequestBuilder.SetupGet(req => req.Profile).Returns(profileRequestBuilder.Object);
 
+            // Attach manager
+            var managerDirectoryRequest = new Mock<IDirectoryObjectWithReferenceRequest>();
+
+            if (manager != null)
+            {
+                managerDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => new DirectoryObject() { Id = manager.Id } );
+            }
+            else
+            {
+                // Simulate manager not found
+                managerDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
+            }
+
+            var managerDirectoryRequestBuilder = new Mock<IDirectoryObjectWithReferenceRequestBuilder>();
+            managerDirectoryRequestBuilder.Setup(req => req.Request()).Returns(managerDirectoryRequest.Object);
+
+            userRequestBuilder.SetupGet(req => req.Manager).Returns(managerDirectoryRequestBuilder.Object);
+
+            // Attach direct reports
+            var directReportsDirectoryRequest = new Mock<IUserDirectReportsCollectionWithReferencesRequest>();
+
+            if (directReports != null)
+            {
+                var page = new Mock<IUserDirectReportsCollectionWithReferencesPage>();
+                page.SetupGet(p => p.CurrentPage).Returns(() => directReports.Select(r => new DirectoryObject() { Id = r.Id }).ToList());
+                directReportsDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(page.Object);
+            }
+            else
+            {
+                directReportsDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
+            }
+
+            // Setup photo to say not found
             var photoContentRequest = new Mock<IProfilePhotoContentRequest>();
             // HACKHACK: Force the result to be notfound to simply load the standard icon
             photoContentRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>(), It.IsAny<HttpCompletionOption>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
@@ -99,6 +131,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
             this.testGraphClient.SetupGet(client => client.Users[profile.Id]).Returns(userRequestBuilder.Object);
         }
+
         /// <summary>
         /// Sets up the search scenario
         /// </summary>
