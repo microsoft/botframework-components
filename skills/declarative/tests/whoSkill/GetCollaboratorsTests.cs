@@ -1,10 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 {
+    using Microsoft.Bot.Dialogs.Tests.Common;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
-    public class GetCollaboratorsTests : WhoSkillDialogTestBase
+    public class GetCollaboratorsTests : WhoSkillTestBase
     {
+        protected override string RelativeTestResourceFolder => "";
+
         [TestMethod]
         public void GetCollaborators_OneFoundFound()
         {

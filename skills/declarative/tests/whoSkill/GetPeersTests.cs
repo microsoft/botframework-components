@@ -1,10 +1,15 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.IO;
+
     [TestClass]
-    public class GetPeersTests : WhoSkillDialogTestBase
+    public class GetPeersTests : WhoSkillTestBase
     {
+        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), nameof(GetPeersTests));
+
         [TestMethod]
         public void GetPeers_OneFoundFound()
         {
