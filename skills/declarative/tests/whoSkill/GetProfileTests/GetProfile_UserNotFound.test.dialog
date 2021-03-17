@@ -20,11 +20,11 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "tell me more about Thomas Chung"
+      "text": "tell me more about Morgan Stanley"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Here is what I found for **Thomas Chung**:"
+      "text": "Sorry, I couldn't find anyone named **Morgan Stanley** in your organization. Please try again."
     }
   ]
 }

@@ -20,11 +20,19 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "tell me more about Thomas Chung"
+      "text": "tell me more about Thomas"
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Here is what I found for **Thomas Chung**:"
+      "text": "I found multiple matches for **Thomas**. Please pick one:"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "the second one"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Here is what I found for **Thomas B Chung**:"
     }
   ]
 }
