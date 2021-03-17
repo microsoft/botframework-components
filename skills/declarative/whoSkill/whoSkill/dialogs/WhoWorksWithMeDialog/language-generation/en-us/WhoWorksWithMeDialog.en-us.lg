@@ -3,6 +3,6 @@
 
 # SendActivity_mfLqxa()
 [Activity
-    Text = I found that ${dialog.UserFound.names[0].displayName} does not have collaborator.
+    Text = I found that **${dialog.UserFound.DisplayName}** does not have collaborator.
 ]
 

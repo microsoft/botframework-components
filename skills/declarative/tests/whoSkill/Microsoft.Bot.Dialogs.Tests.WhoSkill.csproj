@@ -32,6 +32,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="GetCollaboratorsTests\cachedResponses\" />
     <Folder Include="GetPeersTests\cachedResponses\" />
   </ItemGroup>
 

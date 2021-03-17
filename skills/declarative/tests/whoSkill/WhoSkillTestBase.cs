@@ -78,7 +78,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             return profile;
         }
 
-        protected void SetupUserRequest(Profile profile, Profile manager = null, IEnumerable<Profile> directReports = null)
+        protected void SetupUserRequest(Profile profile, Profile manager = null, IEnumerable<Profile> directReports = null, IEnumerable<Profile> collaborators = null)
         {
             var profileRequest = new Mock<IProfileRequest>();
             profileRequest.Setup(req => req.GetAsync()).ReturnsAsync(profile);
@@ -124,6 +124,26 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             var directReportsDirectoryRequestBuilder = new Mock<IUserDirectReportsCollectionWithReferencesRequestBuilder>();
             directReportsDirectoryRequestBuilder.Setup(req => req.Request()).Returns(directReportsDirectoryRequest.Object);
             userRequestBuilder.SetupGet(req => req.DirectReports).Returns(directReportsDirectoryRequestBuilder.Object);
+
+            // Attach collaborators
+            var peopleDirectoryRequest = new Mock<IUserPeopleCollectionRequest>();
+            peopleDirectoryRequest.Setup(req => req.Top(It.IsAny<int>())).Returns(peopleDirectoryRequest.Object);
+            peopleDirectoryRequest.Setup(req => req.Filter(It.IsAny<string>())).Returns(peopleDirectoryRequest.Object);
+
+            if (collaborators != null)
+            {
+                var page = new Mock<IUserPeopleCollectionPage>();
+                page.SetupGet(p => p.CurrentPage).Returns(() => collaborators.Select(r => new Person() { Id = r.Id }).ToList());
+                peopleDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(page.Object);
+            }
+            else
+            {
+                peopleDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
+            }
+
+            var peopleDirectoryRequestBuilder = new Mock<IUserPeopleCollectionRequestBuilder>();
+            peopleDirectoryRequestBuilder.Setup(req => req.Request()).Returns(peopleDirectoryRequest.Object);
+            userRequestBuilder.SetupGet(req => req.People).Returns(peopleDirectoryRequestBuilder.Object);
 
             // Setup photo to say not found
             var photoContentRequest = new Mock<IProfilePhotoContentRequest>();
