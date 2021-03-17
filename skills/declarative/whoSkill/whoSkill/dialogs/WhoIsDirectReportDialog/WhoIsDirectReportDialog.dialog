@@ -17,16 +17,59 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "17pomb"
+            "id": "d0TydA"
           },
-          "activityProcessed": true,
-          "dialog": "FindPersonDialog",
-          "options": {
-            "nameEntity": "=$nameEntity"
+          "condition": "=not(exists($UserFound))",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "FTKDFL"
+              },
+              "name": "UserFound",
+              "label": "UserId",
+              "valueType": "string",
+              "value": "=$UserFound"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ZPh1Ww"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              },
+              "resultProperty": "$UserToSearchFor"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0vENgn"
           },
-          "resultProperty": "$UserToSearchFor"
+          "condition": "=exists($UserToSearchFor)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "P6fqO4"
+              },
+              "activity": "${SendActivity_P6fqO4()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "xcr8th"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.TraceActivity",

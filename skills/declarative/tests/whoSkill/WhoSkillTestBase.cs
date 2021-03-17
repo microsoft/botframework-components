@@ -119,6 +119,12 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
                 directReportsDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
             }
 
+            directReportsDirectoryRequest.Setup(req => req.Top(It.IsAny<int>())).Returns(directReportsDirectoryRequest.Object);
+
+            var directReportsDirectoryRequestBuilder = new Mock<IUserDirectReportsCollectionWithReferencesRequestBuilder>();
+            directReportsDirectoryRequestBuilder.Setup(req => req.Request()).Returns(directReportsDirectoryRequest.Object);
+            userRequestBuilder.SetupGet(req => req.DirectReports).Returns(directReportsDirectoryRequestBuilder.Object);
+
             // Setup photo to say not found
             var photoContentRequest = new Mock<IProfilePhotoContentRequest>();
             // HACKHACK: Force the result to be notfound to simply load the standard icon
