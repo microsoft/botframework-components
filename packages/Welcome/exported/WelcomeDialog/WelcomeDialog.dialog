@@ -2,10 +2,11 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "$designer": {
-      "name": "Welcome",
+      "name": "WelcomeDialog",
       "description": "",
       "id": "8pOkoq"
-    }
+    },
+    "name": "WelcomeDialog"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -53,7 +54,7 @@
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
-  "generator": "Welcome.lg",
-  "id": "Welcome",
-  "recognizer": "Welcome.lu.qna"
+  "generator": "WelcomeDialog.lg",
+  "id": "WelcomeDialog",
+  "recognizer": "WelcomeDialog.lu.qna"
 }
