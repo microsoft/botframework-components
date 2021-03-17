@@ -34,7 +34,7 @@ module.exports = class extends BaseGenerator {
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
-        packageReferences: packageReferences[this.options.platform]
+        packageReferences: packageReferences[this.options.platform],
       })
     );
   }
