@@ -1,19 +1,19 @@
-# generator-adaptive-bot [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-microsoft-bot-adaptive [![NPM version][npm-image]][npm-url]
 > Yeoman generator for creating a bot application built on top of the Microsoft Bot Framework SDK and Adaptive Runtime.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-conversational-core using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and @microsoft/generator-microsoft-bot-adaptive using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
-npm install -g generator-adaptive-bot
+npm install -g @microsoft/generator-microsoft-bot-adaptive
 ```
 
 Then generate your new project:
 
 ```bash
-yo adaptive-bot '{BOT_NAME}'
+yo @microsoft/microsoft-bot-adaptive '{BOT_NAME}'
 ```
 
 ## Getting To Know Yeoman
@@ -26,5 +26,5 @@ yo adaptive-bot '{BOT_NAME}'
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/generator-adaptive-bot.svg
-[npm-url]: https://npmjs.org/package/generator-adaptive-bot
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-microsoft-bot-adaptive.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-microsoft-bot-adaptive

@@ -234,6 +234,14 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "false"
+                },
+                {
+                  "property": "$listOptions.Scenario",
+                  "value": "=$scenario"
                 }
               ]
             },
@@ -326,6 +334,14 @@
                 {
                   "property": "$listOptions.pageIndex",
                   "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.isFirstTurn",
+                  "value": "=false"
+                },
+                {
+                  "property": "$listOptions.Scenario",
+                  "value": "=$Scenario"
                 }
               ]
             },

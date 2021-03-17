@@ -8,7 +8,7 @@
 # SendActivity_AlS4sI()
 [HeroCard
     text = ${HelpMessage()}
-    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction('')}
 ]
 
 # SendActivity_klrCg4()
@@ -20,7 +20,7 @@
 # SendActivity_lqvfia()
 [HeroCard
     text = ${WelcomeUser()}
-    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction(startOfDay(TimeZoneNow()))}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction('')}
 ]
 
 # SendActivity_DGXXhL()
@@ -44,17 +44,12 @@
 
 # SendActivity_QqvaSr()
 [Activity
-    text = ${FoundAvailableTimeResponseText($freeTime.start)}
-    attachments = ${json(CardTemplate(ScheduleHeader($freeTime.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
+    attachments = ${json(CardTemplate(ScheduleHeader($options.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
     attachmentLayout = carousel
 ]
 
 # SendActivity_WlmO9l()
-[Activity
-    text = ${FoundNoAvailableTimeResponseText()}
-    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, TimeZoneNow()), $events), ScheduleList($event), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
+- You don't have anything schedule on ${CapitalizeFirstLetter(FormatDate($options.start))}.
 
 # SendActivity_mWnyUh()
 - ${GeneralErrorMessage()}
@@ -92,11 +87,20 @@
     attachments = ${json(EventDetailActionsCard(last($events)))}
 ]
 # SendActivity_2q5Pi3()
-- ${turn.dialogEvent.value}
+- ```
+Conversation Id: ${conversation.Id}
+
+${turn.dialogEvent.value}
+```
 
 # SendActivity_WgFfpN()
 [Activity
     to = turn.activity.from
     deliveryMode = whisper
     attachments = ${json(SendActivity_lqvfia())}
+]
+
+# SendActivity_H4Vut2()
+[Activity
+    Text = Conversation Id: ${conversation.id}
 ]

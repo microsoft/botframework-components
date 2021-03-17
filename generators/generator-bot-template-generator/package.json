@@ -2,23 +2,25 @@
   "name": "generator-bot-template-generator",
   "version": "0.0.1",
   "description": "Generate a bot template generator for use with Microsoft Bot Framework",
-  "author": "Microsoft",
-  "files": [
-    "app"
-  ],
   "keywords": [
     "bot-template-generator",
     "microsoft",
     "bot",
     "template"
   ],
-  "scripts": {
-    "test": "jest",
-    "pretest": "eslint . --fix",
-    "prepublishOnly": "yarn audit"
+  "license": "ISC",
+  "author": "Bot Framework",
+  "files": [
+    "app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
   },
-  "engines": {
-    "node": ">=4.0.0"
+  "scripts": {
+    "lint": "eslint -c ../../.eslintrc.json .",
+    "test": "jest",
+    "prepublishOnly": "yarn audit"
   },
   "dependencies": {
     "inquirer-npm-name": "^3.0.0",
@@ -27,37 +29,17 @@
     "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
-    "eslint": "^5.3.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-xo-space": "^0.20.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
-    "prettier": "^1.10.2",
+    "prettier": "latest",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "xo-space/esnext",
-      "prettier"
-    ],
-    "env": {
-      "jest": true,
-      "node": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "printWidth": 90
-        }
-      ]
-    },
-    "plugins": [
-      "prettier"
-    ]
+  "engines": {
+    "node": ">=4.0.0"
   },
   "jest": {
     "testEnvironment": "node",

@@ -100,9 +100,8 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 && not(exists(#None)) || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(turn.recognized.score > 0.5 && not(exists(#None))) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_VRSPsi()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -181,7 +180,8 @@
             "recognizeOrdinals": true,
             "recognizeNumbers": true
           },
-          "style": "none"
+          "style": "none",
+          "maxTurnCount": "=if($skipUpdatePrompt, 1, 3)"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -193,6 +193,13 @@
             {
               "value": "attendees",
               "actions": [
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "16MX0G"
+                  },
+                  "property": "$skipContactPrompt"
+                },
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
@@ -283,7 +290,6 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": "=$turnCount",
           "alwaysPrompt": false,
           "allowInterruptions": false,
           "prompt": "${ConfirmInput_Prompt_7ANEcD()}",
@@ -297,7 +303,9 @@
             "inlineSeparator": ", "
           },
           "property": "turn.repeat",
-          "style": "suggestedAction"
+          "style": "suggestedAction",
+          "defaultValue": false,
+          "maxTurnCount": 3
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -314,7 +322,8 @@
               "properties": [
                 "$options.updateProperty",
                 "$options.updateAction",
-                "$options.updateValue"
+                "$options.updateValue",
+                "$skipUpdatePrompt"
               ]
             },
             {
@@ -407,9 +416,9 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
+          "maxTurnCount": "=if($skipContactPrompt, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(turn.recognized.score > 0.5 && not(exists(#None))) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_488KMT()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -480,11 +489,19 @@
               ]
             }
           ],
-          "elseActions": [
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "G2ZZRj"
+          },
+          "condition": "=$options.updateAction == 'remove'",
+          "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "IB0GoF"
+                "id": "moWw86"
               },
               "assignments": [
                 {
@@ -493,7 +510,7 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "email"
+                  "value": "name"
                 },
                 {
                   "property": "$listOptions.activePrompt",
@@ -511,13 +528,17 @@
                     "skipResponse": "ContactListSkipResponse",
                     "defaultValueResponse": "ContactListDefaultValueResponse"
                   }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
                 }
               ]
             },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "zVOmZ0"
+                "id": "A1G1Ci"
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
@@ -527,7 +548,7 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "4MrlUO"
+                "id": "cLK0Cz"
               },
               "property": "$contactToRemove",
               "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
@@ -535,7 +556,7 @@
             {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "0SrLml"
+                "id": "SFBYWY"
               },
               "changeType": "remove",
               "itemsProperty": "$event.attendees",
@@ -544,9 +565,9 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "n59nHl"
+                "id": "Qv9lHi"
               },
-              "activity": "${SendActivity_n59nHl()}"
+              "activity": "${SendActivity_Qv9lHi()}"
             }
           ]
         },
@@ -889,7 +910,7 @@
             "query": "=turn.query",
             "expectedType": "duration"
           },
-          "resultProperty": "$duration"
+          "resultProperty": "turn.duration"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -1088,7 +1109,8 @@
             "inlineSeparator": ", "
           },
           "property": "$confirmUpdate",
-          "style": "none"
+          "style": "none",
+          "defaultValue": false
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -1239,6 +1261,22 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "wRtM2R"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            },
+            {
+              "property": "$skipContactPrompt",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "4p7Kwe"
           },
           "assignments": [
@@ -1252,7 +1290,7 @@
             },
             {
               "property": "$options.updateValue",
-              "value": "=@@newContact"
+              "value": "=unique(union(coalesce(@@contact, []), coalesce(@@newContact, []), coalesce(@@personName, [])))"
             }
           ]
         },
@@ -1287,6 +1325,22 @@
           },
           "property": "$turnCount",
           "value": "=$turnCount + 3"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "SgZdoV"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            },
+            {
+              "property": "$skipContactPrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1343,6 +1397,18 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "N4m4Lh"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "IT5Mhb"
           },
           "assignments": [
@@ -1391,6 +1457,18 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "gcqAQa"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "i2Fadn"
           },
           "assignments": [
@@ -1431,6 +1509,18 @@
           },
           "property": "$turnCount",
           "value": "=$turnCount + 3"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "fCSSJi"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1483,6 +1573,18 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "A4QwHp"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "ZtHibq"
           },
           "assignments": [
@@ -1527,6 +1629,18 @@
           },
           "property": "$turnCount",
           "value": "=$turnCount + 3"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Dmkh1v"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1579,6 +1693,18 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "8OSe2e"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "0hsFO7"
           },
           "assignments": [
@@ -1623,6 +1749,18 @@
           },
           "property": "$turnCount",
           "value": "=$turnCount + 3"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "n5MMJY"
+          },
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",

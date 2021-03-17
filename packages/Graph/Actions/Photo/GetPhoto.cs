@@ -50,6 +50,16 @@ namespace Microsoft.Bot.Component.Graph.Actions
         }
 
         /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // Not found is fine if the person doesn't have any photo
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
+        }
+
+        /// <inheritdoc />
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
             if (this.UserId == null)

@@ -70,7 +70,7 @@
           "activityProcessed": true,
           "dialog": "WhoWorksWithMeDialog",
           "options": {
-            "UserId": "=$options.userId",
+            "UserFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"
           }
         }
@@ -283,7 +283,7 @@
           "dialog": "WhoIsManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "userId": "=$options.userId"
+            "UserFound": "=$options.user"
           }
         }
       ],
@@ -321,7 +321,7 @@
           "dialog": "WhoIsPeerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "userId": "=$options.userId"
+            "UserFound": "=$options.user"
           }
         }
       ]
@@ -416,8 +416,8 @@
               "value": "=coalesce(@contact, @email, @personName)"
             },
             {
-              "property": "$options.userId",
-              "value": "=turn.activity.value.userId"
+              "property": "$options.user",
+              "value": "=turn.activity.value.user"
             }
           ]
         },
@@ -444,6 +444,16 @@
             "id": "BnGy6N"
           },
           "name": "whoSkill.OnError"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NfAZge"
+          },
+          "name": "Error",
+          "label": "Error",
+          "valueType": "string",
+          "value": "=turn.dialogEvent"
         },
         {
           "$kind": "Microsoft.SendActivity",

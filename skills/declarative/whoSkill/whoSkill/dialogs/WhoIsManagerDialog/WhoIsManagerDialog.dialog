@@ -21,7 +21,7 @@
           "$designer": {
             "id": "GfHdIy"
           },
-          "condition": "=not(exists($userId))",
+          "condition": "=not(exists($UserFound))",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -30,7 +30,7 @@
               },
               "activityProcessed": true,
               "dialog": "FindPersonDialog",
-              "resultProperty": "dialog.userId",
+              "resultProperty": "$UserFound",
               "options": {
                 "nameEntity": "=$nameEntity"
               }
@@ -45,7 +45,7 @@
               "name": "FoundUserId",
               "label": "UserId",
               "valueType": "String",
-              "value": "=$userId"
+              "value": "=$UserFound"
             }
           ]
         },
@@ -56,7 +56,7 @@
           },
           "name": "UserId",
           "label": "UserId",
-          "value": "=dialog.userId",
+          "value": "=$UserFound.Id",
           "valueType": "String"
         },
         {
@@ -64,16 +64,16 @@
           "$designer": {
             "id": "wHoNHt"
           },
-          "resultProperty": "dialog.Result",
+          "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=dialog.userId"
+          "userId": "=$UserFound.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "LnZlB6"
           },
-          "condition": "=exists(dialog.Result)",
+          "condition": "=exists($Result)",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -85,6 +85,13 @@
           ],
           "actions": [
             {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "f1nPCd"
+              },
+              "activity": "${SendActivity_f1nPCd()}"
+            },
+            {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "K7Ibr0"
@@ -92,10 +99,16 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "userId": "=dialog.Result.Id"
+                "UserFound": "=$Result"
               }
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "zzebs7"
+          }
         }
       ]
     }

@@ -21,7 +21,7 @@
           "$designer": {
             "id": "TZDg2m"
           },
-          "condition": "=not(exists($userId))",
+          "condition": "=not(exists($UserFound))",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -33,7 +33,7 @@
               "options": {
                 "nameEntity": "=$nameEntity"
               },
-              "resultProperty": "$UserId"
+              "resultProperty": "$UserFound"
             }
           ]
         },
@@ -44,7 +44,8 @@
           },
           "token": "=user.token.token",
           "resultProperty": "$Result",
-          "userId": "=$UserId"
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -54,16 +55,19 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result"
+            "UserList": "=$Result",
+            "User": "=$UserFound",
+            "Scenario": "Collaborator",
+            "AutoChooseFirst": "false"
           },
-          "resultProperty": "$DetailUserId"
+          "resultProperty": "$DetailUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "cKj8jy"
           },
-          "condition": "=exists($DetailUserId)",
+          "condition": "=exists($DetailUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -73,7 +77,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserId": "=$DetailUserId"
+                "UserFound": "=$DetailUser"
               }
             }
           ],
@@ -86,6 +90,12 @@
               "activity": "${SendActivity_mfLqxa()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Stpfkh"
+          }
         }
       ]
     }

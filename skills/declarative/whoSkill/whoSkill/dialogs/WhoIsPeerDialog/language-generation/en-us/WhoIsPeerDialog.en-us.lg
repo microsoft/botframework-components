@@ -3,5 +3,6 @@
 
 # SendActivity_7uCWqD()
 [Activity
-    Text = Sorry we did not find a peer for this person!
+    Text = I found that **${dialog.UserFound.displayName}** does not have peers.
 ]
+

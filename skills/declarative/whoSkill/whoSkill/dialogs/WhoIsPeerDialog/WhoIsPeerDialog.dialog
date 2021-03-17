@@ -21,15 +21,15 @@
           "$designer": {
             "id": "ooNnhY"
           },
-          "condition": "=not(exists($userId))",
+          "condition": "=not(exists($UserFound))",
           "elseActions": [
             {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
                 "id": "vjgu3O"
               },
-              "name": "UserIdAlreadyExists",
-              "value": "=$userId"
+              "name": "UserAlreadyProvided",
+              "value": "=$UserFound"
             }
           ],
           "actions": [
@@ -40,7 +40,7 @@
               },
               "activityProcessed": true,
               "dialog": "FindPersonDialog",
-              "resultProperty": "$userId",
+              "resultProperty": "$UserFound",
               "options": {
                 "nameEntity": "=$nameEntity"
               }
@@ -52,10 +52,10 @@
           "$designer": {
             "id": "rHT96x"
           },
-          "name": "UserId",
-          "label": "UserId",
+          "name": "UserFound",
+          "label": "UserFound",
           "valueType": "String",
-          "value": "=dialog.userId"
+          "value": "=dialog.UserFound"
         },
         {
           "$kind": "Microsoft.Graph.User.GetPeers",
@@ -64,7 +64,8 @@
           },
           "resultProperty": "dialog.Result",
           "token": "=user.token.token",
-          "userId": "=dialog.userId"
+          "userId": "=$UserFound.Id",
+          "maxCount": 15
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -75,16 +76,18 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result",
-            "queryType": "Peer"
+            "Scenario": "Peers",
+            "User": "=$UserFound",
+            "AutoChooseFirst": "false"
           },
-          "resultProperty": "$DetailUserId"
+          "resultProperty": "$DetailUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "2bT4YD"
           },
-          "condition": "=exists($DetailUserId)",
+          "condition": "=exists($DetailUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -94,7 +97,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserId": "=$DetailUserId"
+                "UserFound": "=$DetailUser"
               }
             }
           ],
@@ -107,6 +110,12 @@
               "activity": "${SendActivity_7uCWqD()}"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YtwbHP"
+          }
         }
       ]
     }

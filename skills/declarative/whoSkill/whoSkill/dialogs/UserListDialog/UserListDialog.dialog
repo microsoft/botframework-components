@@ -21,61 +21,85 @@
           "$designer": {
             "id": "yjqnnW"
           },
-          "condition": "=exists($UserList)",
+          "condition": "=exists($UserList) && $UserList != null && count($UserList) > 0",
           "elseActions": [],
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "aX6mMt"
+                "id": "rhHgeG"
               },
-              "name": "UserList",
-              "label": "UserList",
-              "valueType": "string",
-              "value": "=$UserList"
-            },
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "3IciB4"
-              },
-              "assignments": [
+              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == \"false\")",
+              "actions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$UserList"
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "DLV52r"
+                  },
+                  "eventName": "GetPhotosForUsers"
                 },
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "3tcM1L"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$UserList"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "UserListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "ChatIconUrl",
+                        "title": "UserListTitle",
+                        "item": "UserListItem",
+                        "actions": "UserListActions",
+                        "initialPrompt": "UserListPrompt",
+                        "showMorePrompt": "UserListShowMorePrompt",
+                        "skipResponse": "UserListSkipResponse",
+                        "defaultValueResponse": "UserListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.Scenario",
+                      "value": "=$Scenario"
+                    },
+                    {
+                      "property": "$listOptions.User",
+                      "value": "=$User"
+                    }
+                  ]
                 },
                 {
-                  "property": "$listOptions.activePrompt",
-                  "value": "UserListPrompt"
-                },
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "myWIkJ"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "resultProperty": "$SelectedUser",
+                  "options": "=$listOptions"
+                }
+              ],
+              "elseActions": [
                 {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "ChatIconUrl",
-                    "title": "UserListTitle",
-                    "item": "UserListItem",
-                    "actions": "UserListActions",
-                    "initialPrompt": "UserListPrompt",
-                    "showMorePrompt": "UserListShowMorePrompt",
-                    "skipResponse": "UserListSkipResponse",
-                    "defaultValueResponse": "UserListDefaultValueResponse"
-                  }
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VBAEXN"
+                  },
+                  "property": "$SelectedUser",
+                  "value": "= $UserList[0]"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "E0yEeY"
-              },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "options": "=$listOptions",
-              "resultProperty": "$SelectedUser"
             }
           ]
         },
@@ -84,7 +108,53 @@
           "$designer": {
             "id": "8PYkyW"
           },
-          "value": "=$SelectedUser.Id"
+          "value": "=$SelectedUser"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "CzptJy",
+        "name": "OnIntent (GetPhotosForUsers)"
+      },
+      "event": "GetPhotosForUsers",
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "2MNt9J"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "itemsProperty": "$UserList",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "oHX6DZ"
+              },
+              "name": "GetPhotoForId",
+              "value": "=$foreach.value.Id"
+            },
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "2OTcYV"
+              },
+              "token": "=user.token.token",
+              "resultProperty": "$ResultPhoto",
+              "userId": "=$foreach.value.Id"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Zw7HZf"
+              },
+              "property": "$UserList[$foreach.index].Photo",
+              "value": "=$ResultPhoto"
+            }
+          ]
         }
       ]
     }

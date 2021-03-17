@@ -26,7 +26,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Default max number of results to return.
         /// </summary>
-        private const int DefaultMaxCount = 15;
+        private const int DefaultMaxCount = 0;
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetWorksWith.GetWorksWithMeDeclarativeType;
@@ -48,7 +48,16 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
-            IUserPeopleCollectionPage result = await client.Users[userId].People.Request().Top(maxCount).GetAsync();
+
+            // Ensure we filter out groups, meeting rooms, etc. which are not actually people
+            IUserPeopleCollectionRequest request = client.Users[userId].People.Request().Filter("personType eq 'Person' and mailboxType eq 'Mailbox'");
+
+            if (maxCount > 0)
+            {
+                request = request.Top(maxCount);
+            }
+
+            IUserPeopleCollectionPage result = await request.GetAsync();
 
             return result.CurrentPage;
         }
