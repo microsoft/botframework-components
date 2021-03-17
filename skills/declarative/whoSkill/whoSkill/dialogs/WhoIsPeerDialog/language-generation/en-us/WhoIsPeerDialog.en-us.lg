@@ -6,3 +6,8 @@
     Text = I found that **${dialog.UserFound.displayName}** does not have peers.
 ]
 
+
+# SendActivity_9JCLK1()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]

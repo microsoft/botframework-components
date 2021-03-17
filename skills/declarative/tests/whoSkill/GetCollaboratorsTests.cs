@@ -25,15 +25,5 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         public void GetCollaborators_UserNotFound()
         {
         }
-
-        [TestMethod]
-        public void GetCollaborators_DirectReportsNotFound()
-        {
-        }
-
-        [TestMethod]
-        public void GetCollaborators_Forbidden()
-        {
-        }
     }
 }
