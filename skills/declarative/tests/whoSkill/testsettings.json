@@ -7,19 +7,19 @@
   "oauthConnectionName": "Outlook",
   "luis": {
     "name": "whoSkill",
-    "authoringKey": "50678cc086f54508beed8e2a882722a3",
-    "endpointKey": "0782a93e5fd94af6a9d112df62f028a0",
+    "authoringKey": "00000000-0000-0000-0000-000000000000",
+    "endpointKey": "00000000-0000-0000-0000-000000000000",
     "authoringRegion": "westus",
     "defaultLanguage": "en-us",
     "environment": "composer",
     "endpoint": "https://westus.api.cognitive.microsoft.com",
     "authoringEndpoint": "https://westus.api.cognitive.microsoft.com",
     "whoSkill_en_us_lu": {
-      "appId": "a38261f9-a640-4e5d-8459-f27f7d074dc0",
-      "version": "0.4"
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
     },
     "ListDialog_en_us_lu": {
-      "appId": "570d283c-eeac-4de4-a622-1331ea0757d8",
+      "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     }
   },
