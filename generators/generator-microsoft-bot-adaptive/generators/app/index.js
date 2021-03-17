@@ -149,33 +149,22 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const dependencies = {};
+    const { label, start } = {
+      [integrations.functions]: { label: 'azure-functions' },
+      [integrations.webapp]: { label: 'restify', start: 'node index.js' },
+    }[integration];
 
-    switch (integration) {
-      case integrations.webapp:
-        Object.assign(dependencies, {
-          'botbuilder-runtime-integration-restify': 'next',
-          minimist: 'latest',
-        });
-
-        break;
-
-      case integrations.functions:
-        Object.assign(dependencies, {
-          'botbuilder-runtime-integration-azure-functions': 'next',
-        });
-
-        break;
-    }
+    const dependencies = {
+      [`botbuilder-runtime-integration-${label}`]: 'next',
+    };
 
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
       name: botName,
       private: true,
       scripts: {
-        build: 'echo done',
+        start,
       },
       dependencies: Object.assign(
-        {},
         this.packageReferences.reduce(
           (acc, { name, version }) => Object.assign(acc, { [name]: version }),
           {}
