@@ -2,23 +2,25 @@
   "name": "generator-bot-template-generator",
   "version": "0.0.1",
   "description": "Generate a bot template generator for use with Microsoft Bot Framework",
-  "author": "Microsoft",
-  "files": [
-    "app"
-  ],
   "keywords": [
     "bot-template-generator",
     "microsoft",
     "bot",
     "template"
   ],
+  "license": "ISC",
+  "author": "Bot Framework",
+  "files": [
+    "app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  },
   "scripts": {
     "lint": "eslint -c ../../.eslintrc.json .",
     "test": "jest",
     "prepublishOnly": "yarn audit"
-  },
-  "engines": {
-    "node": ">=4.0.0"
   },
   "dependencies": {
     "inquirer-npm-name": "^3.0.0",
@@ -35,6 +37,9 @@
     "prettier": "latest",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   },
   "jest": {
     "testEnvironment": "node",
