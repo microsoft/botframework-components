@@ -13,11 +13,6 @@ const options = rt.Record({
     rt.Record({
       name: rt.String,
       version: rt.String,
-    })
-  ),
-  pluginDefinitions: rt.Array(
-    rt.Record({
-      name: rt.String,
       settingsPrefix: rt.String.Or(rt.Undefined),
     })
   ),
@@ -27,7 +22,6 @@ const defaultOptions = {
   applicationSettingsDirectory: undefined,
   modifyApplicationSettings: undefined,
   packageReferences: [],
-  pluginDefinitions: [],
 };
 
 module.exports = class extends BaseGenerator {
@@ -211,14 +205,7 @@ module.exports = class extends BaseGenerator {
       [platforms.js]: 'node index.js',
     }[platform];
 
-    for (const { name } of this.packageReferences) {
-      appSettings.runtimeSettings.plugins.push({
-        name,
-        settingsPrefix: name,
-      });
-    }
-
-    for (const { name, settingsPrefix } of this.pluginDefinitions) {
+    for (const { name, settingsPrefix } of this.packageReferences) {
       appSettings.runtimeSettings.plugins.push({
         name,
         settingsPrefix: settingsPrefix || name,
