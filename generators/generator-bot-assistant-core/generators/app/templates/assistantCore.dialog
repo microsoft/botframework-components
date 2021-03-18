@@ -50,7 +50,7 @@
       "$kind": "Microsoft.OnChooseIntent",
       "$designer": {
         "id": "0h5yes",
-        "name": "OnAmbiguousIntent"
+        "name": "Duplicated intents recognized"
       },
       "actions": [
         {
@@ -203,7 +203,7 @@
       "$kind": "Microsoft.OnError",
       "$designer": {
         "id": "OCgnRt",
-        "name": "OnError"
+        "name": "Error occurred"
       },
       "actions": [
         {
@@ -225,7 +225,7 @@
       "$kind": "Microsoft.OnUnknownIntent",
       "$designer": {
         "id": "zxdGNB",
-        "name": "OnUnknownIntent"
+        "name": "Unknown intent"
       },
       "actions": [
         {
