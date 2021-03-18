@@ -14,7 +14,8 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "id": "tcqJ5M"
+        "id": "tcqJ5M",
+        "name": "BeginDialog"
       },
       "actions": [
         {
