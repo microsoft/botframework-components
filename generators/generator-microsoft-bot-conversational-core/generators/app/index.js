@@ -13,30 +13,32 @@ module.exports = class extends Generator {
 
   initializing() {
     this.composeWith(
-      require.resolve('@microsoft/generator-microsoft-bot-adaptive/generators/app'),
+      require.resolve(
+        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+      ),
       {
         arguments: this.args,
-        packageReferences: [{
-          name: 'Microsoft.Bot.Components.HelpAndCancel',
-          version: '1.0.0-preview.20210310.8ee9434'
+        packageReferences: [
+          {
+            name: 'Microsoft.Bot.Components.HelpAndCancel',
+            version: '1.0.0-preview.20210310.8ee9434',
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434'
-          }
+            version: '1.0.0-preview.20210310.8ee9434',
+          },
         ],
         applicationSettingsDirectory: 'settings',
-        includeApplicationSettings: false   
       }
     );
   }
-  
+
   writing() {
     this.fs.copyTpl(
       this.templatePath(),
       this.destinationPath(this.options.botName),
       {
-        botName: this.options.botName
+        botName: this.options.botName,
       }
     );
   }

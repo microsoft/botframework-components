@@ -27,8 +27,13 @@
 - uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
 - uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
 - uninvite {@currentContact=morgan} from my event {@date=tomorrow}
-- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite {@currentContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+- no, remove {@currentContact=thomas} from this
+- no, i need to take out {@currentContact=john}
+- yes, but remove {@currentContact=georgie}
+- yeah, but take out {@currentContact=fred}
+- its ok, but take out {@currentContact=harry}
 
 @ intent SetAttendeesRemove usesFeatures Update,Event,Location,Remove,Titled
 

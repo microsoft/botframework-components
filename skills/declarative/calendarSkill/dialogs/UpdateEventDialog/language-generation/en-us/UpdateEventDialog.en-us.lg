@@ -24,7 +24,7 @@
 
 # SendActivity_F6WlGO()
 [Activity
-    text = You are not the meeting organizer.
+    text = Apparently, you are not the organizer of this meeting.
     attachments = ${json(EventDetailActionsCard($event))}
 ]
 
@@ -61,9 +61,6 @@
 # ChoiceInput_Prompt_488KMT()
 - Would you like to add or remove attendees?
 
-# SendActivity_n59nHl()
-- ${RemoveAttendeeConfirmation($selectedContact)}
-
 # ConfirmInput_Prompt_br66dN()
 - ${CancelConfirmPrompt()}
 
@@ -72,3 +69,6 @@
 
 # SendActivity_lgaJK3()
 - ${CancelRejected()}
+
+# SendActivity_Qv9lHi()
+- ${RemoveAttendeeConfirmation($selectedContact)}

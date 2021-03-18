@@ -107,55 +107,68 @@
           "condition": "exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
           "actions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "5xtEZ7"
+                "id": "JGLah7"
               },
-              "assignments": [
+              "condition": "count($events) > 1",
+              "elseActions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$events"
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "05H5om"
+                  },
+                  "eventName": "ShowEvent"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "JtGV26"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$events"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "EventDisplayListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "EventListIconUrl",
+                        "title": "EventListTitle",
+                        "item": "EventDisplayListItem",
+                        "actions": "EventListActions",
+                        "initialPrompt": "EventChoiceListPrompt",
+                        "showMorePrompt": "EventListShowMorePrompt",
+                        "skipResponse": "EventListSkipResponse",
+                        "defaultValueResponse": "EventListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=false"
+                    }
+                  ]
                 },
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
-                },
-                {
-                  "property": "$listOptions.activePrompt",
-                  "value": "EventListPrompt"
-                },
-                {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "EventListIconUrl",
-                    "title": "EventListTitle",
-                    "item": "EventListItem",
-                    "actions": "EventListActions",
-                    "initialPrompt": "EventListPrompt",
-                    "showMorePrompt": "EventListShowMorePrompt",
-                    "skipResponse": "EventListSkipResponse",
-                    "defaultValueResponse": "EventListDefaultValueResponse"
-                  }
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "rHW2BB"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "options": "=$listOptions"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "0x0N4G"
-              },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "options": "=$listOptions",
-              "resultProperty": "$selectedEvent"
-            },
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "uBSpR2"
-              },
-              "eventName": "ShowEvent",
-              "eventValue": "=$selectedEvent"
             }
           ],
           "elseActions": [

@@ -25,12 +25,12 @@ module.exports = class extends Generator {
         name: 'name',
         message: 'Your generator name',
         filter: makeGeneratorName,
-        validate: str => {
+        validate: (str) => {
           return str.length > 'generator-'.length;
-        }
+        },
       },
       this
-    ).then(props => {
+    ).then((props) => {
       this.props.name = props.name;
     });
   }
@@ -38,31 +38,24 @@ module.exports = class extends Generator {
   default() {
     if (path.basename(this.destinationPath()) !== this.props.name) {
       this.log(
-        `Your generator must be inside a folder named ${
-          this.props.name
-        }\nI'll automatically create this folder.`
+        `Your generator must be inside a folder named ${this.props.name}\nI'll automatically create this folder.`
       );
       mkdirp(this.props.name);
       this.destinationRoot(this.destinationPath(this.props.name));
     }
   }
 
-  _normalizeName = (generatorName) => {
+  _normalizeName(generatorName) {
     if (generatorName.indexOf('generator-') !== -1) {
       return generatorName.replace('generator-', '');
-    } 
+    }
     return generatorName;
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(),
-      { name: this.props.name,
-        normalizedName: this._normalizeName(this.props.name)
-      }
-    );
-
+    this.fs.copyTpl(this.templatePath(), this.destinationPath(), {
+      name: this.props.name,
+      normalizedName: this._normalizeName(this.props.name),
+    });
   }
 };
-

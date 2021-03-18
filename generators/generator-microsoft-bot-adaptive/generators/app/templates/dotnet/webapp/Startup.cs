@@ -23,18 +23,22 @@ namespace <%= botName %>
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-#pragma warning disable CA1801 // Review unused parameters
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-#pragma warning restore CA1801 // Review unused parameters
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+        
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseWebSockets();
-            app.UseRouting()
-               .UseEndpoints(endpoints =>
-               {
-                   endpoints.MapControllers();
-               });
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

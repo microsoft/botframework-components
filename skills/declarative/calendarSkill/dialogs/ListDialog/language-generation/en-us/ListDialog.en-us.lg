@@ -24,15 +24,6 @@
 # SendActivity_D6gEbV()
 - That's the end of the list.
 
-# ChoiceInput_DefaultValueResponse_dc3QNs()
-- OK, let's move on.
-
-# ChoiceInput_Prompt_dc3QNs()
-- IF: ${$isFirstTurn == true}
-    - ${InitialChoicePrompt()}
-- ELSE: 
-    - ${RepromptChoicePrompt()}
-
 # InitialChoicePrompt
 [Activity
     text = ${if($activePrompt != null, template($activePrompt), null)}
@@ -50,3 +41,21 @@
 [Activity
     attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
+
+# ChoiceInput_Prompt_VygDK3()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# SendActivity_HOESBs()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# ChoiceInput_DefaultValueResponse_VygDK3()
+- OK, let's move on.
+
+# SendActivity_nRdr1W()
+- ${CancelMessage()}
