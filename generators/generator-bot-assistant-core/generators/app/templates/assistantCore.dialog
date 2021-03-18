@@ -33,18 +33,37 @@
               "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "859266",
-                    "name": "Send a response"
+                    "id": "STCIf4"
                   },
-                  "activity": "${SendActivity_Welcome()}"
+                  "activityProcessed": true,
+                  "dialog": "WelcomeDialog"
                 }
               ]
             }
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "nNAPMq",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "BZdm5n"
+          },
+          "activityProcessed": true,
+          "dialog": "CancelDialog"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.9"
     },
     {
       "$kind": "Microsoft.OnChooseIntent",
@@ -218,6 +237,24 @@
           "$designer": {
             "id": "Z0xhJ8"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Vy3aJg",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "eI5OaR"
+          },
+          "activityProcessed": true,
+          "dialog": "HelpDialog"
         }
       ]
     },

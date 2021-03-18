@@ -1,8 +1,5 @@
 [import](common.lg)
 
-# SendActivity_Welcome
-- ${WelcomeUser()}
-
 # TextInput_Prompt_gWdJbl()
 [Activity
     Attachments = ${json(AdaptiveCardJson())}
