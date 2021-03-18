@@ -2,3 +2,40 @@
 
 # SendActivity_Welcome
 - ${WelcomeUser()}
+
+# TextInput_Prompt_gWdJbl()
+[Activity
+    Attachments = ${json(AdaptiveCardJson())}
+]
+
+# SendActivity_WTfZCN()
+- Sure, no worries.
+
+# SendActivity_mM3nez()
+[Activity
+    Text = ${SendActivity_mM3nez_text()}
+]
+
+# SendActivity_mM3nez_text()
+- Oops, looks like I'm stuck. Can you try to ask me in a different way?
+- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
+- Sorry, it looks like something went wrong. Can you please try again?
+
+# SendActivity_CcTxh7()
+[Activity
+    Text = ${SendActivity_CcTxh7_text()}
+]
+
+# SendActivity_CcTxh7_text()
+- I'm not sure I understand. Can you please try again?
+- Hmm, I don't understand. Can you try to ask me in a different way?
+- I didn't get that. Would you mind rephrasing and try it again?
+- Unfortunately I misunderstood, please try again.
+
+# TextInput_Prompt_nrleRD()
+[Activity
+    Attachments = ${json(AdaptiveCardJson())}
+]
+
+# SendActivity_L8AquD()
+- Sure, no worries.
