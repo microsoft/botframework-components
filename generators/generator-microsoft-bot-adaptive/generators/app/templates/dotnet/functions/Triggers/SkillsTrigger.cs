@@ -16,10 +16,12 @@ namespace <%= botName %>.Triggers
     public class SkillsTrigger
     {
         private readonly SkillHandler _skillHandler;
+        private readonly ILogger<SkillController> _logger;
 
-        public SkillsTrigger(SkillHandler skillHandler)
+        public SkillsTrigger(SkillHandler skillHandler, ILogger<SkillsTrigger> logger)
         {
             this._skillHandler = skillHandler ?? throw new ArgumentNullException(nameof(skillHandler));
+            this._logger = logger;
         }
 
         /// <summary>
@@ -45,6 +47,12 @@ namespace <%= botName %>.Triggers
         {
             var body = await req.ReadAsStringAsync().ConfigureAwait(false);
             var activity = JsonConvert.DeserializeObject<Activity>(body, ActivitySerializationSettings.Default);
+
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                _logger.LogDebug($"RunAsync: conversationId={conversationId}, activityId={activityId}, activity={body}");
+            }
+
             var result = await _skillHandler.HandleReplyToActivityAsync(req.Headers["Authorization"], conversationId, activityId, activity).ConfigureAwait(false);
 
             return new JsonResult(result, ActivitySerializationSettings.Default);
