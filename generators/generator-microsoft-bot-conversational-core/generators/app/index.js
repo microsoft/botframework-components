@@ -25,7 +25,7 @@ module.exports = class extends Generator {
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210317.04ac656',
+            version: '1.0.0-preview.20210318.fd6fdd4',
           },
         ],
         applicationSettingsDirectory: 'settings',
