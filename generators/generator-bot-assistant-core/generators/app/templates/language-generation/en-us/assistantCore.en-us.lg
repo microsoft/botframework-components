@@ -18,17 +18,6 @@
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
 
-# SendActivity_CcTxh7()
-[Activity
-    Text = ${SendActivity_CcTxh7_text()}
-]
-
-# SendActivity_CcTxh7_text()
-- I'm not sure I understand. Can you please try again?
-- Hmm, I don't understand. Can you try to ask me in a different way?
-- I didn't get that. Would you mind rephrasing and try it again?
-- Unfortunately I misunderstood, please try again.
-
 # TextInput_Prompt_nrleRD()
 [Activity
     Attachments = ${json(AdaptiveCardJson())}
@@ -36,3 +25,23 @@
 
 # SendActivity_L8AquD()
 - Sure, no worries.
+
+# TextInput_Prompt_pb31OL()
+[Activity
+    Text = ${expandText(@answer)}
+    SuggestedActions = ${foreach(turn.recognized.answers[0].context.prompts, x, x.displayText)}
+]
+
+# SendActivity_bXv7aT()
+- ${expandText(@answer)}
+
+# QnAMakerDialog_NoAnswer_cc7Yef()
+[Activity
+    Text = ${QnAMakerDialog_NoAnswer_cc7Yef_text()}
+]
+
+# QnAMakerDialog_NoAnswer_cc7Yef_text()
+- I'm not sure I understand. Can you please try again?
+- Hmm, I don't understand. Can you try to ask me in a different way?
+- I didn't get that. Would you mind rephrasing and try it again?
+- Unfortunately I misunderstood, please try again.

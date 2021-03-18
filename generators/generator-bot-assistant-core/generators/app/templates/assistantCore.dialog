@@ -266,11 +266,21 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.QnAMakerDialog",
           "$designer": {
-            "id": "CcTxh7"
+            "id": "cc7Yef",
+            "name": "Send to chitchat knowledge base"
           },
-          "activity": "${SendActivity_CcTxh7()}"
+          "knowledgeBaseId": "=settings.qna.assistantCore_en_us_qna",
+          "endpointKey": "=settings.qna.endpointkey",
+          "hostname": "=settings.qna.hostname",
+          "threshold": 0.3,
+          "activeLearningCardTitle": "Did you mean:",
+          "cardNoMatchText": "None of the above.",
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "top": 3,
+          "isTest": false,
+          "noAnswer": "${QnAMakerDialog_NoAnswer_cc7Yef()}"
         }
       ]
     }

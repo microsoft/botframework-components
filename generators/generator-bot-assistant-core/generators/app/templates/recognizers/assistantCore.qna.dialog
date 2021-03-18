@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "QnA_assistantCore",
+  "recognizers": {
+    "en-us": "assistantCore.en-us.qna",
+    "": "assistantCore.en-us.qna"
+  }
+}
