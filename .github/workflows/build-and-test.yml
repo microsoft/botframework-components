@@ -33,10 +33,10 @@ jobs:
 
       # Run the calendar tests
       - name: Run Calendar Skill tests
-        run: dotnet test
-        working-directory: ./skills/declarative/tests/calendarSkill
+        run: dotnet test ./calendarSkill/Microsoft.Bot.Dialogs.Tests.CalendarSkill.csproj
+        working-directory: ./skills/declarative/tests
       
       # Run the who tests
       - name: Run Who Skill tests
-        run: dotnet test
-        working-directory: ./skills/declarative/tests/whoSkill 
+        run: dotnet test ./whoSkill/Microsoft.Bot.Dialogs.Tests.WhoSkill.csproj
+        working-directory: ./skills/declarative/tests 
