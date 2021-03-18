@@ -62,7 +62,7 @@ namespace <%= botName %>.Triggers
             {
                 if (_logger.IsEnabled(LogLevel.Debug))
                 {
-                    _logger.LogInformation($"RunAsync: routed '{adapterRoute}' to {adapter.GetType().Name}");
+                    _logger.LogDebug($"RunAsync: routed '{adapterRoute}' to {adapter.GetType().Name}");
                 }
 
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
