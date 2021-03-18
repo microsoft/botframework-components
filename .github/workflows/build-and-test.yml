@@ -31,7 +31,12 @@ jobs:
         run:  dotnet build
         working-directory: ./skills/declarative/tests
 
-      # Run the tests
-      - name: Run tests
+      # Run the calendar tests
+      - name: Run Calendar Skill tests
         run: dotnet test
-        working-directory: ./skills/declarative/tests
+        working-directory: ./skills/declarative/tests/calendarSkill
+      
+      # Run the who tests
+      - name: Run Who Skill tests
+        run: dotnet test
+        working-directory: ./skills/declarative/tests/whoSkill 
