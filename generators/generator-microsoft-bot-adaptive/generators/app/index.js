@@ -208,7 +208,10 @@ module.exports = class extends BaseGenerator {
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
     appSettings.runtime.command = {
       [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
-      [platforms.js]: 'node index.js',
+      [platforms.js]: {
+        [integrations.functions]: 'node development.js',
+        [integrations.webapp]: 'node index.js',
+      }[integration],
     }[platform];
 
     for (const { name, settingsPrefix } of this.packageReferences) {
