@@ -1,6 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const { triggers } = require('botbuilder-runtime-integration-azure-functions');
+const { start } = require('botbuilder-runtime-integration-restify');
 
-module.exports = triggers(process.cwd(), <%- settingsDirectory %>);
+(async function () {
+  try {
+    await start(process.cwd(), <%- settingsDirectory %>);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+})();
+

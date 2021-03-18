@@ -149,15 +149,6 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const scripts = {
-      [integrations.functions]: {
-        start: 'node development.js',
-      },
-      [integrations.webapp]: {
-        start: 'node index.js',
-      },
-    }[integration];
-
     const dependencies = {
       [integrations.functions]: {
         'botbuilder-runtime-integration-azure-functions': 'next',
@@ -169,8 +160,7 @@ module.exports = class extends BaseGenerator {
 
     const devDependencies =
       {
-        // Note: in development, we provide a restify server for testing bots
-        // via Composer
+        // Note: in dev we need a server for testing bots via Composer
         [integrations.functions]: {
           'botbuilder-runtime-integration-restify': 'next',
         },
@@ -179,7 +169,9 @@ module.exports = class extends BaseGenerator {
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
       name: botName,
       private: true,
-      scripts,
+      scripts: {
+        start: 'node index.js',
+      },
       dependencies: Object.assign(
         this.packageReferences.reduce(
           (acc, { name, version }) => Object.assign(acc, { [name]: version }),
@@ -208,10 +200,7 @@ module.exports = class extends BaseGenerator {
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
     appSettings.runtime.command = {
       [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
-      [platforms.js]: {
-        [integrations.functions]: 'node development.js',
-        [integrations.webapp]: 'node index.js',
-      }[integration],
+      [platforms.js]: 'node index.js',
     }[platform];
 
     for (const { name, settingsPrefix } of this.packageReferences) {
