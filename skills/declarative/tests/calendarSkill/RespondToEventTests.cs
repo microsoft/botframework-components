@@ -1,72 +1,43 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Bot.Builder.AI.Luis;
-using Microsoft.Bot.Builder.AI.Luis.Testing;
-using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
-using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Tests
+namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
 {
+    using System.IO;
+    using System.Threading.Tasks;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
-    public class RespondToEventTests
+    public class RespondToEventTests : CalendarSkillTestBase<RespondToEventTests>
     {
-        public static ResourceExplorer ResourceExplorer { get; set; }
-
-        public TestContext TestContext { get; set; }
-
-        public static IConfiguration Configuration { get; set; }
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-            var rootFolder = Path.Combine(TestUtils.GetProjectPath(), @"..\..\calendarSkill");
-            var testFolder = Path.Combine(TestUtils.GetProjectPath(), "CalendarSkillTests", nameof(RespondToEventTests));
-            Configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "root", rootFolder},
-                        { "luis:resources", testFolder },
-                    })
-                .UseLuisSettings()
-                .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
-                .Build();
-
-            ResourceExplorer = new ResourceExplorer()
-           .AddFolder(rootFolder, monitorChanges: false)
-           .AddFolder(testFolder)
-           .RegisterType(LuisAdaptiveRecognizer.Kind, typeof(MockLuisRecognizer), new MockLuisLoader(Configuration));
-        }
-
         [TestMethod]
         public async Task RespondToEvent_Accept()
         {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task RespondToEvent_Decline()
         {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task RespondToEvent_TentativelyAccept()
         {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CancelEvent_asAttendee()
         {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+            await this.RunTestScriptAsync();
         }
 
         [TestMethod]
         public async Task CancelEvent_asOrganizer()
         {
-            await TestUtils.RunTestScript(ResourceExplorer, configuration: Configuration);
+            await this.RunTestScriptAsync();
         }
     }
 }

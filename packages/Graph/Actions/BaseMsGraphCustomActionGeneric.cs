@@ -42,7 +42,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string token = this.Token.GetValue(dc.State);
             HttpClient httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            GraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
+            IGraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
 
             var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
