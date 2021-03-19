@@ -28,6 +28,7 @@
 - set up time with {@contact=melanie}
 - setup {@duration=45 minutes} with {@contact=maged refaat} on {@date=friday at 3}
 - setup a meeting with {@contact=qiong}
+- schedule {@duration=an hour} with {@contact=veronica} {@date=this week}
 
 @ intent CreateEvent usesFeatures Create,Event,Location,Titled
 

@@ -1684,14 +1684,14 @@
             "query": "=$query",
             "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
           },
-          "resultProperty": "$dateTime"
+          "resultProperty": "turn.dateTime"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "Ra5sQD"
           },
-          "condition": "=contains($dateTime.text, 'next') && ($options.ordinal.offset == 1 && $options.ordinal.relativeTo == 'current')",
+          "condition": "=contains(turn.dateTime.text, 'next') && ($options.ordinal.offset == 1 && $options.ordinal.relativeTo == 'current')",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -1704,22 +1704,60 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "TLB3n2"
+            "id": "U0hSI8"
           },
-          "assignments": [
+          "condition": "=contains(turn.dateTime.type, \"date\") || contains(turn.dateTime.type, \"time\")",
+          "actions": [
             {
-              "property": "$options.dateTime",
-              "value": "=$dateTime"
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ArqMn7"
+              },
+              "assignments": [
+                {
+                  "property": "$options.dateTime",
+                  "value": "=turn.dateTime"
+                },
+                {
+                  "property": "$options.start",
+                  "value": "=coalesce(turn.dateTime.start, turn.dateTime.value)"
+                },
+                {
+                  "property": "$options.end",
+                  "value": "=turn.dateTime.end"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "7mDmi7"
+          },
+          "condition": "exists(@duration)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bp5lw2"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=@duration"
+              },
+              "resultProperty": "turn.duration"
             },
             {
-              "property": "$options.start",
-              "value": "=coalesce($datetime.start, $datetime.value)"
-            },
-            {
-              "property": "$options.end",
-              "value": "=$datetime.end"
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Im26fU"
+              },
+              "property": "$options.duration",
+              "value": "=coalesce(int(turn.duration.value) / 60, null)"
             }
           ]
         }
