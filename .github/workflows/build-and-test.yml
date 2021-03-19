@@ -37,5 +37,5 @@ jobs:
 
       # Run the calendar tests
       - name: Run tests
-        run: dotnet test --verbosity detailed
+        run: dotnet test --no-build
         working-directory: ./skills/declarative/tests
