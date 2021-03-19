@@ -10,10 +10,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using System.Threading.Tasks;
 
     [TestClass]
-    public class GetDirectReportsTests : WhoSkillTestBase
+    public class GetDirectReportsTests : WhoSkillTestBase<GetDirectReportsTests>
     {
-        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), nameof(GetDirectReportsTests));
-
         [TestMethod]
         public async Task GetDirectReports_OneFound()
         {

@@ -8,10 +8,8 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class AvailabilityTests : CalendarSkillTestBase
+    public class AvailabilityTests : CalendarSkillTestBase<AvailabilityTests>
     {
-        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), "CalendarSkillTests", nameof(AvailabilityTests));
-
         [TestMethod]
         public async Task GetAvailabilityBreaks()
         {

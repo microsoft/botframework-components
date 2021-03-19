@@ -17,11 +17,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using System.Threading;
 
     [TestClass]
-    public abstract class WhoSkillTestBase : PbxDialogTestBase
+    public abstract class WhoSkillTestBase<T> : PbxDialogTestBase<T>, IHaveComponentsToInitialize 
+        where T : IHaveComponentsToInitialize, new()
     {
-        /// <inheritdoc />
-        protected override string RelativeRootFolder => Path.Combine(GetProjectPath(), @"..\..\whoSkill");
-
         protected List<User> TestUsers
         {
             get;
@@ -33,17 +31,20 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         /// </summary>
         private Mock<IGraphServiceClient> testGraphClient = new Mock<IGraphServiceClient>();
 
-        /// <inheritdoc />
-        protected override void InitializeTest()
+        [TestInitialize]
+        public void InitializeTest()
         {
-            ComponentRegistration.Add(new GraphComponentRegistration());
-
             this.testGraphClient = new Mock<IGraphServiceClient>();
             this.TestUsers = new List<User>();
 
             this.SetupSearch();
 
             MSGraphClient.RegisterTestInstance(this.testGraphClient.Object);
+        }
+
+        public void InitializeComponents()
+        {
+            ComponentRegistration.Add(new GraphComponentRegistration());
         }
 
         /// <summary>
