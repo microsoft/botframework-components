@@ -29,11 +29,13 @@
     <None Update="testsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="GetCollaboratorsTests\cachedResponses\" />
-    <Folder Include="GetPeersTests\cachedResponses\" />
+    <!-- Copy the test folders over -->
+    <None Include="TestAssets\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\whoSkill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
