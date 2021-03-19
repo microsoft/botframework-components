@@ -10,10 +10,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using System.Threading.Tasks;
 
     [TestClass]
-    public class GetManagerTests : WhoSkillTestBase
+    public class GetManagerTests : WhoSkillTestBase<GetManagerTests>
     {
-        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), nameof(GetManagerTests));
-
         [TestMethod]
         public async Task GetManager_HappyPath()
         {

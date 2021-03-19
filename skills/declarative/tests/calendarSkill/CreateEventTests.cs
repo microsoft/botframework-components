@@ -8,11 +8,8 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class CreateEventTests : CalendarSkillTestBase
+    public class CreateEventTests : CalendarSkillTestBase<CreateEventTests>
     {
-        /// <inheritdoc/>
-        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), "CalendarSkillTests", nameof(CreateEventTests));
-
         [TestMethod]
         public async Task CreateEvent()
         {

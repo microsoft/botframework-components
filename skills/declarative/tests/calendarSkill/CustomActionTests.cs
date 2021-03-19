@@ -8,10 +8,8 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class CustomActionTests : CalendarSkillTestBase
+    public class CustomActionTests : CalendarSkillTestBase<CustomActionTests>
     { 
-        protected override string RelativeTestResourceFolder => Path.Combine(GetProjectPath(), "CalendarSkillTests", nameof(CustomActionTests));
-
         [TestMethod]
         public async Task CalendarSkillTests_GetProfile()
         {

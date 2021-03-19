@@ -15,39 +15,30 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
+    public interface IHaveComponentsToInitialize
+    {
+        void InitializeComponents();
+    }
+
     [TestClass]
-    public abstract class PbxDialogTestBase
+    public abstract class PbxDialogTestBase<T> where T : IHaveComponentsToInitialize, new()
     { 
         /// <summary>
         /// The configuration of the bot app
         /// </summary>
-        public IConfiguration Configuration { get; set; }
+        public static IConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Resources to be loaded for the test
         /// </summary>
-        public ResourceExplorer ResourceExplorer { get; set; }
-
-        /// <summary>
-        /// Root project folder of the bot relative to the test project
-        /// </summary>
-        protected abstract string RelativeRootFolder
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Resource folder for the test relative to the test project root
-        /// </summary>
-        protected abstract string RelativeTestResourceFolder
-        {
-            get;
-        }
+        public static ResourceExplorer ResourceExplorer { get; set; }
 
         /// <summary>
         /// Gets the current project path
@@ -71,8 +62,8 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
             return parent;
         }
 
-        [TestInitialize]
-        public void TestInitialize()
+        [ClassInitialize(InheritanceBehavior.BeforeEachDerivedClass)]
+        public static void ClassInitialize(TestContext context)
         {
             // IMPROTANT!!! Order matter here. The component registration has to happen before
             // the ResourceExplorer's RegisterType because internally it registers all the type
@@ -90,29 +81,27 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
 
-            this.InitializeTest();
+            IHaveComponentsToInitialize testClass = new T();
+            testClass.InitializeComponents();
+
+            Debug.WriteLine("Testing" + typeof(T).Name);
 
             Configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                     {
-                        { "root", this.RelativeRootFolder},
-                        { "luis:resources", this.RelativeTestResourceFolder },
+                        { "root", Path.Combine(Environment.CurrentDirectory, "BotProject") },
+                        { "luis:resources", Path.Combine(Environment.CurrentDirectory, "TestAssets", typeof(T).Name)},
                     })
                 .UseLuisSettings()
                 .AddJsonFile("testsettings.json", optional: true, reloadOnChange: false)
                 .Build();
 
-            ResourceExplorer = new ResourceExplorer()
-           .AddFolder(this.RelativeRootFolder, monitorChanges: false)
-           .AddFolder(this.RelativeTestResourceFolder, monitorChanges: false)
-           .RegisterType(LuisAdaptiveRecognizer.Kind, typeof(MockLuisRecognizer), new MockLuisLoader(Configuration));
-        }
 
-        /// <summary>
-        /// Additional test initialization required
-        /// </summary>
-        protected virtual void InitializeTest()
-        {
+            ResourceExplorer = new ResourceExplorer()
+            // Add the dialog assets
+           .AddFolder(Path.Combine(Environment.CurrentDirectory, "BotProject"), monitorChanges: false)
+           .AddFolder(Path.Combine(Environment.CurrentDirectory, "TestAssets", typeof(T).Name), monitorChanges: false)
+           .RegisterType(LuisAdaptiveRecognizer.Kind, typeof(MockLuisRecognizer), new MockLuisLoader(Configuration));
         }
 
         /// <summary>
