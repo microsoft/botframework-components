@@ -9,15 +9,14 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     using Microsoft.Bot.Dialogs.Tests.Common;
     using Microsoft.BotFramework.Composer.CustomAction;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Diagnostics;
     using System.IO;
 
     [TestClass]
-    public abstract class CalendarSkillTestBase : PbxDialogTestBase
+    public abstract class CalendarSkillTestBase<T> : PbxDialogTestBase<T>, IHaveComponentsToInitialize 
+        where T : IHaveComponentsToInitialize, new()
     {
-        /// <inheritdoc/>
-        protected override string RelativeRootFolder => Path.Combine(GetProjectPath(), @"..\..\calendarSkill");
-
-        protected override void InitializeTest()
+        public void InitializeComponents()
         {
             ComponentRegistration.Add(new GraphComponentRegistration());
             ComponentRegistration.Add(new CalendarComponentRegistration());
