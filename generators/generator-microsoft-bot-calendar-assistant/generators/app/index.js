@@ -2,38 +2,51 @@
 // Licensed under the MIT License.
 
 'use strict';
-const Generator = require('yeoman-generator');
 
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
+const {
+  BaseGenerator,
+  platforms,
+} = require('@microsoft/generator-microsoft-bot-adaptive');
 
-    this.argument('botName', { type: String, required: true });
-  }
+const packageReferences = {
+  [platforms.dotnet]: [
+    {
+      name: 'Microsoft.Bot.Components.HelpAndCancel',
+      version: '1.0.0-preview.20210310.8ee9434',
+    },
+    {
+      name: 'Microsoft.Bot.Components.Welcome',
+      version: '1.0.0-preview.20210310.8ee9434',
+    },
+    {
+      name: 'Microsoft.Bot.Components.Orchestrator',
+      version: '1.0.0-preview.20210310.8ee9434',
+    },
+  ],
+  [platforms.js]: [
+    { name: '@microsoft/bot-components-helpandcancel', version: 'latest' },
+    { name: '@microsoft/bot-components-welcome', version: 'latest' },
+  ],
+};
 
+module.exports = class extends BaseGenerator {
   initializing() {
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
-      {
+      Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
-        packageReferences: [
-          {
-            name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-preview.20210310.8ee9434',
-          },
-          {
-            name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434',
-          },
-          {
-            name: 'Microsoft.Bot.Components.Orchestrator',
-            version: '1.0.0-preview.20210310.8ee9434',
-          },
-        ],
+        botProjectSettings: {
+          skills: {
+            calendar: {
+              workspace: '../calendar',
+              remote: false,
+            }
+          }
+        },
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             skillHostEndpoint: 'http://localhost:3980/api/skills',
@@ -41,7 +54,8 @@ module.exports = class extends Generator {
 
           appSettings.runtimeSettings.features.setSpeak = true;
         },
-      }
+        packageReferences: packageReferences[this.options.platform],
+      })
     );
 
     // create skill, this derives from a separate template
@@ -49,19 +63,13 @@ module.exports = class extends Generator {
       require.resolve(
         '@microsoft/generator-microsoft-bot-calendar/generators/app'
       ),
-      {
+      Object.assign(this.options, {
         arguments: ['calendar'],
-      }
+      })
     );
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(this.options.botName),
-      {
-        botName: this.options.botName,
-      }
-    );
+    this.copyBotTemplateFiles();
   }
 };

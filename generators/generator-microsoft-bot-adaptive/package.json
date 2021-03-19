@@ -20,6 +20,8 @@
     "url": "https://github.com/Microsoft/botframework-components.git"
   },
   "dependencies": {
+    "globby": "^11.0.2",
+    "normalize-path": "^3.0.0",
     "runtypes": "^5.0.2",
     "uuid": "^8.3.1",
     "xml2js": "^0.4.23",

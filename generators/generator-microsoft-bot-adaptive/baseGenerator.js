@@ -3,6 +3,8 @@
 
 const Generator = require('yeoman-generator');
 const assert = require('assert');
+const globby = require('globby');
+const normalize = require('normalize-path');
 const integrations = require('./integrations');
 const platforms = require('./platforms');
 
@@ -47,5 +49,29 @@ module.exports = class extends Generator {
       integrations[integration],
       `${integration} is not a registered integration`
     );
+  }
+
+  copyBotTemplateFiles({ path = ['**', '*.*'], templateContext = {} } = {}) {
+    const { botName } = this.options;
+
+    const context = Object.assign({}, templateContext, { botName });
+
+    for (const filePath of this.selectTemplateFilePaths(...path)) {
+      this.fs.copyTpl(
+        this.templatePath(filePath),
+        this.destinationPath(botName, filePath.replace(/botName/gi, botName)),
+        context
+      );
+    }
+  }
+
+  selectTemplateFilePaths(...path) {
+    const beginIndex = normalize(this.sourceRoot()).length + 1;
+
+    return globby
+      .sync(normalize(this.templatePath(...path)), {
+        nodir: true,
+      })
+      .map((result) => result.slice(beginIndex));
   }
 };
