@@ -28,7 +28,7 @@
           "$designer": {
             "id": "h7GRVI"
           },
-          "property": "$turnCount",
+          "property": "$maxTurnCount",
           "value": "=3"
         },
         {
@@ -103,9 +103,6 @@
           "alwaysPrompt": false,
           "allowInterruptions": "=(turn.recognized.score > 0.5 && not(exists(#None))) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_VRSPsi()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
@@ -598,6 +595,23 @@
             "id": "RTDLBI"
           },
           "name": "UpdateEventDialog.OnEvent_UpdateDateTime"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "NQwwhV"
+          },
+          "condition": "=not(exists($options.duration))",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "OJaLPN"
+              },
+              "property": "$options.duration",
+              "value": "=ticksToMinutes(ticks($event.end.dateTime) - ticks($event.start.dateTime))"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.DateTimeInput",
@@ -1095,12 +1109,9 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": "=$turnCount",
+          "maxTurnCount": "=$maxTurnCount",
           "alwaysPrompt": false,
           "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "prompt": "${ConfirmInput_Prompt_lvMf0G()}",
           "choiceOptions": {
             "includeNumbers": true,
@@ -1251,14 +1262,6 @@
           "name": "UpdateEventDialog.OnIntent_SetAttendeesAdd"
         },
         {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "nh6sIP"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
-        },
-        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "wRtM2R"
@@ -1300,6 +1303,22 @@
             "id": "6P2tPW"
           },
           "eventName": "UpdateAttendees"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "zwdyDE"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1317,14 +1336,6 @@
             "id": "uJvdmu"
           },
           "name": "UpdateEventDialog.OnIntent_SetAttendeesRemove"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "sPcbxi"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1368,6 +1379,22 @@
             "id": "yRqayJ"
           },
           "eventName": "UpdateAttendees"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "aoQFfO"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1385,14 +1412,6 @@
             "id": "Ac1Mlx"
           },
           "name": "UpdateEventDialog.OnIntent_SetDateTime"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "0jp0JY"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1428,6 +1447,22 @@
             "id": "sA5QKm"
           },
           "eventName": "UpdateDateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "lQtyas"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1445,14 +1480,6 @@
             "id": "hogjiQ"
           },
           "name": "UpdateEventDialog.OnIntent_SetDescription"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "Fpcpcd"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1484,6 +1511,22 @@
             "id": "FXcbDo"
           },
           "eventName": "UpdateDescription"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "b5p7gV"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1501,14 +1544,6 @@
             "id": "BIZY6i"
           },
           "name": "UpdateEventDialog.OnIntent_SetDuration"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "VR6cuW"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1544,6 +1579,22 @@
             "id": "CsUHUn"
           },
           "eventName": "UpdateDuration"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XTi0DF"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1561,14 +1612,6 @@
             "id": "q8M4Vb"
           },
           "name": "UpdateEventDialog.OnIntent_SetLocation"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "cM475R"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1604,6 +1647,22 @@
             "id": "cJPUl2"
           },
           "eventName": "UpdateLocation"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "bBwFUe"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1621,14 +1680,6 @@
             "id": "jXByO9"
           },
           "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingAdd"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "WPOvhg"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1664,6 +1715,22 @@
             "id": "Kz0sNt"
           },
           "eventName": "UpdateOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "T2OXXN"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1681,14 +1748,6 @@
             "id": "6Ck8gB"
           },
           "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingRemove"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "c1EpND"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1724,6 +1783,22 @@
             "id": "w756Ea"
           },
           "eventName": "UpdateOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IHRFBL"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1741,14 +1816,6 @@
             "id": "Ifec42"
           },
           "name": "UpdateEventDialog.OnIntent_SetTitle"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "6OBPrX"
-          },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1784,6 +1851,22 @@
             "id": "SXDO3s"
           },
           "eventName": "UpdateTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "QStljf"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },

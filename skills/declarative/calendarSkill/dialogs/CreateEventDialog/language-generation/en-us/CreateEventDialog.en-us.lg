@@ -29,7 +29,13 @@
 # SendActivity_VLAwOi()
 - ${CancelRejected()}
 
-# ConfirmInput_Prompt_ui2fg1()
+# CreateConfirmNotUnderstood
+[Activity
+    text = Sorry, I didn't understand that. Does this look right?
+    attachments = ${json(EventDetailEditCard($event))}
+]
+
+# CreateConfirmPrompt()
 [Activity
     text=Does this look right?
     attachments=${json(EventDetailEditCard($event))}
@@ -57,3 +63,9 @@
 
 # DateTimeInput_Prompt_aB5ltS()
 - When should I schedule it?
+
+# ConfirmInput_Prompt_ui2fg1()
+- IF: ${this.turnCount > 1 && not(exists(turn.interrupted))}
+    - ${CreateConfirmNotUnderstood()}
+- ELSE: 
+    - ${CreateConfirmPrompt()}

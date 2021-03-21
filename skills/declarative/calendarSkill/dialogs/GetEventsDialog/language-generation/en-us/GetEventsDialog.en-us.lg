@@ -1,11 +1,14 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 
-# TextInput_Prompt_Fej6Ub()
-- Which event? Please provide the title, date, and/or attendees.
-
 # ConfirmInput_Prompt_Xro1Q8()
-- I couldn't find any matching events. Would you like to get your events for today instead?
+- I couldn't find any matching events. Would you like to see your events for today instead?
 
 # SendActivity_qyvf70()
 - ${CancelMessage()}
+
+# TextInput_Prompt_Fej6Ub()
+- IF: ${$turnCount == 1}
+    - Which event? Please provide the title, date, and/or attendees.
+- ELSE:
+    - I couldn't find a match. Please provide the title, date, and/or attendees of the meeting you'd like to find or say cancel to stop.
