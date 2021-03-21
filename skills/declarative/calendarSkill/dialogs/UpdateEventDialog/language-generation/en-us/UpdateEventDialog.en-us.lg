@@ -95,4 +95,5 @@
 - ${CancelRejected()}
 
 # SendActivity_Qv9lHi()
-- ${RemoveAttendeeConfirmation($selectedContact)}
+- ${RemoveAttendeeConfirmation($contactToRemove[0].EmailAddress)}
+
