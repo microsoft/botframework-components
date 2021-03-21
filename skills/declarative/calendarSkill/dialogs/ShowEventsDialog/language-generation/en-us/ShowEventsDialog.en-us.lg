@@ -16,6 +16,7 @@
 
 # SendScheduleCard()
 [Activity
+    text = ${if($tooManyEvents, "There are too many events to show for that date range. Here's the first day:", null)}
     attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
     attachmentLayout = carousel
 ]
