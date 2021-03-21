@@ -372,42 +372,25 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "aoxD3k"
+            "id": "Ax3cHN"
           },
           "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "AXyngg"
+            "id": "0veVBB"
           },
           "activityProcessed": true,
-          "dialog": "GetEventsDialog",
+          "dialog": "ShowEventsDialog",
           "options": {
-            "options": "=$options",
-            "doSelection": "=true"
-          },
-          "resultProperty": "$event"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "LLBNWr"
-          },
-          "property": "$next",
-          "value": "=$ordinal.relativeTo == 'current'"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "9Fl4ob"
-          },
-          "activity": "${SendActivity_9Fl4ob()}"
+            "options": "=$options"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "47nbZA"
+            "id": "jNc5BU"
           },
           "eventName": "dialogCompleted"
         }
