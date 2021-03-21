@@ -45,6 +45,32 @@
 - with {@contact=allan}
 - with {@contact=allan} and {@contact=alex}
 - with the subject of {@subject=dermatologist's appointment}
+- the {@subject=hair appointment}
+
+
+# None
+- what color is the sky
+- create a new meeting with {@contact=thomas}
+- book a meeting with a title of {@subject=weekly review}
+- book time on {@date=tuesday} at {@location=red robin}
+- can you set up a time for me to meet with {@contact=ryan} about the {@subject=project status}
+- create a meeting with {@contact=thomas}
+- create an event with {@contact=beth} in {@location=the cafeteria}
+- i need to talk to {@contact=isaiah} about the {@subject=merger} on {@date=friday}
+- make a meeting with {@contact=em} in {@location=building 4}
+- new event named {@subject=standup} in {@location=city center}
+- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
+- accept the meeting with {@contact=juliet}
+- decline the meeting on {@date=tuesday at 5pm}
+- update the {@subject=standup} meeting
+- cancel the one with {@contact=marianne}
+- what is your name
+- how old are you
+- where are you from
+- when am i available
+- blah blah blah
+- when do i have breaks {@date=tomorrow}
+- am i available at {@date=5PM}
 
 
 # Cancel
@@ -66,6 +92,8 @@
 @ ml date
 
 @ ml subject
+
+@ ml location
 
 
 > # PREBUILT Entity definitions
