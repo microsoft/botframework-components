@@ -496,59 +496,105 @@
           "condition": "=$options.updateAction == 'remove'",
           "actions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "moWw86"
+                "id": "vN2sL3"
               },
-              "assignments": [
+              "condition": "=$options.updateValue != null",
+              "actions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=foreach($event.attendees, x, json(concat('{\"name\": \"', x.EmailAddress.Name ,'\" , \"email\":\"', x.EmailAddress.Address,'\" }')))"
-                },
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WDCnLj"
+                  },
+                  "value": "=where($event.attendees, a, contains(toLower(a.emailAddress.name), toLower($options.updateValue[0])))",
+                  "property": "turn.removeAttendees"
+                }
+              ],
+              "elseActions": [
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "name"
-                },
-                {
-                  "property": "$listOptions.activePrompt",
-                  "value": "ContactListRemovePrompt"
-                },
-                {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "ContactIconUrl",
-                    "title": "ContactListTitle",
-                    "item": "ContactListItem",
-                    "actions": "ContactListActions",
-                    "initialPrompt": "ContactListPrompt",
-                    "showMorePrompt": "ContactListShowMorePrompt",
-                    "skipResponse": "ContactListSkipResponse",
-                    "defaultValueResponse": "ContactListDefaultValueResponse"
-                  }
-                },
-                {
-                  "property": "$listOptions.doSelection",
-                  "value": "=true"
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "4mKc4H"
+                  },
+                  "property": "turn.removeAttendees",
+                  "value": "=$event.attendees"
                 }
               ]
             },
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "A1G1Ci"
+                "id": "h0lIzs"
               },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "resultProperty": "$selectedContact",
-              "options": "=$listOptions"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "cLK0Cz"
-              },
-              "property": "$contactToRemove",
-              "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
+              "condition": "count(turn.removeAttendees) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "rANzUR"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=foreach(coalesce(turn.removeAttendees, $event.attendees), x, json(concat('{\"name\": \"', x.EmailAddress.Name ,'\" , \"email\":\"', x.EmailAddress.Address,'\" }')))"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "name"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "ContactListRemovePrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "ContactIconUrl",
+                        "title": "ContactListTitle",
+                        "item": "ContactListItem",
+                        "actions": "ContactListActions",
+                        "initialPrompt": "ContactListPrompt",
+                        "showMorePrompt": "ContactListShowMorePrompt",
+                        "skipResponse": "ContactListSkipResponse",
+                        "defaultValueResponse": "ContactListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=true"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "PoLzmT"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "resultProperty": "$selectedContact",
+                  "options": "=$listOptions"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "FQB2q9"
+                  },
+                  "property": "$contactToRemove",
+                  "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "HzuV7V"
+                  },
+                  "property": "$contactToRemove",
+                  "value": "=turn.removeAttendees"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.EditArray",
