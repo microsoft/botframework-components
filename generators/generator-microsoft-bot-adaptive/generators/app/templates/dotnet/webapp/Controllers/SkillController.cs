@@ -16,20 +16,28 @@ namespace <%= botName %>.Controllers
     [Route("api/skills")]
     public class SkillController : ChannelServiceController
     {
-        public SkillController(ChannelServiceHandler handler)
+        private readonly ILogger<SkillController> _logger;
+
+        public SkillController(ChannelServiceHandler handler, ILogger<SkillController> logger)
             : base(handler)
         {
+            _logger = logger;
         }
 
         public override Task<IActionResult> ReplyToActivityAsync(string conversationId, string activityId, Activity activity)
         {
             try
             {
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.LogDebug($"ReplyToActivityAsync: conversationId={conversationId}, activityId={activityId}");
+                }
+
                 return base.ReplyToActivityAsync(conversationId, activityId, activity);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError(ex, $"ReplyToActivityAsync : {ex}");
                 throw;
             }
         }
@@ -38,11 +46,16 @@ namespace <%= botName %>.Controllers
         {
             try
             {
+                if (_logger.IsEnabled(LogLevel.Debug))
+                {
+                    _logger.LogDebug($"SendToConversationAsync: conversationId={conversationId}");
+                }
+
                 return base.SendToConversationAsync(conversationId, activity);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError(ex, $"SendToConversationAsync : {ex}");
                 throw;
             }
         }

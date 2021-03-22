@@ -1,0 +1,23 @@
+[import](common.lg)
+
+# SendActivity_PsAJ3p()
+[Activity
+    Text = ${SendActivity_PsAJ3p_text()}
+]
+
+# SendActivity_PsAJ3p_text()
+- Welcome back! How can I help you today?
+- Hello again! What can I help with?
+- Good to see you again. What do you want to do today?
+- Hey, there! Let's get started.
+- Hello again! How can I help?
+
+# SendActivity_f3uG2y()
+[Activity
+    Text = ${SendActivity_f3uG2y_text()}
+]
+
+# SendActivity_f3uG2y_text()
+- Hi there! I'm here to help you out.
+- Hi, I can help you out today.
+- Hello! I'm ready to help you out today.
