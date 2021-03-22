@@ -30,6 +30,7 @@ module.exports = class extends Generator {
             version: '1.0.0-preview.20210310.8ee9434',
           },
           {
+            isPlugin: true,
             name: 'Microsoft.Bot.Components.Orchestrator',
             version: '1.0.0-preview.20210310.8ee9434',
           },

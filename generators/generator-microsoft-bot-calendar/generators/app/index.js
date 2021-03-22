@@ -21,10 +21,12 @@ module.exports = class extends Generator {
         applicationSettingsDirectory: 'settings',
         packageReferences: [
           {
+            isPlugin: true,
             name: 'Microsoft.Bot.Components.Calendar',
             version: '1.0.0-alpha.20210310.8ee9434',
           },
           {
+            isPlugin: true,
             name: 'Microsoft.Bot.Components.Graph',
             version: '1.0.0-alpha.20210310.8ee9434',
           },
