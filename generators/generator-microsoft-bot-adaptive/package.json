@@ -12,16 +12,15 @@
   "license": "ISC",
   "author": "Bot Framework",
   "files": [
+    "*.js",
     "generators"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
   },
-  "scripts": {
-    "lint": "eslint -c ../../.eslintrc.json ."
-  },
   "dependencies": {
+    "runtypes": "^5.0.2",
     "uuid": "^8.3.1",
     "xml2js": "^0.4.23",
     "yeoman-generator": "^1.1.1"
@@ -31,5 +30,8 @@
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
     "prettier": "latest"
+  },
+  "scripts": {
+    "lint": "eslint -c .eslintrc.json ."
   }
 }

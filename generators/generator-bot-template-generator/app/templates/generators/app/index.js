@@ -11,11 +11,10 @@ module.exports = class extends Generator {
   initializing() {
     this.composeWith(require.resolve('generator-adaptive-bot/generators/app'), {
       arguments: this.args,
+      applicationSettingsDirectory: 'settings',
       packageReferences: [
         // PLACE COMPONENT PACKAGES THAT YOUR BOT TEMPLATE USES HERE
       ],
-      applicationSettingsDirectory: 'settings',
-      includeApplicationSettings: false,
     });
   }
 

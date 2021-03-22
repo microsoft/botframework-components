@@ -18,23 +18,17 @@ module.exports = class extends Generator {
       ),
       {
         arguments: this.args,
+        applicationSettingsDirectory: 'settings',
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.Calendar',
             version: '1.0.0-alpha.20210310.8ee9434',
           },
-        ],
-        pluginDefinitions: [
-          {
-            name: 'Microsoft.Bot.Components.Calendar',
-            settingsPrefix: 'Microsoft.Bot.Components.Calendar',
-          },
           {
             name: 'Microsoft.Bot.Components.Graph',
-            settingsPrefix: 'Microsoft.Bot.Components.Graph',
+            version: '1.0.0-alpha.20210310.8ee9434',
           },
         ],
-        applicationSettingsDirectory: 'settings',
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             oauthConnectionName: 'Outlook',

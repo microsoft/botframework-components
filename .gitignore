@@ -395,3 +395,6 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Ignore package lock files
 package-lock.json
+
+# Ignore test bots
+testing/*
