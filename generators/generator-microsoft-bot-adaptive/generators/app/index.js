@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require('uuid');
 const options = rt.Record({
   applicationSettingsDirectory: rt.String,
   botProjectSettings: rt.Record({
-    skills: rt.Dictionary(rt.Record, 'string').Or(rt.Undefined)
+    skills: rt.Dictionary(rt.Record, 'string').Or(rt.Undefined),
   }),
   modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
@@ -238,7 +238,7 @@ module.exports = class extends BaseGenerator {
     );
 
     botProject.name = botName;
-    botProject.skills = botProjectSettings && botProjectSettings.skills || {};
+    botProject.skills = (botProjectSettings && botProjectSettings.skills) || {};
 
     this.fs.writeJSON(
       this.destinationPath(botName, `${botName}.botproj`),

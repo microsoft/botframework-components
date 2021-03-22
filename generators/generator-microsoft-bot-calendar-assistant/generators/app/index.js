@@ -22,8 +22,8 @@ module.exports = class extends BaseGenerator {
             calendar: {
               workspace: '../calendar',
               remote: false,
-            }
-          }
+            },
+          },
         },
         packageReferences: [
           {
