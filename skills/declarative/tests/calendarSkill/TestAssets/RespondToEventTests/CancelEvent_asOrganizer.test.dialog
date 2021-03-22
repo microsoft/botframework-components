@@ -14,6 +14,17 @@
   "dialog": "calendarskill",
   "script": [
     {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
       "$kind": "Microsoft.Test.UserConversationUpdate",
       "membersAdded": [
         "Bot",
