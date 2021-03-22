@@ -2,22 +2,23 @@
 - book a meeting with a title of {@subject=weekly review}
 - book a meeting with {@contact=cynthia} {@date=tomorrow}
 - book a meeting with {@contact=morgan} and {@contact=margaret} on {@date=tuesday} about {@subject=content review}
-- book time on {@date=tuesday} at {@location=Red Robin}
+- book time on {@date=tuesday} at {@location=red robin}
+- book time with {@contact=lynne}, {@contact=patti}, and {@contact=joni} {@date=tomorrow} in {@location=seattle} with the subject {@subject=women's lunch}
 - book time with {@contact=tyler}, {@contact=morgan}, and {@contact=quirine}
-- book time with {@contact=Lynne}, {@contact=Patti}, and {@contact=Joni} {@date=tomorrow} in {@location=Seattle} with the subject {@subject=Women's Lunch}
-- create an event with {@contact=Beth} in {@location=the cafeteria}
-- create a meeting with {@contact=Thomas}
+- can you set up a {@subject=design meeting} with {@contact=lauren} and {@contact=thomas}
 - can you set up a time for me to meet with {@contact=ryan} about the {@subject=project status}
-- i need to meet with {@contact=tom} {@date=this week} in {@location=Redwest B}
+- create a meeting with {@contact=thomas}
+- create an event with {@contact=beth} in {@location=the cafeteria}
+- i need to meet with {@contact=tom} {@date=this week} in {@location=redwest b}
 - i need to talk to {@contact=isaiah} about the {@subject=merger} on {@date=friday}
 - make a meeting with {@contact=cynthia} about {@subject=dentist appointment}
-- make a meeting with {@contact=em} in {@location=Building 4}
-- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
-- new event {@date=today at 3} with {@contact=hyunjin} and {@contact=em}
+- make a meeting with {@contact=em} in {@location=building 4}
 - new event named {@subject=standup} in {@location=city center}
-- new event titled {@subject=Team Meeting} with {@contact=Patti} in {@location=Seattle}
+- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
+- new event titled {@subject=team meeting} with {@contact=patti} in {@location=seattle}
+- new event {@date=today at 3} with {@contact=hyunjin} and {@contact=em}
 - new meeting with {@contact=chris}, {@contact=elaine}, and {@contact=chris} titled {@subject=hair appointment} {@date=next week}
-- new meeting with {@contact=Diego} and {@contact=Alex} named {@subject=project sync} on {@date=Wednesday}
+- new meeting with {@contact=diego} and {@contact=alex} named {@subject=project sync} on {@date=wednesday}
 - new meeting with {@contact=youngjae}, {@contact=lauren}, and {@contact=tyler}
 - schedule a meeting about {@subject=user feedback discussion} on {@date=friday}
 - schedule a meeting from {@date=3pm} to {@date=4pm}
@@ -25,6 +26,9 @@
 - schedule an event with {@contact=cynthia} and {@contact=scott} on {@date=monday}
 - set up a meeting with {@contact=ryan}, {@contact=darren}, {@contact=ted}, and {@contact=elaine}
 - set up time with {@contact=melanie}
+- setup {@duration=45 minutes} with {@contact=maged refaat} on {@date=friday at 3}
+- setup a meeting with {@contact=qiong}
+- schedule {@duration=an hour} with {@contact=veronica} {@date=this week}
 
 @ intent CreateEvent usesFeatures Create,Event,Location,Titled
 
@@ -79,4 +83,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

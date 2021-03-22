@@ -136,7 +136,9 @@
                 {
                     "type": "Image",
                     "url": "${RecurringIconUrl()}",
-                    "horizontalAlignment": "Right"
+                    "horizontalAlignment": "Right",
+                    "height": "${IconSizeSmall()}",
+                    "width": "${IconSizeSmall()}"
                 }
             ]
         }

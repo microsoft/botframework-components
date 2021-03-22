@@ -256,6 +256,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
+        "height": "${IconSize()}",
         "url": "${LeftArrowInactiveIconUrl()}",
         "horizontalAlignment": "Right"
     }
@@ -264,6 +265,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
+        "height": "${IconSize()}",
         "url": "${LeftArrowActiveIconUrl()}",
         "horizontalAlignment": "Right",
         "selectAction": {
@@ -281,6 +283,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
+        "height": "${IconSize()}",
         "url": "${RightArrowInactiveIconUrl()}",
         "horizontalAlignment": "Left"
     }
@@ -289,6 +292,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
+        "height": "${IconSize()}",
         "url": "${RightArrowActiveIconUrl()}",
         "horizontalAlignment": "Left",
         "selectAction": {

@@ -278,6 +278,10 @@
                 {
                   "property": "$listOptions.isFirstTurn",
                   "value": "=false"
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
                 }
               ]
             },
@@ -381,6 +385,10 @@
                 {
                   "value": "=false",
                   "property": "$listOptions.isFirstTurn"
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
                 }
               ]
             },

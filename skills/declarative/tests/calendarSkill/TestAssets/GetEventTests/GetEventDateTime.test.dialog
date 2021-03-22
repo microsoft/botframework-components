@@ -32,11 +32,10 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Here's what I found:",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
-      "description": "Event detail card response"
+      "description": "Schedule card response"
     }
   ]
 }

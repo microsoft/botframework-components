@@ -45,7 +45,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "All right, I’ve declined the meeting named Test Meeting.",
+      "text": "All right, I've declined the meeting named Test Meeting.",
       "description": "Response to input 1"
     }
   ]

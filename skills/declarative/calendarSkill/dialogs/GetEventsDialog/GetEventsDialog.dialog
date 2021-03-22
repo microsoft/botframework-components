@@ -22,6 +22,14 @@
           "name": "GetEventsDialog.BeginDialog"
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "mi47ko"
+          },
+          "property": "$turnCount",
+          "value": "=coalesce($turnCount, 1)"
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "WnfDMU"
@@ -167,13 +175,10 @@
               "disabled": false,
               "maxTurnCount": 3,
               "alwaysPrompt": false,
-              "allowInterruptions": "=#Cancel.score > 0.5",
+              "allowInterruptions": "=#Cancel.score > 0.5 || exists(turn.activity.value.intent)",
               "prompt": "${TextInput_Prompt_Fej6Ub()}",
-              "unrecognizedPrompt": "",
-              "invalidPrompt": "",
-              "defaultValueResponse": "",
               "property": "$query"
-            },
+              },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
@@ -232,7 +237,8 @@
               "activityProcessed": false,
               "options": {
                 "options": "=$options",
-                "doSelection": "=true"
+                "doSelection": "=$doSelection",
+                "turnCount": "=$turnCount"
               }
             }
           ]
@@ -321,17 +327,26 @@
           },
           "resultProperty": "$events",
           "token": "=user.token.token",
-          "titleProperty": "=$parameters.subject",
-          "locationProperty": "=$parameters.location",
-          "attendeesProperty": "=$parameters.attendees",
           "endProperty": "=$parameters.end",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "dateTimeTypeProperty": "=coalesce($parameters.dateTimeType, \"date\")",
           "startProperty": "=$parameters.start",
-          "ordinalProperty": "=$parameters.ordinal",
           "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
           "userEmailProperty": "=user.profile.mail",
           "maxResultsProperty": "=25"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.FilterEvents",
+          "$designer": {
+            "id": "uI3CaY"
+          },
+          "resultProperty": "$events",
+          "token": "=user.token.token",
+          "eventsProperty": "=$events",
+          "titleProperty": "=$parameters.subject",
+          "locationProperty": "=$parameters.location",
+          "attendeesProperty": "=$parameters.attendees",
+          "ordinalProperty": "=$parameters.ordinal"
         }
       ]
     },
@@ -458,15 +473,15 @@
           "$designer": {
             "id": "DM5U3G"
           },
-          "condition": "=$turnCount < 2",
+          "condition": "$turnCount < 2",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "Q8gA4W"
+                "id": "dwLUet"
               },
               "property": "$turnCount",
-              "value": "=$turnCount++"
+              "value": "=$turnCount + 1"
             },
             {
               "$kind": "Microsoft.RepeatDialog",
@@ -475,17 +490,18 @@
               },
               "activityProcessed": true,
               "options": {
-                "turnCount": "=$turnCount"
-              }
+                "turnCount": "=$turnCount",
+                "doSelection": "=$doSelection"
+              },
+              "allowLoop": true
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.CancelAllDialogs",
+              "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "ev5Bwv"
+                "id": "pWMAUd"
               },
-              "activityProcessed": true,
               "eventName": "GetEventsFailed"
             }
           ]
@@ -562,18 +578,20 @@
               },
               "activityProcessed": true,
               "options": {
-                "options": "=$options"
+                "options": "=$options",
+                "doSelection": "=$doSelection"
               }
             }
           ],
-          "elseActions": []
-        },
-        {
-          "$kind": "Microsoft.CancelAllDialogs",
-          "$designer": {
-            "id": "9FFlyY"
-          },
-          "activityProcessed": true
+          "elseActions": [
+            {
+              "$kind": "Microsoft.CancelAllDialogs",
+              "$designer": {
+                "id": "IkvtZ1"
+              },
+              "activityProcessed": true
+            }
+          ]
         }
       ]
     },
