@@ -655,7 +655,7 @@
                 "id": "OJaLPN"
               },
               "property": "$options.duration",
-              "value": "=ticksToMinutes(ticks($event.end.dateTime) - ticks($event.start.dateTime))"
+              "value": "=ticksToMinutes(ticks(formatDateTime($event.end.dateTime)) - ticks(formatDateTime($event.start.dateTime)))"
             }
           ]
         },

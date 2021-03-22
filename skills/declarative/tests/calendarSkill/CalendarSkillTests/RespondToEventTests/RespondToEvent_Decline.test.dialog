@@ -33,7 +33,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "All right, I’ve declined the meeting named Test Meeting.",
+      "text": "All right, I've declined the meeting named Test Meeting.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
