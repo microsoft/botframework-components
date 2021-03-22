@@ -59,7 +59,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 request = request.Top(maxCount);
             }
 
-            IUserDirectReportsCollectionWithReferencesPage result = await request.GetAsync();
+            IUserDirectReportsCollectionWithReferencesPage result = await request.GetAsync(cancellationToken);
 
             // Again only return the top N results but discard the other pages if the manager has more than N direct reports
             return result.CurrentPage;

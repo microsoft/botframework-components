@@ -69,12 +69,6 @@
     attachments = ${json(EventDetailActionsCard($event))}
 ]
 
-# SendActivity_9Fl4ob()
-[Activity
-    text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailActionsCard($event))}
-]
-
 # SendActivity_YAJvpF()
 [Activity
     text = ${FirstEventResponseText(first($events))}

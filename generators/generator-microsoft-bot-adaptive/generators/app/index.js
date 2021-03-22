@@ -14,9 +14,10 @@ const options = rt.Record({
   modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
     rt.Record({
+      isPlugin: rt.Boolean.Or(rt.Undefined),
       name: rt.String,
-      version: rt.String,
       settingsPrefix: rt.String.Or(rt.Undefined),
+      version: rt.String,
     })
   ),
 });
@@ -156,20 +157,28 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const { label, start } = {
-      [integrations.functions]: { label: 'azure-functions' },
-      [integrations.webapp]: { label: 'restify', start: 'node index.js' },
+    const dependencies = {
+      [integrations.functions]: {
+        'botbuilder-runtime-integration-azure-functions': 'next',
+      },
+      [integrations.webapp]: {
+        'botbuilder-runtime-integration-restify': 'next',
+      },
     }[integration];
 
-    const dependencies = {
-      [`botbuilder-runtime-integration-${label}`]: 'next',
-    };
+    const devDependencies =
+      {
+        // Note: in dev we need a server for testing bots via Composer
+        [integrations.functions]: {
+          'botbuilder-runtime-integration-restify': 'next',
+        },
+      }[integration] || {};
 
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
       name: botName,
       private: true,
       scripts: {
-        start,
+        start: 'node index.js',
       },
       dependencies: Object.assign(
         this.packageReferences.reduce(
@@ -178,6 +187,7 @@ module.exports = class extends BaseGenerator {
         ),
         dependencies
       ),
+      devDependencies,
     });
   }
 
@@ -201,11 +211,13 @@ module.exports = class extends BaseGenerator {
       [platforms.js]: 'node index.js',
     }[platform];
 
-    for (const { name, settingsPrefix } of this.packageReferences) {
-      appSettings.runtimeSettings.plugins.push({
-        name,
-        settingsPrefix: settingsPrefix || name,
-      });
+    for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
+      if (isPlugin) {
+        appSettings.runtimeSettings.plugins.push({
+          name,
+          settingsPrefix: settingsPrefix || name,
+        });
+      }
     }
 
     this.fs.writeJSON(

@@ -1,0 +1,1 @@
+{"query":"Who are the peers of Thomas Chung?","prediction":{"topIntent":"GetPeers","intents":{"GetPeers":{"score":0.975502133}},"entities":{"contact":["Thomas Chung"]}}}

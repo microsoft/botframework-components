@@ -34,6 +34,18 @@ module.exports = class extends BaseGenerator {
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
+        packageReferences: [
+          {
+            isPlugin: true,
+            name: 'Microsoft.Bot.Components.Calendar',
+            version: '1.0.0-alpha.20210310.8ee9434',
+          },
+          {
+            isPlugin: true,
+            name: 'Microsoft.Bot.Components.Graph',
+            version: '1.0.0-alpha.20210310.8ee9434',
+          },
+        ],
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             oauthConnectionName: 'Outlook',

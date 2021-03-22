@@ -7555,13 +7555,6 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"runtypes@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "runtypes@npm:5.0.1"
-  checksum: 02c0d08213f7d40fd969db8007422e4b70a14d149d248d5274c1646e8e47e80bfa2e8c58f94cac72b9498f9b2f3e4a01e1cb77f6f633118c7ed87a491d628259
-  languageName: node
-  linkType: hard
-
 "runtypes@npm:^5.0.2":
   version: 5.0.2
   resolution: "runtypes@npm:5.0.2"

@@ -10,3 +10,8 @@
 [Activity
     Text = The manager of **${dialog.UserFound.displayName}** is:
 ]
+
+# SendActivity_PbEMRW()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]

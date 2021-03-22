@@ -22,6 +22,7 @@ namespace Microsoft.Bot.Components.Calendar
             yield return new DeclarativeType<CheckAvailability>(CheckAvailability.DeclarativeType);
             yield return new DeclarativeType<FindAvailableTime>(FindAvailableTime.DeclarativeType);
             yield return new DeclarativeType<GroupEventsByDate>(GroupEventsByDate.DeclarativeType);
+            yield return new DeclarativeType<FilterEvents>(FilterEvents.DeclarativeType);
         }
 
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)

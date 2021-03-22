@@ -57,7 +57,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 request = request.Top(maxCount);
             }
 
-            IUserPeopleCollectionPage result = await request.GetAsync();
+            IUserPeopleCollectionPage result = await request.GetAsync(cancellationToken);
 
             return result.CurrentPage;
         }
@@ -77,6 +77,17 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+        }
+
+        /// <inheritdoc />
+        protected override void HandleServiceException(ServiceException ex)
+        {
+            // It is possible someone traverse to top of org chart to find the peers (e.g. CEO doens't have peers)
+            // So in this case we will just return null to indicate nothing was found for peers.
+            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                base.HandleServiceException(ex);
+            }
         }
     }
 }

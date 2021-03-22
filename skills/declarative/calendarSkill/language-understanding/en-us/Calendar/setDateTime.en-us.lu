@@ -5,26 +5,29 @@
 - change my meeting with {@contact=elaine} to {@newDate=next week}
 - change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
 - change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
-- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
 - change the date
-- change the time
-- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
-- change the time of my meeting to {@newDate=6pm}
 - change the date and time of my next meeting to {@newDate=thursday at 11am}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
 - change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
 - change the date of the meeting to {@newDate=wednesday}
 - change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
+- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
+- change the time
+- change the time of my meeting to {@newDate=6pm}
+- change to {@newDate=2 am}
+- make {@currentDate=tomorrows} friday meeting {@currentDate=at 2} {@newDate=30 minutes later}
 - move my meeting from {@currentDate=3pm} to {@newDate=5pm}
 - move my meeting on {@currentDate=tuesday} to {@newDate=next week}
 - move my meeting with {@contact=darren} to {@newDate=this tuesday}
 - move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
+- move tomorrows physical therapy meeting to {@newDate=noon}
+- no, change it to {@newDate=tuesday}
+- no, set the meeting time to {@newDate=3:30}
 - reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
 - reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
 - update my meeting to start at {@newDate=noon on saturday}
 - update my meeting with {@contact=elaine} to {@newDate=monday at 2}
 - update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
-- no, set the meeting time to {@newDate=3:30}
-- no, change it to {@newDate=tuesday}
 - yes, but can you change the time
 - yes, but change it to {@date=monday at 3:30pm}
 
@@ -81,4 +84,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

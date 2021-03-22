@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -8,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Integration.Runtime.Settings;
+using Microsoft.Extensions.Logging;
 
 namespace <%= botName %>.Triggers
 {
@@ -18,7 +20,7 @@ namespace <%= botName %>.Triggers
     {
         private readonly Dictionary<string, IBotFrameworkHttpAdapter> _adapters = new Dictionary<string, IBotFrameworkHttpAdapter>();
         private readonly IBot _bot;
-        private readonly ILogger<BotController> _logger;
+        private readonly ILogger<MessagesTrigger> _logger;
 
         public MessagesTrigger(
             IEnumerable<IBotFrameworkHttpAdapter> adapters,
@@ -67,15 +69,11 @@ namespace <%= botName %>.Triggers
 
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
                 // The adapter will invoke the bot.
+                // IBotFrameworkHttpAdapter is expected to set the appropriate HttpResponse properties
+                // (eg. Status and Body), so there is no need to return an IActionResult that will
+                // set different HttpResponse values.
                 await adapter.ProcessAsync(req, req.HttpContext.Response, _bot).ConfigureAwait(false);
-                if (req.HttpContext.Response.IsSuccessStatusCode())
-                {
-                    return new OkResult();
-                }
-                return new ContentResult()
-                {
-                    StatusCode = req.HttpContext.Response.StatusCode,
-                };
+                return new EmptyResult();
             }
 
             _logger.LogError($"RunAsync: No adapter registered and enabled for route {adapterRoute}.");
@@ -83,3 +81,4 @@ namespace <%= botName %>.Triggers
         }
     }
 }
+

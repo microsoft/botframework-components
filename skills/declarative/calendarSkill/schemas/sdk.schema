@@ -143,6 +143,9 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
     },
     {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.FilterEvents"
+    },
+    {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
     },
     {
@@ -170,7 +173,28 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
     },
     {
+      "$ref": "#/definitions/Microsoft.Graph.Photo.GetPhoto"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetManager"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetPeers"
+    },
+    {
       "$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetUserProfile"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
     },
     {
       "$ref": "#/definitions/Microsoft.GuidEntityRecognizer"
@@ -4038,6 +4062,78 @@
         }
       }
     },
+    "Microsoft.Graph.Calendar.FilterEvents": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Graph - Filter Events",
+      "description": "Filter events from Microsoft Graph API.",
+      "type": "object",
+      "required": [
+        "eventsProperty",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result Property",
+          "description": "Result Property (named location to store information).",
+          "examples": []
+        },
+        "eventsProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Events",
+          "description": "Events to filter.",
+          "examples": []
+        },
+        "titleProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Title",
+          "description": "Event title.",
+          "examples": []
+        },
+        "locationProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Location",
+          "description": "Event location.",
+          "examples": []
+        },
+        "attendeesProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Attendees",
+          "description": "Event attendees.",
+          "examples": []
+        },
+        "ordinalProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Ordinal",
+          "description": "Ordinal property",
+          "examples": []
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.FilterEvents"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.Graph.Calendar.FindAvailableTime": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "Microsoft Graph - Find Available Time",
@@ -4337,24 +4433,6 @@
           "description": "Microsoft Graph API authentication token.",
           "examples": []
         },
-        "titleProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Title",
-          "description": "Event title.",
-          "examples": []
-        },
-        "locationProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Location",
-          "description": "Event location.",
-          "examples": []
-        },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Attendees",
-          "description": "Event attendees.",
-          "examples": []
-        },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
@@ -4371,12 +4449,6 @@
           "$ref": "#/definitions/valueExpression",
           "title": "DateTimeType",
           "description": "Datetime type, e.g. date, datetime.",
-          "examples": []
-        },
-        "ordinalProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "OrdinalderProperty",
-          "description": "Ordinal property",
           "examples": []
         },
         "timeZoneProperty": {
@@ -4655,9 +4727,265 @@
         }
       }
     },
+    "Microsoft.Graph.Photo.GetPhoto": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Graph - Get Profile Photo",
+      "description": "Get user profile photo from the Microsoft Graph API.",
+      "type": "object",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result Property",
+          "description": "Result Property (named location to store information).",
+          "examples": []
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph API authentication token.",
+          "examples": []
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.userId"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Photo.GetPhoto"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetDirectReports": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get direct reports of a user",
+      "description": "Get the direct reports of a user in the organization using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "maxCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Count",
+          "description": "Max number of results to return",
+          "examples": [
+            "dialog.worksWithMe.maxCount"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetDirectReports"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetManager": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get Manager of a User",
+      "description": "Get the manager of a user in the organization using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetManager"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetPeers": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get peer of a user",
+      "description": "Get peer of a user in the organization using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "maxCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Count",
+          "description": "Max number of results to return",
+          "examples": [
+            "dialog.peers.maxCount"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetPeers"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.Graph.User.GetProfile": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Graph - Get User Profile",
+      "title": "Microsoft Graph - Get Signed-in User's Profile",
       "description": "Get user profile from the Microsoft Graph API.",
       "type": "object",
       "required": [
@@ -4695,6 +5023,205 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.Graph.User.GetProfile"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetUserProfile": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get Profile of A User",
+      "description": "Get a user profile using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetUserProfile"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetUsers": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get users",
+      "description": "Finds users in an organization using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "nameToSearchFor",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "maxCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Count",
+          "description": "Max number of results to return",
+          "examples": [
+            "dialog.worksWithMe.maxCount"
+          ]
+        },
+        "nameToSearchFor": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Search Name",
+          "description": "Name of the user",
+          "examples": [
+            "dialog.user.name"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetUsers"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.User.GetWorksWith": {
+      "$role": "implements(Microsoft.IDialog)",
+      "type": "object",
+      "title": "Microsoft Graph - Get People That Works With Me",
+      "description": "Get people that I frequently collaborate with using the Microsoft Graph API.",
+      "required": [
+        "token",
+        "userId",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
+          "examples": [
+            "dialog.contosodata"
+          ]
+        },
+        "token": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Token",
+          "description": "Microsoft Graph Authentication Token",
+          "examples": [
+            "user.token.token"
+          ]
+        },
+        "maxCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max Count",
+          "description": "Max number of results to return",
+          "examples": [
+            "dialog.worksWithMe.maxCount"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "UserId",
+          "description": "Id of user",
+          "examples": [
+            "dialog.user.id"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.User.GetWorksWith"
         },
         "$designer": {
           "title": "Designer information",
@@ -4937,7 +5464,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Integration.Runtime",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "properties": {
         "route": {
@@ -5058,6 +5585,9 @@
           "$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
         },
         {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.FilterEvents"
+        },
+        {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
         },
         {
@@ -5085,7 +5615,28 @@
           "$ref": "#/definitions/Microsoft.Graph.Calendar.UpdateEvent"
         },
         {
+          "$ref": "#/definitions/Microsoft.Graph.Photo.GetPhoto"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetDirectReports"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetManager"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetPeers"
+        },
+        {
           "$ref": "#/definitions/Microsoft.Graph.User.GetProfile"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetUserProfile"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetUsers"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.User.GetWorksWith"
         },
         {
           "$ref": "#/definitions/Microsoft.HttpRequest"
@@ -10475,7 +11026,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10554,7 +11105,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10617,7 +11168,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10686,7 +11237,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10761,7 +11312,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10822,7 +11373,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10883,7 +11434,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -10958,21 +11509,16 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendAppBasedLinkQueryResponse",
-            "Teams.SendMEAuthResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendAppBasedLinkQueryResponse",
+          "Teams.SendMEAuthResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11041,7 +11587,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11110,7 +11656,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11179,7 +11725,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11248,7 +11794,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11317,7 +11863,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11386,7 +11932,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11453,9 +11999,15 @@
         "actions",
         "$kind"
       ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEActionResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11524,7 +12076,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11593,7 +12145,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11660,21 +12212,16 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendMEConfigQuerySettingUrlResponse",
-            "Teams.SendMEAuthResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEConfigQuerySettingUrlResponse",
+          "Teams.SendMEAuthResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11741,21 +12288,12 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendMEConfigQuerySettingUrlResponse",
-            "Teams.SendMEAuthResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11822,21 +12360,16 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendMEActionResponse",
-            "Teams.SendMEAuthResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEActionResponse",
+          "Teams.SendMEAuthResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11903,9 +12436,16 @@
         "actions",
         "$kind"
       ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEAttachmentsResponse",
+          "Teams.SendMEAuthResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -11972,9 +12512,15 @@
         "actions",
         "$kind"
       ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEAttachmentsResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12041,20 +12587,15 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendMEActionResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendMEActionResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12123,7 +12664,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12190,21 +12731,16 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendTabAuthResponse",
-            "Teams.SendTabCardResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendTabAuthResponse",
+          "Teams.SendTabCardResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12271,20 +12807,15 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendTabCardResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendTabCardResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12351,22 +12882,17 @@
         "actions",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "triggerNotInteractive"
-        },
-        {
-          "type": "triggerRequiresAction",
-          "kinds": [
-            "Teams.SendTaskModuleCardResponse",
-            "Teams.SendTaskModuleMessageResponse",
-            "Teams.SendTaskModuleUrlResponse"
-          ]
-        }
-      ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendTaskModuleCardResponse",
+          "Teams.SendTaskModuleMessageResponse",
+          "Teams.SendTaskModuleUrlResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12433,9 +12959,17 @@
         "actions",
         "$kind"
       ],
+      "$policies": {
+        "requiresKind": [
+          "Teams.SendTaskModuleCardResponse",
+          "Teams.SendTaskModuleMessageResponse",
+          "Teams.SendTaskModuleUrlResponse"
+        ],
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12504,7 +13038,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12573,7 +13107,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12642,7 +13176,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12711,7 +13245,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12780,7 +13314,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12849,7 +13383,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12913,17 +13447,9 @@
         "card",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnAppBasedLinkQuery"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -12985,18 +13511,9 @@
         "card",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnMEFetchTask",
-            "Teams.OnMESubmitAction"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13089,7 +13606,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13174,7 +13691,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13251,7 +13768,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13313,17 +13830,9 @@
         "configUrl",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnMEConfigQuerySettingUrl"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13390,7 +13899,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13456,7 +13965,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13516,7 +14025,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "required": [
         "$kind"
@@ -13596,7 +14105,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13661,18 +14170,9 @@
         "cards",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnTabSubmit",
-            "Teams.OnTabFetch"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13724,18 +14224,9 @@
         "card",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnTaskModuleFetch",
-            "Teams.OnTaskModuleSubmit"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13826,18 +14317,9 @@
         "message",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnTaskModuleFetch",
-            "Teams.OnTaskModuleSubmit"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -13901,18 +14383,9 @@
         "url",
         "$kind"
       ],
-      "policies": [
-        {
-          "type": "allowedTrigger",
-          "kinds": [
-            "Teams.OnTaskModuleFetch",
-            "Teams.OnTaskModuleSubmit"
-          ]
-        }
-      ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Teams",
-        "version": "4.12.0-rc0.preview"
+        "version": "4.12.1-preview"
       },
       "additionalProperties": false,
       "patternProperties": {

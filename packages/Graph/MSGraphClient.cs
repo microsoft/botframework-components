@@ -14,14 +14,33 @@ namespace Microsoft.Bot.Components.Graph
     /// </summary>
     public class MSGraphClient
     {
+#if DEBUG
+        private static IGraphServiceClient clientOverride;
+
+        /// <summary>
+        /// Allows setting test instance of the graph service client
+        /// </summary>
+        /// <param name="client">The client that should be used</param>
+        public static void RegisterTestInstance(IGraphServiceClient client)
+        {
+            MSGraphClient.clientOverride = client;
+        }
+#endif
+
         /// <summary>
         /// Gets the authenticated <see cref="GraphServiceClient"/>.
         /// </summary>
         /// <param name="accessToken">OAuth access token</param>
         /// <param name="httpClient">Instance of <see cref="HttpClient"/> to use.</param>
         /// <returns>Instance of <see cref="GraphServiceClient"/>.</returns>
-        public static GraphServiceClient GetAuthenticatedClient(string accessToken, HttpClient httpClient)
+        public static IGraphServiceClient GetAuthenticatedClient(string accessToken, HttpClient httpClient)
         {
+#if DEBUG
+            if (clientOverride != null)
+            {
+                return clientOverride;
+            }
+#endif
             var client = new GraphServiceClient(httpClient);
             client.AuthenticationProvider = new DelegateAuthenticationProvider(
                     async (requestMessage) =>
