@@ -37,7 +37,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         internal override async Task<DirectoryObject> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
-            DirectoryObject result = await client.Users[userId].Manager.Request().GetAsync();
+            DirectoryObject result = await client.Users[userId].Manager.Request().GetAsync(cancellationToken);
 
             return result;
         }

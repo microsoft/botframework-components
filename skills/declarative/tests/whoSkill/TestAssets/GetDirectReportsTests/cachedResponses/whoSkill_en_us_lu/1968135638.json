@@ -1,0 +1,1 @@
+{"query":"Who reports to Thomas?","prediction":{"topIntent":"GetDirectReports","intents":{"GetDirectReports":{"score":0.98425895}},"entities":{"contact":["Thomas"],"personName":["Thomas"]}}}

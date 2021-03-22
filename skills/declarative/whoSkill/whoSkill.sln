@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "whoSkill", "whoSkill\whoSki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Dialogs.Tests.WhoSkill", "..\tests\whoSkill\Microsoft.Bot.Dialogs.Tests.WhoSkill.csproj", "{2C0048D5-3392-4001-9FE0-F4911204934D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0048D5-3392-4001-9FE0-F4911204934D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0048D5-3392-4001-9FE0-F4911204934D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0048D5-3392-4001-9FE0-F4911204934D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0048D5-3392-4001-9FE0-F4911204934D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

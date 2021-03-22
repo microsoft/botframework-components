@@ -48,6 +48,28 @@
           ]
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qBDQhh"
+          },
+          "condition": "=exists($UserFound)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9JCLK1"
+              },
+              "activity": "${SendActivity_9JCLK1()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "rnko0k"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "rHT96x"

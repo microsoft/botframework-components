@@ -474,7 +474,7 @@
                   "value": "=$contact"
                 }
               ],
-              "condition": "=$contact != null"
+              "condition": "=$contact != null && ($contacts == null || count(where($contacts, c, c.EmailAddress.Address == $contact.EmailAddress.Address)) == 0)"
             }
           ],
           "elseActions": [

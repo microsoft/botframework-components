@@ -1,155 +1,35 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const Generator = require('yeoman-generator');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const rt = require('runtypes');
 const xml2js = require('xml2js');
+const { BaseGenerator, integrations, platforms } = require('../../index');
+const { v4: uuidv4 } = require('uuid');
 
-const INTEGRATION_WEBAPP = 'webapp';
-const INTEGRATION_FUNCTIONS = 'functions';
+const options = rt.Record({
+  applicationSettingsDirectory: rt.String,
+  modifyApplicationSettings: rt.Function,
+  packageReferences: rt.Array(
+    rt.Record({
+      name: rt.String,
+      version: rt.String,
+      settingsPrefix: rt.String.Or(rt.Undefined),
+    })
+  ),
+});
 
-const PLATFORM_DOTNET = 'dotnet';
-const PLATFORM_JS = 'js';
-const PLATFORM_JAVA = 'java';
-const PLATFORM_PYTHON = 'python';
+const defaultOptions = {
+  applicationSettingsDirectory: undefined,
+  modifyApplicationSettings: undefined,
+  packageReferences: [],
+};
 
-const PROJECT_TYPEID_WEBAPP = '9A19103F-16F7-4668-BE54-9A1E7A4F7556';
-const PROJECT_TYPEID_FUNCTION = 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC';
-
-module.exports = class extends Generator {
+module.exports = class extends BaseGenerator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument('botName', {
-      type: String,
-      required: true,
-    });
-
-    this.option('integration', {
-      desc: `The host integration to use:  ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`,
-      type: String,
-      default: INTEGRATION_WEBAPP,
-      alias: 'i',
-    });
-
-    this.option('platform', {
-      desc: `The programming platform to use: ${PLATFORM_DOTNET}`,
-      type: String,
-      default: PLATFORM_DOTNET,
-      alias: 'p',
-    });
-
-    this._verifyOptions();
-    this.applicationSettingsDirectory = this._validateApplicationSettingsDirectory(
-      opts
-    );
-    this.modifyApplicationSettings = this._validateModifyApplicationSettings(
-      opts
-    );
-    this.packageReferences = this._validatePackageReferences(
-      opts.packageReferences
-    );
-    this.pluginDefinitions = this._validatePluginDefinitions(
-      opts.pluginDefinitions
-    );
-  }
-
-  _verifyOptions() {
-    if (
-      this.options.integration.toLowerCase() != INTEGRATION_WEBAPP &&
-      this.options.integration.toLowerCase() != INTEGRATION_FUNCTIONS
-    ) {
-      this.env.error(
-        `--integration must be: ${INTEGRATION_WEBAPP} or ${INTEGRATION_FUNCTIONS}`
-      );
-    }
-
-    if (this.options.platform !== PLATFORM_DOTNET) {
-      this.env.error(`--platform must be: ${PLATFORM_DOTNET}`);
-    }
-  }
-
-  _validateApplicationSettingsDirectory(opts) {
-    let result = null;
-    if (
-      'applicationSettingsDirectory' in opts &&
-      opts.applicationSettingsDirectory &&
-      typeof opts.applicationSettingsDirectory === 'string'
-    ) {
-      result = opts.applicationSettingsDirectory;
-    }
-
-    return result;
-  }
-
-  _validateModifyApplicationSettings(opts) {
-    if (
-      'modifyApplicationSettings' in opts &&
-      typeof opts.modifyApplicationSettings === 'function'
-    ) {
-      return opts.modifyApplicationSettings;
-    }
-
-    return null;
-  }
-
-  _validatePackageReferences(packageReferences) {
-    let results = [];
-    if (Array.isArray(packageReferences)) {
-      packageReferences.forEach((reference) => {
-        if (
-          typeof reference === 'object' &&
-          'name' in reference &&
-          reference.name &&
-          typeof reference.name === 'string' &&
-          'version' in reference &&
-          reference.version &&
-          typeof reference.version === 'string'
-        ) {
-          const result = {
-            name: reference.name,
-            version: reference.version,
-          };
-
-          results.push(result);
-        }
-      });
-    }
-
-    return results;
-  }
-
-  _validatePluginDefinitions(pluginDefinitions) {
-    let results = [];
-    if (Array.isArray(pluginDefinitions)) {
-      pluginDefinitions.forEach((definition) => {
-        if (
-          typeof definition === 'object' &&
-          'name' in definition &&
-          definition.name &&
-          typeof definition.name === 'string'
-        ) {
-          const result = {
-            name: definition.name,
-          };
-
-          if (
-            'settingsPrefix' in definition &&
-            definition.settingsPrefix &&
-            typeof definition.settingsPrefix === 'string'
-          ) {
-            result.settingsPrefix = definition.settingsPrefix;
-          } else {
-            result.settingsPrefix = definition.name;
-          }
-
-          results.push(result);
-        }
-      });
-    }
-
-    return results;
+    // Performs type checking of options, properly defaulting them as well
+    Object.assign(this, defaultOptions, options.asPartial().check(opts));
   }
 
   // 1. initializing - Your initialization methods (checking current project state, getting configs, etc)
@@ -162,41 +42,72 @@ module.exports = class extends Generator {
   // 8. end - Called last, cleanup, say good bye, etc
 
   writing() {
-    this._copyDotnetProject();
-    this._copySchemas();
-    this._writeNugetConfig();
+    this._copyProject();
     this._writeApplicationSettings();
   }
 
-  _copyDotnetProject() {
-    const botName = this.options.botName;
-    const integration = this.options.integration;
-    const platform = this.options.platform;
-    const packageReferences = this._formatPackageReferences();
-    const settingsDirectory =
-      this.applicationSettingsDirectory === null
-        ? 'string.Empty'
-        : `"${this.applicationSettingsDirectory}"`;
+  _copyProject() {
+    const includeAssets = ['schemas'];
 
-    this.fs.copyTpl(
-      this.templatePath(path.join(platform, integration)),
-      this.destinationPath(botName),
-      {
-        botName,
-        packageReferences,
-        settingsDirectory,
+    switch (this.options.platform) {
+      case platforms.dotnet: {
+        this._copyPlatformTemplate({
+          defaultSettingsDirectory: 'string.Empty',
+          includeAssets,
+          templateContext: {
+            packageReferences: this._formatDotnetPackageReferences(
+              this.packageReferences
+            ),
+          },
+        });
+
+        this._copyDotnetSolutionFiles();
+        this._writeDotnetNugetConfig();
+
+        return;
       }
-    );
 
-    this.fs.move(
-      this.destinationPath(path.join(botName, 'botName.csproj')),
-      this.destinationPath(path.join(botName, `${botName}.csproj`))
-    );
+      case platforms.js: {
+        this._copyPlatformTemplate({
+          defaultSettingsDirectory: 'process.cwd()',
+          includeAssets,
+        });
 
-    this._copyDotnetSolutionFile();
+        this._writeJsPackageJson();
+
+        return;
+      }
+    }
   }
 
-  _formatPackageReferences() {
+  _copyPlatformTemplate({
+    defaultSettingsDirectory,
+    includeAssets = [],
+    templateContext = {},
+  }) {
+    const { botName, integration, platform } = this.options;
+
+    const settingsDirectory =
+      this.applicationSettingsDirectory != null
+        ? `"${this.applicationSettingsDirectory}"`
+        : defaultSettingsDirectory;
+
+    this.fs.copyTpl(
+      this.templatePath(platform, integration),
+      this.destinationPath(botName),
+      Object.assign({}, templateContext, { botName, settingsDirectory })
+    );
+
+    for (const path of includeAssets) {
+      this.fs.copyTpl(
+        this.templatePath('assets', path),
+        this.destinationPath(botName, path),
+        Object.assign({}, templateContext, { botName })
+      );
+    }
+  }
+
+  _formatDotnetPackageReferences() {
     let result = '';
     this.packageReferences.forEach((reference) => {
       result = result.concat(
@@ -207,17 +118,24 @@ module.exports = class extends Generator {
     return result;
   }
 
-  _copyDotnetSolutionFile() {
-    const botName = this.options.botName;
+  _copyDotnetSolutionFiles() {
+    const { botName, integration, platform } = this.options;
+
+    this.fs.move(
+      this.destinationPath(botName, 'botName.csproj'),
+      this.destinationPath(botName, `${botName}.csproj`)
+    );
+
     const botProjectGuid = uuidv4().toUpperCase();
     const solutionGuid = uuidv4().toUpperCase();
-    const projectType =
-      this.options.integration == INTEGRATION_WEBAPP
-        ? PROJECT_TYPEID_WEBAPP
-        : PROJECT_TYPEID_FUNCTION;
+
+    const projectType = {
+      [integrations.functions]: 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC',
+      [integrations.webapp]: '9A19103F-16F7-4668-BE54-9A1E7A4F7556',
+    }[integration];
 
     this.fs.copyTpl(
-      this.templatePath(path.join(this.options.platform, 'botName.sln')),
+      this.templatePath(platform, 'botName.sln'),
       this.destinationPath(`${botName}.sln`),
       {
         botName,
@@ -228,54 +146,84 @@ module.exports = class extends Generator {
     );
   }
 
-  _copySchemas() {
-    const botName = this.options.botName;
-    const directoryName = 'schemas';
+  _writeJsPackageJson() {
+    const { botName, integration } = this.options;
 
-    this.fs.copyTpl(
-      this.templatePath(path.join('assets', directoryName)),
-      this.destinationPath(path.join(botName, directoryName)),
+    const dependencies = {
+      [integrations.functions]: {
+        'botbuilder-runtime-integration-azure-functions': 'next',
+      },
+      [integrations.webapp]: {
+        'botbuilder-runtime-integration-restify': 'next',
+      },
+    }[integration];
+
+    const devDependencies =
       {
-        botName,
-      }
-    );
+        // Note: in dev we need a server for testing bots via Composer
+        [integrations.functions]: {
+          'botbuilder-runtime-integration-restify': 'next',
+        },
+      }[integration] || {};
+
+    this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
+      name: botName,
+      private: true,
+      scripts: {
+        start: 'node index.js',
+      },
+      dependencies: Object.assign(
+        this.packageReferences.reduce(
+          (acc, { name, version }) => Object.assign(acc, { [name]: version }),
+          {}
+        ),
+        dependencies
+      ),
+      devDependencies,
+    });
   }
 
   _writeApplicationSettings() {
-    const botName = this.options.botName;
-    const fileName = 'appsettings.json';
-
-    const filePath = path.join(
+    const {
+      applicationSettingsDirectory = '.',
       botName,
-      this.applicationSettingsDirectory
-        ? this.applicationSettingsDirectory
-        : '',
-      fileName
-    );
+      integration,
+      platform,
+    } = this.options;
 
     const appSettings = this.fs.readJSON(
-      this.templatePath(path.join('assets', fileName))
+      this.templatePath('assets', 'appsettings.json')
     );
 
     appSettings.luis.name = botName;
-    appSettings.runtime.command = `dotnet run --project ${botName}.csproj`;
-    appSettings.runtime.key = 'adaptive-runtime-dotnet-webapp';
 
-    for (const pluginDefinition of this.pluginDefinitions) {
-      appSettings.runtimeSettings.plugins.push(pluginDefinition);
+    appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
+    appSettings.runtime.command = {
+      [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
+      [platforms.js]: 'node index.js',
+    }[platform];
+
+    for (const { name, settingsPrefix } of this.packageReferences) {
+      appSettings.runtimeSettings.plugins.push({
+        name,
+        settingsPrefix: settingsPrefix || name,
+      });
     }
 
-    if (this.modifyApplicationSettings) {
-      this.modifyApplicationSettings(appSettings);
-    }
-
-    this.fs.writeJSON(filePath, appSettings);
+    this.fs.writeJSON(
+      this.destinationPath(
+        botName,
+        applicationSettingsDirectory,
+        'appsettings.json'
+      ),
+      appSettings
+    );
   }
 
-  _writeNugetConfig() {
+  _writeDotnetNugetConfig() {
     const done = this.async();
 
-    const botName = this.options.botName;
+    const { botName } = this.options;
     const fileName = 'NuGet.config';
 
     // Due to security checks, all NuGet.config files committed to the repo must possess the <clear/>
@@ -283,9 +231,7 @@ module.exports = class extends Generator {
     // is not desired for scaffolding. To avoid triggering security checks, we need to manipulate
     // the document and remove the element before outputting to the target location.
 
-    const nugetConfig = this.fs.read(
-      this.templatePath(path.join('assets', fileName))
-    );
+    const nugetConfig = this.fs.read(this.templatePath('dotnet', fileName));
 
     xml2js.parseString(nugetConfig, (err, result) => {
       if (err) return done(err);
@@ -300,7 +246,7 @@ module.exports = class extends Generator {
       });
 
       this.fs.write(
-        this.destinationPath(path.join(botName, fileName)),
+        this.destinationPath(botName, fileName),
         builder.buildObject(result)
       );
 

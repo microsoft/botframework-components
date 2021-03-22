@@ -2,8 +2,20 @@
 [Event](event.en-us.lg)
 
 # ChoiceInput_Prompt_VRSPsi()
+- IF: ${this.turnCount > 1 && not(exists(turn.interrupted))}
+    - ${UpdateChoiceNotUnderstood()}
+- ELSE: 
+    - ${UpdateChoicePrompt()}
+
+# UpdateChoicePrompt
 [Activity
     text = What would you like to change?
+    attachments = ${json(EventDetailUpdateCard($event))}
+]
+
+# UpdateChoiceNotUnderstood
+[Activity
+    text = Sorry, I didn't understand that. What would you like to change?
     attachments = ${json(EventDetailUpdateCard($event))}
 ]
 
@@ -32,8 +44,20 @@
 - Ok, I will not update the event.
 
 # ConfirmInput_Prompt_lvMf0G()
+- IF: ${this.turnCount > 1 && not(exists(turn.interrupted))}
+    - ${UpdateConfirmNotUnderstood()}
+- ELSE: 
+    - ${UpdateConfirmPrompt()}
+
+# UpdateConfirmPrompt
 [Activity
     text = Does this look right?
+    attachments = ${json(EventDetailEditCard($event))}
+]
+
+# UpdateConfirmNotUnderstood
+[Activity
+    text = Sorry, I didn't understand that. Does this look right?
     attachments = ${json(EventDetailEditCard($event))}
 ]
 
@@ -71,4 +95,5 @@
 - ${CancelRejected()}
 
 # SendActivity_Qv9lHi()
-- ${RemoveAttendeeConfirmation($selectedContact)}
+- ${RemoveAttendeeConfirmation($contactToRemove[0].EmailAddress)}
+

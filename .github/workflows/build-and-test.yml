@@ -1,10 +1,14 @@
 name: Build & Test for Calendar V2
 
-on:
+on: 
   push:
-    branches: [ "calendarSkill_v2", "main" ]
+    paths:
+      - 'skills/declarative/**'
+      - 'packages/**'
   pull_request:
-    branches: [ "calendarSkill_v2", "main" ]
+    paths:
+      - 'skills/declarative/**'
+      - 'packages/**'
 
 jobs:
   build:
@@ -31,7 +35,7 @@ jobs:
         run:  dotnet build
         working-directory: ./skills/declarative/tests
 
-      # Run the tests
+      # Run the calendar tests
       - name: Run tests
-        run: dotnet test
+        run: dotnet test --no-build
         working-directory: ./skills/declarative/tests

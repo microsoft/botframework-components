@@ -10,7 +10,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.AI.Luis;
     using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Components.Graph.Models;
@@ -41,27 +40,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
         }
 
         /// <summary>
-        /// Gets or sets the title of event to query.
-        /// </summary>
-        /// <value>Title of the event to query.</value>
-        [JsonProperty("titleProperty")]
-        public StringExpression TitleProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the event to query.
-        /// </summary>
-        /// <value>The location of the event to query.</value>
-        [JsonProperty("locationProperty")]
-        public StringExpression LocationProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the attendees of the event to query.
-        /// </summary>
-        /// <value>The attendees of the event to query.</value>
-        [JsonProperty("attendeesProperty")]
-        public ArrayExpression<string> AttendeesProperty { get; set; }
-
-        /// <summary>
         /// Gets or sets the start time of the event to query.
         /// </summary>
         /// <value>The start time of the event to query.</value>
@@ -81,13 +59,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <value>The date time type of the event to query.</value>
         [JsonProperty("dateTimeTypeProperty")]
         public StringExpression DateTimeTypeProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ordinal of the event to query.
-        /// </summary>
-        /// <value>The ordinal of the event to query.</value>
-        [JsonProperty("ordinalProperty")]
-        public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the timezone of the event to query.
@@ -126,22 +97,16 @@ namespace Microsoft.Bot.Component.Graph.Actions
             var startProperty = (DateTime?)parameters["StartProperty"];
             var endProperty = (DateTime?)parameters["EndProperty"];
             var timeZoneProperty = (string)parameters["TimeZoneProperty"];
-            var ordinalProperty = (OrdinalV2)parameters["OrdinalProperty"];
             var dateTimeTypeProperty = (string)parameters["DateTimeTypeProperty"];
             var isFuture = (bool)parameters["FutureEventsOnlyProperty"];
             var maxResults = (int)parameters["MaxResultsProperty"];
             var userEmail = (string)parameters["UserEmailProperty"];
-
             var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["TimezoneProperty"]);
-
-            var titleProperty = (string)parameters["TitleProperty"] ?? string.Empty;
-            var locationProperty = (string)parameters["LocationProperty"] ?? string.Empty;
-            var attendeesProperty = (List<string>)parameters["AttendeesProperty"] ?? new List<string>();
 
             // if start date is not provided, default to DateTime.Now
             var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
 
-            // if datetime field just contains date but no time, use today's date as the datetime range
+            // if datetime field just contains time but no date, use date today at use's timezone
             if (!dateTimeTypeProperty.Contains("date"))
             {
                 if (startProperty != null)
@@ -202,33 +167,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 }
             }
 
-            // These filters will be completed for the Search Events work item and are not currently being used. Notes here are for future implementation.
             // Filter results by datetime if dateTimeType is a specific datetime
             if (dateTimeTypeProperty != null && dateTimeTypeProperty.Contains("time"))
             {
                 parsedEvents = parsedEvents.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
-            }
-
-            // Filter results by title
-            if (titleProperty != null)
-            {
-                var title = titleProperty;
-                parsedEvents = parsedEvents.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
-            }
-
-            // Filter results by location
-            if (locationProperty != null)
-            {
-                var location = locationProperty;
-                parsedEvents = parsedEvents.Where(r => r.Location.ToLower().Contains(location.ToLower())).ToList();
-            }
-
-            // Filter results by attendees
-            if (attendeesProperty != null)
-            {
-                // TODO: update to use contacts from graph rather than string matching
-                var attendees = attendeesProperty;
-                parsedEvents = parsedEvents.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
             }
 
             parsedEvents = parsedEvents
@@ -237,26 +179,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 .Take(maxResults)
                 .ToList();
 
-            // Get result by order
-            if (parsedEvents.Any() && ordinalProperty != null)
-            {
-                long itemIndex = -1;
-                if (ordinalProperty.RelativeTo == "start" || ordinalProperty.RelativeTo == "current")
-                {
-                    itemIndex = ordinalProperty.Offset - 1;
-                }
-                else if (ordinalProperty.RelativeTo == "end")
-                {
-                    itemIndex = parsedEvents.Count - ordinalProperty.Offset - 1;
-                }
-
-                if (itemIndex >= 0 && itemIndex < parsedEvents.Count)
-                {
-                    parsedEvents = new List<CalendarSkillEventModel>() { parsedEvents[(int)itemIndex] };
-                }
-            }
-
-            // TODO: Support for events that last all day or span multiple days. Needs design
             return parsedEvents;
         }
 
@@ -266,14 +188,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
             parameters.Add("StartProperty", this.StartProperty.GetValue(state));
             parameters.Add("EndProperty", this.EndProperty.GetValue(state));
             parameters.Add("TimezoneProperty", this.TimeZoneProperty.GetValue(state));
-            parameters.Add("OrdinalProperty", this.OrdinalProperty.GetValue(state));
             parameters.Add("DateTimeTypeProperty", this.DateTimeTypeProperty.GetValue(state));
             parameters.Add("FutureEventsOnlyProperty", this.FutureEventsOnlyProperty.GetValue(state));
             parameters.Add("MaxResultsProperty", this.MaxResultsProperty.GetValue(state));
             parameters.Add("UserEmailProperty", this.UserEmailProperty.GetValue(state));
-            parameters.Add("AttendeesProperty", this.AttendeesProperty?.GetValue(state));
-            parameters.Add("LocationProperty", this.LocationProperty?.GetValue(state));
-            parameters.Add("TitleProperty", this.TitleProperty?.GetValue(state));
         }
 
         /// <summary>
