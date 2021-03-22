@@ -5,25 +5,7 @@
 
 const {
   BaseGenerator,
-  platforms,
 } = require('@microsoft/generator-microsoft-bot-adaptive');
-
-const packageReferences = {
-  [platforms.dotnet]: [
-    {
-      name: 'Microsoft.Bot.Components.Calendar',
-      version: '1.0.0-alpha.20210310.8ee9434',
-    },
-    {
-      name: 'Microsoft.Bot.Components.Graph',
-      version: '1.0.0-alpha.20210310.8ee9434',
-    },
-  ],
-  [platforms.js]: [
-    { name: '@microsoft/bot-components-calendar', version: 'latest' },
-    { name: '@microsoft/bot-components-graph', version: 'latest' },
-  ],
-};
 
 module.exports = class extends BaseGenerator {
   initializing() {
@@ -56,7 +38,6 @@ module.exports = class extends BaseGenerator {
 
           appSettings.runtimeSettings.features.setSpeak = true;
         },
-        packageReferences: packageReferences[this.options.platform],
       })
     );
   }
