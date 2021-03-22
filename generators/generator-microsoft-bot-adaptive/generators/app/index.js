@@ -11,9 +11,10 @@ const options = rt.Record({
   modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
     rt.Record({
+      isPlugin: rt.Boolean.Or(rt.Undefined),
       name: rt.String,
-      version: rt.String,
       settingsPrefix: rt.String.Or(rt.Undefined),
+      version: rt.String,
     })
   ),
 });
@@ -203,11 +204,13 @@ module.exports = class extends BaseGenerator {
       [platforms.js]: 'node index.js',
     }[platform];
 
-    for (const { name, settingsPrefix } of this.packageReferences) {
-      appSettings.runtimeSettings.plugins.push({
-        name,
-        settingsPrefix: settingsPrefix || name,
-      });
+    for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
+      if (isPlugin) {
+        appSettings.runtimeSettings.plugins.push({
+          name,
+          settingsPrefix: settingsPrefix || name,
+        });
+      }
     }
 
     this.fs.writeJSON(

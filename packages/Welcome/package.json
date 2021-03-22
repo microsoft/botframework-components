@@ -17,8 +17,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
-  },
-  "dependencies": {
-    "botbuilder-runtime-core": "next"
   }
 }
