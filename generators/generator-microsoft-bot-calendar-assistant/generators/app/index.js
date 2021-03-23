@@ -2,24 +2,29 @@
 // Licensed under the MIT License.
 
 'use strict';
-const Generator = require('yeoman-generator');
 
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
+const {
+  BaseGenerator,
+} = require('@microsoft/generator-microsoft-bot-adaptive');
 
-    this.argument('botName', { type: String, required: true });
-  }
-
+module.exports = class extends BaseGenerator {
   initializing() {
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
-      {
+      Object.assign({}, this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
+        botProjectSettings: {
+          skills: {
+            calendar: {
+              workspace: '../calendar',
+              remote: false,
+            },
+          },
+        },
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.HelpAndCancel',
@@ -42,7 +47,7 @@ module.exports = class extends Generator {
 
           appSettings.runtimeSettings.features.setSpeak = true;
         },
-      }
+      })
     );
 
     // create skill, this derives from a separate template
@@ -50,19 +55,13 @@ module.exports = class extends Generator {
       require.resolve(
         '@microsoft/generator-microsoft-bot-calendar/generators/app'
       ),
-      {
+      Object.assign({}, this.options, {
         arguments: ['calendar'],
-      }
+      })
     );
   }
 
   writing() {
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(this.options.botName),
-      {
-        botName: this.options.botName,
-      }
-    );
+    this._copyBotTemplateFiles();
   }
 };

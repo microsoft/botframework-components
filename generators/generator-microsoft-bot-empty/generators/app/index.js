@@ -21,10 +21,6 @@ module.exports = class extends BaseGenerator {
   }
 
   writing() {
-    const { botName } = this.options;
-
-    this.fs.copyTpl(this.templatePath(), this.destinationPath(botName), {
-      botName,
-    });
+    this._copyBotTemplateFiles();
   }
 };

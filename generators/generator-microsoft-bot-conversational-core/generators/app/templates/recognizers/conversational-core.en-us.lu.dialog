@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.LuisRecognizer",
-  "id": "LUIS_conversational-core",
-  "applicationId": "=settings.luis.conversational_core_en_us_lu.appId",
-  "version": "=settings.luis.conversational_core_en_us_lu.version",
-  "endpoint": "=settings.luis.endpoint",
-  "endpointKey": "=settings.luis.endpointKey"
-}

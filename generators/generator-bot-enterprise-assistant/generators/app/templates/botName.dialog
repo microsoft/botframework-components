@@ -1,0 +1,245 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "<%= botName %>",
+      "description": "",
+      "id": "A79tBe"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Welcome()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnChooseIntent",
+      "$designer": {
+        "id": "0h5yes",
+        "name": "Duplicated intents recognized"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "lAFi1s"
+          },
+          "assignments": [
+            {
+              "value": "=turn.recognized.candidates[0]",
+              "property": "dialog.luisResult"
+            },
+            {
+              "property": "dialog.qnaResult",
+              "value": "=turn.recognized.candidates[1]"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "vv9yvW"
+          },
+          "condition": "dialog.luisResult.score >= 0.9 && dialog.qnaResult.score <= 0.5",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "SMpOe6"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "UJeBBn"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hDxpFZ"
+          },
+          "condition": "dialog.luisResult.score <= 0.5 && dialog.qnaResult.score >= 0.9",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "fDazh8"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.qnaResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "4AsMKR"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HxkqOS"
+          },
+          "condition": "dialog.qnaResult.score <= 0.05",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "Ufksdj"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "hqGPbG"
+              }
+            }
+          ],
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above."
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "5hAGxJ"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_gWdJbl()}",
+          "property": "turn.intentChoice",
+          "value": "=@userChosenIntent",
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above.",
+          "activeLearningCardTitle": "Did you mean:",
+          "threshold": 0.3,
+          "noAnswer": "Sorry, I did not find an answer.",
+          "hostname": "=settings.qna.hostname",
+          "endpointKey": "=settings.qna.endpointkey",
+          "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LY8OIx"
+          },
+          "condition": "turn.intentChoice != 'none'",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "NFQuNh"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog[turn.intentChoice].result"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "APpO0t"
+              },
+              "activity": "${SendActivity_WTfZCN()}"
+            }
+          ],
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above.",
+          "activeLearningCardTitle": "Did you mean:",
+          "threshold": 0.3,
+          "noAnswer": "Sorry, I did not find an answer.",
+          "hostname": "=settings.qna.hostname",
+          "endpointKey": "=settings.qna.endpointkey",
+          "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "OCgnRt",
+        "name": "Error occurred"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "mM3nez"
+          },
+          "activity": "${SendActivity_mM3nez()}"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Z0xhJ8"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "zxdGNB",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "CcTxh7"
+          },
+          "activity": "${SendActivity_CcTxh7()}"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "<%= botName %>.lg",
+  "id": "<%= botName %>",
+  "recognizer": "<%= botName %>.lu.qna"
+}

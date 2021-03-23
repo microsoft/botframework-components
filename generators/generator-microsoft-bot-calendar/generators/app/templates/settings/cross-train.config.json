@@ -1,5 +1,5 @@
 {
-  "calendarskill.en-us": {
+  "<%= botName %>.en-us": {
     "rootDialog": true,
     "triggers": {
       "": [
