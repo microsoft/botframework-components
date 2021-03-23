@@ -140,7 +140,6 @@
         "name": "OnEvent (DeclineEvent)"
       },
       "event": "DeclineEvent",
-      "intent": "De",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",

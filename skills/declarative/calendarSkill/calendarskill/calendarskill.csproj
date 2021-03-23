@@ -15,7 +15,6 @@
     <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.1-preview" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\packages\Calendar\Microsoft.Bot.Components.Calendar.csproj" />
     <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
   </ItemGroup>
 </Project>

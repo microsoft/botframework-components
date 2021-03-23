@@ -197,7 +197,7 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.GroupEventsByDate",
+              "$kind": "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate",
               "$designer": {
                 "id": "CHMoK5"
               },

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Calendar Helpers - Group Events By Date",
+  "description": "Accepts a collection of event from the Microsoft Graph API and sorts them into a collection of type {date: System.DateTime, events: []}.",
   "type": "object",
-  "title": "Microsoft Graph - Group Events By Date",
-  "description": "Accept a event using the Microsoft Graph API.",
   "required": [
     "token",
     "eventsProperty",
@@ -19,21 +19,19 @@
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
-      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-      "examples": [
-        "dialog.contosodata"
-      ]
+      "description": "Named state location to store result.",
+      "examples": []
     },
     "startProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Start",
-      "description": "Event range start.",
+      "description": "DateTime range start.",
       "examples": []
     },
     "endProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "End",
-      "description": "Event range end.",
+      "description": "DateTime range end.",
       "examples": []
     },
     "eventsProperty": {

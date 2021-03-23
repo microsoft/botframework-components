@@ -1,11 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "Microsoft Bot Solutions - Recognize DateTime",
+  "title": "Microsoft Calendar Helpers - Recognize DateTime",
   "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
   "type": "object",
   "required": [
-    "timexProperty",
+    "timeZoneProperty",
     "queryProperty"
   ],
   "properties": {
@@ -17,19 +17,19 @@
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result Property",
-      "description": "Result Property (named location to store information).",
+      "description": "Named state location to store result.",
       "examples": []
     },
     "queryProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Query",
-      "description": "Query string to resolve.",
+      "description": "Query string to run recognition against.",
       "examples": []
     },
     "timeZoneProperty": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "Timezone",
-      "description": "Timezone for resolutions.",
+      "title": "Time zone",
+      "description": "Time zone for resolutions.",
       "examples": []
     }
   }

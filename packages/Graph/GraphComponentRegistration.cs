@@ -15,6 +15,7 @@ namespace Microsoft.Bot.Components.Graph
 
     public class GraphComponentRegistration : ComponentRegistration, IComponentDeclarativeTypes
     {
+        /// <inheritdoc/>
         public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
         {
             // Actions
@@ -32,6 +33,7 @@ namespace Microsoft.Bot.Components.Graph
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)
         {
             yield break;

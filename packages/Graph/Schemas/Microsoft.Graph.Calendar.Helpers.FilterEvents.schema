@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "Microsoft Graph - Filter Events",
+  "title": "Microsoft Calendar Helpers - Filter Events",
   "description": "Filter events from Microsoft Graph API.",
   "type": "object",
   "required": [
@@ -15,38 +15,38 @@
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Result Property",
-      "description": "Result Property (named location to store information).",
+      "title": "Result property",
+      "description": "Named state location to store result.",
       "examples": []
     },
     "eventsProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Events",
-      "description": "Events to filter.",
+      "description": "Events to filter",
       "examples": []
     },
     "titleProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Title",
-      "description": "Event title.",
+      "description": "Title to filter by",
       "examples": []
     },
     "locationProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Location",
-      "description": "Event location.",
+      "description": "Location to filter by",
       "examples": []
     },
     "attendeesProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Attendees",
-      "description": "Event attendees.",
+      "description": "Attendees to filter by",
       "examples": []
     },
     "ordinalProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Ordinal",
-      "description": "Ordinal property",
+      "description": "Ordinal (e.g. next, first, last) to filter by",
       "examples": []
     }
   }

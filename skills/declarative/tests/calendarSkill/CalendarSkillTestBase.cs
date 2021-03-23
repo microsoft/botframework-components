@@ -4,7 +4,6 @@
 namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
 {
     using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Components.Calendar;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Dialogs.Tests.Common;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,7 +15,6 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         public void InitializeComponents()
         {
             ComponentRegistration.Add(new GraphComponentRegistration());
-            ComponentRegistration.Add(new CalendarComponentRegistration());
         }
     }
 }

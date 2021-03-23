@@ -54,7 +54,7 @@
           ]
         },
         {
-          "$kind": "Microsoft.Bot.Solutions.RecognizeDateTime",
+          "$kind": "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime",
           "$designer": {
             "id": "SZKf8v"
           },

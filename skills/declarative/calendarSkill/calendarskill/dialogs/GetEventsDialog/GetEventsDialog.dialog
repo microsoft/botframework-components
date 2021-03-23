@@ -178,7 +178,7 @@
               "allowInterruptions": "=#Cancel.score > 0.5 || exists(turn.activity.value.intent)",
               "prompt": "${TextInput_Prompt_Fej6Ub()}",
               "property": "$query"
-              },
+            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
@@ -336,12 +336,11 @@
           "maxResultsProperty": "=25"
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.FilterEvents",
+          "$kind": "Microsoft.Graph.Calendar.Helpers.FilterEvents",
           "$designer": {
             "id": "uI3CaY"
           },
           "resultProperty": "$events",
-          "token": "=user.token.token",
           "eventsProperty": "=$events",
           "titleProperty": "=$parameters.subject",
           "locationProperty": "=$parameters.location",

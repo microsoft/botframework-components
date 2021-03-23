@@ -84,8 +84,7 @@
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "1gxbbD"
-          },
-          "activityProcessed": true
+          }
         }
       ],
       "condition": "=turn.recognized.score > 0.8"
@@ -597,21 +596,15 @@
           "resultProperty": "$events"
         },
         {
-          "$kind": "Microsoft.Graph.Calendar.FindAvailableTime",
+          "$kind": "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes",
           "$designer": {
             "id": "Cb07qI"
           },
           "resultProperty": "$availabilityList",
-          "inputProperty": "=$events",
+          "eventsProperty": "=$events",
           "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
           "workingHourStartProperty": "=user.workingHours.startTime",
           "workingHourEndProperty": "=user.workingHours.endTime"
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "fF6viC"
-          }
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -937,8 +930,7 @@
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "jNhIrI"
-          },
-          "activityProcessed": true
+          }
         }
       ]
     },
@@ -1575,8 +1567,7 @@
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "ePKk2p"
-          },
-          "activityProcessed": true
+          }
         }
       ]
     },

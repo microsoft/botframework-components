@@ -20,7 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
     <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\..\..\packages\Calendar\Microsoft.Bot.Components.Calendar.csproj" />
   </ItemGroup>
 
   <ItemGroup>

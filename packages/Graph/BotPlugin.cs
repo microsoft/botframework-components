@@ -8,6 +8,7 @@ namespace Microsoft.Bot.Components.Graph
 
     public class BotPlugin : IBotPlugin
     {
+        /// <inheritdoc/>
         public void Load(IBotPluginLoadContext context)
         {
             ComponentRegistration.Add(new GraphComponentRegistration());

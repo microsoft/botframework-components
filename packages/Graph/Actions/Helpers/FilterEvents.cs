@@ -1,26 +1,35 @@
-﻿using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.AI.Luis;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.TraceExtensions;
-using Microsoft.Bot.Components.Graph.Models;
-using Microsoft.Recognizers.Text.Choice;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Microsoft.Bot.Components.Calendar.Actions
+﻿namespace Microsoft.Bot.Components.Graph.Actions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AdaptiveExpressions.Properties;
+    using Microsoft.Bot.Builder.AI.Luis;
+    using Microsoft.Bot.Builder.Dialogs;
+    using Microsoft.Bot.Builder.TraceExtensions;
+    using Microsoft.Bot.Components.Graph.Models;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    /// <summary>
+    /// This action accepts a collection of MSGraph event options and filters them based.
+    /// </summary>
+    [GraphCustomActionRegistration(FilterEvents.DeclarativeType)]
     public class FilterEvents : Dialog
     {
+        /// <summary>
+        /// The declarative type name for this action.
+        /// </summary>
         [JsonProperty("$kind")]
-        public const string DeclarativeType = "Microsoft.Graph.Calendar.FilterEvents";
+        public const string DeclarativeType = "Microsoft.Graph.Calendar.Helpers.FilterEvents";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilterEvents"/> class.
+        /// </summary>
+        /// <param name="callerPath">The path of the caller.</param>
+        /// <param name="callerLine">The line number at which the method is called.</param>
         [JsonConstructor]
         public FilterEvents([CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base()
@@ -28,6 +37,9 @@ namespace Microsoft.Bot.Components.Calendar.Actions
             this.RegisterSourceLocation(callerPath, callerLine);
         }
 
+        /// <summary>
+        /// Gets or sets the property name where the result of the action should be stored.
+        /// </summary>
         [JsonProperty("resultProperty")]
         public StringExpression ResultProperty { get; set; }
 
@@ -66,14 +78,15 @@ namespace Microsoft.Bot.Components.Calendar.Actions
         [JsonProperty("ordinalProperty")]
         public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
 
+        /// <inheritdoc/>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
-            var eventsProperty = EventsProperty.GetValue(dcState);
-            var titleProperty = TitleProperty.GetValue(dcState);
-            var locationProperty = LocationProperty.GetValue(dcState);
-            var attendeesProperty = AttendeesProperty.GetValue(dcState);
-            var ordinalProperty = OrdinalProperty.GetValue(dcState);
+            var eventsProperty = this.EventsProperty.GetValue(dcState);
+            var titleProperty = this.TitleProperty.GetValue(dcState);
+            var locationProperty = this.LocationProperty.GetValue(dcState);
+            var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
+            var ordinalProperty = this.OrdinalProperty.GetValue(dcState);
 
             var filteredEvents = eventsProperty;
 

@@ -26,15 +26,6 @@
       "$ref": "#/definitions/Microsoft.BeginSkill"
     },
     {
-      "$ref": "#/definitions/Microsoft.Bot.SendActivityPlus"
-    },
-    {
-      "$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
-    },
-    {
-      "$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
-    },
-    {
       "$ref": "#/definitions/Microsoft.BreakLoop"
     },
     {
@@ -57,6 +48,9 @@
     },
     {
       "$ref": "#/definitions/Microsoft.ConfirmationEntityRecognizer"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.ContinueConversation"
     },
     {
       "$ref": "#/definitions/Microsoft.ContinueConversationLater"
@@ -125,13 +119,13 @@
       "$ref": "#/definitions/Microsoft.GetConversationMembers"
     },
     {
+      "$ref": "#/definitions/Microsoft.GetConversationReference"
+    },
+    {
       "$ref": "#/definitions/Microsoft.GotoAction"
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
-    },
-    {
-      "$ref": "#/definitions/Microsoft.Graph.Calendar.CheckAvailability"
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
@@ -141,12 +135,6 @@
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
-    },
-    {
-      "$ref": "#/definitions/Microsoft.Graph.Calendar.FilterEvents"
-    },
-    {
-      "$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
@@ -164,7 +152,16 @@
       "$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
     },
     {
-      "$ref": "#/definitions/Microsoft.Graph.Calendar.GroupEventsByDate"
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.FilterEvents"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.FindAvailableTimes"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.GroupEventsByDate"
+    },
+    {
+      "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.RecognizeDateTime"
     },
     {
       "$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
@@ -359,6 +356,9 @@
       "$ref": "#/definitions/Microsoft.SendActivity"
     },
     {
+      "$ref": "#/definitions/Microsoft.SendHandoffActivity"
+    },
+    {
       "$ref": "#/definitions/Microsoft.SetProperties"
     },
     {
@@ -374,7 +374,7 @@
       "$ref": "#/definitions/Microsoft.SwitchCondition"
     },
     {
-      "$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+      "$ref": "#/definitions/Microsoft.TelemetryTrackEventAction"
     },
     {
       "$ref": "#/definitions/Microsoft.TemperatureEntityRecognizer"
@@ -559,7 +559,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -595,7 +595,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -692,7 +692,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -727,9 +727,12 @@
       "title": "Send activity to ask a question",
       "description": "This is an action which sends an activity to the user when a response is expected",
       "type": "object",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -804,9 +807,12 @@
       ],
       "title": "Attachment input dialog",
       "description": "Collect information - Ask for a file or image.",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "type": "object",
       "required": [
@@ -926,6 +932,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -996,7 +1004,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1090,7 +1098,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1199,199 +1207,6 @@
         }
       }
     },
-    "Microsoft.Bot.SendActivityPlus": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Send Activity+",
-      "description": "Respond with an activity that can be updated.",
-      "type": "object",
-      "required": [
-        "operationType",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "disabled": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Disabled",
-          "description": "Optional condition which if true will disable this action.",
-          "examples": [
-            "user.age > 3"
-          ]
-        },
-        "activity": {
-          "$kind": "Microsoft.IActivityTemplate",
-          "title": "Activity",
-          "description": "Activity to send. Specify this or 'Activity Property'.",
-          "$ref": "#/definitions/Microsoft.IActivityTemplate"
-        },
-        "activityProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Activity Property",
-          "description": "Property path for a dynamically generated activity to send."
-        },
-        "operationType": {
-          "title": "Type of operation",
-          "description": "Type of update operation to perform.",
-          "default": "send",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "Enum",
-              "description": "Standard operation type.",
-              "enum": [
-                "send",
-                "update",
-                "replace",
-                "delete",
-                "whisper"
-              ]
-            },
-            {
-              "$ref": "#/definitions/equalsExpression"
-            }
-          ]
-        },
-        "activityIdProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Activity ID Property",
-          "description": "Optional name of the property used to remember the ID of the sent activity.",
-          "default": "turn.activity.replyToId"
-        },
-        "whisperToProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Whisper To Property",
-          "description": "The Channel Account info of the user that should be whispered to.",
-          "default": "turn.activity.from"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Bot.SendActivityPlus"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "Microsoft.Bot.Solutions.GotToAction": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Bot Solutions - Go to Action",
-      "description": "Go to an an action by id.",
-      "type": "object",
-      "required": [
-        "actionId",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "disabled": {
-          "$ref": "#/definitions/booleanExpression",
-          "title": "Disabled",
-          "description": "Optional condition which if true will disable this action.",
-          "examples": [
-            "user.age > 3"
-          ]
-        },
-        "actionId": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Action Id",
-          "description": "Action Id to execute next"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Bot.Solutions.GotToAction"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "Microsoft.Bot.Solutions.RecognizeDateTime": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Bot Solutions - Recognize DateTime",
-      "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
-      "type": "object",
-      "required": [
-        "timexProperty",
-        "queryProperty",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
-          "examples": []
-        },
-        "queryProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Query",
-          "description": "Query string to resolve.",
-          "examples": []
-        },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Timezone",
-          "description": "Timezone for resolutions.",
-          "examples": []
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Bot.Solutions.RecognizeDateTime"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
     "Microsoft.BreakLoop": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "Break loop",
@@ -1400,9 +1215,12 @@
       "required": [
         "$kind"
       ],
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -1444,9 +1262,12 @@
       "title": "Cancel all dialogs",
       "description": "Cancel all active dialogs. All dialogs in the dialog chain will need a trigger to capture the event configured in this action.",
       "type": "object",
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1508,9 +1329,12 @@
       "title": "Cancel all dialogs",
       "description": "Cancel all active dialogs. All dialogs in the dialog chain will need a trigger to capture the event configured in this action.",
       "type": "object",
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1576,7 +1400,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1611,9 +1435,12 @@
       "title": "Choice input dialog",
       "description": "Collect information - Pick from a list of choices",
       "type": "object",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -1891,6 +1718,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -1967,7 +1796,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2012,9 +1841,12 @@
       "title": "Confirm input dialog",
       "description": "Collect information - Ask for confirmation (yes or no).",
       "type": "object",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2238,6 +2070,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -2311,7 +2145,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2338,19 +2172,92 @@
         }
       }
     },
-    "Microsoft.ContinueConversationLater": {
+    "Microsoft.ContinueConversation": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "Continue conversation later (Queue)",
-      "description": "Continue conversation at later time (via Azure Storage Queue).",
+      "title": "Continue conversation (Queue)",
+      "description": "Continue a specific conversation (via StorageQueue implementation).",
       "type": "object",
       "required": [
-        "date",
-        "connectionString",
+        "conversationReference",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "disabled": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Disabled",
+          "description": "Optional condition which if true will disable this action.",
+          "examples": [
+            "user.age > 3"
+          ]
+        },
+        "conversationReference": {
+          "$ref": "#/definitions/objectExpression",
+          "title": "Conversation Reference",
+          "description": "A conversation reference. (NOTE: Minimum required values or channelId, conversation).",
+          "examples": [
+            {
+              "channelId": "skype",
+              "serviceUrl": "http://smba.skype.com",
+              "conversation": {
+                "id": "11111"
+              },
+              "bot": {
+                "id": "22222"
+              },
+              "user": {
+                "id": "33333"
+              },
+              "locale": "en-us"
+            }
+          ]
+        },
+        "value": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Value",
+          "description": "Value to send in the activity.value."
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.ContinueConversation"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.ContinueConversationLater": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Continue conversation later (Queue)",
+      "description": "Continue conversation at later time (via StorageQueue implementation).",
+      "type": "object",
+      "required": [
+        "date",
+        "$kind"
+      ],
+      "$package": {
+        "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2408,9 +2315,12 @@
       "required": [
         "$kind"
       ],
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2458,7 +2368,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2506,7 +2416,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2543,7 +2453,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2584,9 +2494,12 @@
         "description": "Default locale.",
         "default": "en-us"
       },
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2681,6 +2594,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -2751,7 +2666,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -2802,7 +2717,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2822,7 +2737,7 @@
           "title": "ActivityId",
           "description": "expression to an activityId to delete",
           "examples": [
-            "=$lastActivity"
+            "=turn.lastresult.id"
           ]
         },
         "disabled": {
@@ -2858,7 +2773,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2916,7 +2831,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -2968,7 +2883,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3007,7 +2922,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3085,7 +3000,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3173,7 +3088,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3211,7 +3126,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3298,9 +3213,12 @@
       "title": "End dialog",
       "description": "End this dialog.",
       "type": "object",
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3356,7 +3274,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3403,7 +3321,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3437,12 +3355,11 @@
       "type": "object",
       "required": [
         "itemsProperty",
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3515,12 +3432,11 @@
       "type": "object",
       "required": [
         "itemsProperty",
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3599,7 +3515,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3630,7 +3546,7 @@
           "title": "Activity Id",
           "description": "Activity ID or expression to an activityId to use to get the members. If none is defined then the current activity id will be used.",
           "examples": [
-            "$lastActivity"
+            "turn.lastresult.id"
           ]
         },
         "disabled": {
@@ -3662,7 +3578,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -3710,6 +3626,61 @@
         }
       }
     },
+    "Microsoft.GetConversationReference": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Get ConversationReference",
+      "description": "Gets the ConversationReference from current context and stores it in property so it can be used to with ContinueConversation action.",
+      "type": "object",
+      "$package": {
+        "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
+        "version": "4.12.1"
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "property": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Property",
+          "description": "Property (named location to store information).",
+          "examples": [
+            "user.age"
+          ]
+        },
+        "disabled": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Disabled",
+          "description": "Optional condition which if true will disable this action.",
+          "examples": [
+            "user.age > 3"
+          ]
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.GetConversationReference"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.GotoAction": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "Go to action",
@@ -3719,9 +3690,12 @@
         "actionId",
         "$kind"
       ],
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -3789,23 +3763,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
-          "title": "EventId",
-          "description": "Id of event",
+          "title": "Event ID",
+          "description": "The ID of the event to accept.",
           "examples": [
             "dialog.event.id"
           ]
@@ -3816,61 +3788,6 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.Graph.Calendar.AcceptEvent"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "Microsoft.Graph.Calendar.CheckAvailability": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Graph - Check Availability",
-      "description": "Check one's availability.",
-      "type": "object",
-      "required": [
-        "inputProperty",
-        "startProperty",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
-          "examples": []
-        },
-        "inputProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Input",
-          "description": "List of events to sort.",
-          "examples": []
-        },
-        "startProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Start",
-          "description": "Event range start.",
-          "examples": []
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.Calendar.CheckAvailability"
         },
         "$designer": {
           "title": "Designer information",
@@ -3904,26 +3821,28 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "eventToCreateProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "Event to create",
-          "description": "Event to create.",
+          "title": "New event",
+          "description": "Event object to create.",
           "examples": []
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "TimeZone",
-          "description": "Timezone.",
+          "title": "Time Zone",
+          "description": "Target time zone to create the event in.",
           "examples": []
         },
         "$kind": {
@@ -3966,23 +3885,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
-          "title": "EventId",
-          "description": "Id of event",
+          "title": "Event ID",
+          "description": "The ID of the event to decline.",
           "examples": [
             "dialog.event.id"
           ]
@@ -4027,23 +3944,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
-          "title": "EventId",
-          "description": "Id of event",
+          "title": "Event ID",
+          "description": "The ID of the event to delete.",
           "examples": [
             "dialog.event.id"
           ]
@@ -4054,147 +3969,6 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.Graph.Calendar.DeleteEvent"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "Microsoft.Graph.Calendar.FilterEvents": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Graph - Filter Events",
-      "description": "Filter events from Microsoft Graph API.",
-      "type": "object",
-      "required": [
-        "eventsProperty",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
-          "examples": []
-        },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Events",
-          "description": "Events to filter.",
-          "examples": []
-        },
-        "titleProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Title",
-          "description": "Event title.",
-          "examples": []
-        },
-        "locationProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Location",
-          "description": "Event location.",
-          "examples": []
-        },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Attendees",
-          "description": "Event attendees.",
-          "examples": []
-        },
-        "ordinalProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Ordinal",
-          "description": "Ordinal property",
-          "examples": []
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.Calendar.FilterEvents"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "Microsoft.Graph.Calendar.FindAvailableTime": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "Microsoft Graph - Find Available Time",
-      "description": "Check one's available time.",
-      "type": "object",
-      "required": [
-        "inputProperty",
-        "startProperty",
-        "workingHourStartProperty",
-        "workingHourEndProperty",
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id",
-          "description": "Optional id for the dialog"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
-          "examples": []
-        },
-        "inputProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Input",
-          "description": "List of events to sort.",
-          "examples": []
-        },
-        "workingHourStartProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "WorkingHourStart",
-          "description": "Start time of work in a day.",
-          "examples": []
-        },
-        "workingHourEndProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "WorkingHourEnd",
-          "description": "End time of work in a day.",
-          "examples": []
-        },
-        "startProperty": {
-          "$ref": "#/definitions/valueExpression",
-          "title": "Start",
-          "description": "Event range start.",
-          "examples": []
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.Calendar.FindAvailableTime"
         },
         "$designer": {
           "title": "Designer information",
@@ -4229,32 +4003,34 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "attendeesProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Attendees",
-          "description": "Event attendees.",
+          "description": "Event attendees",
           "examples": []
         },
         "durationProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Duration",
-          "description": "Default duration of meeting",
+          "description": "Duration of meeting",
           "examples": []
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "TimeZone",
-          "description": "Time zone.",
+          "title": "Time zone",
+          "description": "Time zone for the meeting",
           "examples": []
         },
         "$kind": {
@@ -4296,20 +4072,22 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "nameProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Name",
-          "description": "Contact name.",
+          "description": "Name to lookup",
           "examples": []
         },
         "$kind": {
@@ -4353,31 +4131,29 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "eventIdProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "EventId",
-          "description": "Id of event",
+          "title": "Event ID",
+          "description": "The ID of the event to lookup.",
           "examples": [
             "dialog.event.id"
           ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "TimeZone",
-          "description": "User's time zone.",
+          "title": "Time zone",
+          "description": "Target time zone to display the event in",
           "examples": [
             "user.timeZone"
           ]
@@ -4423,50 +4199,54 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
-          "description": "Event range start.",
+          "description": "Start datetime of event search range.",
           "examples": []
         },
         "endProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
-          "description": "Event range end.",
+          "description": "End datetime of event search range.",
           "examples": []
         },
         "dateTimeTypeProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "DateTimeType",
-          "description": "Datetime type, e.g. date, datetime.",
-          "examples": []
+          "description": "DateTime type, e.g. date, datetime, datetimerange.",
+          "examples": [
+            "dialog.dateTime.type"
+          ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "TimeZone",
-          "description": "Timezone.",
+          "description": "Target time zone to display events in.",
           "examples": []
         },
         "userEmailProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "UserEmail",
-          "description": "Current User's Email Address.",
+          "title": "User Email",
+          "description": "Current user's email address (to exclude from attendees list).",
           "examples": []
         },
         "futureEventsOnlyProperty": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Future Events Only",
-          "description": "Future Events Only",
+          "description": "If true, only return matching events in the future.",
           "examples": []
         },
         "maxResultsProperty": {
@@ -4514,19 +4294,21 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "addressProperty": {
           "$ref": "#/definitions/valueExpression",
-          "title": "Address",
+          "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": []
         },
@@ -4544,11 +4326,152 @@
         }
       }
     },
-    "Microsoft.Graph.Calendar.GroupEventsByDate": {
+    "Microsoft.Graph.Calendar.Helpers.FilterEvents": {
       "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Calendar Helpers - Filter Events",
+      "description": "Filter events from Microsoft Graph API.",
       "type": "object",
-      "title": "Microsoft Graph - Group Events By Date",
-      "description": "Accept a event using the Microsoft Graph API.",
+      "required": [
+        "eventsProperty",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Named state location to store result.",
+          "examples": []
+        },
+        "eventsProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Events",
+          "description": "Events to filter",
+          "examples": []
+        },
+        "titleProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Title",
+          "description": "Title to filter by",
+          "examples": []
+        },
+        "locationProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Location",
+          "description": "Location to filter by",
+          "examples": []
+        },
+        "attendeesProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Attendees",
+          "description": "Attendees to filter by",
+          "examples": []
+        },
+        "ordinalProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Ordinal",
+          "description": "Ordinal (e.g. next, first, last) to filter by",
+          "examples": []
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.Helpers.FilterEvents"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Calendar Helpers - Find Available Times",
+      "description": "Finds available times for the current user for a given date.",
+      "type": "object",
+      "required": [
+        "eventsProperty",
+        "startProperty",
+        "workingHourStartProperty",
+        "workingHourEndProperty",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Named state location to store result.",
+          "examples": []
+        },
+        "eventsProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Events",
+          "description": "List of events for date.",
+          "examples": []
+        },
+        "workingHourStartProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Working Hours Start",
+          "description": "Current user's configured work day start time.",
+          "examples": []
+        },
+        "workingHourEndProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Working Hours End",
+          "description": "Current user's configured work day end time.",
+          "examples": []
+        },
+        "startProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Date",
+          "description": "Date for finding available times",
+          "examples": []
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Calendar Helpers - Group Events By Date",
+      "description": "Accepts a collection of event from the Microsoft Graph API and sorts them into a collection of type {date: System.DateTime, events: []}.",
+      "type": "object",
       "required": [
         "token",
         "eventsProperty",
@@ -4572,21 +4495,19 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
-          "description": "Event range start.",
+          "description": "DateTime range start.",
           "examples": []
         },
         "endProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
-          "description": "Event range end.",
+          "description": "DateTime range end.",
           "examples": []
         },
         "eventsProperty": {
@@ -4602,7 +4523,62 @@
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.Graph.Calendar.GroupEventsByDate"
+          "const": "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Microsoft Calendar Helpers - Recognize DateTime",
+      "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
+      "type": "object",
+      "required": [
+        "timeZoneProperty",
+        "queryProperty",
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result Property",
+          "description": "Named state location to store result.",
+          "examples": []
+        },
+        "queryProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Query",
+          "description": "Query string to run recognition against.",
+          "examples": []
+        },
+        "timeZoneProperty": {
+          "$ref": "#/definitions/valueExpression",
+          "title": "Time zone",
+          "description": "Time zone for resolutions.",
+          "examples": []
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime"
         },
         "$designer": {
           "title": "Designer information",
@@ -4637,23 +4613,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
-          "title": "EventId",
-          "description": "Id of event",
+          "title": "Event ID",
+          "description": "The ID of the event to tentatively accept.",
           "examples": [
             "dialog.event.id"
           ]
@@ -4697,20 +4671,22 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "eventToUpdateProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Updated event",
-          "description": "Updated event to post to MS Graph API.",
+          "description": "Updated event object",
           "examples": []
         },
         "$kind": {
@@ -4752,20 +4728,22 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to retrieve the photo for",
           "examples": [
             "dialog.userId"
           ]
@@ -4810,31 +4788,29 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "maxCount": {
           "$ref": "#/definitions/integerExpression",
-          "title": "Max Count",
+          "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxCount"
+            "dialog.worksWithMe.maxResults"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to retrieve direct reports of",
           "examples": [
             "dialog.user.id"
           ]
@@ -4879,23 +4855,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to get the manager of",
           "examples": [
             "dialog.user.id"
           ]
@@ -4940,31 +4914,29 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "maxCount": {
           "$ref": "#/definitions/integerExpression",
-          "title": "Max Count",
+          "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.peers.maxCount"
+            "dialog.peers.maxResults"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to get the peers of",
           "examples": [
             "dialog.user.id"
           ]
@@ -5007,15 +4979,17 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result Property",
-          "description": "Result Property (named location to store information).",
+          "title": "Result property",
+          "description": "Named state location to store result.",
           "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
-          "examples": []
+          "examples": [
+            "user.token.token"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -5057,23 +5031,21 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to get the profile of",
           "examples": [
             "dialog.user.id"
           ]
@@ -5118,25 +5090,23 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "maxCount": {
           "$ref": "#/definitions/integerExpression",
-          "title": "Max Count",
+          "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxCount"
+            "dialog.worksWithMe.maxResults"
           ]
         },
         "nameToSearchFor": {
@@ -5187,31 +5157,29 @@
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
-          "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-          "examples": [
-            "dialog.contosodata"
-          ]
+          "description": "Named state location to store result.",
+          "examples": []
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
-          "description": "Microsoft Graph Authentication Token",
+          "description": "Microsoft Graph API authentication token.",
           "examples": [
             "user.token.token"
           ]
         },
         "maxCount": {
           "$ref": "#/definitions/integerExpression",
-          "title": "Max Count",
+          "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxCount"
+            "dialog.worksWithMe.maxResults"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
-          "title": "UserId",
-          "description": "Id of user",
+          "title": "User ID",
+          "description": "The ID of the user to get the collaborators of",
           "examples": [
             "dialog.user.id"
           ]
@@ -5240,7 +5208,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -5277,7 +5245,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -5316,7 +5284,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -5454,7 +5422,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.1"
+        "version": "4.12.1"
       }
     },
     "Microsoft.IAdapter": {
@@ -5495,15 +5463,6 @@
           "$ref": "#/definitions/Microsoft.BeginSkill"
         },
         {
-          "$ref": "#/definitions/Microsoft.Bot.SendActivityPlus"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Bot.Solutions.GotToAction"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Bot.Solutions.RecognizeDateTime"
-        },
-        {
           "$ref": "#/definitions/Microsoft.BreakLoop"
         },
         {
@@ -5517,6 +5476,9 @@
         },
         {
           "$ref": "#/definitions/Microsoft.ConfirmInput"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.ContinueConversation"
         },
         {
           "$ref": "#/definitions/Microsoft.ContinueConversationLater"
@@ -5567,13 +5529,13 @@
           "$ref": "#/definitions/Microsoft.GetConversationMembers"
         },
         {
+          "$ref": "#/definitions/Microsoft.GetConversationReference"
+        },
+        {
           "$ref": "#/definitions/Microsoft.GotoAction"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.AcceptEvent"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Graph.Calendar.CheckAvailability"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.CreateEvent"
@@ -5583,12 +5545,6 @@
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.DeleteEvent"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Graph.Calendar.FilterEvents"
-        },
-        {
-          "$ref": "#/definitions/Microsoft.Graph.Calendar.FindAvailableTime"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.FindMeetingTimes"
@@ -5606,7 +5562,16 @@
           "$ref": "#/definitions/Microsoft.Graph.Calendar.GetWorkingHours"
         },
         {
-          "$ref": "#/definitions/Microsoft.Graph.Calendar.GroupEventsByDate"
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.FilterEvents"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.FindAvailableTimes"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.GroupEventsByDate"
+        },
+        {
+          "$ref": "#/definitions/Microsoft.Graph.Calendar.Helpers.RecognizeDateTime"
         },
         {
           "$ref": "#/definitions/Microsoft.Graph.Calendar.TentativelyAcceptEvent"
@@ -5666,6 +5631,9 @@
           "$ref": "#/definitions/Microsoft.SendActivity"
         },
         {
+          "$ref": "#/definitions/Microsoft.SendHandoffActivity"
+        },
+        {
           "$ref": "#/definitions/Microsoft.SetProperties"
         },
         {
@@ -5678,7 +5646,7 @@
           "$ref": "#/definitions/Microsoft.SwitchCondition"
         },
         {
-          "$ref": "#/definitions/Microsoft.TelemetryTrackEvent"
+          "$ref": "#/definitions/Microsoft.TelemetryTrackEventAction"
         },
         {
           "$ref": "#/definitions/Microsoft.TextInput"
@@ -5761,7 +5729,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.1"
+        "version": "4.12.1"
       }
     },
     "Microsoft.IEntityRecognizer": {
@@ -5771,7 +5739,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "oneOf": [
         {
@@ -5852,7 +5820,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       }
     },
     "Microsoft.IRecognizer": {
@@ -5941,7 +5909,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.1"
+        "version": "4.12.1"
       }
     },
     "Microsoft.ITextTemplate": {
@@ -5958,7 +5926,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Declarative",
-        "version": "4.11.1"
+        "version": "4.12.1"
       }
     },
     "Microsoft.ITrigger": {
@@ -5967,7 +5935,7 @@
       "description": "Components which derive from OnCondition class.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "oneOf": [
         {
@@ -6145,7 +6113,7 @@
       "description": "Components which derive from TriggerSelector class.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "oneOf": [
         {
@@ -6177,12 +6145,11 @@
       "type": "object",
       "required": [
         "condition",
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6250,7 +6217,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6319,6 +6286,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -6392,7 +6361,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6425,7 +6394,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6472,7 +6441,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6497,9 +6466,10 @@
           ]
         },
         "text": {
-          "$ref": "#/definitions/stringExpression",
+          "$kind": "Microsoft.IActivityTemplate",
           "title": "Text",
-          "description": "Information to log."
+          "description": "Information to log.",
+          "$ref": "#/definitions/Microsoft.IActivityTemplate"
         },
         "label": {
           "$ref": "#/definitions/stringExpression",
@@ -6538,7 +6508,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.Luis",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6679,7 +6649,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6713,7 +6683,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6755,7 +6725,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -6810,7 +6780,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6845,9 +6815,12 @@
       "title": "Number input dialog",
       "description": "Collect information - Ask for a number.",
       "type": "object",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -6949,6 +6922,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -7022,7 +6997,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -7058,9 +7033,12 @@
         "connectionName",
         "$kind"
       ],
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7196,12 +7174,11 @@
       "type": "object",
       "required": [
         "type",
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7267,14 +7244,13 @@
         "extends(Microsoft.OnCondition)"
       ],
       "title": "On entity assignment",
-      "description": "Actions to take when an entity should be assigned to a property.",
+      "description": "Actions to apply an operation on a property and value.",
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -7285,20 +7261,20 @@
         }
       },
       "properties": {
-        "property": {
-          "type": "string",
-          "title": "Property",
-          "description": "Property that will be set after entity is selected."
-        },
-        "entity": {
-          "type": "string",
-          "title": "Entity",
-          "description": "Entity being put into property"
-        },
         "operation": {
           "type": "string",
           "title": "Operation",
-          "description": "Operation for assigning entity."
+          "description": "Operation filter on event."
+        },
+        "property": {
+          "type": "string",
+          "title": "Property",
+          "description": "Property filter on event."
+        },
+        "value": {
+          "type": "string",
+          "title": "Value",
+          "description": "Value filter on event."
         },
         "condition": {
           "$ref": "#/definitions/condition",
@@ -7355,10 +7331,9 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -7424,10 +7399,9 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -7489,14 +7463,13 @@
         "extends(Microsoft.OnCondition)"
       ],
       "title": "On choose entity",
-      "description": "Actions to be performed when an entity value needs to be resolved.",
+      "description": "Actions to be performed when value is ambiguous for operator and property.",
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -7507,15 +7480,20 @@
         }
       },
       "properties": {
+        "operation": {
+          "type": "string",
+          "title": "Operation",
+          "description": "Operation filter on event."
+        },
         "property": {
           "type": "string",
-          "title": "Property to be set",
-          "description": "Property that will be set after entity is selected."
+          "title": "Property",
+          "description": "Property filter on event."
         },
-        "entity": {
+        "value": {
           "type": "string",
-          "title": "Ambiguous entity",
-          "description": "Ambiguous entity"
+          "title": "Ambiguous value",
+          "description": "Ambiguous value filter on event."
         },
         "condition": {
           "$ref": "#/definitions/condition",
@@ -7567,16 +7545,15 @@
         "implements(Microsoft.ITrigger)",
         "extends(Microsoft.OnCondition)"
       ],
-      "title": "On ambigious intent",
-      "description": "Actions to perform on when an intent is ambigious.",
+      "title": "On ambiguous intent",
+      "description": "Actions to perform on when an intent is ambiguous.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7647,14 +7624,13 @@
         "extends(Microsoft.OnCondition)"
       ],
       "title": "On choose property",
-      "description": "Actions to take when there are multiple possible mappings of entities to properties.",
-      "type": "object",
+      "description": "Actions to take when there are multiple possible mappings of entities to properties and operations.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
+      "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -7665,31 +7641,6 @@
         }
       },
       "properties": {
-        "entity": {
-          "type": "string",
-          "title": "Entity being assigned",
-          "description": "Entity being assigned to property choice"
-        },
-        "properties": {
-          "type": "array",
-          "title": "Possible properties",
-          "description": "Properties to be chosen between.",
-          "items": {
-            "type": "string",
-            "title": "Property name",
-            "description": "Possible property to choose."
-          }
-        },
-        "entities": {
-          "type": "array",
-          "title": "Entities",
-          "description": "Ambiguous entity names.",
-          "items": {
-            "type": "string",
-            "title": "Entity name",
-            "description": "Entity name being chosen between."
-          }
-        },
         "condition": {
           "$ref": "#/definitions/condition",
           "title": "Condition",
@@ -7741,12 +7692,11 @@
       "description": "Actions to perform when specified condition is true.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7810,12 +7760,11 @@
       "description": "Actions to perform when a conversation is started up again from a ContinueConversationLater action.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7879,12 +7828,11 @@
       "description": "Actions to perform on receipt of an activity with type 'ConversationUpdate'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -7948,13 +7896,12 @@
       "description": "Actions to perform when a specific dialog event occurs.",
       "type": "object",
       "required": [
-        "actions",
         "event",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8023,11 +7970,10 @@
       "description": "Actions to take when there are no more actions in the current dialog.",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -8092,12 +8038,14 @@
       "description": "Actions to perform on receipt of an activity with type 'EndOfConversation'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
+      "$policies": {
+        "nonInteractive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8162,10 +8110,9 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -8230,12 +8177,11 @@
       "description": "Actions to perform on receipt of an activity with type 'Event'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8299,12 +8245,11 @@
       "description": "Actions to perform on receipt of an activity with type 'HandOff'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8368,12 +8313,11 @@
       "description": "Actions to perform on receipt of an activity with type 'InstallationUpdate'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8437,12 +8381,11 @@
       "description": "Actions to perform when specified intent is recognized.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8521,12 +8464,11 @@
       "description": "Actions to perform on receipt of an activity with type 'Invoke'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8590,12 +8532,11 @@
       "description": "Actions to perform on receipt of an activity with type 'Message'. Overrides Intent trigger.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8659,12 +8600,11 @@
       "description": "Actions to perform on receipt of an activity with type 'MessageDelete'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8728,12 +8668,11 @@
       "description": "Actions to perform on receipt of an activity with type 'MessageReaction'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8797,12 +8736,11 @@
       "description": "Actions to perform on receipt of an activity with type 'MessageUpdate'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8866,12 +8804,11 @@
       "description": "Actions to perform on when an match from QnAMaker is found.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8936,10 +8873,9 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
-        "actions",
         "$kind"
       ],
       "additionalProperties": false,
@@ -9004,12 +8940,11 @@
       "description": "Actions to perform on receipt of an activity with type 'Typing'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9073,12 +9008,11 @@
       "description": "Action to perform when user input is unrecognized or if none of the 'on intent recognition' triggers match recognized intent.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9143,7 +9077,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9180,7 +9114,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9217,7 +9151,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9257,7 +9191,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.QnA",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9422,7 +9356,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.AI.QnA",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9605,7 +9539,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9648,7 +9582,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9701,7 +9635,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9742,7 +9676,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9810,9 +9744,12 @@
       "type": "object",
       "title": "Repeat dialog",
       "description": "Repeat current dialog.",
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9881,9 +9818,12 @@
       "type": "object",
       "title": "Replace dialog",
       "description": "Replace current dialog with another dialog.",
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -9964,7 +9904,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10014,7 +9954,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10057,6 +9997,50 @@
         }
       }
     },
+    "Microsoft.SendHandoffActivity": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Send a handoff activity",
+      "description": "Sends a handoff activity to trigger a handoff request.",
+      "type": "object",
+      "$package": {
+        "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
+        "version": "4.12.1"
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "context": {
+          "$ref": "#/definitions/objectExpression",
+          "title": "Context",
+          "description": "Context to send with the handoff request"
+        },
+        "transcript": {
+          "$ref": "#/definitions/objectExpression",
+          "title": "transcript",
+          "description": "Transcript to send with the handoff request"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "Microsoft.SendHandoffActivity"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "Microsoft.SetProperties": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "Set property",
@@ -10068,7 +10052,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10148,7 +10132,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10211,7 +10195,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10274,7 +10258,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10317,7 +10301,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10358,8 +10342,7 @@
             "title": "Case",
             "description": "Case and actions.",
             "required": [
-              "value",
-              "actions"
+              "value"
             ],
             "properties": {
               "value": {
@@ -10412,7 +10395,7 @@
         }
       }
     },
-    "Microsoft.TelemetryTrackEvent": {
+    "Microsoft.TelemetryTrackEventAction": {
       "$role": "implements(Microsoft.IDialog)",
       "type": "object",
       "title": "Telemetry - track event",
@@ -10424,7 +10407,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10469,7 +10452,7 @@
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "Microsoft.TelemetryTrackEvent"
+          "const": "Microsoft.TelemetryTrackEventAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -10488,7 +10471,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10522,7 +10505,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10562,9 +10545,12 @@
       "type": "object",
       "title": "Text input dialog",
       "description": "Collection information - Ask for a word or sentence.",
+      "$policies": {
+        "interactive": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10662,6 +10648,8 @@
           "title": "Max turn count",
           "description": "Maximum number of re-prompt attempts to collect information.",
           "default": 3,
+          "minimum": 0,
+          "maximum": 2147483647,
           "examples": [
             3,
             "=settings.xyz"
@@ -10736,7 +10724,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10774,9 +10762,12 @@
         "errorValue",
         "$kind"
       ],
+      "$policies": {
+        "lastAction": true
+      },
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -10825,7 +10816,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10893,7 +10884,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10922,12 +10913,12 @@
     },
     "Microsoft.UpdateActivity": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "Send an activity",
+      "title": "Update an activity",
       "description": "Respond with an activity.",
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -10959,7 +10950,7 @@
           "title": "Activity Id",
           "description": "An string expression with the activity id to update.",
           "examples": [
-            "=dialog.lastActivityId"
+            "=turn.lastresult.id"
           ]
         },
         "activity": {
@@ -10992,7 +10983,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Builder.Dialogs.Adaptive",
-        "version": "4.11.1"
+        "version": "4.12.1"
       },
       "required": [
         "$kind"
@@ -11506,7 +11497,6 @@
         "actions"
       ],
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -11582,7 +11572,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with no activity.name.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11651,7 +11640,6 @@
       "description": "Actions triggered when a Teams ConversationUpdateActivity with channelData.eventType == 'channelCreated'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11720,7 +11708,6 @@
       "description": "Actions triggered when a Teams ConversationUpdateActivity with channelData.eventType == 'channelDeleted'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11789,7 +11776,6 @@
       "description": "Actions triggered when a Teams ConversationUpdateActivity with channelData.eventType == 'channelRenamed'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11858,7 +11844,6 @@
       "description": "Actions triggered when a Teams ConversationUpdateActivity with channelData.eventType == 'channelRestored'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11927,7 +11912,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name == 'fileConsent/invoke'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -11996,7 +11980,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/submitAction' and activity.value.botMessagePreviewAction == 'edit'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12071,7 +12054,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/submitAction' and activity.value.botMessagePreviewAction == 'send'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -12140,7 +12122,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/onCardButtonClicked'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -12209,7 +12190,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with name='composeExtension/querySettingUrl'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12285,7 +12265,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/setting'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12433,7 +12412,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/query'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12509,7 +12487,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/selectItem'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12584,7 +12561,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/submitAction'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12659,7 +12635,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received for 'actionableMessage/executeAction'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -12728,7 +12703,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='tab/fetch'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12804,7 +12778,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='tab/submit'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12879,7 +12852,6 @@
       "description": "Actions triggered when a Teams Invoke Activity is received with activity.name='task/fetch'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -12956,7 +12928,6 @@
       "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='task/submit'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$policies": {
@@ -13033,7 +13004,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamArchived'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -13102,7 +13072,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamDeleted'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -13171,7 +13140,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamHardDeleted'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -13240,7 +13208,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamRenamed'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -13309,7 +13276,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamRestored'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
@@ -13378,7 +13344,6 @@
       "description": "Actions triggered when a Teams ConversationUpdate with channelData.eventType == 'teamUnarchived'.",
       "type": "object",
       "required": [
-        "actions",
         "$kind"
       ],
       "$package": {
