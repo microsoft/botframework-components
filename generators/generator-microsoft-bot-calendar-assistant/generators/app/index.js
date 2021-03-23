@@ -14,7 +14,7 @@ module.exports = class extends BaseGenerator {
       require.resolve(
         '@microsoft/generator-microsoft-bot-adaptive/generators/app'
       ),
-      Object.assign(this.options, {
+      Object.assign({}, this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
         botProjectSettings: {
@@ -55,7 +55,7 @@ module.exports = class extends BaseGenerator {
       require.resolve(
         '@microsoft/generator-microsoft-bot-calendar/generators/app'
       ),
-      Object.assign(this.options, {
+      Object.assign({}, this.options, {
         arguments: ['calendar'],
       })
     );
