@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
-    <ProjectReference Include="..\..\calendarSkill\runtime\customaction\Microsoft.BotFramework.Composer.CustomAction.csproj" />
     <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
     <ProjectReference Include="..\..\..\..\packages\Calendar\Microsoft.Bot.Components.Calendar.csproj" />
   </ItemGroup>
@@ -35,7 +34,7 @@
     <None Include="TestAssets\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\calendarSkill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+    <None Include="..\..\calendarSkill\calendarskill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -7,10 +7,7 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     using Microsoft.Bot.Components.Calendar;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Dialogs.Tests.Common;
-    using Microsoft.BotFramework.Composer.CustomAction;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Diagnostics;
-    using System.IO;
 
     [TestClass]
     public abstract class CalendarSkillTestBase<T> : PbxDialogTestBase<T>, IHaveComponentsToInitialize 
@@ -20,7 +17,6 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
         {
             ComponentRegistration.Add(new GraphComponentRegistration());
             ComponentRegistration.Add(new CalendarComponentRegistration());
-            ComponentRegistration.Add(new CustomActionComponentRegistration());
         }
     }
 }
