@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_calendarskill",
-  "recognizers": {
-    "en-us": "calendarskill.en-us.lu",
-    "": "calendarskill.en-us.lu"
-  }
-}

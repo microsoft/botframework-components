@@ -8,6 +8,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const options = rt.Record({
   applicationSettingsDirectory: rt.String,
+  botProjectSettings: rt
+    .Record({ skills: rt.Dictionary(rt.Unknown) })
+    .asPartial(),
   modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
     rt.Record({
@@ -21,6 +24,7 @@ const options = rt.Record({
 
 const defaultOptions = {
   applicationSettingsDirectory: undefined,
+  botProjectSettings: {},
   modifyApplicationSettings: undefined,
   packageReferences: [],
 };
@@ -45,6 +49,7 @@ module.exports = class extends BaseGenerator {
   writing() {
     this._copyProject();
     this._writeApplicationSettings();
+    this._writeBotProject();
   }
 
   _copyProject() {
@@ -220,6 +225,22 @@ module.exports = class extends BaseGenerator {
         'appsettings.json'
       ),
       appSettings
+    );
+  }
+
+  _writeBotProject() {
+    const { botName } = this.options;
+
+    const botProject = this.fs.readJSON(
+      this.templatePath('assets', 'botName.botproj')
+    );
+
+    botProject.name = botName;
+    botProject.skills = this.botProjectSettings.skills || {};
+
+    this.fs.writeJSON(
+      this.destinationPath(botName, `${botName}.botproj`),
+      botProject
     );
   }
 

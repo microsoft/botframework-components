@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Integration.Runtime.Settings;
+using Microsoft.Extensions.Logging;
 
 namespace <%= botName %>.Controllers
 {

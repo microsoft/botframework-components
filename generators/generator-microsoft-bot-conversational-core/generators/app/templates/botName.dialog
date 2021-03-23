@@ -1,0 +1,105 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "<%= botName %>",
+      "description": "",
+      "id": "4pM5gc"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "PlH6iz"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "WelcomeDialog"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9wETGs",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "B0NP8m"
+          },
+          "activityProcessed": true,
+          "dialog": "HelpDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "e1i6lY",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FDsuIq"
+          },
+          "activityProcessed": true,
+          "dialog": "CancelDialog"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.9"
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "FOxcnx"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IQMEuO"
+          },
+          "activity": "${SendActivity_IQMEuO()}"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "<%= botName %>.lg",
+  "id": "<%= botName %>",
+  "recognizer": "<%= botName %>.lu.qna"
+}

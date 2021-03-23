@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_conversational-core",
-  "recognizers": {
-    "en-us": "conversational-core.en-us.lu",
-    "": "conversational-core.en-us.lu"
-  }
-}
