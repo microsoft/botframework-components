@@ -4,10 +4,19 @@
 [Actions](actions.en-us.lg)
 
 # FirstEventResponseText(event)
-- You start ${FormatDate(event.start.dateTime)}, at ${FormatTime(event.start.dateTime)}, with ${event.Subject}.
+- You start ${FormatDate(event.start.dateTime)} at ${FormatTime(event.start.dateTime)}, with **${event.Subject}**.
+- You're kicking off your day with **${event.Subject}** at  ${FormatTime(event.start.dateTime)}.
+- Your first meeting is **${event.Subject}** at  ${FormatTime(event.start.dateTime)}.
+- Your day starts with **${event.Subject}** at  ${FormatTime(event.start.dateTime)}.
+- First up is **${event.Subject}** at  ${FormatTime(event.start.dateTime)}.
 
 # LastEventResponseText(event)
-- Your day ${FormatDate(event.end.dateTime)}, ends at ${FormatTime(event.end.dateTime)}. Your last meeting is ${event.Subject}.
+- Your day ${FormatDate(event.end.dateTime)}, ends at ${FormatTime(event.end.dateTime)}. Your last meeting is **${event.Subject}**.
+- Your day ends at ${FormatTime(event.end.dateTime)} with **${event.Subject}**.
+- You will be done with meetings after **${event.Subject}** at ${FormatTime(event.end.dateTime)}.
+- After **${event.Subject}** you are done for the day. It ends at ${FormatTime(event.end.dateTime)}.
+- **${event.Subject}** is your last meeting. It ends at ${FormatTime(event.end.dateTime)}.
+- Last on today's schedule is **${event.Subject}** ending at ${FormatTime(event.end.dateTime)}.
 
 # NextEventResponseText(event)
 - Here’s what’s next:

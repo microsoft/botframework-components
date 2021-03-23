@@ -3,7 +3,7 @@
 [Availability](availability.en-us.lg)
 
 # SendActivity_IrC8MR()
-- You're signed out!
+- OK, you're signed out!
 
 # SendActivity_AlS4sI()
 [HeroCard
@@ -80,6 +80,7 @@
     text = ${LastEventResponseText(last($events))}
     attachments = ${json(EventDetailActionsCard(last($events)))}
 ]
+
 # SendActivity_2q5Pi3()
 - ```
 Conversation Id: ${conversation.Id}
