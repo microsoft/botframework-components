@@ -20,7 +20,7 @@
 - ELSE:
     - ${attendees[0].emailAddress.name} and ${count(attendees) - 1} more
     
-# ScheduleDateRangeResponseText(count, startDate, endDate, firstDate)
+# ScheduleDateRangeResponseText(count, startDate, endDate)
 - You have ${count} events planned from ${FormatDate(startDate)} to ${FormatDate(endDate)}. First up on ${FormatDate(startDate)}:
 
 # ScheduleHeader(date, events)

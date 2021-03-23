@@ -2,6 +2,7 @@
 
 # ContactListRemovePrompt()
 - Who should I remove?
+- Which contact should I remove?
 
 # ContactListPrompt()
 - I've found multiple results for **${$additionalOptions.contactName}**:
