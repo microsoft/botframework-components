@@ -78,7 +78,7 @@
 [CardAction
     type = openUrl
 	title = Provide feedback
-    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+    value = https://github.com/microsoft/botframework-components/issues/new/choose
 ]
 
 # SelectEventAction(event)

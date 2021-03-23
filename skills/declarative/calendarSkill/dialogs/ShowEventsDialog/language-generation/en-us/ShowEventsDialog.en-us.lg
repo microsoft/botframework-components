@@ -13,10 +13,12 @@
 
 # SendActivity_Poa1KS()
 - I couldn't find a matching event.
+- I didn't find an event that matched.
+- Sorry, I couldn't find that event.
 
 # SendScheduleCard()
 [Activity
-    text = ${if($tooManyEvents, "There are too many events to show for that date range. Here's the first day:", null)}
+    text = ${if($tooManyEvents, ScheduleDateRangeResponseText(count($events), $options.start, $options.end), null)}
     attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
     attachmentLayout = carousel
 ]

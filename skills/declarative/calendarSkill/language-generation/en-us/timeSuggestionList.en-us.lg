@@ -4,8 +4,15 @@
 # TimeSuggestionListPrompt()
 - IF: ${count($additionalOptions.attendees) == 1}
     - I've found multiple times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - I've found the following times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - There are multiple suggestions when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - Looks like there are several options when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
 - ELSE:
     - I have found multiple times:
+    - There are multiple times you can all meet:
+    - I found more than available time: 
+    - There seem to be a few available slots:
+    - Looks like there are several times available:
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:

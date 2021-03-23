@@ -444,6 +444,13 @@
           ],
           "elseActions": [
             {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ydywki"
+              },
+              "activity": "${SendActivity_ydywki()}"
+            },
+            {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "dcTvpp"
