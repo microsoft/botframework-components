@@ -1,0 +1,31 @@
+[Common](common.en-us.lg)
+
+# SendActivity_JrfC1C()
+- Sorry, I didn't understand that date and/or time.
+
+# ChoiceInput_Prompt_RSIYeJ()
+- Which date and time?
+
+# SendActivity_22HYzp()
+- That date does not meet the minimum requirements. Proceeding with the default value of **${formatDateTime(date($minDate), "dddd, MMMM d, yyyy")}**.
+
+# SendActivity_9oQtz5()
+- That date and time do not meet the minimum requirements. Proceeding with the default value of **${formatDateTime($minDate, "dddd, MMMM d, yyyy 'at' h:mm tt")}**.
+
+# ChoiceInput_Prompt_yHRsbS()
+- Which time?
+
+# ChoiceInput_Prompt_kbCCbs()
+- Which dates?
+
+# ChoiceInput_Prompt_QkdpPG()
+- Which dates and times?
+
+# ChoiceInput_Prompt_pO5zQk()
+- Which times?
+
+# TextInput_Prompt_g2RoUz()
+- I couldn't recognize a ${expectedType} in your query. Can you try rephrasing?
+
+# ChoiceInput_Prompt_xntS1t()
+-

@@ -1,0 +1,583 @@
+[Common](common.en-us.lg)
+[Actions](actions.en-us.lg)
+
+# EventDetailCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), null)}
+
+# EventDetailActionsCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), EventDetailActions(event))}
+
+# EventDetailEditCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), CreateEventActions(event))}
+
+# EventDetailUpdateCard(event)
+- ${CardTemplate(EventDetailHeader(event), EventDetailBody(event), UpdateEventActions(event))}
+
+# EventDetailHeader(event)
+- ${CardHeader(EventIconUrl(), event.Subject, "", "")}
+
+# EventDetailBody(event)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "items": [
+        ${EventDateTimeContainer(event)}
+        ${EventResponseContainer(event)}
+        ${EventAttendeeContainer(event)}
+        ${EventLocationContainer(event)}
+        ${EventContentContainer(event)}
+    ]
+}
+```
+
+# EventTitleContainer(event)
+-  ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 5,
+            "items": [
+                {
+                        "type": "Image",
+                        "url": "${TitleIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "verticalContentAlignment": "center",
+            "width": 95,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${event.Subject}",
+                    "size": "${BodySize()}"
+                }
+            ]
+        }
+    ]
+},
+```
+
+# EventDateTimeContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "width": 5,
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${DateTimeIconUrl()}",
+                    "horizontalAlignment": "Center",
+                    "height": "${IconSize()}",
+                    "width": "${IconSize()}"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": ${if(event.isRecurring, 90, 95)},
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "verticalContentAlignment": "Center",
+                    "spacing": "None",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Bottom",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${FormatTimeRange(event.start.dateTime, event.end.dateTime)}",
+                                    "size": "${BodySize()}",
+                                    "weight": "Bolder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "verticalContentAlignment": "Bottom",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${formatDateTime(event.start.dateTime, 'dddd, MMMM d')}",
+                                    "size": "${BodySize()}",
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": ${if(event.isRecurring, 5, 0)},
+            "isVisible": "${if(exists(event.isRecurring), event.isRecurring, false)}",
+            "verticalContentAlignment": "Center",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${RecurringIconUrl()}",
+                    "horizontalAlignment": "Right",
+                    "height": "${IconSizeSmall()}",
+                    "width": "${IconSizeSmall()}"
+                }
+            ]
+        }
+    ]
+},
+```
+
+# EventResponseContainer(event)
+- IF: ${ event.Response == 'organizer' }    
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You are the organizer",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'accepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${AcceptedIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Accepted, owned by ${event.organizer.emailAddress.name}",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'tentativelyAccepted' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${TentativeIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Tentative",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'declined' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${DeclinedIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Declined",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Response == 'notResponded' }
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${NoResponseIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "You have not responded",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    -
+
+# EventAttendeeContainer(event)
+- IF: ${ event.attendees != null && count(event.attendees) > 1 }
+    - ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Top",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Top",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "wrap": "True",
+                        "text": "${join(if(count(event.attendees) > 10, select(take(event.attendees, 10), e, e.emailAddress.name), select(event.attendees, e, e.emailAddress.name)), ', ')} ${if(count(event.attendees) > 10, concat('+', count(event.attendees) - 10, ' more'), '')}",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSEIF: ${ event.Attendees != null && count(event.Attendees) == 1}
+    -  ```
+    {
+        "type": "ColumnSet",
+        "spacing": "Small",
+        "columns": [
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 5,
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${ContactIconUrl()}",
+                        "height": "${IconSize()}",
+                        "width": "${IconSize()}",
+                        "spacing": "Small",
+                        "horizontalAlignment": "Center"
+                    }
+                ]
+            },
+            {
+                "type": "Column",
+                "verticalContentAlignment": "Center",
+                "width": 95,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${event.Attendees[0].EmailAddress.Name}",
+                        "size": "${BodySize()}"
+                    }
+                ]
+            }
+        ]
+    },
+    ```
+- ELSE:
+    - 
+
+# EventLocationContainer(event)
+- ```
+{
+    "type": "ColumnSet",
+    "spacing": "Small",
+    "columns": [
+        {
+            "type": "Column",
+            "verticalContentAlignment": "Top",
+            "width": 5,
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${LocationIconUrl()} ",
+                    "height": "${IconSize()}",
+                    "width": "${IconSize()}",
+                    "spacing": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "verticalContentAlignment": "Center",
+            "width": "95",
+            "items": [
+                ${EventLocationItems(event)}
+            ]
+        }
+    ]
+},
+```
+
+# EventLocationItems(event)
+- IF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})",
+        "size": "${BodySize()}"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' && event.location != 'Microsoft Teams Meeting' && event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
+    },
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting",
+        "size": "${BodySize()}"
+    }
+    ```
+- ELSEIF: ${ event.location != null && event.location != '' }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${event.Location}",
+        "size": "${BodySize()}"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting && event.isCurrentEvent }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "[Join the meeting](${event.onlineMeeting.joinUrl})",
+        "size": "${BodySize()}"
+    }
+    ```
+- ELSEIF: ${ event.isOnlineMeeting }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "Microsoft Teams Meeting",
+        "size": "${BodySize()}"
+    }
+    ```
+- ELSE: 
+    -```
+    {
+        "type": "TextBlock",
+        "text": "No location provided.",
+        "size": "${BodySize()}"
+    }
+    ```
+
+# EventContentContainer(event)
+- IF: ${ event.Description != null && event.Description != '' }
+    - ```
+    {
+        "type": "Container",
+        "id": "eventContentContainer",
+        "separator": true,
+        "spacing": "medium",
+        "isVisible": "false",
+        "items": [
+            {
+                "type":"TextBlock",
+                "text":"${event.description}",
+                "wrap": true,
+                "size": "${BodySize()}"
+            }
+        ]
+    },
+    ${ToggleButtonContainer('eventContentContainer')}
+    ```
+- ELSE:
+    -
+
+# EventDetailActions(event)
+- IF: ${ event.isOrganizer }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${UpdateEventAction(event)},
+            ${CancelEventAction(event)}
+        ]
+    }
+    ```
+- ELSEIF: ${event.response == 'notResponded'} 
+    - ```
+        {
+        "type": "ActionSet",
+        "actions": [
+            ${RespondAcceptAction(event)},
+            ${RespondDeclineAction(event)}
+        ]
+    }
+    ```
+- ELSE: 
+    - ```
+        {
+        "type": "ActionSet",
+        "actions": [
+            ${RespondDeclineAction(event)}
+        ]
+    }
+    ```
+
+# CreateEventActions(event)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${SetAttendeesAddAction(event)},
+        ${SetDescriptionAction(event)},
+        ${SetDateTimeAction(event)}
+    ]
+}
+```
+
+# UpdateEventActions(event)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${BuildSubmitAction("Attendees", "attendees")},
+        ${BuildSubmitAction("Date and time", "datetime")},
+        ${BuildSubmitAction("Duration", "duration")},
+        ${BuildSubmitAction("Description", "description")},
+        ${BuildSubmitAction("Title", "title")},
+        ${BuildSubmitAction("Location", "location")},
+        ${BuildSubmitAction("Teams link", "onlineMeeting")}
+    ]
+}
+```
+

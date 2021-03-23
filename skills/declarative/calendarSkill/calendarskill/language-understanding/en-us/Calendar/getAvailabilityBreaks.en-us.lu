@@ -1,0 +1,79 @@
+# GetAvailabilityBreaks
+- am i available {@date=this afternoon}
+- am i free at {@date=5 pm today}
+- can i take a break {@date=wednesday}
+- do i have a break before my next meeting
+- do i have a break {@date=this afternoon}
+- do i have any breaks
+- do i have any breaks on {@date=january 3, 2021}
+- do i have any breaks {@date=wednesday}
+- do i have any free time {@date=today}
+- how long until my next meeting
+- how much time do i have until my next meeting
+- tell me when my next break is
+- what breaks do i have {@date=monday}
+- what breaks do i have {@date=tomorrow}
+- what time am i available again
+- when am i free {@date=today}
+- when am i free {@date=tomorrow}
+- when are my breaks
+- when can i take a break
+- when do i have breaks
+- when do i have breaks {@date=today}
+- when is my next break
+- when is my next gap in meetings
+
+@ intent GetAvailabilityBreaks usesFeatures Event,Show
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

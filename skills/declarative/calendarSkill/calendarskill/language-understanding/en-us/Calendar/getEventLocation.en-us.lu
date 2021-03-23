@@ -1,0 +1,76 @@
+# GetEventLocation
+- can you tell me the building for the {@subject=team offsite}
+- show location for the meeting {@date=today}
+- tell me where i need to go for the next meeting
+- what is the location of my event with {@contact=you@test.net}
+- what is the location of the event with {@contact=isaac}
+- what room is my event {@date=tomorrow at noon}
+- what room is my next meeting
+- what room is the meeting
+- what room is the meeting {@date=this weekend} with {@contact=hyunjin} about {@subject=weekly review}
+- what room is the meeting titled {@subject=breakfast} on {@date=wednesday}
+- what room is the next event
+- what room is the {@subject=sprint planning} meeting in
+- what's the location for the meeting {@date=this afternoon}
+- where do i need to go {@date=this afternoon}
+- where is my meeting with {@contact=michiel}
+- where is my meeting with {@contact=you@test.net} and {@contact=morgan}
+- where is the event on {@date=thursday at 11am} with {@contact=morgan} and {@contact=tyler}
+- where is the event titled {@subject=project sync} with {@contact=cynthia} and {@contact=john}
+- where is the next meeting
+- where is the {@subject=team check-in} event
+
+@ intent GetEventLocation usesFeatures Event,Location,Titled,Show
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

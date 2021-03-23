@@ -1,0 +1,34 @@
+> Common intents
+[Cancel](cancel.en-us.lu)
+[Skip](skip.en-us.lu)
+
+> Calendar intents
+[SetAttendeesAdd](setAttendeesAdd.en-us.lu)
+[SetAttendeesRemove](setAttendeesRemove.en-us.lu)
+[SetDateTime](setDateTime.en-us.lu)
+[SetDescription](setDescription.en-us.lu)
+[SetDuration](setDuration.en-us.lu)
+[SetLocation](setLocation.en-us.lu)
+[SetOnlineMeetingAdd](setOnlineMeetingAdd.en-us.lu)
+[SetOnlineMeetingRemove](setOnlineMeetingRemove.en-us.lu)
+[SetTitle](setTitle.en-us.lu)
+
+# Skip
+- skip adding contacts
+- skip setting the title
+- skip adding a subject
+- skip adding teams
+- skip setting the location
+- none
+- no location
+
+# None
+- yes
+- sure
+- no
+- no thanks
+- Alex
+- John
+- thursday
+- tuesday
+- next week
