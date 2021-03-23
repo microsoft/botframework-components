@@ -34,7 +34,7 @@
       "$kind": "Microsoft.Test.AssertReply",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
-        "attachments[0].content.text == '\r\nHi Megan Bowen 🖐, thank you for helping out the Pre-built Experiences team with this dogfood for calendar skill!\r\n\r\nYou can ask the bot calendar related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n'"
+        "attachments[0].content.text == 'Hi Megan Bowen 🖐, I can help you out with calendar related questions and tasks.'"
       ]
     },
     {
@@ -43,7 +43,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Your day Thursday, December 31st, ends at 8:30 AM. Your last meeting is Project Team Meeting.",
+      "text": "Your day Thursday, December 31st, ends at 8:30 AM. Your last meeting is **Project Team Meeting**.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ],
