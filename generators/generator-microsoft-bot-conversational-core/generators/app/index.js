@@ -40,6 +40,6 @@ module.exports = class extends BaseGenerator {
   }
 
   writing() {
-    this.copyBotTemplateFiles();
+    this._copyBotTemplateFiles();
   }
 };
