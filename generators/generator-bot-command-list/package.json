@@ -1,10 +1,16 @@
 {
-  "name": "@microsoft/generator-microsoft-bot-conversational-core",
+  "name": "@microsoft/generator-bot-command-list",
   "version": "1.0.0",
-  "description": "Preview conversational core package for TESTING ONLY",
+  "description": "Preview command list bot for TESTING ONLY",
   "keywords": [
-    "conversationalcore",
-    "yeoman-generator"
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator",
+    "bf-template",
+    "bf-dotnet-webapp",
+    "bf-dotnet-functions"
   ],
   "license": "ISC",
   "author": "Bot Framework",
@@ -14,7 +20,8 @@
     "url": "https://github.com/Microsoft/botframework-components.git"
   },
   "scripts": {
-    "lint": "eslint -c ../../.eslintrc.json ."
+    "lint": "eslint -c ../../.eslintrc.json .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",

@@ -1,14 +1,20 @@
 {
-  "name": "@microsoft/generator-microsoft-bot-calendar-assistant",
-  "version": "0.0.1",
-  "description": "Preview Calendar Assistant template for TESTING ONLY",
+  "name": "@microsoft/generator-bot-conversational-core",
+  "version": "1.0.0",
+  "description": "Preview conversational core package for TESTING ONLY",
   "keywords": [
-    "conversationalcore",
-    "yeoman-generator"
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator",
+    "bf-template",
+    "bf-dotnet-webapp",
+    "bf-dotnet-functions"
   ],
   "license": "ISC",
   "author": "Bot Framework",
-  "main": "./generators/app/index.js",
+  "main": "./generators/app/templates/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
@@ -18,7 +24,6 @@
   },
   "dependencies": {
     "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
-    "@microsoft/generator-microsoft-bot-calendar": "workspace:^0.0.1-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

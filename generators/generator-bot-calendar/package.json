@@ -1,10 +1,16 @@
 {
-  "name": "@microsoft/generator-microsoft-bot-calendar",
-  "version": "0.0.1",
+  "name": "@microsoft/generator-bot-calendar",
+  "version": "1.0.0",
   "description": "Preview calendar bot for TESTING ONLY",
   "keywords": [
-    "conversationalcore",
-    "yeoman-generator"
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator",
+    "bf-template",
+    "bf-dotnet-webapp",
+    "bf-dotnet-functions"
   ],
   "license": "ISC",
   "author": "Bot Framework",

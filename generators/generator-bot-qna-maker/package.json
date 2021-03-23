@@ -7,13 +7,14 @@
     "bot",
     "framework",
     "adaptive",
-    "yeoman-generator"
+    "yeoman-generator",
+    "bf-template",
+    "bf-dotnet-webapp",
+    "bf-dotnet-functions"
   ],
   "license": "ISC",
   "author": "Bot Framework",
-  "files": [
-    "generators"
-  ],
+  "main": "./generators/app/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
