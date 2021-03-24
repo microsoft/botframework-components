@@ -26,15 +26,15 @@
         {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
-            "id": "SrOtuw"
+            "id": "IQuSlw"
           },
           "timeout": 900000,
           "maxTurnCount": 3,
           "allowInterruptions": true,
           "connectionName": "=settings.oauthConnectionName",
-          "property": "user.Token",
           "title": "Sign onto Microsoft Account",
-          "text": "Login"
+          "text": "Login",
+          "property": "user.Token"
         }
       ]
     }

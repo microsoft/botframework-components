@@ -27,3 +27,15 @@
 
 # RightArrowInactiveIconUrl
 - data:image/svg+xml,%3Csvg width='9' height='14' viewBox='0 0 9 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.32715 7L1.49805 13.8291L0.670898 13.002L6.67285 7L0.670898 0.998047L1.49805 0.170898L8.32715 7Z' fill='%23E0E0E0'/%3E%3C/svg%3E%0A
+
+# ContactImageIconUrl(Stream)
+- IF: ${ Stream != null && Stream != "" }
+    - ${HasContactImageIconUrl(Stream)}
+- ELSE:
+    - ${NoContactImageIconUrl()}
+
+# NoContactImageIconUrl
+- data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEgAACxIB0t1+/AAAAfRJREFUSEu9VrFOwzAQzafwKf0E/qCJ7XZCjMBWGBEDSIgRFoQTJIbSBURASAgkpnboQFhggIWpnxD8nKQk8SV1opaT3nJ39su93Nl2bMwV5x0mgkMuggkTcsaEHyeQMy78R8SQk6a3N8YuXNbzP/8IFgC5ak263N5c11/jPVRDbGoDRYw90u3qjfdltyhbWwQzl8v1dFvauEqgF7eH17/sptsXDRIsp7IyVKWUvI2aoyE81d0pTWK6G4nEpSLfvbbVbW2P4ij60XhTeH75iLd2RmSuAcWhyZKhJhJKyMgGe7eGb2PzqpBbBVf4Hcfj8ogKlnEXRvHxyZPh3z94iIfXU8NPAVxOcjTRCXmgEsoPQF7KXwaORsd2FMaTL1I6yDoefxt+GsFMEVIBE5AuDN8Nf6ikPj17NfxVsCYEhqOp7kyQ43+iMvio3CpYSwo5QQaS8D7SjdJ4NCApF3LhrZC1PyorxzAmtqOBBrUai0xGKgYghhwqloceCwwjFcyAL7dpe5sq9eDDGK8+2vD1NoONg2Gwe0PGNBSHJoMx5v/D4e0Xnx6eRfO0Rr66zFZ2AXNJX8AwdwXS4tmSbk8bHj5LqVRVpu5AuyejlremcxcBt0KljHWmu7cJMXLL3djGMLA4JfTdCanmBHjqywli86GuNcf5BRpNKUEndoEwAAAAAElFTkSuQmCC
+
+# HasContactImageIconUrl(Stream)
+- data:image/jpeg;base64,${Stream}

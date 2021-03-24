@@ -13,7 +13,7 @@
 
 # SendActivity_dTcyKk()
 [Activity
-    Text = Here is what I found for **${dialog.Result.names[0].displayName}**:
+    Text = Here is what I found for **${dialog.Result.displayName}**:
 ]
 
 # SendActivity_lcoztE()

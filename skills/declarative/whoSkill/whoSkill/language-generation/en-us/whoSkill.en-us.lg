@@ -1,9 +1,36 @@
 [Common](common.en-us.lg)
 
-# SendActivity_TXYwSy()
--${WelcomeUser()}
 # SendActivity_QxqZcj()
 [Activity
     Text = An error was encountered
 ]
+
+
+# SendActivity_DWdyHg()
+[Activity
+    Text = You're signed out!
+]
+
+# SendActivity_HTkwlL()
+[Activity
+    Text = Sorry I didn't understand your phrase. Can you please try again?
+]
+
+# SendActivity_DP3pJu()
+[Activity
+    Text = ${WelcomeUser()}
+]
+
+# SendActivity_W4IWlO()
+[Activity
+    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
+]
+
+# SendActivity_W4IWlO_attachment_EvFkJ1()
+[HeroCard
+  title = Welcome to People Skill!
+  subtitle = Find people in your organization by asking.
+  text = WelcomeUser()
+]
+
 

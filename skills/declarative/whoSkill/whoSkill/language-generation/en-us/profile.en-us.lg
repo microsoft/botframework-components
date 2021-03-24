@@ -6,21 +6,29 @@
 - ${CardTemplate(ProfileHeader(profile), ProfileBody(profile), ProfileActions(profile))}
 
 # ProfileHeader(profile)
-- ${CardHeader(dialog.ResultPhoto, profile.names.displayName, "", "")}
+- ${CardHeader(dialog.ResultPhoto, profile.displayName, "", "")}
 # ProfileBody(profile)
 - ```
 {
     "type": "Container",
     "separator": true,
     "items": [
-        ${ProfileProperty(profile.positions[0].detail.jobTitle)},
-        ${ProfileProperty(profile.emails[0].address)},
-        ${ProfileProperty(profile.phones[0].number)},
-        ${ProfileProperty(profile.positions[0].detail.company.officeLocation)},
+        ${ProfileProperty(profile.jobTitle)},
+        ${ProfileProperty(profile.mail)},
+        ${ProfileProperty(ShowPhoneNumber(profile.businessPhones, "No phone number found."))},
+        ${ProfileProperty(profile.officeLocation)},
         ${ProfileContactButtons(profile)}
     ]
 }
 ```
+
+# ShowPhoneNumber(Object, TextIfNotFound)
+- IF: ${ Object == null || Object == "" || (Object!= null && isArray(Object) && count(Object) == 0)}
+    - ${TextIfNotFound}
+- ELSEIF : ${ isArray(Object) }
+    - ${Object[0]}
+- ELSE:
+    - ${Object}
 
 # ProfileProperty(text)
 - ```
@@ -56,11 +64,10 @@
                 {
                     "type": "Image",
                     "url": "${ChatIconUrl()}",
-                    "width": "${IconSize()}",
-                    "height": "${IconSize()}",
+                    "size": "${IconSizeSmall()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.emails[0].address}"
+                        "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.mail}"
                     }
                 }
             ],
@@ -73,11 +80,10 @@
                 {
                     "type": "Image",
                     "url": "${MailIconUrl()}",
-                    "width": "${IconSize()}",
-                    "height": "${IconSize()}",
+                    "size": "${IconSizeSmall()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "mailto:${profile.emails[0].address}"
+                        "url": "mailto:${profile.mail}"
                     }
                 }
             ],
@@ -90,11 +96,10 @@
                 {
                     "type": "Image",
                     "url": "${PhoneIconUrl()}",
-                    "width": "${IconSize()}",
-                    "height": "${IconSize()}",
+                    "size": "${IconSizeSmall()}",
                     "selectAction": {
                         "type": "Action.OpenUrl",
-                        "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.emails[0].address}"
+                        "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.mail}"
                     }
                 }
             ],

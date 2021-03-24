@@ -16,6 +16,7 @@
 - Log out
 - Forget me
 
+
 # GetDepartment
 - can you tell me the work area of {@contact=valderrama}?
 - do you know {@contact=robert}´s department?
@@ -520,6 +521,10 @@
 - what's your name
 
 
+# GetCollaborators
+- Who collaborate with me most?
+
+
 > # Entity definitions
 
 @ ml contact usesFeatures personName,email
@@ -547,7 +552,8 @@
 	- department,organization,org,division,team,product
 
 
+> # List entities
+
+> # RegEx entities
 
 
-# GetCollaborators
-- Who collaborate with me most?

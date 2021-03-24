@@ -1,5 +1,6 @@
 [Common](common.en-us.lg)
 [Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
 
 # UserListPrompt(Scenario, User, Items)
 - IF: ${count(Items) > 1}
@@ -73,8 +74,9 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "data:image/jpeg;base64,${item.Photo}",
-                            "style": "Person"
+                            "url": "${ContactImageIconUrl(item.Photo)}",
+                            "style": "Person",
+                            "width": "${IconSizeSmall()}",
                         }
                     ]
                 },
