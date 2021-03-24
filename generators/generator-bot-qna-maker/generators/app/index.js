@@ -3,16 +3,12 @@
 
 'use strict';
 
-const {
-  BaseGenerator,
-} = require('@microsoft/generator-bot-adaptive');
+const { BaseGenerator } = require('@microsoft/generator-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
   initializing() {
     this.composeWith(
-      require.resolve(
-        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
-      ),
+      require.resolve('@microsoft/generator-bot-adaptive/generators/app'),
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
