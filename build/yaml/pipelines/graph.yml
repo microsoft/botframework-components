@@ -12,6 +12,6 @@ variables:
   BuildConfiguration: Release
   BuildPlatform: anycpu
   ComponentType: codeExtension
-  DeploymentRing: alpha
+  DeploymentRing: preview
   # PublishPackageArtifacts: # set in ADO
   WorkingDirectory: packages/Graph

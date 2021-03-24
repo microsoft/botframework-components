@@ -12,4 +12,4 @@ variables:
   ComponentType: generator
   DeploymentRing: preview
   # PublishPackageArtifacts: # set in ADO
-  WorkingDirectory: generators/generator-microsoft-bot-calendar
+  WorkingDirectory: generators/generator-bot-adaptive
