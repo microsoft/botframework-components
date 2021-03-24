@@ -12,13 +12,13 @@ Coming Soon!
 
 ## Template Publishing
 
-Template packages indicate to Composer which azure environments and runtime languages it supports through the keyword tags associated with the package. 
+Template packages indicate to Composer which azure environments and runtime languages it supports through the keywords associated with the package. 
 
 The following feedUrl is used by Composer to grab the first party template generators.
 - If user has not opted in to using preview generators
-  - https://registry.npmjs.org/-/v1/search?text=generator+scope:microsoft+keywords:bf-template+latest
+  - https://registry.npmjs.org/-/v1/search?text=generator+keywords:bf-template+scope:microsoft+maintainer:botframework
 
-So any npm package in the microsoft scope with keyword bf-template will be returned.
+So any npm package in the microsoft scope, with botframework npm UN as a maintainer, with keyword bf-template will be returned.
 
 Composer then parses through the keywords of each package to determine which scenarios the template supports. It uses this data when populating the 'node' and 'C#' tabs in the template selection view as well as the 'web app' and 'functions' options dropdown in the creation flow. The keywords are formatted as bf-{language}-{integration}
 
