@@ -52,11 +52,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc />
         protected override void HandleServiceException(ServiceException ex)
         {
-            // Not found is fine if the person doesn't have any photo
-            if (ex.StatusCode != System.Net.HttpStatusCode.NotFound)
-            {
-                base.HandleServiceException(ex);
-            }
+            // If there is any exception with getting photo, don't throw. Just keep
+            // showing the rest of the profile.
         }
 
         /// <inheritdoc />
