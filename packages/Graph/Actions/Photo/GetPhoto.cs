@@ -15,7 +15,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Get profile of a user's manager in Graph
+    /// Get profile of a user's manager in Graph.
     /// </summary>
     [GraphCustomActionRegistration(GetPhoto.GetPhotorDeclarativeType)]
     public class GetPhoto : BaseMsGraphCustomAction<string>

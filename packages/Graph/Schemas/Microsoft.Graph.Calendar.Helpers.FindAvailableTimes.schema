@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Calendar Helpers - Find Available Times",
+  "description": "Finds available times for the current user for a given date.",
+  "type": "object",
+  "required": [
+    "eventsProperty",
+    "startProperty",
+    "workingHourStartProperty",
+    "workingHourEndProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Named state location to store result.",
+      "examples": []
+    },
+    "eventsProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Events",
+      "description": "List of events for date.",
+      "examples": []
+    },
+    "workingHourStartProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Working Hours Start",
+      "description": "Current user's configured work day start time.",
+      "examples": []
+    },
+    "workingHourEndProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Working Hours End",
+      "description": "Current user's configured work day end time.",
+      "examples": []
+    },
+    "startProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Date",
+      "description": "Date for finding available times",
+      "examples": []
+    }
+  }
+}

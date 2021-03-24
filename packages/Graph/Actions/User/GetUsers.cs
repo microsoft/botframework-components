@@ -13,7 +13,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Find users using Microsoft Graph
+    /// Find users using Microsoft Graph.
     /// </summary>
     [GraphCustomActionRegistration(GetUsers.FindUsersDeclarativeType)]
     public class GetUsers : BaseMsGraphCustomAction<IEnumerable<User>>

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "title": "Microsoft Graph - Get Contacts",
   "description": "Lookup contacts from Microsoft Graph API.",
@@ -16,20 +16,22 @@
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Result Property",
-      "description": "Result Property (named location to store information).",
+      "title": "Result property",
+      "description": "Named state location to store result.",
       "examples": []
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
-      "examples": []
+      "examples": [
+        "user.token.token"
+      ]
     },
     "nameProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Name",
-      "description": "Contact name.",
+      "description": "Name to lookup",
       "examples": []
     }
   }
