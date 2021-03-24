@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-assistant-core",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive Bot application built on top of the Microsoft Bot Framework SDK and runtime.",
+  "description": "Yeoman generator for creating an Adaptive Bot application using the Assistant Core template.",
   "keywords": [
     "microsoft",
     "bot",
@@ -23,7 +23,7 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

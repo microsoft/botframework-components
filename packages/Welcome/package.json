@@ -1,21 +1,24 @@
 {
   "name": "@microsoft/bot-components-welcome",
   "version": "1.0.0",
+  "description": "Provides a Welcome dialog to greet new and existing users in an Adaptive Bot application.",
   "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
     "bf-component"
   ],
-  "description": "Dialogs to provide a Welcome experience for new and returning users",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Bot Framework",
   "license": "MIT",
+  "author": "Bot Framework",
   "files": [
-    "/exported"
+    "exported"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

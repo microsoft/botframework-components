@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-conversational-core",
   "version": "1.0.0",
-  "description": "Preview conversational core package for TESTING ONLY",
+  "description": "Yeoman generator for creating an Adaptive Bot application using the Conversational Core template.",
   "keywords": [
     "microsoft",
     "bot",
@@ -10,7 +10,9 @@
     "yeoman-generator",
     "bf-template",
     "bf-dotnet-webapp",
-    "bf-dotnet-functions"
+    "bf-dotnet-functions",
+    "bf-js-webapp",
+    "bf-js-functions"
   ],
   "license": "ISC",
   "author": "Bot Framework",
@@ -23,7 +25,7 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-calendar-assistant",
   "version": "1.0.0",
-  "description": "Preview Calendar Assistant template for TESTING ONLY",
+  "description": "Yeoman generator for creating an Adaptive Bot application using the Calendar Assistant template.",
   "keywords": [
     "microsoft",
     "bot",
@@ -23,8 +23,8 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview",
-    "@microsoft/generator-microsoft-bot-calendar": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
