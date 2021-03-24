@@ -93,65 +93,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core":
+"@microsoft/generator-bot-adaptive@workspace:^1.0.0-preview, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core"
-  dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
-"@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
-  dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
-"@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker"
-  dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
-"@microsoft/generator-bot-who@workspace:generators/generator-bot-who":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-who@workspace:generators/generator-bot-who"
-  dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
-"@microsoft/generator-microsoft-bot-adaptive@workspace:^1.0.0-preview, @microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-adaptive@workspace:generators/generator-microsoft-bot-adaptive"
+  resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
     eslint: latest
     eslint-config-prettier: latest
@@ -166,12 +110,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-calendar-assistant@workspace:generators/generator-microsoft-bot-calendar-assistant":
+"@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-calendar-assistant@workspace:generators/generator-microsoft-bot-calendar-assistant"
+  resolution: "@microsoft/generator-bot-assistant-core@workspace:generators/generator-bot-assistant-core"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
-    "@microsoft/generator-microsoft-bot-calendar": "workspace:^0.0.1-preview"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -181,11 +124,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-calendar@workspace:^0.0.1-preview, @microsoft/generator-microsoft-bot-calendar@workspace:generators/generator-microsoft-bot-calendar":
+"@microsoft/generator-bot-calendar-assistant@workspace:generators/generator-bot-calendar-assistant":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-calendar@workspace:generators/generator-microsoft-bot-calendar"
+  resolution: "@microsoft/generator-bot-calendar-assistant@workspace:generators/generator-bot-calendar-assistant"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -195,11 +139,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-command-list@workspace:generators/generator-microsoft-bot-command-list":
+"@microsoft/generator-bot-calendar@workspace:^1.0.0-preview, @microsoft/generator-bot-calendar@workspace:generators/generator-bot-calendar":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-command-list@workspace:generators/generator-microsoft-bot-command-list"
+  resolution: "@microsoft/generator-bot-calendar@workspace:generators/generator-bot-calendar"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -209,11 +153,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-conversational-core@workspace:generators/generator-microsoft-bot-conversational-core":
+"@microsoft/generator-bot-command-list@workspace:generators/generator-bot-command-list":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-conversational-core@workspace:generators/generator-microsoft-bot-conversational-core"
+  resolution: "@microsoft/generator-bot-command-list@workspace:generators/generator-bot-command-list"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -223,11 +167,67 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-microsoft-bot-empty@workspace:generators/generator-microsoft-bot-empty":
+"@microsoft/generator-bot-conversational-core@workspace:generators/generator-bot-conversational-core":
   version: 0.0.0-use.local
-  resolution: "@microsoft/generator-microsoft-bot-empty@workspace:generators/generator-microsoft-bot-empty"
+  resolution: "@microsoft/generator-bot-conversational-core@workspace:generators/generator-bot-conversational-core"
   dependencies:
-    "@microsoft/generator-microsoft-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
+  dependencies:
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
+  dependencies:
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-people@workspace:generators/generator-bot-people":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-people@workspace:generators/generator-bot-people"
+  dependencies:
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    eslint: latest
+    eslint-config-prettier: latest
+    eslint-plugin-prettier: latest
+    prettier: latest
+    yeoman-generator: ^2.0.5
+    yeoman-test: ^1.9.1
+  languageName: unknown
+  linkType: soft
+
+"@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker":
+  version: 0.0.0-use.local
+  resolution: "@microsoft/generator-bot-qna-maker@workspace:generators/generator-bot-qna-maker"
+  dependencies:
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
