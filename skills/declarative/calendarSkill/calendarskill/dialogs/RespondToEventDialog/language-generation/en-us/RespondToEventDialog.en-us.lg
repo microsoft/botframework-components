@@ -1,0 +1,35 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+
+# RespondEventResponseText(action, event)
+- All right, I've ${action} the meeting named ${event.Subject}.
+- OK, you've ${action} the meeting named ${event.Subject}.
+
+# SendActivity_P5pp9f()
+[Activity
+    Text = ${RespondEventResponseText("accepted", $event)}
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_3DZbbg()
+[Activity
+    Text = ${RespondEventResponseText("declined", $event)}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# SendActivity_S2mcC8()
+[Activity
+    Text = ${RespondEventResponseText("tentatively accepted", $event)}
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_lP8j1y()
+- You are the meeting organizer.
+
+# SendActivity_yKi3OO()
+- You are the meeting organizer. I can help you update it instead.
+- You are the meeting owner. I'll help you update it instead.
+
+# SendActivity_uJzLWh()
+- You are the meeting organizer. I can help you cancel it instead.
+- You are the meeting owner. I'll help you cancel it instead.

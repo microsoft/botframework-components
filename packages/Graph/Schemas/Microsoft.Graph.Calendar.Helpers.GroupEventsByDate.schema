@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Microsoft Calendar Helpers - Group Events By Date",
+  "description": "Accepts a collection of event from the Microsoft Graph API and sorts them into a collection of type {date: System.DateTime, events: []}.",
+  "type": "object",
+  "required": [
+    "token",
+    "eventsProperty",
+    "startProperty",
+    "endProperty"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Named state location to store result.",
+      "examples": []
+    },
+    "startProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Start",
+      "description": "DateTime range start.",
+      "examples": []
+    },
+    "endProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "End",
+      "description": "DateTime range end.",
+      "examples": []
+    },
+    "eventsProperty": {
+      "$ref": "schema:#/definitions/valueExpression",
+      "title": "Events",
+      "description": "List of events to sort.",
+      "examples": [
+        "dialog.events"
+      ]
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "type": "object",
   "title": "Microsoft Graph - Delete Event",
@@ -17,23 +17,21 @@
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
-      "description": "Property to store the result of this action. The result includes 4 properties from the http response: statusCode, reasonPhrase, content and headers. If the content is json it will be a deserialized object.",
-      "examples": [
-        "dialog.contosodata"
-      ]
+      "description": "Named state location to store result.",
+      "examples": []
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
-      "description": "Microsoft Graph Authentication Token",
+      "description": "Microsoft Graph API authentication token.",
       "examples": [
         "user.token.token"
       ]
     },
     "eventId": {
       "$ref": "schema:#/definitions/valueExpression",
-      "title": "EventId",
-      "description": "Id of event",
+      "title": "Event ID",
+      "description": "The ID of the event to delete.",
       "examples": [
         "dialog.event.id"
       ]

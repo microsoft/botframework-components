@@ -1,0 +1,50 @@
+[import](common.lg)
+
+# TextInput_Prompt_sFm17r()
+- Who should I invite?
+- Who will join?
+- Who do you want to invite?
+- What attendees should I add?
+- Who do you want to include at this meeting?
+- And who should I invite?
+
+# ConfirmInput_Prompt_pjKHu4()
+[Activity
+    attachments = ${json(TextCard(ContactConfirmation($contacts), ContactConfirmationActions()))}
+]
+
+# ContactConfirmation(contacts)
+- IF: ${contacts == null || count(contacts) == 0}
+    - Would you like to invite anyone else?
+    - Want to include anyone else?
+    - Want to add another attendee?
+    - Should I add anyone else?
+    - Any other attendees?
+- ELSEIF: ${count(contacts) == 1}
+    - I've added ${concat(contacts[0].EmailAddress.Name, ' (', contacts[0].EmailAddress.Address, ')')}. ${ContactConfirmation(null)}
+    - OK, I've added ${concat(contacts[0].EmailAddress.Name, ' (', contacts[0].EmailAddress.Address, ')')}. ${ContactConfirmation(null)}
+    - ${concat(contacts[0].EmailAddress.Name, ' (', contacts[0].EmailAddress.Address, ')')} is added. ${ContactConfirmation(null)}
+- ELSE: 
+    - ```
+    ${ContactConfirmation(null)}
+
+    \n * ${GetContactsList(contacts)}
+    ```
+
+# GetContactsList(contacts)
+- ${join(select(contacts, c, concat(c.EmailAddress.Name, ' (', c.EmailAddress.Address, ')')), ' \n\n * ')}
+
+# ContactConfirmationActions()
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${BuildSubmitAction("Yes", "Yes")},
+        ${BuildSubmitAction("No", "No")}
+    ]
+}
+```
+# SendActivity_vTHytL()
+- I couldn't find any matching contacts. Can you try providing the first and last name or email address?
+- I don't see any matching contacts. Can you try with their full name or email address?
+- I can't find the contact you're looking for. Can you try their first and last name or email?

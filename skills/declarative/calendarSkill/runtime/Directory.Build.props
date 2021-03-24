@@ -1,8 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <RestoreAdditionalProjectSources>
-      https://pkgs.dev.azure.com/ConversationalAI/BotFramework/_packaging/SDK/nuget/v3/index.json;
-      https://botbuilder.myget.org/F/botbuilder-v4-dotnet-daily/api/v3/index.json;
-    </RestoreAdditionalProjectSources>
-  </PropertyGroup>  
-</Project>

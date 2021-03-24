@@ -1,0 +1,31 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+
+# ConfirmInput_Prompt_lfDkBw()
+[Activity
+    text = ${ConfirmCancellationPrompt()}
+    attachments = ${json(EventDetailCard($event))}
+]
+
+# ConfirmCancellationPrompt()
+- Are you sure you want to cancel the event?
+- Got it. To confirm, you want to cancel this event?
+- No problem. You want to cancel this meeting, correct?
+
+# SendActivity_W6gQQo()
+- I’ve cancelled the event for you and notified the attendees.
+- Done. I've cancelled this meeting and notified all attendees.
+
+# SendActivity_uyZBZh()
+- No problem, I will leave the event as-is.
+- All right, the event will remain the same.
+- OK, I won't change the event.
+- You got it. The event will remain as-is.
+# ConfirmInput_Prompt_Ef32OL()
+[Activity
+    text = You aren't the meeting organizer. Would you like to decline the invite instead?
+    attachments = ${json(EventDetailActionsCard($event))}
+]
+
+# SendActivity_x08upQ()
+- ${CancelMessage()}

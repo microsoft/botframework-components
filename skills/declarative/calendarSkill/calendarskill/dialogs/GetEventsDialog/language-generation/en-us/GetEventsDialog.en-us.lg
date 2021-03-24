@@ -1,0 +1,19 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+
+# ConfirmInput_Prompt_Xro1Q8()
+- I couldn't find any matching events. Would you like to see your events for today instead?
+- Seems like something is going wrong. Would you like to see your schedule for today instead?
+
+# SendActivity_qyvf70()
+- ${CancelMessage()}
+
+# TextInput_Prompt_Fej6Ub()
+- IF: ${$turnCount == 1}
+    - Which event? Please provide the title, date, and/or attendees.
+    - Can you tell me the start time, meeting title, or other attendees?
+    - What is the start time, event title, or other attendees?
+- ELSE:
+    - I couldn't find a match. Please provide the title, date, and/or attendees of the meeting you'd like to find or say cancel to stop.
+    - I couldn't find the event that you're looking for. Let's try your search again. Can you tell me the specific title, start date, or attendees?
+    - I don't see a meeting that matches. Can you tell me more about the meeting you're looking for, like the start time, title of the event, or other attendees?

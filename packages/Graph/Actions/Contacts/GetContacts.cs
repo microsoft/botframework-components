@@ -11,7 +11,6 @@ namespace Microsoft.Bot.Component.Graph.Actions
     using System.Threading;
     using System.Threading.Tasks;
     using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Bot.Builder.Dialogs.Memory;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Components.Graph.Models;
