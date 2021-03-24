@@ -1,19 +1,19 @@
-# @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Enterprise Assistant template.
+# @microsoft/generator-bot-calendar [![NPM version][npm-image]][npm-url]
+> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Calendar template.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-enterprise-assistant using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-calendar using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-enterprise-assistant
+npm install -g @microsoft/generator-bot-calendar
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-assistant-core '{BOT_NAME}'
+yo @microsoft/bot-calendar '{BOT_NAME}'
 ```
 
 ## Packages
@@ -37,5 +37,5 @@ This template does not rely on any additional Azure Resources.
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-calendar

@@ -1,21 +1,24 @@
 {
   "name": "@microsoft/bot-components-helpandcancel",
   "version": "1.0.0",
+  "description": "Contains Adaptive Dialog assets to support Help and Cancel conversational flows in an Adaptive bot built on the Azure Bot Framework.",
   "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
     "bf-component"
   ],
-  "description": "Dialog to provide \"help\" and \"cancel\" utterance handling",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Bot Framework",
   "license": "MIT",
+  "author": "Bot Framework",
   "files": [
-    "/exported"
+    "exported"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

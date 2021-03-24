@@ -1,19 +1,21 @@
-# @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Enterprise Assistant template.
+# @microsoft/generator-bot-empty [![NPM version][npm-image]][npm-url]
+> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Empty template.
+
+This template instantiates an empty bot with no dependent packages.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-enterprise-assistant using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-empty using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-enterprise-assistant
+npm install -g @microsoft/generator-bot-empty
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-assistant-core '{BOT_NAME}'
+yo @microsoft/bot-empty '{BOT_NAME}'
 ```
 
 ## Packages
@@ -37,5 +39,5 @@ This template does not rely on any additional Azure Resources.
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty
