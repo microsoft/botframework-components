@@ -5,13 +5,13 @@
 
 const {
   BaseGenerator,
-} = require('@microsoft/generator-microsoft-bot-adaptive');
+} = require('@microsoft/generator-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
   initializing() {
     this.composeWith(
       require.resolve(
-        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+        '@microsoft/generator-bot-adaptive/generators/app'
       ),
       Object.assign(this.options, {
         arguments: this.args,

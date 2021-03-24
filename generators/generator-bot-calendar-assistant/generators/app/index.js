@@ -5,14 +5,14 @@
 
 const {
   BaseGenerator,
-} = require('@microsoft/generator-microsoft-bot-adaptive');
+} = require('@microsoft/generator-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
   initializing() {
     // Create the root bot, this is directly deriving from the runtime.
     this.composeWith(
       require.resolve(
-        '@microsoft/generator-microsoft-bot-adaptive/generators/app'
+        '@microsoft/generator-bot-adaptive/generators/app'
       ),
       Object.assign({}, this.options, {
         arguments: this.args,
@@ -53,7 +53,7 @@ module.exports = class extends BaseGenerator {
     // create skill, this derives from a separate template
     this.composeWith(
       require.resolve(
-        '@microsoft/generator-microsoft-bot-calendar/generators/app'
+        '@microsoft/generator-bot-calendar/generators/app'
       ),
       Object.assign({}, this.options, {
         arguments: ['calendar'],

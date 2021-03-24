@@ -5,7 +5,7 @@
 
 const {
   BaseGenerator,
-} = require('@microsoft/generator-microsoft-bot-adaptive');
+} = require('@microsoft/generator-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
   initializing() {
