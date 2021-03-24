@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-conversational-core",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive Bot application using the Conversational Core template.",
+  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Conversational Core template.",
   "keywords": [
     "microsoft",
     "bot",

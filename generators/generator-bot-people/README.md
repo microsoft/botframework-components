@@ -1,20 +1,31 @@
-# @microsoft/generator-bot-who [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating a starter Who bot application built on top of the Microsoft Bot Framework SDK and Adaptive Runtime.
+# @microsoft/generator-bot-people [![NPM version][npm-image]][npm-url]
+> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the People template.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-who using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-people using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-who
+npm install -g @microsoft/generator-bot-people
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-who '{BOT_NAME}'
+yo @microsoft/bot-people '{BOT_NAME}'
 ```
+
+## Packages
+Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
+
+- N/A
+
+## Languages
+English.
+
+## Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
 
 ## Getting To Know Yeoman
 
@@ -26,5 +37,5 @@ yo @microsoft/bot-who '{BOT_NAME}'
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-who.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-who
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-people

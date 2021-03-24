@@ -1,20 +1,31 @@
-# @microsoft/generator-microsoft-bot-adaptive [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating a bot application built on top of the Microsoft Bot Framework SDK and Adaptive Runtime.
+# @microsoft/generator-bot-adaptive [![NPM version][npm-image]][npm-url]
+> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-microsoft-bot-adaptive using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-adaptive using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-microsoft-bot-adaptive
+npm install -g @microsoft/generator-bot-adaptive
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/microsoft-bot-adaptive '{BOT_NAME}'
+yo @microsoft/bot-adaptive '{BOT_NAME}'
 ```
+
+## Packages
+Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
+
+- N/A
+
+## Languages
+English.
+
+## Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
 
 ## Getting To Know Yeoman
 
@@ -26,5 +37,5 @@ yo @microsoft/microsoft-bot-adaptive '{BOT_NAME}'
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-microsoft-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-microsoft-bot-adaptive
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive
