@@ -1,5 +1,5 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_assistantCore",
+  "id": "LUIS_<%= botName %>",
   "recognizers": {}
 }
