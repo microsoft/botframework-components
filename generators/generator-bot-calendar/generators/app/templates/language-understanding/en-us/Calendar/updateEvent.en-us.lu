@@ -14,6 +14,7 @@
 - modify my meeting with {@contact=susan} with a subject of {@subject=team meeting}
 - modify the next meeting
 - update {@contact=greg}'s meeting on {@date=thursday}
+- update meeting titled {@subject=calendar test meeting}
 - update my event
 - update my event with {@contact=chris}
 - update the {@subject=all-hands} meeting details
@@ -73,4 +74,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

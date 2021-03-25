@@ -79,9 +79,38 @@
       "event": "AcceptEvent",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Jo6ZBU"
+          },
+          "name": "RespondToEventDialog.OnEvent_AcceptEvent"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Jhz67U"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lP8j1y"
+              },
+              "activity": "${SendActivity_lP8j1y()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "OAx8M6"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
-            "id": "lE2udT"
+            "id": "2F9RxQ"
           },
           "resultProperty": "$result",
           "token": "=user.token.token",
@@ -111,12 +140,45 @@
         "name": "OnEvent (DeclineEvent)"
       },
       "event": "DeclineEvent",
-      "intent": "De",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YIqJpN"
+          },
+          "name": "RespondToEventDialog.OnEvent_DeclineEvent"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0I6DX5"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "uJzLWh"
+              },
+              "activity": "${SendActivity_uJzLWh()}"
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "4a6c2o"
+              },
+              "activityProcessed": true,
+              "dialog": "CancelEventDialog",
+              "options": {
+                "event": "=$event"
+              }
+            }
+          ]
+        },
         {
           "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
           "$designer": {
-            "id": "5nImTk"
+            "id": "w2IgGa"
           },
           "resultProperty": "$result",
           "token": "=user.token.token",
@@ -148,9 +210,43 @@
       "event": "TentativelyAcceptEvent",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "KDXKf8"
+          },
+          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1elpcm"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yKi3OO"
+              },
+              "activity": "${SendActivity_yKi3OO()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "vnG3uj"
+              },
+              "activityProcessed": true,
+              "dialog": "UpdateEventDialog",
+              "options": {
+                "options.eventId": "=$event.Id"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
           "$designer": {
-            "id": "wj0HxG"
+            "id": "baSSxn"
           },
           "resultProperty": "$result",
           "token": "=user.token.token",

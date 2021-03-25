@@ -9,26 +9,32 @@
 - don't invite {@currentContact=marjorie} to the {@date=dec 1st} event
 - edit attendees
 - edit recipients list
+- its ok, but take out {@currentContact=harry}
+- no, i need to take out {@currentContact=john}
+- no, remove {@currentContact=thomas} from this
 - remove an attendee
-- remove people from this
-- remove recipients
-- remove someone from this
 - remove attendees from the meeting on {@date=thursday}
 - remove {@currentContact=hyunjin} from this
 - remove {@currentContact=jose} from the event called {@subject=project sync}
+- remove {@currentContact=lauren} from my {@date=5 pm}
+- remove people from this
 - remove {@currentContact=rebecca} and {@currentContact=susan}
+- remove recipients
+- remove someone from this
 - remove {@currentContact=susan} from the {@subject=budget review} meeting on {@date=may 20th}
 - remove {@currentContact=susan} from the next event
 - remove {@currentContact=tyler} from the meeting on {@date=june 3rd}
-- uninvite an attendee
 - uninvite a recipient
-- uninvite people from this meeting
+- uninvite an attendee
 - uninvite {@currentContact=cynthia}
 - uninvite {@currentContact=deborah} to the {@subject=holiday party} on {@date=november 20, 2020}
 - uninvite {@currentContact=hyunjin} from my {@subject=breakfast} event
 - uninvite {@currentContact=morgan} from my event {@date=tomorrow}
-- uninvite {@newContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
+- uninvite people from this meeting
+- uninvite {@currentContact=todd}, {@currentContact=kristine}, and {@currentContact=forrest} from the meeting {@date=tuesday at 4}
 - uninvite {@currentContact=you@test.net}, {@currentContact=morgan}, and {@currentContact=you@test.net}
+- yeah, but take out {@currentContact=fred}
+- yes, but remove {@currentContact=georgie}
 
 @ intent SetAttendeesRemove usesFeatures Update,Event,Location,Remove,Titled
 
@@ -83,4 +89,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

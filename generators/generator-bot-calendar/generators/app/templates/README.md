@@ -49,15 +49,16 @@ It will look like this:
 
 When completed, you will see a message with a JSON "publishing profile" and instructions for using it in Composer.
 
-## Setup Authentication
-* Open your Azure Bot Service resource and go to the Settings tab
-* Under OAuth Connection Settings, click "Add setting"
-* Configure select Azure Active Directory v2 from the provider drop down then fill out the fields with the following:
+## Configure Authentication
+### Using Azure Portal
+* Open your **Azure Bot Service** resource and go to the **Settings** tab
+* Under **OAuth Connection Settings**, click **Add setting**
+* Configure select **Azure Active Directory v2** from the provider dropdown then fill out the fields with the following:
   * Client Id: Your bot App Id
   * Client secret: Your bot App Password
   * Tenant: common
-  * Scopes: User.ReadBasic.All Calendars.ReadWrite Contacts.Read People.Read
-* In the Settings tab, click Manage next to your Microsoft App ID
+  * Scopes: Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All 
+* In the **Settings** tab, click **Manage** next to your Microsoft App ID
 * In the API permissions tab, add the following scopes: **User.ReadBasic.All Calendars.ReadWrite Contacts.Read People.Read**
 * Add the following property in Bot Settings in composer:
   ```
@@ -87,5 +88,3 @@ To get a new token:
 * This will result in a JSON object printed to the console, containing a new `accessToken` field.
 * Copy the value of the accessToken from the terminal and into the publish `accessToken` field in the profile in Composer.
 
-
-## 

@@ -16,7 +16,7 @@
         "ListDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ],
-      "Skip": []
+      "Skip": ""
     }
   },
   "GetContactsDialog.en-us": {
@@ -25,7 +25,8 @@
       "": [
         "ListDialog.en-us"
       ],
-      "Skip": []
+      "Skip": "",
+      "SetAttendeesAdd": ""
     }
   },
   "GetEventsDialog.en-us": {
@@ -40,9 +41,10 @@
   "ListDialog.en-us": {
     "rootDialog": false,
     "triggers": {
-      "Next": [],
-      "Previous": [],
-      "Skip": []
+      "Next": "",
+      "Previous": "",
+      "Skip": "",
+      "Cancel": ""
     }
   },
   "UpdateEventDialog.en-us": {
