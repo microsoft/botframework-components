@@ -1,0 +1,39 @@
+{
+  "name": "@microsoft/generator-bot-adaptive",
+  "version": "1.0.0",
+  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework.",
+  "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator"
+  ],
+  "license": "ISC",
+  "author": "Bot Framework",
+  "files": [
+    "*.js",
+    "generators"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "lint": "eslint -c .eslintrc.json ."
+  },
+  "dependencies": {
+    "globby": "^11.0.2",
+    "normalize-path": "^3.0.0",
+    "runtypes": "^5.0.2",
+    "uuid": "^8.3.1",
+    "xml2js": "^0.4.23",
+    "yeoman-generator": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest"
+  }
+}

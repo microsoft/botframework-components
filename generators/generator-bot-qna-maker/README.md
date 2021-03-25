@@ -1,5 +1,5 @@
 # @microsoft/generator-bot-qna-maker [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating a starter QnA Maker bot application built on top of the Microsoft Bot Framework SDK and Adaptive Runtime.
+> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the QnA Maker template.
 
 ## Installation
 
@@ -15,6 +15,17 @@ Then generate your new project:
 ```bash
 yo @microsoft/bot-qna-maker '{BOT_NAME}'
 ```
+
+## Packages
+Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
+
+- N/A
+
+## Languages
+English.
+
+## Azure Resource Deployment
+This template does not rely on any additional Azure Resources.
 
 ## Getting To Know Yeoman
 
