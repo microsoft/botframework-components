@@ -1,11 +1,5 @@
 [Common](common.en-us.lg)
 
-# SendActivity_QxqZcj()
-[Activity
-    Text = An error was encountered
-]
-
-
 # SendActivity_DWdyHg()
 [Activity
     Text = You're signed out!
@@ -34,3 +28,23 @@
 ]
 
 
+
+# SendActivity_ipHTXS()
+[Activity
+    Text = Sorry! An error was encountered.
+]
+
+# SendActivity_AV87xs()
+[Activity
+    Text = An error was encountered, please see below message for detail.
+]
+
+# SendActivity_y3gv3g()
+[Activity
+    Text = Conversation Id: ${turn.activity.conversation.id}
+]
+
+# SendActivity_Tcje3O()
+[Activity
+    Text = Error: ${turn.dialogEvent.value}
+]

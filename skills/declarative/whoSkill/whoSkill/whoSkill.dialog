@@ -56,6 +56,14 @@
           ],
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "K5P9dm"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "W4IWlO"
@@ -97,7 +105,7 @@
           "activity": "${SendActivity_DWdyHg()}"
         }
       ],
-      "condition": "=turn.recognized.score > 0.7"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -505,23 +513,71 @@
           "name": "whoSkill.OnError"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "NfAZge"
+            "id": "FSXy40"
           },
-          "name": "Error",
-          "label": "Error",
-          "valueType": "string",
-          "value": "=turn.dialogEvent"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "QxqZcj"
-          },
-          "activity": "${SendActivity_QxqZcj()}"
+          "condition": "=turn.activity.channelId",
+          "cases": [
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Pszd6H"
+                  },
+                  "name": "Error",
+                  "label": "Error",
+                  "valueType": "string",
+                  "value": "=turn.dialogEvent.value"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ipHTXS"
+                  },
+                  "activity": "${SendActivity_ipHTXS()}"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AV87xs"
+              },
+              "activity": "${SendActivity_AV87xs()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "y3gv3g"
+              },
+              "activity": "${SendActivity_y3gv3g()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Tcje3O"
+              },
+              "activity": "${SendActivity_Tcje3O()}"
+            },
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "26G8Zg"
+              },
+              "properties": {
+                "TurnEvent": "=turn.dialogEvent.value"
+              },
+              "eventName": "BotError"
+            }
+          ]
         }
-      ]
+      ],
+      "runOnce": true
     },
     {
       "$kind": "Microsoft.OnUnknownIntent",

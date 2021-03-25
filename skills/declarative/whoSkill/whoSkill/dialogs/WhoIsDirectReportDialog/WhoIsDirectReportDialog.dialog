@@ -32,6 +32,15 @@
               "label": "UserId",
               "valueType": "string",
               "value": "=$UserFound"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "51g002"
+              },
+              "resultProperty": "$UserFound",
+              "token": "=user.token.token",
+              "userId": "=$UserFound"
             }
           ],
           "actions": [

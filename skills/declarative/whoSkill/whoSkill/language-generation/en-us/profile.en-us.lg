@@ -6,7 +6,8 @@
 - ${CardTemplate(ProfileHeader(profile), ProfileBody(profile), ProfileActions(profile))}
 
 # ProfileHeader(profile)
-- ${CardHeader(dialog.ResultPhoto, profile.displayName, "", "")}
+- ${CardHeader(ContactImageIconUrl(dialog.ResultPhoto), profile.displayName, "", "")}
+
 # ProfileBody(profile)
 - ```
 {
@@ -114,9 +115,9 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${GetManagerAction(dialog.UserFound)},
-        ${GetCollaboratorsAction(dialog.UserFound)},
-        ${GetPeersAction(dialog.UserFound)}
+        ${GetManagerAction(profile.id)},
+        ${GetCollaboratorsAction(profile.id)},
+        ${GetPeersAction(profile.id)}
     ]
 }
 ```

@@ -3,7 +3,7 @@
 # IconSize()
 - Large
 # IconSizeSmall()
-- 80px
+- Small
 # TitleSize
 - Medium
 
@@ -43,7 +43,7 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "${ContactImageIconUrl(icon)}",
+                            "url": "${icon}",
                             "horizontalAlignment": "Center",
                             "width": "${IconSize()}"
                         }
