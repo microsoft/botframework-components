@@ -6,58 +6,26 @@ Extending a bot built on the new Adaptive Runtime with code is slightly differen
 
 First, you'll create your custom action's .cs and .schema files like you would with the existing runtime (follow the documentation linked above if you don't know how to do this.)
 
-To dynamically register your action with the Adaptive Runtime, you'll need to create two additional files. A file that implements the 'IBotPlugin' interface, and which instantiates your component registration class. Examples are given below:
-
+To dynamically register your action with the Adaptive Runtime, you'll need to define a BotComponent by inheriting from the Microsoft.Bot.Builder.BotComponent class. For example, here is how you register a simple custom action called MyCustomAction:
 
 ```c#
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Runtime.Plugins;
-
-namespace conversational_core_1.actions
-{
-    public class BotPlugin : IBotPlugin
-    {
-        public void Load(IBotPluginLoadContext context)
-        {
-            ComponentRegistration.Add(new CustomComponentRegistration());
-        }
-    }
-}
-```
-
-And the component registration class:
-
-```c#
-using System.Collections.Generic;
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Dialogs.Debugging;
-using Microsoft.Bot.Builder.Dialogs.Declarative;
-using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Actions;
-using Newtonsoft.Json;
 
 namespace conversational_core_1.actions
 {
-    public class CustomComponentRegistration : ComponentRegistration, IComponentDeclarativeTypes
+    public class MyBotComponent : BotComponent
     {
-        public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration, ILogger logger)
         {
-            // Actions
-            yield return new DeclarativeType<Multiply>(Multiply.Kind);
-
-        }
-
-        public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)
-        {
-            yield break;
+            // Component type
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<MyCustomAction>(MyCustomAction.Kind));
         }
     }
 }
-
 ```
 
 You can also take a look at the [Calendar package](./packages/Calendar) for another example.
-
 
 ## Docs table of contents
 
