@@ -11,6 +11,9 @@ const options = rt.Record({
   botProjectSettings: rt
     .Record({ skills: rt.Dictionary(rt.Unknown) })
     .asPartial(),
+  dotnetSettings: rt.Record({
+    includeSolutionFile: rt.Boolean.Or(rt.Undefined),
+  }),
   modifyApplicationSettings: rt.Function,
   packageReferences: rt.Array(
     rt.Record({
@@ -25,6 +28,9 @@ const options = rt.Record({
 const defaultOptions = {
   applicationSettingsDirectory: undefined,
   botProjectSettings: {},
+  dotnetSettings: {
+    includeSolutionFile: true,
+  },
   modifyApplicationSettings: undefined,
   packageReferences: [],
 };
@@ -67,8 +73,11 @@ module.exports = class extends BaseGenerator {
           },
         });
 
-        this._copyDotnetSolutionFiles();
-        this._writeDotnetNugetConfig();
+        this._copyDotnetProjectFile();
+
+        if (this.dotnetSettings.includeSolutionFile) {
+          this._copyDotnetSolutionFile();
+        }
 
         return;
       }
@@ -124,13 +133,17 @@ module.exports = class extends BaseGenerator {
     return result;
   }
 
-  _copyDotnetSolutionFiles() {
-    const { botName, integration, platform } = this.options;
+  _copyDotnetProjectFile() {
+    const { botName } = this.options;
 
     this.fs.move(
       this.destinationPath(botName, 'botName.csproj'),
       this.destinationPath(botName, `${botName}.csproj`)
     );
+  }
+
+  _copyDotnetSolutionFile() {
+    const { botName, integration, platform } = this.options;
 
     const botProjectGuid = uuidv4().toUpperCase();
     const solutionGuid = uuidv4().toUpperCase();
@@ -150,43 +163,6 @@ module.exports = class extends BaseGenerator {
         projectType,
       }
     );
-  }
-
-  _writeJsPackageJson() {
-    const { botName, integration } = this.options;
-
-    const dependencies = {
-      [integrations.functions]: {
-        'botbuilder-runtime-integration-azure-functions': 'next',
-      },
-      [integrations.webapp]: {
-        'botbuilder-runtime-integration-restify': 'next',
-      },
-    }[integration];
-
-    const devDependencies =
-      {
-        // Note: in dev we need a server for testing bots via Composer
-        [integrations.functions]: {
-          'botbuilder-runtime-integration-restify': 'next',
-        },
-      }[integration] || {};
-
-    this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
-      name: botName,
-      private: true,
-      scripts: {
-        start: 'node index.js',
-      },
-      dependencies: Object.assign(
-        this.packageReferences.reduce(
-          (acc, { name, version }) => Object.assign(acc, { [name]: version }),
-          {}
-        ),
-        dependencies
-      ),
-      devDependencies,
-    });
   }
 
   _writeApplicationSettings() {
@@ -244,37 +220,40 @@ module.exports = class extends BaseGenerator {
     );
   }
 
-  _writeDotnetNugetConfig() {
-    const done = this.async();
+  _writeJsPackageJson() {
+    const { botName, integration } = this.options;
 
-    const { botName } = this.options;
-    const fileName = 'NuGet.config';
+    const dependencies = {
+      [integrations.functions]: {
+        'botbuilder-runtime-integration-azure-functions': 'next',
+      },
+      [integrations.webapp]: {
+        'botbuilder-runtime-integration-restify': 'next',
+      },
+    }[integration];
 
-    // Due to security checks, all NuGet.config files committed to the repo must possess the <clear/>
-    // element to ensure only a single feed is utilized. This would be fine in a build context, but
-    // is not desired for scaffolding. To avoid triggering security checks, we need to manipulate
-    // the document and remove the element before outputting to the target location.
-
-    const nugetConfig = this.fs.read(this.templatePath('dotnet', fileName));
-
-    xml2js.parseString(nugetConfig, (err, result) => {
-      if (err) return done(err);
-
-      delete result.configuration.packageSources[0].clear;
-
-      const builder = new xml2js.Builder({
-        xmldec: {
-          version: '1.0',
-          encoding: 'utf-8',
+    const devDependencies =
+      {
+        // Note: in dev we need a server for testing bots via Composer
+        [integrations.functions]: {
+          'botbuilder-runtime-integration-restify': 'next',
         },
-      });
+      }[integration] || {};
 
-      this.fs.write(
-        this.destinationPath(botName, fileName),
-        builder.buildObject(result)
-      );
-
-      done();
+    this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
+      name: botName,
+      private: true,
+      scripts: {
+        start: 'node index.js',
+      },
+      dependencies: Object.assign(
+        this.packageReferences.reduce(
+          (acc, { name, version }) => Object.assign(acc, { [name]: version }),
+          {}
+        ),
+        dependencies
+      ),
+      devDependencies,
     });
   }
 };
