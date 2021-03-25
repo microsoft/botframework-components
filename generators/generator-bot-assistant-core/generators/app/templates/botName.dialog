@@ -59,7 +59,7 @@
             "id": "cc7Yef",
             "name": "Send to chitchat knowledge base"
           },
-          "knowledgeBaseId": "=settings.qna.assistantCore_en_us_qna",
+          "knowledgeBaseId": "=settings.qna.<%= botName %>_en_us_qna",
           "endpointKey": "=settings.qna.endpointkey",
           "hostname": "=settings.qna.hostname",
           "threshold": 0.3,
