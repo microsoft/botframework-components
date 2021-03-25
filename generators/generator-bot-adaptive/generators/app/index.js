@@ -194,6 +194,10 @@ module.exports = class extends BaseGenerator {
       }
     }
 
+    if (this.modifyApplicationSettings) {
+      this.modifyApplicationSettings(appSettings);
+    }
+
     this.fs.writeJSON(
       this.destinationPath(
         botName,
