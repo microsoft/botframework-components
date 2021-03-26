@@ -117,7 +117,7 @@
           "name": "=turn.dialogEvent.value.className",
           "valueType": "Exception",
           "value": "=turn.dialogEvent.value",
-          "label": "ErrorOcurred"
+          "label": "ErrorOccurred"
         }
       ]
     }
