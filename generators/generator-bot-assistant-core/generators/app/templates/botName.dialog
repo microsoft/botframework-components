@@ -31,16 +31,59 @@
               "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "859266",
-                    "name": "Send a response"
+                    "id": "Y1t1k4"
                   },
-                  "activity": "${SendActivity_Welcome()}"
+                  "condition": "exists(user.greeted)",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "yXbfKT"
+                      },
+                      "activity": "${SendActivity_yXbfKT()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "XZRD8m"
+                      },
+                      "activity": "${SendActivity_XZRD8m()}"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "eV86Nf"
+                      },
+                      "property": "user.greeted",
+                      "value": "true"
+                    }
+                  ]
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "YQ6GAt",
+        "name": "Bot Tour"
+      },
+      "intent": "BotTour",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6JAmBh"
+          },
+          "activityProcessed": true,
+          "dialog": "BotTourDialog"
         }
       ]
     },
