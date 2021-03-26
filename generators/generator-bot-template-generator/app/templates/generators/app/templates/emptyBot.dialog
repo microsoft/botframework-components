@@ -1,11 +1,9 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "$designer": {
       "name": "emptybot",
       "description": "",
       "id": "A79tBe"
-    }
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -47,7 +45,6 @@
       ]
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "emptybot.lg",
   "id": "emptybot",
   "recognizer": "emptybot.lu.qna"
