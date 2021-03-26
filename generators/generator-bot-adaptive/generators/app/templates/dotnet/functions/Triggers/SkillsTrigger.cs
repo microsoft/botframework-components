@@ -15,10 +15,10 @@ namespace <%= botName %>.Triggers
     /// </summary>
     public class SkillsTrigger
     {
-        private readonly SkillHandler _skillHandler;
+        private readonly ChannelServiceHandlerBase _skillHandler;
         private readonly ILogger<SkillController> _logger;
 
-        public SkillsTrigger(SkillHandler skillHandler, ILogger<SkillsTrigger> logger)
+        public SkillsTrigger(ChannelServiceHandlerBase skillHandler, ILogger<SkillsTrigger> logger)
         {
             this._skillHandler = skillHandler ?? throw new ArgumentNullException(nameof(skillHandler));
             this._logger = logger;
