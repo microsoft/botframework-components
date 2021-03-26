@@ -11,7 +11,6 @@ namespace <%= botName %>.Controllers
 {
     /// <summary>
     /// A controller that handles skill replies to the bot.
-    /// This example uses the <see cref="SkillHandler"/> that is registered as a <see cref="ChannelServiceHandler"/> in startup.cs.
     /// </summary>
     [ApiController]
     [Route("api/skills")]
@@ -19,7 +18,7 @@ namespace <%= botName %>.Controllers
     {
         private readonly ILogger<SkillController> _logger;
 
-        public SkillController(ChannelServiceHandler handler, ILogger<SkillController> logger)
+        public SkillController(ChannelServiceHandlerBase handler, ILogger<SkillController> logger)
             : base(handler)
         {
             _logger = logger;
