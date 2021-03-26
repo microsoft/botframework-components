@@ -1,0 +1,208 @@
+[import](common.lg)
+
+# SendActivity_YRvoei()
+[Activity
+    Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
+]
+
+# BotTourTitle
+- You can ask me...
+
+# BotTourContentTextShort
+- Praesent vel molestie tortor.
+
+# BotTourContentTextLong
+- Vivamus commodo sapien sed facilisis posuere. Nunc nec viverra mi. Proin ac felis in purus facilisis egestas.
+
+# BotTourFocusCardTitle
+- Header goes here
+
+# BotTourFocusCardText
+- Aenean at consectetur orci. [In hendrerit tortor magna](), et pharetra urna fringilla eget. Sed finibus consequat urna, sit amet mattis dui condimentum a. Quisque vel augue quam. Fusce et feugiat orci, nec rutrum lectus. Ut id ligula sed elit posuere laoreet ac in arcu. Etiam mauris lorem, porta et ante eu, bibendum aliquet lorem.
+
+
+# BotTourHeader
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "spacing":"none",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${BotTourIconUrl()}",
+                            "horizontalAlignment": "center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width":"90",
+                    "spacing":"small",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${BotTourTitle()}",
+                            "size": "large",
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ]
+        }        
+    ]
+}
+```
+
+# BotTourBody(bodyText)
+-```
+{
+   "type":"Container",
+   "items":[
+      {
+         "type":"ColumnSet",
+         "columns":[
+            {
+               "type":"Column",
+               "items":[
+                  {
+                     "type":"Image",
+                     "url":"${PlaceholderIconUrl()}",
+                     "horizontalAlignment":"center"
+                  }
+               ],
+               "width":10
+            },
+            {
+               "type":"Column",
+               "width":90,
+               "items":[
+                  {
+                     "type":"TextBlock",
+                     "text":"${bodyText}",
+                     "wrap":true,
+                     "size":"medium",
+                     "maxLines":2,
+                     "color":"accent"
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "selectAction":{
+      "type":"Action.Submit",
+      "title":"FocusCard",
+      "data":{
+         "intent":"FocusCard"
+      }
+   },
+   "separator": true
+}
+```
+
+# BotTourFocusCardHeader
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "spacing":"none",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${PlaceholderIconUrl()}",
+                            "horizontalAlignment": "center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width":"90",
+                    "spacing":"small",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${BotTourFocusCardTitle()}",
+                            "size": "large",
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ]
+        }        
+    ]
+}
+```
+
+# BotTourFocusCardBody 
+-```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${BotTourFocusCardText()}",
+            "wrap": true
+        }        
+    ]
+}
+```
+
+# BotTourFocusCardActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Action A",
+            "data": {
+                "intent": "Action A"
+            }
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Action B",
+            "data": {
+                "intent": "Action B"
+            }
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Action C",
+            "data": {
+                "intent": "Action C"
+            }
+        }
+    ]
+}
+```
+
+# SendActivity_YRvoei_attachment_WGITEE()
+> Bot tour chevron card
+- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort())), 5), ''))}```
+
+# SendActivity_Z5JucQ()
+[Activity
+    Attachments = ${SendActivity_Z5JucQ_attachment_cKtuIu()}
+]
+
+# SendActivity_Z5JucQ_attachment_cKtuIu()
+> Focus card
+- ```${json(CardTemplate(BotTourFocusCardHeader(),BotTourFocusCardBody(), BotTourFocusCardActions()))}```
