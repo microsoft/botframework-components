@@ -47,6 +47,24 @@
       ]
     },
     {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pRdAAf",
+        "name": "Feedback"
+      },
+      "intent": "Feedback",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2pSztz"
+          },
+          "activityProcessed": true,
+          "dialog": "FeedbackDialog"
+        }
+      ]
+    },
+    {
       "$kind": "Microsoft.OnUnknownIntent",
       "$designer": {
         "id": "zxdGNB",
