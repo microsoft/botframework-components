@@ -17,6 +17,10 @@
 - update the meeting body
 - update the meeting content for the {@subject=budget review}
 - update the meeting content with {@contact=ryan} {@date=next week}
+- no, change the description
+- no, add a description
+- yes, but can i set the description
+- sure, but I need to add a description
 
 @ intent SetDescription usesFeatures Update,Event,Location,Titled
 
@@ -71,4 +75,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

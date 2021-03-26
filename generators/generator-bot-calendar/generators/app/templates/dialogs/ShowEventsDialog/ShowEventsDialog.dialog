@@ -37,12 +37,36 @@
               "assignments": [
                 {
                   "property": "$options.start",
-                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
                 }
               ]
             }
           ],
           "condition": "count(where(flatten($options), o, exists(o))) == 0"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "8881nS"
+          },
+          "condition": "=ticksToDays(dateTimeDiff(formatDateTime($options.end), formatDateTime($options.start))) > 2",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "mk6Ph4"
+              },
+              "property": "$tooManyEvents",
+              "value": "=true"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "baWDgS"
+              },
+              "property": "$options.end"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -57,45 +81,28 @@
           }
         },
         {
-          "$kind": "Microsoft.SwitchCondition",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "gXYsAM"
+            "id": "N33MKt"
           },
-          "condition": "count($events)",
-          "cases": [
-            {
-              "value": "1",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EmitEvent",
-                  "$designer": {
-                    "id": "UMFVjb"
-                  },
-                  "eventName": "ShowEvent",
-                  "eventValue": "=$events[0]"
-                }
-              ]
-            },
-            {
-              "value": "0",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EmitEvent",
-                  "$designer": {
-                    "id": "ZVS51Y"
-                  },
-                  "eventName": "NoResults"
-                }
-              ]
-            }
-          ],
-          "default": [
+          "elseActions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "pUEjFG"
+                "id": "AawADt"
               },
               "eventName": "ShowResults"
+            }
+          ],
+          "condition": "exists($options.eventId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "rC7iMb"
+              },
+              "eventName": "ShowEvent",
+              "eventValue": "=$events"
             }
           ]
         }
@@ -124,65 +131,80 @@
           "condition": "exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
           "actions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "5xtEZ7"
+                "id": "JGLah7"
               },
-              "assignments": [
+              "condition": "count($events) > 1",
+              "elseActions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$events"
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "05H5om"
+                  },
+                  "eventName": "ShowEvent"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "JtGV26"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$events"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "EventDisplayListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "EventListIconUrl",
+                        "title": "EventListTitle",
+                        "item": "EventDisplayListItem",
+                        "actions": "EventListActions",
+                        "initialPrompt": "EventChoiceListPrompt",
+                        "showMorePrompt": "EventListShowMorePrompt",
+                        "skipResponse": "EventListSkipResponse",
+                        "defaultValueResponse": "EventListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=false"
+                    }
+                  ]
                 },
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
-                },
-                {
-                  "property": "$listOptions.activePrompt",
-                  "value": "EventListPrompt"
-                },
-                {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "EventListIconUrl",
-                    "title": "EventListTitle",
-                    "item": "EventListItem",
-                    "actions": "EventListActions",
-                    "initialPrompt": "EventListPrompt",
-                    "showMorePrompt": "EventListShowMorePrompt",
-                    "skipResponse": "EventListSkipResponse",
-                    "defaultValueResponse": "EventListDefaultValueResponse"
-                  }
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "rHW2BB"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "options": "=$listOptions"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "0x0N4G"
-              },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "options": "=$listOptions",
-              "resultProperty": "$selectedEvent"
-            },
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "uBSpR2"
-              },
-              "eventName": "ShowEvent",
-              "eventValue": "=$selectedEvent"
             }
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.Graph.Calendar.GroupEventsByDate",
+              "$kind": "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate",
               "$designer": {
                 "id": "CHMoK5"
               },
               "resultProperty": "$groupedEvents ",
-              "eventsProperty": "=$events"
+              "eventsProperty": "=$events",
+              "startProperty": "=$options.start",
+              "endProperty": "=$options.end"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -211,35 +233,29 @@
           "name": "ShowEventsDialog.OnEvent_ShowEvent"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "RzDAXK"
+            "id": "cLApQW"
           },
-          "activity": "${SendActivity_RzDAXK()}"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "qVGMrV",
-        "name": "OnEvent (NoResults)"
-      },
-      "event": "NoResults",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "O60mMM"
-          },
-          "name": "ShowEventsDialog.OnEvent_NoResults"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "vyntiD"
-          },
-          "activity": "${SendActivity_vyntiD()}"
+          "condition": "count($events) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "q9P05a"
+              },
+              "activity": "${SendActivity_q9P05a()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Poa1KS"
+              },
+              "activity": "${SendActivity_Poa1KS()}"
+            }
+          ]
         }
       ]
     }
