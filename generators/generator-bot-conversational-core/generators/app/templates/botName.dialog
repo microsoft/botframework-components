@@ -103,6 +103,17 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TelemetryTrackEventAction",
+          "$designer": {
+            "id": "Aucn7t"
+          },
+          "eventName": "ErrorOccurred",
+          "properties": {
+            "Type": "=turn.dialogEvent.value.className",
+            "Exception": "=turn.dialogEvent.value"
+          }
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "2outgQ"
