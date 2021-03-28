@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-adaptive",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework.",
+  "description": "Yeoman generator for creating a completely empty bot built on the Azure Bot Framework & Composer.",
   "keywords": [
     "microsoft",
     "bot",
