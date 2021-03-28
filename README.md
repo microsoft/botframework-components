@@ -1,6 +1,3 @@
----
-title:  'Bot Framework Components'
----
 # Bot Framework Components
 
 This repository contains the source code for *components* published by Microsoft for bots built on the Azure Bot Framework technology stack. These components are part of the component model for building bots, which enables developers to build bots with re-usable building blocks (components). This model consists of a configurable [adaptive runtime](#adaptive-runtime), that can be extended by importing [packages](#packages) of functionality or connecting to other bots as [skills](#skills). Getting started [templates](#templates) built on this model will unify the creation experience, and eliminate the "dead-end" that can happen for some existing getting started experiences that lock you in to building a particular type of bot.

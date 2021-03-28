@@ -8,13 +8,13 @@
     "framework",
     "adaptive",
     "yeoman-generator",
-    "bf-template",
+    "msbot-template",
     "bf-dotnet-webapp",
     "bf-dotnet-functions",
     "bf-js-webapp",
     "bf-js-functions"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Bot Framework",
   "main": "./generators/app/index.js",
   "repository": {
