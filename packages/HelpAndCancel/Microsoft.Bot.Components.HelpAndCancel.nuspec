@@ -19,5 +19,6 @@
 
     <files>
         <file src="exported\**\*.*" target="exported" />
+        <file src="README.md" target="" />
     </files>
 </package>
