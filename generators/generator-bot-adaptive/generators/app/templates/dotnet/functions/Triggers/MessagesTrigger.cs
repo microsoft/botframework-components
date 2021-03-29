@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Builder.Integration.Runtime.Settings;
+using Microsoft.Bot.Builder.Dialog.Adaptive.Runtime.Settings;
 using Microsoft.Extensions.Logging;
 
 namespace <%= botName %>.Triggers

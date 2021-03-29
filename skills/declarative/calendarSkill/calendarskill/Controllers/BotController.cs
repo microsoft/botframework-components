@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Builder.Integration.Runtime.Settings;
+using Microsoft.Bot.Builder.Dialog.Adaptive.Runtime.Settings;
 
 namespace calendarskill.Controllers
 {
@@ -19,8 +19,8 @@ namespace calendarskill.Controllers
         private readonly IBot _bot;
 
         public BotController(
-            IEnumerable<IBotFrameworkHttpAdapter> adapters, 
-            IEnumerable<AdapterSettings> adapterSettings, 
+            IEnumerable<IBotFrameworkHttpAdapter> adapters,
+            IEnumerable<AdapterSettings> adapterSettings,
             IBot bot)
         {
             _bot = bot ?? throw new ArgumentNullException(nameof(bot));
@@ -45,7 +45,7 @@ namespace calendarskill.Controllers
             {
                 throw new ArgumentNullException(nameof(route));
             }
-            
+
             if (_adapters.TryGetValue(route, out IBotFrameworkHttpAdapter adapter))
             {
                 // Delegate the processing of the HTTP POST to the appropriate adapter.
