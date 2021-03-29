@@ -1,72 +1,27 @@
-This folder contains a Bot Project created with Bot Framework Composer.
+# Welcome to your new bot
 
-The full documentation for Composer lives here:
-https://github.com/microsoft/botframework-composer
+This Bot Project was created using the Assistant Core template. Your bot is an assistant-style bot - it is designed as a base for a bot that will help your users accomplish multiple different tasks.
 
-To test this bot locally, open this folder in Composer, then click "Start Bot"
+## Next steps
 
-## Provision Azure Resources to Host Bot
+### Start building your bot
 
-This project includes a script that can be used to provision the resources necessary to run your bot in the Azure cloud. Running this script will create all of the necessary resources and return a publishing profile in the form of a JSON object.  This JSON object can be imported into Composer's "Publish" tab and used to deploy the bot.
+Composer can help guide you through getting started building your bot. From your bot settings page (the wrench icon on the left navigation rail), click on the rocket-ship icon on the top right for some quick navigation links.
 
-* From this project folder, navigate to the scripts/ folder
-* Run `npm install`
-* Run `node provisionComposer.js --subscriptionId=<YOUR AZURE SUBSCRIPTION ID> --name=<NAME OF YOUR RESOURCE GROUP> --appPassword=<APP PASSWORD> --environment=<NAME FOR ENVIRONMENT DEFAULT to dev>`
-* You will be asked to login to the Azure portal in your browser.
-* You will see progress indicators as the provision process runs. Note that it will take roughly 10 minutes to fully provision the resources.
+Another great resource if you're just getting started is the **[guided tutorial](https://docs.microsoft.com/en-us/composer/tutorial/tutorial-introduction)** in our documentation.
 
-It will look like this:
-```
-{
-  "accessToken": "<SOME VALUE>",
-  "name": "<NAME OF YOUR RESOURCE GROUP>",
-  "environment": "<ENVIRONMENT>",
-  "settings": {
-    "applicationInsights": {
-      "InstrumentationKey": "<SOME VALUE>"
-    },
-    "cosmosDb": {
-      "cosmosDBEndpoint": "<SOME VALUE>",
-      "authKey": "<SOME VALUE>",
-      "databaseId": "botstate-db",
-      "containerId": "botstate-container"
-    },
-    "blobStorage": {
-      "connectionString": "<SOME VALUE>",
-      "container": "transcripts"
-    },
-    "luis": {
-      "endpointKey": "<SOME VALUE>",
-      "authoringKey": "<SOME VALUE>",
-      "region": "westus"
-    },
-    "MicrosoftAppId": "<SOME VALUE>",
-    "MicrosoftAppPassword": "<SOME VALUE>"
-  }
-}```
+### Connect with your users
 
-When completed, you will see a message with a JSON "publishing profile" and instructions for using it in Composer.
+Your bot comes pre-configured to connect to our Web Chat and DirectLine channels, but there are many more places you can connect your bot to - including Microsoft Teams, Telephony, DirectLine Speech, Slack, Facebook, Outlook and more. Check out all of the places you can connect to on the bot settings page.
 
+### Publish your bot to Azure from Composer
 
-## Publish bot to Azure
+Composer can help you provision the Azure resources necessary for your bot, and publish your bot to them. To get started, create a publishing profile from your bot settings page in Composer (the wrench icon on the left navigation rail). Make sure you only provision the optional Azure resources you need!
 
-To publish your bot to a Azure resources provisioned using the process above:
+### Extend your bot with packages
 
-* Open your bot in Composer
-* Navigate to the "Publish" tab
-* Select "Add new profile" from the toolbar
-* In the resulting dialog box, choose "azurePublish" from the "Publish Destination Type" dropdown
-* Paste in the profile you received from the provisioning script
+In the Package Manager in Composer you can find useful packages to help add additional pre-built functionality you can add to your bot - everything from simple dialogs & custom actions for working with specific scenarios to custom adapters for connecting your bot to users on clients like Facebook or Slack.
 
-When you are ready to publish your bot to Azure, select the newly created profile from the sidebar and click "Publish to selected profile" in the toolbar.
+### Extend your bot with code
 
-## Refresh your Azure Token
-
-When publishing, you may encounter an error about your access token being expired. This happens when the access token used to provision your bot expires.
-
-To get a new token:
-
-* Open a terminal window
-* Run `az account get-access-token`
-* This will result in a JSON object printed to the console, containing a new `accessToken` field.
-* Copy the value of the accessToken from the terminal and into the publish `accessToken` field in the profile in Composer.
+You can also extend your bot with code - simply open up the folder that was generated for you in the location you chose during the creation process with your favorite IDE (like Visual Studio). You can do things like create custom actions that can be used during dialog flows, create custom middleware to pre-process (or post-process) messages, and more. See [our documentation](https://aka.ms/bf-extend-with-code) for more information.
