@@ -13,7 +13,7 @@
         <description>Dialogs to provide an onboarding experience</description>
         <tags>bf-component conversationalcore onboarding preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.12.1-preview" />
+            <dependency id="Microsoft.Bot.Builder.Integration.Runtime" version="4.13.0-rc0" />
         </dependencies>
     </metadata>
 
