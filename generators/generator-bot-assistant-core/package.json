@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-assistant-core",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Assistant Core template.",
+  "description": "Yeoman generator for creating an assistant-style bot with NLP built on the Azure Bot Framework and Composer.",
   "keywords": [
     "microsoft",
     "bot",
@@ -12,7 +12,7 @@
     "bf-dotnet-webapp",
     "bf-dotnet-functions"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Bot Framework",
   "main": "./generators/app/index.js",
   "repository": {
