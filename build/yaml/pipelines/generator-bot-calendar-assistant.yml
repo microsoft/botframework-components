@@ -12,4 +12,5 @@ variables:
   ComponentType: generator
   DeploymentRing: preview
   # PublishPackageArtifacts: # set in ADO
+  # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: generators/generator-bot-calendar-assistant
