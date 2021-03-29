@@ -15,11 +15,11 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         [TestMethod]
         public async Task GetManager_HappyPath()
         {
-            Profile manager = this.AddUserProfile("Megan Bowen", "megan@contoso.com", "425-111-1111", "City Center", "Software Engineer", addToSearchResult: false);
-            Profile me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
+            User manager = this.AddUserProfile("Megan Bowen", "megan@contoso.com", "425-111-1111", "City Center", "Software Engineer", addToSearchResult: false);
+            User me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
 
             // Setup the tree
-            this.SetupUserRequest(manager, null, new List<Profile>() { me });
+            this.SetupUserRequest(manager, null, new List<User>() { me });
             this.SetupUserRequest(me, manager, null);
 
             await this.RunTestScriptAsync();
@@ -34,7 +34,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         [TestMethod]
         public async Task GetManager_NoManager()
         {
-            Profile me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
+            User me = this.AddUserProfile(name: "Thomas Chung", email: "thomas@contoso.com", phoneNumber: "425-222-2222", officeLocation: "City Center", jobTitle: "Software Engineer II", addToSearchResult: true);
             this.SetupUserRequest(me, null, null);
 
             await this.RunTestScriptAsync();
