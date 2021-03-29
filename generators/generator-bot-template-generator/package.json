@@ -6,9 +6,10 @@
     "bot-template-generator",
     "microsoft",
     "bot",
+    "framework",
     "template"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Bot Framework",
   "files": [
     "app"
