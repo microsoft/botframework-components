@@ -1,14 +1,14 @@
 {
   "name": "@microsoft/generator-bot-empty",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Empty template.",
+  "description": "Yeoman generator for creating an empty bot built on the Azure Bot Framework & Composer.",
   "keywords": [
     "microsoft",
     "bot",
     "framework",
     "adaptive",
     "yeoman-generator",
-    "msbot-template",
+    "bf-template",
     "bf-dotnet-webapp",
     "bf-dotnet-functions",
     "bf-js-webapp",

@@ -2,7 +2,7 @@
 
 > Yeoman generator for creating an empty bot built on the Azure Bot Framework & Composer.
 
-The Empty Bot template creates a bot built on the Azure Bot Framework and the Adaptive Dialog stack. It is designed to be used from [Bot Framework Composer][composer], and generates a bot containing only a root dialog and a initial greeting dialog.
+The Empty Bot template creates a bot containing only a root dialog and a initial greeting dialog.
 
 ## What this template is for
 
@@ -11,13 +11,25 @@ Use this template if you want to...
 - Start from scratch, without any extraneous files to delete.
 - Build your bot by composing an ad-hoc set of packages.
 
-## Installation
+## Packages
+
+Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
+
+## Supported Languages
+
+- English (en-us)
+
+## Azure Resource Deployment
+
+This template does not rely on any additional Azure Resources.
+
+## Using this template
 
 ### From Composer
 
-From Composer you'll use the **New** button on the **Home** screen to install this template. After installation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
 
-### Command-line Installation
+### From the command-line
 
 This template can also be used from the command-line. First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-empty using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
@@ -31,18 +43,6 @@ Then generate your new project:
 ```bash
 yo @microsoft/bot-empty -botname '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
 ```
-
-## Packages
-
-Bots built on the Adaptive stack can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. From Composer, check out the Package Manager to discover additional packages you can add to your bot.
-
-## Supported Languages
-
-- English (en-us)
-
-## Azure Resource Deployment
-
-This template does not rely on any additional Azure Resources.
 
 ## License
 
@@ -74,3 +74,4 @@ SOFTWARE
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com
 [nodejs]: https://nodejs.org/
+[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
