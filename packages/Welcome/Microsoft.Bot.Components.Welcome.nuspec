@@ -13,7 +13,7 @@
         <description>Dialogs to provide a Welcome experience for new and returning users</description>
         <tags>bf-component conversationalcore welcome preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialog.Adaptive.Runtime" version="4.13.0-rc0" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0-rc0" />
         </dependencies>
     </metadata>
 

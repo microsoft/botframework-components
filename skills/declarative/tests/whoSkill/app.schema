@@ -5186,7 +5186,7 @@
       "description": "Component that enables connecting bots to chat clients and applications.",
       "type": "object",
       "$package": {
-        "name": "Microsoft.Bot.Builder.Dialog.Adaptive.Runtime",
+        "name": "Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime",
         "version": "4.13.0-rc0"
       },
       "properties": {
