@@ -1,8 +1,8 @@
 # @microsoft/generator-bot-assistant-core [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an assistant-style bot with NLP built on the Azure Bot Framework & Composer.
+> Yeoman generator for creating an assistant-style bot with NLP built on the Azure Bot Framework.
 
-The Assistant Core template creates an assistant-style conversational bot containing dialogs for the common conversational flows, with example language models and triggers routing to those dialogs. Includes support for:
+The Assistant Core template creates an assistant-style conversational bot containing dialogs for the common conversational flows, with example language models and triggers routing to those dialogs. Includes support for
 
 - Greeting new and returning users
 - Asking for help
@@ -52,7 +52,7 @@ First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversat
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-conversational-core
+npm install -g @microsoft/generator-bot-assistant-core
 ```
 
 Then generate your new project:

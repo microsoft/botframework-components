@@ -26,12 +26,13 @@ Our [yeoman](https://yeoman.io) generators for scaffolding bot projects.
 |:------------:|-------------|
 |[Empty bot](/generators/generator-microsoft-bot-empty) | The base empty bot |
 |[Conversational Core](/generators/generator-microsoft-bot-conversational-core) | Basic conversational bot with NLP. |
-|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards |
-|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars |
-|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project |
-|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator |
-|[Assistant Core](/generators/generator-bot-assistant-core) | The base assistant-style bot (no skills) |
-|[Enterprise Assistant](/generators/generator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills |
+|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards. |
+|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars. |
+|[People](/generators/generator-microsoft-bot-people) | A bot for searching for people on the MS Graph. |
+|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
+|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator. |
+|[Assistant Core](/generators/generator-bot-assistant-core) | The base assistant-style bot (no skills). |
+|[Enterprise Assistant](/generators/generator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills. |
 
 ### Packages
 
@@ -43,7 +44,7 @@ Bits of bots that you can add to your bot project.
 |[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
 |[Onboarding](/packages/onboarding) | Dialogs |Declarative assets supporting a first time user experience. |
 |[Calendar](/packages/Calendar) | Custom Actions |Custom actions supporting Calendar scenarios. |
-|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API|
+|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API. |
 
 ### Virtual Assistant skills (Legacy)
 

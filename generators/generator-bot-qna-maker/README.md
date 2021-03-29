@@ -42,13 +42,13 @@ First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversat
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-conversational-core
+npm install -g @microsoft/generator-bot-qna-maker
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
+yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License

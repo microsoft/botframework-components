@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework & Composer.
+> Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework.
 
 The Enterprise Assistant template creates a complex enterprise assistant, comprised of a root bot based on the Assistant Core template, and pre-configured with Calendar and People as skills.
 
@@ -55,13 +55,13 @@ First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversat
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-conversational-core
+npm install -g @microsoft/generator-bot-enterprise-assistant
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
+yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License

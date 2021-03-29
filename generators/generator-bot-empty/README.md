@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-empty [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an empty bot built on the Azure Bot Framework & Composer.
+> Yeoman generator for creating an empty bot built on the Azure Bot Framework.
 
 The Empty Bot template creates a bot containing only a root dialog and a initial greeting dialog.
 
@@ -41,7 +41,7 @@ npm install -g @microsoft/generator-bot-empty
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-empty -botname '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
+yo @microsoft/bot-empty -botname '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License

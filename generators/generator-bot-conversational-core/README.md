@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-conversational-core [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a simple conversational bot with NLP built on the Azure Bot Framework & Composer.
+> Yeoman generator for creating a simple conversational bot with NLP built on the Azure Bot Framework.
 
 The Conversational Core template creates a simple conversational bot containing dialogs for the most common conversational flows, with example language models and triggers routing to those dialogs.
 
@@ -46,7 +46,7 @@ npm install -g @microsoft/generator-bot-conversational-core
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
+yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License

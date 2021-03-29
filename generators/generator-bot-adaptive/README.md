@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-adaptive [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a completely empty bot built on the Azure Bot Framework & Composer.
+> Yeoman generator for creating a completely empty bot built on the Azure Bot Framework.
 
 The Adaptive Bot generator is the base generator for creating an Azure Bot Framework bot using the Adaptive Dialog stack. This generator is designed to be used as a base for other more purpose-specific generators, and is responsible for scaffolding:
 
@@ -27,7 +27,7 @@ npm install -g @microsoft/generator-bot-adaptive
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-adaptive -botname '{BOT_NAME}' -platform '{dotnet|js}' -integrations '{functions|webapp}'
+yo @microsoft/bot-adaptive -botname '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 Once your bot is generated, open your bot with **[Bot Framework Composer][composer]** to edit, manage, and publish your bot, or use your favorite IDE (like Visual Studio) to extend your bot with code.
