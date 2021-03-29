@@ -1,29 +1,38 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
 [Schedule](schedule.en-us.lg)
-[Event List](eventList.en-us.lg)
-
-# ScheduleNoResults()
-[Activity
-    text = ${ScheduleResponseText($options.start, createArray())}
-    attachments = ${json(ScheduleNoResultsCard($options.start))}
-]
-
-# SendActivity_RzDAXK()
-[Activity
-    attachments = ${json(EventDetailCard(turn.dialogEvent.value))}
-]
-
-# SendActivity_vyntiD()
-- IF: ${ exists($options.start) }
-    - ${ScheduleNoResults()}
-- ELSE:
-    - I couldn't find any events matching your criteria.
-
+[EventList](eventList.en-us.lg)
 
 # SendActivity_8wch3m()
+- ${SendScheduleCard()}
+
+# SendActivity_q9P05a()
 [Activity
-    text = I found the following events on your schedule.
-    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(x.date))))}
+    attachments = ${json(EventDetailActionsCard($events[0]))}
+]
+
+# SendActivity_Poa1KS()
+- I couldn't find a matching event.
+- I didn't find an event that matched.
+- Sorry, I couldn't find that event.
+
+# ScheduleDateRangeResponse()
+- There are too many events for that date range. Here is the first day:
+
+# SendScheduleCard()
+[Activity
+    text = ${if($tooManyEvents, ScheduleDateRangeResponse(), null)}
+    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
     attachmentLayout = carousel
 ]
+
+# UpdateScheduleCard()
+[Activity
+    deliveryMode = update
+    id = ${turn.activity.replyToId}
+    attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
+    attachmentLayout = carousel
+]
+
+# SendActivity_lZl77c()
+- ${SendScheduleCard()}

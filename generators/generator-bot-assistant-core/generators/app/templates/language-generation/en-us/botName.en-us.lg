@@ -1,8 +1,5 @@
 [import](common.lg)
 
-# SendActivity_Welcome
-- ${WelcomeUser()}
-
 # TextInput_Prompt_gWdJbl()
 [Activity
     Attachments = ${json(AdaptiveCardJson())}
@@ -39,3 +36,53 @@
 
 # SendActivity_L8AquD()
 - Sure, no worries.
+
+# QnAMakerDialog_NoAnswer_cc7Yef()
+[Activity
+    Text = ${QnAMakerDialog_NoAnswer_cc7Yef_text()}
+]
+
+# QnAMakerDialog_NoAnswer_cc7Yef_text()
+- I'm not sure I understand. Can you please try again?
+- Hmm, I don't understand. Can you try to ask me in a different way?
+- I didn't get that. Would you mind rephrasing and try it again?
+- Unfortunately I misunderstood, please try again.
+
+# SendActivity_yXbfKT()
+[Activity
+    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
+]
+
+# SendActivity_XZRD8m()
+[Activity
+    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
+]
+
+# SendActivity_yXbfKT_attachment_9sGxgG()
+[HeroCard
+  text = ${WelcomeReturningUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# BotTourEventAction()
+[CardAction
+    title = You can ask me
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ intent: "BotTour" }}
+]
+
+# SendActivity_XZRD8m_attachment_SR7bxz()
+[HeroCard
+  text = ${WelcomeNewUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# SendActivity_2outgQ()
+[Activity
+    Text = ${SendActivity_2outgQ_text()}
+]
+
+# SendActivity_2outgQ_text()
+- Oops, looks like I'm stuck. Can you try to ask me in a different way?
+- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
+- Sorry, it looks like something went wrong. Can you please try again?

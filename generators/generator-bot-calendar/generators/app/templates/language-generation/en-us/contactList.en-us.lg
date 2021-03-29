@@ -2,12 +2,13 @@
 
 # ContactListRemovePrompt()
 - Who should I remove?
+- Which contact should I remove?
 
 # ContactListPrompt()
-- I've found multiple ${$additionalOptions.contactName}'s:
-- I've found more than one ${$additionalOptions.contactName}'s: 
-- There are multiple ${$additionalOptions.contactName}'s:
-- There seem to be a few ${$additionalOptions.contactName}'s:
+- I've found multiple results for **${$additionalOptions.contactName}**:
+- I've found more than one **${$additionalOptions.contactName}**: 
+- There are multiple results for **${$additionalOptions.contactName}**:
+- There seem to be a few results for **${$additionalOptions.contactName}**:
 
 # ContactListShowMorePrompt()
 - How about these contacts:
@@ -30,24 +31,22 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "Medium",
+    "spacing": "Small",
     "items": [
         {
             "type": "TextBlock",
             "text": "${item.name}",
+            "size": "${BodySize()}",
             "weight": "Bolder"
         },
         {
             "type": "TextBlock",
             "text": "${item.email}",
+            "size": "${BodySize()}",
             "spacing": "Small"
         }
     ],
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": ${BuildCardActionData(item.email)}
-    }
+    "selectAction": ${BuildSubmitAction(item.name, item.index)}
 }
 ```
 
@@ -56,11 +55,6 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Try Again",
-            "data": ${BuildCardActionData('Try again')}
-        }
     ]
 }
 ```

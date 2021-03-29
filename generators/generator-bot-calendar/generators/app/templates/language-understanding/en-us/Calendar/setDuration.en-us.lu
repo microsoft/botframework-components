@@ -1,24 +1,32 @@
 # SetDuration
+- change meeting to {@duration=1 hr}
+- change the duration to {@duration=one hour}
 - change the event with {@contact=you@test.net} to {@duration=2 hours}
+- change to {@duration=1hr}
 - change to {@duration=3 hrs}
 - extend the event to {@duration=1 hour and 30 minutes}
 - extend the {@subject=standup} to {@duration=2 hours}
+- i want it to go for {@duration=half an hour}
 - make it {@duration=1 hour}
 - make it {@duration=1 hour and 30 minutes}
+- make it last {@duration=three and a half hours}
 - make my meeting with {@contact=thomas} {@duration=1 hour}
 - make the meeting last {@duration=30 min}
+- no, update the meeting to last {@duration=an hour and a half}
+- no, update to {@duration=1 hour and 30 minutes}
 - set the duration of my meeting
 - set the event to {@duration=1 hour and 30 minutes}
 - set the length the event with {@contact=rebecca}
 - set this to {@duration=15 min}
 - set to {@duration=1 hour}
 - shorten the {@subject=team meeting} to {@duration=half an hour}
+- sure, and make the meeting last {@duration=30 min}
+- the meeting should last for {@duration=two hours}
 - update my event on {@date=monday} with {@contact=john} to {@duration=15 min}
 - update of my event with {@contact=morgan}, {@contact=margaret}, and {@contact=jose} called {@subject=lunch} to {@duration=1 hour}
 - update the duration the meeting {@date=today at 3} with {@contact=morgan} and {@contact=rebecca}
 - update the length of the event about {@subject=standup} {@date=tomorrow} with {@contact=morgan}
-- update the meeting to last {@duration=an hour and a half}
-- update to {@duration=1 hour and 30 minutes}
+- yes, but set to {@duration=1 hour}
 
 @ intent SetDuration usesFeatures Update,Event,Location,Titled
 
@@ -73,4 +81,4 @@
 	- tentative,respond maybe,might make,might attend
 
 @ phraselist Show(interchangeable) disabledForAllModels = 
-	- show,list,find,get,read,lookup
+	- show,list,find,get,read,lookup,what is,what's,whats,what

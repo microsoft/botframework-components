@@ -19,13 +19,17 @@ yo @microsoft/bot-calendar '{BOT_NAME}'
 ## Packages
 Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
 
-- N/A
+- Microsoft.Bot.Components.Graph
 
 ## Languages
 English.
 
 ## Azure Resource Deployment
-This template does not rely on any additional Azure Resources.
+This template requires Microsoft Azure Active Directory authentication to be configured on your Azure Bot Service resource with access to the following scopes:
+- Calendars.ReadWrite
+- Contacts.Read
+- People.Read
+- User.ReadBasic.All
 
 ## Getting To Know Yeoman
 

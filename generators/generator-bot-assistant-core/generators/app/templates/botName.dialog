@@ -1,11 +1,9 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "$designer": {
       "name": "<%= botName %>",
       "description": "",
       "id": "A79tBe"
-    }
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -33,21 +31,143 @@
               "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "859266",
-                    "name": "Send a response"
+                    "id": "Y1t1k4"
                   },
-                  "activity": "${SendActivity_Welcome()}"
+                  "condition": "exists(user.greeted)",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "yXbfKT"
+                      },
+                      "activity": "${SendActivity_yXbfKT()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "XZRD8m"
+                      },
+                      "activity": "${SendActivity_XZRD8m()}"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "eV86Nf"
+                      },
+                      "property": "user.greeted",
+                      "value": "true"
+                    }
+                  ]
                 }
               ]
             }
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "YQ6GAt",
+        "name": "Bot Tour"
+      },
+      "intent": "BotTour",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6JAmBh"
+          },
+          "activityProcessed": true,
+          "dialog": "BotTourDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "aLQGr7"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TelemetryTrackEventAction",
+          "$designer": {
+            "id": "Aucn7t"
+          },
+          "eventName": "ErrorOccurred",
+          "properties": {
+            "Type": "=turn.dialogEvent.value.className",
+            "Exception": "=turn.dialogEvent.value"
+          }
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "2outgQ"
+          },
+          "activity": "${SendActivity_2outgQ()}"
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NVFqr5"
+          },
+          "name": "=turn.dialogEvent.value.className",
+          "valueType": "Exception",
+          "value": "=turn.dialogEvent.value",
+          "label": "ErrorOccurred"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pRdAAf",
+        "name": "Feedback"
+      },
+      "intent": "Feedback",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2pSztz"
+          },
+          "activityProcessed": true,
+          "dialog": "FeedbackDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "zxdGNB",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.QnAMakerDialog",
+          "$designer": {
+            "id": "cc7Yef",
+            "name": "Send to chitchat knowledge base"
+          },
+          "knowledgeBaseId": "=settings.qna.<%= botName %>_en_us_qna",
+          "endpointKey": "=settings.qna.endpointkey",
+          "hostname": "=settings.qna.hostname",
+          "threshold": 0.3,
+          "activeLearningCardTitle": "Did you mean:",
+          "cardNoMatchText": "None of the above.",
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "top": 3,
+          "isTest": false,
+          "noAnswer": "${QnAMakerDialog_NoAnswer_cc7Yef()}"
+        }
+      ]
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "<%= botName %>.lg",
   "id": "<%= botName %>",
   "recognizer": "<%= botName %>.lu.qna"

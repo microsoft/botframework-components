@@ -28,7 +28,7 @@
           "$designer": {
             "id": "h7GRVI"
           },
-          "property": "$turnCount",
+          "property": "$maxTurnCount",
           "value": "=3"
         },
         {
@@ -100,13 +100,9 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 && not(exists(#None)) || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(turn.recognized.score > 0.5 && not(exists(#None))) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_VRSPsi()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
@@ -181,7 +177,8 @@
             "recognizeOrdinals": true,
             "recognizeNumbers": true
           },
-          "style": "suggestedAction"
+          "style": "none",
+          "maxTurnCount": "=if($skipUpdatePrompt, 1, 3)"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -193,6 +190,13 @@
             {
               "value": "attendees",
               "actions": [
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "16MX0G"
+                  },
+                  "property": "$skipContactPrompt"
+                },
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
@@ -283,7 +287,6 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": "=$turnCount",
           "alwaysPrompt": false,
           "allowInterruptions": false,
           "prompt": "${ConfirmInput_Prompt_7ANEcD()}",
@@ -297,7 +300,9 @@
             "inlineSeparator": ", "
           },
           "property": "turn.repeat",
-          "style": "suggestedAction"
+          "style": "suggestedAction",
+          "defaultValue": false,
+          "maxTurnCount": 3
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -314,7 +319,8 @@
               "properties": [
                 "$options.updateProperty",
                 "$options.updateAction",
-                "$options.updateValue"
+                "$options.updateValue",
+                "$skipUpdatePrompt"
               ]
             },
             {
@@ -407,9 +413,9 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": 3,
+          "maxTurnCount": "=if($skipContactPrompt, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(turn.recognized.score > 0.5 && not(exists(#None))) || exists(turn.activity.value.intent)",
           "prompt": "${ChoiceInput_Prompt_488KMT()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
@@ -428,7 +434,8 @@
           "recognizerOptions": {
             "recognizeOrdinals": true,
             "recognizeNumbers": true
-          }
+          },
+          "style": "heroCard"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -479,62 +486,120 @@
               ]
             }
           ],
-          "elseActions": [
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "G2ZZRj"
+          },
+          "condition": "=$options.updateAction == 'remove'",
+          "actions": [
             {
-              "$kind": "Microsoft.SetProperties",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "IB0GoF"
+                "id": "vN2sL3"
               },
-              "assignments": [
+              "condition": "=$options.updateValue != null",
+              "actions": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=foreach($event.attendees, x, json(concat('{\"name\": \"', x.EmailAddress.Name ,'\" , \"email\":\"', x.EmailAddress.Address,'\" }')))"
-                },
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "WDCnLj"
+                  },
+                  "value": "=where($event.attendees, a, contains(toLower(a.emailAddress.name), toLower($options.updateValue[0])))",
+                  "property": "turn.removeAttendees"
+                }
+              ],
+              "elseActions": [
                 {
-                  "property": "$listOptions.actionTitleProperty",
-                  "value": "email"
-                },
-                {
-                  "property": "$listOptions.activePrompt",
-                  "value": "ContactListRemovePrompt"
-                },
-                {
-                  "property": "$listOptions.templates",
-                  "value": {
-                    "icon": "ContactIconUrl",
-                    "title": "ContactListTitle",
-                    "item": "ContactListItem",
-                    "actions": "ContactListActions",
-                    "initialPrompt": "ContactListPrompt",
-                    "showMorePrompt": "ContactListShowMorePrompt",
-                    "skipResponse": "ContactListSkipResponse",
-                    "defaultValueResponse": "ContactListDefaultValueResponse"
-                  }
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "4mKc4H"
+                  },
+                  "property": "turn.removeAttendees",
+                  "value": "=$event.attendees"
                 }
               ]
             },
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "zVOmZ0"
+                "id": "h0lIzs"
               },
-              "activityProcessed": true,
-              "dialog": "ListDialog",
-              "resultProperty": "$selectedContact",
-              "options": "=$listOptions"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "4MrlUO"
-              },
-              "property": "$contactToRemove",
-              "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
+              "condition": "count(turn.removeAttendees) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "rANzUR"
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=foreach(coalesce(turn.removeAttendees, $event.attendees), x, json(concat('{\"name\": \"', x.EmailAddress.Name ,'\" , \"email\":\"', x.EmailAddress.Address,'\" }')))"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "name"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "ContactListRemovePrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "ContactIconUrl",
+                        "title": "ContactListTitle",
+                        "item": "ContactListItem",
+                        "actions": "ContactListActions",
+                        "initialPrompt": "ContactListPrompt",
+                        "showMorePrompt": "ContactListShowMorePrompt",
+                        "skipResponse": "ContactListSkipResponse",
+                        "defaultValueResponse": "ContactListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=true"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "PoLzmT"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "resultProperty": "$selectedContact",
+                  "options": "=$listOptions"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "FQB2q9"
+                  },
+                  "property": "$contactToRemove",
+                  "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "HzuV7V"
+                  },
+                  "property": "$contactToRemove",
+                  "value": "=turn.removeAttendees"
+                }
+              ]
             },
             {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "0SrLml"
+                "id": "SFBYWY"
               },
               "changeType": "remove",
               "itemsProperty": "$event.attendees",
@@ -543,9 +608,9 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "n59nHl"
+                "id": "Qv9lHi"
               },
-              "activity": "${SendActivity_n59nHl()}"
+              "activity": "${SendActivity_Qv9lHi()}"
             }
           ]
         },
@@ -578,6 +643,23 @@
           "name": "UpdateEventDialog.OnEvent_UpdateDateTime"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "NQwwhV"
+          },
+          "condition": "=not(exists($options.duration))",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "OJaLPN"
+              },
+              "property": "$options.duration",
+              "value": "=ticksToMinutes(ticks(formatDateTime($event.end.dateTime)) - ticks(formatDateTime($event.start.dateTime)))"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.DateTimeInput",
           "$designer": {
             "id": "b0tmn4"
@@ -586,7 +668,7 @@
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
           "prompt": "${DateTimeInput_Prompt_b0tmn4()}",
-          "unrecognizedPrompt": "${DateTimeInput_UnrecognizedPrompt_b0tmn4()}",
+          "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "defaultValueResponse": "",
           "property": "turn.query",
@@ -888,7 +970,7 @@
             "query": "=turn.query",
             "expectedType": "duration"
           },
-          "resultProperty": "$duration"
+          "resultProperty": "turn.duration"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -1003,7 +1085,8 @@
           },
           "property": "turn.isOnlineMeeting",
           "value": "=$options.updateValue",
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)"
+          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "style": "heroCard"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -1072,19 +1155,19 @@
           },
           "defaultLocale": "en-us",
           "disabled": false,
-          "maxTurnCount": "=$turnCount",
+          "maxTurnCount": "=$maxTurnCount",
           "alwaysPrompt": false,
           "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "prompt": "${ConfirmInput_Prompt_lvMf0G()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",
-            "inlineOr": " or "
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
           },
-          "property": "$confirmUpdate"
+          "property": "$confirmUpdate",
+          "style": "none",
+          "defaultValue": false
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -1225,12 +1308,20 @@
           "name": "UpdateEventDialog.OnIntent_SetAttendeesAdd"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "nh6sIP"
+            "id": "wRtM2R"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            },
+            {
+              "property": "$skipContactPrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1248,7 +1339,7 @@
             },
             {
               "property": "$options.updateValue",
-              "value": "=@@newContact"
+              "value": "=unique(union(coalesce(@@contact, []), coalesce(@@newContact, []), coalesce(@@personName, [])))"
             }
           ]
         },
@@ -1258,6 +1349,22 @@
             "id": "6P2tPW"
           },
           "eventName": "UpdateAttendees"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "zwdyDE"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1277,12 +1384,20 @@
           "name": "UpdateEventDialog.OnIntent_SetAttendeesRemove"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "sPcbxi"
+            "id": "SgZdoV"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            },
+            {
+              "property": "$skipContactPrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1310,6 +1425,22 @@
             "id": "yRqayJ"
           },
           "eventName": "UpdateAttendees"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "aoQFfO"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1329,12 +1460,16 @@
           "name": "UpdateEventDialog.OnIntent_SetDateTime"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "0jp0JY"
+            "id": "N4m4Lh"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1358,6 +1493,22 @@
             "id": "sA5QKm"
           },
           "eventName": "UpdateDateTime"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "lQtyas"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1377,12 +1528,16 @@
           "name": "UpdateEventDialog.OnIntent_SetDescription"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "Fpcpcd"
+            "id": "gcqAQa"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1402,6 +1557,22 @@
             "id": "FXcbDo"
           },
           "eventName": "UpdateDescription"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "b5p7gV"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1421,12 +1592,16 @@
           "name": "UpdateEventDialog.OnIntent_SetDuration"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "VR6cuW"
+            "id": "fCSSJi"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1450,6 +1625,22 @@
             "id": "CsUHUn"
           },
           "eventName": "UpdateDuration"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XTi0DF"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1469,12 +1660,16 @@
           "name": "UpdateEventDialog.OnIntent_SetLocation"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "cM475R"
+            "id": "A4QwHp"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1498,6 +1693,22 @@
             "id": "cJPUl2"
           },
           "eventName": "UpdateLocation"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "bBwFUe"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1517,12 +1728,16 @@
           "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingAdd"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "WPOvhg"
+            "id": "Dmkh1v"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1546,6 +1761,22 @@
             "id": "Kz0sNt"
           },
           "eventName": "UpdateOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "T2OXXN"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1565,12 +1796,16 @@
           "name": "UpdateEventDialog.OnIntent_SetOnlineMeetingRemove"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "c1EpND"
+            "id": "8OSe2e"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1594,6 +1829,22 @@
             "id": "w756Ea"
           },
           "eventName": "UpdateOnlineMeeting"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "IHRFBL"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },
@@ -1613,12 +1864,16 @@
           "name": "UpdateEventDialog.OnIntent_SetTitle"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "6OBPrX"
+            "id": "n5MMJY"
           },
-          "property": "$turnCount",
-          "value": "=$turnCount + 3"
+          "assignments": [
+            {
+              "property": "$skipUpdatePrompt",
+              "value": "=true"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -1642,6 +1897,22 @@
             "id": "SXDO3s"
           },
           "eventName": "UpdateTitle"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "QStljf"
+          },
+          "assignments": [
+            {
+              "property": "turn.interrupted",
+              "value": "=true"
+            },
+            {
+              "property": "$maxTurnCount",
+              "value": "=$maxTurnCount + 3"
+            }
+          ]
         }
       ]
     },

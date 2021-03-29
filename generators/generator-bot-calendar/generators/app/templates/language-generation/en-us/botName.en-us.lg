@@ -1,15 +1,14 @@
 [Common](common.en-us.lg)
 [Event](event.en-us.lg)
-[Schedule](schedule.en-us.lg)
 [Availability](availability.en-us.lg)
 
 # SendActivity_IrC8MR()
-- You're signed out!
+- OK, you're signed out!
 
 # SendActivity_AlS4sI()
-[Activity
-    text= ${HelpMessage()}
-    SuggestedActions = New event | What's on today
+[HeroCard
+    text = ${HelpMessage()}
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction('')}
 ]
 
 # SendActivity_klrCg4()
@@ -19,63 +18,38 @@
 - Sorry, I'm not sure what you mean. Can you try rephrasing?
 
 # SendActivity_lqvfia()
-[Activity
+[HeroCard
     text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    buttons = ${CreateEventCardAction()} | ${GetEventsCardAction('')}
 ]
 
 # SendActivity_DGXXhL()
 [HeroCard
    text = Try the calendar skill now!
-   buttons = ${json(LaunchAction())}
+   buttons = ${LaunchCardAction()}
 ]
-
-# LaunchAction()
-- ```
-{
-    "title": "Launch",
-    "type": "postBack",
-    "value": {
-        "data": {
-            "intent": "LaunchChat"
-        }
-    }
-}
-```
 
 # SendActivity_QaDvyy()
 [HeroCard
    text = Let us know what you think!
-   buttons = ${OpenSurveyAction()}
-]
-
-# OpenSurveyAction()
-[CardAction
-    type = openUrl
-	title = Provide feedback
-    value = https://microsoft.qualtrics.com/jfe/form/SV_2ixlG2HqAyK0aBT?ConversationID=${turn.activity.conversation.id}
+   buttons = ${OpenSurveyCardAction()}
 ]
 
 # SendActivity_OIka7e()
 [Activity
     to = turn.activity.from
     deliveryMode = whisper
-    text = ${WelcomeUser()}
-    SuggestedActions = New event | What's on today
+    attachments = ${json(SendActivity_lqvfia())}
 ]
+
 # SendActivity_QqvaSr()
 [Activity
-    text = ${FoundAvailableTimeResponseText($freeTime.start)}
-    attachments = ${json(CardTemplate(ScheduleHeader($freeTime.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
+    attachments = ${json(CardTemplate(ScheduleHeader($options.start, $events), AvailabilityList($availabilityList), AvailabilityActions()))}
     attachmentLayout = carousel
 ]
 
 # SendActivity_WlmO9l()
-[Activity
-    text = ${FoundNoAvailableTimeResponseText()}
-    attachments = ${json(CardTemplate(ScheduleHeader(coalesce($options.start, convertFromUTC(utcNow(),user.workingHours.timeZone.name, 'yyyy-MM-dd')), $events), ScheduleList($event), AvailabilityActions()))}
-    attachmentLayout = carousel
-]
+- You don't have anything schedule on ${CapitalizeFirstLetter(FormatDate($options.start))}.
 
 # SendActivity_mWnyUh()
 - ${GeneralErrorMessage()}
@@ -86,28 +60,42 @@
 # SendActivity_UKSMPm()
 [Activity
     text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_x7EkgW()
 [Activity
     text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
-]
-
-# SendActivity_9Fl4ob()
-[Activity
-    text = ${if($next, NextEventResponseText($event), EventResponseText())}
-    attachments = ${json(EventDetailCard($event))}
+    attachments = ${json(EventDetailActionsCard($event))}
 ]
 
 # SendActivity_YAJvpF()
 [Activity
     text = ${FirstEventResponseText(first($events))}
-    attachments = ${json(EventDetailCard(first($events)))}
+    attachments = ${json(EventDetailActionsCard(first($events)))}
 ]
+
 # SendActivity_IdPxbc()
 [Activity
     text = ${LastEventResponseText(last($events))}
-    attachments = ${json(EventDetailCard(last($events)))}
+    attachments = ${json(EventDetailActionsCard(last($events)))}
+]
+
+# SendActivity_2q5Pi3()
+- ```
+Conversation Id: ${conversation.Id}
+
+${turn.dialogEvent.value}
+```
+
+# SendActivity_WgFfpN()
+[Activity
+    to = turn.activity.from
+    deliveryMode = whisper
+    attachments = ${json(SendActivity_lqvfia())}
+]
+
+# SendActivity_H4Vut2()
+[Activity
+    Text = Conversation Id: ${conversation.id}
 ]

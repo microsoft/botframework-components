@@ -16,9 +16,12 @@
 - I didn't find an event that matched.
 - Sorry, I couldn't find that event.
 
+# ScheduleDateRangeResponse()
+- There are too many events for that date range. Here is the first day:
+
 # SendScheduleCard()
 [Activity
-    text = ${if($tooManyEvents, ScheduleDateRangeResponseText(count($events), $options.start, $options.end), null)}
+    text = ${if($tooManyEvents, ScheduleDateRangeResponse(), null)}
     attachments = ${foreach($groupedEvents, x, json(CardTemplate(ScheduleHeader(x.date, x.events), ScheduleList(x.events), ScheduleActions(formatDateTime(x.date, "yyyy-MM-dd"), count($groupedEvents)))))}
     attachmentLayout = carousel
 ]

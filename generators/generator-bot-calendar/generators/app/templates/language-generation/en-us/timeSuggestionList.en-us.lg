@@ -1,10 +1,18 @@
 [Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # TimeSuggestionListPrompt()
 - IF: ${count($additionalOptions.attendees) == 1}
     - I've found multiple times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - I've found the following times when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - There are multiple suggestions when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
+    - Looks like there are several options when you can meet with ${$additionalOptions.attendees[0].emailAddress.name}:
 - ELSE:
     - I have found multiple times:
+    - There are multiple times you can all meet:
+    - I found more than available time: 
+    - There seem to be a few available slots:
+    - Looks like there are several times available:
 
 # TimeSuggestionListShowMorePrompt()
 - How about these new suggestions:
@@ -26,7 +34,7 @@
 {
     "type": "Container",
     "separator": true,
-    "spacing": "Medium",
+    "spacing": "Small",
     "items": [
         {
             "type": "ColumnSet",
@@ -37,8 +45,9 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${formatDateTime(item.Start, 'h:mm')} - ${formatDateTime(item.End, 'h:mm tt')}",
+                            "text": "${FormatTimeRange(item.Start, item.End)}",
                             "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
                             "weight": "Bolder"
                         }
                     ]
@@ -50,18 +59,15 @@
                         {
                             "type": "TextBlock",
                             "text": "${formatDateTime(item.Start, 'dddd, MMM d')}",
-                            "spacing": "Small"
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
                         }
                     ]
                 }
             ]
         }
     ],
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": ${BuildCardActionData(item.index)}
-    }
+    "selectAction": ${BuildSubmitAction(item.Start, item.index)}
 }
 ```
 
@@ -70,13 +76,7 @@
 {
     "type": "ActionSet",
     "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Choose your own date and time",
-            "data": {
-                "intent": "Skip"
-            }
-        }
+        ${ChooseDateAction()}
     ]
 }
 ```
