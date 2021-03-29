@@ -3,8 +3,15 @@ steps:
     $deploymentRing = "$(DeploymentRing)";
     "Deployment Ring = $deploymentRing";
 
+    $deploymentRingOverride = "$(DeploymentRingOverride)";
+    "Deployment Ring Override = $deploymentRingOverride";
+
     $componentType = "$(ComponentType)";
     "Component Type = $componentType";
+
+    if ($deploymentRingOverride) {
+      $deploymentRing = $deploymentRingOverride;
+    }
 
     if ($deploymentRing.ToLowerInvariant() -eq "rc") {
       $releaseCandidateNumber = "$(ReleaseCandidateNumber)";
