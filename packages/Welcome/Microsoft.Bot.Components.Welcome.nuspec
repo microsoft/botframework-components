@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <projectUrl>https://github.com/Microsoft/botframework-components</projectUrl>
         <releaseNotes>First version of welcome package</releaseNotes>
-        <description>Dialogs to provide a Welcome experience for new and returning users</description>
+        <description>An Adaptive Dialog for greeting new and returning users</description>
         <tags>msbot-component msbot-content conversationalcore welcome preview</tags>
         <dependencies>
             <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0-rc0" />
