@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Skills;
 using Microsoft.Bot.Schema;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
 namespace <%= botName %>.Triggers
 {
     /// <summary>
@@ -16,7 +17,7 @@ namespace <%= botName %>.Triggers
     public class SkillsTrigger
     {
         private readonly ChannelServiceHandlerBase _skillHandler;
-        private readonly ILogger<SkillController> _logger;
+        private readonly ILogger<SkillsTrigger> _logger;
 
         public SkillsTrigger(ChannelServiceHandlerBase skillHandler, ILogger<SkillsTrigger> logger)
         {
