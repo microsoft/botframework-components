@@ -200,6 +200,8 @@ __metadata:
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
     "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-people": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -209,7 +211,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-people@workspace:generators/generator-bot-people":
+"@microsoft/generator-bot-people@workspace:^1.0.0-preview, @microsoft/generator-bot-people@workspace:generators/generator-bot-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-people@workspace:generators/generator-bot-people"
   dependencies:
