@@ -9,6 +9,13 @@
 
 > # Intent definitions
 
+# Logout
+- Signout
+- Logout
+- Sign out
+- Log out
+- Forget me
+
 # GetDepartment
 - can you tell me the work area of {@contact=valderrama}?
 - do you know {@contact=robert}´s department?

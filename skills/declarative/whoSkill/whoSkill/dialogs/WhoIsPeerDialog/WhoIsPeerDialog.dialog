@@ -30,6 +30,15 @@
               },
               "name": "UserAlreadyProvided",
               "value": "=$UserFound"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "1kYUiQ"
+              },
+              "resultProperty": "$UserFound",
+              "token": "=user.token.token",
+              "userId": "=$UserFound"
             }
           ],
           "actions": [

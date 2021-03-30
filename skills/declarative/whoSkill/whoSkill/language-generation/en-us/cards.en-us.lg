@@ -1,11 +1,9 @@
 [Icons](icons.en-us.lg)
 
-# IconSize
-- Medium
-
-# IconSizeSmall
+# IconSize()
+- Large
+# IconSizeSmall()
 - Small
-
 # TitleSize
 - Medium
 
@@ -45,10 +43,9 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "data:image/jpeg;base64,${icon}",
+                            "url": "${icon}",
                             "horizontalAlignment": "Center",
-                            "width": "${IconSize()}",
-                            "height": "${IconSize()}"
+                            "width": "${IconSize()}"
                         }
                     ]
                 },

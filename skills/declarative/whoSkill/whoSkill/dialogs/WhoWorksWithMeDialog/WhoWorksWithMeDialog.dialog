@@ -35,6 +35,27 @@
               },
               "resultProperty": "$UserFound"
             }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "luHvuh"
+              },
+              "name": "UserFound",
+              "label": "UserId",
+              "valueType": "string",
+              "value": "=$UserFound"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "68MRWM"
+              },
+              "resultProperty": "$UserFound",
+              "token": "=user.token.token",
+              "userId": "=$UserFound"
+            }
           ]
         },
         {

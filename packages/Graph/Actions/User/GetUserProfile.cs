@@ -17,7 +17,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
     /// Get profile of other users in MSGraph.
     /// </summary>
     [GraphCustomActionRegistration(GetUserProfile.GetUserProfileDeclarativeType)]
-    public class GetUserProfile : BaseMsGraphCustomAction<Profile>
+    public class GetUserProfile : BaseMsGraphCustomAction<User>
     {
         /// <summary>
         /// Declarative type for the custom action.
@@ -34,10 +34,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public override string DeclarativeType => GetUserProfile.GetUserProfileDeclarativeType;
 
         /// <inheritdoc/>
-        internal override async Task<Profile> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
+        internal override async Task<User> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
-            Profile result = await client.Users[userId].Profile.Request().GetAsync();
+            User result = await client.Users[userId].Request().GetAsync();
 
             return result;
         }

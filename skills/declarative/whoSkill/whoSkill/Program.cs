@@ -1,6 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 

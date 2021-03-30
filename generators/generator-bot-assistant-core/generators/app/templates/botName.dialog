@@ -88,6 +88,25 @@
       ]
     },
     {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "e1i6lY",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FDsuIq"
+          },
+          "activityProcessed": true,
+          "dialog": "CancelDialog"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.9"
+    },
+    {
       "$kind": "Microsoft.OnChooseIntent",
       "$designer": {
         "id": "YDQnEj"
@@ -236,6 +255,24 @@
           "hostname": "=settings.qna.hostname",
           "endpointKey": "=settings.qna.endpointkey",
           "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9wETGs",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "B0NP8m"
+          },
+          "activityProcessed": true,
+          "dialog": "HelpDialog"
         }
       ]
     },
