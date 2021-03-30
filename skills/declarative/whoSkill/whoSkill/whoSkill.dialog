@@ -209,7 +209,8 @@
           "activityProcessed": true,
           "dialog": "WhoIsDirectReportDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "UserFound": "=$options.user"
           }
         }
       ]
