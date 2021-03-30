@@ -13,5 +13,7 @@ variables:
   BuildPlatform: anycpu
   ComponentType: codeExtension
   DeploymentRing: preview
+  # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
+  # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: packages/Graph
