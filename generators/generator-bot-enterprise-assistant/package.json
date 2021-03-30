@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-enterprise-assistant",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework and Composer.",
+  "description": "Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
     "bot",
