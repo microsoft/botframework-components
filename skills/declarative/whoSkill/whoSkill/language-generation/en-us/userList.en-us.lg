@@ -109,13 +109,3 @@
     ]
 }
 ```
-
-# UserListActions
-- ```
-{
-    "type": "ActionSet",
-    "actions": [
-        ${TryAgainAction()}
-    ]
-}
-```
