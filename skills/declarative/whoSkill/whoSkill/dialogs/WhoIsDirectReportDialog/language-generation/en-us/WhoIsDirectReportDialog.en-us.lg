@@ -3,14 +3,11 @@
 
 # SendActivity_UTkQ6k()
 [Activity
-    Text = I found that ${dialog.UserToSearchFor.displayName} does not have direct reports.
+    Text = I found that ${dialog.userFound.displayName} does not have direct reports.
 ]
 
 # SendActivity_P6fqO4()
 [Activity
-    Text = ${SendActivity_P6fqO4_text()}
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
 ]
 
-# SendActivity_P6fqO4_text()
-- Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
-- 

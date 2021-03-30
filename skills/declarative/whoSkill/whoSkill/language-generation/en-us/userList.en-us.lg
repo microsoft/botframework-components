@@ -98,9 +98,9 @@
                         },
                         {
                             "type": "TextBlock",
-                            "text": "${item.jobTitle}",
+                            "text": "${coalesce(item.jobTitle, item.department, "")}",
                             "wrap": true,
-                            "spacing": "Small"
+                            "spacing": "None"
                         }
                     ]
                 }

@@ -43,6 +43,21 @@
 }
 ```
 
+# GetTeamAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Team",
+    "data": {
+        "intent": "GetDirectReports",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
 # TryAgainAction()
 - ```
 {
