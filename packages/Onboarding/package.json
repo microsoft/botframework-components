@@ -2,7 +2,8 @@
   "name": "@microsoft/bot-components-onboarding",
   "version": "1.0.0",
   "keywords": [
-    "bf-component"
+    "msbot-component",
+    "msbot-content"
   ],
   "description": "Dialogs to provide an onboarding experience",
   "main": "index.js",
