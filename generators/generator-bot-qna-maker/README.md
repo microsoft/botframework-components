@@ -14,11 +14,6 @@ Use this template if you want to...
 
 Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
 
-This bot starts with the following packages:
-
-- [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
-- [Welcome dialog](https://www.nuget.org/packages/Microsoft.Bot.Components.Welcome/)
-
 ## Languages
 
 - English (en-us)
@@ -38,7 +33,9 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversational-core using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)):
+> You can instantiate this template from the command line, however this approach is NOT recommended, as Composer guides you through connecting to your QnA Maker knowledge base.
+
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-qna-maker using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
 
 ```bash
 npm install -g yo
@@ -48,7 +45,7 @@ npm install -g @microsoft/generator-bot-qna-maker
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
+yo @microsoft/bot-conversational-qna-maker '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License
@@ -75,8 +72,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-qna-maker.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-qna-maker
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

@@ -24,7 +24,7 @@ Composer can help you provision the Azure resources necessary for your bot, and 
 
 ### Extend your bot with packages
 
-In the Package Manager in Composer you can find useful packages to help add additional pre-built functionality you can add to your bot - everything from simple dialogs & custom actions for working with specific scenarios to custom adapters for connecting your bot to users on clients like Facebook or Slack.
+From Package Manager in Composer you can find useful packages to help add additional pre-built functionality you can add to your bot - everything from simple dialogs & custom actions for working with specific scenarios to custom adapters for connecting your bot to users on clients like Facebook or Slack.
 
 ### Extend your bot with code
 

@@ -51,7 +51,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversational-core using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)):
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
 
 ```bash
 npm install -g yo
@@ -61,7 +61,7 @@ npm install -g @microsoft/generator-bot-enterprise-assistant
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
+yo @microsoft/bot-enterprise-assistant '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License
@@ -88,8 +88,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-enterprise-assistant.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-assistant
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

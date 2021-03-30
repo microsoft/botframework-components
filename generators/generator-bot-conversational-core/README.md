@@ -9,7 +9,7 @@ The Conversational Core template creates a simple conversational bot containing 
 Use this template if you want to...
 
 - Create a basic conversational bot with natural language processing (NLP) with a recognizer like [LUIS][luis].
-- See a simple example of how language understanding, language generation, recognizers and dialogs work together.
+- See the basics of how language understanding, language generation, recognizers and dialogs work together.
 
 ## Packages
 
@@ -36,7 +36,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-conversational-core using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)):
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-conversational-core using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
 
 ```bash
 npm install -g yo
@@ -73,8 +73,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-conversational-core
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com
