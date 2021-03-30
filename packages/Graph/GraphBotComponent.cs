@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Microsoft.Bot.Components.Graph
@@ -8,15 +8,15 @@ namespace Microsoft.Bot.Components.Graph
     using System.Linq;
     using System.Reflection;
     using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Builder.Dialogs.Debugging;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
-    using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
-    using Newtonsoft.Json;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
-    public class GraphComponentRegistration : ComponentRegistration, IComponentDeclarativeTypes
+    public class GraphBotComponent : BotComponent
     {
         /// <inheritdoc/>
-        public IEnumerable<DeclarativeType> GetDeclarativeTypes(ResourceExplorer resourceExplorer)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration)
         {
             // Actions
             // Get all the classes where they have a ComponentRegistration attribute
@@ -28,15 +28,9 @@ namespace Microsoft.Bot.Components.Graph
 
                 if (attribute != null)
                 {
-                    yield return new DeclarativeType(attribute.DeclarativeType, type);
+                    services.AddSingleton<DeclarativeType>(sp => new DeclarativeType(attribute.DeclarativeType, type));
                 }
             }
-        }
-
-        /// <inheritdoc/>
-        public IEnumerable<JsonConverter> GetConverters(ResourceExplorer resourceExplorer, SourceContext sourceContext)
-        {
-            yield break;
         }
     }
 }

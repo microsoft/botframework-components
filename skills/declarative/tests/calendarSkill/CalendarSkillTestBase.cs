@@ -14,7 +14,9 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     {
         public void InitializeComponents()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             ComponentRegistration.Add(new GraphComponentRegistration());
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

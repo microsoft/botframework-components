@@ -6,6 +6,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Dialogs.Tests.Common;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Graph;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
@@ -44,7 +46,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
         public void InitializeComponents()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             ComponentRegistration.Add(new GraphComponentRegistration());
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>
