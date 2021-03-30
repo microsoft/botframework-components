@@ -234,7 +234,7 @@ module.exports = class extends BaseGenerator {
         'botbuilder-dialogs-adaptive-runtime-integration-azure-functions': sdkVersion,
       },
       [integrations.webapp]: {
-        'botbuilder-dialogs-adaptive-runtime-integration-restify': sdkVersion,
+        'botbuilder-dialogs-adaptive-runtime-integration-express': sdkVersion,
       },
     }[integration];
 
@@ -242,7 +242,7 @@ module.exports = class extends BaseGenerator {
       {
         // Note: in dev we need a server for testing bots via Composer
         [integrations.functions]: {
-          'botbuilder-dialogs-adaptive-runtime-integration-restify': sdkVersion,
+          'botbuilder-dialogs-adaptive-runtime-integration-express': sdkVersion,
         },
       }[integration] || {};
 
