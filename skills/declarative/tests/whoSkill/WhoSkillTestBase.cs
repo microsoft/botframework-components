@@ -6,6 +6,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Dialogs.Tests.Common;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Graph;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
@@ -44,7 +46,10 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
         public void InitializeComponents()
         {
-            ComponentRegistration.Add(new GraphComponentRegistration());
+            //var services = new ServiceCollection();
+            //IConfiguration configuration = new ConfigurationBuilder().Build();
+
+            //new GraphBotComponent().ConfigureServices(services, configuration);
         }
 
         /// <summary>

@@ -187,7 +187,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
                 // Log the latency and any exception that we caught.
                 // Telemetry client is something that is handled by the base Dialog class, and by extension the SDK
-                // platform itself. If the bot has telemetry enabled with the instrumentation key, then this would 
+                // platform itself. If the bot has telemetry enabled with the instrumentation key, then this would
                 // automatically show up on their Application Insight monitoring log events.
                 this.TelemetryClient.TrackEvent(this.TelemetryEventName, properties, metric);
             }

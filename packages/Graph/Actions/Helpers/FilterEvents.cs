@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Bot.Components.Graph.Actions
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.Bot.Components.Graph.Actions
 {
     using System.Collections.Generic;
     using System.Linq;

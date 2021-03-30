@@ -16,7 +16,7 @@ namespace Microsoft.Bot.Components.Graph
     public class GraphBotComponent : BotComponent
     {
         /// <inheritdoc/>
-        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration, ILogger logger)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration)
         {
             // Actions
             // Get all the classes where they have a ComponentRegistration attribute
