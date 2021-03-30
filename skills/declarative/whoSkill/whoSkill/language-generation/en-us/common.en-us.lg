@@ -2,9 +2,9 @@
 [Cards](cards.en-us.lg)
 
 # WelcomeUser()
-- IF: ${user.profile.displayName != null}
+- IF: ${dialog.signedInUser.givenName!= null}
 - ```
-Hi ${user.profile.displayName} 🖐, thank you for helping the PBX team out with this dogfood for who skill!
+Hi ${dialog.signedInUser.givenName} 🖐, thank you for helping the PBX team out with this dogfood for who skill!
 
 You can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
 ```

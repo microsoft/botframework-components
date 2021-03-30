@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,7 +30,7 @@ namespace <%= botName %>
             {
                 app.UseDeveloperExceptionPage();
             }
-        
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseWebSockets();

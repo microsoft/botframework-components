@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Bot.Builder.Integration.Runtime.Extensions;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
 
 [assembly: FunctionsStartup(typeof(<%= botName %>.Startup))]
 

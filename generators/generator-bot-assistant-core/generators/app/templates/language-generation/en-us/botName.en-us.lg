@@ -77,6 +77,26 @@
   buttons = ${BotTourEventAction()}
 ]
 
+# TextInput_Prompt_XRSIOS()
+[Activity
+    Attachments = ${json(AdaptiveCardJson())}
+]
+
+# SendActivity_Z8FHjj()
+- Sure, no worries.
+
+# TextInput_Prompt_YQSOpf()
+[Activity
+    Attachments = ${TextInput_Prompt_YQSOpf_attachment_Yixa1e()}
+]
+
+# TextInput_Prompt_YQSOpf_attachment_Yixa1e()
+- $json{AdaptiveCardJson()}
+# SendActivity_ufxNYo()
+[Activity
+    Text = Sure, no worries.
+]
+
 # SendActivity_2outgQ()
 [Activity
     Text = ${SendActivity_2outgQ_text()}

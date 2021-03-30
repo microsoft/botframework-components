@@ -44,7 +44,8 @@ Bits of bots that you can add to your bot project.
 |[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
 |[Onboarding](/packages/onboarding) | Dialogs |Declarative assets supporting a first time user experience. |
 |[Calendar](/packages/Calendar) | Custom Actions |Custom actions supporting Calendar scenarios. |
-|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API. |
+|[Graph](/packages/Graph) | Custom Actions |Custom actions for work with the MS Graph API|
+|[Orchestrator](Microsoft.Bot.Builder.AI.Orchestrator) | Recognizer | Plugin to register the Orchestrator recognizer with the runtime. |
 
 ### Virtual Assistant skills (Legacy)
 

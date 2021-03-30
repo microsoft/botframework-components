@@ -5,18 +5,16 @@
 
 # SendActivity_ryFbw6()
 [Activity
-    Attachments = ${SendActivity_ryFbw6_attachment_7Dz895()}
+    Attachments = ${json(ProfileCard(dialog.Result))}
 ]
-
-# SendActivity_ryFbw6_attachment_7Dz895()
-- ${json(ProfileCard(dialog.Result))}
 
 # SendActivity_dTcyKk()
 [Activity
-    Text = Here is what I found for **${dialog.Result.names[0].displayName}**:
+    Text = Here is what I found for **${dialog.Result.displayName}**:
 ]
 
 # SendActivity_lcoztE()
 [Activity
     Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
 ]
+

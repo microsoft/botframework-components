@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Builder.Integration.Runtime.Settings;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace <%= botName %>.Controllers
 {
@@ -21,17 +22,20 @@ namespace <%= botName %>.Controllers
         private readonly ILogger<BotController> _logger;
 
         public BotController(
+            IConfiguration configuration,
             IEnumerable<IBotFrameworkHttpAdapter> adapters,
-            IEnumerable<AdapterSettings> adapterSettings,
             IBot bot,
             ILogger<BotController> logger)
         {
             _bot = bot ?? throw new ArgumentNullException(nameof(bot));
             _logger = logger;
 
+            var adapterSettings = configuration.GetSection(AdapterSettings.AdapterSettingsKey).Get<List<AdapterSettings>>() ?? new List<AdapterSettings>();
+            adapterSettings.Add(AdapterSettings.CoreBotAdapterSettings);
+
             foreach (var adapter in adapters ?? throw new ArgumentNullException(nameof(adapters)))
             {
-                var settings = adapterSettings.FirstOrDefault(s => s.Enabled && s.Name == adapter.GetType().FullName);
+                var settings = adapterSettings.FirstOrDefault(s => s.Enabled && s.Type == adapter.GetType().FullName);
 
                 if (settings != null)
                 {
