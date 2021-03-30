@@ -227,7 +227,7 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const sdkVersion = '4.13.0-preview.rc0';
+    const sdkVersion = '~4.13.0-preview.rc0';
 
     const dependencies = {
       [integrations.functions]: {
