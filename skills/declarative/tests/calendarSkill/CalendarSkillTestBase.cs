@@ -14,7 +14,7 @@ namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
     {
         public void InitializeComponents()
         {
-            ComponentRegistration.Add(new GraphComponentRegistration());
+            //ComponentRegistration.Add(new GraphComponentRegistration());
         }
     }
 }
