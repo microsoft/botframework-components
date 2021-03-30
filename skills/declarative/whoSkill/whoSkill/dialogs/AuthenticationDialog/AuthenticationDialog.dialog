@@ -32,8 +32,8 @@
           "maxTurnCount": 3,
           "allowInterruptions": true,
           "connectionName": "=settings.oauthConnectionName",
-          "title": "Sign onto Microsoft Account",
-          "text": "Login",
+          "title": "Sign in",
+          "text": "Time to sign in with your Microsoft account to access your contacts and company directory, and try out our new 💃🕺 Skill!",
           "property": "user.Token"
         }
       ]
