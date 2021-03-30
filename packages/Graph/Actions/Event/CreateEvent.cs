@@ -40,7 +40,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression TimeZoneProperty { get; set; }
 
         /// <summary>
-        /// The event and its property to update in graph.
+        /// Gets or sets the event and its property to update in graph.
         /// </summary>
         [JsonProperty("eventToCreateProperty")]
         public ObjectExpression<CalendarSkillEventModel> EventToCreateProperty { get; set; }

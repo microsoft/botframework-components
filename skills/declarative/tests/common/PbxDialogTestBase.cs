@@ -74,12 +74,14 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
             // Include the base set of components
             // Individual test classes should add its own set of custom actions
             // and other components required for testing
+#pragma warning disable CS0618 // Type or member is obsolete
             ComponentRegistration.Add(new DeclarativeComponentRegistration());
             ComponentRegistration.Add(new AdaptiveComponentRegistration());
             ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
             ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             IHaveComponentsToInitialize testClass = new T();
             testClass.InitializeComponents();

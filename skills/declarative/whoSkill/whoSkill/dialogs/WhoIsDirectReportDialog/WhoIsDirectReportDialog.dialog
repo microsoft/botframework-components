@@ -32,6 +32,15 @@
               "label": "UserId",
               "valueType": "string",
               "value": "=$UserFound"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "51g002"
+              },
+              "resultProperty": "$UserFound",
+              "token": "=user.token.token",
+              "userId": "=$UserFound"
             }
           ],
           "actions": [
@@ -45,7 +54,7 @@
               "options": {
                 "nameEntity": "=$nameEntity"
               },
-              "resultProperty": "$UserToSearchFor"
+              "resultProperty": "$UserFound"
             }
           ]
         },
@@ -54,7 +63,7 @@
           "$designer": {
             "id": "0vENgn"
           },
-          "condition": "=exists($UserToSearchFor)",
+          "condition": "=exists($UserFound)",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -88,7 +97,7 @@
           },
           "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=$UserToSearchFor.Id",
+          "userId": "=$UserFound.Id",
           "maxCount": 15
         },
         {
@@ -100,7 +109,7 @@
           "dialog": "UserListDialog",
           "options": {
             "UserList": "=$Result",
-            "User": "=$UserToSearchFor",
+            "User": "=$UserFound",
             "Scenario": "DirectReports",
             "AutoChooseFirst": "false"
           },

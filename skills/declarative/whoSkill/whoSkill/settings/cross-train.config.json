@@ -1,11 +1,19 @@
 {
+  "ListDialog.en-us": {
+    "rootDialog": false,
+    "triggers": {
+      "Next": [],
+      "Previous": [],
+      "Skip": []
+    }
+  },
   "whoSkill.en-us": {
     "rootDialog": true,
     "triggers": {
       "": [
-        "AuthenticationDialog.en-us",
-        "UnknownIntentDialog.en-us"
+        "AuthenticationDialog.en-us"
       ],
+      "Logout": [],
       "GetCollaborators": [
         "WhoWorksWithMeDialog.en-us"
       ],
@@ -36,14 +44,6 @@
       "GetProfile": [
         "WhoIsPersonDialog.en-us"
       ]
-    }
-  },
-  "ListDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "Next": [],
-      "Previous": [],
-      "Skip": []
     }
   }
 }

@@ -1,5 +1,6 @@
 [Common](common.en-us.lg)
 [Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
 
 # UserListPrompt(Scenario, User, Items)
 - IF: ${count(Items) > 1}
@@ -10,20 +11,20 @@
 #SingleResultFound(Scenario, User)
 - SWITCH: ${Scenario}
 - CASE: ${"Collaborator"}
-    - I found 1 collegue that collaborates with **${User.displayName}**.
+    - I found 1 colleague that collaborates with **${User.displayName}**.
 - CASE: ${"Peers"}
-    - I found 1 collegues that share the same manager as **${User.displayName}**.
+    - I found 1 colleague that share the same manager as **${User.displayName}**.
 - CASE: ${"DirectReports"}
-    - I found 1 collegue that reports to **${User.displayName}**.
+    - I found 1 colleague that reports to **${User.displayName}**.
 - DEFAULT:
     - I found one result:
 
 #MultipleResultFound(Scenario, TotalCount, User)
 - SWITCH: ${Scenario}
 - CASE: ${"Collaborator"}
-    - I found ${TotalCount} collegues that collaborates with **${User.displayName}**.
+    - I found ${TotalCount} colleagues that collaborates with **${User.displayName}**.
 - CASE: ${"Peers"}
-    - There are ${TotalCount} collegues that share the same manager as **${User.displayName}**.
+    - There are ${TotalCount} colleagues that share the same manager as **${User.displayName}**.
 - CASE: ${"DirectReports"}
     - There are ${TotalCount} people that are part of **${User.displayName}**'s team.
 - CASE: ${"PersonSearch"}
@@ -49,7 +50,7 @@
 - CASE: ${"DirectReports"}
     - Team
 - DEFAULT:
-    - Collegues
+    - Colleagues
 
 # UserListItem(item)
 - ```
@@ -60,7 +61,13 @@
     "selectAction": {
         "type": "Action.Submit",
         "title": "selectOption",
-        "data": "${item.index}"
+        "data": 
+        {
+            "value" : "${item.index}",
+            "msteams": {
+                "type": "messageBack"
+            }
+        }
     },
     "items": [
         {
@@ -73,8 +80,9 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "data:image/jpeg;base64,${item.Photo}",
-                            "style": "Person"
+                            "url": "${ContactImageIconUrl(item.Photo)}",
+                            "style": "Person",
+                            "size": "${IconSizeSmall()}",
                         }
                     ]
                 },
@@ -90,9 +98,9 @@
                         },
                         {
                             "type": "TextBlock",
-                            "text": "${item.jobTitle}",
+                            "text": "${coalesce(item.jobTitle, item.department, "")}",
                             "wrap": true,
-                            "spacing": "Small"
+                            "spacing": "None"
                         }
                     ]
                 }

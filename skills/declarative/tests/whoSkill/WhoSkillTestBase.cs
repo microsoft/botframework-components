@@ -6,6 +6,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Components.Graph;
     using Microsoft.Bot.Dialogs.Tests.Common;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Graph;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
@@ -44,7 +46,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
         public void InitializeComponents()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             ComponentRegistration.Add(new GraphComponentRegistration());
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>
@@ -55,38 +59,32 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         /// <param name="phoneNumber"></param>
         /// <param name="officeLocation"></param>
         /// <param name="jobTitle"></param>
-        protected Profile AddUserProfile(string name, string email, string phoneNumber, string officeLocation, string jobTitle, bool addToSearchResult= true)
+        protected User AddUserProfile(string name, string email, string phoneNumber, string officeLocation, string jobTitle, bool addToSearchResult= true)
         {
-            Profile profile = new Profile
+            User user = new User()
             {
                 Id = Guid.NewGuid().ToString(),
-                Names = new ProfileNamesCollectionPage(),
-                Positions = new ProfilePositionsCollectionPage(),
-                Emails = new ProfileEmailsCollectionPage(),
-                Phones = new ProfilePhonesCollectionPage()
+                DisplayName = name,
+                JobTitle = jobTitle,
+                Mail = email,
+                BusinessPhones = new List<string> { phoneNumber }
             };
-
-            profile.Names.Add(new PersonName() { DisplayName = name });
-            profile.Positions.Add(new WorkPosition() { Detail = new PositionDetail() { JobTitle = jobTitle, Company = new CompanyDetail() { OfficeLocation = officeLocation } } });
-            profile.Emails.Add(new ItemEmail() { Address = email });
-            profile.Phones.Add(new ItemPhone() { Number = phoneNumber });
 
             if (addToSearchResult)
             {
-                this.TestUsers.Add(new User() { DisplayName = name, JobTitle = jobTitle, Id = profile.Id });
+                this.TestUsers.Add(user);
             }
 
-            return profile;
+            return user;
         }
 
-        protected void SetupUserRequest(Profile profile, Profile manager = null, IEnumerable<Profile> directReports = null, IEnumerable<Profile> collaborators = null)
+        protected void SetupUserRequest(User profile, User manager = null, IEnumerable<User> directReports = null, IEnumerable<User> collaborators = null)
         {
-            var profileRequest = new Mock<IProfileRequest>();
-            profileRequest.Setup(req => req.GetAsync()).ReturnsAsync(profile);
-            var profileRequestBuilder = new Mock<IProfileRequestBuilder>();
-            profileRequestBuilder.Setup(req => req.Request()).Returns(profileRequest.Object);
             var userRequestBuilder = new Mock<IUserRequestBuilder>();
-            userRequestBuilder.SetupGet(req => req.Profile).Returns(profileRequestBuilder.Object);
+
+            var userRequest = new Mock<IUserRequest>();
+            userRequest.Setup(req => req.GetAsync()).ReturnsAsync(profile);
+            userRequestBuilder.Setup(req => req.Request()).Returns(userRequest.Object);
 
             // Attach manager
             var managerDirectoryRequest = new Mock<IDirectoryObjectWithReferenceRequest>();

@@ -5,7 +5,7 @@
     "title": "Manager",
     "data": {
         "intent": "GetManager",
-        "user": ${user},
+        "user": "${user}",
         "msteams": {
             "type": "messageBack"
         }
@@ -20,7 +20,7 @@
     "title": "Collaborators",
     "data": {
         "intent": "GetCollaborators",
-        "user": ${user},
+        "user": "${user}",
         "msteams": {
             "type": "messageBack"
         }
@@ -35,7 +35,22 @@
     "title": "Peers",
     "data": {
         "intent": "GetPeers",
-        "user": ${user},
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# GetTeamAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Team",
+    "data": {
+        "intent": "GetDirectReports",
+        "user": "${user}",
         "msteams": {
             "type": "messageBack"
         }

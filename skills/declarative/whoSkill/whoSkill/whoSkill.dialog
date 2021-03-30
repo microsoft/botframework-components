@@ -24,21 +24,88 @@
           "name": "whoSkill.Greeting"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "OgF5rd"
+            "id": "2Szxt3"
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Uaq27I"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetProfile",
+              "$designer": {
+                "id": "vTjoP3"
+              },
+              "token": "=user.token.token",
+              "resultProperty": "$signedInUser"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DP3pJu"
+              },
+              "activity": "${SendActivity_DP3pJu()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "K5P9dm"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "W4IWlO"
+              },
+              "activity": "${SendActivity_W4IWlO()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "52Yo92",
+        "name": "OnIntent (Logout)"
+      },
+      "intent": "Logout",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SjeplQ"
+          },
+          "name": "whoSkill.Logout"
+        },
+        {
+          "$kind": "Microsoft.SignOutUser",
+          "$designer": {
+            "id": "7Ibk0G"
+          },
+          "userId": "=user.id",
+          "connectionName": "=settings.oauthConnectionName"
         },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "TXYwSy"
+            "id": "DWdyHg"
           },
-          "activity": "${SendActivity_TXYwSy()}"
+          "activity": "${SendActivity_DWdyHg()}"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -446,68 +513,84 @@
           "name": "whoSkill.OnError"
         },
         {
-          "$kind": "Microsoft.TraceActivity",
+          "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "NfAZge"
+            "id": "FSXy40"
           },
-          "name": "Error",
-          "label": "Error",
-          "valueType": "string",
-          "value": "=turn.dialogEvent"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "QxqZcj"
-          },
-          "activity": "${SendActivity_QxqZcj()}"
+          "condition": "=turn.activity.channelId",
+          "cases": [
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Pszd6H"
+                  },
+                  "name": "Error",
+                  "label": "Error",
+                  "valueType": "string",
+                  "value": "=turn.dialogEvent.value"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ipHTXS"
+                  },
+                  "activity": "${SendActivity_ipHTXS()}"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AV87xs"
+              },
+              "activity": "${SendActivity_AV87xs()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "y3gv3g"
+              },
+              "activity": "${SendActivity_y3gv3g()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Tcje3O"
+              },
+              "activity": "${SendActivity_Tcje3O()}"
+            },
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "26G8Zg"
+              },
+              "properties": {
+                "TurnEvent": "=turn.dialogEvent.value"
+              },
+              "eventName": "BotError"
+            }
+          ]
         }
-      ]
+      ],
+      "runOnce": true
     },
     {
       "$kind": "Microsoft.OnUnknownIntent",
       "$designer": {
-        "id": "ONiLWO"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "ydQ6tJ"
-          },
-          "activityProcessed": true,
-          "dialog": "UnknownIntentDialog"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnUnknownIntent",
-      "$designer": {
-        "id": "Czo7cS"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "aDUbIy"
-          },
-          "activityProcessed": true,
-          "dialog": "UnknownIntentDialog"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnError",
-      "$designer": {
-        "id": "0XJm0e"
+        "id": "YhLqAm"
       },
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "QxqZcj"
+            "id": "HTkwlL"
           },
-          "activity": "${SendActivity_QxqZcj()}"
+          "activity": "${SendActivity_HTkwlL()}"
         }
       ]
     }

@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="0.39.0-preview" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.Runtime" Version="4.12.1-preview" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.0-rc0" />
 
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
@@ -33,6 +33,7 @@
     <Content Include="**/*.schema" />
     <Content Include="**/*.uischema" />
     <Content Include="**/*.qna" />
+    <Content Include="README.md" />
   </ItemGroup>
 
   <PropertyGroup>

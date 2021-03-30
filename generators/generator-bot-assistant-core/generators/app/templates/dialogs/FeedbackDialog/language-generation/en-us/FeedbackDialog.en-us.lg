@@ -183,13 +183,16 @@
 ]
 
 # SendActivity_639pkl_text()
-- Got it, thanks for the feedback.
-- Understood, thanks for the feedback.
+- Thank you for this feedback.
+- Thanks for your feedback.
+- Thank you, I've captured your feedback.
+
 # SendActivity_YBCkGQ()
 [Activity
     Text = ${SendActivity_YBCkGQ_text()}
 ]
 
 # SendActivity_YBCkGQ_text()
-- Got it, thanks for the feedback.
-- Understood, thanks for providing feedback.
+- Thank you for this feedback.
+- Thanks for your feedback.
+- Thank you, I've captured your feedback.
