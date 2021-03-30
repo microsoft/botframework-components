@@ -1,12 +1,12 @@
 steps:
 - powershell: |
-    $deploymentRing = "$(DeploymentRing)";
+    $deploymentRing = "$env:DEPLOYMENTRING";
     "Deployment Ring = $deploymentRing";
 
-    $deploymentRingOverride = "$(DeploymentRingOverride)";
+    $deploymentRingOverride = "$env:DEPLOYMENTRINGOVERRIDE";
     "Deployment Ring Override = $deploymentRingOverride";
 
-    $componentType = "$(ComponentType)";
+    $componentType = "$env:COMPONENTTYPE";
     "Component Type = $componentType";
 
     if ($deploymentRingOverride) {
@@ -14,7 +14,7 @@ steps:
     }
 
     if ($deploymentRing.ToLowerInvariant() -eq "rc") {
-      $releaseCandidateNumber = "$(ReleaseCandidateNumber)";
+      $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
       "Release Candidate Number = $releaseCandidateNumber";
 
       if (-not $releaseCandidateNumber) {
