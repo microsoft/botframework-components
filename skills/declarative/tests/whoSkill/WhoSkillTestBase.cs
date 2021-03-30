@@ -46,10 +46,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
         public void InitializeComponents()
         {
-            //var services = new ServiceCollection();
-            //IConfiguration configuration = new ConfigurationBuilder().Build();
-
-            //new GraphBotComponent().ConfigureServices(services, configuration);
+#pragma warning disable CS0618 // Type or member is obsolete
+            ComponentRegistration.Add(new GraphComponentRegistration());
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>

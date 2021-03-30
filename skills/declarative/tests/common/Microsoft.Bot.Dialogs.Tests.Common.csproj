@@ -16,4 +16,8 @@
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
+	</ItemGroup>
+
 </Project>

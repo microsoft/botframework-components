@@ -5,7 +5,7 @@ using System;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Obsolete;
 using Microsoft.Bot.Components.Graph;
 
-namespace Microsoft.Bot.Dialogs.Tests.CalendarSkill
+namespace Microsoft.Bot.Dialogs.Tests.Common
 {
     /// <summary>
     /// Define component assets for Graph.
