@@ -16,7 +16,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "Hi there 🖐, thank you for helping the PBX team out with this dogfood for who skill!\r\n    \r\nYou can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot)."
+      "text": "\r\nHi there 🖐, thank you for helping the PBX team out with this dogfood for who skill!\r\n    \r\nYou can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).\r\n"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
