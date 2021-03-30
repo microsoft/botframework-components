@@ -59,10 +59,9 @@
                     {
                       "property": "$listOptions.templates",
                       "value": {
-                        "icon": "ChatIconUrl",
+                        "icon": "ContactIconUrl",
                         "title": "UserListTitle",
                         "item": "UserListItem",
-                        "actions": "UserListActions",
                         "initialPrompt": "UserListPrompt",
                         "showMorePrompt": "UserListShowMorePrompt",
                         "skipResponse": "UserListSkipResponse",

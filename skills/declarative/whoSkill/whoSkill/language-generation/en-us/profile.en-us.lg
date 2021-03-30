@@ -2,7 +2,7 @@
 [Actions](actions.en-us.lg)
 [Icons](icons.en-us.lg)
 
-# ProfileCardTemplate(body, contacts, actions)
+# ProfileCardTemplate(body, actions)
 - ```
 {
     "type": "AdaptiveCard",
@@ -10,14 +10,13 @@
     "version": "1.2",
     "body": [
         ${body},
-        ${contacts},
         ${actions}
     ]
 }
 ```
 
 # ProfileCard(profile)
-- ${ProfileCardTemplate(ProfileBody(profile, ContactImageIconUrl(dialog.ResultPhoto)), ProfileContacts(profile), ProfileActions(profile))}
+- ${ProfileCardTemplate(ProfileBody(profile, ContactImageIconUrl(dialog.ResultPhoto)), ProfileActions(profile))}
 
 # ProfileBody(profile, photo)
 - ```
@@ -50,19 +49,26 @@
                             "type": "TextBlock",
                             "text": "${profile.displayName}",
                             "wrap": true,
-                            "size": "Medium",
+                            "size": "Large",
                             "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${profile.jobTitle}",
+                            "wrap": true,
+                            "size": "Medium",
+                            "spacing": "None"
                         },
                         {
                             "type": "Container",
                             "width": "stretch",
                             "spacing": "Small",
                             "items": [
-                                ${ProfileProperty(profile.jobTitle)},
-                                ${ProfileProperty(profile.department)},
                                 ${ProfileProperty(profile.mail)},
                                 ${ProfileProperty(ShowPhoneNumber(profile.businessPhones, "No phone number found."))},
-                                ${ProfileProperty(profile.officeLocation)}
+                                ${ProfileProperty(profile.department)},
+                                ${ProfileProperty(profile.officeLocation)},
+                                ${ProfileContacts(profile)}
                             ]
                         }
                     ]
@@ -96,6 +102,7 @@
 - ```
 {
     "type": "Container",
+    "spacing" : "Padding",
     "items": [
         {
             "type": "ColumnSet",
@@ -107,6 +114,8 @@
                         {
                             "type": "Image",
                             "url": "${ChatIconUrl()}",
+                            "width" : "24px",
+                            "height" : "24px",
                             "selectAction": {
                                 "type": "Action.OpenUrl",
                                 "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.mail}"
@@ -122,6 +131,8 @@
                         {
                             "type": "Image",
                             "url": "${MailIconUrl()}",
+                            "width" : "29px",
+                            "height" : "18px",
                             "selectAction": {
                                 "type": "Action.OpenUrl",
                                 "url": "mailto:${profile.mail}"
@@ -137,6 +148,8 @@
                         {
                             "type": "Image",
                             "url": "${PhoneIconUrl()}",
+                            "width" : "22px",
+                            "height" : "22px",
                             "selectAction": {
                                 "type": "Action.OpenUrl",
                                 "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.mail}"
