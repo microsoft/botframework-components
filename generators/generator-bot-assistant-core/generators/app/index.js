@@ -12,7 +12,7 @@ const packageReferences = {
   [platforms.dotnet]: [
     {
       name: 'Microsoft.Bot.Components.HelpAndCancel',
-      version: '1.0.0-preview.20210324.6dfb4a1',
+      version: '1.0.0-preview.20210330.97c8719',
     },
   ],
   [platforms.js]: [
