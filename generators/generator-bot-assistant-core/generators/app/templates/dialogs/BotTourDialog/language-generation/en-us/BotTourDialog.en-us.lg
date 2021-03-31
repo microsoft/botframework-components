@@ -5,21 +5,23 @@
     Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
 ]
 
-# BotTourTitle
+# BotTourTitle()
 - You can ask me...
 
-# BotTourContentTextShort
-- Praesent vel molestie tortor.
+# SkillTitle()
+- Your skill
 
-# BotTourContentTextLong
-- Vivamus commodo sapien sed facilisis posuere. Nunc nec viverra mi. Proin ac felis in purus facilisis egestas.
+# BotTourContentTextOne()
+- A first time user experience is helpful in onboarding users.
 
-# BotTourFocusCardTitle
-- Header goes here
+# BotTourContentTextTwo()
+- You can provide a short description for core capabilities.
 
-# BotTourFocusCardText
-- Aenean at consectetur orci. [In hendrerit tortor magna](), et pharetra urna fringilla eget. Sed finibus consequat urna, sit amet mattis dui condimentum a. Quisque vel augue quam. Fusce et feugiat orci, nec rutrum lectus. Ut id ligula sed elit posuere laoreet ac in arcu. Etiam mauris lorem, porta et ante eu, bibendum aliquet lorem.
+# BotTourContentTextThree()
+- You can also provide samples to trigger connected skills.
 
+# BotTourFocusCardText()
+- You can provide a more detailed description of your skill, as well as sample utterances users can say to get started.
 
 # BotTourHeader
 - ```
@@ -62,7 +64,7 @@
 }
 ```
 
-# BotTourBody(bodyText)
+# BotTourOption(subtitle)
 -```
 {
    "type":"Container",
@@ -72,6 +74,7 @@
          "columns":[
             {
                "type":"Column",
+                "verticalContentAlignment": "center",
                "items":[
                   {
                      "type":"Image",
@@ -82,17 +85,24 @@
                "width":10
             },
             {
-               "type":"Column",
-               "width":90,
-               "items":[
-                  {
-                     "type":"TextBlock",
-                     "text":"${bodyText}",
-                     "wrap":true,
-                     "size":"medium",
-                     "maxLines":2,
-                     "color":"accent"
-                  }
+                "type":"Column",
+                "width":90,
+                "verticalContentAlignment": "center",
+                "items":[
+                    {
+                        "type":"TextBlock",
+                        "text":"${SkillTitle()}",
+                        "size":"medium",
+                        "spacing": "Small"
+                    },
+                    {
+                        "type":"TextBlock",
+                        "text":"${subtitle}",
+                        "wrap":true,
+                        "size":"default",
+                        "spacing": "Small",
+                        "maxLines":2
+                    }
                ]
             }
          ]
@@ -109,7 +119,7 @@
 }
 ```
 
-# BotTourFocusCardHeader
+# BotTourFocusCardHeader()
 - ```
 {
     "type": "Container",
@@ -138,7 +148,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${BotTourFocusCardTitle()}",
+                            "text": "${SkillTitle()}",
                             "size": "large",
                             "weight": "Bolder"
                         }
@@ -150,7 +160,7 @@
 }
 ```
 
-# BotTourFocusCardBody 
+# BotTourFocusCardBody()
 -```
 {
     "type": "Container",
@@ -164,30 +174,30 @@
 }
 ```
 
-# BotTourFocusCardActions
+# BotTourFocusCardActions()
 - ```
 {
     "type": "ActionSet",
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "Action A",
+            "title": "\"What's next on my calendar?\"",
             "data": {
-                "intent": "Action A"
+                "intent": "SampleAction"
             }
         },
         {
             "type": "Action.Submit",
-            "title": "Action B",
+            "title": "\"Whats the forecast tomorrow?\"",
             "data": {
-                "intent": "Action B"
+                "intent": "SampleAction"
             }
         },
         {
             "type": "Action.Submit",
-            "title": "Action C",
+            "title": "\"Set a timer\"",
             "data": {
-                "intent": "Action C"
+                "intent": "SampleAction"
             }
         }
     ]
@@ -196,7 +206,7 @@
 
 # SendActivity_YRvoei_attachment_WGITEE()
 > Bot tour chevron card
-- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort()),BotTourBody(BotTourContentTextLong()),BotTourBody(BotTourContentTextShort())), 5), ''))}```
+- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
 
 # SendActivity_Z5JucQ()
 [Activity
