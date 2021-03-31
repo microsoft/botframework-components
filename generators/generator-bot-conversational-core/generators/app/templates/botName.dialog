@@ -47,24 +47,6 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "9wETGs",
-        "name": "Help"
-      },
-      "intent": "Help",
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "B0NP8m"
-          },
-          "activityProcessed": true,
-          "dialog": "HelpDialog"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
         "id": "e1i6lY",
         "name": "Cancel"
       },
@@ -82,17 +64,20 @@
       "condition": "=turn.recognized.score > 0.9"
     },
     {
-      "$kind": "Microsoft.OnUnknownIntent",
+      "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "FOxcnx"
+        "id": "9wETGs",
+        "name": "Help"
       },
+      "intent": "Help",
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "IQMEuO"
+            "id": "B0NP8m"
           },
-          "activity": "${SendActivity_IQMEuO()}"
+          "activityProcessed": true,
+          "dialog": "HelpDialog"
         }
       ]
     },
@@ -129,6 +114,21 @@
           "valueType": "Exception",
           "value": "=turn.dialogEvent.value",
           "label": "ErrorOccurred"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "FOxcnx"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IQMEuO"
+          },
+          "activity": "${SendActivity_IQMEuO()}"
         }
       ]
     }
