@@ -7,6 +7,7 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
     using Microsoft.Bot.Builder.AI.Luis;
     using Microsoft.Bot.Builder.AI.Luis.Testing;
     using Microsoft.Bot.Builder.AI.QnA;
+    using Microsoft.Bot.Builder.Dialogs;
     using Microsoft.Bot.Builder.Dialogs.Adaptive;
     using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
@@ -81,6 +82,7 @@ namespace Microsoft.Bot.Dialogs.Tests.Common
             ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
             ComponentRegistration.Add(new LuisComponentRegistration());
             ComponentRegistration.Add(new QnAMakerComponentRegistration());
+            ComponentRegistration.Add(new DialogsComponentRegistration());
 #pragma warning restore CS0618 // Type or member is obsolete
 
             IHaveComponentsToInitialize testClass = new T();
