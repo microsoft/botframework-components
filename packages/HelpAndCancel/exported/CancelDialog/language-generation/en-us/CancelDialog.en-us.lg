@@ -2,8 +2,13 @@
 
 # ConfirmInput_Prompt_DTdbkd()
 [Activity
-    Text = Are you sure you want to cancel?
+    Text = ${ConfirmInput_Prompt_DTdbkd_text()}
 ]
+
+# ConfirmInput_Prompt_DTdbkd_text()
+- Are you sure you want to cancel?
+- Do you want to cancel?
+- I will cancel this for you, but are you sure?
 
 # SendActivity_zbC0VV()
 [Activity
@@ -19,5 +24,10 @@
 
 # SendActivity_5kB8oO()
 [Activity
-    Text = OK, let's continue.
+    Text = ${SendActivity_5kB8oO_text()}
 ]
+
+# SendActivity_5kB8oO_text()
+- OK, let's continue.
+- Alright, let's move on.
+- Let's continue then.

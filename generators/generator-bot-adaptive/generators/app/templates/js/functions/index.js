@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const { start } = require('botbuilder-runtime-integration-restify');
+const { start } = require('botbuilder-dialogs-adaptive-runtime-integration-express');
 
 (async function () {
   try {

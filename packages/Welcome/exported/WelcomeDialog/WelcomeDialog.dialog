@@ -3,7 +3,7 @@
   "$designer": {
     "$designer": {
       "name": "WelcomeDialog",
-      "description": "",
+      "description": "Greets new and returning users",
       "id": "8pOkoq"
     },
     "name": "WelcomeDialog"
