@@ -14,13 +14,13 @@
 # BotTourContentTextOne()
 - A first time user experience is helpful in onboarding users.
 
-# BotTourContentTextTwo
+# BotTourContentTextTwo()
 - You can provide a short description for core capabilities.
 
-# BotTourContentTextThree
+# BotTourContentTextThree()
 - You can also provide samples to trigger connected skills.
 
-# BotTourFocusCardText
+# BotTourFocusCardText()
 - You can provide a more detailed description of your skill, as well as sample utterances users can say to get started.
 
 # BotTourHeader
@@ -103,52 +103,6 @@
                         "spacing": "Small",
                         "maxLines":2
                     }
-               ]
-            }
-         ]
-      }
-   ],
-   "selectAction":{
-      "type":"Action.Submit",
-      "title":"FocusCard",
-      "data":{
-         "intent":"FocusCard"
-      }
-   },
-   "separator": true
-}
-```
-
-# BotTourBody(bodyText)
--```
-{
-   "type":"Container",
-   "items":[
-      {
-         "type":"ColumnSet",
-         "columns":[
-            {
-               "type":"Column",
-               "items":[
-                  {
-                     "type":"Image",
-                     "url":"${PlaceholderIconUrl()}",
-                     "horizontalAlignment":"center"
-                  }
-               ],
-               "width":10
-            },
-            {
-               "type":"Column",
-               "width":90,
-               "items":[
-                  {
-                     "type":"TextBlock",
-                     "text":"${bodyText}",
-                     "wrap":true,
-                     "size":"medium",
-                     "maxLines":2
-                  }
                ]
             }
          ]
