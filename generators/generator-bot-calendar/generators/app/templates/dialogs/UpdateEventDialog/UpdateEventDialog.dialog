@@ -32,19 +32,6 @@
           "value": "=3"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "1y2dDi"
-          },
-          "activityProcessed": true,
-          "dialog": "GetEventsDialog",
-          "options": {
-            "options": "=$options",
-            "doSelection": "=true"
-          },
-          "resultProperty": "$event"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "kSyN5E"

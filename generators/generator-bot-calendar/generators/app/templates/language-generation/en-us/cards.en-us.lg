@@ -1,4 +1,5 @@
 [Icons](icons.en-us.lg)
+[Actions](actions.en-us.lg)
 
 # IconSize
 - 18px
@@ -268,13 +269,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         "height": "${IconSize()}",
         "url": "${LeftArrowActiveIconUrl()}",
         "horizontalAlignment": "Right",
-        "selectAction": {
-            "type": "Action.Submit",
-            "title": "previousPage",
-            "data": {
-                "intent": "Previous"
-            }        
-        }
+        "selectAction": ${PreviousPageAction()}
     }
     ```
 
@@ -295,13 +290,7 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         "height": "${IconSize()}",
         "url": "${RightArrowActiveIconUrl()}",
         "horizontalAlignment": "Left",
-        "selectAction": {
-            "type": "Action.Submit",
-            "title": "show more",
-            "data": {
-                "intent": "Next"
-            }
-        }
+        "selectAction": ${NextPageAction()}
     }
     ```
     

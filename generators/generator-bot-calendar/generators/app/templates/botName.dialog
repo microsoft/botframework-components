@@ -5,7 +5,7 @@
       "description": "",
       "id": "sJt0wA"
   },
-  "autoEndDialog": true,
+  "autoEndDialog": false,
   "defaultResultProperty": "$result",
   "triggers": [
     {
@@ -892,12 +892,26 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "vfNGvE"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "Ay1N1B"
           },
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1805,6 +1819,7 @@
       "runOnce": true
     }
   ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "<%= botName %>.lg",
   "recognizer": "<%= botName %>.lu.qna",
   "id": "<%= botName %>"
