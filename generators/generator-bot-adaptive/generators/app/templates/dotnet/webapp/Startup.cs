@@ -20,7 +20,7 @@ namespace <%= botName %>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
-            services.AddBotRuntime(this.Configuration);
+            services.AddBotRuntime(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -37,7 +37,7 @@ namespace <%= botName %>.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"ReplyToActivityAsync : {ex}");
+                _logger.LogError(ex, $"ReplyToActivityAsync: {ex}");
                 throw;
             }
         }
@@ -55,7 +55,7 @@ namespace <%= botName %>.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"SendToConversationAsync : {ex}");
+                _logger.LogError(ex, $"SendToConversationAsync: {ex}");
                 throw;
             }
         }
