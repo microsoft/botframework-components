@@ -24,16 +24,16 @@ module.exports = class extends BaseGenerator {
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-preview.20210310.8ee9434',
+            version: '1.0.0-preview.20210331.a54d9f1',
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210310.8ee9434',
+            version: '1.0.0-preview.20210331.a54d9f1',
           },
           {
             isPlugin: true,
             name: 'Microsoft.Bot.Builder.AI.Orchestrator',
-            version: '4.13.0-daily.preview.20210325.227467.a85d1ad',
+            version: '4.13.0-rc1.preview',
           },
         ],
         modifyApplicationSettings: (appSettings) => {

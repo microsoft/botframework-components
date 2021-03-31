@@ -17,8 +17,8 @@ namespace <%= botName %>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, builder) =>
                 {
-                    string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
-                    string settingsDirectory = <%- settingsDirectory %>;
+                    var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+                    var settingsDirectory = <%- settingsDirectory %>;
 
                     builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
 
