@@ -107,10 +107,19 @@ module.exports = class extends BaseGenerator {
         ? `"${this.applicationSettingsDirectory}"`
         : defaultSettingsDirectory;
 
+    let settingsIncludePath = this.applicationSettingsDirectory;
+    if (settingsIncludePath && !settingsIncludePath.endsWith('/')) {
+      settingsIncludePath += '/';
+    }
+
     this.fs.copyTpl(
       this.templatePath(platform, integration),
       this.destinationPath(botName),
-      Object.assign({}, templateContext, { botName, settingsDirectory })
+      Object.assign({}, templateContext, {
+        botName,
+        settingsDirectory,
+        settingsIncludePath,
+      })
     );
 
     for (const path of includeAssets) {
