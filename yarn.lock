@@ -75,12 +75,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/bot-components-onboarding@workspace:packages/Onboarding":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/bot-components-onboarding@workspace:packages/Onboarding"
-  languageName: unknown
-  linkType: soft
-
 "@microsoft/bot-components-welcome@workspace:packages/Welcome":
   version: 0.0.0-use.local
   resolution: "@microsoft/bot-components-welcome@workspace:packages/Welcome"

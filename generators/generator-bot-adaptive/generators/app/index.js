@@ -227,12 +227,14 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
+    const sdkVersion = '~4.13.0-preview.rc1';
+
     const dependencies = {
       [integrations.functions]: {
-        'botbuilder-runtime-integration-azure-functions': 'next',
+        'botbuilder-dialogs-adaptive-runtime-integration-azure-functions': sdkVersion,
       },
       [integrations.webapp]: {
-        'botbuilder-runtime-integration-restify': 'next',
+        'botbuilder-dialogs-adaptive-runtime-integration-express': sdkVersion,
       },
     }[integration];
 
@@ -240,7 +242,7 @@ module.exports = class extends BaseGenerator {
       {
         // Note: in dev we need a server for testing bots via Composer
         [integrations.functions]: {
-          'botbuilder-runtime-integration-restify': 'next',
+          'botbuilder-dialogs-adaptive-runtime-integration-express': sdkVersion,
         },
       }[integration] || {};
 

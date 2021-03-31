@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/generator-bot-empty",
   "version": "1.0.0",
-  "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Empty template.",
+  "description": "Yeoman generator for creating an empty bot built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
     "bot",
@@ -14,7 +14,7 @@
     "bf-js-webapp",
     "bf-js-functions"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Bot Framework",
   "main": "./generators/app/index.js",
   "repository": {

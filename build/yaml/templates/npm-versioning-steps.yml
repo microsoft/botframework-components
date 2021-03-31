@@ -1,14 +1,33 @@
 steps:
 - powershell: |
-    $deploymentRing = "$(DeploymentRing)";
+    $deploymentRing = "$env:DEPLOYMENTRING";
     "Deployment Ring = $deploymentRing";
 
-    $componentType = "$(ComponentType)";
+    $deploymentRingOverride = "$env:DEPLOYMENTRINGOVERRIDE";
+    "Deployment Ring Override = $deploymentRingOverride";
+
+    $componentType = "$env:COMPONENTTYPE";
     "Component Type = $componentType";
 
-    $dateStamp = (Get-Date -format "yyyyMMdd");
-    $commitHash = "$(Build.SourceVersion)".SubString(0,7);
-    $vs = $dateStamp + "." + $commitHash;
+    if ($deploymentRingOverride) {
+      $deploymentRing = $deploymentRingOverride;
+    }
+
+    if ($deploymentRing.ToLowerInvariant() -eq "rc") {
+      $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
+      "Release Candidate Number = $releaseCandidateNumber";
+
+      if (-not $releaseCandidateNumber) {
+        Write-Host "Release Candidate Number not defined"
+        exit 1
+      }
+
+      $vs = $releaseCandidateNumber.ToLowerInvariant();
+    } else {
+      $dateStamp = (Get-Date -format "yyyyMMdd");
+      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+      $vs = "-" + $dateStamp + "." + $commitHash;
+    }
 
     # If declarative assets or generator, get and set version from package.json
     if ($componentType.ToLowerInvariant() -eq "declarativeAsset" -Or $componentType.ToLowerInvariant() -eq "generator" ) {
@@ -22,7 +41,7 @@ steps:
         # Configure version suffix based on deployment ring
         if ($deploymentRing.ToLowerInvariant() -ne "stable") {
           # npm uses a slightly different version suffix pattern, so calculate that separately.
-          $npmVersionSuffix = $deploymentRing + "-" + $vs;
+          $npmVersionSuffix = $deploymentRing + $vs;
           "Version Suffix = $npmVersionSuffix";
           $packageVersion += "-" + $npmVersionSuffix;
         }

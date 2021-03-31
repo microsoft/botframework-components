@@ -1,6 +1,3 @@
----
-title:  'Bot Framework Components'
----
 # Bot Framework Components
 
 This repository contains the source code for *components* published by Microsoft for bots built on the Azure Bot Framework technology stack. These components are part of the component model for building bots, which enables developers to build bots with re-usable building blocks (components). This model consists of a configurable [adaptive runtime](#adaptive-runtime), that can be extended by importing [packages](#packages) of functionality or connecting to other bots as [skills](#skills). Getting started [templates](#templates) built on this model will unify the creation experience, and eliminate the "dead-end" that can happen for some existing getting started experiences that lock you in to building a particular type of bot.
@@ -27,12 +24,15 @@ Our [yeoman](https://yeoman.io) generators for scaffolding bot projects.
 
 | Name         | Description |
 |:------------:|-------------|
-|[Empty bot](/generators/generator-microsoft-bot-empty) ) | The base empty bot |
+|[Empty bot](/generators/generator-microsoft-bot-empty) | The base empty bot |
 |[Conversational Core](/generators/generator-microsoft-bot-conversational-core) | Basic conversational bot with NLP. |
-|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards |
-|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars |
-|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project |
-|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator |
+|[Command list](/generators/generator-microsoft-bot-command-list) | Basic bot using regex and cards. |
+|[Calendar](/generators/generator-microsoft-bot-calendar) | A bot for working with Calendars. |
+|[People](/generators/generator-microsoft-bot-people) | A bot for searching for people on the MS Graph. |
+|[Adaptive](/generators/generator-microsoft-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
+|[Calendar Assistant](/generators/generator-microsoft-bot-calendar-assistant) | **Experimental** A bot that contains Conversational Core and Calendar, with Orchestrator. |
+|[Assistant Core](/generators/generator-bot-assistant-core) | The base assistant-style bot (no skills). |
+|[Enterprise Assistant](/generators/generator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills. |
 
 ### Packages
 
@@ -53,7 +53,7 @@ You can find the list of Virtual Assistant skills [here](/skills/csharp/readme.m
 
 ## Need Help?
 
-Please use this GitHub Repositories issue tracking capability to raise [issues](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Feature&template=feature_request.md&title=).
+Please use this GitHub repository issue to raise [issues](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Bug&template=bug_report.md&title=) or [feature requests](https://github.com/Microsoft/botframework-components/issues/new?assignees=&labels=Type%3A+Feature&template=feature_request.md&title=).
 
 ## Contributing
 
@@ -64,4 +64,25 @@ We welcome contributions to this repository! Please see our [wiki](https://githu
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at [secure@microsoft.com](mailto:secure@microsoft.com). You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the [MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/default).
 
 ## License
-Copyright (c) Microsoft Corporation. All rights reserved.
+
+MIT License
+
+Copyright (c) Microsoft Corporation.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

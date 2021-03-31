@@ -11,5 +11,7 @@ extends:
 variables:
   ComponentType: generator
   DeploymentRing: preview
+  # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
+  # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: generators/generator-bot-enterprise-assistant

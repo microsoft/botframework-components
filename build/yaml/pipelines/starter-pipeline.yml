@@ -14,6 +14,8 @@ variables:
   BuildConfiguration: 'Release'
   BuildPlatform: anycpu
   ComponentType: YOUR_COMPONENT_TYPE # codeExtension, declarativeAsset, or generator
-  DeploymentRing: YOUR_DEPLOYMENT_RING # alpha, preview, or stable
+  DeploymentRing: YOUR_DEPLOYMENT_RING # alpha, preview, rc, or stable
+  # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
+  # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: YOUR_WORKING_DIRECTORY

@@ -1,9 +1,57 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Enterprise Assistant template.
 
-## Installation
+> Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework.
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-enterprise-assistant using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+The Enterprise Assistant template creates a complex enterprise assistant, comprised of a root bot based on the Assistant Core template, and pre-configured with Calendar and People as skills.
+
+Includes support for:
+
+- Greeting new and returning users
+- Asking for help
+- Cancelling a dialog
+- Submitting feedback about the bot
+- Error handling in conversations
+- Repeat the previous question
+- Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
+- Disambiguation of NLP results
+
+## What this template is for
+
+Use this template if you want to...
+
+- Create an enterprise assistant
+- See examples of more complex conversational flows, and more advanced language understanding and generation
+- See an example of a root bot and skills handling complex user interactions
+
+## Packages
+
+Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
+
+This bot starts with the following packages:
+
+- [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
+
+## Languages
+
+- English (en-us)
+
+## Azure Resource Deployment
+
+To run this bot you'll need the resources listed below. Create a publishing profile in Composer to provision and publish to your Azure resources for your bot.
+
+- [LUIS][luis], or another recognizer of your choice
+- [QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
+- A storage solution for persistent state storage like Azure CosmosDB
+
+## Using this template
+
+### From Composer
+
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+
+### From the command-line
+
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
 
 ```bash
 npm install -g yo
@@ -13,29 +61,37 @@ npm install -g @microsoft/generator-bot-enterprise-assistant
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-assistant-core '{BOT_NAME}'
+yo @microsoft/bot-enterprise-assistant '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
-## Packages
-Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
-
-- N/A
-
-## Languages
-English.
-
-## Azure Resource Deployment
-This template does not rely on any additional Azure Resources.
-
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
-
 ## License
-Copyright (c) Microsoft Corporation. All rights reserved.
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg
+MIT License
+
+Copyright (c) Microsoft Corporation.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-enterprise-assistant.svg
 [npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-assistant
+[composer]: https://github.com/microsoft/botframework-composer
+[yeoman]: https://yeoman.io
+[npm]: https://npmjs.com
+[nodejs]: https://nodejs.org/
+[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
