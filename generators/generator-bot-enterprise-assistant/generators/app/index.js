@@ -26,18 +26,21 @@ module.exports = class extends BaseGenerator {
         },
         packageReferences: [
           {
-            name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-preview.20210324.6dfb4a1',
+            name: 'Microsoft.Bot.Components.HelpAndCancel',
+            version: '1.0.0-preview.20210331.a54d9f1',
           },
           {
             isPlugin: true,
-            name: 'Microsoft.Bot.Components.Orchestrator',
-            version: '1.0.0-preview.20210310.a7ff2d0',
+            name: 'Microsoft.Bot.Builder.AI.Orchestrator',
+            version: '4.13.0-rc1.preview',
           },
         ],
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             skillHostEndpoint: 'http://localhost:3980/api/skills',
+            skillConfiguration: {
+              isSkill: false,
+            },
           });
 
           appSettings.runtimeSettings.features.setSpeak = true;
