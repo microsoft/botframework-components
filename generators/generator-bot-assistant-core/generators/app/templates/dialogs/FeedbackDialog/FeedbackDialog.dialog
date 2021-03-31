@@ -3,7 +3,7 @@
   "$designer": {
     "id": "k1pCvc",
     "name": "FeedbackDialog",
-    "description": "Sample dialog capturing user feedback with like/dislike input"
+    "description": "Captures user feedback with like/dislike input"
   },
   "autoEndDialog": false,
   "defaultResultProperty": "dialog.result",
@@ -12,7 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "description": "",
+        "description": "Presents a like/dislike card to the user",
         "id": "bs11zc"
       },
       "actions": [

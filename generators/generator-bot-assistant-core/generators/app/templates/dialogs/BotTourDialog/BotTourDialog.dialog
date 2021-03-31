@@ -3,7 +3,7 @@
   "$designer": {
     "id": "xyjdJi",
     "name": "BotTourDialog",
-    "description": ""
+    "description": "Onboards users with a sample first time user experience"
   },
   "autoEndDialog": false,
   "defaultResultProperty": "dialog.result",
@@ -12,7 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "description": "",
+        "description": "Presents an overview card to the user",
         "id": "1sVGwc"
       },
       "actions": [
