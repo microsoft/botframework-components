@@ -16,7 +16,7 @@
 ]
 
 # SendActivity_yDMllq_attachment_nUDor4()
-- ${json(CardTemplate(CalendarTourCardHeader(), '', CalendarTourCardActions()))}
+- ${json(CardTemplate(CalendarTourCardHeader(), BotTourDetailsCardBody(CalendarTourCardText()), CalendarTourCardActions()))}
 
 # SendActivity_l6vgAo()
 [Activity
@@ -24,13 +24,19 @@
 ]
 
 # SendActivity_l6vgAo_attachment_a0ogKC()
-- ${json(CardTemplate(PeopleTourCardHeader(), '', PeopleTourCardActions()))}
+- ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
 
-# CalendarTourCardTitle
-- Calendar (tasks involving your calendar)
+# CalendarTourTitle
+- Calendar
+
+# CalendarTourSubtitle
+- Tasks involving your calendar
 
 # CalendarTourCardHeader()
-- ${BotTourDetailsCardHeader(CalendarIconUrl(), CalendarTourCardTitle())}
+- ${BotTourDetailsCardHeader(CalendarIconUrl(), CalendarTourTitle())}
+
+# CalendarTourCardText()
+- This skill allows you to create, lookup, and manage events in your calendar. 
 
 # CalendarTourCardActions
 - ```
@@ -45,11 +51,17 @@
 }
 ```
 
-# PeopleTourCardTitle
-- Who is (discovering contact details of a colleague)
+# PeopleTourTitle
+- People
+
+# PeopleTourSubtitle
+- Discover details about your colleagues
 
 # PeopleTourCardHeader()
-- ${BotTourDetailsCardHeader(ContactIconUrl(), PeopleTourCardTitle())}
+- ${BotTourDetailsCardHeader(ContactIconUrl(), PeopleTourTitle())}
+
+# PeopleTourCardText()
+- This skill allows you to lookup details about the people in your organization. 
 
 # PeopleTourCardActions
 - ```
@@ -67,7 +79,7 @@
 - You can ask me about...
 
 # BotTourOptions
-- ${createArray(BotTourOption(CalendarIconUrl(), CalendarTourCardTitle(), "CalendarTour"), BotTourOption(ContactIconUrl(), PeopleTourCardTitle(), "PeopleTour"))}
+- ${createArray(BotTourOption(CalendarIconUrl(), CalendarTourTitle(), CalendarTourSubtitle(), "CalendarTour"), BotTourOption(ContactIconUrl(), PeopleTourTitle(), PeopleTourSubtitle(), "PeopleTour"))}
 
 # BotTourHeader
 - ```
@@ -110,7 +122,7 @@
 }
 ```
 
-# BotTourOption(icon, text, intent)
+# BotTourOption(icon, title, subtitle, intent)
 -```
 {
    "type":"Container",
@@ -137,9 +149,17 @@
                 "items":[
                     {
                         "type":"TextBlock",
-                        "text":"${text}",
-                        "wrap":true,
+                        "text":"${title}",
                         "size":"medium",
+                        "spacing": "Small",
+                        "color":"accent"
+                    },
+                    {
+                        "type":"TextBlock",
+                        "text":"${subtitle}",
+                        "wrap":true,
+                        "size":"default",
+                        "spacing": "Small",
                         "maxLines":2,
                         "color":"accent"
                     }
