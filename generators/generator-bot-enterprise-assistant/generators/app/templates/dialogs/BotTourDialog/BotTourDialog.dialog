@@ -1,0 +1,66 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "xyjdJi",
+    "name": "BotTourDialog",
+    "description": ""
+  },
+  "autoEndDialog": false,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "1sVGwc"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "YRvoei"
+          },
+          "activity": "${SendActivity_YRvoei()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "4AFzQZ",
+        "name": "CalendarTour"
+      },
+      "intent": "CalendarTour",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "yDMllq"
+          },
+          "activity": "${SendActivity_yDMllq()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yT12Kx",
+        "name": "PeopleTour"
+      },
+      "intent": "PeopleTour",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "l6vgAo"
+          },
+          "activity": "${SendActivity_l6vgAo()}"
+        }
+      ]
+    }
+  ],
+  "generator": "BotTourDialog.lg",
+  "recognizer": "BotTourDialog.lu.qna",
+  "id": "BotTourDialog"
+}

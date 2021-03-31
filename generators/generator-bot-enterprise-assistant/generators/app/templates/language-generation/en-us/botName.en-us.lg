@@ -1,4 +1,45 @@
 [import](common.lg)
 
-# SendActivity_Welcome
-- ${WelcomeUser()}
+# SendActivity_yXbfKT()
+[Activity
+    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
+]
+
+# SendActivity_XZRD8m()
+[Activity
+    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
+]
+
+# SendActivity_yXbfKT_attachment_9sGxgG()
+[HeroCard
+  text = ${WelcomeReturningUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# SendActivity_XZRD8m_attachment_SR7bxz()
+[HeroCard
+  text = ${WelcomeNewUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# BotTourEventAction()
+[CardAction
+    title = You can ask me
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ intent: "BotTour" }}
+]
+
+# SendActivity_SYFXJJ()
+[Activity
+    Text = ${SendActivity_SYFXJJ_text()}
+]
+
+# SendActivity_SYFXJJ_text()
+- Oops, looks like I'm stuck. Can you try to ask me in a different way?
+- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
+- Sorry, it looks like something went wrong. Can you please try again?
+
+# SendActivity_T9zEr4()
+[Activity
+    Text = ${turn.dialogEvent.value}
+]
