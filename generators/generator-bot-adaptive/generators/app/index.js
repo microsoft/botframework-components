@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+const path = require('path');
 const rt = require('runtypes');
 const xml2js = require('xml2js');
 const { BaseGenerator, integrations, platforms } = require('../../index');
@@ -107,10 +108,19 @@ module.exports = class extends BaseGenerator {
         ? `"${this.applicationSettingsDirectory}"`
         : defaultSettingsDirectory;
 
+    const settingsIncludePath = path.join(
+      this.applicationSettingsDirectory,
+      path.sep
+    );
+
     this.fs.copyTpl(
       this.templatePath(platform, integration),
       this.destinationPath(botName),
-      Object.assign({}, templateContext, { botName, settingsDirectory })
+      Object.assign({}, templateContext, {
+        botName,
+        settingsDirectory,
+        settingsIncludePath,
+      })
     );
 
     for (const path of includeAssets) {
