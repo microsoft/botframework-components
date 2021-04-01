@@ -23,8 +23,8 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
-    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-rc",
+    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-rc",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
