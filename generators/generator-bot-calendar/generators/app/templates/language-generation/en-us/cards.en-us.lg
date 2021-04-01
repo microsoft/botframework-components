@@ -1,19 +1,19 @@
 [Icons](icons.en-us.lg)
 [Actions](actions.en-us.lg)
 
-# IconSize
+# IconSize()
 - 18px
 
-# IconSizeSmall
+# IconSizeSmall()
 - 14px
 
-# TitleSize
+# TitleSize()
 - Medium
 
-# SubtitleSize
+# SubtitleSize()
 - Small
 
-# BodySize
+# BodySize()
 - Small
 
 # CardTemplate(header, body, actions)
