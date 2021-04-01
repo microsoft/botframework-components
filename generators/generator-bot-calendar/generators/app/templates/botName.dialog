@@ -1,9 +1,9 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-      "name": "<%= botName %>",
-      "description": "",
-      "id": "sJt0wA"
+    "name": "<%= botName %>",
+    "description": "",
+    "id": "sJt0wA"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -892,12 +892,26 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "vfNGvE"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "Ay1N1B"
           },
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1483,11 +1497,29 @@
           "name": "<%= botName %>.UnknownIntent"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "iHNKPb"
+            "id": "ceaMpz"
           },
-          "activity": "${SendActivity_iHNKPb()}"
+          "condition": "=turn.activity.recipient.role == \"skill\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "wPwj7Y"
+              },
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UA2sps"
+              },
+              "activity": "${SendActivity_UA2sps()}"
+            }
+          ]
         }
       ]
     },
@@ -1805,6 +1837,7 @@
       "runOnce": true
     }
   ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "<%= botName %>.lg",
   "recognizer": "<%= botName %>.lu.qna",
   "id": "<%= botName %>"

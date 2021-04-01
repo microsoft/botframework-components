@@ -1,0 +1,28 @@
+[import](common.lg)
+
+# SendActivity_5JQ9rf()
+[Activity
+    Text = ${SendActivity_5JQ9rf_text()}
+]
+
+# SendActivity_5JQ9rf_text()
+- ```
+### What can I do?
+I'm here to help with questions about your Calendar and People in your organization. 
+
+You can ask:
+* "What is on my schedule for tomorrow?" 
+* "When is my next meeting?" or "Set up an event"
+* "Who is" or "Who works with", and much more!  
+```
+- ```
+### What can I do?
+I'm here to help with asks about your Calendar and People in your organization. 
+
+Try saying:
+* "Set up a meeting tomorrow at 9 AM"
+* "When do I have breaks today?" or "What is scheduled for tomorrow?"
+* "Who is the manager of" or "Who reports to", and much more!
+```
+
+> Imported: 652e61274267b0470f12d0a285631c99

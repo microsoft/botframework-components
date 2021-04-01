@@ -12,8 +12,9 @@ Includes support for:
 - Submitting feedback about the bot
 - Error handling in conversations
 - Repeat the previous question
-- Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
+- Chit chat with QnA Maker ([friendly personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
 - Disambiguation of NLP results
+- Calendar and People skills configured out of the box
 
 ## What this template is for
 
@@ -30,8 +31,9 @@ Your bot can use the [Azure Bot Framework component model](https://aka.ms/Compon
 This bot starts with the following packages:
 
 - [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
+- [Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Builder.AI.Orchestrator/)
 
-## Languages
+## Supported Languages
 
 - English (en-us)
 
@@ -39,9 +41,17 @@ This bot starts with the following packages:
 
 To run this bot you'll need the resources listed below. Create a publishing profile in Composer to provision and publish to your Azure resources for your bot.
 
-- [LUIS][luis], or another recognizer of your choice
+- Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+    - Calendars.ReadWrite
+    - Contacts.Read
+    - Directory.Read.All
+    - People.Read
+    - People.Read.All
+    - User.ReadBasic.All
+    - User.Read.All
+- [Language Understanding (LUIS)][luis], or another recognizer of your choice
 - [QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
-- A storage solution for persistent state storage like Azure CosmosDB
+- A storage solution for persistent state storage like Azure Cosmos DB
 
 ## Using this template
 
@@ -51,7 +61,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
@@ -61,7 +71,7 @@ npm install -g @microsoft/generator-bot-enterprise-assistant
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-enterprise-assistant '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
+yo @microsoft/bot-enterprise-assistant '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
 ```
 
 ## License

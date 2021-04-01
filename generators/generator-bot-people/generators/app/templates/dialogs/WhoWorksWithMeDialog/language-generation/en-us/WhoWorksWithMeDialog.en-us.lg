@@ -1,0 +1,8 @@
+[import](common.lg)
+
+
+# SendActivity_mfLqxa()
+[Activity
+    Text = I found that **${dialog.UserFound.DisplayName}** does not have collaborator.
+]
+

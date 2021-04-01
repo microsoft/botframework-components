@@ -1,11 +1,15 @@
 [Functions](functions.en-us.lg)
 
+# SkillId
+- calendar
+
 # CancelEventAction(event)
 -```
 {
     "type": "Action.Submit",
     "title": "Cancel",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "CancelEvent",
         "eventId": "${event.Id}",
         "msteams": {
@@ -21,6 +25,7 @@
     "type": "Action.Submit",
     "title": "New event",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "CreateEvent",
         "dateTime": "${dateTime}",
         "msteams": {
@@ -34,7 +39,7 @@
 [CardAction
     title = New event
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
-    value = ${{ intent: "CreateEvent" }}
+    value = ${{ "skillId": "${SkillId()}", intent: "CreateEvent" }}
 ]
 
 # GetEventsAction(dateTime)
@@ -43,11 +48,25 @@
     "type": "Action.Submit",
     "title": "${GetEventsActionTitle(dateTime)}",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "GetEvents",
         "dateTime": "${formatDateTime(dateTime, "yyyy-MM-dd")}",
         "msteams": {
             "type": "messageBack"
         }
+    }
+}
+```
+
+# GetEventByIdAction(id)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Get event",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetEvents",
+        "eventId": "${id}"
     }
 }
 ```
@@ -64,7 +83,7 @@
 [CardAction
     title = ${GetEventsActionTitle(dateTime)}
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
-    value = ${{ intent: "GetEvents", dateTime: dateTime }}
+    value = ${{ "skillId": "${SkillId()}", intent: "GetEvents", dateTime: dateTime }}
 ]
 
 # LaunchCardAction()
@@ -87,6 +106,7 @@
     "type": "Action.Submit",
     "title": "Select event",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "GetEvents",
         "eventId": "${event.Id}",
         "msteams": {
@@ -102,6 +122,7 @@
     "type": "Action.Submit",
     "title": "Add attendees",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetAttendeesAdd",
         "eventId": "${event.Id}",
         "msteams": {
@@ -117,6 +138,7 @@
     "type": "Action.Submit",
     "title": "Remove attendees",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetAttendeesRemove",
         "eventId": "${event.Id}",
         "msteams": {
@@ -132,6 +154,7 @@
     "type": "Action.Submit",
     "title": "Update date and time",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetDateTime",
         "eventId": "${event.Id}",
         "msteams": {
@@ -147,6 +170,7 @@
     "type": "Action.Submit",
     "title": "Update description",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetDescription",
         "eventId": "${event.Id}",
         "msteams": {
@@ -162,6 +186,7 @@
     "type": "Action.Submit",
     "title": "Update duration",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetDuration",
         "eventId": "${event.Id}",
         "msteams": {
@@ -177,6 +202,7 @@
     "type": "Action.Submit",
     "title": "Update location",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetLocation",
         "eventId": "${event.Id}",
         "msteams": {
@@ -192,6 +218,7 @@
     "type": "Action.Submit",
     "title": "Add Microsoft Teams",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetOnlineMeetingAdd",
         "eventId": "${event.Id}",
         "msteams": {
@@ -207,6 +234,7 @@
     "type": "Action.Submit",
     "title": "Remove Microsoft Teams",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "SetOnlineMeetingRemove",
         "eventId": "${event.Id}",
         "msteams": {
@@ -222,6 +250,7 @@
     "type": "Action.Submit",
     "title": "Accept",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "RespondAccept",
         "eventId": "${event.Id}",
         "msteams": {
@@ -237,6 +266,7 @@
     "type": "Action.Submit",
     "title": "Decline",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "RespondDecline",
         "eventId": "${event.Id}",
         "msteams": {
@@ -252,6 +282,7 @@
     "type": "Action.Submit",
     "title": "Update",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "UpdateEvent",
         "eventId": "${event.Id}",
         "msteams": {
@@ -267,6 +298,7 @@
     "type": "Action.Submit",
     "title": "Choose your own date and time",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "Skip",
         "msteams": {
             "type": "messageBack"
@@ -281,7 +313,38 @@
     "type": "Action.Submit",
     "title": "Try Again",
     "data": {
+        "skillId": "${SkillId()}",
         "intent": "Retry",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# NextPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Next",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Next",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# PreviousPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Previous",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Previous",
         "msteams": {
             "type": "messageBack"
         }
@@ -302,6 +365,7 @@
     "type": "Action.Submit",
     "title": "${text}",
     "data": {
+        "skillId": "${SkillId()}",
         "msteams": {
             "type": "messageBack",
             "text": "${value}"
@@ -315,7 +379,8 @@
 {
     "type": "Action.Submit",
     "title": "${text}",
-    "data": { 
+    "data": {
+        "skillId": "${SkillId()}", 
         "value": "${value}"
     }
 }

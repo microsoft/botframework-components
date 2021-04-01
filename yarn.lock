@@ -194,16 +194,19 @@ __metadata:
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
     "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview"
+    "@microsoft/generator-bot-people": "workspace:^1.0.0-preview"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
     prettier: latest
+    uuid: ^8.3.2
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-people@workspace:generators/generator-bot-people":
+"@microsoft/generator-bot-people@workspace:^1.0.0-preview, @microsoft/generator-bot-people@workspace:generators/generator-bot-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-people@workspace:generators/generator-bot-people"
   dependencies:
@@ -8075,7 +8078,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.1":
+"uuid@npm:^8.3.1, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

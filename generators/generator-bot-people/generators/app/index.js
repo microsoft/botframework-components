@@ -12,6 +12,20 @@ module.exports = class extends BaseGenerator {
       Object.assign(this.options, {
         arguments: this.args,
         applicationSettingsDirectory: 'settings',
+        packageReferences: [
+          {
+            isPlugin: true,
+            name: 'Microsoft.Bot.Components.Graph',
+            version: '1.0.0-preview.20210331.a54d9f1',
+          },
+        ],
+        modifyApplicationSettings: (appSettings) => {
+          Object.assign(appSettings, {
+            oauthConnectionName: '',
+          });
+
+          appSettings.runtimeSettings.features.setSpeak = true;
+        },
       })
     );
   }

@@ -46,14 +46,7 @@
 {
     "type": "Container",
     "separator": true,
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "Show event",
-        "data": {
-            "intent": "GetEvents",
-            "eventId": "${item.id}"
-        }
-    },
+    "selectAction": ${GetEventByIdAction(item.id)},
     "items": [
         {
             "type": "ColumnSet",

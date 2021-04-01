@@ -1,0 +1,245 @@
+[import](common.lg)
+
+# SendActivity_YRvoei()
+[Activity
+    Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
+]
+
+# SendActivity_YRvoei_attachment_WGITEE()
+> Bot tour chevron card
+- ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(BotTourOptions(), 5), ''))}
+
+
+# SendActivity_yDMllq()
+[Activity
+    Attachments = ${SendActivity_yDMllq_attachment_nUDor4()}
+]
+
+# SendActivity_yDMllq_attachment_nUDor4()
+- ${json(CardTemplate(CalendarTourCardHeader(), BotTourDetailsCardBody(CalendarTourCardText()), CalendarTourCardActions()))}
+
+# SendActivity_l6vgAo()
+[Activity
+    Attachments = ${SendActivity_l6vgAo_attachment_a0ogKC()}
+]
+
+# SendActivity_l6vgAo_attachment_a0ogKC()
+- ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
+
+# CalendarTourTitle
+- Calendar
+
+# CalendarTourSubtitle
+- Tasks involving your calendar
+
+# CalendarTourCardHeader()
+- ${BotTourDetailsCardHeader(CalendarIconUrl(), CalendarTourTitle())}
+
+# CalendarTourCardText()
+- This skill allows you to create, lookup, and manage events in your calendar. 
+
+# CalendarTourCardActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${BuildSubmitAction("Set up a meeting for tomorrow at 9 AM", "calendar")},
+        ${BuildSubmitAction("When do I have breaks today?", "calendar")},
+        ${BuildSubmitAction("What is scheduled for tomorrow?", "calendar")},
+        ${BuildSubmitAction("Update my next meeting", "calendar")}
+    ]
+}
+```
+
+# PeopleTourTitle
+- People
+
+# PeopleTourSubtitle
+- Discover details about your colleagues
+
+# PeopleTourCardHeader()
+- ${BotTourDetailsCardHeader(ContactIconUrl(), PeopleTourTitle())}
+
+# PeopleTourCardText()
+- This skill allows you to lookup details about the people in your organization. 
+
+# PeopleTourCardActions
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${BuildSubmitAction("Who is a peer of...", "people")},
+        ${BuildSubmitAction("Who is the manager of...", "people")},
+        ${BuildSubmitAction("Who reports to...", "people")}
+    ]
+}
+```
+
+# BotTourTitle
+- You can ask me about...
+
+# BotTourOptions
+- ${createArray(BotTourOption(CalendarIconUrl(), CalendarTourTitle(), CalendarTourSubtitle(), "CalendarTour"), BotTourOption(ContactIconUrl(), PeopleTourTitle(), PeopleTourSubtitle(), "PeopleTour"))}
+
+# BotTourHeader
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "spacing":"none",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${BotTourIconUrl()}",
+                            "horizontalAlignment": "center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width":"90",
+                    "spacing":"small",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${BotTourTitle()}",
+                            "size": "large",
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ]
+        }        
+    ]
+}
+```
+
+# BotTourOption(icon, title, subtitle, intent)
+-```
+{
+   "type":"Container",
+   "items":[
+      {
+         "type":"ColumnSet",
+         "columns":[
+            {
+               "type":"Column",
+                "verticalContentAlignment": "center",
+               "items":[
+                  {
+                     "type":"Image",
+                     "url":"${icon}",
+                     "horizontalAlignment":"center"
+                  }
+               ],
+               "width":10
+            },
+            {
+                "type":"Column",
+                "width":90,
+                "verticalContentAlignment": "center",
+                "items":[
+                    {
+                        "type":"TextBlock",
+                        "text":"${title}",
+                        "size":"medium",
+                        "spacing": "Small",
+                        "color":"accent"
+                    },
+                    {
+                        "type":"TextBlock",
+                        "text":"${subtitle}",
+                        "wrap":true,
+                        "size":"default",
+                        "spacing": "Small",
+                        "maxLines":2,
+                        "color":"accent"
+                    }
+               ]
+            }
+         ]
+      }
+   ],
+   "selectAction":{
+      "type":"Action.Submit",
+      "title":"${text}",
+      "data":{
+         "intent":"${intent}"
+      }
+   },
+   "separator": true
+}
+```
+
+# BotTourDetailsCardHeader(icon, text)
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "spacing":"none",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${icon}",
+                            "horizontalAlignment": "center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 90,
+                    "spacing":"small",
+                    "verticalContentAlignment": "center",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${text}",
+                            "size": "medium",
+                            "weight": "Bolder",
+                            "wrap": true
+                        }
+                    ]
+                }
+            ]
+        }        
+    ]
+}
+```
+
+# BotTourDetailsCardBody(text) 
+-```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true
+        }        
+    ]
+}
+```
+
+# BuildSubmitAction(title, intent)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${title}",
+    "data": "${title}"
+}
+```
