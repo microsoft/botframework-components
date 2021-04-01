@@ -97,7 +97,7 @@ __metadata:
     globby: ^11.0.2
     normalize-path: ^3.0.0
     prettier: latest
-    runtypes: ^5.0.2
+    runtypes: ~5.1.0
     uuid: ^8.3.1
     xml2js: ^0.4.23
     yeoman-generator: ^1.1.1
@@ -6908,10 +6908,10 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"runtypes@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "runtypes@npm:5.0.2"
-  checksum: 75eb308c0d7aa303955ee14605512a4ef2922d23a5bad2aadb4b4f0eee580cf2a0b2a35a6803bccdc56dcc3d8c3aeab7c2ab39c23ad20a209a09f2f8f25de4ba
+"runtypes@npm:~5.1.0":
+  version: 5.1.0
+  resolution: "runtypes@npm:5.1.0"
+  checksum: 749ca90976c7a5a5ce8f4a20a3c57337a3972fa2dd3aa29a5f1ef3179f0abd07fd8fda131b82dc60f18a9cbd5ae53a2aae8ccdd24b56df6321ea02af3519be7f
   languageName: node
   linkType: hard
 
