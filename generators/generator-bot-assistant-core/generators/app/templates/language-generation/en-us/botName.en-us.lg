@@ -1,13 +1,5 @@
 [import](common.lg)
 
-# TextInput_Prompt_gWdJbl()
-[Activity
-    Attachments = ${json(AdaptiveCardJson())}
-]
-
-# SendActivity_WTfZCN()
-- Sure, no worries.
-
 # SendActivity_mM3nez()
 [Activity
     Text = ${SendActivity_mM3nez_text()}
@@ -28,14 +20,6 @@
 - Hmm, I don't understand. Can you try to ask me in a different way?
 - I didn't get that. Would you mind rephrasing and try it again?
 - Unfortunately I misunderstood, please try again.
-
-# TextInput_Prompt_nrleRD()
-[Activity
-    Attachments = ${json(AdaptiveCardJson())}
-]
-
-# SendActivity_L8AquD()
-- Sure, no worries.
 
 # SendActivity_yXbfKT()
 [Activity
@@ -66,26 +50,6 @@
   buttons = ${BotTourEventAction()}
 ]
 
-# TextInput_Prompt_XRSIOS()
-[Activity
-    Attachments = ${json(AdaptiveCardJson())}
-]
-
-# SendActivity_Z8FHjj()
-- Sure, no worries.
-
-# TextInput_Prompt_YQSOpf()
-[Activity
-    Attachments = ${TextInput_Prompt_YQSOpf_attachment_Yixa1e()}
-]
-
-# TextInput_Prompt_YQSOpf_attachment_Yixa1e()
-- $json{AdaptiveCardJson()}
-# SendActivity_ufxNYo()
-[Activity
-    Text = Sure, no worries.
-]
-
 # SendActivity_2outgQ()
 [Activity
     Text = ${SendActivity_2outgQ_text()}
@@ -95,3 +59,86 @@
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
+
+# TextInput_Prompt_YQSOpf()
+[Activity
+    Attachments = ${json(ChooseIntentCard())}
+]
+
+# SendActivity_ufxNYo()
+[Activity
+    Text = Sure, no worries.
+]
+
+# ChooseIntentCard()
+-```
+{
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.0",
+      "type": "AdaptiveCard",
+      "speak": "",
+      "body": [
+          {
+              "type": "TextBlock",
+              "text": "${whichOneDidYouMean()}",
+              "weight": "Bolder"
+          },
+          {
+              "type": "TextBlock",
+              "text": "${pickOne()}",
+              "separator": "true"
+          },
+          {
+              "type": "Input.ChoiceSet",
+              "placeholder": "Placeholder text",
+              "id": "userChosenIntent",
+              "choices": [
+                           {
+                               "title": "${getIntentReadBack()}",
+                               "value": "luisResult"
+                           },
+                           {
+                               "title": "${getAnswerReadBack()}",
+                               "value": "qnaResult"
+                           },
+                           {
+                               "title": "None of the above",
+                               "value": "none"
+                           }
+             ],
+             "style": "expanded",
+             "value": "luis"
+         },
+         {
+             "type": "ActionSet",
+             "actions": [
+                {
+                     "type": "Action.Submit",
+                     "title": "Submit",
+                     "data": {
+                   "intent": "chooseIntentCardResponse"
+                }
+         }
+       ]
+     }
+    ]
+}
+```
+
+# whichOneDidYouMean()
+- I'm not sure which one you mean.
+- Hmmm, I find that to be ambiguous.
+
+# pickOne()
+- Can you pick one ?
+- Can you help clarify by choosing one ?
+
+# getAnswerReadBack()
+- See an answer from the Knowledge Base
+
+# getIntentReadBack()
+- SWITCH : ${toLower(dialog.luisResult.intent)}
+- CASE : ${'GetUserProfile'}
+  - Start filling in your profile(GetUserProfile intent)
+- DEFAULT :
+  - ${dialog.luisResult.intent}
