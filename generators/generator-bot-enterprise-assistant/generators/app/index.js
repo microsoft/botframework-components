@@ -19,11 +19,11 @@ module.exports = class extends BaseGenerator {
         applicationSettingsDirectory: 'settings',
         botProjectSettings: {
           skills: {
-            calendar: {
+            Calendar: {
               workspace: '../Calendar',
               remote: false,
             },
-            people: {
+            People: {
               workspace: '../People',
               remote: false,
             },

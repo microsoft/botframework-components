@@ -13,7 +13,7 @@ In order to test this bot locally, you will need the following services provisio
 - QnA Maker
 
 ## Configure Authentication
-You must configure an authentication connection on your root bot Azure Bot Registration in order to log in and access Microsoft Graph resources. 
+You must configure an authentication connection on your **skill bot** Azure Bot Registrations in order to log in and access Microsoft Graph resources. 
 
 ### Using Azure Portal
 * Open your **Azure Bot Service** resource and go to the **Settings** tab
@@ -59,6 +59,32 @@ You must configure an authentication connection on your root bot Azure Bot Regis
     }
     ```
 
+
+# Configure Skill connections
+After provisioning your Azure resources and configuring your authentication connections, update the following settings in your Composer bot settings:
+- In your root bot, set the following properties:
+    - Microsoft App Id
+    - Microsoft App Password
+    - LUIS authoring key
+    - LUIS endpoint key 
+    - LUIS region
+    - QnA Maker subscription key
+    - In **Advanced Settings View (json)**, set the app IDs of the skills that will be allowed to communicate with your root bot. For testing you can set this to "*".
+        ```
+            "skills": {
+              "allowedCallers": [ "<app id>" ]
+            },
+        ```
+- In your skill bots, set the following properties:
+    - Microsoft App Id
+    - Microsoft App Password
+    - In **Advanced Settings View (json)**, set the app IDs of the bots that will be allowed to communicate with your skill bot. For testing you can set this to "*".
+        ```
+           "skillConfiguration": {
+            "isSkill": true,
+            "allowedCallers": [ "<app id>" ]
+          },
+        ```
 
 ## Next steps
 
