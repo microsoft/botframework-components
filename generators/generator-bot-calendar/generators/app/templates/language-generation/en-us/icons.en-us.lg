@@ -1,56 +1,56 @@
-# AcceptedIconUrl
+# AcceptedIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/AcceptedIcon.png?raw=true
 
-# CalendarIconUrl
+# CalendarIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/CalendarIcon.png?raw=true
 
-# ChevronDownIconUrl
+# ChevronDownIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/ChevronDownIcon.png?raw=true
 
-# ChevronUpIconUrl
+# ChevronUpIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/ChevronUpIcon.png?raw=true
 
-# ContactIconUrl
+# ContactIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/ContactListIcon.png?raw=true
 
-# DateTimeIconUrl
+# DateTimeIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/TimeIcon.png?raw=true
 
-# DeclinedIconUrl
+# DeclinedIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/DeclinedIcon.png?raw=true
 
-# EventIconUrl
+# EventIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/EventIcon.png?raw=true
 
-# LocationIconUrl
+# LocationIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/LocationIcon.png?raw=true
 
-# NoResponseIconUrl
+# NoResponseIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/NotRespondedIocn.png?raw=true
 
-# RecurringIconUrl
+# RecurringIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/RecurringIcon.png?raw=true
 
-# TentativeIconUrl
+# TentativeIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/TentativeIcon.png?raw=true
 
-# TimeSlotIconUrl
+# TimeSlotIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/EventListIcon.png?raw=true
 
-# LeftArrowActiveIconUrl
+# LeftArrowActiveIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/LeftChevronEnabledIcon.png?raw=true
 
-# LeftArrowInactiveIconUrl
+# LeftArrowInactiveIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/LeftChevronInactive.png?raw=true
 
-# RightArrowActiveIconUrl
+# RightArrowActiveIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/RightChevronEnabledIcon.png?raw=true
 
-# RightArrowInactiveIconUrl
+# RightArrowInactiveIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/RightChevronInactive.png?raw=true
 
-# EventListIconUrl
+# EventListIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/EventListIcon.png?raw=true
 
-# TitleIconUrl
+# TitleIconUrl()
 - https://github.com/microsoft/botframework-components/blob/main/skills/declarative/icons/EventIcon.png?raw=true

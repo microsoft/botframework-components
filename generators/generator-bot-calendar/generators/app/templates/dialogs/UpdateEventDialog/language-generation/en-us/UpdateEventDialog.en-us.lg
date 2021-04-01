@@ -7,19 +7,19 @@
 - ELSE: 
     - ${UpdateChoicePrompt()}
 
-# UpdateChoicePrompt
+# UpdateChoicePrompt()
 [Activity
     text = ${UpdateChoiceText()}
     attachments = ${json(EventDetailUpdateCard($event))}
 ]
 
-# UpdateChoiceNotUnderstood
+# UpdateChoiceNotUnderstood()
 [Activity
     text = Sorry, I didn't understand that. ${UpdateChoiceText()}
     attachments = ${json(EventDetailUpdateCard($event))}
 ]
 
-# UpdateChoiceText
+# UpdateChoiceText()
 - What would you like to change?
 - What do you want to update?
 - What can I update for you?
@@ -72,13 +72,13 @@
 - ELSE: 
     - ${UpdateConfirmPrompt()}
 
-# UpdateConfirmPrompt
+# UpdateConfirmPrompt()
 [Activity
     text = Does this look right?
     attachments = ${json(EventDetailEditCard($event))}
 ]
 
-# UpdateConfirmNotUnderstood
+# UpdateConfirmNotUnderstood()
 [Activity
     text = Sorry, I didn't understand that. Does this look right?
     attachments = ${json(EventDetailEditCard($event))}
