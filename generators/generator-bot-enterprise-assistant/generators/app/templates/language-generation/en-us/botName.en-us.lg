@@ -125,3 +125,40 @@
   - Start filling in your profile(GetUserProfile intent)
 - DEFAULT :
   - ${dialog.luisResult.intent}
+
+# SendActivity_bGYBta()
+[Activity
+    Text = ${SendActivity_bGYBta_text()}
+]
+
+# SendActivity_bGYBta_text()
+- OK, no problem.
+- Sure. I'll cancel.
+- OK, I will stop.
+- Got it, I'll stop here.
+- No problem, I will stop.
+
+# SendActivity_zlXdEy()
+[Activity
+    Text = ${SendActivity_zlXdEy_text()}
+]
+
+# SendActivity_zlXdEy_text()
+- ```
+### What can I do?
+I'm here to help with questions about your Calendar and People in your organization. 
+
+You can ask:
+* "What is on my schedule for tomorrow?" 
+* "When is my next meeting?" or "Set up an event"
+* "Who is" or "Who works with", and much more!  
+```
+- ```
+### What can I do?
+I'm here to help with asks about your Calendar and People in your organization. 
+
+Try saying:
+* "Set up a meeting tomorrow at 9 AM"
+* "When do I have breaks today?" or "What is scheduled for tomorrow?"
+* "Who is the manager of" or "Who reports to", and much more!
+```

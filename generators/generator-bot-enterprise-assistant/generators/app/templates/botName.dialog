@@ -113,12 +113,18 @@
           "name": "EnterpriseAssistant.OnIntent_Cancel"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "FDsuIq"
+            "id": "bGYBta"
           },
-          "activityProcessed": true,
-          "dialog": "CancelDialog"
+          "activity": "${SendActivity_bGYBta()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "5BAUTN"
+          },
+          "activityProcessed": true
         }
       ],
       "condition": "=turn.recognized.score > 0.9"
@@ -139,12 +145,11 @@
           "name": "EnterpriseAssistant.OnIntent_Help"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "B0NP8m"
+            "id": "zlXdEy"
           },
-          "activityProcessed": true,
-          "dialog": "HelpDialog"
+          "activity": "${SendActivity_zlXdEy()}"
         }
       ]
     },
