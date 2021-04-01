@@ -24,7 +24,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-rc",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
