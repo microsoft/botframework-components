@@ -58,17 +58,7 @@
     "type": "Container",
     "separator": true,
     "spacing": "Small",
-    "selectAction": {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": 
-        {
-            "value" : "${item.index}",
-            "msteams": {
-                "type": "messageBack"
-            }
-        }
-    },
+    "selectAction": ${BuildSubmitAction(item.displayName, item.index)},
     "items": [
         {
             "type": "ColumnSet",

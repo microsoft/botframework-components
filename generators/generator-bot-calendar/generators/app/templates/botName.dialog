@@ -1,11 +1,11 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-      "name": "<%= botName %>",
-      "description": "",
-      "id": "sJt0wA"
+    "name": "<%= botName %>",
+    "description": "",
+    "id": "sJt0wA"
   },
-  "autoEndDialog": false,
+  "autoEndDialog": true,
   "defaultResultProperty": "$result",
   "triggers": [
     {
@@ -1497,11 +1497,29 @@
           "name": "<%= botName %>.UnknownIntent"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "iHNKPb"
+            "id": "ceaMpz"
           },
-          "activity": "${SendActivity_iHNKPb()}"
+          "condition": "=turn.activity.recipient.role == \"skill\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "wPwj7Y"
+              },
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UA2sps"
+              },
+              "activity": "${SendActivity_UA2sps()}"
+            }
+          ]
         }
       ]
     },

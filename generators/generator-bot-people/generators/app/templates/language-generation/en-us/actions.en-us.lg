@@ -109,3 +109,37 @@
     }
 }
 ```
+
+# BuildSubmitAction(text, value)
+- IF: ${ turn.activity.channelId == "msteams" }
+    - ${TeamsSubmitAction(text, value)}
+- ELSE: 
+    - ${SubmitAction(text, value)}
+
+
+# TeamsSubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}",
+        "msteams": {
+            "type": "messageBack",
+            "text": "${value}"
+        }
+    }
+}
+```
+
+# SubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}", 
+        "value": "${value}"
+    }
+}
+```

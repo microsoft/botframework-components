@@ -7,7 +7,7 @@
       "id": "Kyymuy"
     }
   },
-  "autoEndDialog": false,
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -587,11 +587,36 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "HTkwlL"
+            "id": "G0hNYR"
           },
-          "activity": "${SendActivity_HTkwlL()}"
+          "name": "<%= botName %>.OnUnknownIntent"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "61Nit8"
+          },
+          "condition": "=turn.activity.recipient.role == \"skill\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "QC2QIx"
+              },
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "HG1MJM"
+              },
+              "activity": "${SendActivity_HG1MJM()}"
+            }
+          ]
         }
       ]
     }

@@ -391,7 +391,8 @@
                   "connectionName": "=settings.connectionName",
                   "allowInterruptions": true,
                   "skillEndpoint": "=settings.skill['calendar'].endpointUrl",
-                  "skillAppId": "=settings.skill['calendar'].msAppId"
+                  "skillAppId": "=settings.skill['calendar'].msAppId",
+                  "resultProperty": "$skillHandled"
                 }
               ]
             },
@@ -409,9 +410,34 @@
                   "connectionName": "=settings.connectionName",
                   "allowInterruptions": true,
                   "skillEndpoint": "=settings.skill['people'].endpointUrl",
-                  "skillAppId": "=settings.skill['people'].msAppId"
+                  "skillAppId": "=settings.skill['people'].msAppId",
+                  "resultProperty": "$skillHandled"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "RieQAx"
+          },
+          "condition": "exists($skillHandled) && $skillHandled == false",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "UTQYW4"
+              },
+              "name": "AfterSkillComplete"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "H7Nrkt"
+              },
+              "activityProcessed": false,
+              "allowLoop": false
             }
           ]
         }
