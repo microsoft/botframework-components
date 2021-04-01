@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-calendar [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an empty bot built on the Azure Bot Framework.
+> Yeoman generator for creating a bot with Calendar-related capabilities built on the Azure Bot Framework.
 
 The Calendar Bot template creates a bot configured to manage Office 365 calendars using Microsoft Graph.
 
@@ -38,7 +38,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-empty using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
+This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-calendar using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
 
 ```bash
 npm install -g yo
@@ -75,8 +75,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-calendar
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

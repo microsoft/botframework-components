@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-people [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an empty bot built on the Azure Bot Framework.
+> Yeoman generator for creating a bot with People-related capabilities built on the Azure Bot Framework.
 
 The People Bot template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
 
@@ -40,7 +40,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-empty using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
+This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-people using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
@@ -77,8 +77,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-people
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

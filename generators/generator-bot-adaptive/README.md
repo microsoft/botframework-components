@@ -17,7 +17,7 @@ If you need to create your own templates, you can use this generator as a base, 
 
 ### From the command line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-adaptive using [npm][npm] (we assume you have pre-installed [node.js][nodejs].
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-adaptive using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo

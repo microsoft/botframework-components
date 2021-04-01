@@ -50,7 +50,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-assistant-core using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-assistant-core using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo

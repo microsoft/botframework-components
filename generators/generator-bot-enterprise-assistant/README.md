@@ -31,7 +31,7 @@ Your bot can use the [Azure Bot Framework component model](https://aka.ms/Compon
 This bot starts with the following packages:
 
 - [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
-- [Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Components.Orchestrator/)
+- [Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Builder.AI.Orchestrator/)
 
 ## Supported Languages
 
@@ -61,7 +61,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]:
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo

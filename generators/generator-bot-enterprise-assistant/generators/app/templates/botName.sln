@@ -1,0 +1,37 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{<%= projectType %>}") = "<%= botName %>", "<%= botName %>\<%= botName %>.csproj", "{<%= botProjectGuid %>}"
+EndProject
+Project("{<%= projectType %>}") = "Calendar", "Calendar\Calendar.csproj", "{<%= calendarProjectGuid %>}"
+EndProject
+Project("{<%= projectType %>}") = "People", "People\People.csproj", "{<%= peopleProjectGuid %>}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{<%= botProjectGuid %>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= botProjectGuid %>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%= botProjectGuid %>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%= botProjectGuid %>}.Release|Any CPU.Build.0 = Release|Any CPU
+        {<%= calendarProjectGuid %>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= calendarProjectGuid %>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%= calendarProjectGuid %>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%= calendarProjectGuid %>}.Release|Any CPU.Build.0 = Release|Any CPU
+        {<%= peopleProjectGuid %>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%= peopleProjectGuid %>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%= peopleProjectGuid %>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%= peopleProjectGuid %>}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {<%= solutionGuid %>}
+	EndGlobalSection
+EndGlobal
