@@ -200,6 +200,7 @@ __metadata:
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
     prettier: latest
+    uuid: ^8.3.2
     yeoman-generator: ^2.0.5
     yeoman-test: ^1.9.1
   languageName: unknown
@@ -8077,7 +8078,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.1":
+"uuid@npm:^8.3.1, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
