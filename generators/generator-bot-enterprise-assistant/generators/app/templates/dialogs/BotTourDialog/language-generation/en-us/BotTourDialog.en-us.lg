@@ -43,10 +43,10 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Set up a meeting for tomorrow at 9 AM", "calendar")},
-        ${BuildSubmitAction("When do I have breaks today?", "calendar")},
-        ${BuildSubmitAction("What is scheduled for tomorrow?", "calendar")},
-        ${BuildSubmitAction("Update my next meeting", "calendar")}
+        ${BuildSubmitAction("Set up a meeting for tomorrow at 9 AM", "Calendar")},
+        ${BuildSubmitAction("When do I have breaks today?", "Calendar")},
+        ${BuildSubmitAction("What is scheduled for tomorrow?", "Calendar")},
+        ${BuildSubmitAction("Update my next meeting", "Calendar")}
     ]
 }
 ```
@@ -68,9 +68,9 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Who is a peer of...", "people")},
-        ${BuildSubmitAction("Who is the manager of...", "people")},
-        ${BuildSubmitAction("Who reports to...", "people")}
+        ${BuildSubmitAction("Who is a peer of...", "People")},
+        ${BuildSubmitAction("Who is the manager of...", "People")},
+        ${BuildSubmitAction("Who reports to...", "People")}
     ]
 }
 ```

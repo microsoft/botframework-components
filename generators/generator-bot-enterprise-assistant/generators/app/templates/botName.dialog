@@ -468,7 +468,7 @@
             "id": "aEgt1o"
           },
           "eventName": "ConnectToSkill",
-          "eventValue": "calendar"
+          "eventValue": "Calendar"
         }
       ],
       "condition": "=turn.recognized.score > 0.8"
@@ -494,7 +494,7 @@
             "id": "CPu21u"
           },
           "eventName": "ConnectToSkill",
-          "eventValue": "people"
+          "eventValue": "People"
         }
       ],
       "condition": "=turn.recognized.score > 0.8"
@@ -530,7 +530,7 @@
           "condition": "$skillId",
           "cases": [
             {
-              "value": "calendar",
+              "value": "Calendar",
               "actions": [
                 {
                   "$kind": "Microsoft.BeginSkill",
@@ -542,14 +542,14 @@
                   "skillHostEndpoint": "=settings.skillHostEndpoint",
                   "connectionName": "=settings.connectionName",
                   "allowInterruptions": true,
-                  "skillEndpoint": "=settings.skill['calendar'].endpointUrl",
-                  "skillAppId": "=settings.skill['calendar'].msAppId",
+                  "skillEndpoint": "=settings.skill['Calendar'].endpointUrl",
+                  "skillAppId": "=settings.skill['Calendar'].msAppId",
                   "resultProperty": "$skillHandled"
                 }
               ]
             },
             {
-              "value": "people",
+              "value": "People",
               "actions": [
                 {
                   "$kind": "Microsoft.BeginSkill",
@@ -561,8 +561,8 @@
                   "skillHostEndpoint": "=settings.skillHostEndpoint",
                   "connectionName": "=settings.connectionName",
                   "allowInterruptions": true,
-                  "skillEndpoint": "=settings.skill['people'].endpointUrl",
-                  "skillAppId": "=settings.skill['people'].msAppId",
+                  "skillEndpoint": "=settings.skill['People'].endpointUrl",
+                  "skillAppId": "=settings.skill['People'].msAppId",
                   "resultProperty": "$skillHandled"
                 }
               ]
