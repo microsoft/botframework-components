@@ -126,13 +126,14 @@
 -```
 {
    "type":"Container",
+   "spacing": "medium",
    "items":[
       {
          "type":"ColumnSet",
          "columns":[
             {
                "type":"Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                "items":[
                   {
                      "type":"Image",
@@ -145,14 +146,13 @@
             {
                 "type":"Column",
                 "width":90,
-                "verticalContentAlignment": "center",
+                "spacing":"small",
+                "verticalContentAlignment": "top",
                 "items":[
                     {
                         "type":"TextBlock",
                         "text":"${title}",
-                        "size":"medium",
-                        "spacing": "Small",
-                        "color":"accent"
+                        "size":"medium"
                     },
                     {
                         "type":"TextBlock",
@@ -160,8 +160,7 @@
                         "wrap":true,
                         "size":"default",
                         "spacing": "Small",
-                        "maxLines":2,
-                        "color":"accent"
+                        "maxLines":2
                     }
                ]
             }
