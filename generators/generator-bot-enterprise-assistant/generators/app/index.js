@@ -51,7 +51,6 @@ module.exports = class extends BaseGenerator {
             },
           });
 
-          appSettings.runtimeSettings.features.setSpeak = true;
           appSettings.runtimeSettings.features.showTyping = true;
         },
       })
