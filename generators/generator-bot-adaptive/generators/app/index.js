@@ -108,10 +108,10 @@ module.exports = class extends BaseGenerator {
         ? `"${this.applicationSettingsDirectory}"`
         : defaultSettingsDirectory;
 
-    const settingsIncludePath = path.join(
-      this.applicationSettingsDirectory,
-      path.sep
-    );
+    const settingsIncludePath =
+      this.applicationSettingsDirectory != null
+        ? path.join(this.applicationSettingsDirectory, path.sep)
+        : '';
 
     this.fs.copyTpl(
       this.templatePath(platform, integration),
