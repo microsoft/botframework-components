@@ -34,10 +34,6 @@ module.exports = class extends BaseGenerator {
         },
         packageReferences: [
           {
-            name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-preview.20210331.a54d9f1',
-          },
-          {
             isPlugin: true,
             name: 'Microsoft.Bot.Builder.AI.Orchestrator',
             version: '4.13.0-rc1.preview',
@@ -51,7 +47,6 @@ module.exports = class extends BaseGenerator {
             },
           });
 
-          appSettings.runtimeSettings.features.setSpeak = true;
           appSettings.runtimeSettings.features.showTyping = true;
         },
       })

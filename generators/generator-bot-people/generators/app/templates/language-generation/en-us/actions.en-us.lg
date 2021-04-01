@@ -1,5 +1,5 @@
- # SkillId()
- - people
+ # SkillId
+ - <%= botName %>
  
  # GetManagerAction(user)
  - ```

@@ -1,7 +1,7 @@
 [Functions](functions.en-us.lg)
 
 # SkillId
-- calendar
+- <%= botName %>
 
 # CancelEventAction(event)
 -```
