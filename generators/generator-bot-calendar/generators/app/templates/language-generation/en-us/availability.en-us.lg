@@ -93,7 +93,7 @@
 }
 ```
 
-# AvailabilityActions
+# AvailabilityActions()
 - ```
 {
     "type": "ActionSet",

@@ -26,10 +26,10 @@
 # SendActivity_l6vgAo_attachment_a0ogKC()
 - ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
 
-# CalendarTourTitle
+# CalendarTourTitle()
 - Calendar
 
-# CalendarTourSubtitle
+# CalendarTourSubtitle()
 - Tasks involving your calendar
 
 # CalendarTourCardHeader()
@@ -38,7 +38,7 @@
 # CalendarTourCardText()
 - This skill allows you to create, lookup, and manage events in your calendar. 
 
-# CalendarTourCardActions
+# CalendarTourCardActions()
 - ```
 {
     "type": "ActionSet",
@@ -51,10 +51,10 @@
 }
 ```
 
-# PeopleTourTitle
+# PeopleTourTitle()
 - People
 
-# PeopleTourSubtitle
+# PeopleTourSubtitle()
 - Discover details about your colleagues
 
 # PeopleTourCardHeader()
@@ -75,13 +75,13 @@
 }
 ```
 
-# BotTourTitle
+# BotTourTitle()
 - You can ask me about...
 
-# BotTourOptions
+# BotTourOptions()
 - ${createArray(BotTourOption(CalendarIconUrl(), CalendarTourTitle(), CalendarTourSubtitle(), "CalendarTour"), BotTourOption(ContactIconUrl(), PeopleTourTitle(), PeopleTourSubtitle(), "PeopleTour"))}
 
-# BotTourHeader
+# BotTourHeader()
 - ```
 {
     "type": "Container",

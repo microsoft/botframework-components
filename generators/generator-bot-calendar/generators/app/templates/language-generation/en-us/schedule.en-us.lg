@@ -85,7 +85,7 @@
 }
 ```
 
-# ScheduleNoResultsBody
+# ScheduleNoResultsBody()
 - ```
 {
     "type": "Container",
