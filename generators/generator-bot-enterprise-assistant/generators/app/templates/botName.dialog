@@ -85,7 +85,7 @@
           "$designer": {
             "id": "D2FtKS"
           },
-          "name": "EnterpriseAssistant.OnIntent_BotTour"
+          "name": "<%= botName %>.OnIntent_BotTour"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -95,7 +95,8 @@
           "activityProcessed": true,
           "dialog": "BotTourDialog"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -110,7 +111,7 @@
           "$designer": {
             "id": "hGYYdd"
           },
-          "name": "EnterpriseAssistant.OnIntent_Cancel"
+          "name": "<%= botName %>.OnIntent_Cancel"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -127,7 +128,7 @@
           "activityProcessed": true
         }
       ],
-      "condition": "=turn.recognized.score > 0.9"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -142,7 +143,7 @@
           "$designer": {
             "id": "2mE4eA"
           },
-          "name": "EnterpriseAssistant.OnIntent_Help"
+          "name": "<%= botName %>.OnIntent_Help"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -151,7 +152,8 @@
           },
           "activity": "${SendActivity_zlXdEy()}"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -166,7 +168,7 @@
           "$designer": {
             "id": "tXHBt0"
           },
-          "name": "EnterpriseAssistant.OnIntent_Feedback"
+          "name": "<%= botName %>.OnIntent_Feedback"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -176,7 +178,8 @@
           "activityProcessed": true,
           "dialog": "FeedbackDialog"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnChooseIntent",
@@ -267,10 +270,7 @@
                 "id": "iP9W7S"
               }
             }
-          ],
-          "top": 3,
-          "cardNoMatchResponse": "Thanks for the feedback.",
-          "cardNoMatchText": "None of the above."
+          ]
         },
         {
           "$kind": "Microsoft.TextInput",
@@ -282,15 +282,6 @@
           "allowInterruptions": false,
           "property": "turn.intentChoice",
           "value": "=@userChosenIntent",
-          "top": 3,
-          "cardNoMatchResponse": "Thanks for the feedback.",
-          "cardNoMatchText": "None of the above.",
-          "activeLearningCardTitle": "Did you mean:",
-          "threshold": 0.3,
-          "noAnswer": "Sorry, I did not find an answer.",
-          "hostname": "=settings.qna.hostname",
-          "endpointKey": "=settings.qna.endpointkey",
-          "knowledgeBaseId": "=settings.qna.knowledgebaseid",
           "prompt": "${TextInput_Prompt_YQSOpf()}"
         },
         {
@@ -317,16 +308,7 @@
               },
               "activity": "${SendActivity_ufxNYo()}"
             }
-          ],
-          "top": 3,
-          "cardNoMatchResponse": "Thanks for the feedback.",
-          "cardNoMatchText": "None of the above.",
-          "activeLearningCardTitle": "Did you mean:",
-          "threshold": 0.3,
-          "noAnswer": "Sorry, I did not find an answer.",
-          "hostname": "=settings.qna.hostname",
-          "endpointKey": "=settings.qna.endpointkey",
-          "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+          ]
         }
       ]
     },
@@ -342,7 +324,7 @@
           "$designer": {
             "id": "nekhCR"
           },
-          "name": "EnterpriseAssistant.UnknownIntent"
+          "name": "<%= botName %>.UnknownIntent"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -394,7 +376,7 @@
           "$designer": {
             "id": "1WJLFA"
           },
-          "name": "EnterpriseAssistant.OnError"
+          "name": "<%= botName %>.OnError"
         },
         {
           "$kind": "Microsoft.TelemetryTrackEventAction",
@@ -465,7 +447,7 @@
           "$designer": {
             "id": "qwgcOJ"
           },
-          "name": "EnterpriseAssistant.OnIntent_Calendar"
+          "name": "<%= botName %>.OnIntent_Calendar"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -491,7 +473,7 @@
           "$designer": {
             "id": "Ii2PVZ"
           },
-          "name": "EnterpriseAssistant.OnIntent_People"
+          "name": "<%= botName %>.OnIntent_People"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -517,7 +499,7 @@
           "$designer": {
             "id": "egazMG"
           },
-          "name": "EnterpriseAssistant.OnEvent_ConnectToSkill"
+          "name": "<%= botName %>.OnEvent_ConnectToSkill"
         },
         {
           "$kind": "Microsoft.SetProperty",
