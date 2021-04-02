@@ -188,10 +188,7 @@ module.exports = class extends BaseGenerator {
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
     appSettings.runtime.command = {
       [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
-      [platforms.js]: {
-        [integrations.functions]: 'func start',
-        [integrations.webapp]: 'node index.js',
-      }[integration],
+      [platforms.js]: 'npm run dev --',
     }[platform];
 
     for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
@@ -251,9 +248,15 @@ module.exports = class extends BaseGenerator {
       name: botName,
       private: true,
       scripts: {
-        start: 'node index.js',
+        dev: {
+          [integrations.functions]: 'cross-env NODE_ENV=dev func start',
+          [integrations.webapp]: 'cross-env NODE_ENV=dev node index.js',
+        }[integration],
       },
       dependencies: Object.assign(
+        {
+          'cross-env': 'latest',
+        },
         this.packageReferences.reduce(
           (acc, { name, version }) => Object.assign(acc, { [name]: version }),
           {}
