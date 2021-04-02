@@ -42,9 +42,6 @@ module.exports = class extends BaseGenerator {
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             skillHostEndpoint: 'http://localhost:3980/api/skills',
-            skillConfiguration: {
-              isSkill: false,
-            },
           });
 
           appSettings.runtimeSettings.features.showTyping = true;
