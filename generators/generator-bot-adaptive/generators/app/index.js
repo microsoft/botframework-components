@@ -177,6 +177,7 @@ module.exports = class extends BaseGenerator {
 
   _writeApplicationSettings() {
     const { botName, integration, platform } = this.options;
+    const { applicationSettingsDirectory = '.' } = this;
 
     const appSettings = this.fs.readJSON(
       this.templatePath('assets', 'appsettings.json')
@@ -209,7 +210,7 @@ module.exports = class extends BaseGenerator {
     this.fs.writeJSON(
       this.destinationPath(
         botName,
-        this.applicationSettingsDirectory,
+        applicationSettingsDirectory,
         'appsettings.json'
       ),
       appSettings
