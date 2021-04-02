@@ -85,7 +85,7 @@
           "$designer": {
             "id": "D2FtKS"
           },
-          "name": "EnterpriseAssistant.OnIntent_BotTour"
+          "name": "<%= botName %>.OnIntent_BotTour"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -95,7 +95,8 @@
           "activityProcessed": true,
           "dialog": "BotTourDialog"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -110,7 +111,7 @@
           "$designer": {
             "id": "hGYYdd"
           },
-          "name": "EnterpriseAssistant.OnIntent_Cancel"
+          "name": "<%= botName %>.OnIntent_Cancel"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -127,7 +128,7 @@
           "activityProcessed": true
         }
       ],
-      "condition": "=turn.recognized.score > 0.9"
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -142,7 +143,7 @@
           "$designer": {
             "id": "2mE4eA"
           },
-          "name": "EnterpriseAssistant.OnIntent_Help"
+          "name": "<%= botName %>.OnIntent_Help"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -151,7 +152,8 @@
           },
           "activity": "${SendActivity_zlXdEy()}"
         }
-      ]
+      ],
+      "condition": "=turn.recognized.score > 0.8"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -166,7 +168,7 @@
           "$designer": {
             "id": "tXHBt0"
           },
-          "name": "EnterpriseAssistant.OnIntent_Feedback"
+          "name": "<%= botName %>.OnIntent_Feedback"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -175,6 +177,138 @@
           },
           "activityProcessed": true,
           "dialog": "FeedbackDialog"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnChooseIntent",
+      "$designer": {
+        "id": "YDQnEj"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "LMu0fC"
+          },
+          "assignments": [
+            {
+              "value": "=turn.recognized.candidates[0]",
+              "property": "dialog.luisResult"
+            },
+            {
+              "property": "dialog.qnaResult",
+              "value": "=turn.recognized.candidates[1]"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1flIQn"
+          },
+          "condition": "dialog.luisResult.score >= 0.9 && dialog.qnaResult.score <= 0.5",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "86jqYT"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "YOHNju"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1n7wbU"
+          },
+          "condition": "dialog.luisResult.score <= 0.5 && dialog.qnaResult.score >= 0.9",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "NAyC56"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.qnaResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "3fxdQ1"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cRerUu"
+          },
+          "condition": "dialog.qnaResult.score <= 0.05",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "rVjgzi"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "iP9W7S"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "YQSOpf"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "property": "turn.intentChoice",
+          "value": "=@userChosenIntent",
+          "prompt": "${TextInput_Prompt_YQSOpf()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Xh7TIa"
+          },
+          "condition": "turn.intentChoice != 'none'",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "HUqDv8"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog[turn.intentChoice].result"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ufxNYo"
+              },
+              "activity": "${SendActivity_ufxNYo()}"
+            }
+          ]
         }
       ]
     },
@@ -342,7 +476,7 @@
           "$designer": {
             "id": "nekhCR"
           },
-          "name": "EnterpriseAssistant.UnknownIntent"
+          "name": "<%= botName %>.UnknownIntent"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -394,7 +528,7 @@
           "$designer": {
             "id": "1WJLFA"
           },
-          "name": "EnterpriseAssistant.OnError"
+          "name": "<%= botName %>.OnError"
         },
         {
           "$kind": "Microsoft.TelemetryTrackEventAction",
@@ -465,7 +599,7 @@
           "$designer": {
             "id": "qwgcOJ"
           },
-          "name": "EnterpriseAssistant.OnIntent_Calendar"
+          "name": "<%= botName %>.OnIntent_Calendar"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -491,7 +625,7 @@
           "$designer": {
             "id": "Ii2PVZ"
           },
-          "name": "EnterpriseAssistant.OnIntent_People"
+          "name": "<%= botName %>.OnIntent_People"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -517,7 +651,7 @@
           "$designer": {
             "id": "egazMG"
           },
-          "name": "EnterpriseAssistant.OnEvent_ConnectToSkill"
+          "name": "<%= botName %>.OnEvent_ConnectToSkill"
         },
         {
           "$kind": "Microsoft.SetProperty",
