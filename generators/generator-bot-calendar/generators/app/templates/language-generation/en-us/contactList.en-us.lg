@@ -23,7 +23,7 @@
 # ContactListDefaultValueResponse()
 - OK, let's move on without attendees.
 
-# ContactListTitle
+# ContactListTitle()
 - Contacts
 
 # ContactListItem(item)
@@ -50,7 +50,7 @@
 }
 ```
 
-# ContactListActions
+# ContactListActions()
 - ```
 {
     "type": "ActionSet",

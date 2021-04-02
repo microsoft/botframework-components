@@ -44,7 +44,7 @@
 # SendActivity_VLAwOi()
 - ${CancelRejected()}
 
-# CreateConfirmNotUnderstood
+# CreateConfirmNotUnderstood()
 [Activity
     text = Sorry, I didn't understand that. ${CreateConfirmPrompt()}
     attachments = ${json(EventDetailEditCard($event))}
@@ -56,7 +56,7 @@
     attachments=${json(EventDetailEditCard($event))}
 ]
 
-# CreateConfirmText
+# CreateConfirmText()
 - Does this look right?
 - Is this correct?
 - Are you ready to send it?

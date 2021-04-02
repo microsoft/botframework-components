@@ -11,10 +11,10 @@
 - Did the bot meet your expectations?
 - Did you like this interaction with the bot?
 
-# FeedbackTitle
+# FeedbackTitle()
 - Feedback
 
-# FeedbackHeader
+# FeedbackHeader()
 - ```
 {
     "type": "Container",
@@ -55,7 +55,7 @@
 }
 ```
 
-# FeedbackBody
+# FeedbackBody()
 - ```
 {
             "type": "Container",
@@ -157,7 +157,8 @@
             ]
         }
 ```
-# FeedbackActions
+
+# FeedbackActions()
 - ```
 {
     "type": "ActionSet",
