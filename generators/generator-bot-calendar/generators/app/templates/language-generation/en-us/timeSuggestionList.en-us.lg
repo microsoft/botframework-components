@@ -26,7 +26,7 @@
 # TimeSuggestionNumericalChoiceResponse()
 - Sure, let’s continue with the ${addOrdinal(int($selectedIndex))} option.
 
-# TimeSuggestionListTitle
+# TimeSuggestionListTitle()
 - Suggested times
 
 # TimeSuggestionListItem(item)
@@ -71,7 +71,7 @@
 }
 ```
 
-# TimeSuggestionListActions
+# TimeSuggestionListActions()
 - ```
 {
     "type": "ActionSet",

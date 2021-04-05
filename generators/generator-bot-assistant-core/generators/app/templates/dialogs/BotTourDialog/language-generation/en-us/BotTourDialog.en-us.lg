@@ -68,13 +68,14 @@
 -```
 {
    "type":"Container",
+   "spacing": "medium",
    "items":[
       {
          "type":"ColumnSet",
          "columns":[
             {
                "type":"Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                "items":[
                   {
                      "type":"Image",
@@ -87,13 +88,13 @@
             {
                 "type":"Column",
                 "width":90,
-                "verticalContentAlignment": "center",
+                "spacing":"small",
+                "verticalContentAlignment": "top",
                 "items":[
                     {
                         "type":"TextBlock",
                         "text":"${SkillTitle()}",
-                        "size":"medium",
-                        "spacing": "Small"
+                        "size":"medium"
                     },
                     {
                         "type":"TextBlock",

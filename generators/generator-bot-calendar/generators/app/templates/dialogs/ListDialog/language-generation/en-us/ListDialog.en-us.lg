@@ -24,13 +24,13 @@
 # SendActivity_D6gEbV()
 - That's the end of the list.
 
-# InitialChoicePrompt
+# InitialChoicePrompt()
 [Activity
     text = ${if($activePrompt != null, template($activePrompt), null)}
     attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
 
-# RepromptChoicePrompt
+# RepromptChoicePrompt()
 [Activity
     deliveryMode = update
     id = ${turn.activity.replyToId}

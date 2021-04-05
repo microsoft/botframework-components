@@ -7,13 +7,13 @@
 # IconSizeSmall()
 - Small
 
-# TitleSize
+# TitleSize()
 - Medium
 
-# SubtitleSize
+# SubtitleSize()
 - Small
 
-# BodySize
+# BodySize()
 - Small
 
 # CardTemplate(header, body)

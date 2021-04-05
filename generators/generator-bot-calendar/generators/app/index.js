@@ -26,8 +26,6 @@ module.exports = class extends BaseGenerator {
               duration: 30,
             },
           });
-
-          appSettings.runtimeSettings.features.setSpeak = true;
         },
       })
     );
