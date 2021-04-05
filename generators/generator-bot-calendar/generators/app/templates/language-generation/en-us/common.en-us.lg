@@ -9,17 +9,17 @@
 - ELSE: 
     - Hi there 🖐, ${IntroMessage()}
 
-# IntroMessage
+# IntroMessage()
 - I can help you out with calendar related questions and tasks.
 - I'm ready to help you with your schedule and upcoming events.
 - I’m here to help you make the most of your day and get things done quickly.
 
-# HelpMessage
+# HelpMessage()
 - I can help you out with calendar questions. You can ask: **What's on my calendar today?** or **Create a new event**.
 - I can help you with calendar requests. Try saying: **Create a new meeting** or **What's on my calendar tomorrow?**.
 - I'm here to help with your Calendar. Get started with **When is my next meeting?** or **Create a new meeting**.
 
-# HelpActions
+# HelpActions()
 - ```
 {
     "type": "ActionSet",
@@ -30,7 +30,7 @@
 }
 ```
 
-# GeneralErrorMessage
+# GeneralErrorMessage()
 - I'm not sure I understand. Can you please try again?
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?

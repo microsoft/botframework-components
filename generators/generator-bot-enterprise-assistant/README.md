@@ -12,7 +12,7 @@ Includes support for:
 - Submitting feedback about the bot
 - Error handling in conversations
 - Repeat the previous question
-- Chit chat with QnA Maker ([friendly personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
+- Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
 - Disambiguation of NLP results
 - Calendar and People skills configured out of the box
 

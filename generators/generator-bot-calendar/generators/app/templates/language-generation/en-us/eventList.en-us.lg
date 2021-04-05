@@ -29,7 +29,7 @@
 # EventListDefaultValueResponse()
 - OK, let's move on. 
 
-# EventListTitle
+# EventListTitle()
 - Find Event
 
 # EventListItem(item)

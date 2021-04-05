@@ -23,8 +23,6 @@ module.exports = class extends BaseGenerator {
           Object.assign(appSettings, {
             oauthConnectionName: '',
           });
-
-          appSettings.runtimeSettings.features.setSpeak = true;
         },
       })
     );

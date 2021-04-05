@@ -26,10 +26,10 @@
 # SendActivity_l6vgAo_attachment_a0ogKC()
 - ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
 
-# CalendarTourTitle
+# CalendarTourTitle()
 - Calendar
 
-# CalendarTourSubtitle
+# CalendarTourSubtitle()
 - Tasks involving your calendar
 
 # CalendarTourCardHeader()
@@ -38,23 +38,23 @@
 # CalendarTourCardText()
 - This skill allows you to create, lookup, and manage events in your calendar. 
 
-# CalendarTourCardActions
+# CalendarTourCardActions()
 - ```
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Set up a meeting for tomorrow at 9 AM", "calendar")},
-        ${BuildSubmitAction("When do I have breaks today?", "calendar")},
-        ${BuildSubmitAction("What is scheduled for tomorrow?", "calendar")},
-        ${BuildSubmitAction("Update my next meeting", "calendar")}
+        ${BuildSubmitAction("Set up a meeting for tomorrow at 9 AM", "Calendar")},
+        ${BuildSubmitAction("When do I have breaks today?", "Calendar")},
+        ${BuildSubmitAction("What is scheduled for tomorrow?", "Calendar")},
+        ${BuildSubmitAction("Update my next meeting", "Calendar")}
     ]
 }
 ```
 
-# PeopleTourTitle
+# PeopleTourTitle()
 - People
 
-# PeopleTourSubtitle
+# PeopleTourSubtitle()
 - Discover details about your colleagues
 
 # PeopleTourCardHeader()
@@ -68,20 +68,20 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Who is a peer of...", "people")},
-        ${BuildSubmitAction("Who is the manager of...", "people")},
-        ${BuildSubmitAction("Who reports to...", "people")}
+        ${BuildSubmitAction("Who is a peer of...", "People")},
+        ${BuildSubmitAction("Who is the manager of...", "People")},
+        ${BuildSubmitAction("Who reports to...", "People")}
     ]
 }
 ```
 
-# BotTourTitle
+# BotTourTitle()
 - You can ask me about...
 
-# BotTourOptions
+# BotTourOptions()
 - ${createArray(BotTourOption(CalendarIconUrl(), CalendarTourTitle(), CalendarTourSubtitle(), "CalendarTour"), BotTourOption(ContactIconUrl(), PeopleTourTitle(), PeopleTourSubtitle(), "PeopleTour"))}
 
-# BotTourHeader
+# BotTourHeader()
 - ```
 {
     "type": "Container",
@@ -126,13 +126,14 @@
 -```
 {
    "type":"Container",
+   "spacing": "medium",
    "items":[
       {
          "type":"ColumnSet",
          "columns":[
             {
                "type":"Column",
-                "verticalContentAlignment": "center",
+                "verticalContentAlignment": "top",
                "items":[
                   {
                      "type":"Image",
@@ -145,14 +146,13 @@
             {
                 "type":"Column",
                 "width":90,
-                "verticalContentAlignment": "center",
+                "spacing":"small",
+                "verticalContentAlignment": "top",
                 "items":[
                     {
                         "type":"TextBlock",
                         "text":"${title}",
-                        "size":"medium",
-                        "spacing": "Small",
-                        "color":"accent"
+                        "size":"medium"
                     },
                     {
                         "type":"TextBlock",
@@ -160,8 +160,7 @@
                         "wrap":true,
                         "size":"default",
                         "spacing": "Small",
-                        "maxLines":2,
-                        "color":"accent"
+                        "maxLines":2
                     }
                ]
             }
