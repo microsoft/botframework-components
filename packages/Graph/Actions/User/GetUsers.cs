@@ -52,7 +52,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             string filterClause = $"startsWith(displayName, '{nameToSearch}') or startsWith(surname, '{nameToSearch}') or startsWith(givenname, '{nameToSearch}')";
 
-            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause);
+            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause).Select("id,displayName,mail,officeLocation,businessPhones,jobTitle,department");
 
             // Apply the Top() filter if there is a value to apply
             if (maxCount > 0)

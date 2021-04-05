@@ -51,7 +51,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
             int maxCount = (int)parameters["MaxResults"];
 
             // Create the request first then apply the Top() after
-            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request();
+            // TODO: Make this SELECT() clause configurable for different column names
+            // EXPLAINER: The reason we are limiting the field is for two reasons:
+            //            1. Limit the size of the graph object payload needed to be transferred over the wire
+            //            2. Reduces the exposure of end user PII (Personally Identifiable Information) in our system for privacy reasons. It's generally good practice to use what you need.
+            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request().Select("id,displayName,mail,businessPhones,department,jobTitle,officeLocation");
 
             if (maxCount > 0)
             {
