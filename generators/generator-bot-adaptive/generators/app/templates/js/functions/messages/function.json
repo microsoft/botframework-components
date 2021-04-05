@@ -16,6 +16,6 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../triggers.js",
+  "scriptFile": "../index.js",
   "entryPoint": "messageTrigger"
 }

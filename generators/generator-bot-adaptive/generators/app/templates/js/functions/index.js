@@ -1,14 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const { start } = require('botbuilder-dialogs-adaptive-runtime-integration-express');
+const { triggers } = require('botbuilder-dialogs-adaptive-runtime-integration-azure-functions');
 
-(async function () {
-  try {
-    await start(process.cwd(), <%- settingsDirectory %>);
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }
-})();
-
+module.exports = triggers(process.cwd(), <%- settingsDirectory %>);
