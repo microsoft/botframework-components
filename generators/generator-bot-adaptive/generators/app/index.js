@@ -176,12 +176,8 @@ module.exports = class extends BaseGenerator {
   }
 
   _writeApplicationSettings() {
-    const {
-      applicationSettingsDirectory = '.',
-      botName,
-      integration,
-      platform,
-    } = this.options;
+    const { botName, integration, platform } = this.options;
+    const { applicationSettingsDirectory = '.' } = this;
 
     const appSettings = this.fs.readJSON(
       this.templatePath('assets', 'appsettings.json')
@@ -192,7 +188,7 @@ module.exports = class extends BaseGenerator {
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
     appSettings.runtime.command = {
       [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
-      [platforms.js]: 'node index.js',
+      [platforms.js]: 'npm run dev --',
     }[platform];
 
     for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
@@ -237,7 +233,7 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const sdkVersion = '~4.13.0-preview.rc2';
+    const sdkVersion = '~4.13.0-preview.rc3';
 
     const dependencies = {
       [integrations.functions]: {
@@ -248,28 +244,25 @@ module.exports = class extends BaseGenerator {
       },
     }[integration];
 
-    const devDependencies =
-      {
-        // Note: in dev we need a server for testing bots via Composer
-        [integrations.functions]: {
-          'botbuilder-dialogs-adaptive-runtime-integration-express': sdkVersion,
-        },
-      }[integration] || {};
-
     this.fs.writeJSON(this.destinationPath(botName, 'package.json'), {
       name: botName,
       private: true,
       scripts: {
-        start: 'node index.js',
+        dev: {
+          [integrations.functions]: 'cross-env NODE_ENV=dev func start',
+          [integrations.webapp]: 'cross-env NODE_ENV=dev node index.js',
+        }[integration],
       },
       dependencies: Object.assign(
+        {
+          'cross-env': 'latest',
+        },
         this.packageReferences.reduce(
           (acc, { name, version }) => Object.assign(acc, { [name]: version }),
           {}
         ),
         dependencies
       ),
-      devDependencies,
     });
   }
 };
