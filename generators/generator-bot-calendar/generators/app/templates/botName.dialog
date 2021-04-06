@@ -970,6 +970,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3LDDfO"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "dwMTAM"
@@ -997,7 +1010,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1033,6 +1047,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6oJkrQ"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "DCQfYO"
@@ -1060,7 +1087,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1096,6 +1124,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "etUeNh"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "DWCcXP"
@@ -1119,7 +1160,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1155,6 +1197,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "W3MerJ"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "5FjD7P"
@@ -1174,7 +1229,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1210,6 +1266,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "i9hL2l"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "ASrX2S"
@@ -1233,7 +1302,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1269,6 +1339,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9to0Tg"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "x5UHxV"
@@ -1292,7 +1375,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1328,6 +1412,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fbyOgf"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "7UAwuX"
@@ -1351,7 +1448,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1387,6 +1485,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4tNSAB"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "ctjClr"
@@ -1410,7 +1521,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
@@ -1446,6 +1558,19 @@
           "eventName": "SetOptions"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "QOk2Kr"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "GDc4WO"
@@ -1469,7 +1594,8 @@
           "activityProcessed": true,
           "dialog": "UpdateEventDialog",
           "options": {
-            "options": "=$options"
+            "options": "=$options",
+            "event": "=$event"
           }
         },
         {
