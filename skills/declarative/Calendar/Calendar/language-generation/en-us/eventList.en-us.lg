@@ -1,0 +1,122 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+[Functions](functions.en-us.lg)
+
+# EventDisplayListPrompt()
+- I've found ${count($items)} events that match your request:
+- I've found ${count($items)} events that match your request:
+- There are ${count($items)} events that match your search:
+- ${count($items)} events match your search criteria:
+- You have ${count($items)} events that match your search:
+
+# EventListPrompt()
+- I've found ${count($items)} events that match your request. Please select an option:
+- I've found ${count($items)} events that match your request. Please select an option:
+- There are ${count($items)} events that match your search. Please select an option:
+- ${count($items)} events match your search criteria. Please select an option:
+- You have ${count($items)} events that match your search. Please select an option:
+
+# EventListShowMorePrompt()
+- How about these options:
+- What about these options:
+- Sure, relevant options are: 
+
+# EventListSkipResponse()
+- 
+
+# EventListDefaultValueResponse()
+- OK, let's move on. 
+
+# EventListTitle()
+- Find Event
+
+# EventListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": ${BuildSubmitAction(item.id, item.index)},
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
+                            "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${EventTitleContainer(item)}
+    ]
+}
+```
+
+# EventDisplayListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": ${SelectEventAction(item)},
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
+                            "horizontalAlignment": "Right",
+                            "size": "${BodySize()}",
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${formatDateTime(item.start.dateTime, 'dddd, MMM d')}",
+                            "spacing": "Small",
+                            "size": "${BodySize()}"
+                        }
+                    ]
+                }
+            ]
+        },
+        ${EventTitleContainer(item)}
+    ]
+}
+```
+
+# EventListActions()
+- 
