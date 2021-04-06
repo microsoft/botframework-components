@@ -6,16 +6,16 @@ This Bot Project was created using the Enterprise Assistant template, and contai
 
 To test this bot locally, follow these instructions:
 
-## Provision Azure Resources to Host Bot
+### Provision Azure Resources to Host Bot
 In order to test this bot locally, you will need the following services provisioned in Azure:
 - An Azure Bot Registration for your **root bot** and **each skill**
 - Language Understanding (LUIS)
 - QnA Maker
 
-## Configure Authentication
+### Configure Authentication
 You must configure an authentication connection on your **skill bot** Azure Bot Registrations in order to log in and access Microsoft Graph resources. 
 
-### Using Azure Portal
+#### Using Azure Portal
 * Open your **Azure Bot Service** resource and go to the **Settings** tab
 * Under **OAuth Connection Settings**, click **Add setting**
 * Configure select **Azure Active Directory v2** from the provider dropdown then fill out the fields with the following:
@@ -30,7 +30,7 @@ You must configure an authentication connection on your **skill bot** Azure Bot 
   "oauthConnectionName": "[your connection name]"
   ```
 
-### Using [Azure CLI]()
+#### Using [Azure CLI]()
 1. Get your Microsoft App Object ID (used in later steps):
     ```
     az ad app show --id <bot-app-id> --query objectId
@@ -60,7 +60,7 @@ You must configure an authentication connection on your **skill bot** Azure Bot 
     ```
 
 
-# Configure Skill connections
+### Configure Skill connections
 After provisioning your Azure resources and configuring your authentication connections, update the following settings in your Composer bot settings:
 - In your root bot, set the following properties:
     - Microsoft App Id
