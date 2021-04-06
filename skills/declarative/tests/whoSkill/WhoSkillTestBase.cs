@@ -39,6 +39,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             this.testGraphClient = new Mock<IGraphServiceClient>();
             this.TestUsers = new List<User>();
 
+            this.SetupMe();
             this.SetupSearch();
 
             MSGraphClient.RegisterTestInstance(this.testGraphClient.Object);
@@ -84,6 +85,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
             var userRequest = new Mock<IUserRequest>();
             userRequest.Setup(req => req.GetAsync()).ReturnsAsync(profile);
+            userRequest.Setup(req => req.Select(It.IsAny<string>())).Returns(userRequest.Object);
             userRequestBuilder.Setup(req => req.Request()).Returns(userRequest.Object);
 
             // Attach manager
@@ -98,6 +100,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
                 // Simulate manager not found
                 managerDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new ServiceException(new Error(), null, System.Net.HttpStatusCode.NotFound));
             }
+
+            managerDirectoryRequest.Setup(req => req.Select(It.IsAny<string>())).Returns(managerDirectoryRequest.Object);
 
             var managerDirectoryRequestBuilder = new Mock<IDirectoryObjectWithReferenceRequestBuilder>();
             managerDirectoryRequestBuilder.Setup(req => req.Request()).Returns(managerDirectoryRequest.Object);
@@ -119,6 +123,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             }
 
             directReportsDirectoryRequest.Setup(req => req.Top(It.IsAny<int>())).Returns(directReportsDirectoryRequest.Object);
+            directReportsDirectoryRequest.Setup(req => req.Select(It.IsAny<string>())).Returns(directReportsDirectoryRequest.Object);
 
             var directReportsDirectoryRequestBuilder = new Mock<IUserDirectReportsCollectionWithReferencesRequestBuilder>();
             directReportsDirectoryRequestBuilder.Setup(req => req.Request()).Returns(directReportsDirectoryRequest.Object);
@@ -157,6 +162,19 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             this.testGraphClient.SetupGet(client => client.Users[profile.Id]).Returns(userRequestBuilder.Object);
         }
 
+        private void SetupMe()
+        {
+            User me = this.AddUserProfile("Test User", "testuser@contoso.com", "123-123-1234", "Moon", "Astronaut", false);
+
+            Mock<IUserRequest> userRequest = new Mock<IUserRequest>();
+            userRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(me);
+
+            Mock<IUserRequestBuilder> userRequestBuilder = new Mock<IUserRequestBuilder>();
+            userRequestBuilder.Setup(req => req.Request()).Returns(userRequest.Object);
+
+            this.testGraphClient.SetupGet(client => client.Me).Returns(userRequestBuilder.Object);
+        }
+
         /// <summary>
         /// Sets up the search scenario
         /// </summary>
@@ -168,6 +186,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             var usersSearchRequest = new Mock<IGraphServiceUsersCollectionRequest>();
             usersSearchRequest.Setup(req => req.Top(It.IsAny<int>())).Returns(usersSearchRequest.Object);
             usersSearchRequest.Setup(req => req.Filter(It.IsAny<string>())).Returns(usersSearchRequest.Object);
+            usersSearchRequest.Setup(req => req.Select(It.IsAny<string>())).Returns(usersSearchRequest.Object);
             usersSearchRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(usersSearchResultPage.Object);
 
             var usersSearchRequestBuilder = new Mock<IGraphServiceUsersCollectionRequestBuilder>();
