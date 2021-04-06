@@ -4,7 +4,7 @@
   "userTokenMocks": [
     "nomagiccode.mock"
   ],
-  "dialog": "whoSkill",
+  "dialog": "People",
   "script": [
     {
       "$kind": "Microsoft.Test.UserConversationUpdate",
