@@ -4864,6 +4864,14 @@
             "dialog.peers.maxResults"
           ]
         },
+        "fieldsToSelect": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Fields To Select",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "examples": [
+            "dialog.fieldsToSelect"
+          ]
+        },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
