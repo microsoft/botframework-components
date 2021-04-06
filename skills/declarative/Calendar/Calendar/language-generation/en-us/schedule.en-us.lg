@@ -1,0 +1,125 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[Actions](actions.en-us.lg)
+
+# ScheduleResponseText(date, events)
+- IF: ${ events == null || count(events) == 0 }
+    - You don't have anything scheduled for ${FormatDate(date)}.
+- ELSEIF: ${ count(events) == 1 }
+    - I found 1 event for ${FormatDate(date)}. It’s at ${FormatTime(events[0].start.datetime)}, ${events[0].Subject}. The attendees are ${ContactConfirmWithOne(events[0].Attendees)}. 
+- ELSEIF: ${ count(events) == 2 }
+    - I see 2 events for ${FormatDate(date)}. First up at ${FormatTime(events[0].start.datetime)}, ${events[0].Subject}. And then at ${FormatTime(events[1].start.datetime)}, ${events[1].Subject}.
+- ELSE:
+    - I found ${count(events)} events for ${FormatDate(date)}.
+
+# ContactConfirmWithOne(attendees)
+- IF: ${ attendees == null || count(attendees) == 0 }
+    - no attendees
+- ELSE IF: ${ count(attendees) == 1 }
+    - ${attendees[0].emailAddress.name}
+- ELSE:
+    - ${attendees[0].emailAddress.name} and ${count(attendees) - 1} more
+    
+# ScheduleDateRangeResponseText(count, startDate, endDate)
+- You have ${count} events planned from ${FormatDate(startDate)} to ${FormatDate(endDate)}. First up on ${FormatDate(startDate)}:
+
+# ScheduleHeader(date, events)
+- ${CardHeader(CalendarIconUrl(), ScheduleSubtitle(date), null, ScheduleCounter(events))}
+
+# ScheduleTitle
+- Calendar
+
+# ScheduleSubtitle(date)
+- ${CapitalizeFirstLetter(FormatDate(date))}
+
+# ScheduleCounter(events)
+- ${count(events)} ${Pluralize(count(events), 'event', 'events')}
+
+# ScheduleList(items)
+- IF: ${count(items) == 0}
+    - ${ScheduleNoResultsBody()}
+- ELSE: 
+    - ${ExpandableListCardBody(foreach(items, item, ScheduleItem(item)), 5)}
+
+# ScheduleItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "selectAction": ${GetEventByIdAction(item.id)},
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "verticalContentAlignment": "Top",
+                    "width": "105px",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${FormatTimeRange(item.start.dateTime, item.end.dateTime)}",
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Right",
+                            "size": "${BodySize()}"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "verticalContentAlignment": "Top",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.Subject}",
+                            "size": "${BodySize()}",
+                            "wrap": "true",
+                            "maxLines": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# ScheduleNoResultsBody()
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "You have no meetings, congrats!",
+            "size": "${BodySize()}",
+            "spacing": "Medium"
+        }
+    ],
+    "spacing": "Medium",
+    "separator": true,
+    "verticalContentAlignment": "Center"
+}
+```
+
+# ScheduleActions(date, dayCount)
+- IF: ${ dayCount == 1 }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            ${CreateEventAction(date)},
+            ${GetEventsAction(addDays(formatDateTime(date), 1))}
+        ]
+    }
+    ```
+- ELSE: 
+    - ```
+        {
+        "type": "ActionSet",
+        "actions": [
+            ${CreateEventAction(date)}
+        ]
+    }
+    ```

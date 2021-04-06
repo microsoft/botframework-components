@@ -6,7 +6,7 @@
   },
   "oauthConnectionName": "Outlook",
   "luis": {
-    "name": "calendarSkill",
+    "name": "Calendar",
     "authoringKey": "00000000000000000000000000000000",
     "endpointKey": "00000000000000000000000000000000",
     "authoringRegion": "westus",
@@ -22,7 +22,7 @@
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
-    "calendarskill_en_us_lu": {
+    "Calendar_en_us_lu": {
       "appId": "00000000-0000-0000-0000-000000000000",
       "version": "0.1"
     },
