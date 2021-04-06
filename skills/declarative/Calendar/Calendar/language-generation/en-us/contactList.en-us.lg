@@ -1,0 +1,60 @@
+[Common](common.en-us.lg)
+
+# ContactListRemovePrompt()
+- Who should I remove?
+- Which contact should I remove?
+
+# ContactListPrompt()
+- I've found multiple results for **${$additionalOptions.contactName}**:
+- I've found more than one **${$additionalOptions.contactName}**: 
+- There are multiple results for **${$additionalOptions.contactName}**:
+- There seem to be a few results for **${$additionalOptions.contactName}**:
+
+# ContactListShowMorePrompt()
+- How about these contacts:
+- What about these contacts:
+- Sure, relevant contacts are: 
+
+# ContactListSkipResponse()
+- Got it, none of these contacts.
+- Sure. Let's move on.
+- OK, you can invite attendees to this meeting later on.
+
+# ContactListDefaultValueResponse()
+- OK, let's move on without attendees.
+
+# ContactListTitle()
+- Contacts
+
+# ContactListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${item.name}",
+            "size": "${BodySize()}",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${item.email}",
+            "size": "${BodySize()}",
+            "spacing": "Small"
+        }
+    ],
+    "selectAction": ${BuildSubmitAction(item.name, item.index)}
+}
+```
+
+# ContactListActions()
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+    ]
+}
+```

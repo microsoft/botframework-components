@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{8364D261-E67A-40D3-88C6-93A7458633F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calendar", "Calendar\Calendar.csproj", "{6BA1AA4A-8A29-4DDE-B3B6-35CFFEC491EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8364D261-E67A-40D3-88C6-93A7458633F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8364D261-E67A-40D3-88C6-93A7458633F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8364D261-E67A-40D3-88C6-93A7458633F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8364D261-E67A-40D3-88C6-93A7458633F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA1AA4A-8A29-4DDE-B3B6-35CFFEC491EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA1AA4A-8A29-4DDE-B3B6-35CFFEC491EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA1AA4A-8A29-4DDE-B3B6-35CFFEC491EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA1AA4A-8A29-4DDE-B3B6-35CFFEC491EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0786EB30-2DEB-41BE-BDF3-887074BD4BCB}
+	EndGlobalSection
+EndGlobal

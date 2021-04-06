@@ -32,7 +32,7 @@
     <None Include="TestAssets\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\calendarSkill\calendarskill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+    <None Include="..\..\Calendar\Calendar\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

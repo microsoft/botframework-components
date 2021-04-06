@@ -10,7 +10,7 @@
   "userTokenMocks": [
     "nomagiccode.mock"
   ],
-  "dialog": "calendarskill",
+  "dialog": "Calendar",
   "script": [
     {
       "$kind": "Microsoft.Test.UserActivity",
