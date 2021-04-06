@@ -98,7 +98,8 @@
               },
               "token": "=user.token.token",
               "userId": "=$UserFound.Id",
-              "resultProperty": "dialog.Result"
+              "resultProperty": "dialog.Result",
+              "fieldsToSelect": "id,displayName,mail,businessPhones,department,jobTitle,officeLocation"
             },
             {
               "$kind": "Microsoft.TraceActivity",
