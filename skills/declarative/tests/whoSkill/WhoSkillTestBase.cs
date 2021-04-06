@@ -162,6 +162,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             this.testGraphClient.SetupGet(client => client.Users[profile.Id]).Returns(userRequestBuilder.Object);
         }
 
+        /// <summary>
+        /// Setup the "Me" call to get user profile after authentication
+        /// </summary>
         private void SetupMe()
         {
             User me = this.AddUserProfile("Test User", "testuser@contoso.com", "123-123-1234", "Moon", "Astronaut", false);
