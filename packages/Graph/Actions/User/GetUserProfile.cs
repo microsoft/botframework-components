@@ -43,12 +43,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
         internal override async Task<User> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
+            string fieldsToSelect = (string)parameters["FieldsToSelect"];
 
             // TODO: Make this SELECT() clause configurable for different column names
             // EXPLAINER: The reason we are limiting the field is for two reasons:
             //            1. Limit the size of the graph object payload needed to be transferred over the wire
             //            2. Reduces the exposure of end user PII (Personally Identifiable Information) in our system for privacy reasons. It's generally good practice to use what you need.
-            User result = await client.Users[userId].Request().Select("id,displayName,mail,officeLocation,businessPhones,jobTitle,department").GetAsync();
+            User result = await client.Users[userId].Request().Select(fieldsToSelect).GetAsync();
 
             return result;
         }

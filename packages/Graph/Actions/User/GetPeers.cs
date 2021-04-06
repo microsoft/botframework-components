@@ -42,6 +42,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("UserId")]
         public StringExpression UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("FieldsToSelect")]
+        public StringExpression FieldsToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetPeers.GetPeersDeclarativeType;
 
@@ -81,10 +87,19 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCount.GetValue(state);
             }
 
+            // Select minimum of the "id" field from the object
+            string fieldsToSelect = DefaultIdField;
+
+            if (this.FieldsToSelect != null)
+            {
+                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+            parameters.Add("FieldsToSelect", fieldsToSelect);
         }
 
         /// <inheritdoc />
