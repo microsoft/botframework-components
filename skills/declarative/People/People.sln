@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "whoSkill", "whoSkill\whoSkill.csproj", "{701A064B-7B21-4B0C-8916-F41CD0D2E6B0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "People", "People\People.csproj", "{92491207-D4AA-4D6F-905F-D9DC64FDFE89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,14 +12,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{701A064B-7B21-4B0C-8916-F41CD0D2E6B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{701A064B-7B21-4B0C-8916-F41CD0D2E6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{701A064B-7B21-4B0C-8916-F41CD0D2E6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{701A064B-7B21-4B0C-8916-F41CD0D2E6B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C573B9-7439-4444-9DB2-E4E2A9F6D126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92491207-D4AA-4D6F-905F-D9DC64FDFE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92491207-D4AA-4D6F-905F-D9DC64FDFE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92491207-D4AA-4D6F-905F-D9DC64FDFE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92491207-D4AA-4D6F-905F-D9DC64FDFE89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
