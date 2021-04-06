@@ -4725,9 +4725,10 @@
         "fieldsToSelect": {
           "$ref": "#/definitions/stringExpression",
           "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect"
+            "dialog.fieldsToSelect",
+            "id, displayName, mail, officeLocation, jobTitle"
           ]
         },
         "userId": {
@@ -4792,9 +4793,10 @@
         "fieldsToSelect": {
           "$ref": "#/definitions/stringExpression",
           "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect"
+            "dialog.fieldsToSelect",
+            "id, displayName, mail, officeLocation, jobTitle"
           ]
         },
         "userId": {
@@ -4867,9 +4869,10 @@
         "fieldsToSelect": {
           "$ref": "#/definitions/stringExpression",
           "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect"
+            "dialog.fieldsToSelect",
+            "id, displayName, mail, officeLocation, jobTitle"
           ]
         },
         "userId": {
@@ -4984,9 +4987,10 @@
         "fieldsToSelect": {
           "$ref": "#/definitions/stringExpression",
           "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect"
+            "dialog.fieldsToSelect",
+            "id, displayName, mail, officeLocation, jobTitle"
           ]
         },
         "userId": {
@@ -5059,9 +5063,10 @@
         "fieldsToSelect": {
           "$ref": "#/definitions/stringExpression",
           "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect"
+            "dialog.fieldsToSelect",
+            "id, displayName, mail, officeLocation, jobTitle"
           ]
         },
         "nameToSearchFor": {
