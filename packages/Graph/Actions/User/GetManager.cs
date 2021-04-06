@@ -30,6 +30,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("UserId")]
         public StringExpression UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("FieldsToSelect")]
+        public StringExpression FieldsToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetManager.GetManagerDeclarativeType;
 
@@ -37,11 +43,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
         internal override async Task<DirectoryObject> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
-            // TODO: Make this SELECT() clause configurable for different column names
-            // EXPLAINER: The reason we are limiting the field is for two reasons:
-            //            1. Limit the size of the graph object payload needed to be transferred over the wire
-            //            2. Reduces the exposure of end user PII (Personally Identifiable Information) in our system for privacy reasons. It's generally good practice to use what you need.
-            DirectoryObject result = await client.Users[userId].Manager.Request().Select("id,displayName,mail,businessPhones,department,jobTitle,officeLocation").GetAsync(cancellationToken);
+            string fieldsToSelect = (string)parameters["FieldsToSelect"];
+
+            DirectoryObject result = await client.Users[userId].Manager.Request().Select(fieldsToSelect).GetAsync(cancellationToken);
 
             return result;
         }
@@ -54,9 +58,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 throw new ArgumentNullException(nameof(this.UserId));
             }
 
+            // Select minimum of the "id" field from the object
+            string fieldsToSelect = DefaultIdField;
+
+            if (this.FieldsToSelect != null)
+            {
+                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
+            parameters.Add("FieldsToSelect", fieldsToSelect);
         }
 
         /// <inheritdoc />

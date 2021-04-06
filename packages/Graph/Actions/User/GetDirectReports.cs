@@ -41,6 +41,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("MaxCount")]
         public IntExpression MaxCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("FieldsToSelect")]
+        public StringExpression FieldsToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetDirectReports.GetDirectReportsDeclarativeType;
 
@@ -49,13 +55,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
+            string fieldsToSelect = (string)parameters["FieldsToSelect"];
 
             // Create the request first then apply the Top() after
-            // TODO: Make this SELECT() clause configurable for different column names
-            // EXPLAINER: The reason we are limiting the field is for two reasons:
-            //            1. Limit the size of the graph object payload needed to be transferred over the wire
-            //            2. Reduces the exposure of end user PII (Personally Identifiable Information) in our system for privacy reasons. It's generally good practice to use what you need.
-            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request().Select("id,displayName,mail,businessPhones,department,jobTitle,officeLocation");
+            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request().Select(fieldsToSelect);
 
             if (maxCount > 0)
             {
@@ -84,10 +87,19 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCount.GetValue(state);
             }
 
+            // Select minimum of the "id" field from the object
+            string fieldsToSelect = DefaultIdField;
+
+            if (this.FieldsToSelect != null)
+            {
+                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+            parameters.Add("FieldsToSelect", fieldsToSelect);
         }
 
         /// <inheritdoc />

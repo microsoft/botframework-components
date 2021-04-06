@@ -41,6 +41,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("MaxCount")]
         public IntExpression MaxCountProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("FieldsToSelect")]
+        public StringExpression FieldsToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetUsers.FindUsersDeclarativeType;
 
@@ -80,8 +86,17 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCountProperty.GetValue(state);
             }
 
+            // Select minimum of the "id" field from the object
+            string fieldsToSelect = DefaultIdField;
+
+            if (this.FieldsToSelect != null)
+            {
+                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+            }
+
             parameters.Add("NameToSearch", nameToSearch);
             parameters.Add("MaxResults", maxCount);
+            parameters.Add("FieldsToSelect", fieldsToSelect);
         }
     }
 }

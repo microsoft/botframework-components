@@ -30,6 +30,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("UserId")]
         public StringExpression UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("FieldsToSelect")]
+        public StringExpression FieldsToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetUserProfile.GetUserProfileDeclarativeType;
 
@@ -55,9 +61,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 throw new ArgumentNullException(nameof(this.UserId));
             }
 
+            // Select minimum of the "id" field from the object
+            string fieldsToSelect = DefaultIdField;
+
+            if (this.FieldsToSelect != null)
+            {
+                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
+            parameters.Add("FieldsToSelect", fieldsToSelect);
         }
     }
 }
