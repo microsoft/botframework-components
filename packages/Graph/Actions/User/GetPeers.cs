@@ -63,6 +63,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             {
                 { "UserId", manager.Id },
                 { "MaxResults", parameters["MaxResults"] },
+                { "FieldsToSelect", parameters["FieldsToSelect"] },
             };
 
             GetDirectReports directReportActions = new GetDirectReports();
