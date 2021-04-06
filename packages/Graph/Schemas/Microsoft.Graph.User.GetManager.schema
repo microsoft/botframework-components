@@ -28,6 +28,14 @@
         "user.token.token"
       ]
     },
+    "fieldsToSelect": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Fields To Select",
+      "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object.",
+      "examples": [
+        "dialog.fieldsToSelect"
+      ]
+    },
     "userId": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "User ID",
