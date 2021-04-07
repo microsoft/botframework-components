@@ -12,7 +12,8 @@
     "bf-dotnet-webapp",
     "bf-dotnet-functions",
     "bf-js-webapp",
-    "bf-js-functions"
+    "bf-js-functions",
+    "msbot-project-template"
   ],
   "license": "MIT",
   "author": "Bot Framework",

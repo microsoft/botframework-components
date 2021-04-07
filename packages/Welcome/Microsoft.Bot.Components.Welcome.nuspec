@@ -13,7 +13,7 @@
         <description>An Adaptive Dialog for greeting new and returning users</description>
         <tags>msbot-component msbot-content conversationalcore welcome preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0-rc2" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0-rc4" />
         </dependencies>
     </metadata>
 
