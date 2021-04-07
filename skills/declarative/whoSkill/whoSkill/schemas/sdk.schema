@@ -4722,14 +4722,18 @@
             "dialog.worksWithMe.maxResults"
           ]
         },
-        "fieldsToSelect": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect",
             "id, displayName, mail, officeLocation, jobTitle"
-          ]
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API."
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
@@ -4790,14 +4794,18 @@
             "user.token.token"
           ]
         },
-        "fieldsToSelect": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect",
             "id, displayName, mail, officeLocation, jobTitle"
-          ]
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API."
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
@@ -4866,14 +4874,18 @@
             "dialog.peers.maxResults"
           ]
         },
-        "fieldsToSelect": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect",
             "id, displayName, mail, officeLocation, jobTitle"
-          ]
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API."
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
@@ -4984,14 +4996,18 @@
             "user.token.token"
           ]
         },
-        "fieldsToSelect": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect",
             "id, displayName, mail, officeLocation, jobTitle"
-          ]
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API."
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
@@ -5060,14 +5076,18 @@
             "dialog.worksWithMe.maxResults"
           ]
         },
-        "fieldsToSelect": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Fields To Select",
-          "description": "The fields of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
           "examples": [
-            "dialog.fieldsToSelect",
             "id, displayName, mail, officeLocation, jobTitle"
-          ]
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API."
+          }
         },
         "nameToSearchFor": {
           "$ref": "#/definitions/stringExpression",

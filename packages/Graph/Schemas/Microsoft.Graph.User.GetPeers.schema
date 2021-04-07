@@ -38,7 +38,7 @@
     },
     "propertiesToSelect": {
       "$ref": "schema:#/definitions/arrayExpression",
-      "title": "Fields To Select",
+      "title": "User Properties To Select",
       "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
       "examples": [
         "id, displayName, mail, officeLocation, jobTitle"
