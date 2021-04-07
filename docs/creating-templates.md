@@ -12,11 +12,11 @@ Coming Soon!
 
 ## Template Publishing
 
-Template packages indicate to Composer which azure environments and runtime languages it supports through the keywords associated with the package. 
+Template packages indicate to Composer which Azure environments and runtime languages it supports through the keywords associated with the package. 
 
 The following feedUrl is used by Composer to grab the first party template generators.
 - If user has not opted in to using preview generators
-  - https://registry.npmjs.org/-/v1/search?text=generator+keywords:bf-template+scope:microsoft+maintainer:botframework
+  - https://registry.npmjs.org/-/v1/search?text=generator+maintainer:botframework+keywords:bf-template
 
 So any npm package in the microsoft scope, with botframework npm UN as a maintainer, with keyword bf-template will be returned.
 
