@@ -18,9 +18,9 @@
         "user.age > 3"
       ]
     },
-    "url": {
+    "location": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Url",
+      "title": "Location",
       "description": "Url of the Adaptive Card Template to load."
     },
     "resultProperty": {

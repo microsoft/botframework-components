@@ -4,14 +4,14 @@
     "label": "Get an Adaptive Card Template",
     "subtitle": "Get Adaptive Card Template",
     "order": [
-      "url",
+      "location",
       "resultProperty",
       "cacheTemplate",
       "cacheExpiration",
       "*"
     ],
     "properties": {
-      "url": {
+      "location": {
         "intellisenseScopes": [
           "variable-scopes"
         ]
@@ -30,7 +30,7 @@
   },
   "flow": {
     "widget": "ActionCard",
-    "body": "=action.url",
+    "body": "=action.location",
     "footer": {
       "widget": "PropertyDescription",
       "property": "=action.resultProperty",
