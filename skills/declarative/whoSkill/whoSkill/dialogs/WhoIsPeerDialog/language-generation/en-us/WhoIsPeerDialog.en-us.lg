@@ -3,9 +3,8 @@
 
 # SendActivity_7uCWqD()
 [Activity
-    Text = I found that **${dialog.UserFound.displayName}** does not have peers.
+    Text = I found that **${turn.UserFound.displayName}** does not have peers.
 ]
-
 
 # SendActivity_9JCLK1()
 [Activity

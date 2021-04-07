@@ -32,19 +32,11 @@
           "condition": "=not(exists($UserFound))",
           "elseActions": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "vjgu3O"
-              },
-              "name": "UserAlreadyProvided",
-              "value": "=$UserFound"
-            },
-            {
               "$kind": "Microsoft.Graph.User.GetUserProfile",
               "$designer": {
                 "id": "1kYUiQ"
               },
-              "resultProperty": "$UserFound",
+              "resultProperty": "turn.UserFound",
               "token": "=turn.token.token",
               "userId": "=$UserFound"
             }
@@ -57,7 +49,7 @@
               },
               "activityProcessed": true,
               "dialog": "FindPersonDialog",
-              "resultProperty": "$UserFound",
+              "resultProperty": "turn.UserFound",
               "options": {
                 "nameEntity": "=$nameEntity"
               }
@@ -69,7 +61,7 @@
           "$designer": {
             "id": "qBDQhh"
           },
-          "condition": "=exists($UserFound)",
+          "condition": "=exists(turn.UserFound)",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -87,23 +79,13 @@
           ]
         },
         {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "rHT96x"
-          },
-          "name": "UserFound",
-          "label": "UserFound",
-          "valueType": "String",
-          "value": "=dialog.UserFound"
-        },
-        {
           "$kind": "Microsoft.Graph.User.GetPeers",
           "$designer": {
             "id": "SBjTDm"
           },
-          "resultProperty": "dialog.Result",
+          "resultProperty": "turn.Result",
           "token": "=turn.token.token",
-          "userId": "=$UserFound.Id",
+          "userId": "=turn.UserFound.Id",
           "maxCount": 15
         },
         {
@@ -114,19 +96,19 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result",
+            "UserList": "=turn.Result",
             "Scenario": "Peers",
-            "User": "=$UserFound",
+            "User": "=turn.UserFound",
             "AutoChooseFirst": "false"
           },
-          "resultProperty": "$DetailUser"
+          "resultProperty": "turn.DetailUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "2bT4YD"
           },
-          "condition": "=exists($DetailUser)",
+          "condition": "=exists(turn.DetailUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -136,7 +118,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserFound": "=$DetailUser"
+                "UserFound": "=turn.DetailUser"
               }
             }
           ],
