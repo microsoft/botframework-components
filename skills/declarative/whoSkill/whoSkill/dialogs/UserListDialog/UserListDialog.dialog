@@ -17,6 +17,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "BsaK5q"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "yjqnnW"

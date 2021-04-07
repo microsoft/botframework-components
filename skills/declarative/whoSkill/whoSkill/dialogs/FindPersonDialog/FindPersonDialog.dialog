@@ -29,7 +29,7 @@
           "$designer": {
             "id": "KiEzol"
           },
-          "resultProperty": "$Result",
+          "resultProperty": "turn.Result",
           "token": "=turn.Token.token",
           "nameToSearchFor": "=$nameEntity",
           "maxCount": 16
@@ -42,19 +42,19 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result",
+            "UserList": "=turn.Result",
             "AutoChooseFirst": "true",
             "Scenario": "PersonSearch",
             "User": "=$nameEntity"
           },
-          "resultProperty": "$SelectedUser"
+          "resultProperty": "turn.SelectedUser"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "t5WNI5"
           },
-          "value": "=$SelectedUser"
+          "value": "=turn.SelectedUser"
         }
       ]
     }

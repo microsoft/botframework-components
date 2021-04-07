@@ -29,7 +29,7 @@
           "$designer": {
             "id": "rqPdz8"
           },
-          "condition": "= not(exists($UserFound))",
+          "condition": "= not(exists($UserIdFound))",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -42,6 +42,14 @@
               "options": {
                 "nameEntity": "=$nameEntity"
               }
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "UDKkix"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -61,7 +69,16 @@
               "valueType": "String",
               "label": "FoundId",
               "name": "FoundId",
-              "value": "=dialog.userId"
+              "value": "=$UserFound"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "nLo3ZP"
+              },
+              "resultProperty": "turn.UserFound",
+              "token": "=turn.token.token",
+              "userId": "=$UserIdFound"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -86,7 +103,7 @@
                 "id": "ZW7CBi"
               },
               "token": "=turn.token.token",
-              "userId": "=turn.UserFound.Id",
+              "userId": "=turn.UserFound.id",
               "resultProperty": "turn.Result"
             },
             {
@@ -96,7 +113,7 @@
               },
               "resultProperty": "turn.Result.Photo",
               "token": "=turn.token.token",
-              "userId": "=turn.UserFound.Id"
+              "userId": "=turn.UserFound.id"
             },
             {
               "$kind": "Microsoft.IfCondition",

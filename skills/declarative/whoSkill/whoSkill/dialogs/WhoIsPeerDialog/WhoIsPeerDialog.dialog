@@ -118,7 +118,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserFound": "=turn.DetailUser"
+                "UserIdFound": "=turn.DetailUser.Id"
               }
             }
           ],

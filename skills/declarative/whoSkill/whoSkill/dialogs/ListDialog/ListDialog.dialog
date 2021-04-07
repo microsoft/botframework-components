@@ -24,6 +24,14 @@
           "name": "ListDialog.BeginDialog"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "kHEmNh"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "ttdzia"
