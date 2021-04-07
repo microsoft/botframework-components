@@ -205,7 +205,7 @@ module.exports = class extends BaseGenerator {
         appSettings.runtime.command = 'npm run dev --';
         break;
       default:
-        appSettings.runtime.command = '';
+        this.env.error(`Unreachable : Unrecognized platform ${platform}`);
     }
 
     for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
