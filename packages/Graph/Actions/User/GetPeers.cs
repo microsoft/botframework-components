@@ -43,10 +43,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public StringExpression UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the fields to select from the Graph API.
+        /// Gets or sets the properties to select from the Graph API.
         /// </summary>
-        [JsonProperty("FieldsToSelect")]
-        public StringExpression FieldsToSelect { get; set; }
+        [JsonProperty("PropertiesToSelect")]
+        public ArrayExpression<string> PropertiesToSelect { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetPeers.GetPeersDeclarativeType;
@@ -63,7 +63,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             {
                 { "UserId", manager.Id },
                 { "MaxResults", parameters["MaxResults"] },
-                { "FieldsToSelect", parameters["FieldsToSelect"] },
+                { "PropertiesToSelect", parameters["PropertiesToSelect"] },
             };
 
             GetDirectReports directReportActions = new GetDirectReports();
@@ -89,18 +89,23 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
 
             // Select minimum of the "id" field from the object
-            string fieldsToSelect = DefaultIdField;
+            string propertiesToSelect = DefaultIdField;
 
-            if (this.FieldsToSelect != null)
+            if (this.PropertiesToSelect != null)
             {
-                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+                List<string> propertiesFound = this.PropertiesToSelect.GetValue(state);
+
+                if (propertiesFound != null && propertiesFound.Count > 0)
+                {
+                    propertiesToSelect = string.Join(",", propertiesFound);
+                }
             }
 
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
-            parameters.Add("FieldsToSelect", fieldsToSelect);
+            parameters.Add("PropertiesToSelect", propertiesToSelect);
         }
 
         /// <inheritdoc />

@@ -42,10 +42,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         public IntExpression MaxCountProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the fields to select from the Graph API.
+        /// Gets or sets the properties to select from the Graph API.
         /// </summary>
-        [JsonProperty("FieldsToSelect")]
-        public StringExpression FieldsToSelect { get; set; }
+        [JsonProperty("PropertiesToSelect")]
+        public ArrayExpression<string> PropertiesToSelect { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetUsers.FindUsersDeclarativeType;
@@ -55,11 +55,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string nameToSearch = (string)parameters["NameToSearch"];
             int maxCount = (int)parameters["MaxResults"];
-            string fieldsToSelect = (string)parameters["FieldsToSelect"];
+            string propertiesToSelect = (string)parameters["PropertiesToSelect"];
 
             string filterClause = $"startsWith(displayName, '{nameToSearch}') or startsWith(surname, '{nameToSearch}') or startsWith(givenname, '{nameToSearch}')";
 
-            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause).Select(fieldsToSelect);
+            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause).Select(propertiesToSelect);
 
             // Apply the Top() filter if there is a value to apply
             if (maxCount > 0)
@@ -88,16 +88,21 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
 
             // Select minimum of the "id" field from the object
-            string fieldsToSelect = DefaultIdField;
+            string propertiesToSelect = DefaultIdField;
 
-            if (this.FieldsToSelect != null)
+            if (this.PropertiesToSelect != null)
             {
-                fieldsToSelect = this.FieldsToSelect.GetValue(state);
+                List<string> propertiesFound = this.PropertiesToSelect.GetValue(state);
+
+                if (propertiesFound != null && propertiesFound.Count > 0)
+                {
+                    propertiesToSelect = string.Join(",", propertiesFound);
+                }
             }
 
             parameters.Add("NameToSearch", nameToSearch);
             parameters.Add("MaxResults", maxCount);
-            parameters.Add("FieldsToSelect", fieldsToSelect);
+            parameters.Add("PropertiesToSelect", propertiesToSelect);
         }
     }
 }
