@@ -1,6 +1,7 @@
 [Common](common.en-us.lg)
 [Actions](actions.en-us.lg)
 [Icons](icons.en-us.lg)
+[Cards](cards.en-us.lg)
 
 # UserListPrompt(Scenario, User, Items)
 - IF: ${count(Items) > 1}
