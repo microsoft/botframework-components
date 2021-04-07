@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 
   <PropertyGroup>
@@ -15,7 +15,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
-    <PackageTags>bf-component</PackageTags>
+    <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
     <ContentTargetFolders>content</ContentTargetFolders>
   </PropertyGroup>
 
