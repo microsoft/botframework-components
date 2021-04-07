@@ -23,6 +23,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
     public abstract class BaseMsGraphCustomAction : Dialog
     {
         /// <summary>
+        /// Name of the id field that Graph uses to identify objects in the system.
+        /// </summary>
+        public const string DefaultIdField = "id";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BaseMsGraphCustomAction"/> class.
         /// </summary>
         /// <param name="callerPath">Caller path.</param>
