@@ -38,7 +38,7 @@
               },
               "activityProcessed": true,
               "dialog": "FindPersonDialog",
-              "resultProperty": "$UserFound",
+              "resultProperty": "turn.UserFound",
               "options": {
                 "nameEntity": "=$nameEntity"
               }
@@ -78,45 +78,25 @@
           "$designer": {
             "id": "hFpZL4"
           },
-          "condition": "= $UserFound != null && exists($UserFound)",
+          "condition": "= turn.UserFound != null && exists(turn.UserFound)",
           "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "b9hhH2"
-              },
-              "name": "UserId",
-              "label": "UserId",
-              "valueType": "String",
-              "value": "=dialog.userId"
-            },
-            {
-              "$kind": "Microsoft.Graph.Photo.GetPhoto",
-              "$designer": {
-                "id": "rYukBT"
-              },
-              "resultProperty": "dialog.ResultPhoto",
-              "token": "=turn.token.token",
-              "userId": "=$UserFound.Id"
-            },
             {
               "$kind": "Microsoft.Graph.User.GetUserProfile",
               "$designer": {
                 "id": "ZW7CBi"
               },
               "token": "=turn.token.token",
-              "userId": "=$UserFound.Id",
-              "resultProperty": "dialog.Result"
+              "userId": "=turn.UserFound.Id",
+              "resultProperty": "turn.Result"
             },
             {
-              "$kind": "Microsoft.TraceActivity",
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "YumZ1w"
+                "id": "CQDmFd"
               },
-              "name": "JsonResult",
-              "label": "JsonResult",
-              "valueType": "String",
-              "value": "=dialog.Result"
+              "resultProperty": "turn.Result.Photo",
+              "token": "=turn.token.token",
+              "userId": "=turn.UserFound.Id"
             },
             {
               "$kind": "Microsoft.IfCondition",
