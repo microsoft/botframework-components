@@ -41,26 +41,16 @@
               "options": {
                 "nameEntity": "=$nameEntity"
               },
-              "resultProperty": "$UserFound"
+              "resultProperty": "turn.UserFound"
             }
           ],
           "elseActions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "luHvuh"
-              },
-              "name": "UserFound",
-              "label": "UserId",
-              "valueType": "string",
-              "value": "=$UserFound"
-            },
             {
               "$kind": "Microsoft.Graph.User.GetUserProfile",
               "$designer": {
                 "id": "68MRWM"
               },
-              "resultProperty": "$UserFound",
+              "resultProperty": "turn.UserFound",
               "token": "=turn.token.token",
               "userId": "=$UserFound"
             }
@@ -72,7 +62,7 @@
             "id": "0jrRb0"
           },
           "token": "=turn.token.token",
-          "resultProperty": "$Result",
+          "resultProperty": "turn.Result",
           "userId": "=$UserFound.Id",
           "maxCount": 15
         },
@@ -84,19 +74,19 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=$Result",
-            "User": "=$UserFound",
+            "UserList": "=turn.Result",
+            "User": "=turn.UserFound",
             "Scenario": "Collaborator",
             "AutoChooseFirst": "false"
           },
-          "resultProperty": "$DetailUser"
+          "resultProperty": "turn.DetailUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "cKj8jy"
           },
-          "condition": "=exists($DetailUser)",
+          "condition": "=exists(turn.DetailUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -106,7 +96,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserFound": "=$DetailUser"
+                "UserFound": "=turn.DetailUser"
               }
             }
           ],
