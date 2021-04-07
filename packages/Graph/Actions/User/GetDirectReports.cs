@@ -41,6 +41,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("MaxCount")]
         public IntExpression MaxCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fields to select from the Graph API.
+        /// </summary>
+        [JsonProperty("PropertiesToSelect")]
+        public ArrayExpression<string> PropertiesToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetDirectReports.GetDirectReportsDeclarativeType;
 
@@ -49,9 +55,10 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string userId = (string)parameters["UserId"];
             int maxCount = (int)parameters["MaxResults"];
+            string propertiesToSelect = (string)parameters["PropertiesToSelect"];
 
             // Create the request first then apply the Top() after
-            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request();
+            IUserDirectReportsCollectionWithReferencesRequest request = client.Users[userId].DirectReports.Request().Select(propertiesToSelect);
 
             if (maxCount > 0)
             {
@@ -80,10 +87,24 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCount.GetValue(state);
             }
 
+            // Select minimum of the "id" field from the object
+            string propertiesToSelect = DefaultIdField;
+
+            if (this.PropertiesToSelect != null)
+            {
+                List<string> propertiesFound = this.PropertiesToSelect.GetValue(state);
+
+                if (propertiesFound != null && propertiesFound.Count > 0)
+                {
+                    propertiesToSelect = string.Join(",", propertiesFound);
+                }
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
             parameters.Add("MaxResults", maxCount);
+            parameters.Add("PropertiesToSelect", propertiesToSelect);
         }
 
         /// <inheritdoc />
