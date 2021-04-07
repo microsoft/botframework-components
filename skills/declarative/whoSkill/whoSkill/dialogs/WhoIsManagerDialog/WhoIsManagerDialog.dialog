@@ -19,42 +19,22 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "joMxmD"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "FaxQmA"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "GfHdIy"
-          },
-          "condition": "=not(exists($UserFound))",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "pKdDHj"
-              },
-              "activityProcessed": true,
-              "dialog": "FindPersonDialog",
-              "resultProperty": "turn.UserFound",
-              "options": {
-                "nameEntity": "=$nameEntity"
-              }
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.Graph.User.GetUserProfile",
-              "$designer": {
-                "id": "x2KpKw"
-              },
-              "resultProperty": "turn.UserFound",
-              "token": "=turn.token.token",
-              "userId": "=$UserFound"
-            }
-          ]
         },
         {
           "$kind": "Microsoft.IfCondition",

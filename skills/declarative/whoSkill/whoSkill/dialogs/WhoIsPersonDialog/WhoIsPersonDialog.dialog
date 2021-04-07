@@ -38,7 +38,7 @@
               },
               "activityProcessed": true,
               "dialog": "FindPersonDialog",
-              "resultProperty": "turn.UserFound",
+              "resultProperty": "$UserIdFound",
               "options": {
                 "nameEntity": "=$nameEntity"
               }
@@ -62,25 +62,6 @@
           ],
           "elseActions": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "hwsKVX"
-              },
-              "valueType": "String",
-              "label": "FoundId",
-              "name": "FoundId",
-              "value": "=$UserFound"
-            },
-            {
-              "$kind": "Microsoft.Graph.User.GetUserProfile",
-              "$designer": {
-                "id": "nLo3ZP"
-              },
-              "resultProperty": "turn.UserFound",
-              "token": "=turn.token.token",
-              "userId": "=$UserIdFound"
-            },
-            {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "9DAueZ"
@@ -95,7 +76,7 @@
           "$designer": {
             "id": "hFpZL4"
           },
-          "condition": "= turn.UserFound != null && exists(turn.UserFound)",
+          "condition": "= exists($UserIdFound)",
           "actions": [
             {
               "$kind": "Microsoft.Graph.User.GetUserProfile",
@@ -103,7 +84,7 @@
                 "id": "ZW7CBi"
               },
               "token": "=turn.token.token",
-              "userId": "=turn.UserFound.id",
+              "userId": "=$UserIdFound",
               "resultProperty": "turn.Result"
             },
             {
@@ -113,7 +94,7 @@
               },
               "resultProperty": "turn.Result.Photo",
               "token": "=turn.token.token",
-              "userId": "=turn.UserFound.id"
+              "userId": "=$UserIdFound"
             },
             {
               "$kind": "Microsoft.IfCondition",

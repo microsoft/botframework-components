@@ -29,18 +29,8 @@
           "$designer": {
             "id": "d0TydA"
           },
-          "condition": "=not(exists($UserFound))",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.Graph.User.GetUserProfile",
-              "$designer": {
-                "id": "51g002"
-              },
-              "resultProperty": "turn.UserFound",
-              "token": "=turn.token.token",
-              "userId": "=$UserFound"
-            }
-          ],
+          "condition": "=not(exists($UserIdFound))",
+          "elseActions": [],
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -52,9 +42,18 @@
               "options": {
                 "nameEntity": "=$nameEntity"
               },
-              "resultProperty": "turn.UserFound"
+              "resultProperty": "$UserIdFound"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetUserProfile",
+          "$designer": {
+            "id": "utaNUC"
+          },
+          "resultProperty": "turn.UserFound",
+          "token": "=turn.token.token",
+          "userId": "=$UserIdFound"
         },
         {
           "$kind": "Microsoft.IfCondition",

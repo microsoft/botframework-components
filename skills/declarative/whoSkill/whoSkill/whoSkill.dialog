@@ -137,7 +137,7 @@
           "activityProcessed": true,
           "dialog": "WhoWorksWithMeDialog",
           "options": {
-            "UserFound": "=$options.user",
+            "UserIdFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"
           }
         }
@@ -210,7 +210,7 @@
           "dialog": "WhoIsDirectReportDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]
@@ -351,7 +351,7 @@
           "dialog": "WhoIsManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ],
@@ -389,7 +389,7 @@
           "dialog": "WhoIsPeerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]

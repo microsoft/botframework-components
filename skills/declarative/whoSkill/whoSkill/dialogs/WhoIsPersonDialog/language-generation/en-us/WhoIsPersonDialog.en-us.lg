@@ -5,12 +5,12 @@
 
 # SendActivity_ryFbw6()
 [Activity
-    Attachments = ${json(ProfileCard(dialog.Result))}
+    Attachments = ${json(ProfileCard(turn.Result))}
 ]
 
 # SendActivity_dTcyKk()
 [Activity
-    Text = Here is what I found for **${dialog.Result.displayName}**:
+    Text = Here is what I found for **${turn.Result.displayName}**:
 ]
 
 # SendActivity_lcoztE()

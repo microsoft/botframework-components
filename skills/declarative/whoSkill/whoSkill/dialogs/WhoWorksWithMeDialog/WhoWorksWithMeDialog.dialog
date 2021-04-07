@@ -19,6 +19,18 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
+            "id": "ON21f5"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
             "id": "WEryuA"
           },
           "activityProcessed": true,
@@ -27,32 +39,22 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "TZDg2m"
+            "id": "nUeEx5"
           },
-          "condition": "=not(exists($UserFound))",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "EicuKU"
-              },
-              "activityProcessed": true,
-              "dialog": "FindPersonDialog",
-              "options": {
-                "nameEntity": "=$nameEntity"
-              },
-              "resultProperty": "turn.UserFound"
-            }
-          ],
+          "condition": "=exists(turn.UserFound)",
           "elseActions": [
             {
-              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "68MRWM"
+                "id": "puUO79"
               },
-              "resultProperty": "turn.UserFound",
-              "token": "=turn.token.token",
-              "userId": "=$UserFound"
+              "activity": "${SendActivity_puUO79()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "lyEABk"
+              }
             }
           ]
         },
@@ -63,7 +65,7 @@
           },
           "token": "=turn.token.token",
           "resultProperty": "turn.Result",
-          "userId": "=$UserFound.Id",
+          "userId": "=turn.UserFound.Id",
           "maxCount": 15
         },
         {
