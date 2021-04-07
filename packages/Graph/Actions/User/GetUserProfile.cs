@@ -30,6 +30,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("UserId")]
         public StringExpression UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the properties to select from the Graph API.
+        /// </summary>
+        [JsonProperty("PropertiesToSelect")]
+        public ArrayExpression<string> PropertiesToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetUserProfile.GetUserProfileDeclarativeType;
 
@@ -37,7 +43,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
         internal override async Task<User> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
-            User result = await client.Users[userId].Request().GetAsync();
+            string propertiesToSelect = (string)parameters["PropertiesToSelect"];
+
+            User result = await client.Users[userId].Request().Select(propertiesToSelect).GetAsync();
 
             return result;
         }
@@ -50,9 +58,23 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 throw new ArgumentNullException(nameof(this.UserId));
             }
 
+            // Select minimum of the "id" field from the object
+            string propertiesToSelect = DefaultIdField;
+
+            if (this.PropertiesToSelect != null)
+            {
+                List<string> propertiesFound = this.PropertiesToSelect.GetValue(state);
+
+                if (propertiesFound != null && propertiesFound.Count > 0)
+                {
+                    propertiesToSelect = string.Join(",", propertiesFound);
+                }
+            }
+
             string userId = this.UserId.GetValue(state);
 
             parameters.Add("UserId", userId);
+            parameters.Add("PropertiesToSelect", propertiesToSelect);
         }
     }
 }

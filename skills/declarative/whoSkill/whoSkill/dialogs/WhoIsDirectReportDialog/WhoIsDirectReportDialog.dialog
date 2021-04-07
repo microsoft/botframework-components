@@ -40,7 +40,16 @@
               },
               "resultProperty": "$UserFound",
               "token": "=user.token.token",
-              "userId": "=$UserFound"
+              "userId": "=$UserFound",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
             }
           ],
           "actions": [
@@ -98,7 +107,16 @@
           "resultProperty": "$Result",
           "token": "=user.token.token",
           "userId": "=$UserFound.Id",
-          "maxCount": 15
+          "maxCount": 15,
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",

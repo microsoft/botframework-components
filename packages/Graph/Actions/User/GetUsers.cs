@@ -41,6 +41,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
         [JsonProperty("MaxCount")]
         public IntExpression MaxCountProperty { get; set; }
 
+        /// <summary>
+        /// Gets or sets the properties to select from the Graph API.
+        /// </summary>
+        [JsonProperty("PropertiesToSelect")]
+        public ArrayExpression<string> PropertiesToSelect { get; set; }
+
         /// <inheritdoc/>
         public override string DeclarativeType => GetUsers.FindUsersDeclarativeType;
 
@@ -49,10 +55,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             string nameToSearch = (string)parameters["NameToSearch"];
             int maxCount = (int)parameters["MaxResults"];
+            string propertiesToSelect = (string)parameters["PropertiesToSelect"];
 
             string filterClause = $"startsWith(displayName, '{nameToSearch}') or startsWith(surname, '{nameToSearch}') or startsWith(givenname, '{nameToSearch}')";
 
-            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause);
+            IGraphServiceUsersCollectionRequest request = client.Users.Request().Filter(filterClause).Select(propertiesToSelect);
 
             // Apply the Top() filter if there is a value to apply
             if (maxCount > 0)
@@ -80,8 +87,22 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 maxCount = this.MaxCountProperty.GetValue(state);
             }
 
+            // Select minimum of the "id" field from the object
+            string propertiesToSelect = DefaultIdField;
+
+            if (this.PropertiesToSelect != null)
+            {
+                List<string> propertiesFound = this.PropertiesToSelect.GetValue(state);
+
+                if (propertiesFound != null && propertiesFound.Count > 0)
+                {
+                    propertiesToSelect = string.Join(",", propertiesFound);
+                }
+            }
+
             parameters.Add("NameToSearch", nameToSearch);
             parameters.Add("MaxResults", maxCount);
+            parameters.Add("PropertiesToSelect", propertiesToSelect);
         }
     }
 }

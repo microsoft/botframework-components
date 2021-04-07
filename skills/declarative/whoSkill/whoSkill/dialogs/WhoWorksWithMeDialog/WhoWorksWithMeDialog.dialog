@@ -54,7 +54,16 @@
               },
               "resultProperty": "$UserFound",
               "token": "=user.token.token",
-              "userId": "=$UserFound"
+              "userId": "=$UserFound",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
             }
           ]
         },
