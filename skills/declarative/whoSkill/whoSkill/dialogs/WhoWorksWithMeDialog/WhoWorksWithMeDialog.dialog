@@ -55,7 +55,15 @@
               "resultProperty": "$UserFound",
               "token": "=user.token.token",
               "userId": "=$UserFound",
-              "fieldsToSelect": "id,displayName,mail,businessPhones,department,jobTitle,officeLocation"
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
             }
           ]
         },
