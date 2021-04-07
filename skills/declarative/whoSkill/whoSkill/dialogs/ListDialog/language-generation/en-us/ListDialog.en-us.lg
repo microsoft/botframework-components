@@ -1,5 +1,6 @@
 [Common](common.en-us.lg)
 [UserList](userList.en-us.lg)
+[Cards](cards.en-us.lg)
 
 # ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, pageIndex, pageCount, scenario)
 - ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount, scenario), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount))}

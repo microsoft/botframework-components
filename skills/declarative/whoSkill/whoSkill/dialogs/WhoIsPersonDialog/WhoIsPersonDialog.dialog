@@ -17,6 +17,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "IgPvkk"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "rqPdz8"
@@ -88,7 +96,7 @@
                 "id": "rYukBT"
               },
               "resultProperty": "dialog.ResultPhoto",
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "userId": "=$UserFound.Id"
             },
             {
@@ -96,7 +104,7 @@
               "$designer": {
                 "id": "ZW7CBi"
               },
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "userId": "=$UserFound.Id",
               "resultProperty": "dialog.Result"
             },

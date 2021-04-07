@@ -17,12 +17,20 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "XVsKBS"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
             "id": "KiEzol"
           },
           "resultProperty": "$Result",
-          "token": "=user.token.token",
+          "token": "=turn.Token.token",
           "nameToSearchFor": "=$nameEntity",
           "maxCount": 16
         },

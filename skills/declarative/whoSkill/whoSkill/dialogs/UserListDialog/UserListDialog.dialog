@@ -120,6 +120,14 @@
       "event": "GetPhotosForUsers",
       "actions": [
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3yNKv4"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Foreach",
           "$designer": {
             "id": "2MNt9J"
@@ -129,19 +137,11 @@
           "itemsProperty": "$UserList",
           "actions": [
             {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "oHX6DZ"
-              },
-              "name": "GetPhotoForId",
-              "value": "=$foreach.value.Id"
-            },
-            {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
                 "id": "2OTcYV"
               },
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "resultProperty": "$ResultPhoto",
               "userId": "=$foreach.value.Id"
             },

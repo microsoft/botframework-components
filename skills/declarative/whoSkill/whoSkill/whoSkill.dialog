@@ -43,8 +43,8 @@
               "$designer": {
                 "id": "vTjoP3"
               },
-              "token": "=user.token.token",
-              "resultProperty": "$signedInUser"
+              "token": "=turn.Token.token",
+              "resultProperty": "turn.signedInUser"
             },
             {
               "$kind": "Microsoft.SendActivity",
