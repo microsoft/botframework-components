@@ -186,10 +186,27 @@ module.exports = class extends BaseGenerator {
     appSettings.luis.name = botName;
 
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
-    appSettings.runtime.command = {
-      [platforms.dotnet]: `dotnet run --project ${botName}.csproj`,
-      [platforms.js]: 'npm run dev --',
-    }[platform];
+
+    switch (platform) {
+      case platforms.dotnet:
+        switch (integration) {
+          case integrations.functions:
+            appSettings.runtime.command = `func start --script-root ${path.join(
+              'bin',
+              'Debug',
+              'netcoreapp3.1'
+            )}`;
+            break;
+          default:
+            appSettings.runtime.command = `dotnet run --project ${botName}.csproj`;
+        }
+        break;
+      case platforms.js:
+        appSettings.runtime.command = 'npm run dev --';
+        break;
+      default:
+        this.env.error(`Unreachable : Unrecognized platform '${platform}'`);
+    }
 
     for (const { isPlugin, name, settingsPrefix } of this.packageReferences) {
       if (isPlugin) {
