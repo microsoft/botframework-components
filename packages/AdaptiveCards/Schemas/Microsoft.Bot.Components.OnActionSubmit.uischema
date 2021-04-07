@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+      "order": [
+          "condition",
+          "*"
+      ],
+      "hidden": [
+          "actions"
+      ],
+      "label": "Card submitted",
+      "subtitle": "Action.Submit"
+  },
+  "trigger": {
+    "label": "Action.Submit (message activity)",
+    "submenu": "Adaptive Card Actions"
+  }
+}

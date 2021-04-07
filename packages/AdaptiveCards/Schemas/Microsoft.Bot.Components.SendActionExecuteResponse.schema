@@ -1,0 +1,74 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Respond to an Action.Execute",
+  "description": "Respond to an invoked Action.Execute with either a card or message.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "type": {
+      "title": "Type of response",
+      "description": "Type of response to send.",
+      "oneOf": [
+        {
+          "type": "string",
+          "title": "Response type",
+          "description": "Supported response types.",
+          "enum": [
+            "adaptiveCard",
+            "message"
+          ]
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ]
+    },
+    "value": {
+      "$role": "expression",
+      "title": "Value",
+      "description": "The Adaptive Card or message to respond with.",
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "Object",
+          "description": "Adaptive Card."
+        },
+        {
+          "type": "string",
+          "title": "String",
+          "description": "Message text.",
+          "pattern": "^(?!(=)).*",
+          "examples": [
+            "Hello ${user.name}"
+          ]
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression",
+          "examples": [
+            "=..."
+          ]
+        }
+      ]
+    },
+    "statusCode": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Status Code",
+      "description": "Success of the card rendering.",
+      "default": 200
+    }
+  },
+  "required": [ "type", "value", "statusCode" ]
+}
