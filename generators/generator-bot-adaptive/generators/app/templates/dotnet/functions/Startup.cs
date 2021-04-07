@@ -15,10 +15,16 @@ namespace <%= botName %>
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder configurationBuilder)
         {
-            string applicationRoot = configurationBuilder.GetContext().ApplicationRootPath;
+            FunctionsHostBuilderContext context = configurationBuilder.GetContext();
+
+            string applicationRoot = context.ApplicationRootPath;
+            string environmentName = context.EnvironmentName;
             string settingsDirectory = <%- settingsDirectory %>;
 
-            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
+            configurationBuilder.ConfigurationBuilder.AddBotRuntimeConfiguration(
+                applicationRoot,
+                settingsDirectory,
+                environmentName);
         }
     }
 }

@@ -10,7 +10,8 @@
     "yeoman-generator",
     "bf-template",
     "bf-dotnet-webapp",
-    "bf-dotnet-functions"
+    "bf-dotnet-functions",
+    "msbot-project-template"
   ],
   "license": "ISC",
   "author": "Bot Framework",

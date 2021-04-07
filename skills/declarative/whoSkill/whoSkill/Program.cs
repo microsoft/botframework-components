@@ -17,8 +17,8 @@ namespace whoSkill
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, builder) =>
                 {
-                    string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
-                    string settingsDirectory = "settings";
+                    var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+                    var settingsDirectory = "settings";
 
                     builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory);
 
