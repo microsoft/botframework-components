@@ -25,97 +25,73 @@
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "yjqnnW"
+            "id": "vE2VKR"
           },
-          "condition": "=exists($UserList) && $UserList != null && count($UserList) > 0",
-          "elseActions": [],
-          "actions": [
+          "eventName": "=$getItemsEvent",
+          "bubbleEvent": true
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "6oYIrU"
+          },
+          "assignments": [
             {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "rhHgeG"
-              },
-              "condition": "= count($UserList) > 1 || (count($UserList) == 1 && $AutoChooseFirst == \"false\")",
-              "actions": [
-                {
-                  "$kind": "Microsoft.EmitEvent",
-                  "$designer": {
-                    "id": "DLV52r"
-                  },
-                  "eventName": "GetPhotosForUsers"
-                },
-                {
-                  "$kind": "Microsoft.SetProperties",
-                  "$designer": {
-                    "id": "3tcM1L"
-                  },
-                  "assignments": [
-                    {
-                      "property": "$listOptions.items",
-                      "value": "=$UserList"
-                    },
-                    {
-                      "property": "$listOptions.actionTitleProperty",
-                      "value": "index"
-                    },
-                    {
-                      "property": "$listOptions.activePrompt",
-                      "value": "UserListPrompt"
-                    },
-                    {
-                      "property": "$listOptions.templates",
-                      "value": {
-                        "icon": "ContactIconUrl",
-                        "title": "UserListTitle",
-                        "item": "UserListItem",
-                        "initialPrompt": "UserListPrompt",
-                        "showMorePrompt": "UserListShowMorePrompt",
-                        "skipResponse": "UserListSkipResponse",
-                        "defaultValueResponse": "UserListDefaultValueResponse"
-                      }
-                    },
-                    {
-                      "property": "$listOptions.Scenario",
-                      "value": "=$Scenario"
-                    },
-                    {
-                      "property": "$listOptions.User",
-                      "value": "=$User"
-                    }
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "myWIkJ"
-                  },
-                  "activityProcessed": true,
-                  "dialog": "ListDialog",
-                  "resultProperty": "$SelectedUser",
-                  "options": "=$listOptions"
-                }
-              ],
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "VBAEXN"
-                  },
-                  "property": "$SelectedUser",
-                  "value": "= $UserList[0]"
-                }
-              ]
+              "property": "$listOptions.templates",
+              "value": {
+                "icon": "ContactIconUrl",
+                "title": "UserListTitle",
+                "item": "UserListItem",
+                "initialPrompt": "UserListPrompt",
+                "showMorePrompt": "UserListShowMorePrompt",
+                "skipResponse": "UserListSkipResponse",
+                "defaultValueResponse": "UserListDefaultValueResponse"
+              }
+            },
+            {
+              "property": "$listOptions.actionTitleProperty",
+              "value": "index"
+            },
+            {
+              "property": "$listOptions.activePrompt",
+              "value": "UserListPrompt"
+            },
+            {
+              "property": "$listOptions.Scenario",
+              "value": "=$Scenario"
+            },
+            {
+              "property": "$listOptions.User",
+              "value": "=$User"
+            },
+            {
+              "property": "$listOptions.getItemsEvent",
+              "value": "GetListItems"
+            },
+            {
+              "property": "$listOptions.itemsProperty",
+              "value": "turn.Items"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "n1BaIq"
+          },
+          "activityProcessed": true,
+          "dialog": "ListDialog",
+          "resultProperty": "turn.SelectedUser",
+          "options": "=$listOptions"
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
             "id": "8PYkyW"
           },
-          "value": "=$SelectedUser"
+          "value": "=turn.SelectedUser"
         }
       ]
     },
@@ -142,7 +118,7 @@
           },
           "index": "dialog.foreach.index",
           "value": "dialog.foreach.value",
-          "itemsProperty": "$UserList",
+          "itemsProperty": "turn.Items",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
@@ -150,16 +126,8 @@
                 "id": "2OTcYV"
               },
               "token": "=turn.token.token",
-              "resultProperty": "$ResultPhoto",
-              "userId": "=$foreach.value.Id"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "Zw7HZf"
-              },
-              "property": "$UserList[$foreach.index].Photo",
-              "value": "=$ResultPhoto"
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "userId": "=turn.foreach.value.Id"
             }
           ]
         }

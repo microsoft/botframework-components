@@ -59,16 +59,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.Graph.User.GetDirectReports",
-          "$designer": {
-            "id": "AdQtbk"
-          },
-          "resultProperty": "turn.Result",
-          "token": "=turn.token.token",
-          "userId": "=turn.UserFound.Id",
-          "maxCount": 15
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "PupWRK"
@@ -76,10 +66,10 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=turn.Result",
             "User": "=turn.UserFound",
             "Scenario": "DirectReports",
-            "AutoChooseFirst": "false"
+            "AutoChooseFirst": "false",
+            "GetListItemEvent": "GetListItem"
           },
           "resultProperty": "turn.DirectReportUser"
         },
@@ -117,6 +107,49 @@
           "$designer": {
             "id": "0nZUOA"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "l2fm3e",
+        "name": "OnIntent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "QBzfKY"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetDirectReports",
+          "$designer": {
+            "id": "Q9M6AF"
+          },
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "officeLocation",
+            "jobTitle",
+            "department"
+          ],
+          "token": "turn.token.token",
+          "maxCount": 15,
+          "resultProperty": "turn.Result"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "otsxJO"
+          },
+          "value": "=turn.UserList"
         }
       ]
     }

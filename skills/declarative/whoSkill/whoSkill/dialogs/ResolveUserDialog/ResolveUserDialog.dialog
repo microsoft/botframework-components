@@ -52,7 +52,16 @@
           },
           "resultProperty": "turn.Result",
           "token": "=turn.token.token",
-          "userId": "=$UserIdFound"
+          "userId": "=$UserIdFound",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",

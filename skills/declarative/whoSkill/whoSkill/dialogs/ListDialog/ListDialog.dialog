@@ -5,7 +5,7 @@
     "name": "ListDialog",
     "description": ""
   },
-  "autoEndDialog": true,
+  "autoEndDialog": false,
   "defaultResultProperty": "$result",
   "triggers": [
     {
@@ -21,74 +21,148 @@
           "$designer": {
             "id": "i6ahnZ"
           },
-          "name": "ListDialog.BeginDialog"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "kHEmNh"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "name": "ListDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "ttdzia"
+            "id": "4dyLBN"
           },
           "eventName": "GetChoices"
         },
         {
-          "$kind": "Microsoft.ChoiceInput",
-          "$designer": {
-            "id": "dc3QNs"
-          },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
-          },
-          "property": "$selectedIndex",
-          "recognizerOptions": {
-            "recognizeOrdinals": true,
-            "recognizeNumbers": true,
-            "noAction": false
-          },
-          "choices": "=$choices",
-          "style": "none",
-          "alwaysPrompt": false,
-          "allowInterruptions": "=#ChoiceInput_Response_dc3QNs == null && (#Next != null || #Previous != null || #Skip != null) && turn.recognized.score > 0.8",
-          "defaultValue": "=null",
-          "maxTurnCount": "=3",
-          "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_dc3QNs()}",
-          "prompt": "${ChoiceInput_Prompt_dc3QNs()}"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "sfVoHE"
+            "id": "siTpSb"
           },
-          "condition": "$selectedIndex != null",
+          "condition": "$autoSelectFirst",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "kpv68G"
+                "id": "Bl5XQz"
               },
-              "property": "$selection",
-              "value": "=$pageItems[int($selectedIndex) - 1]"
+              "property": "turn.selection",
+              "value": "=turn.pageItems[0]"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "g3GMBc"
+              },
+              "name": "ListDialog_AutoSelection"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "cUpDew"
+              }
             }
           ]
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "PNJp3T"
+            "id": "NbCgE7"
           },
-          "value": "=$selection"
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "oDMLpz"
+              },
+              "name": "TurnData",
+              "value": "=turn"
+            },
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "VygDK3"
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "property": "turn.selectedIndex",
+              "recognizerOptions": {
+                "recognizeOrdinals": true,
+                "recognizeNumbers": true,
+                "noAction": false,
+                "noValue": false
+              },
+              "choices": "=turn.choices",
+              "style": "none",
+              "alwaysPrompt": false,
+              "allowInterruptions": "=(exists(#Next) || exists(#Previous) || exists(#Skip) || exists(#Cancel) ) && turn.recognized.score > 0.8",
+              "defaultValue": "=null",
+              "maxTurnCount": "=3",
+              "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_VygDK3()}",
+              "prompt": "${ChoiceInput_Prompt_VygDK3()}",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              },
+              "outputFormat": "index"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "lIowZt"
+              },
+              "condition": "turn.selectedIndex != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "aUZ2FY"
+                  },
+                  "property": "turn.selection",
+                  "value": "=turn.pageItems[int(turn.selectedIndex) - 1]"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "jHIT3r"
+              },
+              "name": "ListDialog2_Selection",
+              "value": "=dialog"
+            },
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "APvcE0"
+              },
+              "name": "ListDialog2_Selection",
+              "value": "=turn.selection"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "d0ve0h"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "sweZKs"
+              },
+              "name": "DoSelectionState",
+              "value": "=turn"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "HOESBs"
+              },
+              "activity": "${SendActivity_HOESBs()}"
+            }
+          ],
+          "condition": "=coalesce($doSelection, true)"
         }
       ]
     },
@@ -99,6 +173,30 @@
         "name": "OnEvent (GetChoices)"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zER0mA"
+          },
+          "name": "ListDialog.OnEvent_GetChoices",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "aVXgYo"
+          },
+          "bubbleEvent": true,
+          "eventName": "=$getItemsEvent"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "KRvKCt"
+          },
+          "property": "turn.items",
+          "value": "=getProperty($itemsProperty)"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -122,16 +220,20 @@
               "value": "=coalesce($pageindex * $pageSize, 0)"
             },
             {
-              "property": "$pageItems",
-              "value": "=subArray($items, $startIndex, min($startIndex + $pageSize, count($items)))"
+              "property": "turn.pageItems",
+              "value": "=subArray(turn.items, $startIndex, min($startIndex + $pageSize, count(turn.items)))"
             },
             {
               "property": "$pageCount",
-              "value": "=if(count($items) % $pageSize == 0, count($items) / $pageSize, round(count($items) / $pageSize) + 1)"
+              "value": "=if(count(turn.items) % $pageSize == 0, count(turn.items) / $pageSize, round(count(turn.items) / $pageSize) + 1)"
             },
             {
               "property": "$isFirstTurn",
               "value": "=coalesce($isFirstTurn, true)"
+            },
+            {
+              "property": "$itemCount",
+              "value": "=count(turn.items)"
             }
           ]
         },
@@ -140,33 +242,33 @@
           "$designer": {
             "id": "DrAjqe"
           },
-          "index": "$foreach.index",
-          "value": "$foreach.value",
-          "itemsProperty": "$pageItems",
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.pageItems",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "kNUEEQ"
               },
-              "property": "$pageItems[$foreach.index].index",
-              "value": "=$foreach.index + 1"
+              "property": "turn.pageItems[turn.foreach.index].index",
+              "value": "=turn.foreach.index + 1"
             },
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "Q0pcWI"
               },
-              "property": "$actionTitle",
-              "value": "=$pageItems[$foreach.index][$actionTitleProperty]"
+              "property": "turn.actionTitle",
+              "value": "=turn.pageItems[turn.foreach.index][$actionTitleProperty]"
             },
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "Ho4bLH"
               },
-              "property": "$choiceItem",
-              "value": "=json(concat('{ \"value\": \"', $pageItems[$foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', $actionTitle, '\" } }'))"
+              "property": "turn.choiceItem",
+              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
             },
             {
               "$kind": "Microsoft.EditArray",
@@ -174,10 +276,18 @@
                 "id": "L4FUUg"
               },
               "changeType": "push",
-              "itemsProperty": "$choices",
-              "value": "=$choiceItem"
+              "itemsProperty": "turn.choices",
+              "value": "=turn.choiceItem"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "vBhsRF"
+          },
+          "name": "ListDialog.Choices",
+          "value": "=turn.choices"
         }
       ],
       "event": "GetChoices"
@@ -190,6 +300,14 @@
       },
       "intent": "Next",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jJCAos"
+          },
+          "name": "ListDialog.OnIntent_Next",
+          "value": "=null"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -211,7 +329,7 @@
           "$designer": {
             "id": "P1awzy"
           },
-          "condition": "$pageIndex * $pageSize <  count($items)",
+          "condition": "$pageIndex * $pageSize <  $itemCount",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -220,16 +338,20 @@
               },
               "assignments": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$items"
+                  "property": "$listOptions.itemsProperty",
+                  "value": "=$itemsProperty"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "=$getItemsEvent"
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "$actionTitleProperty"
+                  "value": "=$actionTitleProperty"
                 },
                 {
                   "property": "$listOptions.activePrompt",
-                  "value": "$activePrompt"
+                  "value": "=$activePrompt"
                 },
                 {
                   "property": "$listOptions.templates",
@@ -245,11 +367,11 @@
                 },
                 {
                   "property": "$listOptions.isFirstTurn",
-                  "value": "false"
+                  "value": "=false"
                 },
                 {
-                  "property": "$listOptions.Scenario",
-                  "value": "=$scenario"
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
                 }
               ]
             },
@@ -291,6 +413,14 @@
       "intent": "Previous",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wNTV7x"
+          },
+          "name": "ListDialog.OnIntent_Previous",
+          "value": "=null"
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "9QoATl"
@@ -316,20 +446,24 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "wjAVvg"
+                "id": "4jXyy8"
               },
               "assignments": [
                 {
-                  "property": "$listOptions.items",
-                  "value": "=$items"
+                  "property": "$listOptions.itemsProperty",
+                  "value": "=$itemsProperty"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "=$getItemsEvent"
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "$actionTitleProperty"
+                  "value": "=$actionTitleProperty"
                 },
                 {
                   "property": "$listOptions.activePrompt",
-                  "value": "$activePrompt"
+                  "value": "=$activePrompt"
                 },
                 {
                   "property": "$listOptions.templates",
@@ -348,15 +482,15 @@
                   "value": "=false"
                 },
                 {
-                  "property": "$listOptions.Scenario",
-                  "value": "=$Scenario"
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
                 }
               ]
             },
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-                "id": "WfLoxa"
+                "id": "b4hawV"
               },
               "activityProcessed": true,
               "options": "=$listOptions"
@@ -391,6 +525,14 @@
       "intent": "Skip",
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "73c90n"
+          },
+          "name": "ListDialog.OnIntent_Skip",
+          "value": "=null"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "BDsmtE"
@@ -403,6 +545,38 @@
             "id": "piQ9tu"
           },
           "value": "=null"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "DogtGR",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pzG3IA"
+          },
+          "name": "ListDialog.OnIntent_Cancel",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "nRdr1W"
+          },
+          "activity": "${SendActivity_nRdr1W()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "rKJlTu"
+          },
+          "activityProcessed": true
         }
       ]
     }

@@ -25,16 +25,6 @@
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.Graph.User.GetUsers",
-          "$designer": {
-            "id": "KiEzol"
-          },
-          "resultProperty": "turn.Result",
-          "token": "=turn.Token.token",
-          "nameToSearchFor": "=$nameEntity",
-          "maxCount": 16
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "q12nrf"
@@ -42,7 +32,7 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=turn.Result",
+            "getItemsEvent": "GetListItems",
             "AutoChooseFirst": "true",
             "Scenario": "PersonSearch",
             "User": "=$nameEntity"
@@ -55,6 +45,63 @@
             "id": "t5WNI5"
           },
           "value": "=turn.SelectedUser.Id"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "a0xuhL",
+        "name": "OnIntent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "eyez8z"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetUsers",
+          "$designer": {
+            "id": "EvJ4g2"
+          },
+          "nameToSearchFor": "=$nameEntity",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "officeLocation",
+            "businessPhones",
+            "jobTitle",
+            "department"
+          ],
+          "maxCount": 16,
+          "token": "=turn.token.token",
+          "resultProperty": "turn.Items"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Ek6zBT"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "rDlhom"
+              },
+              "token": "=turn.token.token",
+              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+            }
+          ]
         }
       ]
     }

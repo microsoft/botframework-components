@@ -85,7 +85,16 @@
               },
               "token": "=turn.token.token",
               "userId": "=$UserIdFound",
-              "resultProperty": "turn.Result"
+              "resultProperty": "turn.Result",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
             },
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",

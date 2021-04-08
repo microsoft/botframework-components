@@ -65,7 +65,16 @@
           },
           "resultProperty": "turn.Result",
           "token": "=turn.token.token",
-          "userId": "=turn.UserFound.id"
+          "userId": "=turn.UserFound.id",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
