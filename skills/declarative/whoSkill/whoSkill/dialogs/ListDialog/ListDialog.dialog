@@ -268,7 +268,7 @@
                 "id": "Ho4bLH"
               },
               "property": "turn.choiceItem",
-              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].index, '\", \"action\": { \"type\": \"imBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
+              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
             },
             {
               "$kind": "Microsoft.EditArray",
