@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Conditions;
+using Microsoft.Bot.Components.Teams.Actions;
+using Microsoft.Bot.Components.Teams.Conditions;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Bot.Builder;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams
+namespace Microsoft.Bot.Components.Teams
 {
     public class TeamsBotComponent : BotComponent
     {

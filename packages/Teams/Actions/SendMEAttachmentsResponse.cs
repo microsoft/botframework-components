@@ -8,11 +8,12 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     /// <summary>
     /// Send a messaging extension 'result' in response to a Teams Invoke with name of 'composeExtension/query'.

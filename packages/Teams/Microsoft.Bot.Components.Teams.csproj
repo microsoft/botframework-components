@@ -11,7 +11,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Microsoft.Bot.Builder.Dialogs.Adaptive.Teams</PackageId>
+    <PackageId>Microsoft.Bot.Components.Teams</PackageId>
     <Description>This library implements .NET support for adaptive dialogs with Microsoft Teams</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
     <ContentTargetFolders>content</ContentTargetFolders>

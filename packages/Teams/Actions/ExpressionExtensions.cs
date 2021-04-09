@@ -5,7 +5,7 @@ using System;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs.Memory;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     internal static class ExpressionExtensions
     {

@@ -7,12 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Components.Teams.Actions;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     /// <summary>
     /// Send a messaging extension 'config' response. This is the type of response used for a 'composeExtension/querySettingUrl' request.

@@ -4,7 +4,7 @@
 using System;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Obsolete;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams
+namespace Microsoft.Bot.Components.Teams
 {
     [Obsolete("Use `TeamsBotComponent`.")]
     public class TeamsComponentRegistration : DeclarativeComponentRegistrationBridge<TeamsBotComponent>

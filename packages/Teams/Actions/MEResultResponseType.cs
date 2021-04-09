@@ -4,7 +4,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     /// <summary>
     /// Enum representing Messaging Extension Result Response types.

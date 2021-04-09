@@ -8,6 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Connector;
@@ -17,7 +20,7 @@ using Microsoft.Bot.Schema.Teams;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Tests
+namespace Microsoft.Bot.Components.Teams.Tests
 {
     [CollectionDefinition("Dialogs.Adaptive")]
     public class ActionTests : IClassFixture<ResourceExplorerFixture>

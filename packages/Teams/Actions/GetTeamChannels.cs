@@ -6,13 +6,12 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema.Teams;
 using Newtonsoft.Json;
+using Microsoft.Bot.Builder.Dialogs;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     /// <summary>
     /// Calls TeamsInfo.GetTeamChannels to retrieve a list of channels in a

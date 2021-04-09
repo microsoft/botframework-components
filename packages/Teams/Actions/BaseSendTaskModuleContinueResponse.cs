@@ -4,7 +4,7 @@
 using AdaptiveExpressions.Properties;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Actions
+namespace Microsoft.Bot.Components.Teams.Actions
 {
     /// <summary>
     /// Base class for a url and card Task Module Continue responses.

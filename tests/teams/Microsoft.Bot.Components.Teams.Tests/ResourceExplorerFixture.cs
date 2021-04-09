@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 
-namespace Microsoft.Bot.Builder.Dialogs.Adaptive.Teams.Tests
+namespace Microsoft.Bot.Components.Teams.Tests
 {
     public class ResourceExplorerFixture : IDisposable
     {
