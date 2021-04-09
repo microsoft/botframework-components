@@ -32,7 +32,17 @@ namespace <%= botName %>
             }
 
             app.UseDefaultFiles();
-            app.UseStaticFiles();
+
+            // Set up custom content types - associating file extension to MIME type.
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".lu"] = "application/lu";
+            provider.Mappings[".qna"] = "application/qna";
+
+            // Expose static files in manifests folder for skill scenarios.
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider
+            });
             app.UseWebSockets();
             app.UseRouting();
             app.UseAuthorization();
