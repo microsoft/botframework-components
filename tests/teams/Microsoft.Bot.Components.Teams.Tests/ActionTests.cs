@@ -13,6 +13,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Bot.Builder.Dialogs.Declarative.Obsolete;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
@@ -34,7 +35,7 @@ namespace Microsoft.Bot.Components.Teams.Tests
             ComponentRegistration.Add(new AdaptiveComponentRegistration());
             ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
             ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
-            ComponentRegistration.Add(new TeamsComponentRegistration());
+            ComponentRegistration.Add(new DeclarativeComponentRegistrationBridge<TeamsBotComponent>());
 
             _resourceExplorerFixture = resourceExplorerFixture.Initialize(nameof(ActionTests));
         }

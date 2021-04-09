@@ -8,6 +8,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Testing;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Bot.Builder.Dialogs.Declarative.Obsolete;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace Microsoft.Bot.Components.Teams.Tests
             ComponentRegistration.Add(new AdaptiveComponentRegistration());
             ComponentRegistration.Add(new LanguageGenerationComponentRegistration());
             ComponentRegistration.Add(new AdaptiveTestingComponentRegistration());
-            ComponentRegistration.Add(new TeamsComponentRegistration());
+            ComponentRegistration.Add(new DeclarativeComponentRegistrationBridge<TeamsBotComponent>());
 
             ResourceExplorer = new ResourceExplorer()
                 .AddFolder(Path.Combine(TestUtils.GetProjectPath(), "Tests", nameof(ConditionalTests)), monitorChanges: false);

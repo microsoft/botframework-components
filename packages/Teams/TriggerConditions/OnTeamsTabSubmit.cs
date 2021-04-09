@@ -9,7 +9,7 @@ using Microsoft.Bot.Builder.Dialogs.Adaptive.Conditions;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 
-namespace Microsoft.Bot.Components.Teams
+namespace Microsoft.Bot.Components.Teams.Conditions
 {
     /// <summary>
     /// Actions triggered when a Teams InvokeActivity is received with activity.name='tab/submit'.
