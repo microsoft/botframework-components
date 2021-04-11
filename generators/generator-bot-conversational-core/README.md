@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-conversational-core [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a simple conversational bot with NLP built on the Azure Bot Framework.
-
-The Conversational Core template creates a simple conversational bot containing dialogs for the most common conversational flows, with example language models and triggers routing to those dialogs.
+This template creates a simple conversational bot containing dialogs for the most common conversational flows, with example language models and triggers routing to those dialogs.
 
 ## What this template is for
 
