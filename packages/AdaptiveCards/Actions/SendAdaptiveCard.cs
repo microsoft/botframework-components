@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -10,7 +13,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 {
     public class SendAdaptiveCard : BaseAdaptiveCard
     {
-
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Bot.Components.SendAdaptiveCard";
 

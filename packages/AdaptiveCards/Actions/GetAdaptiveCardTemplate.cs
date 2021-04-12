@@ -1,5 +1,5 @@
-﻿// Licensed under the MIT License.
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Concurrent;
@@ -16,7 +16,11 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 {
     public class GetAdaptiveCardTemplate : Dialog
     {
+        // TODO: Migrate to using MemoryCache class.
         private static ConcurrentDictionary<string, CacheEntry> cache = new ConcurrentDictionary<string, CacheEntry>();
+        private static HttpClient httpClient = new HttpClient();
+
+        private const int DefaultCachePeriod = 900;
 
         /// <summary>
         /// Class identifier.
@@ -57,7 +61,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
         public BoolExpression CacheTemplate { get; set; } = true;
 
         [JsonProperty("cacheExpiration")]
-        public IntExpression CacheExpiration { get; set; } = 900;
+        public IntExpression CacheExpiration { get; set; } = DefaultCachePeriod;
 
         /// <summary>
         /// Called when the dialog is started and pushed onto the dialog stack.
@@ -89,10 +93,9 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             var cache = this.CacheTemplate?.GetValue(dc.State);
             if (cache == true)
             {
-                template = GetTemplateFromCache(url);
-                if (template == null)
+                if (TryGetTemplateFromCache(url, out template))
                 {
-                    var expiration = this.CacheExpiration?.GetValue(dc.State) ?? 900;
+                    var expiration = this.CacheExpiration?.GetValue(dc.State) ?? DefaultCachePeriod;
                     template = await FetchTemplateAsync(dc, url, cancellationToken).ConfigureAwait(false);
                     AddTemplateToCache(url, template, expiration);
                 }
@@ -125,66 +128,56 @@ namespace Microsoft.Bot.Components.AdaptiveCards
         {
             // Fetch template
             JObject template;
-            var client = new HttpClient();
+            var response = await httpClient.GetAsync(url, cancellationToken).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"{this.Id}: '{(int)response.StatusCode}' error fetching template: {response.ReasonPhrase}");
+            }
+
+            // Parse template
             try
             {
-                var response = await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
-                if ((int)response.StatusCode < 200 || (int)response.StatusCode >= 300)
-                {
-                    throw new Exception($"{this.Id}: '{(int)response.StatusCode}' error fetching template: {response.ReasonPhrase}");
-                }
-
-                // Parse template
-                try
-                {
-                    var json = JToken.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-                    if (json is JObject)
-                    {
-                        template = (JObject)json;
-                    }
-                    else
-                    {
-                        throw new Exception("Template is not a valid JSON object.");
-                    }
-                }
-                catch (Exception err)
-                {
-                    throw new Exception($"{this.Id}: error parsing template: {err.Message}");
-
-                }
+                template = JObject.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
-            finally
+            catch (Exception err)
             {
-                client.Dispose();
+                throw new Exception($"{this.Id}: error parsing template: {err.Message}");
+
             }
 
 
             return template;
         }
 
-        public static JObject GetTemplateFromCache(string url)
+        private static bool TryGetTemplateFromCache(string url, out JObject template)
         {
             PurgeCache();
             CacheEntry entry;
             if (cache.TryGetValue(url, out entry))
             {
-                return entry.Template;
+                template = entry.Template;
+            }
+            else
+            {
+                template = null;
             }
 
-            return null;
+            return template != null;
         }
 
-        public static void AddTemplateToCache(string url, JObject template, int expiration)
+        private static void AddTemplateToCache(string url, JObject template, int expiration)
         {
-            var entry = new CacheEntry();
-            entry.Url = url;
-            entry.Template = template;
-            entry.Expiration = DateTimeOffset.UtcNow.AddSeconds(expiration).UtcDateTime;
+            var entry = new CacheEntry()
+            {
+                Url = url,
+                Template = template,
+                Expiration = DateTimeOffset.UtcNow.AddSeconds(expiration).UtcDateTime
+            };
             cache.TryAdd(url, entry);
         }
 
 
-        public static void PurgeCache()
+        private static void PurgeCache()
         {
             var entries = cache.Values;
             foreach (var entry in entries)

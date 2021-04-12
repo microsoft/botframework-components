@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +17,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 {
     public abstract class BaseAdaptiveCard : Dialog
     {
-        protected abstract Task<object> OnProcessCardAsync(DialogContext dc, JObject card, CancellationToken cancellationToken = default(CancellationToken));
+        public const string AdaptiveCardActionName = "adaptiveCard/action";
 
         [JsonConstructor]
         public BaseAdaptiveCard([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
@@ -33,6 +36,8 @@ namespace Microsoft.Bot.Components.AdaptiveCards
         [JsonProperty("data")]
         public ObjectExpression<object> Data { get; set; } = new ObjectExpression<object>("={}");
 
+        protected abstract Task<object> OnProcessCardAsync(DialogContext dc, JObject card, CancellationToken cancellationToken = default(CancellationToken));
+
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (options is CancellationToken)
@@ -40,7 +45,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
                 throw new ArgumentException($"{nameof(options)} cannot be a cancellation token");
             }
 
-            if (this.Disabled != null && this.Disabled.GetValue(dc.State) == true)
+            if (this.Disabled?.GetValue(dc.State) == true)
             {
                 return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -56,8 +61,8 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             var data = this.Data?.GetValue(dc.State) ?? new JObject();
 
             // Render card and convert to JObject
-            var tmpl = new AdaptiveCardTemplate(jTemplate.ToString());
-            var card = tmpl.Expand(data);
+            var template = new AdaptiveCardTemplate(jTemplate.ToString());
+            var card = template.Expand(data);
             var jCard = !String.IsNullOrEmpty(card) ? JObject.Parse(card) : null;
 
             // Process card
@@ -72,7 +77,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             if (dc.Context.Activity.Type == ActivityTypes.Invoke)
             {
                 // Ensure we're responding to a supported invoke name
-                if (dc.Context.Activity.Name != "adaptiveCard/action")
+                if (!string.Equals(dc.Context.Activity.Name, AdaptiveCardActionName, StringComparison.OrdinalIgnoreCase))
                 {
                     throw new Exception($"{this.Id}: doesn't support responding to an invoke named '{dc.Context.Activity.Name}'.");
                 }

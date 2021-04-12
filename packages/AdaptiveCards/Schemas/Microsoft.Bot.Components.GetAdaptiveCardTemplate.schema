@@ -2,7 +2,7 @@
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "title": "Get an Adaptive Card Template",
-  "description": "Loads and optional caches an Adaptive Card Template from a Url.",
+  "description": "Loads and optionally caches an Adaptive Card Template from a Url.",
   "type": "object",
   "properties": {
     "id": {

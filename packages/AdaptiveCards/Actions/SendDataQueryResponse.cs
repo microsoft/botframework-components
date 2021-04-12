@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +18,9 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 {
     public class SendDataQueryResponse : Dialog
     {
+        [JsonProperty("$kind")]
+        public const string Kind = "Microsoft.Bot.Components.SendDataQueryResponse";
+
         [JsonConstructor]
         public SendDataQueryResponse([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
@@ -22,9 +28,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
         }
-
-        [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Bot.Components.SendDataQueryResponse";
 
         [JsonProperty("disabled")]
         public BoolExpression Disabled { get; set; }
@@ -58,6 +61,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 
             return await dc.EndDialogAsync(null, cancellationToken).ConfigureAwait(false);
         }
+
         protected override string OnComputeId()
         {
             return $"{this.GetType().Name}('{StringUtils.Ellipsis(Results?.ToString(), 30)}')";
