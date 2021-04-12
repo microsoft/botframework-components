@@ -45,7 +45,7 @@ You'll package your components using the normal `pack` command for your package 
 
 ## Publishing your package
 
-You can publish to a local feed, or to a hosted feed (private or public). If you are planning to publish to NuGet or npm, and wish to make your package available in Package Manager in Composer, then you'll need to use the 'msbot-component' tag on your package.
+You can publish your package to a local feed, or to a hosted feed (private or public). If you are planning to publish to NuGet or npm, and wish to make your package available from the default feeds in Package Manager in Composer, then you'll need to use the 'msbot-component' tag on your package.
 
 Optionally, you can also use one or more of the following tags based on the contents of your package.
 
@@ -55,8 +55,7 @@ Optionally, you can also use one or more of the following tags based on the cont
 - msbot-trigger
 - msbot-adapter
 
-The easiest thing to do is to publish to a local feed. Read about doing that here: [Setting up Local NuGet Feeds](https://docs.microsoft.com/nuget/hosting-packages/local-feeds)
-
+The easiest thing to do is to publish to a local feed. Read about doing that here: [Setting up Local NuGet Feeds](https://docs.microsoft.com/nuget/hosting-packages/local-feeds).
 
 ## Docs table of contents
 
