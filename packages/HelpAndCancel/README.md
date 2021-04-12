@@ -25,4 +25,4 @@ The dialogs contained in this package are examples for handling help and cancel 
 
 ## Feedback and issues
 
-If you encounter any issues with this package, or would like to share any feedback please open an Issue in your [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
+If you encounter any issues with this package, or would like to share any feedback please open an Issue in our [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
