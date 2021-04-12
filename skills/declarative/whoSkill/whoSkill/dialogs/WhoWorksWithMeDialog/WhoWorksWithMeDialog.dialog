@@ -59,16 +59,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.Graph.User.GetWorksWith",
-          "$designer": {
-            "id": "0jrRb0"
-          },
-          "token": "=turn.token.token",
-          "resultProperty": "turn.Result",
-          "userId": "=turn.UserFound.Id",
-          "maxCount": 15
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "wHB39C"
@@ -76,10 +66,10 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=turn.Result",
             "User": "=turn.UserFound",
             "Scenario": "Collaborator",
-            "AutoChooseFirst": "false"
+            "AutoChooseFirst": "false",
+            "GetListItemEvent": "GetListItems"
           },
           "resultProperty": "turn.DetailUser"
         },
@@ -98,7 +88,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser.Id"
+                "UserIdFound": "=turn.DetailUser"
               }
             }
           ],
@@ -117,6 +107,54 @@
           "$designer": {
             "id": "Stpfkh"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Vqq2HS",
+        "name": "OnIntent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZKKInz"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetWorksWith",
+          "$designer": {
+            "id": "nt8FTI"
+          },
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "userId": "=turn.UserFound.Id",
+          "resultProperty": "turn.Items"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "vADC8V"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "mq1B9p"
+              },
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "userId": "=turn.foreach.value.Id",
+              "token": "turn.token.token"
+            }
+          ]
         }
       ]
     }

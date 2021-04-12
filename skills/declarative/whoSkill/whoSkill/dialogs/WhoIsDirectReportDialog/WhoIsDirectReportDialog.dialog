@@ -17,6 +17,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ARqQ7b"
+          },
+          "name": "PeopleSkill.DirectReport",
+          "value": "=dialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "6g7a8q"
@@ -56,6 +64,16 @@
                 "id": "xcr8th"
               }
             }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "FQh503"
+              },
+              "name": "WhoIsDirectReportDialog.UserFound",
+              "value": "=turn.UserFound"
+            }
           ]
         },
         {
@@ -69,7 +87,7 @@
             "User": "=turn.UserFound",
             "Scenario": "DirectReports",
             "AutoChooseFirst": "false",
-            "GetListItemEvent": "GetListItem"
+            "GetListItemEvent": "GetListItems"
           },
           "resultProperty": "turn.DirectReportUser"
         },
@@ -88,7 +106,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserIdFound": "=turn.DirectReportUser.Id"
+                "UserIdFound": "=turn.DirectReportUser"
               }
             }
           ],
@@ -140,16 +158,30 @@
             "jobTitle",
             "department"
           ],
-          "token": "turn.token.token",
+          "token": "=turn.token.token",
           "maxCount": 15,
-          "resultProperty": "turn.Result"
+          "resultProperty": "turn.Items",
+          "userId": "=turn.UserFound.Id"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "otsxJO"
+            "id": "SAgsvz"
           },
-          "value": "=turn.UserList"
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "uCR1y8"
+              },
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "userId": "=turn.foreach.value.Id",
+              "token": "=turn.token.token"
+            }
+          ]
         }
       ]
     }

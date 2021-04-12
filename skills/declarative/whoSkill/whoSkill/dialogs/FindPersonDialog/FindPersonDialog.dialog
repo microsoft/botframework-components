@@ -44,7 +44,7 @@
           "$designer": {
             "id": "t5WNI5"
           },
-          "value": "=turn.SelectedUser.Id"
+          "value": "=turn.SelectedUser"
         }
       ]
     },

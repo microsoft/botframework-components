@@ -25,14 +25,6 @@
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "vE2VKR"
-          },
-          "eventName": "=$getItemsEvent",
-          "bubbleEvent": true
-        },
-        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "6oYIrU"
@@ -92,44 +84,6 @@
             "id": "8PYkyW"
           },
           "value": "=turn.SelectedUser"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "CzptJy",
-        "name": "OnIntent (GetPhotosForUsers)"
-      },
-      "event": "GetPhotosForUsers",
-      "actions": [
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "3yNKv4"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.Foreach",
-          "$designer": {
-            "id": "2MNt9J"
-          },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
-          "itemsProperty": "turn.Items",
-          "actions": [
-            {
-              "$kind": "Microsoft.Graph.Photo.GetPhoto",
-              "$designer": {
-                "id": "2OTcYV"
-              },
-              "token": "=turn.token.token",
-              "resultProperty": "turn.Items[turn.foreach.index].Photo",
-              "userId": "=turn.foreach.value.Id"
-            }
-          ]
         }
       ]
     }

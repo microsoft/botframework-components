@@ -27,9 +27,24 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "4dyLBN"
+            "id": "6Z6i4E"
           },
           "eventName": "GetChoices"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "SkoRPU"
+          },
+          "condition": "=exists(turn.Items) && count(turn.Items) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "RDgQUm"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -86,10 +101,8 @@
               "recognizerOptions": {
                 "recognizeOrdinals": true,
                 "recognizeNumbers": true,
-                "noAction": false,
-                "noValue": false
+                "noAction": false
               },
-              "choices": "=turn.choices",
               "style": "none",
               "alwaysPrompt": false,
               "allowInterruptions": "=(exists(#Next) || exists(#Previous) || exists(#Skip) || exists(#Cancel) ) && turn.recognized.score > 0.8",
@@ -103,7 +116,8 @@
                 "inlineOr": " or ",
                 "inlineSeparator": ", "
               },
-              "outputFormat": "index"
+              "choices": "=turn.choices",
+              "outputFormat": "value"
             },
             {
               "$kind": "Microsoft.IfCondition",
@@ -113,36 +127,29 @@
               "condition": "turn.selectedIndex != null",
               "actions": [
                 {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "YPrzQC"
+                  },
+                  "name": "SelectionEvent",
+                  "value": "=turn.selectedIndex"
+                },
+                {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "aUZ2FY"
                   },
                   "property": "turn.selection",
-                  "value": "=turn.pageItems[int(turn.selectedIndex) - 1]"
+                  "value": "=turn.selectedIndex"
                 }
               ]
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "jHIT3r"
-              },
-              "name": "ListDialog2_Selection",
-              "value": "=dialog"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "APvcE0"
-              },
-              "name": "ListDialog2_Selection",
-              "value": "=turn.selection"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
                 "id": "d0ve0h"
-              }
+              },
+              "value": "=turn.selection"
             }
           ],
           "elseActions": [
@@ -192,10 +199,25 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "KRvKCt"
+            "id": "4qlsk7"
           },
           "property": "turn.items",
           "value": "=getProperty($itemsProperty)"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Ovxpvh"
+          },
+          "condition": "=count(turn.items) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "PaQM6S"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -268,7 +290,7 @@
                 "id": "Ho4bLH"
               },
               "property": "turn.choiceItem",
-              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
+              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].id, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
             },
             {
               "$kind": "Microsoft.EditArray",

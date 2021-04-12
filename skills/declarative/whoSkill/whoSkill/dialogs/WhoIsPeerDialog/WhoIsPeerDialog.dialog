@@ -59,25 +59,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.Graph.User.GetPeers",
-          "$designer": {
-            "id": "SBjTDm"
-          },
-          "resultProperty": "turn.Result",
-          "token": "=turn.token.token",
-          "userId": "=turn.UserFound.Id",
-          "maxCount": 15,
-          "propertiesToSelect": [
-            "id",
-            "displayName",
-            "mail",
-            "businessPhones",
-            "department",
-            "jobTitle",
-            "officeLocation"
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "Ldr65P"
@@ -85,10 +66,10 @@
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "UserList": "=turn.Result",
             "Scenario": "Peers",
             "User": "=turn.UserFound",
-            "AutoChooseFirst": "false"
+            "AutoChooseFirst": "false",
+            "GetListItemEvent": "GetListItems"
           },
           "resultProperty": "turn.DetailUser"
         },
@@ -107,7 +88,7 @@
               "activityProcessed": true,
               "dialog": "WhoIsPersonDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser.Id"
+                "UserIdFound": "=turn.DetailUser"
               }
             }
           ],
@@ -126,6 +107,63 @@
           "$designer": {
             "id": "YtwbHP"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "qk16FD",
+        "name": "OnIntent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "qZ7hQz"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetPeers",
+          "$designer": {
+            "id": "ww53aA"
+          },
+          "resultProperty": "turn.Items",
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "officeLocation",
+            "jobTitle",
+            "department"
+          ],
+          "userId": "=turn.UserFound.Id"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "3NzFtD"
+          },
+          "index": "dialog.foreach.index",
+          "value": "dialog.foreach.value",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "VsikRa"
+              },
+              "token": "turn.token.token",
+              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+            }
+          ],
+          "itemsProperty": "turn.Items"
         }
       ]
     }
