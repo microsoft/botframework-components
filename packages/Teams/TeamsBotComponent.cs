@@ -7,6 +7,7 @@ using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder;
+using System;
 
 namespace Microsoft.Bot.Components.Teams
 {
@@ -15,6 +16,22 @@ namespace Microsoft.Bot.Components.Teams
         /// <inheritdoc/>
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            var ettings = configuration.GetSection(ComponentSettings.SettingsKey).Get<ComponentSettings>() ?? new ComponentSettings();
+            if (ettings.SSOMiddleware)
+            {
+                services.AddSingleton<IMiddleware, SSOTokenExchangeMiddleware>();
+            }
+
             // Conditionals
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsAppBasedLinkQuery>(OnTeamsAppBasedLinkQuery.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsCardAction>(OnTeamsCardAction.Kind));
