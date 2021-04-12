@@ -17,6 +17,9 @@
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
     <ContentTargetFolders>content</ContentTargetFolders>
     <PackageTags>msbot-action;msbot-trigger</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
