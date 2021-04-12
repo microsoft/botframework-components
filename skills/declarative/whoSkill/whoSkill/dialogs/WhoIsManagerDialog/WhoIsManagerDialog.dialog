@@ -54,7 +54,16 @@
               },
               "resultProperty": "$UserFound",
               "token": "=user.token.token",
-              "userId": "=$UserFound"
+              "userId": "=$UserFound",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
             }
           ]
         },
@@ -97,7 +106,16 @@
           },
           "resultProperty": "$Result",
           "token": "=user.token.token",
-          "userId": "=$UserFound.id"
+          "userId": "=$UserFound.id",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",
