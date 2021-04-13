@@ -33,7 +33,8 @@
           "dialog": "ResolveUserDialog",
           "resultProperty": "turn.UserFound",
           "options": {
-            "UserIdFound": "=$UserIdFound"
+            "UserIdFound": "=$UserIdFound",
+            "NameEntity": "=$NameEntity"
           }
         },
         {
@@ -86,9 +87,9 @@
           "options": {
             "User": "=turn.UserFound",
             "Scenario": "DirectReports",
-            "AutoChooseFirst": "false",
+            "AutoChooseFirst": false,
             "GetListItemEvent": "GetListItems",
-            "doSelection": "false"
+            "doSelection": false
           },
           "resultProperty": "turn.DirectReportUser"
         },
