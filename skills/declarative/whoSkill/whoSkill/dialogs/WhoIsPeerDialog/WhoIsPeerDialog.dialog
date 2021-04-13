@@ -25,7 +25,8 @@
           "dialog": "ResolveUserDialog",
           "resultProperty": "turn.UserFound",
           "options": {
-            "UserIdFound": "=$UserIdFound"
+            "UserIdFound": "=$UserIdFound",
+            "NameEntity": "=$NameEntity"
           }
         },
         {
@@ -68,9 +69,9 @@
           "options": {
             "Scenario": "Peers",
             "User": "=turn.UserFound",
-            "AutoChooseFirst": "false",
+            "AutoChooseFirst": false,
             "GetListItemEvent": "GetListItems",
-            "doSelection": "false"
+            "doSelection": false
           },
           "resultProperty": "turn.DetailUser"
         },
