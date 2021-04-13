@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Components.Teams.Actions;
 using Microsoft.Bot.Components.Teams.Conditions;
-using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Bot.Builder;
-using System;
 
 namespace Microsoft.Bot.Components.Teams
 {
@@ -26,8 +26,8 @@ namespace Microsoft.Bot.Components.Teams
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            var ettings = configuration.GetSection(ComponentSettings.SettingsKey).Get<ComponentSettings>() ?? new ComponentSettings();
-            if (ettings.SSOMiddleware)
+            var settings = configuration.Get<ComponentSettings>() ?? new ComponentSettings();
+            if (settings.UseSingleSignOnMiddleware)
             {
                 services.AddSingleton<IMiddleware, SSOTokenExchangeMiddleware>();
             }

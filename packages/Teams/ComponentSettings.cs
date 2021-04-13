@@ -8,14 +8,14 @@ namespace Microsoft.Bot.Components.Teams
     /// </summary>
     internal class ComponentSettings
     {
-        public const string SettingsKey = "Microsoft.Bot.Components.Teams";
-
         /// <summary>
         /// Gets or sets a value indicating whether the runtime should use SSO Middleware.
         /// </summary>
-        /// <value>
-        /// A value indicating whether the runtime should use SSO Middleware.
-        /// </value>
-        public bool SSOMiddleware { get; set; } = false;
+        public bool UseSingleSignOnMiddleware { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the Connection Name to use for the single sign on token exchange.
+        /// </summary>
+        public string ConnectionName { get; set; }
     }
 }

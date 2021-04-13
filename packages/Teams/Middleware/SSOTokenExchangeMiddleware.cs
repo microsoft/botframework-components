@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Bot.Components.Teams
@@ -33,18 +32,28 @@ namespace Microsoft.Bot.Components.Teams
     /// </remarks>
     public class SSOTokenExchangeMiddleware : IMiddleware
     {
-        private const string ConnectionNameProperty = "ConnectionName";
         private readonly IStorage _storage;
         private readonly string _oAuthConnectionName;
 
         /// <summary>
         /// Creates an instance of <see cref="SSOTokenExchangeMiddleware" />.
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="storage"></param>
-        public SSOTokenExchangeMiddleware(IConfiguration configuration, IStorage storage)
+        /// <param name="storage">The <see cref="IStorage"/> to use for deduplication.</param>
+        /// <param name="connectionName">The connection name to use for the single
+        /// sign on token exchange.</param>
+        public SSOTokenExchangeMiddleware(IStorage storage, string connectionName)
         {
-            _oAuthConnectionName = configuration[ConnectionNameProperty];
+            if (storage == null)
+            {
+                throw new ArgumentNullException(nameof(storage));
+            }
+
+            if (string.IsNullOrEmpty(connectionName))
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+
+            _oAuthConnectionName = connectionName;
             _storage = storage;
         }
 
@@ -118,20 +127,21 @@ namespace Microsoft.Bot.Components.Teams
                 var userTokenClient = turnContext.TurnState.Get<UserTokenClient>();
                 if (userTokenClient != null)
                 {
-                    tokenExchangeResponse = await userTokenClient.ExchangeTokenAsync(turnContext.Activity.From.Id,
-                                                                    _oAuthConnectionName,
-                                                                    turnContext.Activity.ChannelId,
-                                                                    new TokenExchangeRequest { Token = tokenExchangeRequest.Token },
-                                                                    cancellationToken).ConfigureAwait(false);
+                    tokenExchangeResponse = await userTokenClient.ExchangeTokenAsync(
+                        turnContext.Activity.From.Id,
+                        _oAuthConnectionName,
+                        turnContext.Activity.ChannelId,
+                        new TokenExchangeRequest { Token = tokenExchangeRequest.Token },
+                        cancellationToken).ConfigureAwait(false);
                 }
                 else if (turnContext.Adapter is IExtendedUserTokenProvider adapter)
                 {
                     tokenExchangeResponse = await adapter.ExchangeTokenAsync(
-                                                            turnContext,
-                                                            _oAuthConnectionName,
-                                                            turnContext.Activity.From.Id,
-                                                            new TokenExchangeRequest { Token = tokenExchangeRequest.Token },
-                                                            cancellationToken).ConfigureAwait(false);
+                        turnContext,
+                        _oAuthConnectionName,
+                        turnContext.Activity.From.Id,
+                        new TokenExchangeRequest { Token = tokenExchangeRequest.Token },
+                        cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -147,7 +157,7 @@ namespace Microsoft.Bot.Components.Teams
                 // and hence we send back a failure invoke response to the caller.
             }
 
-            if (tokenExchangeResponse == null || string.IsNullOrEmpty(tokenExchangeResponse.Token))
+            if (string.IsNullOrEmpty(tokenExchangeResponse?.Token))
             {
                 // The token could not be exchanged (which could be due to a consent requirement)
                 // Notify the sender that PreconditionFailed so they can respond accordingly.
@@ -169,15 +179,6 @@ namespace Microsoft.Bot.Components.Teams
 
                 return false;
             }
-            else
-            {
-                // NOTE: this could be used in conjunction with an OAuthInput dialog which checks the 
-                // TurnState for the responses, rather than re-creating them which results in two exchange request calls.
-
-                //// Store response in TurnState, so the TokenExchangeOAuthPrompt can use it, and not have to do the exchange again.
-                //turnContext.TurnState[nameof(TokenExchangeInvokeRequest)] = tokenExchangeRequest;
-                //turnContext.TurnState[nameof(TokenResponse)] = tokenExchangeResponse;
-            }
 
             return true;
         }
@@ -191,11 +192,6 @@ namespace Microsoft.Bot.Components.Teams
                 var activity = turnContext.Activity;
                 var channelId = activity.ChannelId ?? throw new InvalidOperationException("invalid activity-missing channelId");
                 var conversationId = activity.Conversation?.Id ?? throw new InvalidOperationException("invalid activity-missing Conversation.Id");
-
-                if (activity.Type != ActivityTypes.Invoke || activity.Name != SignInConstants.TokenExchangeOperationName)
-                {
-                    throw new InvalidOperationException("TokenExchangeState can only be used with Invokes of signin/tokenExchange.");
-                }
 
                 var value = activity.Value as JObject;
                 if (value == null || !value.ContainsKey("id"))
