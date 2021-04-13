@@ -87,7 +87,8 @@
             "User": "=turn.UserFound",
             "Scenario": "DirectReports",
             "AutoChooseFirst": "false",
-            "GetListItemEvent": "GetListItems"
+            "GetListItemEvent": "GetListItems",
+            "doSelection": "false"
           },
           "resultProperty": "turn.DirectReportUser"
         },

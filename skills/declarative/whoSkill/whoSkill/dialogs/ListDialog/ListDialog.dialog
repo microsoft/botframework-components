@@ -51,7 +51,7 @@
           "$designer": {
             "id": "siTpSb"
           },
-          "condition": "$autoSelectFirst",
+          "condition": "$autoChooseFirst && count(turn.Items) == 1",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -59,20 +59,14 @@
                 "id": "Bl5XQz"
               },
               "property": "turn.selection",
-              "value": "=turn.pageItems[0]"
-            },
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "g3GMBc"
-              },
-              "name": "ListDialog_AutoSelection"
+              "value": "=turn.choices[0].value"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
                 "id": "cUpDew"
-              }
+              },
+              "value": "=turn.selection"
             }
           ]
         },
@@ -82,14 +76,6 @@
             "id": "NbCgE7"
           },
           "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "oDMLpz"
-              },
-              "name": "TurnData",
-              "value": "=turn"
-            },
             {
               "$kind": "Microsoft.ChoiceInput",
               "$designer": {
@@ -186,7 +172,7 @@
             "id": "zER0mA"
           },
           "name": "ListDialog.OnEvent_GetChoices",
-          "value": "=null"
+          "value": "=turn"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -343,6 +329,10 @@
             {
               "property": "$itemIndex",
               "value": "=0"
+            },
+            {
+              "property": "turn.UserFound.Id",
+              "value": "=coalesce(turn.UserFound.Id, turn.activity.value.user)"
             }
           ]
         },
@@ -455,6 +445,10 @@
             {
               "property": "$itemIndex",
               "value": "=0"
+            },
+            {
+              "property": "turn.UserFound.Id",
+              "value": "=coalesce(turn.UserFound.Id, turn.activity.value.user)"
             }
           ]
         },

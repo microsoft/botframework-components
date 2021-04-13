@@ -3,33 +3,33 @@
 [Icons](icons.en-us.lg)
 [Cards](cards.en-us.lg)
 
-# UserListPrompt(Scenario, User, Items)
-- IF: ${count(Items) > 1}
-    - ${MultipleResultFound(Scenario, count(Items), User)}
+# UserListPrompt()
+- IF: ${count(turn.Items) > 1}
+    - ${MultipleResultFound()}
 - ELSE:
-    - ${SingleResultFound(Scenario, User)}
+    - ${SingleResultFound()}
 
-#SingleResultFound(Scenario, User)
-- SWITCH: ${Scenario}
+#SingleResultFound()
+- SWITCH: ${dialog.Scenario}
 - CASE: ${"Collaborator"}
-    - I found 1 colleague that collaborates with **${User.displayName}**.
+    - I found 1 colleague that collaborates with **${turn.UserFound.displayName}**.
 - CASE: ${"Peers"}
-    - I found 1 colleague that share the same manager as **${User.displayName}**.
+    - I found 1 colleague that share the same manager as **${turn.UserFound.displayName}**.
 - CASE: ${"DirectReports"}
-    - I found 1 colleague that reports to **${User.displayName}**.
+    - I found 1 colleague that reports to **${turn.UserFound.displayName}**.
 - DEFAULT:
     - I found one result:
 
-#MultipleResultFound(Scenario, TotalCount, User)
-- SWITCH: ${Scenario}
+#MultipleResultFound()
+- SWITCH: ${dialog.Scenario}
 - CASE: ${"Collaborator"}
-    - I found ${TotalCount} colleagues that collaborates with **${User.displayName}**.
+    - I found ${count(turn.Items)} colleagues that collaborates with **${turn.UserFound.displayName}**.
 - CASE: ${"Peers"}
-    - There are ${TotalCount} colleagues that share the same manager as **${User.displayName}**.
+    - There are ${count(turn.Items)} colleagues that share the same manager as **${turn.UserFound.displayName}**.
 - CASE: ${"DirectReports"}
-    - There are ${TotalCount} people that are part of **${User.displayName}**'s team.
+    - There are ${count(turn.Items)} people that are part of **${turn.UserFound.displayName}**'s team.
 - CASE: ${"PersonSearch"}
-    - I found multiple matches for **${User}**. Please pick one:
+    - I found multiple matches for **${dialog.nameEntity}**. Please pick one:
 - DEFAULT:
     - I found multiple results:
 
@@ -42,8 +42,8 @@
 # UserListDefaultValueResponse()
 - OK, let's move on.
 
-# UserListTitle(Scenario)
-- SWITCH: ${Scenario}
+# UserListTitle()
+- SWITCH: ${dialog.Scenario}
 - CASE: ${"Collaborator"}
     - Collaborators
 - CASE: ${"Peers"}
@@ -53,13 +53,24 @@
 - DEFAULT:
     - Colleagues
 
-# UserListItem(item)
-- ```
-{
-    "type": "Container",
-    "separator": true,
-    "spacing": "Small",
-    "selectAction": {
+# UserListItemAction(item)
+- IF: ${ dialog.doSelection }
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": {
+            "intent": "GetProfile",
+            "user": "${item.id}",
+            "msteams": {
+                "type": "messageBack"
+            }
+        }
+    }
+    ```
+- ELSE:
+    - ```
+    {
         "type": "Action.Submit",
         "title": "selectOption",
         "data": 
@@ -70,7 +81,16 @@
                 "value" : "${item.index}",
             }
         }
-    },
+    }
+    ```
+
+# UserListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": ${UserListItemAction(item)},
     "items": [
         {
             "type": "ColumnSet",

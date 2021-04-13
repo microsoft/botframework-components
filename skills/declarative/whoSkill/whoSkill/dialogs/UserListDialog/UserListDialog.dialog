@@ -65,6 +65,14 @@
             {
               "property": "$listOptions.itemsProperty",
               "value": "turn.Items"
+            },
+            {
+              "property": "$listOptions.autoChooseFirst",
+              "value": "=$AutoChooseFirst"
+            },
+            {
+              "property": "$listOptions.doSelection",
+              "value": "=$doSelection"
             }
           ]
         },

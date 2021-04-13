@@ -68,8 +68,9 @@
           "options": {
             "User": "=turn.UserFound",
             "Scenario": "Collaborator",
-            "AutoChooseFirst": "false",
-            "GetListItemEvent": "GetListItems"
+            "AutoChooseFirst": false,
+            "GetListItemEvent": "GetListItems",
+            "doSelection": false
           },
           "resultProperty": "turn.DetailUser"
         },
@@ -152,7 +153,7 @@
               },
               "resultProperty": "turn.Items[turn.foreach.index].Photo",
               "userId": "=turn.foreach.value.Id",
-              "token": "turn.token.token"
+              "token": "=turn.token.token"
             }
           ]
         }

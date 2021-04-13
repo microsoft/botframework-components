@@ -69,7 +69,8 @@
             "Scenario": "Peers",
             "User": "=turn.UserFound",
             "AutoChooseFirst": "false",
-            "GetListItemEvent": "GetListItems"
+            "GetListItemEvent": "GetListItems",
+            "doSelection": "false"
           },
           "resultProperty": "turn.DetailUser"
         },
