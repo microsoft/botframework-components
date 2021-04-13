@@ -29,7 +29,7 @@
 - CASE: ${"DirectReports"}
     - There are ${count(turn.Items)} people that are part of **${turn.UserFound.displayName}**'s team.
 - CASE: ${"PersonSearch"}
-    - I found multiple matches for **${dialog.nameEntity}**. Please pick one:
+    - I found multiple matches for **${dialog.User}**. Please pick one:
 - DEFAULT:
     - I found multiple results:
 
