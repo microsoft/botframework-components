@@ -54,21 +54,7 @@
     - Colleagues
 
 # UserListItemAction(item)
-- IF: ${ dialog.doSelection }
-    - ```
-    {
-        "type": "Action.Submit",
-        "title": "selectOption",
-        "data": {
-            "intent": "GetProfile",
-            "user": "${item.id}",
-            "msteams": {
-                "type": "messageBack"
-            }
-        }
-    }
-    ```
-- ELSE:
+- IF: ${ dialog.doSelection }    
     - ```
     {
         "type": "Action.Submit",
@@ -79,6 +65,20 @@
             "msteams": {
                 "type": "messageBack",
                 "value" : "${item.index}",
+            }
+        }
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": {
+            "intent": "GetProfile",
+            "user": "${item.id}",
+            "msteams": {
+                "type": "messageBack"
             }
         }
     }

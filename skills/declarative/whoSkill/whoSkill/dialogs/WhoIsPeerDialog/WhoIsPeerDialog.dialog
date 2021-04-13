@@ -152,15 +152,15 @@
           "$designer": {
             "id": "3NzFtD"
           },
-          "index": "dialog.foreach.index",
-          "value": "dialog.foreach.value",
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
                 "id": "VsikRa"
               },
-              "token": "turn.token.token",
+              "token": "=turn.token.token",
               "userId": "=turn.foreach.value.Id",
               "resultProperty": "turn.Items[turn.foreach.index].Photo"
             }

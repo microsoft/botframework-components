@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "lKyff0"
+          },
+          "name": "FindPersonDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "XVsKBS"
@@ -56,6 +63,14 @@
       },
       "event": "GetListItems",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HM0ZDn"
+          },
+          "name": "FindPersonDialog.GetListItems",
+          "value": "=dialog"
+        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
