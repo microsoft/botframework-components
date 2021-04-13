@@ -460,7 +460,8 @@
           "activityProcessed": true,
           "dialog": "WhoIsPersonDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "userIdFound": "=$options.user"
           }
         }
       ]
