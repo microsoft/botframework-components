@@ -6,10 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ],
-      "route": "api/messages"
+      "route": "{*path}"
     },
     {
       "type": "http",
@@ -18,5 +17,5 @@
     }
   ],
   "scriptFile": "../index.js",
-  "entryPoint": "messageTrigger"
+  "entryPoint": "staticTrigger"
 }
