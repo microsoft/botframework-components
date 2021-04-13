@@ -53,6 +53,14 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zLf2ZE"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.User.GetUserProfile",
           "$designer": {
             "id": "JHccSI"
