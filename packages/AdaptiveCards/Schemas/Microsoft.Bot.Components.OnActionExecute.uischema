@@ -1,0 +1,23 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+      "order": [
+          "verb",
+          "condition",
+          "*"
+      ],
+      "hidden": [
+          "actions"
+      ],
+      "label": "Verb executed",
+      "subtitle": "Action.Execute"
+  },
+  "trigger": {
+    "label": "Action.Execute (invoke activity)",
+    "submenu": {
+      "label": "Adaptive Card Actions",
+      "prompt": "Which action type?",
+      "placeholder": "Select an action type"
+    }
+  }
+}

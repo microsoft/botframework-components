@@ -1,0 +1,47 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Replace an existing Adaptive Card",
+  "description": "Replaces an existing Adaptive Card by either updating the cards activity or by responding to an invoked Action.Execute.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "template": {
+      "$ref": "schema:#/definitions/objectExpression",
+      "title": "Template",
+      "description": "Adaptive Card template to render.",
+      "default": {
+        "type": "AdaptiveCard",
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "version": "1.2",
+        "body": [
+
+        ]
+      }
+    },
+    "data": {
+      "$ref": "schema:#/definitions/objectExpression",
+      "title": "Data",
+      "description": "Data object used when rendering the cards template. Defaults to an empty object."
+    },
+    "activityId": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Activity ID",
+      "description": "ID of the cards activity to update.  Required unless sending a response to an invoked Action.Execute.",
+      "default": "=turn.activity.replyTo"
+    }
+  },
+  "required": [ "template", "data" ]
+}

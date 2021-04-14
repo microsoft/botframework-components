@@ -1,0 +1,45 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Get an Adaptive Card Template",
+  "description": "Loads and optionally caches an Adaptive Card Template from a Url.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "location": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Location",
+      "description": "Url of the Adaptive Card Template to load."
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result Property",
+      "description": "Property path for where to store the rendered card."
+    },
+    "cacheTemplate": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Cache Template",
+      "description": "If true the loaded template will be cached in memory to improve performance.",
+      "default":  true
+    },
+    "cacheExpiration": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Cache Expiration",
+      "description": "Number of seconds to cache template for.",
+      "default":  900
+    }
+  },
+  "required": [ "template", "resultProperty" ]
+}
