@@ -15,7 +15,7 @@
   "files": [
     "exported"
   ],
-  "homepage": "https://github.com/Microsoft/botframework-components/tree/main/packages/Welcome/README.md",
+  "homepage": "https://github.com/Microsoft/botframework-components/tree/main/packages/Welcome",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"

@@ -10,7 +10,7 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>Plugin component for MSGraph custom action</Description>
     <Summary>Plugin component for MSGraph custom action.</Summary>
-    <RepositoryUrl>https://github.com/Microsoft/botbuilder-components/tree/main/packages/Graph/README.md</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Microsoft/botbuilder-components/tree/main/packages/Graph</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
