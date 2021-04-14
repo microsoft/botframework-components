@@ -9,7 +9,7 @@
         "get",
         "post"
       ],
-      "route": "api/messages"
+      "route": "api/{route}"
     },
     {
       "type": "http",
