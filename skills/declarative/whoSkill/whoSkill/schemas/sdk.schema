@@ -413,7 +413,7 @@
       "$ref": "#/definitions/Microsoft.UrlEntityRecognizer"
     },
     {
-      "$ref": "#/definitions/WhoIsManagerDialog.dialog"
+      "$ref": "#/definitions/GetManagerDialog.dialog"
     },
     {
       "$ref": "#/definitions/WhoIsPersonDialog.dialog"
@@ -5649,7 +5649,7 @@
           "$ref": "#/definitions/Microsoft.UpdateActivity"
         },
         {
-          "$ref": "#/definitions/WhoIsManagerDialog.dialog"
+          "$ref": "#/definitions/GetManagerDialog.dialog"
         },
         {
           "$ref": "#/definitions/WhoIsPersonDialog.dialog"
@@ -11003,9 +11003,9 @@
         }
       }
     },
-    "WhoIsManagerDialog.dialog": {
+    "GetManagerDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "WhoIsManagerDialog",
+      "title": "GetManagerDialog",
       "type": "object",
       "$result": {
         "type": "object",
@@ -11037,7 +11037,7 @@
               ]
             },
             {
-              "$ref": "#/definitions/WhoIsManagerDialog.dialog/definitions/equalsExpression",
+              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
               "examples": [
                 "=concat('x','y','z')"
               ]
@@ -11058,7 +11058,7 @@
       "properties": {
         "nameEntity": {
           "description": "Name of the entity to search",
-          "$ref": "#/definitions/WhoIsManagerDialog.dialog/definitions/stringExpression",
+          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
           "title": "Name Entity"
         },
         "$kind": {
@@ -11066,7 +11066,7 @@
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "WhoIsManagerDialog.dialog"
+          "const": "GetManagerDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",

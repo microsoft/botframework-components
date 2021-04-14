@@ -135,7 +135,7 @@
             "id": "io3AVP"
           },
           "activityProcessed": true,
-          "dialog": "WhoWorksWithMeDialog",
+          "dialog": "GetCollaboratorsDialog",
           "options": {
             "UserIdFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"

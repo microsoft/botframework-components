@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "nfUy4u",
-    "name": "WhoWorksWithMeDialog",
+    "name": "GetCollaboratorsDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "oatn8b"
           },
-          "name": "PeopleSkill.WhoWorksWithMeDialog.BeginDialog"
+          "name": "PeopleSkill.GetCollaboratorsDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -131,7 +131,7 @@
           "$designer": {
             "id": "kTe9ET"
           },
-          "name": "PeopleSkill.WhoWorksWithMeDialog.OnEvent_GetListItems"
+          "name": "PeopleSkill.GetCollaboratorsDialog.OnEvent_GetListItems"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -174,7 +174,7 @@
       ]
     }
   ],
-  "generator": "WhoWorksWithMeDialog.lg",
-  "recognizer": "WhoWorksWithMeDialog.lu.qna",
-  "id": "WhoWorksWithMeDialog"
+  "generator": "GetCollaboratorsDialog.lg",
+  "recognizer": "GetCollaboratorsDialog.lu.qna",
+  "id": "GetCollaboratorsDialog"
 }

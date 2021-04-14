@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "TiCQ7a",
-    "name": "WhoIsManagerDialog",
+    "name": "GetManagerDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "IUYOm8"
           },
-          "name": "PeopleSkill.WhoIsManagerDialog.BeginDialog"
+          "name": "PeopleSkill.GetManagerDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -128,7 +128,7 @@
       ]
     }
   ],
-  "generator": "WhoIsManagerDialog.lg",
-  "recognizer": "WhoIsManagerDialog.lu.qna",
-  "id": "WhoIsManagerDialog"
+  "generator": "GetManagerDialog.lg",
+  "recognizer": "GetManagerDialog.lu.qna",
+  "id": "GetManagerDialog"
 }
