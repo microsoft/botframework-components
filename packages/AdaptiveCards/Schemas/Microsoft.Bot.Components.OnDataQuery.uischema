@@ -1,0 +1,19 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "order": [
+      "dataset",
+      "condition",
+      "*"
+    ],
+      "hidden": [
+          "actions"
+      ],
+      "label": "Input.ChoiceSet dynamic query",
+      "subtitle": "Data.Query"
+  },
+  "trigger": {
+    "label": "Data.Query (invoke activity)",
+    "submenu": "Adaptive Card Actions"
+  }
+}
