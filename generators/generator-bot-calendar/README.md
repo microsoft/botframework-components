@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-calendar [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a bot with Calendar-related capabilities built on the Azure Bot Framework.
-
-The Calendar Bot template creates a bot configured to manage Office 365 calendars using Microsoft Graph.
+This template creates a bot configured to manage Office 365 calendars using the Microsoft Graph API.
 
 ## What this template is for
 

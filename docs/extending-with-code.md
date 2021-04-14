@@ -24,7 +24,7 @@ namespace conversational_core_1.actions
 }
 ```
 
-You can also take a look at the [Calendar package](./packages/Calendar) for another example.
+You can also take a look at the [Graph package](/packages/Graph) for another example.
 
 ## Docs table of contents
 

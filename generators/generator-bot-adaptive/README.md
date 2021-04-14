@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-adaptive [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a completely empty bot built on the Azure Bot Framework.
-
-The Adaptive Bot generator is the base generator for creating an Azure Bot Framework bot using the Adaptive Dialog stack. This generator is designed to be used as a base for other more purpose-specific generators, and is responsible for scaffolding:
+This generator is a base for creating an Azure Bot Framework bot using the Adaptive Dialog stack. This generator is designed to be used as a base for other more purpose-specific generators, and is responsible for scaffolding:
 
 - The basic bot project (code files, root dialog, base schema) for your bot, based on the platform you choose (dotnet or JavaScript)
 - The publishing environment for your bot (Azure Functions, or a Web App)
