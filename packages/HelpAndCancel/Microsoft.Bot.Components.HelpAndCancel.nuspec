@@ -13,7 +13,7 @@
         <description>Dialogs to provide help and cancel utterance handling</description>
         <tags>msbot-component msbot-content conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0-rc4" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.0" />
         </dependencies>
     </metadata>
 
