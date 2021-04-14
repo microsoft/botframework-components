@@ -10,10 +10,12 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>Custom actions for the MS Graph API for Bot Framework bots.</Description>
     <Summary>A set of custom actions for working with the Microsoft Graph API from Bot Framework Composer.</Summary>
+    <RepositoryUrl>https://github.com/Microsoft/botbuilder-components/tree/main/packages/Graph</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <ContentTargetFolders>content</ContentTargetFolders>
+    <PackageTags>msbot-component;msbot-action</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
