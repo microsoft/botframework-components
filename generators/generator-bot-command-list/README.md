@@ -1,7 +1,6 @@
 # @microsoft/generator-bot-command-list [![NPM version][npm-image]][npm-url]
-> Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Command List template.
 
-This template instantiates a bot built around a set of commands rather than a language recognizer. Includes cards with message back actions for example commands "hello" and "help."
+This template instantiates a bot built around a set of simple commands. Includes cards with message back actions for example commands "hello" and "help."
 
 ## Installation
 
