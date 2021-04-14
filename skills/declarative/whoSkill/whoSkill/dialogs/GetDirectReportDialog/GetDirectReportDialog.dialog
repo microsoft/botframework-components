@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "TRNmes",
-    "name": "WhoIsDirectReportDialog",
+    "name": "GetDirectReportDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "ARqQ7b"
           },
-          "name": "PeopleSkill.WhoIsDirectReportDialog.BeginDialog"
+          "name": "PeopleSkill.GetDirectReportDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -133,7 +133,7 @@
           "$designer": {
             "id": "fUH5tK"
           },
-          "name": "PeopleSkill.WhoIsDirectReportDialog.OnEvent_GetListItems"
+          "name": "PeopleSkill.GetDirectReportDialog.OnEvent_GetListItems"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -185,7 +185,7 @@
       ]
     }
   ],
-  "generator": "WhoIsDirectReportDialog.lg",
-  "recognizer": "WhoIsDirectReportDialog.lu.qna",
-  "id": "WhoIsDirectReportDialog"
+  "generator": "GetDirectReportDialog.lg",
+  "recognizer": "GetDirectReportDialog.lu.qna",
+  "id": "GetDirectReportDialog"
 }

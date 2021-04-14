@@ -207,7 +207,7 @@
             "id": "Y2hy7l"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsDirectReportDialog",
+          "dialog": "GetDirectReportDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
             "UserIdFound": "=$options.user"
@@ -348,7 +348,7 @@
             "id": "3vIVVS"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsManagerDialog",
+          "dialog": "GetManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
             "UserIdFound": "=$options.user"
