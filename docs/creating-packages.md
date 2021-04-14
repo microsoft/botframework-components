@@ -25,7 +25,7 @@ When your package is added to a bot from Package Manager in Composer, the follow
 
 1. The package is installed using `nuget|npm install`.
 2. Your declarative files are merged using the [Bot Frameowork CLI's](https://github.com/microsoft/botframework-cli) `dialog:merge` command.
-    1. `dialog:merge' adds a copy of any dialog assets (.lu/.lg/.qna/.dialog files) in your package to the corresponding folding in the bot project.
+    1. `dialog:merge` adds a copy of any dialog assets (.lu/.lg/.qna/.dialog files) in your package to the corresponding folding in the bot project.
 
 >Note: While testing and debugging your package, you may find it useful to manually install and merge your package from the command line, rather than from Composer.
 

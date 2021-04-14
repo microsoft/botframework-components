@@ -4,7 +4,7 @@ This repository contains *components* published by Microsoft for bots built on t
 
 ## Using Components
 
-You'll primarily use components through **[Bot Framework Composer][https://github.com/microsoft/BotFramework-Composer]** - our visual bot authoring canvas for developers. From Composer you can add and remove packages from your bot, and the creation process creates bots built from the templates here.
+You'll primarily use components through [**Bot Framework Composer**](https://github.com/microsoft/BotFramework-Composer) - our visual bot authoring canvas for developers. From Composer you can add and remove packages from your bot, and the creation process creates bots built from the templates here.
 
 ## Creating your own components
 
@@ -20,26 +20,26 @@ Templates are pre-built bot projects designed for specific scenarios. We use [ye
 |:------------:|:---:|:------------|
 |[Empty bot](/generators/generator-bot-empty) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty) | The base empty bot. |
 |[Conversational Core](/generators/generator-bot-conversational-core) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core) | Basic conversational bot with NLP. |
-|[Command list](/generators/generator-bot-command-list) | Soon! | Basic bot using regex and cards. |
+|[Command list](/generators/generator-bot-command-list) |  | Basic bot using regex and cards. |
 |[Calendar](/generators/generator-bot-calendar) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar) | A bot for working with Calendars. |
 |[People](/generators/generator-bot-people) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people) | A bot for searching for people on the MS Graph. |
 |[Adaptive](/generators/generator-bot-adaptive) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
-|[Assistant Core](/generators/generator-bot-assistant-core) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core) | The base assistant-style bot (no skills). |
+|[Assistant Core](/generators/generator-bot-assistant-core) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core) | Basic assistant bot with no skills. |
 |[Enterprise Assistant](/generators/generator-bot-enterprise-assistant) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills. |
 
 ### Packages
 
-Bits of bots that you can add to your bot project. They can contain coded extensions like custom actions, adapters, or triggers, and declarative assets like dialogs, language generation or language understanding files.
+Packages are bits of bots that you can add to your bot project. They can contain coded extensions like custom actions, adapters, or triggers, and declarative assets like dialogs, language generation or language understanding files.
 
 | Name         |Type   | NuGet | npm |Description |
 |:------------:|:------|:-----:|:---:|:-----------|
 |[Welcome](/packages/Welcome) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Welcome?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Welcome/)| [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome) | Declarative assets supporting scenarios that welcome new and returning users. |
 |[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.HelpAndCancel?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel) | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
-|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | Soon! | Custom actions for work with calendars and people through the MS Graph API.|
+|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | | Custom actions for work with calendars and people through the MS Graph API.|
 
 ### Virtual Assistant skills (Legacy)
 
-Skills built to work with the Virtual Assistant template. You can find the list of Virtual Assistant skills [here](/skills/csharp/readme.md).
+Skills built to work with the [Virtual Assistant](https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction) template. You can find the list of Virtual Assistant skills [here](/skills/csharp/readme.md).
 
 ## Need Help?
 
