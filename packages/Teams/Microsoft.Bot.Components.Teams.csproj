@@ -14,6 +14,7 @@
     <PackageId>Microsoft.Bot.Components.Teams</PackageId>
     <Description>This library implements .NET support for adaptive dialogs with Microsoft Teams</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
+    <RepositoryUrl>https://github.com/Microsoft/botbuilder-components/packages/Teams/README.md</RepositoryUrl>
     <ContentTargetFolders>content</ContentTargetFolders>
     <PackageTags>msbot-action;msbot-trigger</PackageTags>
   </PropertyGroup>
