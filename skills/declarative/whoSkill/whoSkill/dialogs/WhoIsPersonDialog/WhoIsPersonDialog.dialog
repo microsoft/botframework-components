@@ -21,7 +21,7 @@
           "$designer": {
             "id": "FPmp8f"
           },
-          "name": "WhoIsPersonDialog.BeginDialog"
+          "name": "PeopleSkill.WhoIsPersonDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",

@@ -21,8 +21,7 @@
           "$designer": {
             "id": "ARqQ7b"
           },
-          "name": "PeopleSkill.DirectReport",
-          "value": "=dialog"
+          "name": "PeopleSkill.WhoIsDirectReportDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -66,16 +65,7 @@
               }
             }
           ],
-          "actions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "FQh503"
-              },
-              "name": "WhoIsDirectReportDialog.UserFound",
-              "value": "=turn.UserFound"
-            }
-          ]
+          "actions": []
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -134,10 +124,17 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "l2fm3e",
-        "name": "OnIntent (GetListItems)"
+        "name": "OnEvent (GetListItems)"
       },
       "event": "GetListItems",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "fUH5tK"
+          },
+          "name": "PeopleSkill.WhoIsDirectReportDialog.OnEvent_GetListItems"
+        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {

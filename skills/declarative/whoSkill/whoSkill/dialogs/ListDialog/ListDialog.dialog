@@ -21,8 +21,7 @@
           "$designer": {
             "id": "i6ahnZ"
           },
-          "name": "ListDialog.BeginDialog",
-          "value": "=null"
+          "name": "PeopleSkill.ListDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -113,14 +112,6 @@
               "condition": "turn.selectedIndex != null",
               "actions": [
                 {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "YPrzQC"
-                  },
-                  "name": "SelectionEvent",
-                  "value": "=turn.selectedIndex"
-                },
-                {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "aUZ2FY"
@@ -139,14 +130,6 @@
             }
           ],
           "elseActions": [
-            {
-              "$kind": "Microsoft.TraceActivity",
-              "$designer": {
-                "id": "sweZKs"
-              },
-              "name": "DoSelectionState",
-              "value": "=turn"
-            },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
@@ -171,7 +154,7 @@
           "$designer": {
             "id": "zER0mA"
           },
-          "name": "ListDialog.OnEvent_GetChoices",
+          "name": "PeopleSkill.ListDialog.OnEvent_GetChoices",
           "value": "=turn"
         },
         {
@@ -313,7 +296,7 @@
           "$designer": {
             "id": "jJCAos"
           },
-          "name": "ListDialog.OnIntent_Next",
+          "name": "PeopleSkill.ListDialog.OnIntent_Next",
           "value": "=null"
         },
         {
@@ -429,7 +412,7 @@
           "$designer": {
             "id": "wNTV7x"
           },
-          "name": "ListDialog.OnIntent_Previous",
+          "name": "PeopleSkill.ListDialog.OnIntent_Previous",
           "value": "=null"
         },
         {
@@ -545,7 +528,7 @@
           "$designer": {
             "id": "73c90n"
           },
-          "name": "ListDialog.OnIntent_Skip",
+          "name": "PeopleSkill.ListDialog.OnIntent_Skip",
           "value": "=null"
         },
         {
@@ -577,7 +560,7 @@
           "$designer": {
             "id": "pzG3IA"
           },
-          "name": "ListDialog.OnIntent_Cancel",
+          "name": "PeopleSkill.ListDialog.OnIntent_Cancel",
           "value": "=null"
         },
         {

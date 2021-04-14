@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "oatn8b"
+          },
+          "name": "PeopleSkill.WhoWorksWithMeDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "ON21f5"
@@ -115,10 +122,17 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "Vqq2HS",
-        "name": "OnIntent (GetListItems)"
+        "name": "OnEvent (GetListItems)"
       },
       "event": "GetListItems",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "kTe9ET"
+          },
+          "name": "PeopleSkill.WhoWorksWithMeDialog.OnEvent_GetListItems"
+        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {

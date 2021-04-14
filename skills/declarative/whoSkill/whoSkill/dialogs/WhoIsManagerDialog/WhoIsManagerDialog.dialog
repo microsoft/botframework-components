@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IUYOm8"
+          },
+          "name": "PeopleSkill.WhoIsManagerDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "joMxmD"

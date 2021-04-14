@@ -21,7 +21,7 @@
           "$designer": {
             "id": "DkZ1R6"
           },
-          "name": "ResolveUserDialog.BeginDialog"
+          "name": "PeopleSkill.ResolveUserDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",

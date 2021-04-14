@@ -21,7 +21,7 @@
           "$designer": {
             "id": "5oW8CV"
           },
-          "name": "whoSkill.Greeting"
+          "name": "PeopleSkill.Greeting"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -87,7 +87,7 @@
           "$designer": {
             "id": "SjeplQ"
           },
-          "name": "whoSkill.Logout"
+          "name": "PeopleSkill.OnIntent_Logout"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -120,7 +120,7 @@
           "$designer": {
             "id": "rIjVl9"
           },
-          "name": "whoSkill.GetCollaborators"
+          "name": "PeopleSkill.OnIntent_GetCollaborators"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -156,7 +156,7 @@
           "$designer": {
             "id": "CtN0JN"
           },
-          "name": "whoSkill.GetDepartment"
+          "name": "PeopleSkill.OnIntent_GetDepartment"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -192,7 +192,7 @@
           "$designer": {
             "id": "UIBrQZ"
           },
-          "name": "whoSkill.GetDirectReports"
+          "name": "PeopleSkill.OnIntent_GetDirectReports"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -228,7 +228,7 @@
           "$designer": {
             "id": "LLDQcc"
           },
-          "name": "whoSkill.GetEmailAddress"
+          "name": "PeopleSkill.OnIntent_GetEmailAddress"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -263,7 +263,7 @@
           "$designer": {
             "id": "S2lRYi"
           },
-          "name": "whoSkill.GetJobTitle"
+          "name": "PeopleSkill.OnIntent_GetJobTitle"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -298,7 +298,7 @@
           "$designer": {
             "id": "AF2A5j"
           },
-          "name": "whoSkill.GetLocation"
+          "name": "PeopleSkill.OnIntent_GetLocation"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -333,7 +333,7 @@
           "$designer": {
             "id": "QPzd0I"
           },
-          "name": "whoSkill.GetManager"
+          "name": "PeopleSkill.OnIntent_GetManager"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -371,7 +371,7 @@
           "$designer": {
             "id": "v9syx2"
           },
-          "name": "whoSkill.GetPeers"
+          "name": "PeopleSkill.OnIntent_GetPeers"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -407,7 +407,7 @@
           "$designer": {
             "id": "1ZZm4i"
           },
-          "name": "whoSkill.GetPhoneNumber"
+          "name": "PeopleSkill.OnIntent_GetPhoneNumber"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -443,7 +443,7 @@
           "$designer": {
             "id": "wiVPuM"
           },
-          "name": "whoSkill.GetProfile"
+          "name": "PeopleSkill.OnIntent_GetProfile"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -474,6 +474,13 @@
       },
       "event": "SetOptions",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ruudtx"
+          },
+          "name": "PeopleSkill.OnEvent_SetOptions"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -512,7 +519,7 @@
           "$designer": {
             "id": "BnGy6N"
           },
-          "name": "whoSkill.OnError"
+          "name": "PeopleSkill.OnError"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -587,6 +594,13 @@
         "id": "YhLqAm"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "njVcFH"
+          },
+          "name": "PeopleSkill.UnknownIntent"
+        },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {

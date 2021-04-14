@@ -21,7 +21,7 @@
           "$designer": {
             "id": "lKyff0"
           },
-          "name": "FindPersonDialog.BeginDialog"
+          "name": "PeopleSkill.FindPersonDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -59,7 +59,7 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "a0xuhL",
-        "name": "OnIntent (GetListItems)"
+        "name": "OnEvent (GetListItems)"
       },
       "event": "GetListItems",
       "actions": [
@@ -68,8 +68,7 @@
           "$designer": {
             "id": "HM0ZDn"
           },
-          "name": "FindPersonDialog.GetListItems",
-          "value": "=dialog"
+          "name": "PeopleSkill.FindPersonDialog.OnEvent_GetListItems"
         },
         {
           "$kind": "Microsoft.BeginDialog",

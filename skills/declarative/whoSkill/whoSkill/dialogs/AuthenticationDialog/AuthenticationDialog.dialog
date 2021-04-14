@@ -21,7 +21,7 @@
           "$designer": {
             "id": "V4SpTN"
           },
-          "name": "AuthenticationDialog.BeginDialog"
+          "name": "PeopleSkill.AuthenticationDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.OAuthInput",

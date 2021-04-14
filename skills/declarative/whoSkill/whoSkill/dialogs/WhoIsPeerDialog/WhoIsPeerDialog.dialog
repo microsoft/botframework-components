@@ -17,6 +17,13 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IozdU8"
+          },
+          "name": "PeopleSkill.WhoIsPeerDialog.BeginDialog"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "TqcvPH"
@@ -116,10 +123,17 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "qk16FD",
-        "name": "OnIntent (GetListItems)"
+        "name": "OnEvent (GetListItems)"
       },
       "event": "GetListItems",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NouegB"
+          },
+          "name": "PeopleSkill.WhoIsPeerDialog.OnEvent_GetListItems"
+        },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
