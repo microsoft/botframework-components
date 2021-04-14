@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework.
-
-The Enterprise Assistant template creates a complex enterprise assistant, comprised of a root bot based on the Assistant Core template, and pre-configured with Calendar and People as skills.
+This template creates an enterprise assistant, comprised of a root bot based on the Assistant Core template, and pre-configured with Calendar and People as skills.
 
 Includes support for:
 

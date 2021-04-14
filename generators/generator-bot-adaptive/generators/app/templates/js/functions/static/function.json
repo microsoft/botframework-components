@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "post"
+        "get"
       ],
-      "route": "api/skills/v3/conversations/{conversationId}/activities/{activityId}"
+      "route": "{*path}"
     },
     {
       "type": "http",
@@ -17,5 +17,5 @@
     }
   ],
   "scriptFile": "../index.js",
-  "entryPoint": "skillsTrigger"
+  "entryPoint": "staticTrigger"
 }
