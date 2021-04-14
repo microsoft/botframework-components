@@ -386,7 +386,7 @@
             "id": "fJItRK"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPeerDialog",
+          "dialog": "GetPeersDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
             "UserIdFound": "=$options.user"

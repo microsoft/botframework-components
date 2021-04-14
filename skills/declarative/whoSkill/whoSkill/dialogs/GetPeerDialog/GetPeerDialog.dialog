@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "2luWYj",
-    "name": "WhoIsPeerDialog",
+    "name": "GetPeersDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "IozdU8"
           },
-          "name": "PeopleSkill.WhoIsPeerDialog.BeginDialog"
+          "name": "PeopleSkill.GetPeersDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -132,7 +132,7 @@
           "$designer": {
             "id": "NouegB"
           },
-          "name": "PeopleSkill.WhoIsPeerDialog.OnEvent_GetListItems"
+          "name": "PeopleSkill.GetPeersDialog.OnEvent_GetListItems"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -184,7 +184,7 @@
       ]
     }
   ],
-  "generator": "WhoIsPeerDialog.lg",
-  "recognizer": "WhoIsPeerDialog.lu.qna",
-  "id": "WhoIsPeerDialog"
+  "generator": "GetPeersDialog.lg",
+  "recognizer": "GetPeersDialog.lu.qna",
+  "id": "GetPeersDialog"
 }
