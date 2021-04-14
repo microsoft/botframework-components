@@ -207,7 +207,7 @@
             "id": "Y2hy7l"
           },
           "activityProcessed": true,
-          "dialog": "GetDirectReportDialog",
+          "dialog": "GetDirectReportsDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
             "UserIdFound": "=$options.user"

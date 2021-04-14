@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "2luWYj",
-    "name": "GetPeersDialog",
+    "id": "TRNmes",
+    "name": "GetDirectReportsDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -13,20 +13,20 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "C0rITH"
+        "id": "WRPVvN"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "IozdU8"
+            "id": "ARqQ7b"
           },
-          "name": "PeopleSkill.GetPeersDialog.BeginDialog"
+          "name": "PeopleSkill.GetDirectReportsDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "TqcvPH"
+            "id": "6g7a8q"
           },
           "activityProcessed": true,
           "dialog": "ResolveUserDialog",
@@ -39,7 +39,7 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "F8ARgq"
+            "id": "2CmiAT"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -47,57 +47,58 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "qBDQhh"
+            "id": "0vENgn"
           },
           "condition": "=exists(turn.UserFound)",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "9JCLK1"
+                "id": "P6fqO4"
               },
-              "activity": "${SendActivity_9JCLK1()}"
+              "activity": "${SendActivity_P6fqO4()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "rnko0k"
+                "id": "xcr8th"
               }
             }
-          ]
+          ],
+          "actions": []
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "Ldr65P"
+            "id": "PupWRK"
           },
           "activityProcessed": true,
           "dialog": "UserListDialog",
           "options": {
-            "Scenario": "Peers",
             "User": "=turn.UserFound",
+            "Scenario": "DirectReports",
             "AutoChooseFirst": false,
             "GetListItemEvent": "GetListItems",
             "doSelection": false
           },
-          "resultProperty": "turn.DetailUser"
+          "resultProperty": "turn.DirectReportUser"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "2bT4YD"
+            "id": "WUuhtm"
           },
-          "condition": "=exists(turn.DetailUser)",
+          "condition": "=exists(turn.DirectReportUser)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "yuDqlV"
+                "id": "ARtyS5"
               },
               "activityProcessed": true,
               "dialog": "GetProfileDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser"
+                "UserIdFound": "=turn.DirectReportUser"
               }
             }
           ],
@@ -105,16 +106,16 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "7uCWqD"
+                "id": "UTkQ6k"
               },
-              "activity": "${SendActivity_7uCWqD()}"
+              "activity": "${SendActivity_UTkQ6k()}"
             }
           ]
         },
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "YtwbHP"
+            "id": "0nZUOA"
           }
         }
       ]
@@ -122,7 +123,7 @@
     {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "qk16FD",
+        "id": "l2fm3e",
         "name": "OnEvent (GetListItems)"
       },
       "event": "GetListItems",
@@ -130,26 +131,23 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "NouegB"
+            "id": "fUH5tK"
           },
-          "name": "PeopleSkill.GetPeersDialog.OnEvent_GetListItems"
+          "name": "PeopleSkill.GetDirectReportsDialog.OnEvent_GetListItems"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "qZ7hQz"
+            "id": "QBzfKY"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.Graph.User.GetPeers",
+          "$kind": "Microsoft.Graph.User.GetDirectReports",
           "$designer": {
-            "id": "ww53aA"
+            "id": "Q9M6AF"
           },
-          "resultProperty": "turn.Items",
-          "token": "=turn.token.token",
-          "maxCount": 15,
           "propertiesToSelect": [
             "id",
             "displayName",
@@ -159,32 +157,35 @@
             "jobTitle",
             "department"
           ],
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "resultProperty": "turn.Items",
           "userId": "=turn.UserFound.Id"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "3NzFtD"
+            "id": "SAgsvz"
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "VsikRa"
+                "id": "uCR1y8"
               },
-              "token": "=turn.token.token",
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
               "userId": "=turn.foreach.value.Id",
-              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+              "token": "=turn.token.token"
             }
-          ],
-          "itemsProperty": "turn.Items"
+          ]
         }
       ]
     }
   ],
-  "generator": "GetPeersDialog.lg",
-  "recognizer": "GetPeersDialog.lu.qna",
-  "id": "GetPeersDialog"
+  "generator": "GetDirectReportsDialog.lg",
+  "recognizer": "GetDirectReportsDialog.lu.qna",
+  "id": "GetDirectReportsDialog"
 }
