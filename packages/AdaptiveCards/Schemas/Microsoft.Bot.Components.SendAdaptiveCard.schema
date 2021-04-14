@@ -1,0 +1,46 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Send an Adaptive Card",
+  "description": "Sends a new Adaptive Card as either a message activity or the response to an invoked Action.Execute.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "template": {
+      "$ref": "schema:#/definitions/objectExpression",
+      "title": "Template",
+      "description": "Adaptive Card template to render.",
+      "default": {
+        "type": "AdaptiveCard",
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "version": "1.2",
+        "body": [
+
+        ]
+      }
+    },
+    "data": {
+      "$ref": "schema:#/definitions/objectExpression",
+      "title": "Data",
+      "description": "Data object used when rendering the cards template. Defaults to an empty object."
+    },
+    "activityIdProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Activity ID Property",
+      "description": "Optional property path for where to store the ID of the sent activity."
+    }
+  },
+  "required": [ "template", "data" ]
+}
