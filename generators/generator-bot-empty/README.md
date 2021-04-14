@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-empty [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating an empty bot built on the Azure Bot Framework.
-
-The Empty Bot template creates a bot containing only a root dialog and a initial greeting dialog.
+This template creates a bot containing only a root dialog and a initial greeting dialog.
 
 ## What this template is for
 
