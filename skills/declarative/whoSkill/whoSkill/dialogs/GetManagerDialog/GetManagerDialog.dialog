@@ -112,7 +112,7 @@
                 "id": "K7Ibr0"
               },
               "activityProcessed": true,
-              "dialog": "WhoIsPersonDialog",
+              "dialog": "GetProfileDialog",
               "options": {
                 "UserIdFound": "=turn.Result.Id"
               }

@@ -96,7 +96,7 @@
                 "id": "ARtyS5"
               },
               "activityProcessed": true,
-              "dialog": "WhoIsPersonDialog",
+              "dialog": "GetProfileDialog",
               "options": {
                 "UserIdFound": "=turn.DirectReportUser"
               }

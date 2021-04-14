@@ -95,7 +95,7 @@
                 "id": "yuDqlV"
               },
               "activityProcessed": true,
-              "dialog": "WhoIsPersonDialog",
+              "dialog": "GetProfileDialog",
               "options": {
                 "UserIdFound": "=turn.DetailUser"
               }

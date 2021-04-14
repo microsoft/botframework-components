@@ -171,7 +171,7 @@
             "id": "OlaCZn"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -243,7 +243,7 @@
             "id": "Bhz0b5"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -278,7 +278,7 @@
             "id": "xiISoH"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -313,7 +313,7 @@
             "id": "pOJdPA"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -422,7 +422,7 @@
             "id": "sr38K1"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -458,7 +458,7 @@
             "id": "U3dC5A"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
             "userIdFound": "=$options.user"

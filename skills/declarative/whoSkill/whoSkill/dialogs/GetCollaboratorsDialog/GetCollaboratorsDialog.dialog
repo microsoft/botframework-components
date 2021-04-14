@@ -94,7 +94,7 @@
                 "id": "Q24GGv"
               },
               "activityProcessed": true,
-              "dialog": "WhoIsPersonDialog",
+              "dialog": "GetProfileDialog",
               "options": {
                 "UserIdFound": "=turn.DetailUser"
               }

@@ -416,7 +416,7 @@
       "$ref": "#/definitions/GetManagerDialog.dialog"
     },
     {
-      "$ref": "#/definitions/WhoIsPersonDialog.dialog"
+      "$ref": "#/definitions/GetProfileDialog.dialog"
     }
   ],
   "definitions": {
@@ -5652,7 +5652,7 @@
           "$ref": "#/definitions/GetManagerDialog.dialog"
         },
         {
-          "$ref": "#/definitions/WhoIsPersonDialog.dialog"
+          "$ref": "#/definitions/GetProfileDialog.dialog"
         },
         {
           "type": "string",
@@ -11075,9 +11075,9 @@
         }
       }
     },
-    "WhoIsPersonDialog.dialog": {
+    "GetProfileDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "WhoIsPersonDialog",
+      "title": "GetProfileDialog",
       "type": "object",
       "$result": {
         "type": "object",
@@ -11109,7 +11109,7 @@
               ]
             },
             {
-              "$ref": "#/definitions/WhoIsPersonDialog.dialog/definitions/equalsExpression",
+              "$ref": "#/definitions/GetProfileDialog.dialog/definitions/equalsExpression",
               "examples": [
                 "=concat('x','y','z')"
               ]
@@ -11130,7 +11130,7 @@
       "properties": {
         "nameEntity": {
           "description": "Name entity to search",
-          "$ref": "#/definitions/WhoIsPersonDialog.dialog/definitions/stringExpression",
+          "$ref": "#/definitions/GetProfileDialog.dialog/definitions/stringExpression",
           "title": "Name Entity"
         },
         "$kind": {
@@ -11138,7 +11138,7 @@
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "WhoIsPersonDialog.dialog"
+          "const": "GetProfileDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",

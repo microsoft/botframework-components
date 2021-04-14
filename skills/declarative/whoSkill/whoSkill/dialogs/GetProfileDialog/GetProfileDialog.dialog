@@ -2,7 +2,7 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "1dAZlt",
-    "name": "WhoIsPersonDialog",
+    "name": "GetProfileDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -21,7 +21,7 @@
           "$designer": {
             "id": "FPmp8f"
           },
-          "name": "PeopleSkill.WhoIsPersonDialog.BeginDialog"
+          "name": "PeopleSkill.GetProfileDialog.BeginDialog"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -155,7 +155,7 @@
       ]
     }
   ],
-  "generator": "WhoIsPersonDialog.lg",
-  "recognizer": "WhoIsPersonDialog.lu.qna",
-  "id": "WhoIsPersonDialog"
+  "generator": "GetProfileDialog.lg",
+  "recognizer": "GetProfileDialog.lu.qna",
+  "id": "GetProfileDialog"
 }
