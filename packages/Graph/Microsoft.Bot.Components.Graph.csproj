@@ -15,6 +15,7 @@
     <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <ContentTargetFolders>content</ContentTargetFolders>
+    <PackageTags>msbot-component;msbot-action</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

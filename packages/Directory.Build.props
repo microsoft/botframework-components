@@ -17,7 +17,6 @@
     <PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <LicenseUrl>https://github.com/Microsoft/BotBuilder-dotnet/blob/master/LICENSE</LicenseUrl>
-    <PackageTags>msbot-component</PackageTags>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <!--
