@@ -1,0 +1,45 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Create an Adaptive Card",
+    "subtitle": "Create Adaptive Card",
+    "helpLink": "https://adaptivecards.io/designer/",
+    "order": [
+      "template",
+      "data",
+      "resultProperty",
+      "*"
+    ],
+    "properties": {
+      "template": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "data": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "resultProperty": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Create an Adaptive Card",
+    "submenu": [ "Adaptive Cards" ],
+    "order":  2
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "body": "=if(isObject(action.template), '(Custom Template)', action.template)",
+    "footer": {
+      "widget": "PropertyDescription",
+      "property": "=action.resultProperty",
+      "description": "= (Card)"
+    }
+  }
+}

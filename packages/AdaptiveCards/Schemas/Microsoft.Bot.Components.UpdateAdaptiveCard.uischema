@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Update an existing Adaptive Card",
+    "subtitle": "Update Adaptive Card",
+    "helpLink": "https://adaptivecards.io/designer/",
+    "order": [
+      "template",
+      "data",
+      "activityId",
+      "*"
+    ],
+    "properties": {
+      "template": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "data": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "activityId": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Update an existing Adaptive Card",
+    "submenu": [ "Adaptive Cards" ],
+    "order":  1
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "body": "=if(isObject(action.template), '(Custom Template)', action.template)"
+  }
+}
