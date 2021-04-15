@@ -38,7 +38,7 @@ npm install --save [some package]
 Navigate to the runtime folder and run:
 
 ```bash
-cd runtime/azurewebapp
+cd runtime
 dotnet add package [some package] --version=[some version]
 ```
 
