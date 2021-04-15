@@ -1,2 +1,2 @@
-# prevent appsettings.json get checked in
-**/appsettings.json
+# Don't check in any files that are generated
+**/generated/**
