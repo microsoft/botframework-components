@@ -4,6 +4,7 @@
 using System;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Components.Teams.Actions;
 using Microsoft.Bot.Components.Teams.Conditions;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +30,7 @@ namespace Microsoft.Bot.Components.Teams
             var settings = configuration.Get<ComponentSettings>() ?? new ComponentSettings();
             if (settings.UseSingleSignOnMiddleware)
             {
-                services.AddSingleton<IMiddleware, SSOTokenExchangeMiddleware>();
+                services.AddSingleton<IMiddleware>(s=> new TeamsSSOTokenExchangeMiddleware(s.GetRequiredService<IStorage>(), settings.ConnectionName));
             }
 
             // Conditionals
