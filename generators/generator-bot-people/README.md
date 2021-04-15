@@ -1,8 +1,6 @@
 # @microsoft/generator-bot-people [![NPM version][npm-image]][npm-url]
 
-> Yeoman generator for creating a bot with People-related capabilities built on the Azure Bot Framework.
-
-The People Bot template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
+This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
 
 ## What this template is for
 
