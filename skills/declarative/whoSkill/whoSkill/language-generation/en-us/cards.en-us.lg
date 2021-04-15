@@ -272,7 +272,8 @@ ${ToggleButtonContainer('additionalItemsContainer')}
             "type": "Action.Submit",
             "title": "previousPage",
             "data": {
-                "intent": "Previous"
+                "intent": "Previous",
+                "user" : "${turn.UserFound.Id}"
             }        
         }
     }
@@ -297,7 +298,8 @@ ${ToggleButtonContainer('additionalItemsContainer')}
             "type": "Action.Submit",
             "title": "show more",
             "data": {
-                "intent": "Next"
+                "intent": "Next",
+                "user" : "${turn.UserFound.Id}"
             }
         }
     }

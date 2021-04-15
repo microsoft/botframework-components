@@ -1,0 +1,13 @@
+[import](common.lg)
+
+
+# SendActivity_mfLqxa()
+[Activity
+    Text = I found that **${turn.UserFound.DisplayName}** does not have collaborator.
+]
+
+
+# SendActivity_puUO79()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]
