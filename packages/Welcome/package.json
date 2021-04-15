@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/bot-components-welcome",
   "version": "1.0.0",
-  "description": "An Adaptive Dialog for greeting new and returning users on first interaction with your Adaptive bot built on the Azure Bot Framework.",
+  "description": "An Adaptive Dialog for greeting new and returning users on first interaction with your bot built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
     "bot",
@@ -15,6 +15,7 @@
   "files": [
     "exported"
   ],
+  "homepage": "https://github.com/Microsoft/botframework-components/tree/main/packages/Welcome",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/botframework-components.git"

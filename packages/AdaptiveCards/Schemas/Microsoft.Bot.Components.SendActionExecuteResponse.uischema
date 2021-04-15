@@ -1,0 +1,29 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Respond to an Action.Execute",
+    "subtitle": "Send Action.Execute Response",
+    "order": [
+      "type",
+      "value",
+      "statusCode",
+      "*"
+    ],
+    "properties": {
+      "value": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Respond to an Action.Execute",
+    "submenu": [ "Adaptive Cards" ],
+    "order":  4
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "body": "=action.value"
+  }
+}

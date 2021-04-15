@@ -1,0 +1,27 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Respond to Data.Query",
+    "subtitle": "Send Data.Query Response",
+    "order": [
+      "results",
+      "*"
+    ],
+    "properties": {
+      "results": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Respond to a Data.Query",
+    "submenu": [ "Adaptive Cards" ],
+    "order":  5
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "body": "=action.results"
+  }
+}
