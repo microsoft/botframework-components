@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
+    <ProjectReference Include="..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
   </ItemGroup>
 
   <ItemGroup>
