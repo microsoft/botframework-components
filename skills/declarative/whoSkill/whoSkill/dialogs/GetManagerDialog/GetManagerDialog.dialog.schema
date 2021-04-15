@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetManagerDialog",
+  "type": "object",
+  "properties": {
+    "nameEntity": {
+      "description": "Name of the entity to search",
+      "$ref": "#/definitions/stringExpression",
+      "title": "Name Entity"
+    }
+  },
+  "$result": {
+    "type": "object",
+    "properties": {}
+  },
+  "definitions": {
+    "equalsExpression": {
+      "$role": "expression",
+      "type": "string",
+      "title": "Equals Expression",
+      "description": "Expression starting with =.",
+      "pattern": "^=.*\\S.*",
+      "examples": [
+        "=user.name"
+      ]
+    },
+    "stringExpression": {
+      "$role": "expression",
+      "title": "String or expression",
+      "description": "Interpolated string or expression to evaluate.",
+      "oneOf": [
+        {
+          "type": "string",
+          "title": "String",
+          "description": "Interpolated string",
+          "pattern": "^(?!(=)).*",
+          "examples": [
+            "Hello ${user.name}"
+          ]
+        },
+        {
+          "$ref": "#/definitions/equalsExpression",
+          "examples": [
+            "=concat('x','y','z')"
+          ]
+        }
+      ]
+    }
+  }
+}
