@@ -48,3 +48,17 @@
 [Activity
     Text = Error: ${turn.dialogEvent.value}
 ]
+
+# WelcomeUser()
+- IF: ${turn.signedInUser.givenName!= null}
+- ```
+Hi ${turn.signedInUser.givenName} 🖐, thank you for helping the PBX team out with this dogfood for who skill!
+
+You can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```
+- ELSE: 
+- ```
+Hi there 🖐, thank you for helping the PBX team out with this dogfood for who skill!
+    
+You can ask the bot contact/personel related questions in this Teams chat modality (ps. other testing with modalities will follow like speaking to the bot).
+```

@@ -21,7 +21,7 @@
           "$designer": {
             "id": "5oW8CV"
           },
-          "name": "whoSkill.Greeting"
+          "name": "PeopleSkill.Greeting"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -43,8 +43,8 @@
               "$designer": {
                 "id": "vTjoP3"
               },
-              "token": "=user.token.token",
-              "resultProperty": "$signedInUser"
+              "token": "=turn.Token.token",
+              "resultProperty": "turn.signedInUser"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -87,7 +87,7 @@
           "$designer": {
             "id": "SjeplQ"
           },
-          "name": "whoSkill.Logout"
+          "name": "PeopleSkill.OnIntent_Logout"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -120,7 +120,7 @@
           "$designer": {
             "id": "rIjVl9"
           },
-          "name": "whoSkill.GetCollaborators"
+          "name": "PeopleSkill.OnIntent_GetCollaborators"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -135,9 +135,9 @@
             "id": "io3AVP"
           },
           "activityProcessed": true,
-          "dialog": "WhoWorksWithMeDialog",
+          "dialog": "GetCollaboratorsDialog",
           "options": {
-            "UserFound": "=$options.user",
+            "UserIdFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"
           }
         }
@@ -156,7 +156,7 @@
           "$designer": {
             "id": "CtN0JN"
           },
-          "name": "whoSkill.GetDepartment"
+          "name": "PeopleSkill.OnIntent_GetDepartment"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -171,7 +171,7 @@
             "id": "OlaCZn"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -192,7 +192,7 @@
           "$designer": {
             "id": "UIBrQZ"
           },
-          "name": "whoSkill.GetDirectReports"
+          "name": "PeopleSkill.OnIntent_GetDirectReports"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -207,10 +207,10 @@
             "id": "Y2hy7l"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsDirectReportDialog",
+          "dialog": "GetDirectReportsDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]
@@ -228,7 +228,7 @@
           "$designer": {
             "id": "LLDQcc"
           },
-          "name": "whoSkill.GetEmailAddress"
+          "name": "PeopleSkill.OnIntent_GetEmailAddress"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -243,7 +243,7 @@
             "id": "Bhz0b5"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -263,7 +263,7 @@
           "$designer": {
             "id": "S2lRYi"
           },
-          "name": "whoSkill.GetJobTitle"
+          "name": "PeopleSkill.OnIntent_GetJobTitle"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -278,7 +278,7 @@
             "id": "xiISoH"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -298,7 +298,7 @@
           "$designer": {
             "id": "AF2A5j"
           },
-          "name": "whoSkill.GetLocation"
+          "name": "PeopleSkill.OnIntent_GetLocation"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -313,7 +313,7 @@
             "id": "pOJdPA"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -333,7 +333,7 @@
           "$designer": {
             "id": "QPzd0I"
           },
-          "name": "whoSkill.GetManager"
+          "name": "PeopleSkill.OnIntent_GetManager"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -348,10 +348,10 @@
             "id": "3vIVVS"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsManagerDialog",
+          "dialog": "GetManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ],
@@ -371,7 +371,7 @@
           "$designer": {
             "id": "v9syx2"
           },
-          "name": "whoSkill.GetPeers"
+          "name": "PeopleSkill.OnIntent_GetPeers"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -386,10 +386,10 @@
             "id": "fJItRK"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPeerDialog",
+          "dialog": "GetPeersDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]
@@ -407,7 +407,7 @@
           "$designer": {
             "id": "1ZZm4i"
           },
-          "name": "whoSkill.GetPhoneNumber"
+          "name": "PeopleSkill.OnIntent_GetPhoneNumber"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -422,7 +422,7 @@
             "id": "sr38K1"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -443,7 +443,7 @@
           "$designer": {
             "id": "wiVPuM"
           },
-          "name": "whoSkill.GetProfile"
+          "name": "PeopleSkill.OnIntent_GetProfile"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -458,9 +458,10 @@
             "id": "U3dC5A"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "userIdFound": "=$options.user"
           }
         }
       ]
@@ -473,6 +474,13 @@
       },
       "event": "SetOptions",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ruudtx"
+          },
+          "name": "PeopleSkill.OnEvent_SetOptions"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -511,7 +519,7 @@
           "$designer": {
             "id": "BnGy6N"
           },
-          "name": "whoSkill.OnError"
+          "name": "PeopleSkill.OnError"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -586,6 +594,13 @@
         "id": "YhLqAm"
       },
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "njVcFH"
+          },
+          "name": "PeopleSkill.UnknownIntent"
+        },
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
