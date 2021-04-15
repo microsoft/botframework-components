@@ -16,7 +16,7 @@
 ```
 
 # ProfileCard(profile)
-- ${ProfileCardTemplate(ProfileBody(profile, ContactImageIconUrl(dialog.ResultPhoto)), ProfileActions(profile))}
+- ${ProfileCardTemplate(ProfileBody(profile, ContactImageIconUrl(profile.Photo)), ProfileActions(profile))}
 
 # ProfileBody(profile, photo)
 - ```
