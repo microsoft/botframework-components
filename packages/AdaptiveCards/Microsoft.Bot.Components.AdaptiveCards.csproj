@@ -20,10 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards.Templating" Version="1.2.1" />
-    <PackageReference Include="Microsoft.Bot.Builder" Version="4.13.0-rc4" />
-    <PackageReference Include="Microsoft.Bot.Connector" Version="4.13.0-rc4" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.13.0-rc4" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.0" />
   </ItemGroup>
 
   <ItemGroup>
