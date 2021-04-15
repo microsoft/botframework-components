@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Get an Adaptive Card Template",
+    "subtitle": "Get Adaptive Card Template",
+    "order": [
+      "location",
+      "resultProperty",
+      "cacheTemplate",
+      "cacheExpiration",
+      "*"
+    ],
+    "properties": {
+      "location": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "resultProperty": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Get an Adaptive Card Template",
+    "submenu": [ "Adaptive Cards" ],
+    "order":  3
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "body": "=action.location",
+    "footer": {
+      "widget": "PropertyDescription",
+      "property": "=action.resultProperty",
+      "description": "= (Template)"
+    }
+  }
+}

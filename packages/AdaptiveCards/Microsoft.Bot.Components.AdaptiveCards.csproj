@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Bot.Components.AdaptiveCards</PackageId>
+    <PackageProjectUrl>https://github.com/microsoft/botframework-components/tree/main/packages/AdaptiveCards</PackageProjectUrl>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Description>Composer triggers and actions for working with Adaptive Cards.</Description>
+    <Summary>Composer triggers and actions for working with Adaptive Cards.</Summary>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+    <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
+    <ContentTargetFolders>content</ContentTargetFolders>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AdaptiveCards.Templating" Version="1.2.1" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.13.0-rc4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="**/*.dialog" />
+    <Content Include="**/*.lg" />
+    <Content Include="**/*.lu" />
+    <Content Include="**/*.schema" />
+    <Content Include="**/*.uischema" />
+    <Content Include="**/*.qna" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Schemas\BotBuilderCommunity.CreateAdaptiveCard.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.CreateAdaptiveCard.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.GetAdaptiveCardTemplate.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.GetAdaptiveCardTemplate.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnActionExecute.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnActionExecute.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnActionSubmit.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnActionSubmit.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnDataQuery.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.OnDataQuery.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendActionExecuteResponse.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendActionExecuteResponse.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendAdaptiveCard.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendAdaptiveCard.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendDataQueryResponse.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.SendDataQueryResponse.uischema" />
+    <None Remove="Schemas\BotBuilderCommunity.UpdateAdaptiveCard.schema" />
+    <None Remove="Schemas\BotBuilderCommunity.UpdateAdaptiveCard.uischema" />
+  </ItemGroup>
+
+</Project>
