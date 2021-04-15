@@ -1,0 +1,43 @@
+﻿{
+  "botFilePath": "fake.bot",
+  "botFileSecret": "",
+  "ApplicationInsights": {
+    "InstrumentationKey": "00000000-0000-0000-0000-000000000000"
+  },
+  "oauthConnectionName": "Outlook",
+  "luis": {
+    "name": "Calendar",
+    "authoringKey": "00000000000000000000000000000000",
+    "endpointKey": "00000000000000000000000000000000",
+    "authoringRegion": "westus",
+    "defaultLanguage": "en-us",
+    "environment": "composer",
+    "endpoint": "https://westus.api.cognitive.microsoft.com",
+    "authoringEndpoint": "https://westus.api.cognitive.microsoft.com",
+    "GetEventsDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "GetContactsDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "Calendar_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "CreateEventDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "ListDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    },
+    "UpdateEventDialog_en_us_lu": {
+      "appId": "00000000-0000-0000-0000-000000000000",
+      "version": "0.1"
+    }
+  },
+  "environment": "composer"
+}
