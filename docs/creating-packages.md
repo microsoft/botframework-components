@@ -4,9 +4,8 @@
 
 Packages are bits of bots that you want to reuse and/or share. They are simply standard NuGet or npm packages that contain any combination of the items listed below.
 
-- Declarative files
-  - dialog assets (.lu/.lg/.qna/.dialog files)
-  - Schema files, including uischema
+- Complete sets of dialog files
+
 - Coded extensions like
   - Custom actions and triggers
   - Middleware
@@ -14,11 +13,11 @@ Packages are bits of bots that you want to reuse and/or share. They are simply s
 
 At a high level, the steps for creating a package are:
 
-1. Create your dialog asset files (use Composer to create them).
+1. Create your dialog files (use Composer to create them).
 2. Create your code extensions (use your favorite IDE to create them).
 3. Let Composer know about your package contents with schema files.
 4. Register your code extensions with the runtime through the `BotComponent` class.
-5. Package your files (conventionally use NuGet for C# runtime bots, and npm for bots using the JavaScript runtime).
+5. Package your files (use NuGet for C# runtime bots, and npm for bots using the JavaScript runtime).
 6. Publish your package to a package feed (public, private, or local).
 
 When your package is added to a bot from Package Manager in Composer, the following steps happen:
@@ -31,13 +30,50 @@ When your package is added to a bot from Package Manager in Composer, the follow
 
 ## Declarative files in packages
 
-Declarative files can be anywhere in your package - the `dialog:merge` command will locate and merge or copy them as appropriate. Typically you'll be exporting complete dialogs that you've created in Composer. To do so, locate your bot's files on your hard disk, and simply add the entire dialog folder and all it's contents to your package.
+Declarative files can be added to your package by placing them in a an `exported` folder in your package. You need to include a complete set of dialog files in order for Composer to recognize them. Use Composer to create your dialog, then add the complete dialog folder to your package. The folder structure should look similar to the below (depending on language encoding):
 
-See the [Help and Cancel](/packages/helpandcancel) package for an example of a package containing dialog assets.
+- Exported
+    - YourDialogName
+        - knowledge-base/en-us
+            - en-us
+                - YourDialogName.en-us.qna
+        - language-generation
+            -en-us
+                - YourDialogName.en-us.lg
+        - language-understanding
+            - en-us
+                - YourDialogName.en-us.lu
+        - recognizers
+            - YourDialogName.en-us.dialog
+            - YourDialogName.lu.dialog
+            - YourDialogName.qna.dialog
+        - YourDialogName.dialog
+
+See the [Help and Cancel](/packages/helpandcancel) package for an example of a package containing a dialog.
 
 ## Code extensions in packages
 
 The contents of your package are essentially the same as what you would create if you were [extending your bot with code](/docs/extending-with-code.md). Just make sure you're using the `BotComponent` class to register your components.
+
+### BotComponent
+
+To dynamically register your action with the Adaptive Runtime, you'll need to define a BotComponent by inheriting from the Microsoft.Bot.Builder.BotComponent class. For example, here is how you register a simple custom action called MyCustomAction:
+
+```c#
+using Microsoft.Bot.Builder;
+
+namespace conversational_core_1.actions
+{
+    public class MyBotComponent : BotComponent
+    {
+        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration, ILogger logger)
+        {
+            // Component type
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<MyCustomAction>(MyCustomAction.Kind));
+        }
+    }
+}
+```
 
 ## Packaging your files
 
