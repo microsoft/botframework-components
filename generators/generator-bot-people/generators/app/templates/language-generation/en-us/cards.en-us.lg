@@ -1,19 +1,16 @@
 [Icons](icons.en-us.lg)
-[Actions](actions.en-us.lg)
 
 # IconSize()
 - Large
-
 # IconSizeSmall()
 - Small
-
-# TitleSize()
+# TitleSize
 - Medium
 
-# SubtitleSize()
+# SubtitleSize
 - Small
 
-# BodySize()
+# BodySize
 - Small
 
 # CardTemplate(header, body)
@@ -261,7 +258,6 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
-        "height": "${IconSize()}",
         "url": "${LeftArrowInactiveIconUrl()}",
         "horizontalAlignment": "Right"
     }
@@ -270,10 +266,16 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
-        "height": "${IconSize()}",
         "url": "${LeftArrowActiveIconUrl()}",
         "horizontalAlignment": "Right",
-        "selectAction": ${PreviousPageAction()}
+        "selectAction": {
+            "type": "Action.Submit",
+            "title": "previousPage",
+            "data": {
+                "intent": "Previous",
+                "user" : "${turn.UserFound.Id}"
+            }        
+        }
     }
     ```
 
@@ -282,7 +284,6 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
-        "height": "${IconSize()}",
         "url": "${RightArrowInactiveIconUrl()}",
         "horizontalAlignment": "Left"
     }
@@ -291,9 +292,15 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     - ```
     {
         "type": "Image",
-        "height": "${IconSize()}",
         "url": "${RightArrowActiveIconUrl()}",
         "horizontalAlignment": "Left",
-        "selectAction": ${NextPageAction()}
+        "selectAction": {
+            "type": "Action.Submit",
+            "title": "show more",
+            "data": {
+                "intent": "Next",
+                "user" : "${turn.UserFound.Id}"
+            }
+        }
     }
     ```
