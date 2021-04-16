@@ -1,0 +1,1 @@
+{"query":"tell me more about Thomas","prediction":{"topIntent":"GetProfile","intents":{"GetProfile":{"score":0.8668969}},"entities":{"contact":["Thomas"]}}}

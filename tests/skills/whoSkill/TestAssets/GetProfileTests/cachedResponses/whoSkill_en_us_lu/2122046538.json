@@ -1,0 +1,1 @@
+{"query":"tell me more about Morgan Stanley","prediction":{"topIntent":"GetProfile","intents":{"GetProfile":{"score":0.7574259}},"entities":{"contact":["Morgan Stanley"]}}}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock",
+    "getEvent.mock",
+    "updateEvent.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "Calendar",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.text == 'Hi Megan Bowen 🖐, I can help you out with calendar related questions and tasks.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "update a meeting"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Which event? Please provide the title, date, and/or attendees."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "the one on tuesday"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What would you like to change?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "title"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What should I change the title to?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "new title"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Would you like to change anything else?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "no"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Does this look right?"
+      ],
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I've updated the event."
+      ]
+    }
+  ]
+}

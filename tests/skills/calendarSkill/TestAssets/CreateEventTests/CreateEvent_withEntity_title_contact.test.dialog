@@ -1,0 +1,116 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock",
+    "getContact.mock",
+    "getPeople.mock",
+    "findMeetingTimes.mock",
+    "createEvent.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "Calendar",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.text == 'Hi Megan Bowen 🖐, I can help you out with calendar related questions and tasks.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "new meeting with Lydia named Team Meeting"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "contains(attachments[0].content.body[0].text, 'Would you like to invite anyone else?')"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "no"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I've found multiple times when you can meet with test name:"
+      ],
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I've made this a Microsoft Teams meeting."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Would you like to add a location? (1) Yes or (2) No"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "What should I set the location to?"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "test location"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Does this look right?"
+      ],
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "yes"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "I've created the event."
+      ]
+    }
+  ]
+}

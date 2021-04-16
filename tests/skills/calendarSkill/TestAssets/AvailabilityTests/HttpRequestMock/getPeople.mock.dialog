@@ -1,0 +1,151 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/beta/me/people*",
+  "Responses": [
+    {
+      "Content": {
+        "value": [
+          {
+            "id": "testid",
+            "displayName": "test name",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "emailAddresses": [
+              {
+                "address": "test@test.com",
+                "relevanceScore": 248762882,
+              }
+            ],
+            "phones": [],
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "Content": {
+        "value": [
+          {
+            "id": "test2id",
+            "displayName": "test2 name",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "emailAddresses": [
+              {
+                "address": "test2@test.com",
+                "relevanceScore": 248762881
+              }
+            ],
+            "phones": [],
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "Content": {
+        "value": [
+          {
+            "id": "testid",
+            "displayName": "test name",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "emailAddresses": [
+              {
+                "address": "test@test.com",
+                "relevanceScore": 248762882
+              }
+            ],
+            "phones": [],
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "Content": {
+        "value": [
+          {
+            "id": "test2id",
+            "displayName": "test2 name",
+            "givenName": null,
+            "surname": null,
+            "birthday": null,
+            "personNotes": null,
+            "isFavorite": false,
+            "jobTitle": null,
+            "companyName": null,
+            "yomiCompany": null,
+            "department": null,
+            "officeLocation": null,
+            "profession": null,
+            "userPrincipalName": null,
+            "imAddress": null,
+            "emailAddress": [
+              {
+                "address": "test2@test.com",
+                "relevanceScore": 248762881
+              }
+            ],
+            "phones": [],
+            "personType": "Person",
+            "sources": [
+              {
+                "type": "Active Directory"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

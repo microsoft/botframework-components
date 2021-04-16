@@ -3,9 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams.Tests", "teams\Microsoft.Bot.Components.Teams.Tests\Microsoft.Bot.Components.Teams.Tests.csproj", "{42EA3A43-0AB0-4005-8248-185CC12E1931}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "..\packages\Teams\Microsoft.Bot.Components.Teams.csproj", "{1C09226C-3DE0-48BF-BEB7-68F0691908EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skills", "skills", "{31CBAEDA-E319-49AE-A662-AA0739205C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Dialogs.Tests.Common", "skills\common\Microsoft.Bot.Dialogs.Tests.Common.csproj", "{94784B33-91CD-4EFE-A1DF-D0FD670A0058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Dialogs.Tests.WhoSkill", "skills\whoSkill\Microsoft.Bot.Dialogs.Tests.WhoSkill.csproj", "{6876407A-F34E-479F-9F3C-6E6ED81EB600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Dialogs.Tests.CalendarSkill", "skills\calendarSkill\Microsoft.Bot.Dialogs.Tests.CalendarSkill.csproj", "{F0E73465-DB1D-4F8A-B527-88F1E2515A5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{73825711-6685-48E2-BFA2-3FCDECE1A0FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teams", "teams", "{61708441-52A4-48F6-819A-B8D4C279C4C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Teams.Tests", "packages\Microsoft.Bot.Components.Teams.Tests\Microsoft.Bot.Components.Teams.Tests.csproj", "{F6E872DE-52B7-4372-B546-B18B5A495C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Graph", "..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{9561BF32-D0EE-464F-981B-7E4298ACDDFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,11 +35,38 @@ Global
 		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6876407A-F34E-479F-9F3C-6E6ED81EB600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6876407A-F34E-479F-9F3C-6E6ED81EB600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6876407A-F34E-479F-9F3C-6E6ED81EB600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6876407A-F34E-479F-9F3C-6E6ED81EB600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E73465-DB1D-4F8A-B527-88F1E2515A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E73465-DB1D-4F8A-B527-88F1E2515A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E73465-DB1D-4F8A-B527-88F1E2515A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E73465-DB1D-4F8A-B527-88F1E2515A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E872DE-52B7-4372-B546-B18B5A495C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E872DE-52B7-4372-B546-B18B5A495C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E872DE-52B7-4372-B546-B18B5A495C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E872DE-52B7-4372-B546-B18B5A495C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9561BF32-D0EE-464F-981B-7E4298ACDDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9561BF32-D0EE-464F-981B-7E4298ACDDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9561BF32-D0EE-464F-981B-7E4298ACDDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9561BF32-D0EE-464F-981B-7E4298ACDDFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D0FB02B-704A-44E0-AECA-A4FDF6F805C5}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{94784B33-91CD-4EFE-A1DF-D0FD670A0058} = {31CBAEDA-E319-49AE-A662-AA0739205C82}
+		{6876407A-F34E-479F-9F3C-6E6ED81EB600} = {31CBAEDA-E319-49AE-A662-AA0739205C82}
+		{F0E73465-DB1D-4F8A-B527-88F1E2515A5C} = {31CBAEDA-E319-49AE-A662-AA0739205C82}
+		{61708441-52A4-48F6-819A-B8D4C279C4C8} = {73825711-6685-48E2-BFA2-3FCDECE1A0FD}
+		{F6E872DE-52B7-4372-B546-B18B5A495C73} = {61708441-52A4-48F6-819A-B8D4C279C4C8}
 	EndGlobalSection
 EndGlobal

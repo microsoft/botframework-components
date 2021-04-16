@@ -1,0 +1,11 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "",
+  "Url": "https://graph.microsoft.com/beta/me/events/*/microsoft.graph.decline",
+  "Responses": [
+    {
+      "Content": {
+      }
+    }
+  ]
+}

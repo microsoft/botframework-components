@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock",
+    "getEvent.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "Calendar",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.text == 'Hi Megan Bowen 🖐, I can help you out with calendar related questions and tasks.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "when am I done tomorrow"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Your day Thursday, December 31st, ends at 8:30 AM. Your last meeting is **Project Team Meeting**.",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ],
+      "description": "Response to input 1"
+    }
+  ]
+}
