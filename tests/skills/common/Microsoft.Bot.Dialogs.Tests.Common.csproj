@@ -17,7 +17,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
+		<ProjectReference Include="..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
 	</ItemGroup>
 
 </Project>
