@@ -74,6 +74,70 @@
     {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
+        "id": "Crp07R",
+        "name": "OnEvent (SetDefaults)"
+      },
+      "event": "SetDefaults",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MUHCqr"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "2RQn2O"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "count(where(flatten($options), o, exists(o))) == 0"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "3cnBsr"
+          },
+          "condition": "=ticksToDays(dateTimeDiff(formatDateTime($options.end), formatDateTime($options.start))) > 2",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ZDxmgI"
+              },
+              "condition": "not(exists($options.subject)) && not(exists($options.contactArray)) && not(exists($options.emailArray)) && not(exists($options.ordinal))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VWXoGf"
+                  },
+                  "property": "$tooManyEvents",
+                  "value": "=true"
+                },
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "APDVdr"
+                  },
+                  "property": "$options.end"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
         "id": "PIPYJh",
         "name": "OnEvent (ShowResults)"
       },
@@ -219,70 +283,6 @@
                 "id": "Poa1KS"
               },
               "activity": "${SendActivity_Poa1KS()}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "Crp07R",
-        "name": "OnEvent (SetDefaults)"
-      },
-      "event": "SetDefaults",
-      "actions": [
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "MUHCqr"
-          },
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "2RQn2O"
-              },
-              "assignments": [
-                {
-                  "property": "$options.start",
-                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
-                }
-              ]
-            }
-          ],
-          "condition": "count(where(flatten($options), o, exists(o))) == 0"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "3cnBsr"
-          },
-          "condition": "=ticksToDays(dateTimeDiff(formatDateTime($options.end), formatDateTime($options.start))) > 2",
-          "actions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "ZDxmgI"
-              },
-              "condition": "not(exists($options.subject)) && not(exists($options.contactArray)) && not(exists($options.emailArray)) && not(exists($options.ordinal))",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "VWXoGf"
-                  },
-                  "property": "$tooManyEvents",
-                  "value": "=true"
-                },
-                {
-                  "$kind": "Microsoft.DeleteProperty",
-                  "$designer": {
-                    "id": "APDVdr"
-                  },
-                  "property": "$options.end"
-                }
-              ]
             }
           ]
         }

@@ -2,9 +2,6 @@
 [Event](event.en-us.lg)
 [TimeSuggestionList](timeSuggestionList.en-us.lg)
 
-# SendActivity_44hcCm()
-- ${CancelMessage()}
-
 # TextInput_Prompt_HmkRsB()
 - What should I set the title to?
 - What is the title of the meeting?

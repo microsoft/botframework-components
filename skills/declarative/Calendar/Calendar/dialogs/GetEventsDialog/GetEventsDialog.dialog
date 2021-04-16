@@ -618,23 +618,6 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "J8OA5a",
-        "name": "OnIntent (Cancel)"
-      },
-      "intent": "Cancel",
-      "actions": [
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "mrBR6n"
-          },
-          "eventName": "Cancel"
-        }
-      ]
-    },
-    {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "lxR3u1",
@@ -655,6 +638,23 @@
             "id": "eBStwi"
           },
           "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "J8OA5a",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mrBR6n"
+          },
+          "eventName": "Cancel"
         }
       ]
     }

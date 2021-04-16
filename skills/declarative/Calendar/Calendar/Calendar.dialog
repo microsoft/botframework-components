@@ -183,13 +183,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "YVVKLC"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -227,13 +220,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "L2PLXH"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -288,13 +274,6 @@
             "id": "UKSMPm"
           },
           "activity": "${SendActivity_UKSMPm()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "WHy6Bo"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -349,13 +328,6 @@
             "id": "x7EkgW"
           },
           "activity": "${SendActivity_x7EkgW()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "KDqk7Z"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -393,13 +365,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "jNc5BU"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -539,13 +504,6 @@
             "id": "IdPxbc"
           },
           "activity": "${SendActivity_IdPxbc()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "W7ue9g"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -641,13 +599,6 @@
               "activity": "${SendActivity_WlmO9l()}"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "3CUd8v"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -698,13 +649,6 @@
           "options": {
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "fSgPJl"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -756,13 +700,6 @@
             "response": "='accepted'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "KTgFcq"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -814,13 +751,6 @@
             "response": "='declined'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "DiEzlo"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -872,13 +802,6 @@
             "response": "='tentativelyAccepted'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "u8kRHS"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -930,13 +853,6 @@
             "options": "=$options",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "f95C2A"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -1679,87 +1595,6 @@
     {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "UW3KVm",
-        "name": "OnEvent (CollectFeedback)"
-      },
-      "event": "collectFeedback",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "ewbuLF"
-          },
-          "name": "Calendar.OnCollectFeedbackEvent",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "QaDvyy"
-          },
-          "activity": "${SendActivity_QaDvyy()}"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "oTlYj2",
-        "name": "OnEvent (DialogCompleted)"
-      },
-      "event": "dialogCompleted",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "KJHXUC"
-          },
-          "name": "Calendar.OnDialogCompletedEvent",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "QCM3um"
-          },
-          "property": "conversation.dialogCount",
-          "value": "= coalesce(conversation.dialogCount, 0) + 1"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "NuS1r3"
-          },
-          "condition": "conversation.dialogCount == 3",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "NjCCRC"
-              },
-              "property": "conversation.dialogCount",
-              "value": "= 0"
-            },
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "BH6jnO"
-              },
-              "eventName": "CollectFeedback"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.CancelAllDialogs",
-          "$designer": {
-            "id": "ePKk2p"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
         "id": "YzvkvP",
         "name": "OnEvent (SetOptions)"
       },
@@ -1978,13 +1813,6 @@
                 "id": "mWnyUh"
               },
               "activity": "${SendActivity_mWnyUh()}"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "2q5Pi3"
-              },
-              "activity": "${SendActivity_2q5Pi3()}"
             }
           ]
         }

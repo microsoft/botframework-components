@@ -568,6 +568,52 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
+        "id": "Jmd14H",
+        "name": "OnIntent (SetAttendeesAdd)"
+      },
+      "intent": "SetAttendeesAdd",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pL6yTk"
+          },
+          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "Yt83Kf"
+          },
+          "assignments": [
+            {
+              "property": "$emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "$contactArray",
+              "value": "=unique(union(coalesce(@@contact, []), coalesce(@@newContact, []), coalesce(@@personName, [])))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.RepeatDialog",
+          "$designer": {
+            "id": "B2tJQf"
+          },
+          "activityProcessed": true,
+          "options": {
+            "contacts": "=$contacts",
+            "emailArray": "=$emailArray",
+            "contactArray": "=$contactArray"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
         "id": "8Asary",
         "name": "OnIntent (Skip)"
       },
@@ -615,61 +661,6 @@
           "eventName": "Cancel"
         }
       ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "Jmd14H",
-        "name": "OnIntent (SetAttendeesAdd)"
-      },
-      "intent": "SetAttendeesAdd",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "pL6yTk"
-          },
-          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "Yt83Kf"
-          },
-          "assignments": [
-            {
-              "property": "$emailArray",
-              "value": "=@@email"
-            },
-            {
-              "property": "$contactArray",
-              "value": "=unique(union(coalesce(@@contact, []), coalesce(@@newContact, []), coalesce(@@personName, [])))"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.RepeatDialog",
-          "$designer": {
-            "id": "B2tJQf"
-          },
-          "activityProcessed": true,
-          "options": {
-            "contacts": "=$contacts",
-            "emailArray": "=$emailArray",
-            "contactArray": "=$contactArray"
-          }
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "NkFGP3",
-        "name": "OnEvent (SetOptions)"
-      },
-      "event": "SetOptions",
-      "actions": []
     }
   ],
   "generator": "GetContactsDialog.lg",
